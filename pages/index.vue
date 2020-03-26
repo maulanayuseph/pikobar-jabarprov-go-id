@@ -354,7 +354,7 @@
               :title="item.title"
               :content="item.content"
               :date="formatDateTimeShort(item.published_at)"
-              :to="`/articles/${item.id}`"
+              :to="item.route"
             />
             <hr v-if="index < news.length - 1" class="my-8">
           </div>

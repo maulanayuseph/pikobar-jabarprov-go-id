@@ -1,4 +1,5 @@
 require('dotenv').config()
+const APP_TITLE = 'Pikobar - Pusat Informasi dan Koordinasi COVID-19 Jawa Barat'
 export default {
   env: {
     FIREBASE_API_KEY: process.env.FIREBASE_API_KEY,
@@ -9,7 +10,9 @@ export default {
     FIREBASE_MESSAGING_SENDER_ID: process.env.FIREBASE_MESSAGING_SENDER_ID,
     FIREBASE_APP_ID: process.env.FIREBASE_APP_ID,
     FIREBASE_MEASUREMENT_ID: process.env.FIREBASE_MEASUREMENT_ID,
-    FIREBASE_PUBLIC_VAPID_KEY: process.env.FIREBASE_PUBLIC_VAPID_KEY
+    FIREBASE_PUBLIC_VAPID_KEY: process.env.FIREBASE_PUBLIC_VAPID_KEY,
+    APP_TITLE,
+    URL: process.env.URL
   },
   router: {
     prefetchLinks: false
@@ -26,11 +29,19 @@ export default {
   ** Headers of the page
   */
   head: {
-    title: 'COVID-19 Jawa Barat',
+    title: APP_TITLE,
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: process.env.npm_package_description || '' }
+      { hid: 'description', name: 'description', content: process.env.npm_package_description || '' },
+      { hid: 'url', name: 'url', content: process.env.URL },
+      { hid: 'og:title', property: 'og:title', content: APP_TITLE },
+      { hid: 'og:description', property: 'og:description', content: process.env.npm_package_description },
+      { hid: 'og:url', property: 'og:url', content: process.env.URL },
+      { hid: 'og:image', property: 'og:image', content: `${process.env.URL}/logo.jpg` },
+      { hid: 'og:site_name', property: 'og:site_name', content: APP_TITLE },
+      { hid: 'twitter:card', name: 'twitter:card', content: 'summary' },
+      { hid: 'twitter:site', name: 'twitter:site', content: '@jabardigital' }
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
