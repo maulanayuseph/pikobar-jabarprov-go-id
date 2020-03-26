@@ -3,7 +3,6 @@
   <div class="container mx-auto">
     <section class="top-grid m-4 md:m-8">
       <div class="top-grid__banner rounded-lg overflow-hidden">
-        <!-- <img v-lazy="bannerImage" class="absolute inset-0 w-full h-full object-cover object-left-top"> -->
         <ImageCarousel
           class="absolute inset-0 w-full h-full"
           :items="banners"
@@ -69,18 +68,16 @@
         <b>Angka Kejadian di Jawa Barat</b><br>
         <small class="opacity-50">Update Terakhir: {{ lastUpdatedAt }}</small>
       </h2>
-      <DataSummary class="my-8" />
-      <div class="rounded-lg bg-white shadow-md overflow-hidden">
-        <PetaPersebaranAllCases />
-      </div>
+      <DataSummary class="mt-8" />
       <a
-        v-show="false"
         target="_blank"
-        class="text-center md:self-center w-56 py-2 rounded-lg text-brand-green-darker hover:bg-green-200 border-2 border-solid border-brand-green"
+        class="text-center md:self-center mb-8 px-4 py-2 font-bold text-lg text-brand-green-darker hover:text-brand-green-light"
         href="/data"
       >
-        Lihat Data Selengkapnya
+        Lihat Selengkapnya
+        <FontAwesomeIcon class="ml-2" :icon="icon.faChevronRight" />
       </a>
+      <DataTabs />
       <br>
     </section>
     <section class="mt-8 m-4 md:mt-16 md:m-8">
@@ -386,8 +383,8 @@ import CallCard from '~/components/CallCard'
 import ContactListItem from '~/components/ContactList/ContactListItem'
 import CallCenter from '~/components/CallCenter'
 import BlogPostPreview from '~/components/Blog/BlogPostPreview'
+import DataTabs from '~/components/_pages/index/DataTabs'
 import DataSummary from '~/components/_pages/index/DataSummary'
-import PetaPersebaranAllCases from '~/components/Tableau/PetaPersebaranAllCases'
 import ShareableItems from '~/components/ShareableItems'
 
 export default {
@@ -398,8 +395,8 @@ export default {
     BlogPostPreview,
     ContactListItem,
     CallCenter,
+    DataTabs,
     DataSummary,
-    PetaPersebaranAllCases,
     ShareableItems
   },
   data () {
