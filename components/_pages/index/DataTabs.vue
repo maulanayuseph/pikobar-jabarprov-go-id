@@ -1,7 +1,7 @@
 <template>
   <div>
     <ul
-      class="overflow-y-hidden overflow-x-hidden flex flex-row flex-no-wrap items-stretch border-b-2 border-solid border-gray-300"
+      class="flex flex-row flex-no-wrap items-stretch border-b-2 border-solid border-gray-300"
     >
       <li
         v-for="(tab, index) in tabs"
@@ -16,18 +16,23 @@
         </a>
       </li>
     </ul>
-    <component :is="null" />
+    <br>
+    <keep-alive :max="tabs.length">
+      <component :is="tabComponent" />
+    </keep-alive>
   </div>
 </template>
 
 <script>
+import BarStatHarianAkumulatif from '~/components/BarStatHarianAkumulatif'
 export default {
   data () {
     return {
       tabs: [
         {
           id: 'stat',
-          title: 'Statistik'
+          title: 'Statistik',
+          component: BarStatHarianAkumulatif
         },
         {
           id: 'map-kota',
@@ -40,6 +45,14 @@ export default {
       ],
       activeTabId: 'stat',
       currentX: null
+    }
+  },
+  computed: {
+    tabComponent () {
+      if (!this.activeTabId) {
+        return null
+      }
+      return this.tabs.find(tab => tab.id === this.activeTabId).component || null
     }
   }
 }
