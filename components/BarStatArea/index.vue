@@ -1,40 +1,29 @@
 <template>
   <div>
-    <div class="row mt-2 mb-2 pl-2">
-      <nuxt-link
-        tag="a"
-        style="border: 1px solid #2DAC55;"
-        class="btn btn-md mr-2"
-        :class="stat.isActiveHarian ? 'btnActive' : 'btnNonActive'"
-        to=""
-        @click.native="enableHarian"
+    <div class="flex flex-row items-stretch mb-4">
+      <button
+        class="button-selector mr-2"
+        :active="stat.isActiveHarian"
+        @click="enableHarian"
       >
         <font-awesome-icon :icon="fontChartBar" /> Angka Harian
-      </nuxt-link>
-      <nuxt-link
-        tag="a"
-        style="border: 1px solid #2DAC55;"
-        class="btn btn-md mr-2"
-        :class="stat.isActiveAkumulatif ? 'btnActive' : 'btnNonActive'"
-        to=""
-        @click.native="enableAkumulatif"
+      </button>
+      <button
+        class="button-selector"
+        :active="stat.isActiveAkumulatif"
+        @click="enableAkumulatif"
       >
         <font-awesome-icon :icon="fontChartLine" /> Kumulatif
-      </nuxt-link>
+      </button>
     </div>
 
-    <div v-if="stat.isActiveHarian" class="row mt-2 mb-2">
+    <section v-show="stat.isActiveHarian">
       <div style="overflow-x: auto; width: 100%; height: 100%; display: flex;">
-        <div
-          class="bg-white m-2 p-2"
-          style="border-radius: 0.8rem; box-shadow: 0 0 4px 0px rgba(0,0,0,0.05)"
-        >
-          <div class="row m-1">
-            <span style="width: 60%">
-              <h4 style="color: #828282; font-weight: bolder;">
-                Indonesia
-              </h4>
-            </span>
+        <div class="bg-white p-3 mr-4 mb-4 rounded-lg shadow-md">
+          <div class="flex flex-row justify-between items-center">
+            <h4 style="color: #828282; font-weight: bolder;">
+              Indonesia
+            </h4>
             <span style="width: 40%">
               <h4 style="color: #000000; font-weight: bolder; text-align: right; margin-right: 20px;">
                 ({{ dataTotalPositifAll[0] }})
@@ -47,16 +36,11 @@
             :options="barChartNasionalOptions"
           />
         </div>
-        <div
-          class="bg-white m-2 p-2"
-          style="border-radius: 0.8rem; box-shadow: 0 0 4px 0px rgba(0,0,0,0.05)"
-        >
-          <div class="row m-1">
-            <span style="width: 60%">
-              <h4 style="color: #828282; font-weight: bolder;">
-                Jawa Barat
-              </h4>
-            </span>
+        <div class="bg-white p-3 mr-4 mb-4 rounded-lg shadow-md">
+          <div class="flex flex-row justify-between items-center">
+            <h4 style="color: #828282; font-weight: bolder;">
+              Jawa Barat
+            </h4>
             <span style="width: 40%">
               <h4 style="color: #000000; font-weight: bolder; text-align: right; margin-right: 20px;">
                 ({{ dataTotalPositifAll[1] }})
@@ -72,10 +56,9 @@
         <div
           v-for="(item, index) in jsonDataKota"
           :key="item.kode"
-          class="bg-white m-2 p-2"
-          style="border-radius: 0.8rem; box-shadow: 0 0 4px 0px rgba(0,0,0,0.05)"
+          class="bg-white p-3 mr-4 mb-4 rounded-lg shadow-md"
         >
-          <div class="row m-1">
+          <div class="flex flex-row justify-between items-center">
             <div style="width: 60%">
               <h4 style="color: #828282; font-weight: bolder;">
                 {{ item.nama }}
@@ -95,20 +78,17 @@
           />
         </div>
       </div>
-    </div>
+    </section>
 
-    <div v-if="stat.isActiveAkumulatif" class="row mt-2 mb-2 p3">
+    <section
+      v-show="stat.isActiveAkumulatif"
+    >
       <div style="overflow-x: auto; width: 100%; height: 100%; display: flex;">
-        <div
-          class="bg-white m-2 p-2"
-          style="border-radius: 0.8rem; box-shadow: 0 0 4px 0px rgba(0,0,0,0.05)"
-        >
-          <div class="row m-1">
-            <span style="width: 60%">
-              <h4 style="color: #828282; font-weight: bolder;">
-                Indonesia
-              </h4>
-            </span>
+        <div class="bg-white p-3 mr-4 mb-4 rounded-lg shadow-md">
+          <div class="flex flex-row justify-between items-center">
+            <h4 style="color: #828282; font-weight: bolder;">
+              Indonesia
+            </h4>
             <span style="width: 40%">
               <h4 style="color: #000000; font-weight: bolder; text-align: right; margin-right: 20px;">
                 ({{ dataTotalPositifAll[0] }})
@@ -121,16 +101,11 @@
             :options="lineChartNasionalOptions"
           />
         </div>
-        <div
-          class="bg-white m-2 p-2"
-          style="border-radius: 0.8rem; box-shadow: 0 0 4px 0px rgba(0,0,0,0.05)"
-        >
-          <div class="row m-1">
-            <span style="width: 60%">
-              <h4 style="color: #828282; font-weight: bolder;">
-                Jawa Barat
-              </h4>
-            </span>
+        <div class="bg-white p-3 mr-4 mb-4 rounded-lg shadow-md">
+          <div class="flex flex-row justify-between items-center">
+            <h4 style="color: #828282; font-weight: bolder;">
+              Jawa Barat
+            </h4>
             <span style="width: 40%">
               <h4 style="color: #000000; font-weight: bolder; text-align: right; margin-right: 20px;">
                 ({{ dataTotalPositifAll[1] }})
@@ -146,10 +121,9 @@
         <div
           v-for="(item, index) in jsonDataKota"
           :key="item.kode"
-          class="bg-white m-2 p-2"
-          style="border-radius: 0.8rem; box-shadow: 0 0 4px 0px rgba(0,0,0,0.05)"
+          class="bg-white p-3 mr-4 mb-4 rounded-lg shadow-md"
         >
-          <div class="row m-1">
+          <div class="flex flex-row justify-between items-center">
             <div style="width: 60%">
               <h4 style="color: #828282; font-weight: bolder;">
                 {{ item.nama }}
@@ -169,7 +143,7 @@
           />
         </div>
       </div>
-    </div>
+    </section>
   </div>
 </template>
 
@@ -960,6 +934,8 @@ export default {
           }
           if (self.jsonDataNasionalHarianKumulatif[self.jsonDataNasionalHarianKumulatif.length - 1].jumlahKasusKumulatif === null) {
             self.dataTotalPositifAll[0] = self.jsonDataNasionalHarianKumulatif[self.jsonDataNasionalHarianKumulatif.length - 2].jumlahKasusKumulatif
+          } else {
+            self.dataTotalPositifAll[0] = self.jsonDataNasionalHarianKumulatif[self.jsonDataNasionalHarianKumulatif.length - 1].jumlahKasusKumulatif
           }
           self.ChartNasionalDataHarian.splice(1, 1)
           self.ChartNasionalDataAkumulatif.splice(1, 1)
@@ -1161,5 +1137,16 @@ export default {
 .btnNonActive {
   color: #2DAC55;
   background-color: #FFFFFF;
+}
+</style>
+
+<style lang="scss" scoped>
+.button-selector {
+  @apply px-6 py-2 rounded-md border border-solid border-brand-green
+  text-brand-green bg-white;
+
+  &[active] {
+    @apply text-white bg-brand-green;
+  }
 }
 </style>

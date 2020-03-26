@@ -1,45 +1,36 @@
 <template>
   <div
-    class="bg-white p-1"
-    style="border-radius: 0.8rem; box-shadow: 0 0 4px 0px rgba(0,0,0,0.05), 0 4px 24px 0 rgba(0,0,0,0.1);"
+    class="bg-white overflow-hidden rounded-lg shadow-md"
   >
-    <h4 class="m-3">
+    <h4 class="p-5 text-xl">
       <b>Jenis Kelamin</b>
     </h4>
     <hr>
-    <div class="row ml-2">
-      <nuxt-link
-        tag="a"
-        style="border: 1px solid #2DAC55;"
-        class="btn btn-sm m-1"
-        :class="stat.isPositif ? 'btnActive' : 'btnNonActive'"
-        to=""
-        @click.native="changeGroupJenisKelamin('Positif')"
+    <div class="flex flex-row items-stretch p-5 pb-0">
+      <button
+        class="button-selector mr-2"
+        :active="stat.isPositif"
+        @click="changeGroupJenisKelamin('Positif')"
       >
         Positif
-      </nuxt-link>
-      <nuxt-link
-        tag="a"
-        style="border: 1px solid #2DAC55;"
-        class="btn btn-sm m-1"
-        :class="stat.isODP ? 'btnActive' : 'btnNonActive'"
-        to=""
-        @click.native="changeGroupJenisKelamin('ODP')"
+      </button>
+      <button
+        class="button-selector mr-2"
+        :active="stat.isODP"
+        @click="changeGroupJenisKelamin('ODP')"
       >
         ODP
-      </nuxt-link>
-      <nuxt-link
-        tag="a"
-        style="border: 1px solid #2DAC55;"
-        class="btn btn-sm m-1"
-        :class="stat.isPDP ? 'btnActive' : 'btnNonActive'"
-        to=""
-        @click.native="changeGroupJenisKelamin('PDP')"
+      </button>
+      <button
+        class="button-selector"
+        :active="stat.isPDP"
+        @click="changeGroupJenisKelamin('PDP')"
       >
         PDP
-      </nuxt-link>
+      </button>
     </div>
     <GChart
+      class="p-5"
       type="PieChart"
       :data="pieChartJenisKelaminData"
       :options="pieChartJenisKelaminOptions"
@@ -184,13 +175,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.button-selector {
+  @apply px-6 py-2 rounded-md border border-solid border-brand-green
+  text-brand-green bg-white;
 
-.btnActive {
-  color: #ffffff;
-  background-color: #2DAC55;
-}
-.btnNonActive {
-  color: #2DAC55;
-  background-color: #FFFFFF;
+  &[active] {
+    @apply text-white bg-brand-green;
+  }
 }
 </style>

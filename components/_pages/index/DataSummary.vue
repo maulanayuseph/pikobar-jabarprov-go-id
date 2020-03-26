@@ -73,9 +73,9 @@
         </CounterCardLoader>
       </section>
 
-      <section class="flex flex-col lg:flex-row lg:flex-no-wrap">
+      <section class="flex flex-col xl:flex-row xl:flex-no-wrap">
         <StatisticLoader
-          class="lg:mr-8"
+          class="w-full xl:w-auto xl:mr-8"
           :is-pending="isPending"
           label="ODP (Orang Dalam Pemantauan)"
           processed-label="Proses Pemantauan"
@@ -100,6 +100,7 @@
           </template>
         </StatisticLoader>
         <StatisticLoader
+          class="w-full xl:w-auto"
           :is-pending="isPending"
           label="PDP (Pasien Dalam Pengawasan)"
           processed-label="Proses Pengawasan"

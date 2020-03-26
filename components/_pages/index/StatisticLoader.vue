@@ -19,7 +19,7 @@ export default {
     const staticClass = context.data.staticClass || ''
     const staticStyle = context.data.staticStyle || {}
     const containerProps = {
-      class: ['bg-white rounded-lg mb-8 lg:mb-0 lg:w-1/2 shadow-md', staticClass],
+      class: ['bg-white rounded-lg mb-8 xl:mb-0 xl:w-1/2 shadow-md', staticClass],
       style: staticStyle
     }
     return (
