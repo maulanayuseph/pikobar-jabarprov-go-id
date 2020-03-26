@@ -103,7 +103,8 @@
           </button> -->
           <a
             class="cursor-pointer px-10 py-4 rounded-lg text-white border-2 border-solid border-white hover:bg-brand-green-light"
-            @click.prevent="onClickSelfDiagnose"
+            :href.prop="selfDiagnoseURL"
+            target="_blank"
           >
             <b>Nilai Diri Saya</b>
           </a>
@@ -455,13 +456,7 @@ export default {
     }
   },
   methods: {
-    formatDateTimeShort,
-    onClickSelfDiagnose () {
-      if (!this.selfDiagnoseURL) {
-        return
-      }
-      window.open(this.selfDiagnoseURL, '_blank')
-    }
+    formatDateTimeShort
   }
 }
 
