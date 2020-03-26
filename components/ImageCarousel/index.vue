@@ -9,7 +9,6 @@
             :class="['banner-slide', item.action_url && 'cursor-pointer']"
             @slide-click="onItemClick(item)"
           >
-            <img role="bg" :src="item.url">
             <img role="main" :src="item.url">
           </VueCarouselSlide>
         </VueCarousel>
@@ -55,7 +54,7 @@ export default {
   data () {
     return {
       carouselConfig: {
-        autoplay: true,
+        autoplay: false,
         autoplayTimeout: 4000,
         paginationEnabled: false,
         paginationColor: '#90a4ae',
@@ -112,33 +111,12 @@ export default {
 
 <style lang="scss" scoped>
 .banner-slide {
-  // padding: 28.125%;
-  padding-top: 55%;
+  padding-top: (400% / 713);
   @apply relative flex flex-row justify-center items-center;
-
-  @screen lg {
-    // padding: 0;
-    // height: 400px;
-  }
-
-  > img[role="bg"] {
-    @supports (filter: blur(4px)) {
-      filter: blur(4px) grayscale(33%) opacity(0.2);
-    }
-    @supports not(filter: blur(4px)) {
-      opacity: 0.2;
-    }
-    @apply absolute inset-0 w-full h-full
-    object-cover object-top;
-  }
 
   > img[role="main"] {
     @apply absolute top-0 w-full h-full
-    object-cover;
-
-    // @screen lg {
-    //   @apply object-contain;
-    // }
+    object-contain object-top;
   }
 }
 
