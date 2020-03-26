@@ -59,6 +59,24 @@ export default {
     ...mapActions('infographics', {
       getItems: 'getItems'
     })
+  },
+  head () {
+    const title = 'Infografis - Pikobar [Pusat Informasi dan Koordinasi COVID-19 Jawa Barat]'
+    return {
+      title,
+      meta: [
+        {
+          hid: 'og:title',
+          property: 'og:title',
+          content: title
+        },
+        {
+          hid: 'og:type',
+          property: 'og:type',
+          content: 'article'
+        }
+      ]
+    }
   }
 }
 </script>
