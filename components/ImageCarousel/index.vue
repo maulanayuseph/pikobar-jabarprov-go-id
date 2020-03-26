@@ -54,7 +54,7 @@ export default {
   data () {
     return {
       carouselConfig: {
-        autoplay: false,
+        autoplay: true,
         autoplayTimeout: 4000,
         paginationEnabled: false,
         paginationColor: '#90a4ae',
