@@ -68,10 +68,20 @@
 import { ContentLoader } from 'vue-content-loader'
 import { formatDateTimeShort } from '~/lib/date'
 import { analytics } from '~/lib/firebase'
+import { useDefaultMetaInfo, useArticleMetaInfo } from '~/lib/metainfo'
 
+const regex = /(?:(-artcl\.))(.*)$/
 export default {
   components: {
     ContentLoader
+  },
+  validate ({ redirect, params }) {
+    const { slug } = params
+    if (!slug || typeof slug !== 'string') {
+      redirect('/articles')
+      return
+    }
+    return true
   },
 
   metaInfo: {
@@ -85,8 +95,20 @@ export default {
     }
   },
 
+  computed: {
+    itemId () {
+      const slug = this.$route.params.slug
+      if (slug.includes('-artcl.')) {
+        const matched = regex.exec(slug)
+        return matched && matched.length ? matched[2] : null
+      } else {
+        return slug
+      }
+    }
+  },
+
   mounted () {
-    this.getById(this.$route.params.slug)
+    this.getById(this.itemId)
   },
 
   methods: {
@@ -112,6 +134,29 @@ export default {
         analytics.logEvent('article_detail_click_action', { id: this.$route.params.slug })
       }
       window.open(e.target.href, '_blank')
+    }
+  },
+  head () {
+    if (!this.item) {
+      return useDefaultMetaInfo()
+    } else {
+      const {
+        title,
+        published_at: publishedAt,
+        image,
+        route,
+        news_channel: newsChannel
+      } = this.item
+      const date = publishedAt && typeof publishedAt.toISOString === 'function'
+        ? publishedAt.toISOString()
+        : ''
+      return useArticleMetaInfo({
+        author: newsChannel,
+        title,
+        publishedTime: date,
+        image,
+        url: `${process.env.URL}${route}`
+      })
     }
   }
 }

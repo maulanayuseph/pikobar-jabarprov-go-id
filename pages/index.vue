@@ -3,7 +3,11 @@
   <div class="container mx-auto">
     <section class="top-grid m-4 md:m-8">
       <div class="top-grid__banner rounded-lg overflow-hidden">
-        <img v-lazy="bannerImage" class="absolute inset-0 w-full h-full object-cover object-left-top">
+        <!-- <img v-lazy="bannerImage" class="absolute inset-0 w-full h-full object-cover object-left-top"> -->
+        <ImageCarousel
+          class="absolute inset-0 w-full h-full"
+          :items="banners"
+        />
       </div>
       <CallCard class="top-grid__call-card" title="Call Center" subtitle="Nomor Darurat" number="119" />
       <CallCard class="top-grid__call-card" title="Dinkes Jabar" subtitle="Pertanyaan Umum" number="0811 2093 306" />
@@ -103,7 +107,8 @@
           </button> -->
           <a
             class="cursor-pointer px-10 py-4 rounded-lg text-white border-2 border-solid border-white hover:bg-brand-green-light"
-            @click.prevent="onClickSelfDiagnose"
+            :href.prop="selfDiagnoseURL"
+            target="_blank"
           >
             <b>Nilai Diri Saya</b>
           </a>
@@ -354,7 +359,7 @@
               :title="item.title"
               :content="item.content"
               :date="formatDateTimeShort(item.published_at)"
-              :to="`/articles/${item.id}`"
+              :to="item.route"
             />
             <hr v-if="index < news.length - 1" class="my-8">
           </div>
@@ -376,6 +381,7 @@ import { ContentLoader } from 'vue-content-loader'
 import { mapState } from 'vuex'
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons'
 import { formatDateTimeShort } from '~/lib/date'
+import ImageCarousel from '~/components/ImageCarousel'
 import CallCard from '~/components/CallCard'
 import ContactListItem from '~/components/ContactList/ContactListItem'
 import CallCenter from '~/components/CallCenter'
@@ -387,6 +393,7 @@ import ShareableItems from '~/components/ShareableItems'
 export default {
   components: {
     ContentLoader,
+    ImageCarousel,
     CallCard,
     BlogPostPreview,
     ContactListItem,
@@ -455,13 +462,7 @@ export default {
     }
   },
   methods: {
-    formatDateTimeShort,
-    onClickSelfDiagnose () {
-      if (!this.selfDiagnoseURL) {
-        return
-      }
-      window.open(this.selfDiagnoseURL, '_blank')
-    }
+    formatDateTimeShort
   }
 }
 

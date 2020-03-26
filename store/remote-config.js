@@ -31,10 +31,8 @@ export const actions = {
           })
       }
       await remoteConfig.activate()
-        .then((isActivated) => {
-          if (!isActivated) {
-            return fetch()
-          }
+        .then(() => {
+          return fetch()
         }).then(() => {
           const enableDownload = remoteConfig.getValue('download_app_via_web_enabled')._value === 'true'
           const downloadAppURL = remoteConfig.getValue('download_app_url')._value
