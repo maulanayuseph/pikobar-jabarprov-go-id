@@ -958,9 +958,9 @@ export default {
             // by Akumulatif
             self.ChartNasionalDataAkumulatif.push([self.formatDate(date), self.jsonDataNasionalHarianKumulatif[i].jumlahKasusKumulatif])
           }
-          if (self.jsonDataNasionalHarianKumulatif[self.jsonDataNasionalHarianKumulatif.length - 1].jumlahKasusKumulatif === null) {
-            self.dataTotalPositifAll[0] = self.jsonDataNasionalHarianKumulatif[self.jsonDataNasionalHarianKumulatif.length - 2].jumlahKasusKumulatif
-          }
+          // if (self.jsonDataNasionalHarianKumulatif[self.jsonDataNasionalHarianKumulatif.length - 1].jumlahKasusKumulatif === null) {
+          self.dataTotalPositifAll[0] = self.jsonDataNasionalHarianKumulatif[self.jsonDataNasionalHarianKumulatif.length - 1].jumlahKasusKumulatif
+          // }
           self.ChartNasionalDataHarian.splice(1, 1)
           self.ChartNasionalDataAkumulatif.splice(1, 1)
         })
