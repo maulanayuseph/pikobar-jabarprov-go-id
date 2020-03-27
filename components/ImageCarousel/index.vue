@@ -6,9 +6,9 @@
           <VueCarouselSlide
             v-for="(item, index) in carouselItems"
             :key="index"
-            class="banner-slide"
+            :class="['banner-slide', item.action_url && 'cursor-pointer']"
+            @slide-click="onItemClick(item)"
           >
-            <img role="bg" :src="item.url">
             <img role="main" :src="item.url">
           </VueCarouselSlide>
         </VueCarousel>
@@ -56,7 +56,7 @@ export default {
       carouselConfig: {
         autoplay: true,
         autoplayTimeout: 4000,
-        paginationEnabled: true,
+        paginationEnabled: false,
         paginationColor: '#90a4ae',
         paginationActiveColor: '#00b0ff',
         paginationSize: 12,
@@ -97,54 +97,38 @@ export default {
           })
       }
     }
+  },
+
+  methods: {
+    onItemClick (item) {
+      if (item.action_url) {
+        window.open(item.action_url, '_blank')
+      }
+    }
   }
 }
 </script>
 
 <style lang="scss" scoped>
 .banner-slide {
-  // padding: 28.125%;
-  padding-top: 55%;
+  padding-top: (400% / 713);
   @apply relative flex flex-row justify-center items-center;
-
-  @screen lg {
-    // padding: 0;
-    // height: 400px;
-  }
-
-  > img[role="bg"] {
-    @supports (filter: blur(4px)) {
-      filter: blur(4px) grayscale(33%) opacity(0.2);
-    }
-    @supports not(filter: blur(4px)) {
-      opacity: 0.2;
-    }
-    @apply absolute inset-0 w-full h-full
-    object-cover object-top;
-  }
 
   > img[role="main"] {
     @apply absolute top-0 w-full h-full
-    object-cover;
-
-    // @screen lg {
-    //   @apply object-contain;
-    // }
+    object-contain object-top;
   }
+}
+
+.banner-slide.cursor-pointer:hover {
+  @apply opacity-50;
 }
 </style>
 
 <style lang="scss">
-// @screen sm {
-//   .VueCarousel-wrapper {
-//     @apply rounded-lg overflow-hidden shadow;
-//   }
-// }
-// .VueCarousel-pagination {
-//   background-color: transparent !important;
-// }
-// .VueCarousel-dot-container {
-//   margin-top: 0 !important;
-//   margin-bottom: 1rem !important;
-// }
+.VueCarousel,
+.VueCarousel-wrapper,
+.VueCarousel-inner {
+  height: 100% !important;
+}
 </style>

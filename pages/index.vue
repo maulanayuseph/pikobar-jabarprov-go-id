@@ -1,63 +1,76 @@
 
 <template>
   <div class="container mx-auto">
-    <section class="top-grid m-4 md:m-8">
-      <div class="top-grid__banner rounded-lg overflow-hidden">
-        <img v-lazy="bannerImage" class="absolute inset-0 w-full h-full object-cover object-left-top">
-      </div>
-      <CallCard class="top-grid__call-card" title="Call Center" subtitle="Nomor Darurat" number="119" />
-      <CallCard class="top-grid__call-card" title="Dinkes Jabar" subtitle="Pertanyaan Umum" number="0811 2093 306" />
-      <div
-        v-show="cases"
-        class="top-grid__call-status rounded-lg"
-      >
-        <h6>
-          <strong>Pertanyaan Terlayani</strong><br>
-          <small>
-            Telpon & Pesan Teks
-          </small>
-        </h6>
-        <summary class="text-5xl text-yellopx-40 font-bold">
-          {{ cases ? cases.pertanyaan_terlayani : '' }}
-        </summary>
-      </div>
-      <div
-        v-show="!cases"
-        class="top-grid__call-status rounded-lg"
-      >
-        <ContentLoader
-          :speed="2"
-          :height="100"
-          primary-color="rgba(255,255,255,0.3)"
-          secondary-color="rgba(255,255,255,0.1)"
-          class="w-full h-full max-w-xs"
-          style="grid-column-end: span 2;"
-        >
-          <rect
-            x="0"
-            y="0"
-            rx="8"
-            ry="6"
-            width="50%"
-            height="16"
-          />
-          <rect
-            x="0"
-            y="30"
-            rx="8"
-            ry="6"
-            width="66%"
-            height="16"
-          />
-          <rect
-            x="0"
-            y="64"
-            rx="8"
-            ry="6"
-            width="20%"
-            height="16"
-          />
-        </ContentLoader>
+    <section class="m-4 md:m-8">
+      <div class="flex flex-col lg:flex-row lg:items-stretch">
+        <div class="w-full mb-6 lg:w-1/2 lg:mr-6 lg:mb-0">
+          <div class="relative rounded-lg overflow-hidden shadow-md" :style="{paddingTop: `${400 * 100/ 713}%`}">
+            <ImageCarousel
+              class="absolute inset-0 w-full h-full"
+              :items="banners"
+            />
+          </div>
+        </div>
+        <div class="w-full lg:w-1/2">
+          <div class="relative" :style="{paddingTop: `${400 * 100/ 713}%`}">
+            <div class="absolute inset-0 w-full h-full top-grid">
+              <CallCard class="top-grid__call-card" title="Call Center" subtitle="Nomor Darurat" number="119" />
+              <CallCard class="top-grid__call-card" title="Dinkes Jabar" subtitle="Pertanyaan Umum" number="0811 2093 306" />
+              <div
+                v-show="cases"
+                class="top-grid__call-status rounded-lg"
+              >
+                <h6>
+                  <strong>Pertanyaan Terlayani</strong><br>
+                  <small>
+                    Telpon & Pesan Teks
+                  </small>
+                </h6>
+                <summary class="text-5xl text-yellopx-40 font-bold">
+                  {{ cases ? cases.pertanyaan_terlayani : '' }}
+                </summary>
+              </div>
+              <div
+                v-show="!cases"
+                class="top-grid__call-status rounded-lg"
+              >
+                <ContentLoader
+                  :speed="2"
+                  :height="100"
+                  primary-color="rgba(255,255,255,0.3)"
+                  secondary-color="rgba(255,255,255,0.1)"
+                  class="w-full h-full max-w-xs"
+                  style="grid-column-end: span 2;"
+                >
+                  <rect
+                    x="0"
+                    y="0"
+                    rx="8"
+                    ry="6"
+                    width="50%"
+                    height="16"
+                  />
+                  <rect
+                    x="0"
+                    y="30"
+                    rx="8"
+                    ry="6"
+                    width="66%"
+                    height="16"
+                  />
+                  <rect
+                    x="0"
+                    y="64"
+                    rx="8"
+                    ry="6"
+                    width="20%"
+                    height="16"
+                  />
+                </ContentLoader>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
     <section class="mt-8 m-4 md:m-8 flex flex-col">
@@ -103,7 +116,8 @@
           </button> -->
           <a
             class="cursor-pointer px-10 py-4 rounded-lg text-white border-2 border-solid border-white hover:bg-brand-green-light"
-            @click.prevent="onClickSelfDiagnose"
+            :href.prop="selfDiagnoseURL"
+            target="_blank"
           >
             <b>Nilai Diri Saya</b>
           </a>
@@ -354,7 +368,7 @@
               :title="item.title"
               :content="item.content"
               :date="formatDateTimeShort(item.published_at)"
-              :to="`/articles/${item.id}`"
+              :to="item.route"
             />
             <hr v-if="index < news.length - 1" class="my-8">
           </div>
@@ -376,6 +390,7 @@ import { ContentLoader } from 'vue-content-loader'
 import { mapState } from 'vuex'
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons'
 import { formatDateTimeShort } from '~/lib/date'
+import ImageCarousel from '~/components/ImageCarousel'
 import CallCard from '~/components/CallCard'
 import ContactListItem from '~/components/ContactList/ContactListItem'
 import CallCenter from '~/components/CallCenter'
@@ -387,6 +402,7 @@ import ShareableItems from '~/components/ShareableItems'
 export default {
   components: {
     ContentLoader,
+    ImageCarousel,
     CallCard,
     BlogPostPreview,
     ContactListItem,
@@ -455,13 +471,7 @@ export default {
     }
   },
   methods: {
-    formatDateTimeShort,
-    onClickSelfDiagnose () {
-      if (!this.selfDiagnoseURL) {
-        return
-      }
-      window.open(this.selfDiagnoseURL, '_blank')
-    }
+    formatDateTimeShort
   }
 }
 
@@ -471,6 +481,7 @@ export default {
 .top-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto 1fr;
   column-gap: 1.5rem;
   row-gap: 1.5rem;
 
@@ -486,6 +497,7 @@ export default {
   }
 
   &__call-card {
+    min-height: 100px;
     grid-column-end: span 1;
     @apply shadow-md;
   }
@@ -496,12 +508,6 @@ export default {
     text-xl text-white
     bg-brand-green-dark
     shadow-md;
-  }
-
-  @screen lg {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-template-rows: auto 1fr;
   }
 }
 

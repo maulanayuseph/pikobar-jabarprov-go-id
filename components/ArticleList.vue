@@ -24,20 +24,10 @@
             :image="item.image"
             :title="item.title"
             :content="item.content"
-            :to="`/articles/${item.id}`"
+            :to="item.route"
             :date="formatDateTimeShort(item.published_at)"
             class="bg-white rounded-lg mb-8 p-6 shadow-lg"
           />
-          <!-- <AnchorPostPreview
-              v-for="item in items"
-              :key="item.id"
-              :image="item.image"
-              :title="item.title"
-              :content="item.content"
-              :to="`/articles/${item.id}`"
-              :date="formatDateTimeShort(item.published_at)"
-              class="bg-white rounded-lg mb-8 p-6 shadow-lg"
-            /> -->
         </template>
         <template v-if="isLoadingMore">
           <div class="mb-8 rounded-lg p-6 bg-white">
@@ -70,7 +60,6 @@
 import { ContentLoader } from 'vue-content-loader'
 import { db, analytics } from '~/lib/firebase'
 import { formatDateTimeShort } from '~/lib/date'
-// import { mapState, mapGetters, mapActions } from 'vuex'
 
 import BlogPostPreview from '~/components/Blog/BlogPostPreview'
 
