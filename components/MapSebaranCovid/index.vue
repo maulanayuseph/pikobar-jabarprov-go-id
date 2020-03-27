@@ -120,17 +120,22 @@
           <div class="backdrop" />
           <div class="text-disclaimer">
             <div class="title">
-              Peta Sebaran Kasus COVID-19 di Jawa Barat
+              Disclaimer
             </div>
-            <div class="subtitle">
+            <!-- <div class="subtitle">
               Sumber: Dinas Kesehatan Provinsi Jawa Barat
-            </div>
-            <div class="description mt-2">
-              <br>
-              <b>Data yang ditampilkan akan terus diperbarui sesuai dengan informasi yang diterima melalui <br>Pemerintah Provinsi Jawa Barat.</b>
+            </div> -->
+            <div class="description mt-2 text-justify pl-5 pr-5">
+              Perbesar peta untuk melihat jumlah titik akurat. Beberapa titik yang saling berdekatan terlihat menyatu pada pembesaran peta skala besar.
+
+              Titik lokasi merupakan titik acak (random by system) wilayah yang tertera pada identitas kasus dan tidak menunjuk pada alamat persis masing-masing kasus.
+
+              Saat ini, data yang Pikobar tampilkan berasal dari sinkronisasi data dengan Dinas Kesehatan Kabupaten/Kota. Proses ini mungkin membutuhkan waktu 1-2 hari setiap perbaruan data terjadi. Oleh karena itu, untuk sementara Anda mungkin melihat perbedaan antara angka yang tampil di Pikobar dengan yang diumumkan di kabupaten/kota selama proses sinkronisasi berlangsung. Silakan periksa kembali 1-2 hari setelah perbaruan terakhir dari masing-masing kabupaten/kota.
+
+              Terima kasih dan mohon untuk dimaklumi.
             </div>
             <button class="px-6 py-2 bg-brand-green hover:bg-brand-green-lighter text-white rounded-lg shadow-md mt-8" style="color: #fff" @click="isHidden = !isHidden">
-              <b>Lihat Peta</b>
+              <b>Mengerti</b>
             </button>
           </div>
         </div>
@@ -205,17 +210,17 @@ export default {
       loading: false,
       filter: {
         odp : {
-          proses: false,
+          proses: true,
           belumupdate: false
         },
         pdp: {
-          proses: false,
+          proses: true,
           belumupdate: false
         },
         positif: {
-          proses: false,
-          meninggal: false,
-          sembuh: false
+          proses: true,
+          meninggal: true,
+          sembuh: true
         }
       },
       isShowFilter: false,
@@ -895,6 +900,10 @@ export default {
   list-style: none;
   opacity: 0.4;
   padding-bottom: 0.2em;
+}
+
+.filter-layer li:hover {
+  cursor: pointer;
 }
 .filter-active {
   opacity: 1 !important;
