@@ -1,7 +1,7 @@
 import _kebabCase from 'lodash/kebabCase'
 import { db } from '~/lib/firebase'
 
-function slugify (id, title) {
+export function slugify (id, title) {
   if (!id || !title) {
     console.error('slugify: id and title must be supplied')
     return '#'

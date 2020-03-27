@@ -58,6 +58,7 @@
 
 <script>
 import { ContentLoader } from 'vue-content-loader'
+import { slugify } from '~/api/news'
 import { db, analytics } from '~/lib/firebase'
 import { formatDateTimeShort } from '~/lib/date'
 
@@ -134,7 +135,8 @@ export default {
               docs.push({
                 ...data,
                 id: doc.id,
-                published_at: data.published_at.toDate()
+                published_at: data.published_at.toDate(),
+                route: slugify(doc.id, data.title)
               })
             })
           }
