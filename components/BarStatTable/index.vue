@@ -132,7 +132,7 @@ export default {
             sort: 'desc'
           },
           {
-            label: 'OPD - Proses',
+            label: 'ODP - Proses',
             field: 'odp_proses',
             sort: 'desc'
           },
