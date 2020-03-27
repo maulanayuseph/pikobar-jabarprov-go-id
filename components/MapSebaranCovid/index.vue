@@ -112,7 +112,13 @@
           <div class="row">
             <div class="col-md mt-1">
               <b>Catatan:</b><br>
-              Titik lokasi merupakan titik acak (random by system) wilayah yang tertera pada identitas kasus dan tidak menunjuk pada alamat persis masing-masing kasus, beberapa titik yang saling berdekatan terlihat menyatu pada pembesaran peta skala besar. Data yang ditampilkan saat ini bukan data seluruhnya,  data akan terus diperbaharui sesuai dengan informasi yang diterima melalui Pemerintah Provinsi Jawa Barat
+              Perbesar peta untuk melihat jumlah titik akurat. Beberapa titik yang saling berdekatan terlihat menyatu pada pembesaran peta skala besar.
+
+              Titik lokasi merupakan titik acak (random by system) wilayah yang tertera pada identitas kasus dan tidak menunjuk pada alamat persis masing-masing kasus.
+
+              Saat ini, data yang Pikobar tampilkan berasal dari sinkronisasi data dengan Dinas Kesehatan Kabupaten/Kota. Proses ini mungkin membutuhkan waktu 1-2 hari setiap perbaruan data terjadi. Oleh karena itu, untuk sementara Anda mungkin melihat perbedaan antara angka yang tampil di Pikobar dengan yang diumumkan di kabupaten/kota selama proses sinkronisasi berlangsung. Silakan periksa kembali 1-2 hari setelah perbaruan terakhir dari masing-masing kabupaten/kota.
+
+              Terima kasih dan mohon untuk dimaklumi.
             </div>
           </div>
         </div>
@@ -847,7 +853,7 @@ export default {
     color: #555;
 }
 .text-disclaimer {
-  top:20%;
+  top:15%;
   width: 100%;
   position: absolute;
   text-align: center;
@@ -920,6 +926,21 @@ export default {
   padding-top: 200px;
   font-size: 30px;
   font-family: sans-serif;
+}
+
+@media only screen and (max-width: 400px) {
+  .text-disclaimer {
+    top: 10%;
+  }
+}
+
+
+@media only screen and (max-width: 340px) {
+  .text-disclaimer .description{
+    overflow: auto;
+    height: 20em;
+    top:0;
+  }
 }
 </style>
 <style>
