@@ -7,13 +7,6 @@
       </h3>
       <small class="text-xl opacity-75">*Update Terakhir: {{ lastUpdatedAt }}</small>
     </header>
-    <!-- <section>
-        <BarStat />
-      </section>
-    <section class="m-4 mb-8 md:m-8">
-      <BarStatDetail />
-    </section> -->
-
     <section class="m-4 mb-8 md:m-8">
       <DataSummary />
     </section>
@@ -112,13 +105,6 @@ export default {
     enableRS () {
       this.stat.isActiveCovid = false
       this.stat.isActiveRS = true
-    }
-  },
-  head () {
-    return {
-      link: [
-        // { rel: 'stylesheet', href: 'https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css' }
-      ]
     }
   }
 }
