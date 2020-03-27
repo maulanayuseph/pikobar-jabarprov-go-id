@@ -25,10 +25,13 @@
   .my-custom-scrollbar {
     position: relative;
     height: 365px;
-    overflow: scroll;
+    overflow-y: scroll;
   }
   .table-wrapper-scroll-y {
     display: block;
+  }
+  .dataTables_wrapper {
+    max-width: 98% !important;
   }
 
   .table {
@@ -129,7 +132,7 @@ export default {
             sort: 'desc'
           },
           {
-            label: 'OPD - Proses',
+            label: 'ODP - Proses',
             field: 'odp_proses',
             sort: 'desc'
           },
