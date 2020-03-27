@@ -3,6 +3,43 @@
   <div class="container-map">
     <div class="bg-white col-md-12 p-0 m-2 " style="border-radius: 0.8rem; box-shadow: 0 0 4px 0px rgba(0,0,0,0.05), 0 4px 24px 0 rgba(0,0,0,0.1); height:50em;">
         <div id="map-wrap" style="height: 75%;z-index:0;" />
+        <div class="filter-layer"> 
+          <div class="text-right">
+            <button class="btn btn-light" @click="showFilter">
+              <font-awesome-icon :icon="faFilter" />
+            </button>
+          </div>
+          <div data-v-dfef036a="" v-if="isShowFilter" class="filter-data">
+            <li @click="setFilter('odp', 'proses')" :class="filter.odp.proses ? 'filter-active' : ''">
+              <div data-v-dfef036a="" class="legend-color" style="background: rgb(45, 156, 219);margin-right: 0.5em;"></div>
+                ODP - Proses
+            </li>
+            <li @click="setFilter('odp', 'belumupdate')" :class="filter.odp.belumupdate ? 'filter-active' : ''">
+              <div class="legend-color" style="background:#2d9cdb; border: 2px solid #bdbdbd" /> &nbsp;
+              ODP (belum diupdate)
+            </li>
+            <li @click="setFilter('pdp', 'proses')" :class="filter.pdp.proses ? 'filter-active' : ''">
+              <div class="legend-color" style="background:#f2c94c;" /> &nbsp;
+              PDP - Proses
+            </li>
+            <li @click="setFilter('pdp', 'belumupdate')" :class="filter.pdp.belumupdate ? 'filter-active' : ''">
+              <div class="legend-color" style="background:#f2c94c; border: 2px solid #bdbdbd" /> &nbsp;
+              PDP (belum diupdate)
+            </li>
+            <li @click="setFilter('positif', 'meninggal')" :class="filter.positif.meninggal ? 'filter-active' : ''">
+              <div class="legend-color" style="background:#a51212; border: 2px solid #eb5757" /> &nbsp;
+              Positif - Meninggal
+            </li>
+            <li @click="setFilter('positif', 'proses')" :class="filter.positif.proses ? 'filter-active' : ''">
+              <div class="legend-color" style="background:#eb5757" /> &nbsp;
+              Positif - Proses
+            </li>
+            <li @click="setFilter('positif', 'sembuh')" :class="filter.positif.sembuh ? 'filter-active' : ''">
+              <div class="legend-color" style="background:#27ae60; border: 2px solid #eb5757" /> &nbsp;
+              Positif - Sembuh
+            </li>
+          </div>
+        </div>
         <div class="info-legend p-2">
           <b>Keterangan: </b>
           <div class="row">
@@ -97,6 +134,61 @@
             </button>
           </div>
         </div>
+      <div class="loading-page" v-if="loading">
+        <p>
+          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="margin: auto; display: block; shape-rendering: auto;" width="200px" height="200px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+            <g transform="rotate(0 50 50)">
+              <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#85a2b6">
+                <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.9166666666666666s" repeatCount="indefinite"></animate>
+              </rect>
+            </g><g transform="rotate(30 50 50)">
+              <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#85a2b6">
+                <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.8333333333333334s" repeatCount="indefinite"></animate>
+              </rect>
+            </g><g transform="rotate(60 50 50)">
+              <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#85a2b6">
+                <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.75s" repeatCount="indefinite"></animate>
+              </rect>
+            </g><g transform="rotate(90 50 50)">
+              <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#85a2b6">
+                <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.6666666666666666s" repeatCount="indefinite"></animate>
+              </rect>
+            </g><g transform="rotate(120 50 50)">
+              <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#85a2b6">
+                <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.5833333333333334s" repeatCount="indefinite"></animate>
+              </rect>
+            </g><g transform="rotate(150 50 50)">
+              <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#85a2b6">
+                <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.5s" repeatCount="indefinite"></animate>
+              </rect>
+            </g><g transform="rotate(180 50 50)">
+              <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#85a2b6">
+                <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.4166666666666667s" repeatCount="indefinite"></animate>
+              </rect>
+            </g><g transform="rotate(210 50 50)">
+              <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#85a2b6">
+                <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.3333333333333333s" repeatCount="indefinite"></animate>
+              </rect>
+            </g><g transform="rotate(240 50 50)">
+              <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#85a2b6">
+                <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.25s" repeatCount="indefinite"></animate>
+              </rect>
+            </g><g transform="rotate(270 50 50)">
+              <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#85a2b6">
+                <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.16666666666666666s" repeatCount="indefinite"></animate>
+              </rect>
+            </g><g transform="rotate(300 50 50)">
+              <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#85a2b6">
+                <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.08333333333333333s" repeatCount="indefinite"></animate>
+              </rect>
+            </g><g transform="rotate(330 50 50)">
+              <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#85a2b6">
+                <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="0s" repeatCount="indefinite"></animate>
+              </rect>
+            </g>
+          </svg>
+        </p>
+      </div>
     </div>
   </div>
 </template>
@@ -104,11 +196,30 @@
 <script>
 import axios from 'axios'
 import * as turf from '@turf/turf'
+import { faFilter } from '@fortawesome/free-solid-svg-icons'
 
 export default {
   name: 'MapSebaranCovid',
   data () {
     return {
+      loading: false,
+      filter: {
+        odp : {
+          proses: false,
+          belumupdate: false
+        },
+        pdp: {
+          proses: false,
+          belumupdate: false
+        },
+        positif: {
+          proses: false,
+          meninggal: false,
+          sembuh: false
+        }
+      },
+      isShowFilter: false,
+      faFilter: faFilter,
       map: '',
       zoom: 8,
       isHidden: false,
@@ -271,6 +382,32 @@ export default {
     }
   },
   methods: {
+    async setFilter(status, stage) {
+      this.loading = true
+      try {
+        setTimeout(() => {
+          this.filter[status][stage] = !this.filter[status][stage]
+          if (this.zoom > 12) {
+            this.removeBatasWilayah()
+            this.removeLayer()
+            this.createLayerByKecamatan()
+          } else if (this.zoom < 12) {
+            this.removeBatasWilayah()
+            this.removeLayer()
+            this.createLayerPasienByKota()
+          }
+          this.loading = false
+        }, 1000)
+        
+
+
+      } catch (e) {
+        console.log(e.message);
+      }
+    },
+    showFilter() {
+      this.isShowFilter = !this.isShowFilter
+    },
     importJSON () {
       const files = [
         {
@@ -386,7 +523,7 @@ export default {
       return {
         singleMarkerMode: true,
         maxClusterRadius: 10000,
-        spiderfyOnMaxZoom: false,
+        spiderfyOnMaxZoom: true,
         showCoverageOnHover: false,
         zoomToBoundsOnClick: false,
         spiderLegPolylineOptions: { weight: 1.5, color: '#222', opacity: 0 },
@@ -550,7 +687,21 @@ export default {
               }
               const isInside = turf.inside(point, element.feature)
               if (isInside) {
-                this.addMarkerLayer(this.kotaCluster, element, elPasien)
+                if (this.filter.odp.proses && elPasien.status === 'ODP' && elPasien.stage === 'Proses') {
+                  this.addMarkerLayer(this.kotaCluster, element, elPasien)
+                } else if (this.filter.odp.belumupdate && elPasien.status === 'ODP' && (elPasien.stage === '' || elPasien.stage === null)) {
+                  this.addMarkerLayer(this.kotaCluster, element, elPasien)
+                } else if (this.filter.pdp.proses && elPasien.status === 'PDP' && elPasien.stage === 'Proses') {
+                  this.addMarkerLayer(this.kotaCluster, element, elPasien)
+                } else if (this.filter.pdp.belumupdate && elPasien.status === 'PDP' && (elPasien.stage === '' || elPasien.stage === null)) {
+                  this.addMarkerLayer(this.kotaCluster, element, elPasien)
+                } else if (this.filter.positif.proses && elPasien.status === 'Positif' && elPasien.stage === 'Aktif') {
+                  this.addMarkerLayer(this.kotaCluster, element, elPasien)
+                } else if (this.filter.positif.meninggal && elPasien.status === 'Positif' && elPasien.stage === 'Meninggal') {
+                  this.addMarkerLayer(this.kotaCluster, element, elPasien)
+                } else if (this.filter.positif.sembuh && elPasien.status === 'Positif' && elPasien.stage === 'Sembuh') {
+                  this.addMarkerLayer(this.kotaCluster, element, elPasien)
+                }
               }
             }
           })
@@ -558,6 +709,7 @@ export default {
           this.addMarkerClusterLayer(this.kotaCluster, element)
         }
       })
+
     },
     createLayerByKecamatan () {
       // if(map.getBounds().intersects(layer._bounds)) { ... }
@@ -585,7 +737,21 @@ export default {
               const isInside = turf.inside(point, element.feature)
               if (isInside) {
                 kabkotNama = elPasien.kabkot_str
-                this.addMarkerLayer(this.kecamatanCluster, element, elPasien)
+                if (this.filter.odp.proses && elPasien.status === 'ODP' && elPasien.stage === 'Proses') {
+                  this.addMarkerLayer(this.kecamatanCluster, element, elPasien)
+                } else if (this.filter.odp.belumupdate && elPasien.status === 'ODP' && (elPasien.stage === '' || elPasien.stage === null)) {
+                  this.addMarkerLayer(this.kecamatanCluster, element, elPasien)
+                } else if (this.filter.pdp.proses && elPasien.status === 'PDP' && elPasien.stage === 'Proses') {
+                  this.addMarkerLayer(this.kecamatanCluster, element, elPasien)
+                } else if (this.filter.pdp.belumupdate && elPasien.status === 'PDP' && (elPasien.stage === '' || elPasien.stage === null)) {
+                  this.addMarkerLayer(this.kecamatanCluster, element, elPasien)
+                } else if (this.filter.positif.proses && elPasien.status === 'Positif' && elPasien.stage === 'Aktif') {
+                  this.addMarkerLayer(this.kecamatanCluster, element, elPasien)
+                } else if (this.filter.positif.meninggal && elPasien.status === 'Positif' && elPasien.stage === 'Meninggal') {
+                  this.addMarkerLayer(this.kecamatanCluster, element, elPasien)
+                } else if (this.filter.positif.sembuh && elPasien.status === 'Positif' && elPasien.stage === 'Sembuh') {
+                  this.addMarkerLayer(this.kecamatanCluster, element, elPasien)
+                }
               }
             }
           })
@@ -703,6 +869,48 @@ export default {
   float: left;
   border-radius: 10px;
   margin-top: 4px;
+}
+
+.filter-layer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding-right: 1em;
+  padding-top: 1em;
+}
+
+.filter-layer .btn {
+  font-size: 0.8em;
+  padding: 2px 6px;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.65);
+}
+.filter-data {
+  background: #fff;
+  margin-top: 0.5em;
+  padding: 0.6em;
+  border-radius: 0.6em;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.65);
+}
+.filter-layer li {
+  list-style: none;
+  opacity: 0.4;
+  padding-bottom: 0.2em;
+}
+.filter-active {
+  opacity: 1 !important;
+}
+.loading-page {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 0.5em;
+  text-align: center;
+  padding-top: 200px;
+  font-size: 30px;
+  font-family: sans-serif;
 }
 </style>
 <style>
