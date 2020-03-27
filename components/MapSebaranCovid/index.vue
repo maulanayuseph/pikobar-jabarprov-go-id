@@ -6,23 +6,23 @@
         <div class="info-legend p-2">
           <b>Keterangan: </b>
           <div class="row">
-            <div class="col-md">
+            <div class="col-md-3">
               <div class="legend-color" style="background:#2d9cdb" /> &nbsp;
               ODP - Proses
             </div>
-            <div class="col-md">
+            <!-- <div class="col-md">
               <div class="legend-color" style="background:#f2c94c; border: 2px solid #2d9cdb" /> &nbsp;
               ODP - naik satus ke PDP
-            </div>
-            <div class="col-md">
+            </div> -->
+            <div class="col-md-3">
               <div class="legend-color" style="background:#2d9cdb; border: 2px solid #bdbdbd" /> &nbsp;
               ODP (belum diupdate)
             </div>
-            <div class="col-md">
+            <!-- <div class="col-md">
               <div class="legend-color" style="background:#27ae60; border: 2px solid #f2c94c" /> &nbsp;
               PDP - Selesai
-            </div>
-            <div class="col-md">
+            </div> -->
+            <div class="col-md-3">
               <div class="legend-color" style="background:#f2c94c; border: 2px solid #bdbdbd" /> &nbsp;
               PDP (belum diupdate)
             </div>
@@ -32,23 +32,23 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-md">
+            <!-- <div class="col-md">
               <div class="legend-color" style="background:#27ae60; border: 2px solid #3aa2dd" /> &nbsp;
               ODP - Selesai
-            </div>
-            <div class="col-md">
+            </div> -->
+            <!-- <div class="col-md">
               <div class="legend-color" style="background:#eb5757; border: 2px solid #3aa2dd" /> &nbsp;
               ODP - naik satus ke Positif
-            </div>
-            <div class="col-md">
+            </div> -->
+            <div class="col-md-3">
               <div class="legend-color" style="background:#f2c94c;" /> &nbsp;
               PDP - Proses
             </div>
-            <div class="col-md">
+            <!-- <div class="col-md">
               <div class="legend-color" style="background:#eb5757; border: 2px solid #f2c94c" /> &nbsp;
               PDP - naik status ke Positif
-            </div>
-            <div class="col-md">
+            </div> -->
+            <div class="col-md-3">
               <div class="legend-color" style="background:#eb5757" /> &nbsp;
               Positif - Proses
             </div>
@@ -238,6 +238,21 @@ export default {
         opacity: 1,
         color: '#D7B6AE',
         fillOpacity: 0
+      },
+      statusStage: {
+        positif: {
+          proses: 'Positif - Proses',
+          meninggal: 'Positif - Meninggal',
+          sembuh: 'Positif - Sembuh'
+        },
+        pdp: {
+          proses: 'PDP - Proses',
+          belumupdate: 'PDP (belum diupdate)'
+        },
+        odp: {
+          proses: 'ODP - Proses',
+          belumupdate: 'ODP (belum diupdate)'
+        }
       }
     }
   },
@@ -394,37 +409,7 @@ export default {
       }
     },
     statusStageCorona (status, stage) {
-      console.log( status + ' === ' + stage )
-      let statusStage = ''
-      if (status === 'positif' && stage === 'proses') {
-        statusStage = 'Positif - Proses'
-      } else if (status === 'positif' && stage === 'meninggal') {
-        statusStage = 'Positif - Meninggal'
-      } else if (status === 'positif' && stage === 'sembuh') {
-        statusStage = 'Positif - Sembuh'
-      } else if (status === 'positif' && (stage == null || stage == '')) {
-        statusStage = 'Positif'
-      } else if (status === 'pdp' && stage === 'proses') {
-        statusStage = 'PDP - Proses'
-      } else if (status === 'pdp' && stage === 'selesai') {
-        statusStage = 'PDP - Selesai'
-      } else if (status === 'pdp' && stage === 'positif') {
-        statusStage = 'PDP - naik status ke Positif'
-      } else if (status === 'pdp' && stage === 'belumupdate') {
-        statusStage = 'PDP (belum diupdate)'
-      } else if (status === 'odp' && stage === 'proses') {
-        statusStage = 'ODP - Proses'
-      } else if (status === 'odp' && stage === 'selesai') {
-        statusStage = 'ODP - Selesai'
-      } else if (status === 'odp' && stage === 'pdp') {
-        statusStage = 'ODP - naik status ke PDP'
-      } else if (status === 'odp' && stage === 'positif') {
-        statusStage = 'ODP naik status ke Positif'
-      } else if (status === 'odp' && stage == 'belumupdate'){
-        statusStage = 'ODP (belum di update)'
-      } 
-
-      return statusStage
+      return this.statusStage[status][stage]
     },
     createMap () {
       this.createLayerPasienByKota()
@@ -433,15 +418,15 @@ export default {
       const markerClusters = {
         odp: {
           proses: '',
-          selesai: '',
-          pdp: '',
-          positif: '',
+          // selesai: '',
+          // pdp: '',
+          // positif: '',
           belumupdate: ''
         },
         pdp: {
           proses: '',
-          selesai: '',
-          positif: '',
+          // selesai: '',
+          // positif: '',
           belumupdate: ''
         },
         positif: {
@@ -454,13 +439,13 @@ export default {
       markerClusters.positif.meninggal = this.$L.markerClusterGroup(this.configCluster('cluster-positif-meninggal'))
       markerClusters.positif.sembuh = this.$L.markerClusterGroup(this.configCluster('cluster-positif-sembuh'))
       markerClusters.pdp.proses = this.$L.markerClusterGroup(this.configCluster('cluster-pdp-proses'))
-      markerClusters.pdp.selesai = this.$L.markerClusterGroup(this.configCluster('cluster-pdp-selesai'))
-      markerClusters.pdp.positif = this.$L.markerClusterGroup(this.configCluster('cluster-pdp-positif'))
+      // markerClusters.pdp.selesai = this.$L.markerClusterGroup(this.configCluster('cluster-pdp-selesai'))
+      // markerClusters.pdp.positif = this.$L.markerClusterGroup(this.configCluster('cluster-pdp-positif'))
       markerClusters.pdp.belumupdate = this.$L.markerClusterGroup(this.configCluster('cluster-pdp-belumupdate'))
       markerClusters.odp.proses = this.$L.markerClusterGroup(this.configCluster('cluster-odp-proses'))
-      markerClusters.odp.selesai = this.$L.markerClusterGroup(this.configCluster('cluster-odp-selesai'))
-      markerClusters.odp.pdp = this.$L.markerClusterGroup(this.configCluster('cluster-odp-pdp'))
-      markerClusters.odp.positif = this.$L.markerClusterGroup(this.configCluster('cluster-odp-positif'))
+      // markerClusters.odp.selesai = this.$L.markerClusterGroup(this.configCluster('cluster-odp-selesai'))
+      // markerClusters.odp.pdp = this.$L.markerClusterGroup(this.configCluster('cluster-odp-pdp'))
+      // markerClusters.odp.positif = this.$L.markerClusterGroup(this.configCluster('cluster-odp-positif'))
       markerClusters.odp.belumupdate = this.$L.markerClusterGroup(this.configCluster('cluster-odp-belumupdate'))
 
       return markerClusters
@@ -500,19 +485,19 @@ export default {
       } else if (elPasien.status === 'PDP' && elPasien.stage === 'Proses') {
         cluster[element.feature.properties.bps_kode].pdp.proses.addLayer(m)
       } else if (elPasien.status === 'PDP' && elPasien.stage === 'Selesai') {
-        cluster[element.feature.properties.bps_kode].pdp.selesai.addLayer(m)
+        // cluster[element.feature.properties.bps_kode].pdp.selesai.addLayer(m)
       } else if (elPasien.status === 'PDP' && elPasien.stage === 'Positif') {
-        cluster[element.feature.properties.bps_kode].pdp.positif.addLayer(m)
+        // cluster[element.feature.properties.bps_kode].pdp.positif.addLayer(m)
       } else if (elPasien.status === 'PDP' && elPasien.stage === null) {
         cluster[element.feature.properties.bps_kode].pdp.belumupdate.addLayer(m)
       } else if (elPasien.status === 'ODP' && elPasien.stage === 'Proses') {
         cluster[element.feature.properties.bps_kode].odp.proses.addLayer(m)
       } else if (elPasien.status === 'ODP' && elPasien.stage === 'Selesai') {
-        cluster[element.feature.properties.bps_kode].odp.selesai.addLayer(m)
+        // cluster[element.feature.properties.bps_kode].odp.selesai.addLayer(m)
       } else if (elPasien.status === 'ODP' && elPasien.stage === 'PDP') {
-        cluster[element.feature.properties.bps_kode].odp.pdp.addLayer(m)
+        // cluster[element.feature.properties.bps_kode].odp.pdp.addLayer(m)
       } else if (elPasien.status === 'ODP' && elPasien.stage === 'Positif') {
-        cluster[element.feature.properties.bps_kode].odp.positif.addLayer(m)
+        // cluster[element.feature.properties.bps_kode].odp.positif.addLayer(m)
       } else {
         cluster[element.feature.properties.bps_kode].odp.belumupdate.addLayer(m)
       }
