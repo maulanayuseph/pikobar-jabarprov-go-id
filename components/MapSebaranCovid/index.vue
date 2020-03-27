@@ -32,7 +32,7 @@
             </li>
             <li @click="setFilter('positif', 'proses')" :class="filter.positif.proses ? 'filter-active' : ''">
               <div class="legend-color" style="background:#eb5757" /> &nbsp;
-              Positif - Proses
+              Positif - Aktif
             </li>
             <li @click="setFilter('positif', 'sembuh')" :class="filter.positif.sembuh ? 'filter-active' : ''">
               <div class="legend-color" style="background:#27ae60; border: 2px solid #eb5757" /> &nbsp;
@@ -87,7 +87,7 @@
             </div> -->
             <div class="col-md-3">
               <div class="legend-color" style="background:#eb5757" /> &nbsp;
-              Positif - Proses
+              Positif - Aktif
             </div>
             <div class="col-md">
               <div class="legend-color" style="background:#27ae60; border: 2px solid #eb5757" /> &nbsp;
@@ -363,7 +363,7 @@ export default {
       },
       statusStage: {
         positif: {
-          proses: 'Positif - Proses',
+          proses: 'Positif - Aktif',
           meninggal: 'Positif - Meninggal',
           sembuh: 'Positif - Sembuh'
         },
