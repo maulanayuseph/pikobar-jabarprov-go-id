@@ -5,7 +5,7 @@
       <div class="info-legend p-4">
         <b>Keterangan: </b>
         <div class="row">
-          <div class="col-md-2">
+          <div class="col-md-3">
             <svg
               style="float:left;"
               width="18"
@@ -25,9 +25,9 @@
               <path d="M13.9998 7.54973V10.4503C13.9998 10.7177 13.7832 10.9347 13.5153 10.9347H10.935V13.5155C10.935 13.783 10.7179 14 10.4505 14H9V4H10.4505C10.7179 4 10.935 4.21704 10.935 4.48447V7.06526H13.5153C13.7832 7.06526 13.9998 7.2823 13.9998 7.54973Z" fill="#5AAA4E" />
             </svg>
             &nbsp;
-            Rumah Sakit Rujukan
+            Rumah Sakit Rujukan Lini 1
           </div>
-          <div class="col-md-2">
+          <div class="col-md-3">
             <svg
               style="float:left"
               width="18"
@@ -47,7 +47,7 @@
               <path d="M13.9998 7.54973V10.4503C13.9998 10.7177 13.7832 10.9347 13.5153 10.9347H10.935V13.5155C10.935 13.783 10.7179 14 10.4505 14H9V4H10.4505C10.7179 4 10.935 4.21704 10.935 4.48447V7.06526H13.5153C13.7832 7.06526 13.9998 7.2823 13.9998 7.54973Z" fill="#F2C94C" />
             </svg>
             &nbsp;
-            Rumah Sakit Lini 2
+            Rumah Sakit Rujukan Lini 2
           </div>
           <div class="col-md-2">
             <svg

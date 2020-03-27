@@ -144,7 +144,7 @@ export default {
         count_kota: 0
       },
       barChartHarianODPData: [
-        ['Tanggal', 'Proses Pemantauan'],
+        ['Tanggal', 'Total Pemantauan'],
         ['0', 0]
       ],
       barChartHarianODPOptions: {
@@ -166,7 +166,7 @@ export default {
         }
       },
       barChartHarianPDPData: [
-        ['Tanggal', 'Proses Pengawasan'],
+        ['Tanggal', 'Total Pengawasan'],
         ['0', 0]
       ],
       barChartHarianPDPOptions: {

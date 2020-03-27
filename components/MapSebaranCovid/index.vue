@@ -3,26 +3,63 @@
   <div class="container-map relative">
     <div class="bg-white col-md-12 shadow-md" style="height:50em;">
         <div id="map-wrap" style="height: 75%;z-index:0;" />
+        <div class="filter-layer"> 
+          <div class="text-right">
+            <button class="btn btn-light" @click="showFilter">
+              <font-awesome-icon :icon="faFilter" />
+            </button>
+          </div>
+          <div data-v-dfef036a="" v-if="isShowFilter" class="filter-data">
+            <li @click="setFilter('odp', 'proses')" :class="filter.odp.proses ? 'filter-active' : ''">
+              <div data-v-dfef036a="" class="legend-color" style="background: rgb(45, 156, 219);margin-right: 0.5em;"></div>
+                ODP - Proses
+            </li>
+            <li @click="setFilter('odp', 'belumupdate')" :class="filter.odp.belumupdate ? 'filter-active' : ''">
+              <div class="legend-color" style="background:#2d9cdb; border: 2px solid #bdbdbd" /> &nbsp;
+              ODP (belum diupdate)
+            </li>
+            <li @click="setFilter('pdp', 'proses')" :class="filter.pdp.proses ? 'filter-active' : ''">
+              <div class="legend-color" style="background:#f2c94c;" /> &nbsp;
+              PDP - Proses
+            </li>
+            <li @click="setFilter('pdp', 'belumupdate')" :class="filter.pdp.belumupdate ? 'filter-active' : ''">
+              <div class="legend-color" style="background:#f2c94c; border: 2px solid #bdbdbd" /> &nbsp;
+              PDP (belum diupdate)
+            </li>
+            <li @click="setFilter('positif', 'meninggal')" :class="filter.positif.meninggal ? 'filter-active' : ''">
+              <div class="legend-color" style="background:#a51212; border: 2px solid #eb5757" /> &nbsp;
+              Positif - Meninggal
+            </li>
+            <li @click="setFilter('positif', 'proses')" :class="filter.positif.proses ? 'filter-active' : ''">
+              <div class="legend-color" style="background:#eb5757" /> &nbsp;
+              Positif - Aktif
+            </li>
+            <li @click="setFilter('positif', 'sembuh')" :class="filter.positif.sembuh ? 'filter-active' : ''">
+              <div class="legend-color" style="background:#27ae60; border: 2px solid #eb5757" /> &nbsp;
+              Positif - Sembuh
+            </li>
+          </div>
+        </div>
         <div class="info-legend p-2">
           <b>Keterangan: </b>
           <div class="row">
-            <div class="col-md">
+            <div class="col-md-3">
               <div class="legend-color" style="background:#2d9cdb" /> &nbsp;
               ODP - Proses
             </div>
-            <div class="col-md">
+            <!-- <div class="col-md">
               <div class="legend-color" style="background:#f2c94c; border: 2px solid #2d9cdb" /> &nbsp;
               ODP - naik satus ke PDP
-            </div>
-            <div class="col-md">
+            </div> -->
+            <div class="col-md-3">
               <div class="legend-color" style="background:#2d9cdb; border: 2px solid #bdbdbd" /> &nbsp;
               ODP (belum diupdate)
             </div>
-            <div class="col-md">
+            <!-- <div class="col-md">
               <div class="legend-color" style="background:#27ae60; border: 2px solid #f2c94c" /> &nbsp;
               PDP - Selesai
-            </div>
-            <div class="col-md">
+            </div> -->
+            <div class="col-md-3">
               <div class="legend-color" style="background:#f2c94c; border: 2px solid #bdbdbd" /> &nbsp;
               PDP (belum diupdate)
             </div>
@@ -32,25 +69,25 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-md">
+            <!-- <div class="col-md">
               <div class="legend-color" style="background:#27ae60; border: 2px solid #3aa2dd" /> &nbsp;
               ODP - Selesai
-            </div>
-            <div class="col-md">
+            </div> -->
+            <!-- <div class="col-md">
               <div class="legend-color" style="background:#eb5757; border: 2px solid #3aa2dd" /> &nbsp;
               ODP - naik satus ke Positif
-            </div>
-            <div class="col-md">
+            </div> -->
+            <div class="col-md-3">
               <div class="legend-color" style="background:#f2c94c;" /> &nbsp;
               PDP - Proses
             </div>
-            <div class="col-md">
+            <!-- <div class="col-md">
               <div class="legend-color" style="background:#eb5757; border: 2px solid #f2c94c" /> &nbsp;
               PDP - naik status ke Positif
-            </div>
-            <div class="col-md">
+            </div> -->
+            <div class="col-md-3">
               <div class="legend-color" style="background:#eb5757" /> &nbsp;
-              Positif - Proses
+              Positif - Aktif
             </div>
             <div class="col-md">
               <div class="legend-color" style="background:#27ae60; border: 2px solid #eb5757" /> &nbsp;
@@ -75,7 +112,13 @@
           <div class="row">
             <div class="col-md mt-1">
               <b>Catatan:</b><br>
-              Titik lokasi merupakan titik acak (random by system) wilayah yang tertera pada identitas kasus dan tidak menunjuk pada alamat persis masing-masing kasus, beberapa titik yang saling berdekatan terlihat menyatu pada pembesaran peta skala besar. Data yang ditampilkan saat ini bukan data seluruhnya,  data akan terus diperbaharui sesuai dengan informasi yang diterima melalui Pemerintah Provinsi Jawa Barat
+              Perbesar peta untuk melihat jumlah titik akurat. Beberapa titik yang saling berdekatan terlihat menyatu pada pembesaran peta skala besar.
+
+              Titik lokasi merupakan titik acak (random by system) wilayah yang tertera pada identitas kasus dan tidak menunjuk pada alamat persis masing-masing kasus.
+
+              Saat ini, data yang Pikobar tampilkan berasal dari sinkronisasi data dengan Dinas Kesehatan Kabupaten/Kota. Proses ini mungkin membutuhkan waktu 1-2 hari setiap perbaruan data terjadi. Oleh karena itu, untuk sementara Anda mungkin melihat perbedaan antara angka yang tampil di Pikobar dengan yang diumumkan di kabupaten/kota selama proses sinkronisasi berlangsung. Silakan periksa kembali 1-2 hari setelah perbaruan terakhir dari masing-masing kabupaten/kota.
+
+              Terima kasih dan mohon untuk dimaklumi.
             </div>
           </div>
         </div>
@@ -83,20 +126,80 @@
           <div class="backdrop" />
           <div class="text-disclaimer">
             <div class="title">
-              Peta Sebaran Kasus COVID-19 di Jawa Barat
+              Disclaimer
             </div>
-            <div class="subtitle">
+            <!-- <div class="subtitle">
               Sumber: Dinas Kesehatan Provinsi Jawa Barat
-            </div>
-            <div class="description mt-2">
-              <br>
-              <b>Data yang ditampilkan akan terus diperbarui sesuai dengan informasi yang diterima melalui <br>Pemerintah Provinsi Jawa Barat.</b>
+            </div> -->
+            <div class="description mt-2 text-justify pl-5 pr-5">
+              Perbesar peta untuk melihat jumlah titik akurat. Beberapa titik yang saling berdekatan terlihat menyatu pada pembesaran peta skala besar.
+
+              Titik lokasi merupakan titik acak (random by system) wilayah yang tertera pada identitas kasus dan tidak menunjuk pada alamat persis masing-masing kasus.
+
+              Saat ini, data yang Pikobar tampilkan berasal dari sinkronisasi data dengan Dinas Kesehatan Kabupaten/Kota. Proses ini mungkin membutuhkan waktu 1-2 hari setiap perbaruan data terjadi. Oleh karena itu, untuk sementara Anda mungkin melihat perbedaan antara angka yang tampil di Pikobar dengan yang diumumkan di kabupaten/kota selama proses sinkronisasi berlangsung. Silakan periksa kembali 1-2 hari setelah perbaruan terakhir dari masing-masing kabupaten/kota.
+
+              Terima kasih dan mohon untuk dimaklumi.
             </div>
             <button class="px-6 py-2 bg-brand-green hover:bg-brand-green-lighter text-white rounded-lg shadow-md mt-8" style="color: #fff" @click="isHidden = !isHidden">
-              <b>Lihat Peta</b>
+              <b>Mengerti</b>
             </button>
           </div>
         </div>
+      <div class="loading-page" v-if="loading">
+        <p>
+          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="margin: auto; display: block; shape-rendering: auto;" width="200px" height="200px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+            <g transform="rotate(0 50 50)">
+              <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#85a2b6">
+                <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.9166666666666666s" repeatCount="indefinite"></animate>
+              </rect>
+            </g><g transform="rotate(30 50 50)">
+              <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#85a2b6">
+                <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.8333333333333334s" repeatCount="indefinite"></animate>
+              </rect>
+            </g><g transform="rotate(60 50 50)">
+              <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#85a2b6">
+                <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.75s" repeatCount="indefinite"></animate>
+              </rect>
+            </g><g transform="rotate(90 50 50)">
+              <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#85a2b6">
+                <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.6666666666666666s" repeatCount="indefinite"></animate>
+              </rect>
+            </g><g transform="rotate(120 50 50)">
+              <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#85a2b6">
+                <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.5833333333333334s" repeatCount="indefinite"></animate>
+              </rect>
+            </g><g transform="rotate(150 50 50)">
+              <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#85a2b6">
+                <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.5s" repeatCount="indefinite"></animate>
+              </rect>
+            </g><g transform="rotate(180 50 50)">
+              <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#85a2b6">
+                <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.4166666666666667s" repeatCount="indefinite"></animate>
+              </rect>
+            </g><g transform="rotate(210 50 50)">
+              <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#85a2b6">
+                <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.3333333333333333s" repeatCount="indefinite"></animate>
+              </rect>
+            </g><g transform="rotate(240 50 50)">
+              <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#85a2b6">
+                <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.25s" repeatCount="indefinite"></animate>
+              </rect>
+            </g><g transform="rotate(270 50 50)">
+              <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#85a2b6">
+                <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.16666666666666666s" repeatCount="indefinite"></animate>
+              </rect>
+            </g><g transform="rotate(300 50 50)">
+              <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#85a2b6">
+                <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.08333333333333333s" repeatCount="indefinite"></animate>
+              </rect>
+            </g><g transform="rotate(330 50 50)">
+              <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#85a2b6">
+                <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="0s" repeatCount="indefinite"></animate>
+              </rect>
+            </g>
+          </svg>
+        </p>
+      </div>
     </div>
   </div>
 </template>
@@ -104,11 +207,30 @@
 <script>
 import axios from 'axios'
 import * as turf from '@turf/turf'
+import { faFilter } from '@fortawesome/free-solid-svg-icons'
 
 export default {
   name: 'MapSebaranCovid',
   data () {
     return {
+      loading: false,
+      filter: {
+        odp : {
+          proses: true,
+          belumupdate: false
+        },
+        pdp: {
+          proses: true,
+          belumupdate: false
+        },
+        positif: {
+          proses: true,
+          meninggal: true,
+          sembuh: true
+        }
+      },
+      isShowFilter: false,
+      faFilter: faFilter,
       map: '',
       zoom: 8,
       isHidden: false,
@@ -238,6 +360,21 @@ export default {
         opacity: 1,
         color: '#D7B6AE',
         fillOpacity: 0
+      },
+      statusStage: {
+        positif: {
+          proses: 'Positif - Aktif',
+          meninggal: 'Positif - Meninggal',
+          sembuh: 'Positif - Sembuh'
+        },
+        pdp: {
+          proses: 'PDP - Proses',
+          belumupdate: 'PDP (belum diupdate)'
+        },
+        odp: {
+          proses: 'ODP - Proses',
+          belumupdate: 'ODP (belum diupdate)'
+        }
       }
     }
   },
@@ -256,6 +393,32 @@ export default {
     }
   },
   methods: {
+    async setFilter(status, stage) {
+      this.loading = true
+      try {
+        setTimeout(() => {
+          this.filter[status][stage] = !this.filter[status][stage]
+          if (this.zoom > 12) {
+            this.removeBatasWilayah()
+            this.removeLayer()
+            this.createLayerByKecamatan()
+          } else if (this.zoom < 12) {
+            this.removeBatasWilayah()
+            this.removeLayer()
+            this.createLayerPasienByKota()
+          }
+          this.loading = false
+        }, 1000)
+        
+
+
+      } catch (e) {
+        console.log(e.message);
+      }
+    },
+    showFilter() {
+      this.isShowFilter = !this.isShowFilter
+    },
     importJSON () {
       const files = [
         {
@@ -371,7 +534,7 @@ export default {
       return {
         singleMarkerMode: true,
         maxClusterRadius: 10000,
-        spiderfyOnMaxZoom: false,
+        spiderfyOnMaxZoom: true,
         showCoverageOnHover: false,
         zoomToBoundsOnClick: false,
         spiderLegPolylineOptions: { weight: 1.5, color: '#222', opacity: 0 },
@@ -394,37 +557,7 @@ export default {
       }
     },
     statusStageCorona (status, stage) {
-      console.log( status + ' === ' + stage )
-      let statusStage = ''
-      if (status === 'positif' && stage === 'proses') {
-        statusStage = 'Positif - Proses'
-      } else if (status === 'positif' && stage === 'meninggal') {
-        statusStage = 'Positif - Meninggal'
-      } else if (status === 'positif' && stage === 'sembuh') {
-        statusStage = 'Positif - Sembuh'
-      } else if (status === 'positif' && (stage == null || stage == '')) {
-        statusStage = 'Positif'
-      } else if (status === 'pdp' && stage === 'proses') {
-        statusStage = 'PDP - Proses'
-      } else if (status === 'pdp' && stage === 'selesai') {
-        statusStage = 'PDP - Selesai'
-      } else if (status === 'pdp' && stage === 'positif') {
-        statusStage = 'PDP - naik status ke Positif'
-      } else if (status === 'pdp' && stage === 'belumupdate') {
-        statusStage = 'PDP (belum diupdate)'
-      } else if (status === 'odp' && stage === 'proses') {
-        statusStage = 'ODP - Proses'
-      } else if (status === 'odp' && stage === 'selesai') {
-        statusStage = 'ODP - Selesai'
-      } else if (status === 'odp' && stage === 'pdp') {
-        statusStage = 'ODP - naik status ke PDP'
-      } else if (status === 'odp' && stage === 'positif') {
-        statusStage = 'ODP naik status ke Positif'
-      } else if (status === 'odp' && stage == 'belumupdate'){
-        statusStage = 'ODP (belum di update)'
-      } 
-
-      return statusStage
+      return this.statusStage[status][stage]
     },
     createMap () {
       this.createLayerPasienByKota()
@@ -433,15 +566,15 @@ export default {
       const markerClusters = {
         odp: {
           proses: '',
-          selesai: '',
-          pdp: '',
-          positif: '',
+          // selesai: '',
+          // pdp: '',
+          // positif: '',
           belumupdate: ''
         },
         pdp: {
           proses: '',
-          selesai: '',
-          positif: '',
+          // selesai: '',
+          // positif: '',
           belumupdate: ''
         },
         positif: {
@@ -454,13 +587,13 @@ export default {
       markerClusters.positif.meninggal = this.$L.markerClusterGroup(this.configCluster('cluster-positif-meninggal'))
       markerClusters.positif.sembuh = this.$L.markerClusterGroup(this.configCluster('cluster-positif-sembuh'))
       markerClusters.pdp.proses = this.$L.markerClusterGroup(this.configCluster('cluster-pdp-proses'))
-      markerClusters.pdp.selesai = this.$L.markerClusterGroup(this.configCluster('cluster-pdp-selesai'))
-      markerClusters.pdp.positif = this.$L.markerClusterGroup(this.configCluster('cluster-pdp-positif'))
+      // markerClusters.pdp.selesai = this.$L.markerClusterGroup(this.configCluster('cluster-pdp-selesai'))
+      // markerClusters.pdp.positif = this.$L.markerClusterGroup(this.configCluster('cluster-pdp-positif'))
       markerClusters.pdp.belumupdate = this.$L.markerClusterGroup(this.configCluster('cluster-pdp-belumupdate'))
       markerClusters.odp.proses = this.$L.markerClusterGroup(this.configCluster('cluster-odp-proses'))
-      markerClusters.odp.selesai = this.$L.markerClusterGroup(this.configCluster('cluster-odp-selesai'))
-      markerClusters.odp.pdp = this.$L.markerClusterGroup(this.configCluster('cluster-odp-pdp'))
-      markerClusters.odp.positif = this.$L.markerClusterGroup(this.configCluster('cluster-odp-positif'))
+      // markerClusters.odp.selesai = this.$L.markerClusterGroup(this.configCluster('cluster-odp-selesai'))
+      // markerClusters.odp.pdp = this.$L.markerClusterGroup(this.configCluster('cluster-odp-pdp'))
+      // markerClusters.odp.positif = this.$L.markerClusterGroup(this.configCluster('cluster-odp-positif'))
       markerClusters.odp.belumupdate = this.$L.markerClusterGroup(this.configCluster('cluster-odp-belumupdate'))
 
       return markerClusters
@@ -500,19 +633,19 @@ export default {
       } else if (elPasien.status === 'PDP' && elPasien.stage === 'Proses') {
         cluster[element.feature.properties.bps_kode].pdp.proses.addLayer(m)
       } else if (elPasien.status === 'PDP' && elPasien.stage === 'Selesai') {
-        cluster[element.feature.properties.bps_kode].pdp.selesai.addLayer(m)
+        // cluster[element.feature.properties.bps_kode].pdp.selesai.addLayer(m)
       } else if (elPasien.status === 'PDP' && elPasien.stage === 'Positif') {
-        cluster[element.feature.properties.bps_kode].pdp.positif.addLayer(m)
+        // cluster[element.feature.properties.bps_kode].pdp.positif.addLayer(m)
       } else if (elPasien.status === 'PDP' && elPasien.stage === null) {
         cluster[element.feature.properties.bps_kode].pdp.belumupdate.addLayer(m)
       } else if (elPasien.status === 'ODP' && elPasien.stage === 'Proses') {
         cluster[element.feature.properties.bps_kode].odp.proses.addLayer(m)
       } else if (elPasien.status === 'ODP' && elPasien.stage === 'Selesai') {
-        cluster[element.feature.properties.bps_kode].odp.selesai.addLayer(m)
+        // cluster[element.feature.properties.bps_kode].odp.selesai.addLayer(m)
       } else if (elPasien.status === 'ODP' && elPasien.stage === 'PDP') {
-        cluster[element.feature.properties.bps_kode].odp.pdp.addLayer(m)
+        // cluster[element.feature.properties.bps_kode].odp.pdp.addLayer(m)
       } else if (elPasien.status === 'ODP' && elPasien.stage === 'Positif') {
-        cluster[element.feature.properties.bps_kode].odp.positif.addLayer(m)
+        // cluster[element.feature.properties.bps_kode].odp.positif.addLayer(m)
       } else {
         cluster[element.feature.properties.bps_kode].odp.belumupdate.addLayer(m)
       }
@@ -565,7 +698,21 @@ export default {
               }
               const isInside = turf.inside(point, element.feature)
               if (isInside) {
-                this.addMarkerLayer(this.kotaCluster, element, elPasien)
+                if (this.filter.odp.proses && elPasien.status === 'ODP' && elPasien.stage === 'Proses') {
+                  this.addMarkerLayer(this.kotaCluster, element, elPasien)
+                } else if (this.filter.odp.belumupdate && elPasien.status === 'ODP' && (elPasien.stage === '' || elPasien.stage === null)) {
+                  this.addMarkerLayer(this.kotaCluster, element, elPasien)
+                } else if (this.filter.pdp.proses && elPasien.status === 'PDP' && elPasien.stage === 'Proses') {
+                  this.addMarkerLayer(this.kotaCluster, element, elPasien)
+                } else if (this.filter.pdp.belumupdate && elPasien.status === 'PDP' && (elPasien.stage === '' || elPasien.stage === null)) {
+                  this.addMarkerLayer(this.kotaCluster, element, elPasien)
+                } else if (this.filter.positif.proses && elPasien.status === 'Positif' && elPasien.stage === 'Aktif') {
+                  this.addMarkerLayer(this.kotaCluster, element, elPasien)
+                } else if (this.filter.positif.meninggal && elPasien.status === 'Positif' && elPasien.stage === 'Meninggal') {
+                  this.addMarkerLayer(this.kotaCluster, element, elPasien)
+                } else if (this.filter.positif.sembuh && elPasien.status === 'Positif' && elPasien.stage === 'Sembuh') {
+                  this.addMarkerLayer(this.kotaCluster, element, elPasien)
+                }
               }
             }
           })
@@ -573,6 +720,7 @@ export default {
           this.addMarkerClusterLayer(this.kotaCluster, element)
         }
       })
+
     },
     createLayerByKecamatan () {
       // if(map.getBounds().intersects(layer._bounds)) { ... }
@@ -600,7 +748,21 @@ export default {
               const isInside = turf.inside(point, element.feature)
               if (isInside) {
                 kabkotNama = elPasien.kabkot_str
-                this.addMarkerLayer(this.kecamatanCluster, element, elPasien)
+                if (this.filter.odp.proses && elPasien.status === 'ODP' && elPasien.stage === 'Proses') {
+                  this.addMarkerLayer(this.kecamatanCluster, element, elPasien)
+                } else if (this.filter.odp.belumupdate && elPasien.status === 'ODP' && (elPasien.stage === '' || elPasien.stage === null)) {
+                  this.addMarkerLayer(this.kecamatanCluster, element, elPasien)
+                } else if (this.filter.pdp.proses && elPasien.status === 'PDP' && elPasien.stage === 'Proses') {
+                  this.addMarkerLayer(this.kecamatanCluster, element, elPasien)
+                } else if (this.filter.pdp.belumupdate && elPasien.status === 'PDP' && (elPasien.stage === '' || elPasien.stage === null)) {
+                  this.addMarkerLayer(this.kecamatanCluster, element, elPasien)
+                } else if (this.filter.positif.proses && elPasien.status === 'Positif' && elPasien.stage === 'Aktif') {
+                  this.addMarkerLayer(this.kecamatanCluster, element, elPasien)
+                } else if (this.filter.positif.meninggal && elPasien.status === 'Positif' && elPasien.stage === 'Meninggal') {
+                  this.addMarkerLayer(this.kecamatanCluster, element, elPasien)
+                } else if (this.filter.positif.sembuh && elPasien.status === 'Positif' && elPasien.stage === 'Sembuh') {
+                  this.addMarkerLayer(this.kecamatanCluster, element, elPasien)
+                }
               }
             }
           })
@@ -691,7 +853,7 @@ export default {
     color: #555;
 }
 .text-disclaimer {
-  top:20%;
+  top:15%;
   width: 100%;
   position: absolute;
   text-align: center;
@@ -718,6 +880,67 @@ export default {
   float: left;
   border-radius: 10px;
   margin-top: 4px;
+}
+
+.filter-layer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding-right: 1em;
+  padding-top: 1em;
+}
+
+.filter-layer .btn {
+  font-size: 0.8em;
+  padding: 2px 6px;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.65);
+}
+.filter-data {
+  background: #fff;
+  margin-top: 0.5em;
+  padding: 0.6em;
+  border-radius: 0.6em;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.65);
+}
+.filter-layer li {
+  list-style: none;
+  opacity: 0.4;
+  padding-bottom: 0.2em;
+}
+
+.filter-layer li:hover {
+  cursor: pointer;
+}
+.filter-active {
+  opacity: 1 !important;
+}
+.loading-page {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 0.5em;
+  text-align: center;
+  padding-top: 200px;
+  font-size: 30px;
+  font-family: sans-serif;
+}
+
+@media only screen and (max-width: 400px) {
+  .text-disclaimer {
+    top: 10%;
+  }
+}
+
+
+@media only screen and (max-width: 340px) {
+  .text-disclaimer .description{
+    overflow: auto;
+    height: 20em;
+    top:0;
+  }
 }
 </style>
 <style>
