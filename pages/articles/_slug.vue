@@ -68,7 +68,7 @@
 import { ContentLoader } from 'vue-content-loader'
 import { formatDateTimeShort } from '~/lib/date'
 import { analytics } from '~/lib/firebase'
-import { useDefaultMetaInfo, useArticleMetaInfo } from '~/lib/metainfo'
+import { useArticleMetaInfo } from '~/lib/metainfo'
 
 const regex = /(?:(-artcl\.))(.*)$/
 export default {
@@ -84,13 +84,12 @@ export default {
     return true
   },
 
-  metaInfo: {
-    title: 'Informasi Terbaru'
+  async fetch () {
+    await this.fetchItem()
   },
 
   data () {
     return {
-      item: null,
       isLoading: true
     }
   },
@@ -104,23 +103,20 @@ export default {
       } else {
         return slug
       }
+    },
+    item () {
+      return this.$store.getters['news/itemsMap'][this.itemId]
     }
-  },
-
-  mounted () {
-    this.getById(this.itemId)
   },
 
   methods: {
     formatDateTimeShort,
-    getById (id) {
+    fetchItem () {
       this.isLoading = true
-      this.item = null
-      return this.$store.dispatch('news/getItemById', id)
-        .then((item) => {
-          this.item = item
+      return this.$store.dispatch('news/getItemById', this.itemId)
+        .then(() => {
           if (process.client || process.browser) {
-            analytics.logEvent('article_detail_view', { id: item.id })
+            analytics.logEvent('article_detail_view', { id: this.itemId })
           }
         }).finally(() => {
           this.isLoading = false
@@ -137,9 +133,7 @@ export default {
     }
   },
   head () {
-    if (!this.item) {
-      return useDefaultMetaInfo()
-    } else {
+    if (this.item) {
       const {
         title,
         published_at: publishedAt,
