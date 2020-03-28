@@ -55,6 +55,9 @@ export default {
   },
   async fetch () {
     await this.fetchItem()
+      .then(() => {
+        this.isPending = false
+      })
   },
   data () {
     return {
