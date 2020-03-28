@@ -103,6 +103,15 @@ export default {
   components: {
     ContentLoader
   },
+  async fetch () {
+    await new Promise((resolve) => {
+      this.getItems()
+        .then(() => {
+          this.performFiltering()
+          resolve()
+        })
+    })
+  },
   data () {
     return {
       openedItems: [],
@@ -121,16 +130,19 @@ export default {
       items: 'items'
     })
   },
+  watch: {
+    items: {
+      immediate: true,
+      deep: true,
+      handler (arr) {
+        this.performFiltering()
+      }
+    }
+  },
   mounted () {
-    this.getItems()
-      .then(() => {
-        this.performFiltering({
-          showLoading: false
-        })
-        if (process.browser) {
-          analytics.logEvent('faqs_view')
-        }
-      })
+    if (process.browser) {
+      analytics.logEvent('faqs_view')
+    }
   },
   methods: {
     ...mapActions('faqs', {
@@ -152,21 +164,19 @@ export default {
         this.openItem(index)
       }
     },
-    performFiltering ({ showLoading = true } = {}) {
+    performFiltering () {
       if (!this.items || !this.items.length) {
         this.filteredItems = []
+        return
       }
-      this.filteredItems = null
-      setTimeout(() => {
-        this.filteredItems = this.items.filter((faq) => {
-          if (!this.searchString) {
-            return true
-          }
-          return [faq.title, faq.content].some((str) => {
-            return `${str}`.toLowerCase().includes(this.searchString.toLowerCase())
-          })
+      this.filteredItems = this.items.filter((faq) => {
+        if (!this.searchString) {
+          return true
+        }
+        return [faq.title, faq.content].some((str) => {
+          return `${str}`.toLowerCase().includes(this.searchString.toLowerCase())
         })
-      }, showLoading ? 1000 : 0)
+      })
     },
     resetFilter () {
       this.searchString = ''

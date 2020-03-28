@@ -390,6 +390,7 @@ import { ContentLoader } from 'vue-content-loader'
 import { mapState } from 'vuex'
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons'
 import { formatDateTimeShort } from '~/lib/date'
+import { analytics } from '~/lib/firebase'
 import ImageCarousel from '~/components/ImageCarousel'
 import CallCard from '~/components/CallCard'
 import ContactListItem from '~/components/ContactList/ContactListItem'
@@ -410,6 +411,10 @@ export default {
     DataSummary,
     PetaPersebaranAllCases,
     ShareableItems
+  },
+  async fetch () {
+    await this.$store.dispatch('hospitals/getItems')
+    await this.$store.dispatch('infographics/getItems')
   },
   data () {
     return {
@@ -465,10 +470,25 @@ export default {
             shareable: true,
             downloadable: true,
             downloadURL: item.images[0],
-            shareText: `[Pikobar] Bagikan "${item.title}". Selengkapnya di ${window.location.origin}${item.route}`
+            shareText: `[Pikobar] Bagikan "${item.title}". Selengkapnya di ${process.env.URL}${item.route}`
           }
         })
     }
+  },
+  mounted () {
+    this.$nextTick(() => {
+      Promise.all([
+        this.$store.dispatch('statistics/getCases')
+      ]).then(() => {
+        Promise.all([
+          this.$store.dispatch('banners/getItems'),
+          this.$store.dispatch('news/getItems')
+        ])
+      })
+      if (process.browser) {
+        analytics.logEvent('homepage_view')
+      }
+    })
   },
   methods: {
     formatDateTimeShort
