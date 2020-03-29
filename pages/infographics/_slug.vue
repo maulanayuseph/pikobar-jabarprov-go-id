@@ -20,13 +20,13 @@
             />
           </ContentLoader>
         </template>
-        <template v-else-if="infographic">
+        <template v-else-if="item">
           <h2 class="text-xl font-bold leading-tight">
-            {{ infographic.title }}
+            {{ item.title }}
           </h2>
           <br>
           <img
-            :src="infographic.images[0] || null"
+            :src="item.images[0] || null"
             class="cursor-pointer w-full h-full object-contain object-center"
           >
         </template>
@@ -36,10 +36,9 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
 import { ContentLoader } from 'vue-content-loader'
 import { analytics } from '~/lib/firebase'
-import { useDefaultMetaInfo, useArticleMetaInfo } from '~/lib/metainfo'
+import { useArticleMetaInfo } from '~/lib/metainfo'
 
 const regex = /(?:(-inf\.))(.*)$/
 export default {
@@ -54,10 +53,15 @@ export default {
     }
     return true
   },
+  async fetch () {
+    await this.fetchItem()
+      .then(() => {
+        this.isPending = false
+      })
+  },
   data () {
     return {
-      isPending: true,
-      infographic: null
+      isPending: true
     }
   },
   computed: {
@@ -69,40 +73,28 @@ export default {
       } else {
         return slug
       }
-    }
-  },
-  watch: {
-    itemId: {
-      immediate: true,
-      handler (v) {
-        if (v) {
-          this.isPending = true
-          this.getItemById(v)
-            .then((item) => {
-              this.infographic = item
-            })
-            .then(() => {
-              if (process.client || process.browser) {
-                analytics.logEvent('infographic_detail_view', { id: this.$route.params.slug })
-              }
-            })
-            .finally(() => {
-              this.isPending = false
-            })
-        }
-      }
+    },
+    item () {
+      return this.$store.getters['infographics/itemsMap'][this.itemId]
     }
   },
   methods: {
-    ...mapActions('infographics', {
-      getItemById: 'getItemById'
-    })
+    fetchItem () {
+      this.isPending = true
+      return this.$store.dispatch('infographics/getItemById', this.itemId)
+        .then(() => {
+          if (process.client || process.browser) {
+            analytics.logEvent('infographic_detail_view', { id: this.$route.params.slug })
+          }
+        })
+        .finally(() => {
+          this.isPending = false
+        })
+    }
   },
   head () {
-    if (!this.infographic) {
-      return useDefaultMetaInfo()
-    } else {
-      const { title, route, published_at: publishedAt, images = [] } = this.infographic
+    if (this.item) {
+      const { title, route, published_at: publishedAt, images = [] } = this.item
       const date = publishedAt && typeof publishedAt.toISOString === 'function'
         ? publishedAt.toISOString()
         : ''

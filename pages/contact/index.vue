@@ -40,6 +40,7 @@
 
 <script>
 import { mapState } from 'vuex'
+import { analytics } from '~/lib/firebase'
 import ContactList from '~/components/ContactList'
 import CallCenter from '~/components/CallCenter'
 export default {
@@ -50,6 +51,14 @@ export default {
   computed: {
     ...mapState('hospitals', {
       hospitals: 'items'
+    })
+  },
+  mounted () {
+    this.$store.dispatch('hospitals/getItems')
+    this.$nextTick(() => {
+      if (process.browser) {
+        analytics.logEvent('contacts_view')
+      }
     })
   },
   head () {

@@ -14,6 +14,7 @@ module.exports = {
   // add your custom rules here
   rules: {
     'no-console': 'off',
-    'no-debugger': 'off'
+    'no-debugger': 'off',
+    'nuxt/no-this-in-fetch-data': 'off'
   }
 }

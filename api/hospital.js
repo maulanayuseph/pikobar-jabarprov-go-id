@@ -1,4 +1,4 @@
-import { db } from '~/lib/firebase'
+import { db } from '../lib/firebase'
 
 export function get (options = { perPage: 9999 }) {
   return db.collection('emergency_numbers')
