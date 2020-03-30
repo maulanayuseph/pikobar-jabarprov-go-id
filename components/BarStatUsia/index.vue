@@ -166,7 +166,6 @@ export default {
   },
   created () {
     this.fetchDataSebaranJabar()
-    console.log(this.barChartUmurJenisKelaminOptions.hAxis.ticks)
   },
   methods: {
     ifNullReturnZero (str) {
