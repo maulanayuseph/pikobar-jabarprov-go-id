@@ -66,7 +66,7 @@
       <div
         class="overflow-hidden bg-white rounded-lg shadow-md"
       >
-        <h4 class="m-3 text-xl">
+        <h4 class="p-5 text-xl">
           <b>Kumulatif ODP</b><br>
           <small class="opacity-50">(Orang Dalam Pemantauan)</small>
         </h4>
@@ -80,7 +80,7 @@
       <div
         class="overflow-hidden bg-white rounded-lg shadow-md"
       >
-        <h4 class="m-3 text-xl">
+        <h4 class="p-5 text-xl">
           <b>Kumulatif PDP</b><br>
           <small class="opacity-50">(Pasien Dalam Pengawasan)</small>
         </h4>
