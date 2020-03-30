@@ -16,9 +16,12 @@
       </li>
     </ul>
     <br>
-    <keep-alive :max="tabs.length">
-      <component :is="tabComponent" style="min-height: 50vh;" />
-    </keep-alive>
+    <component
+      :is="tab.component"
+      v-for="(tab, index) in tabs"
+      v-show="tab.id === activeTabId"
+      :key="index"
+    />
   </div>
 </template>
 
