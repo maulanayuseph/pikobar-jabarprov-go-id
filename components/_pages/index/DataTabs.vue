@@ -6,8 +6,7 @@
       <li
         v-for="(tab, index) in tabs"
         :key="index"
-        ref="tabItems"
-        :class="['relative cursor-pointer p-6 whitespace-no-wrap select-none hover:bg-gray-200', tab.id === activeTabId && 'border-b-4 border-solid border-brand-green']"
+        :class="['relative cursor-pointer p-4 sm:p-6 whitespace-no-wrap select-none hover:bg-gray-200', tab.id === activeTabId && 'border-b-4 border-solid border-brand-green']"
         style="transform: translateY(3px);"
         @click="activeTabId = tab.id"
       >
@@ -18,13 +17,12 @@
     </ul>
     <br>
     <keep-alive :max="tabs.length">
-      <component :is="tabComponent" />
+      <component :is="tabComponent" style="min-height: 50vh;" />
     </keep-alive>
   </div>
 </template>
 
 <script>
-import BarStatHarianAkumulatif from '~/components/BarStatHarianAkumulatif'
 export default {
   data () {
     return {
@@ -32,15 +30,17 @@ export default {
         {
           id: 'stat',
           title: 'Statistik',
-          component: BarStatHarianAkumulatif
+          component: () => import('../../BarStatHarianAkumulatif')
         },
         {
           id: 'map-kota',
-          title: 'Peta Kota'
+          title: 'Peta Kota',
+          component: () => import('../../Tableau/PetaSebaranKotaKabupaten')
         },
         {
           id: 'map-kel',
-          title: 'Peta Kelurahan'
+          title: 'Peta Kelurahan',
+          component: () => import('../../Tableau/PetaPersebaranAllCases')
         }
       ],
       activeTabId: 'stat',
