@@ -99,7 +99,7 @@ export default {
   transition-property: transform, opacity;
   transition-duration: 0.45s;
   transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  @apply fixed w-16 h-16 flex justify-center items-center rounded-lg shadow-xl text-white text-xl bg-brand-yellow-darkest;
+  @apply fixed w-16 h-16 flex justify-center items-center rounded-full shadow-xl text-white text-xl bg-brand-green;
 
   @screen lg {
     --translateY: -2rem;
@@ -112,11 +112,11 @@ export default {
 
   &:focus,
   &:hover {
-    @apply bg-brand-yellow-dark;
+    @apply bg-brand-green-light;
   }
 
   &:active {
-    @apply bg-brand-yellow;
+    @apply bg-brand-green-lighter;
   }
 }
 
