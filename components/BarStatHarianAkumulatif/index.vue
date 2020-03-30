@@ -24,7 +24,7 @@
     </nav>
 
     <section
-      v-show="stat.isActiveHarian"
+      v-if="stat.isActiveHarian"
       class="chart-container w-full mt-4"
     >
       <div
@@ -60,7 +60,7 @@
     </section>
 
     <section
-      v-show="stat.isActiveAkumulatif"
+      v-if="stat.isActiveAkumulatif"
       class="chart-container w-full mt-4"
     >
       <div

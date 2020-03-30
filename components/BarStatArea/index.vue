@@ -17,7 +17,7 @@
       </button>
     </div>
 
-    <section v-show="stat.isActiveHarian">
+    <section v-if="stat.isActiveHarian">
       <div style="overflow-x: auto; width: 100%; height: 100%; display: flex;">
         <div class="bg-white p-3 mr-4 mb-4 rounded-lg shadow-md">
           <div class="flex flex-row justify-between items-center">
@@ -81,7 +81,7 @@
     </section>
 
     <section
-      v-show="stat.isActiveAkumulatif"
+      v-if="stat.isActiveAkumulatif"
     >
       <div style="overflow-x: auto; width: 100%; height: 100%; display: flex;">
         <div class="bg-white p-3 mr-4 mb-4 rounded-lg shadow-md">
@@ -885,7 +885,6 @@ export default {
           alignment: 'center'
         },
         vAxis: {
-          textPosition: 'in',
           viewWindow: {
             min: 0,
             max: 0
