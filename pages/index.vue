@@ -79,14 +79,17 @@
         <small class="opacity-50">Update Terakhir: {{ lastUpdatedAt }}</small>
       </h2>
       <DataSummary class="mt-8" />
-      <a
-        target="_blank"
-        class="text-center md:self-center mb-8 px-4 py-2 font-bold text-lg text-brand-green-darker hover:text-brand-green-light"
-        href="/data"
-      >
-        Lihat Selengkapnya
-        <FontAwesomeIcon class="ml-2" :icon="icon.faChevronRight" />
-      </a>
+      <div class="text-center md:self-center mb-8 xl:mt-8">
+        <a
+          target="_blank"
+          class="px-4 py-2 font-bold text-lg text-brand-green-darker hover:text-brand-green-light"
+          href="/data"
+        >
+          Lihat Selengkapnya
+          <FontAwesomeIcon class="ml-2" :icon="icon.faChevronRight" />
+        </a>
+      </div>
+      <br>
       <DataTabs />
       <br>
     </section>
