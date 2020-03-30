@@ -1,8 +1,11 @@
 <template>
   <client-only>
-    <div>
+    <div
+      @mouseover="showNavigation = true"
+      @mouseleave="showNavigation = false"
+    >
       <template v-if="!isPending">
-        <VueCarousel v-bind="carouselConfig">
+        <VueCarousel ref="vueCarousel" v-bind="carouselConfig">
           <VueCarouselSlide
             v-for="(item, index) in carouselItems"
             :key="index"
@@ -33,12 +36,42 @@
           </div>
         </slot>
       </template>
+      <!-- assume that device smaller than 768px is touch device -->
+      <div class="hidden md:flex flex-row justify-between items-center pointer-events-none absolute top-0 left-0 right-0 h-full p-4">
+        <transition
+          name="carousel-nav-appear-transition"
+          enter-class="carousel-nav-appear-transition-enter--left"
+          leave-to-class="carousel-nav-appear-transition-leave-to--left"
+        >
+          <button
+            v-show="showNavigation"
+            class="carousel-nav-button carousel-nav-button--left"
+            @click="navigate('prev')"
+          >
+            <FontAwesomeIcon :icon="icon.faChevronLeft" />
+          </button>
+        </transition>
+        <transition
+          name="carousel-nav-appear-transition"
+          enter-class="carousel-nav-appear-transition-enter--right"
+          leave-to-class="carousel-nav-appear-transition-leave-to--right"
+        >
+          <button
+            v-show="showNavigation"
+            class="carousel-nav-button carousel-nav-button--right"
+            @click="navigate('next')"
+          >
+            <FontAwesomeIcon :icon="icon.faChevronRight" />
+          </button>
+        </transition>
+      </div>
     </div>
   </client-only>
 </template>
 
 <script>
 import { ContentLoader } from 'vue-content-loader'
+import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons'
 
 export default {
   name: 'ImageCarousel',
@@ -53,13 +86,15 @@ export default {
   },
   data () {
     return {
+      icon: {
+        faChevronLeft,
+        faChevronRight
+      },
       carouselConfig: {
         autoplay: true,
         autoplayTimeout: 4000,
         paginationEnabled: false,
-        paginationColor: '#90a4ae',
-        paginationActiveColor: '#00b0ff',
-        paginationSize: 12,
+        navigationEnabled: false,
         perPage: 1,
         mouseDrag: true,
         loop: true
@@ -67,7 +102,9 @@ export default {
 
       isPending: true,
       error: null,
-      carouselItems: null
+      carouselItems: null,
+
+      showNavigation: false
     }
   },
   watch: {
@@ -104,6 +141,19 @@ export default {
       if (item.action_url) {
         window.open(item.action_url, '_blank')
       }
+    },
+    navigate (where) {
+      if (!this.$refs.vueCarousel) {
+        return
+      }
+      switch (where) {
+        case 'next':
+          this.$refs.vueCarousel.handleNavigation()
+          break
+        case 'prev':
+          this.$refs.vueCarousel.handleNavigation('backward')
+          break
+      }
     }
   }
 }
@@ -121,7 +171,49 @@ export default {
 }
 
 .banner-slide.cursor-pointer:hover {
-  @apply opacity-50;
+  @apply opacity-75;
+}
+
+.carousel-nav-button {
+  box-shadow: 0 0 0.5rem 0 rgba(0,0,0,0.1), 0 0.25rem 1.5rem 0 rgba(0,0,0,0.1);
+  @apply pointer-events-auto
+  relative flex justify-center items-center
+  w-16 h-16 rounded-full
+  text-lg
+  bg-white;
+
+  &:focus,
+  &:active {
+    outline: none;
+  }
+
+  &:hover {
+    @apply bg-gray-200;
+  }
+  &:active {
+    @apply bg-white;
+  }
+}
+
+.carousel-nav-appear-transition {
+  &-enter--left,
+  &-leave-to--left {
+    transform: translateX(-2rem);
+    opacity: 0;
+  }
+
+  &-enter--right,
+  &-leave-to--right {
+    transform: translateX(2rem);
+    opacity: 0;
+  }
+
+  &-enter-active,
+  &-leave-active {
+    transition-property: transform opacity;
+    transition-duration: 0.2s;
+    transition-timing-function: ease-out;
+  }
 }
 </style>
 
