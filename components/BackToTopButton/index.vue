@@ -1,13 +1,10 @@
 <template>
-  <transition name="slide-y-fade-transition">
-    <button
-      v-show="showButton"
-      class="button-back-to-top"
-      @click="onScrollToTop"
-    >
-      <FontAwesomeIcon :icon="icon.faArrowUp" />
-    </button>
-  </transition>
+  <button
+    :class="['button-back-to-top', !showButton && 'is-hidden']"
+    @click="onScrollToTop"
+  >
+    <FontAwesomeIcon :icon="icon.faArrowUp" />
+  </button>
 </template>
 
 <script>
@@ -118,13 +115,14 @@ export default {
   &:active {
     @apply bg-brand-green-lighter;
   }
-}
 
-.slide-y-fade-transition {
-  &-enter,
-  &-leave-to {
+  &.is-hidden {
     opacity: 0;
     transform: translateY(4rem);
+  }
+
+  &:not(.is-hidden) {
+    opacity: 1;
   }
 }
 </style>
