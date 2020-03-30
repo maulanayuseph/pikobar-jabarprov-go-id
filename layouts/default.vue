@@ -23,6 +23,7 @@
     >
       <nuxt />
     </div>
+    <BackToTopButton />
     <Navbar class="lg:hidden" />
   </div>
 </template>
@@ -30,10 +31,12 @@
 <script>
 import Appbar from '~/components/Appbar'
 import Navbar from '~/components/Navbar'
+import BackToTopButton from '~/components/BackToTopButton'
 export default {
   components: {
     Appbar,
-    Navbar
+    Navbar,
+    BackToTopButton
   },
   data () {
     return {
