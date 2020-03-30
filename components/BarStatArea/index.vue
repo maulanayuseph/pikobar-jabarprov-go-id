@@ -885,7 +885,6 @@ export default {
           alignment: 'center'
         },
         vAxis: {
-          title: 'Average Rating',
           textPosition: 'in',
           viewWindow: {
             min: 0,
