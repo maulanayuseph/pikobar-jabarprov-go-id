@@ -1,45 +1,36 @@
 <template>
   <div
-    class="bg-white p-1"
-    style="border-radius: 0.8rem; box-shadow: 0 0 4px 0px rgba(0,0,0,0.05), 0 4px 24px 0 rgba(0,0,0,0.1);"
+    class="bg-white overflow-hidden rounded-lg shadow-md"
   >
-    <h4 class="m-3">
+    <h4 class="p-5 text-xl">
       <b>Umur dan Jenis Kelamin</b>
     </h4>
     <hr>
-    <div class="row ml-2">
-      <nuxt-link
-        tag="a"
-        style="border: 1px solid #2DAC55;"
-        class="btn btn-sm m-1"
-        :class="stat.isPositif ? 'btnActive' : 'btnNonActive'"
-        to=""
-        @click.native="changeGroupUsia('Positif')"
+    <div class="flex flex-row items-stretch p-5 pb-0">
+      <button
+        class="button-selector mr-2"
+        :active="stat.isPositif"
+        @click="changeGroupUsia('Positif')"
       >
         Positif
-      </nuxt-link>
-      <nuxt-link
-        tag="a"
-        style="border: 1px solid #2DAC55;"
-        class="btn btn-sm m-1"
-        :class="stat.isODP ? 'btnActive' : 'btnNonActive'"
-        to=""
-        @click.native="changeGroupUsia('ODP')"
+      </button>
+      <button
+        class="button-selector mr-2"
+        :active="stat.isODP"
+        @click="changeGroupUsia('ODP')"
       >
         ODP
-      </nuxt-link>
-      <nuxt-link
-        tag="a"
-        style="border: 1px solid #2DAC55;"
-        class="btn btn-sm m-1"
-        :class="stat.isPDP ? 'btnActive' : 'btnNonActive'"
-        to=""
-        @click.native="changeGroupUsia('PDP')"
+      </button>
+      <button
+        class="button-selector"
+        :active="stat.isPDP"
+        @click="changeGroupUsia('PDP')"
       >
         PDP
-      </nuxt-link>
+      </button>
     </div>
     <GChart
+      class="p-5"
       type="BarChart"
       :data="barChartUmurJenisKelaminData"
       :options="barChartUmurJenisKelaminOptions"
@@ -156,7 +147,8 @@ export default {
           title: 'Umur',
           viewWindowMode: 'explicit',
           viewWindow: {
-            min: 0
+            min: -150,
+            max: 150
           },
           ticks: [
             { v: -10, f: '10' },
@@ -324,14 +316,8 @@ export default {
         this.stat.isODP = false
         this.stat.isPDP = true
       }
-      let max = 0
       for (let i = 0; i < self.jsonDataSebaranJabar.length; i++) {
         if (self.jsonDataSebaranJabar[i].status === stat) {
-          if (self.jsonDataSebaranJabar[i].umur > max) {
-            max = self.jsonDataSebaranJabar[i].umur
-            self.barChartUmurJenisKelaminOptions.hAxis.viewWindow.min = (max + 10) * -1
-            self.barChartUmurJenisKelaminOptions.hAxis.viewWindow.max = max + 10
-          }
           if (self.jsonDataSebaranJabar[i].gender === 'Laki-laki') {
             if ((self.jsonDataSebaranJabar[i].umur >= 0) && (self.jsonDataSebaranJabar[i].umur <= 10)) {
               self.barChartUmurJenisKelaminData.rows[8].c[1].v -= 1
@@ -393,13 +379,36 @@ export default {
           }
         }
       }
-    }
-  },
-  head () {
-    return {
-      link: [
-        /* { rel: 'stylesheet', href: 'https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css' } */
-      ]
+
+      let max = 0
+      let asc = 0
+      // find max count for scala
+      for (let j = 0; j < self.barChartUmurJenisKelaminData.rows.length; j++) {
+        if (self.barChartUmurJenisKelaminData.rows[j].c[2].v > max) {
+          max = self.barChartUmurJenisKelaminData.rows[j].c[2].v
+        }
+        if (self.barChartUmurJenisKelaminData.rows[j].c[1].v * -1 > max) {
+          max = self.barChartUmurJenisKelaminData.rows[j].c[1].v * -1
+        }
+        asc = Math.ceil(max / 10)
+        self.barChartUmurJenisKelaminOptions.hAxis.viewWindow.min = (max + asc) * -1
+        self.barChartUmurJenisKelaminOptions.hAxis.viewWindow.max = max + asc
+      }
+
+      // set number of scala
+      self.barChartUmurJenisKelaminOptions.hAxis.ticks = []
+      if (max > 0) {
+        asc = Math.ceil(max / 10)
+        for (let k = 0; k <= max + asc; k = k + asc) {
+          self.barChartUmurJenisKelaminOptions.hAxis.ticks.push({ v: k * -1, f: k.toString() })
+        }
+        for (let k = 0; k <= max + asc; k = k + asc) {
+          self.barChartUmurJenisKelaminOptions.hAxis.ticks.push(k)
+        }
+      } else {
+        self.barChartUmurJenisKelaminOptions.hAxis.ticks.push({ v: 0, f: '0' })
+        self.barChartUmurJenisKelaminOptions.hAxis.ticks.push(0)
+      }
     }
   }
 }
@@ -407,13 +416,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.button-selector {
+  @apply px-6 py-2 rounded-md border border-solid border-brand-green
+  text-brand-green bg-white;
 
-.btnActive {
-  color: #ffffff;
-  background-color: #2DAC55;
-}
-.btnNonActive {
-  color: #2DAC55;
-  background-color: #FFFFFF;
+  &[active] {
+    @apply text-white bg-brand-green;
+  }
 }
 </style>

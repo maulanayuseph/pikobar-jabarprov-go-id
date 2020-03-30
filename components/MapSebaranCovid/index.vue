@@ -1,7 +1,7 @@
 <template>
 
-  <div class="container-map">
-    <div class="bg-white col-md-12 p-0 m-2 " style="border-radius: 0.8rem; box-shadow: 0 0 4px 0px rgba(0,0,0,0.05), 0 4px 24px 0 rgba(0,0,0,0.1); height:50em;">
+  <div class="container-map relative">
+    <div class="bg-white col-md-12 shadow-md" style="height:50em;">
         <div id="map-wrap" style="height: 75%;z-index:0;" />
         <div class="filter-layer"> 
           <div class="text-right">
@@ -379,7 +379,7 @@ export default {
     }
   },
   mounted () {
-    this.tesMap()
+    // this.tesMap()
     this.createBasemap()
     this.importJSON()
       .then(() => {
@@ -393,7 +393,7 @@ export default {
     }
   },
   methods: {
-    async setFilter(status, stage) {
+    setFilter (status, stage) {
       this.loading = true
       try {
         setTimeout(() => {

@@ -1,97 +1,80 @@
 <template>
   <div class="container mx-auto">
-    <div class="container">
-      <!-- <link rel="stylesheet" href=""> -->
-      <br>
-      <br>
-      <br>
+    <br>
+    <header class="m-4 mb-8 md:m-8">
       <h3 class="text-3xl text-gray-900 font-bold text-left leading-none" style="margin-bottom: 10px; ">
         Dashboard Kasus COVID-19 Provinsi Jawa Barat
       </h3>
-      <span style="font-size: smaller;">*Update Terakhir: {{ lastUpdatedAt }}</span>
-      <br>
-      <br>
-      <section>
-        <BarStat />
-      </section>
-
-      <section class="mt-2">
-        <BarStatDetail />
-      </section>
-
-      <div class="row mt-2 mb-2 pl-2">
-        <nuxt-link
-          tag="a"
-          style="border: 1px solid #2DAC55;"
-          class="btn btn-md mr-2"
-          :class="stat.isActiveCovid ? 'btnActive' : 'btnNonActive'"
-          to=""
-          @click.native="enableCovid"
+      <small class="text-xl opacity-75">*Update Terakhir: {{ lastUpdatedAt }}</small>
+    </header>
+    <section class="m-4 mb-8 md:m-8">
+      <DataSummary />
+    </section>
+    <section class="m-4 mb-8 md:m-8">
+      <div class="flex flex-row items-stretch">
+        <button
+          class="button-selector mr-2"
+          :active="stat.isActiveCovid"
+          @click="enableCovid"
         >
           <font-awesome-icon :icon="fontDiagnoses" /> Sebaran Covid-19
-        </nuxt-link>
-        <nuxt-link
-          tag="a"
-          style="border: 1px solid #2DAC55;"
-          class="btn btn-md mr-2"
-          :class="stat.isActiveRS ? 'btnActive' : 'btnNonActive'"
-          to=""
-          @click.native="enableRS"
+        </button>
+        <button
+          class="button-selector"
+          :active="stat.isActiveRS"
+          @click="enableRS"
         >
           <font-awesome-icon :icon="fontHospital" /> Fasilitas Kesehatan
-        </nuxt-link>
+        </button>
       </div>
+      <div class="mt-4">
+        <MapSebaranCovid v-if="stat.isActiveCovid" />
+        <MapFaskes v-if="stat.isActiveRS" />
+        <MapSebaranPolygon v-if="stat.isActivePolygon" />
+      </div>
+    </section>
 
-      <section v-if="stat.isActiveCovid" class="row">
-        <MapSebaranCovid />
-      </section>
+    <section class="m-4 mb-8 md:m-8">
+      <BarStatArea />
+    </section>
 
-      <section v-if="stat.isActiveRS" class="row">
-        <MapFaskes />
-      </section>
+    <section class="m-4 mb-8 md:m-8">
+      <BarStatTable />
+    </section>
 
-      <section class="mt-4">
-        <BarStatArea />
-      </section>
+    <section class="m-4 mb-8 md:m-8">
+      <div class="chart-container w-full">
+        <BarStatJenisKelamin />
+        <BarStatUsia />
+      </div>
+    </section>
 
-      <section class="mt-4">
-        <BarStatTable />
-      </section>
-
-      <section class="row mt-4">
-        <div class="p-1 col-lg-5 col-md col-sm col-xs mb-4">
-          <BarStatJenisKelamin />
-        </div>
-        <div class="p-1 col-lg-7 col-md">
-          <BarStatUsia />
-        </div>
-      </section>
-
-      <section class="mt-4">
-        <BarStatHarianAkumulatif />
-      </section>
-    </div>
+    <section class="m-4 md:m-8">
+      <BarStatHarianAkumulatif />
+    </section>
   </div>
 </template>
 
 <script>
 import { mapState } from 'vuex'
-// import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faFirstAid, faBug } from '@fortawesome/free-solid-svg-icons'
+import DataSummary from '~/components/_pages/index/DataSummary'
 import { formatDateTimeShort } from '~/lib/date'
+import { analytics } from '~/lib/firebase'
 
 export default {
   components: {
+    DataSummary,
     MapSebaranCovid: () => import('~/components/MapSebaranCovid'),
     MapFaskes: () => import('~/components/MapFaskes'),
-    BarStat: () => import('~/components/BarStat'),
-    BarStatDetail: () => import('~/components/BarStatDetail'),
     BarStatArea: () => import('~/components/BarStatArea'),
     BarStatJenisKelamin: () => import('~/components/BarStatJenisKelamin'),
     BarStatUsia: () => import('~/components/BarStatUsia'),
     BarStatHarianAkumulatif: () => import('~/components/BarStatHarianAkumulatif'),
     BarStatTable: () => import('~/components/BarStatTable')
-    // FontAwesomeIcon
+  },
+  async fetch () {
+    await this.$store.dispatch('statistics/getCases')
   },
   data () {
     return {
@@ -114,6 +97,13 @@ export default {
       return this.formatDateTimeShort(this.cases.updated_at)
     }
   },
+  mounted () {
+    this.$nextTick(() => {
+      if (process.browser) {
+        analytics.logEvent('dashboard_view')
+      }
+    })
+  },
   methods: {
     formatDateTimeShort,
     enableCovid () {
@@ -124,25 +114,28 @@ export default {
       this.stat.isActiveCovid = false
       this.stat.isActiveRS = true
     }
-  },
-  head () {
-    return {
-      link: [
-        { rel: 'stylesheet', href: 'https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css' }
-      ]
-    }
   }
 }
 </script>
 
 <style lang="scss" scoped>
+.chart-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  column-gap: 1rem;
+  row-gap: 1rem;
 
-.btnActive {
-  color: #ffffff;
-  background-color: #2DAC55;
+  @screen md {
+    grid-template-columns: 2fr 4fr;
+  }
 }
-.btnNonActive {
-  color: #2DAC55;
-  background-color: #FFFFFF;
+
+.button-selector {
+  @apply px-6 py-2 rounded-md border border-solid border-brand-green
+  text-brand-green bg-white;
+
+  &[active] {
+    @apply text-white bg-brand-green;
+  }
 }
 </style>

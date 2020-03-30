@@ -58,7 +58,7 @@
 
 <script>
 import { ContentLoader } from 'vue-content-loader'
-import { slugify } from '~/api/news'
+import { slugifyArticleRoute as slugify } from '~/lib/slugify'
 import { db, analytics } from '~/lib/firebase'
 import { formatDateTimeShort } from '~/lib/date'
 
