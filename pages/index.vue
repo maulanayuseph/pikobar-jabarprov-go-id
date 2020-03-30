@@ -119,7 +119,7 @@
             :href.prop="selfDiagnoseURL"
             target="_blank"
           >
-            <b>Nilai Diri Saya</b>
+            <b>Periksa Diri Saya</b>
           </a>
         </div>
       </div>
