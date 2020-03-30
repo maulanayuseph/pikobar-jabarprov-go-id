@@ -18,21 +18,28 @@
     </div>
     <Appbar />
     <div
-      class="w-full pb-32"
+      class="w-full"
       style="min-height: 75vh;"
     >
       <nuxt />
     </div>
+    <AppFooter class="container mx-auto pb-32">
+      <SponsorList class="m-4 md:m-8 p-5 md:p-8 rounded-lg bg-white shadow-md" />
+    </AppFooter>
     <Navbar class="lg:hidden" />
   </div>
 </template>
 
 <script>
 import Appbar from '~/components/Appbar'
+import AppFooter from '~/components/AppFooter'
+import SponsorList from '~/components/SponsorList'
 import Navbar from '~/components/Navbar'
 export default {
   components: {
     Appbar,
+    AppFooter,
+    SponsorList,
     Navbar
   },
   data () {
