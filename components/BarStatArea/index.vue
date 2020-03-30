@@ -26,7 +26,7 @@
             </h4>
             <span style="width: 40%">
               <h4 style="color: #000000; font-weight: bolder; text-align: right; margin-right: 20px;">
-                ({{ dataTotalPositifAll[0] }})
+                [{{ dataTotalPositifAll[0] }}]
               </h4>
             </span>
           </div>
@@ -43,7 +43,7 @@
             </h4>
             <span style="width: 40%">
               <h4 style="color: #000000; font-weight: bolder; text-align: right; margin-right: 20px;">
-                ({{ dataTotalPositifAll[1] }})
+                [{{ dataTotalPositifAll[1] }}]
               </h4>
             </span>
           </div>
@@ -67,7 +67,7 @@
             <div style="width: 40%">
               <h4 style="text-align: right; margin-right: 20px;">
                 <span style="color: #4FB769; font-weight: bolder;">{{ item.positif_persentase }} %</span>
-                <span style="color: #000000; font-weight: bolder;">({{ item.positif }})</span>
+                <span style="color: #000000; font-weight: bolder;">[{{ item.positif }}]</span>
               </h4>
             </div>
           </div>
@@ -91,7 +91,7 @@
             </h4>
             <span style="width: 40%">
               <h4 style="color: #000000; font-weight: bolder; text-align: right; margin-right: 20px;">
-                ({{ dataTotalPositifAll[0] }})
+                [{{ dataTotalPositifAll[0] }}]
               </h4>
             </span>
           </div>
@@ -108,7 +108,7 @@
             </h4>
             <span style="width: 40%">
               <h4 style="color: #000000; font-weight: bolder; text-align: right; margin-right: 20px;">
-                ({{ dataTotalPositifAll[1] }})
+                [{{ dataTotalPositifAll[1] }}]
               </h4>
             </span>
           </div>
@@ -132,7 +132,7 @@
             <div style="width: 40%">
               <h4 style="text-align: right; margin-right: 20px;">
                 <span style="color: #4FB769; font-weight: bolder;">{{ item.positif_persentase }} %</span>
-                <span style="color: #000000; font-weight: bolder;">({{ item.positif }})</span>
+                <span style="color: #000000; font-weight: bolder;">[{{ item.positif }}]</span>
               </h4>
             </div>
           </div>
