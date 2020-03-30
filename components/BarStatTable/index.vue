@@ -36,7 +36,7 @@ export default {
             backgroundColor: '#eee'
           },
           {
-            label: 'OPD - Proses',
+            label: 'ODP - Proses',
             field: 'odp_proses',
             sort: 'desc',
             backgroundColor: '#009EDC',

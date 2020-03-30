@@ -24,7 +24,7 @@
     </nav>
 
     <section
-      v-show="stat.isActiveHarian"
+      v-if="stat.isActiveHarian"
       class="chart-container w-full mt-4"
     >
       <div
@@ -60,13 +60,13 @@
     </section>
 
     <section
-      v-show="stat.isActiveAkumulatif"
+      v-if="stat.isActiveAkumulatif"
       class="chart-container w-full mt-4"
     >
       <div
         class="overflow-hidden bg-white rounded-lg shadow-md"
       >
-        <h4 class="m-3 text-xl">
+        <h4 class="p-5 text-xl">
           <b>Kumulatif ODP</b><br>
           <small class="opacity-50">(Orang Dalam Pemantauan)</small>
         </h4>
@@ -80,7 +80,7 @@
       <div
         class="overflow-hidden bg-white rounded-lg shadow-md"
       >
-        <h4 class="m-3 text-xl">
+        <h4 class="p-5 text-xl">
           <b>Kumulatif PDP</b><br>
           <small class="opacity-50">(Pasien Dalam Pengawasan)</small>
         </h4>
@@ -144,7 +144,7 @@ export default {
         count_kota: 0
       },
       barChartHarianODPData: [
-        ['Tanggal', 'Proses Pemantauan'],
+        ['Tanggal', 'Total Pemantauan'],
         ['0', 0]
       ],
       barChartHarianODPOptions: {
@@ -166,7 +166,7 @@ export default {
         }
       },
       barChartHarianPDPData: [
-        ['Tanggal', 'Proses Pengawasan'],
+        ['Tanggal', 'Total Pengawasan'],
         ['0', 0]
       ],
       barChartHarianPDPOptions: {

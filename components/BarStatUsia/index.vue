@@ -147,7 +147,8 @@ export default {
           title: 'Umur',
           viewWindowMode: 'explicit',
           viewWindow: {
-            min: 0
+            min: -150,
+            max: 150
           },
           ticks: [
             { v: -10, f: '10' },
@@ -315,14 +316,8 @@ export default {
         this.stat.isODP = false
         this.stat.isPDP = true
       }
-      let max = 0
       for (let i = 0; i < self.jsonDataSebaranJabar.length; i++) {
         if (self.jsonDataSebaranJabar[i].status === stat) {
-          if (self.jsonDataSebaranJabar[i].umur > max) {
-            max = self.jsonDataSebaranJabar[i].umur
-            self.barChartUmurJenisKelaminOptions.hAxis.viewWindow.min = (max + 10) * -1
-            self.barChartUmurJenisKelaminOptions.hAxis.viewWindow.max = max + 10
-          }
           if (self.jsonDataSebaranJabar[i].gender === 'Laki-laki') {
             if ((self.jsonDataSebaranJabar[i].umur >= 0) && (self.jsonDataSebaranJabar[i].umur <= 10)) {
               self.barChartUmurJenisKelaminData.rows[8].c[1].v -= 1
@@ -384,13 +379,36 @@ export default {
           }
         }
       }
-    }
-  },
-  head () {
-    return {
-      link: [
-        /* { rel: 'stylesheet', href: 'https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css' } */
-      ]
+
+      let max = 0
+      let asc = 0
+      // find max count for scala
+      for (let j = 0; j < self.barChartUmurJenisKelaminData.rows.length; j++) {
+        if (self.barChartUmurJenisKelaminData.rows[j].c[2].v > max) {
+          max = self.barChartUmurJenisKelaminData.rows[j].c[2].v
+        }
+        if (self.barChartUmurJenisKelaminData.rows[j].c[1].v * -1 > max) {
+          max = self.barChartUmurJenisKelaminData.rows[j].c[1].v * -1
+        }
+        asc = Math.ceil(max / 10)
+        self.barChartUmurJenisKelaminOptions.hAxis.viewWindow.min = (max + asc) * -1
+        self.barChartUmurJenisKelaminOptions.hAxis.viewWindow.max = max + asc
+      }
+
+      // set number of scala
+      self.barChartUmurJenisKelaminOptions.hAxis.ticks = []
+      if (max > 0) {
+        asc = Math.ceil(max / 10)
+        for (let k = 0; k <= max + asc; k = k + asc) {
+          self.barChartUmurJenisKelaminOptions.hAxis.ticks.push({ v: k * -1, f: k.toString() })
+        }
+        for (let k = 0; k <= max + asc; k = k + asc) {
+          self.barChartUmurJenisKelaminOptions.hAxis.ticks.push(k)
+        }
+      } else {
+        self.barChartUmurJenisKelaminOptions.hAxis.ticks.push({ v: 0, f: '0' })
+        self.barChartUmurJenisKelaminOptions.hAxis.ticks.push(0)
+      }
     }
   }
 }

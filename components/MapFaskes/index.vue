@@ -1,11 +1,15 @@
 <template>
-  <div class="container-map">
-    <div class="bg-white col-md-12 p-0 m-2 " style="border-radius: 0.8rem; box-shadow: 0 0 4px 0px rgba(0,0,0,0.05), 0 4px 24px 0 rgba(0,0,0,0.1); height:50em;">
-      <div id="map-faskes" style="height: 83%;z-index:0;" />
-      <div class="info-legend p-4">
-        <b>Keterangan: </b>
-        <div class="row">
-          <div class="col-md-2">
+  <div class="container-map m-2">
+    <div class="bg-white col-md-12 p-0 " style="border-radius: 0.8rem; box-shadow: 0 0 4px 0px rgba(0,0,0,0.05), 0 4px 24px 0 rgba(0,0,0,0.1);">
+      <div id="map-faskes" style="height: 50em;z-index:0;" />
+      <div class="filter-layer">
+        <div class="text-right">
+          <button class="btn btn-light" @click="showFilter">
+            <font-awesome-icon :icon="faFilter" />
+          </button>
+        </div>
+        <div v-if="isShowFilter" data-v-dfef036a="" class="filter-data">
+          <li :class="filter.lini1 ? 'filter-active' : ''" @click="setFilter('lini1')">
             <svg
               style="float:left;"
               width="18"
@@ -25,9 +29,9 @@
               <path d="M13.9998 7.54973V10.4503C13.9998 10.7177 13.7832 10.9347 13.5153 10.9347H10.935V13.5155C10.935 13.783 10.7179 14 10.4505 14H9V4H10.4505C10.7179 4 10.935 4.21704 10.935 4.48447V7.06526H13.5153C13.7832 7.06526 13.9998 7.2823 13.9998 7.54973Z" fill="#5AAA4E" />
             </svg>
             &nbsp;
-            Rumah Sakit Rujukan
-          </div>
-          <div class="col-md-2">
+            Rumah Sakit Rujukan Lini 1
+          </li>
+          <li :class="filter.lini2 ? 'filter-active' : ''" @click="setFilter('lini2')">
             <svg
               style="float:left"
               width="18"
@@ -47,9 +51,9 @@
               <path d="M13.9998 7.54973V10.4503C13.9998 10.7177 13.7832 10.9347 13.5153 10.9347H10.935V13.5155C10.935 13.783 10.7179 14 10.4505 14H9V4H10.4505C10.7179 4 10.935 4.21704 10.935 4.48447V7.06526H13.5153C13.7832 7.06526 13.9998 7.2823 13.9998 7.54973Z" fill="#F2C94C" />
             </svg>
             &nbsp;
-            Rumah Sakit Lini 2
-          </div>
-          <div class="col-md-2">
+            Rumah Sakit Rujukan Lini 2
+          </li>
+          <li :class="filter.puskesmas ? 'filter-active' : ''" @click="setFilter('puskesmas')">
             <svg
               style="float:left"
               width="18"
@@ -69,9 +73,84 @@
             </svg>
             &nbsp;
             Puskesmas
-          </div>
-          <div class="col-md" />
+          </li>
         </div>
+      </div>
+      <div class="info-legend p-3">
+        <div class="container">
+          <b>Keterangan: </b>
+          <div class="row">
+            <div class="col-md-3">
+              <svg
+                style="float:left;"
+                width="18"
+                height="18"
+                viewBox="0 0 18 18"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg">
+                <rect
+                  x="1"
+                  y="1"
+                  width="16"
+                  height="16"
+                  rx="4"
+                  stroke="#5AAA4E"
+                />
+                <path d="M13.9996 7.54973V10.4503C13.9996 10.7177 13.783 10.9347 13.5151 10.9347H10.9348V13.5155C10.9348 13.783 10.7177 14 10.4503 14H7.54978C7.28235 14 7.0653 13.783 7.0653 13.5155V10.9347H4.48447C4.21656 10.9347 4 10.7177 4 10.4503V7.54973C4 7.2823 4.21656 7.06526 4.48447 7.06526H7.0653V4.48447C7.0653 4.21704 7.28235 4 7.54978 4H10.4504C10.7178 4 10.9348 4.21704 10.9348 4.48447V7.06526H13.5152C13.783 7.06526 13.9996 7.2823 13.9996 7.54973Z" fill="#6EBE62"/>
+                <path d="M13.9998 7.54973V10.4503C13.9998 10.7177 13.7832 10.9347 13.5153 10.9347H10.935V13.5155C10.935 13.783 10.7179 14 10.4505 14H9V4H10.4505C10.7179 4 10.935 4.21704 10.935 4.48447V7.06526H13.5153C13.7832 7.06526 13.9998 7.2823 13.9998 7.54973Z" fill="#5AAA4E" />
+              </svg>
+              &nbsp;
+              Rumah Sakit Rujukan Lini 1
+            </div>
+            <div class="col-md-3">
+              <svg
+                style="float:left"
+                width="18"
+                height="18"
+                viewBox="0 0 18 18"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg">
+                <rect
+                  x="1"
+                  y="1"
+                  width="16"
+                  height="16"
+                  rx="4"
+                  stroke="#F2C94C"
+                />
+                <path d="M13.9996 7.54973V10.4503C13.9996 10.7177 13.783 10.9347 13.5151 10.9347H10.9348V13.5155C10.9348 13.783 10.7177 14 10.4503 14H7.54978C7.28235 14 7.0653 13.783 7.0653 13.5155V10.9347H4.48447C4.21656 10.9347 4 10.7177 4 10.4503V7.54973C4 7.2823 4.21656 7.06526 4.48447 7.06526H7.0653V4.48447C7.0653 4.21704 7.28235 4 7.54978 4H10.4504C10.7178 4 10.9348 4.21704 10.9348 4.48447V7.06526H13.5152C13.783 7.06526 13.9996 7.2823 13.9996 7.54973Z" fill="#F2D57A" />
+                <path d="M13.9998 7.54973V10.4503C13.9998 10.7177 13.7832 10.9347 13.5153 10.9347H10.935V13.5155C10.935 13.783 10.7179 14 10.4505 14H9V4H10.4505C10.7179 4 10.935 4.21704 10.935 4.48447V7.06526H13.5153C13.7832 7.06526 13.9998 7.2823 13.9998 7.54973Z" fill="#F2C94C" />
+              </svg>
+              &nbsp;
+              Rumah Sakit Rujukan Lini 2
+            </div>
+            <div class="col-md-2">
+              <svg
+                style="float:left"
+                width="18"
+                height="18"
+                viewBox="0 0 18 18"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg">
+                <rect
+                  x="1"
+                  y="1"
+                  width="16"
+                  height="16"
+                  rx="4"
+                  stroke="#2D9CDB" />
+                <path d="M13.9996 7.54973V10.4503C13.9996 10.7177 13.783 10.9347 13.5151 10.9347H10.9348V13.5155C10.9348 13.783 10.7177 14 10.4503 14H7.54978C7.28235 14 7.0653 13.783 7.0653 13.5155V10.9347H4.48447C4.21656 10.9347 4 10.7177 4 10.4503V7.54973C4 7.2823 4.21656 7.06526 4.48447 7.06526H7.0653V4.48447C7.0653 4.21704 7.28235 4 7.54978 4H10.4504C10.7178 4 10.9348 4.21704 10.9348 4.48447V7.06526H13.5152C13.783 7.06526 13.9996 7.2823 13.9996 7.54973Z" fill="#56CCF2" />
+                <path d="M13.9998 7.54973V10.4503C13.9998 10.7177 13.7832 10.9347 13.5153 10.9347H10.935V13.5155C10.935 13.783 10.7179 14 10.4505 14H9V4H10.4505C10.7179 4 10.935 4.21704 10.935 4.48447V7.06526H13.5153C13.7832 7.06526 13.9998 7.2823 13.9998 7.54973Z" fill="#2D9CDB" />
+              </svg>
+              &nbsp;
+              Puskesmas
+            </div>
+            <div class="col-md" />
+          </div>
+        </div>
+      </div>
+      <div v-if="loading" class="loading-page">
+        <div class="loading-image" />
       </div>
     </div>
   </div>
@@ -79,16 +158,40 @@
 
 <script>
 import axios from 'axios'
+import { faFilter } from '@fortawesome/free-solid-svg-icons'
 
 export default {
   name: 'MapSebaranCovid',
   data () {
     return {
       map: '',
+      isShowFilter: false,
       zoom: 8,
       isHidden: false,
       jsonData: [],
-      listLayer: []
+      listLayer: [],
+      filter: {
+        lini1: true,
+        lini2: true,
+        puskesmas: true
+      },
+      loading: false,
+      faFilter,
+      geoJSONData: [],
+      iconRSRujukan: `<svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="1" y="1" width="16" height="16" rx="4" stroke="#5AAA4E"/>
+        <path d="M13.9996 7.54973V10.4503C13.9996 10.7177 13.783 10.9347 13.5151 10.9347H10.9348V13.5155C10.9348 13.783 10.7177 14 10.4503 14H7.54978C7.28235 14 7.0653 13.783 7.0653 13.5155V10.9347H4.48447C4.21656 10.9347 4 10.7177 4 10.4503V7.54973C4 7.2823 4.21656 7.06526 4.48447 7.06526H7.0653V4.48447C7.0653 4.21704 7.28235 4 7.54978 4H10.4504C10.7178 4 10.9348 4.21704 10.9348 4.48447V7.06526H13.5152C13.783 7.06526 13.9996 7.2823 13.9996 7.54973Z" fill="#6EBE62"/>
+        <path d="M13.9998 7.54973V10.4503C13.9998 10.7177 13.7832 10.9347 13.5153 10.9347H10.935V13.5155C10.935 13.783 10.7179 14 10.4505 14H9V4H10.4505C10.7179 4 10.935 4.21704 10.935 4.48447V7.06526H13.5153C13.7832 7.06526 13.9998 7.2823 13.9998 7.54973Z" fill="#5AAA4E"/></svg>`,
+      iconRSLini: `<svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="1" y="1" width="16" height="16" rx="4" stroke="#F2C94C"/>
+        <path d="M13.9996 7.54973V10.4503C13.9996 10.7177 13.783 10.9347 13.5151 10.9347H10.9348V13.5155C10.9348 13.783 10.7177 14 10.4503 14H7.54978C7.28235 14 7.0653 13.783 7.0653 13.5155V10.9347H4.48447C4.21656 10.9347 4 10.7177 4 10.4503V7.54973C4 7.2823 4.21656 7.06526 4.48447 7.06526H7.0653V4.48447C7.0653 4.21704 7.28235 4 7.54978 4H10.4504C10.7178 4 10.9348 4.21704 10.9348 4.48447V7.06526H13.5152C13.783 7.06526 13.9996 7.2823 13.9996 7.54973Z" fill="#F2D57A"/>
+        <path d="M13.9998 7.54973V10.4503C13.9998 10.7177 13.7832 10.9347 13.5153 10.9347H10.935V13.5155C10.935 13.783 10.7179 14 10.4505 14H9V4H10.4505C10.7179 4 10.935 4.21704 10.935 4.48447V7.06526H13.5153C13.7832 7.06526 13.9998 7.2823 13.9998 7.54973Z" fill="#F2C94C"/>
+      </svg>`,
+      iconPuskesmas: `<svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="1" y="1" width="16" height="16" rx="4" stroke="#2D9CDB"/>
+        <path d="M13.9996 7.54973V10.4503C13.9996 10.7177 13.783 10.9347 13.5151 10.9347H10.9348V13.5155C10.9348 13.783 10.7177 14 10.4503 14H7.54978C7.28235 14 7.0653 13.783 7.0653 13.5155V10.9347H4.48447C4.21656 10.9347 4 10.7177 4 10.4503V7.54973C4 7.2823 4.21656 7.06526 4.48447 7.06526H7.0653V4.48447C7.0653 4.21704 7.28235 4 7.54978 4H10.4504C10.7178 4 10.9348 4.21704 10.9348 4.48447V7.06526H13.5152C13.783 7.06526 13.9996 7.2823 13.9996 7.54973Z" fill="#56CCF2"/>
+        <path d="M13.9998 7.54973V10.4503C13.9998 10.7177 13.7832 10.9347 13.5153 10.9347H10.935V13.5155C10.935 13.783 10.7179 14 10.4505 14H9V4H10.4505C10.7179 4 10.935 4.21704 10.935 4.48447V7.06526H13.5153C13.7832 7.06526 13.9998 7.2823 13.9998 7.54973Z" fill="#2D9CDB"/>
+      </svg>`
     }
   },
   mounted () {
@@ -102,18 +205,64 @@ export default {
     }
   },
   methods: {
+    setFilter (type) {
+      this.loading = true
+      try {
+        this.filter[type] = !this.filter[type]
+        this.loading = false
+        this.removeLayer()
+        this.createMap()
+      } catch (e) {
+        console.log(e.message)
+      }
+    },
+    showFilter () {
+      this.isShowFilter = !this.isShowFilter
+    },
     fetchData () {
       const self = this
       axios
         .get('https://covid19-public.digitalservice.id/api/v1/sebaran/jabar/faskes')
         .then(function (response) {
-          console.log(response.data)
           self.jsonData = response.data.data
+          self.geoJSONData = self.createGeoJSON(response.data.data)
           self.createMap()
         })
         .catch(function (error) {
           console.log(error)
         })
+    },
+    createGeoJSON (data) {
+      const features = []
+      data.forEach((element) => {
+        if (element.latitude !== null) {
+          features.push({
+            type: 'Feature',
+            properties: {
+              kode_kemenkes: element.kode_kemenkes,
+              nama: element.nama,
+              tipe_faskes: element.tipe_faskes,
+              rujukan: element.rujukan,
+              alamat: element.alamat,
+              telepon: element.telepon,
+              url: element.url
+            },
+            geometry: {
+              type: 'Point',
+              coordinates: [
+                element.longitude,
+                element.latitude
+              ]
+            }
+          })
+        }
+      })
+      const geojson = {
+        type: 'FeatureCollection',
+        features
+      }
+
+      return geojson
     },
     createBasemap () {
       this.map = this.$L.map('map-faskes', {
@@ -143,86 +292,74 @@ export default {
       // create layer group
       this.layerGroup = this.$L.layerGroup().addTo(this.map)
     },
+    createMap (data) {
+      const self = this
+      const layer = self.$L.geoJSON(self.geoJSONData, {
+        pointToLayer: (feature, latlng) => {
+          let icon = ''
+          if (feature.properties.rujukan === true) {
+            icon = self.iconRSRujukan
+          } else if (feature.properties.tipe_faskes === 1) {
+            icon = self.iconRSLini
+          } else {
+            icon = self.iconPuskesmas
+          }
+
+          return self.$L.marker([feature.geometry.coordinates[1], feature.geometry.coordinates[0]], {
+            icon: self.$L.divIcon({
+              html: icon,
+              className: 'icon-rs green'
+            })
+          })
+        },
+        filter: (feature, layer) => {
+          if (self.filter.lini1 && feature.properties.rujukan) {
+            return feature
+          } else if (self.filter.lini2 && feature.properties.tipe_faskes === 1) {
+            return feature
+          } else if (self.filter.puskesmas && feature.properties.tipe_faskes === 2) {
+            return feature
+          }
+        },
+        onEachFeature: (feature, layer) => {
+          let popup = `<table border=0 cellpadding=2>
+          <tr>
+            <th><b> Nama </b></th>
+            <td> : </td>
+            <td>${feature.properties.nama}</td>
+          </tr>
+          <tr>
+            <th><b> Alamat </b></th>
+            <td> : </td>
+            <td>${feature.properties.alamat}</td>
+          </tr>`
+          if (feature.properties.telepon != null && feature.properties.telepon !== '') {
+            popup += `<tr>
+                <th><b> Telepon </b></th>
+                <td> : </td>
+                <td>${feature.properties.telepon}</td>
+            </tr>`
+          }
+
+          if (feature.properties.url != null && feature.properties.url !== '') {
+            popup += `<tr>
+                <th><b> Url </b></th>
+                <td> : </td>
+                <td>${feature.properties.url}</td>
+              </tr>`
+          }
+
+          popup += '</table>'
+          layer.bindPopup(popup)
+        }
+      }).addTo(self.map)
+      self.listLayer.push(layer)
+    },
     removeLayer () {
       this.listLayer.forEach((element) => {
         this.map.removeLayer(element)
       })
       this.listLayer = []
-    },
-    createMap () {
-      this.createLayerFaskes()
-    },
-    createLayerFaskes () {
-      const iconRSRujukan = `<svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect x="1" y="1" width="16" height="16" rx="4" stroke="#5AAA4E"/>
-      <path d="M13.9996 7.54973V10.4503C13.9996 10.7177 13.783 10.9347 13.5151 10.9347H10.9348V13.5155C10.9348 13.783 10.7177 14 10.4503 14H7.54978C7.28235 14 7.0653 13.783 7.0653 13.5155V10.9347H4.48447C4.21656 10.9347 4 10.7177 4 10.4503V7.54973C4 7.2823 4.21656 7.06526 4.48447 7.06526H7.0653V4.48447C7.0653 4.21704 7.28235 4 7.54978 4H10.4504C10.7178 4 10.9348 4.21704 10.9348 4.48447V7.06526H13.5152C13.783 7.06526 13.9996 7.2823 13.9996 7.54973Z" fill="#6EBE62"/>
-      <path d="M13.9998 7.54973V10.4503C13.9998 10.7177 13.7832 10.9347 13.5153 10.9347H10.935V13.5155C10.935 13.783 10.7179 14 10.4505 14H9V4H10.4505C10.7179 4 10.935 4.21704 10.935 4.48447V7.06526H13.5153C13.7832 7.06526 13.9998 7.2823 13.9998 7.54973Z" fill="#5AAA4E"/></svg>`
-      const iconRSLini = `<svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect x="1" y="1" width="16" height="16" rx="4" stroke="#F2C94C"/>
-      <path d="M13.9996 7.54973V10.4503C13.9996 10.7177 13.783 10.9347 13.5151 10.9347H10.9348V13.5155C10.9348 13.783 10.7177 14 10.4503 14H7.54978C7.28235 14 7.0653 13.783 7.0653 13.5155V10.9347H4.48447C4.21656 10.9347 4 10.7177 4 10.4503V7.54973C4 7.2823 4.21656 7.06526 4.48447 7.06526H7.0653V4.48447C7.0653 4.21704 7.28235 4 7.54978 4H10.4504C10.7178 4 10.9348 4.21704 10.9348 4.48447V7.06526H13.5152C13.783 7.06526 13.9996 7.2823 13.9996 7.54973Z" fill="#F2D57A"/>
-      <path d="M13.9998 7.54973V10.4503C13.9998 10.7177 13.7832 10.9347 13.5153 10.9347H10.935V13.5155C10.935 13.783 10.7179 14 10.4505 14H9V4H10.4505C10.7179 4 10.935 4.21704 10.935 4.48447V7.06526H13.5153C13.7832 7.06526 13.9998 7.2823 13.9998 7.54973Z" fill="#F2C94C"/>
-      </svg>`
-      const iconPuskesmas = `<svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect x="1" y="1" width="16" height="16" rx="4" stroke="#2D9CDB"/>
-      <path d="M13.9996 7.54973V10.4503C13.9996 10.7177 13.783 10.9347 13.5151 10.9347H10.9348V13.5155C10.9348 13.783 10.7177 14 10.4503 14H7.54978C7.28235 14 7.0653 13.783 7.0653 13.5155V10.9347H4.48447C4.21656 10.9347 4 10.7177 4 10.4503V7.54973C4 7.2823 4.21656 7.06526 4.48447 7.06526H7.0653V4.48447C7.0653 4.21704 7.28235 4 7.54978 4H10.4504C10.7178 4 10.9348 4.21704 10.9348 4.48447V7.06526H13.5152C13.783 7.06526 13.9996 7.2823 13.9996 7.54973Z" fill="#56CCF2"/>
-      <path d="M13.9998 7.54973V10.4503C13.9998 10.7177 13.7832 10.9347 13.5153 10.9347H10.935V13.5155C10.935 13.783 10.7179 14 10.4505 14H9V4H10.4505C10.7179 4 10.935 4.21704 10.935 4.48447V7.06526H13.5153C13.7832 7.06526 13.9998 7.2823 13.9998 7.54973Z" fill="#2D9CDB"/>
-      </svg>`
-
-      this.jsonData.forEach((elFaskes) => {
-        if (elFaskes.latitude !== null) {
-          let icon = ''
-          if (elFaskes.rujukan === true) {
-            icon = iconRSRujukan
-          } else if (elFaskes.tipe_faskes === 1) {
-            icon = iconRSLini
-          } else {
-            icon = iconPuskesmas
-          }
-          const pointRS = this.$L.marker([elFaskes.latitude, elFaskes.longitude], {
-            icon: this.$L.divIcon({
-              html: icon,
-              className: 'icon-rs green'
-            })
-          }).addTo(this.map)
-
-          let popup = `<table border=0 cellpadding=2>
-              <tr>
-                <th><b> Nama </b></th>
-                <td> : </td>
-                <td>${elFaskes.nama}</td>
-              </tr>
-              <tr>
-                <th><b> Alamat </b></th>
-                <td> : </td>
-                <td>${elFaskes.alamat}</td>
-              </tr>`
-          if (elFaskes.telepon != null && elFaskes.telepon !== '') {
-            popup += `<tr>
-                <th><b> Telepon </b></th>
-                <td> : </td>
-                <td>${elFaskes.telepon}</td>
-            </tr>`
-          }
-
-          if (elFaskes.url != null && elFaskes.url !== '') {
-            popup += `<tr>
-                <th><b> Url </b></th>
-                <td> : </td>
-                <td>${elFaskes.url}</td>
-              </tr>`
-          }
-
-          popup += '</table>'
-          pointRS.bindPopup(popup)
-          pointRS.on('mouseover', function (e) {
-            this.openPopup()
-          })
-          pointRS.on('mouseout', function (e) {
-            this.closePopup()
-          })
-          this.listLayer.push(pointRS)
-        }
-      })
     },
     tesMap () {
     }
@@ -255,9 +392,6 @@ export default {
     color: #777;
 }
 .info-legend {
-  height: 15%;
-  overflow-y: auto;
-  overflow-x: hidden;
   font-size: 15px;
 }
 .legend {
@@ -278,6 +412,52 @@ export default {
 }
 .icon-legend-rs {
   font-size: 1.2em;
+}
+.loading-page {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 0.5em;
+  text-align: center;
+  padding-top: 200px;
+  font-size: 30px;
+  font-family: sans-serif;
+}
+
+.filter-layer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding-right: 1em;
+  padding-top: 1em;
+}
+
+.filter-layer .btn {
+  font-size: 0.8em;
+  padding: 2px 6px;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.65);
+}
+.filter-data {
+  background: #fff;
+  margin-top: 0.5em;
+  padding: 0.6em;
+  border-radius: 0.6em;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.65);
+}
+.filter-layer li {
+  list-style: none;
+  opacity: 0.4;
+  padding-bottom: 0.2em;
+}
+
+.filter-layer li:hover {
+  cursor: pointer;
+}
+.filter-active {
+  opacity: 1 !important;
 }
 </style>
 <style>
@@ -417,4 +597,13 @@ export default {
 .icon-rs {
   background: #fff
 }
+
+.loading-image {
+  height: 10em;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-image:
+        url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBzdHlsZT0ibWFyZ2luOiBhdXRvOyBkaXNwbGF5OiBibG9jazsgc2hhcGUtcmVuZGVyaW5nOiBhdXRvOyIgd2lkdGg9IjIwMHB4IiBoZWlnaHQ9IjIwMHB4IiB2aWV3Qm94PSIwIDAgMTAwIDEwMCIgcHJlc2VydmVBc3BlY3RSYXRpbz0ieE1pZFlNaWQiPgogICAgICAgICAgICA8ZyB0cmFuc2Zvcm09InJvdGF0ZSgwIDUwIDUwKSI+CiAgICAgICAgICAgICAgPHJlY3QgeD0iNDciIHk9IjI0IiByeD0iMyIgcnk9IjYiIHdpZHRoPSI2IiBoZWlnaHQ9IjEyIiBmaWxsPSIjODVhMmI2Ij4KICAgICAgICAgICAgICAgIDxhbmltYXRlIGF0dHJpYnV0ZU5hbWU9Im9wYWNpdHkiIHZhbHVlcz0iMTswIiBrZXlUaW1lcz0iMDsxIiBkdXI9IjFzIiBiZWdpbj0iLTAuOTE2NjY2NjY2NjY2NjY2NnMiIHJlcGVhdENvdW50PSJpbmRlZmluaXRlIj48L2FuaW1hdGU+CiAgICAgICAgICAgICAgPC9yZWN0PgogICAgICAgICAgICA8L2c+PGcgdHJhbnNmb3JtPSJyb3RhdGUoMzAgNTAgNTApIj4KICAgICAgICAgICAgICA8cmVjdCB4PSI0NyIgeT0iMjQiIHJ4PSIzIiByeT0iNiIgd2lkdGg9IjYiIGhlaWdodD0iMTIiIGZpbGw9IiM4NWEyYjYiPgogICAgICAgICAgICAgICAgPGFuaW1hdGUgYXR0cmlidXRlTmFtZT0ib3BhY2l0eSIgdmFsdWVzPSIxOzAiIGtleVRpbWVzPSIwOzEiIGR1cj0iMXMiIGJlZ2luPSItMC44MzMzMzMzMzMzMzMzMzM0cyIgcmVwZWF0Q291bnQ9ImluZGVmaW5pdGUiPjwvYW5pbWF0ZT4KICAgICAgICAgICAgICA8L3JlY3Q+CiAgICAgICAgICAgIDwvZz48ZyB0cmFuc2Zvcm09InJvdGF0ZSg2MCA1MCA1MCkiPgogICAgICAgICAgICAgIDxyZWN0IHg9IjQ3IiB5PSIyNCIgcng9IjMiIHJ5PSI2IiB3aWR0aD0iNiIgaGVpZ2h0PSIxMiIgZmlsbD0iIzg1YTJiNiI+CiAgICAgICAgICAgICAgICA8YW5pbWF0ZSBhdHRyaWJ1dGVOYW1lPSJvcGFjaXR5IiB2YWx1ZXM9IjE7MCIga2V5VGltZXM9IjA7MSIgZHVyPSIxcyIgYmVnaW49Ii0wLjc1cyIgcmVwZWF0Q291bnQ9ImluZGVmaW5pdGUiPjwvYW5pbWF0ZT4KICAgICAgICAgICAgICA8L3JlY3Q+CiAgICAgICAgICAgIDwvZz48ZyB0cmFuc2Zvcm09InJvdGF0ZSg5MCA1MCA1MCkiPgogICAgICAgICAgICAgIDxyZWN0IHg9IjQ3IiB5PSIyNCIgcng9IjMiIHJ5PSI2IiB3aWR0aD0iNiIgaGVpZ2h0PSIxMiIgZmlsbD0iIzg1YTJiNiI+CiAgICAgICAgICAgICAgICA8YW5pbWF0ZSBhdHRyaWJ1dGVOYW1lPSJvcGFjaXR5IiB2YWx1ZXM9IjE7MCIga2V5VGltZXM9IjA7MSIgZHVyPSIxcyIgYmVnaW49Ii0wLjY2NjY2NjY2NjY2NjY2NjZzIiByZXBlYXRDb3VudD0iaW5kZWZpbml0ZSI+PC9hbmltYXRlPgogICAgICAgICAgICAgIDwvcmVjdD4KICAgICAgICAgICAgPC9nPjxnIHRyYW5zZm9ybT0icm90YXRlKDEyMCA1MCA1MCkiPgogICAgICAgICAgICAgIDxyZWN0IHg9IjQ3IiB5PSIyNCIgcng9IjMiIHJ5PSI2IiB3aWR0aD0iNiIgaGVpZ2h0PSIxMiIgZmlsbD0iIzg1YTJiNiI+CiAgICAgICAgICAgICAgICA8YW5pbWF0ZSBhdHRyaWJ1dGVOYW1lPSJvcGFjaXR5IiB2YWx1ZXM9IjE7MCIga2V5VGltZXM9IjA7MSIgZHVyPSIxcyIgYmVnaW49Ii0wLjU4MzMzMzMzMzMzMzMzMzRzIiByZXBlYXRDb3VudD0iaW5kZWZpbml0ZSI+PC9hbmltYXRlPgogICAgICAgICAgICAgIDwvcmVjdD4KICAgICAgICAgICAgPC9nPjxnIHRyYW5zZm9ybT0icm90YXRlKDE1MCA1MCA1MCkiPgogICAgICAgICAgICAgIDxyZWN0IHg9IjQ3IiB5PSIyNCIgcng9IjMiIHJ5PSI2IiB3aWR0aD0iNiIgaGVpZ2h0PSIxMiIgZmlsbD0iIzg1YTJiNiI+CiAgICAgICAgICAgICAgICA8YW5pbWF0ZSBhdHRyaWJ1dGVOYW1lPSJvcGFjaXR5IiB2YWx1ZXM9IjE7MCIga2V5VGltZXM9IjA7MSIgZHVyPSIxcyIgYmVnaW49Ii0wLjVzIiByZXBlYXRDb3VudD0iaW5kZWZpbml0ZSI+PC9hbmltYXRlPgogICAgICAgICAgICAgIDwvcmVjdD4KICAgICAgICAgICAgPC9nPjxnIHRyYW5zZm9ybT0icm90YXRlKDE4MCA1MCA1MCkiPgogICAgICAgICAgICAgIDxyZWN0IHg9IjQ3IiB5PSIyNCIgcng9IjMiIHJ5PSI2IiB3aWR0aD0iNiIgaGVpZ2h0PSIxMiIgZmlsbD0iIzg1YTJiNiI+CiAgICAgICAgICAgICAgICA8YW5pbWF0ZSBhdHRyaWJ1dGVOYW1lPSJvcGFjaXR5IiB2YWx1ZXM9IjE7MCIga2V5VGltZXM9IjA7MSIgZHVyPSIxcyIgYmVnaW49Ii0wLjQxNjY2NjY2NjY2NjY2NjdzIiByZXBlYXRDb3VudD0iaW5kZWZpbml0ZSI+PC9hbmltYXRlPgogICAgICAgICAgICAgIDwvcmVjdD4KICAgICAgICAgICAgPC9nPjxnIHRyYW5zZm9ybT0icm90YXRlKDIxMCA1MCA1MCkiPgogICAgICAgICAgICAgIDxyZWN0IHg9IjQ3IiB5PSIyNCIgcng9IjMiIHJ5PSI2IiB3aWR0aD0iNiIgaGVpZ2h0PSIxMiIgZmlsbD0iIzg1YTJiNiI+CiAgICAgICAgICAgICAgICA8YW5pbWF0ZSBhdHRyaWJ1dGVOYW1lPSJvcGFjaXR5IiB2YWx1ZXM9IjE7MCIga2V5VGltZXM9IjA7MSIgZHVyPSIxcyIgYmVnaW49Ii0wLjMzMzMzMzMzMzMzMzMzMzNzIiByZXBlYXRDb3VudD0iaW5kZWZpbml0ZSI+PC9hbmltYXRlPgogICAgICAgICAgICAgIDwvcmVjdD4KICAgICAgICAgICAgPC9nPjxnIHRyYW5zZm9ybT0icm90YXRlKDI0MCA1MCA1MCkiPgogICAgICAgICAgICAgIDxyZWN0IHg9IjQ3IiB5PSIyNCIgcng9IjMiIHJ5PSI2IiB3aWR0aD0iNiIgaGVpZ2h0PSIxMiIgZmlsbD0iIzg1YTJiNiI+CiAgICAgICAgICAgICAgICA8YW5pbWF0ZSBhdHRyaWJ1dGVOYW1lPSJvcGFjaXR5IiB2YWx1ZXM9IjE7MCIga2V5VGltZXM9IjA7MSIgZHVyPSIxcyIgYmVnaW49Ii0wLjI1cyIgcmVwZWF0Q291bnQ9ImluZGVmaW5pdGUiPjwvYW5pbWF0ZT4KICAgICAgICAgICAgICA8L3JlY3Q+CiAgICAgICAgICAgIDwvZz48ZyB0cmFuc2Zvcm09InJvdGF0ZSgyNzAgNTAgNTApIj4KICAgICAgICAgICAgICA8cmVjdCB4PSI0NyIgeT0iMjQiIHJ4PSIzIiByeT0iNiIgd2lkdGg9IjYiIGhlaWdodD0iMTIiIGZpbGw9IiM4NWEyYjYiPgogICAgICAgICAgICAgICAgPGFuaW1hdGUgYXR0cmlidXRlTmFtZT0ib3BhY2l0eSIgdmFsdWVzPSIxOzAiIGtleVRpbWVzPSIwOzEiIGR1cj0iMXMiIGJlZ2luPSItMC4xNjY2NjY2NjY2NjY2NjY2NnMiIHJlcGVhdENvdW50PSJpbmRlZmluaXRlIj48L2FuaW1hdGU+CiAgICAgICAgICAgICAgPC9yZWN0PgogICAgICAgICAgICA8L2c+PGcgdHJhbnNmb3JtPSJyb3RhdGUoMzAwIDUwIDUwKSI+CiAgICAgICAgICAgICAgPHJlY3QgeD0iNDciIHk9IjI0IiByeD0iMyIgcnk9IjYiIHdpZHRoPSI2IiBoZWlnaHQ9IjEyIiBmaWxsPSIjODVhMmI2Ij4KICAgICAgICAgICAgICAgIDxhbmltYXRlIGF0dHJpYnV0ZU5hbWU9Im9wYWNpdHkiIHZhbHVlcz0iMTswIiBrZXlUaW1lcz0iMDsxIiBkdXI9IjFzIiBiZWdpbj0iLTAuMDgzMzMzMzMzMzMzMzMzMzNzIiByZXBlYXRDb3VudD0iaW5kZWZpbml0ZSI+PC9hbmltYXRlPgogICAgICAgICAgICAgIDwvcmVjdD4KICAgICAgICAgICAgPC9nPjxnIHRyYW5zZm9ybT0icm90YXRlKDMzMCA1MCA1MCkiPgogICAgICAgICAgICAgIDxyZWN0IHg9IjQ3IiB5PSIyNCIgcng9IjMiIHJ5PSI2IiB3aWR0aD0iNiIgaGVpZ2h0PSIxMiIgZmlsbD0iIzg1YTJiNiI+CiAgICAgICAgICAgICAgICA8YW5pbWF0ZSBhdHRyaWJ1dGVOYW1lPSJvcGFjaXR5IiB2YWx1ZXM9IjE7MCIga2V5VGltZXM9IjA7MSIgZHVyPSIxcyIgYmVnaW49IjBzIiByZXBlYXRDb3VudD0iaW5kZWZpbml0ZSI+PC9hbmltYXRlPgogICAgICAgICAgICAgIDwvcmVjdD4KICAgICAgICAgICAgPC9nPgogICAgICAgICAgPC9zdmc+")
+}
+
 </style>

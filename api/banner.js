@@ -1,4 +1,4 @@
-import { db } from '~/lib/firebase'
+import { db } from '../lib/firebase'
 
 export function get (options = { perPage: 3 }) {
   return db.collection('banners')

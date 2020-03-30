@@ -94,11 +94,11 @@ export default {
       notifications: 'items'
     })
   },
-  created () {
+  mounted () {
     this.isPending = true
     this.getItems()
       .finally(() => {
-        if (process.client || process.browser) {
+        if (process.browser) {
           analytics.logEvent('messages_list_view')
         }
         this.isPending = false

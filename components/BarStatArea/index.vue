@@ -17,7 +17,7 @@
       </button>
     </div>
 
-    <section v-show="stat.isActiveHarian">
+    <section v-if="stat.isActiveHarian">
       <div style="overflow-x: auto; width: 100%; height: 100%; display: flex;">
         <div class="bg-white p-3 mr-4 mb-4 rounded-lg shadow-md">
           <div class="flex flex-row justify-between items-center">
@@ -26,7 +26,7 @@
             </h4>
             <span style="width: 40%">
               <h4 style="color: #000000; font-weight: bolder; text-align: right; margin-right: 20px;">
-                ({{ dataTotalPositifAll[0] }})
+                [{{ dataTotalPositifAll[0] }}]
               </h4>
             </span>
           </div>
@@ -43,7 +43,7 @@
             </h4>
             <span style="width: 40%">
               <h4 style="color: #000000; font-weight: bolder; text-align: right; margin-right: 20px;">
-                ({{ dataTotalPositifAll[1] }})
+                [{{ dataTotalPositifAll[1] }}]
               </h4>
             </span>
           </div>
@@ -67,21 +67,21 @@
             <div style="width: 40%">
               <h4 style="text-align: right; margin-right: 20px;">
                 <span style="color: #4FB769; font-weight: bolder;">{{ item.positif_persentase }} %</span>
-                <span style="color: #000000; font-weight: bolder;">({{ item.positif }})</span>
+                <span style="color: #000000; font-weight: bolder;">[{{ item.positif }}]</span>
               </h4>
             </div>
           </div>
           <GChart
             type="BarChart"
             :data="jsonDataKota[index].dataHarian"
-            :options="barChartNasionalOptions"
+            :options="barChartKotaOptions"
           />
         </div>
       </div>
     </section>
 
     <section
-      v-show="stat.isActiveAkumulatif"
+      v-if="stat.isActiveAkumulatif"
     >
       <div style="overflow-x: auto; width: 100%; height: 100%; display: flex;">
         <div class="bg-white p-3 mr-4 mb-4 rounded-lg shadow-md">
@@ -91,7 +91,7 @@
             </h4>
             <span style="width: 40%">
               <h4 style="color: #000000; font-weight: bolder; text-align: right; margin-right: 20px;">
-                ({{ dataTotalPositifAll[0] }})
+                [{{ dataTotalPositifAll[0] }}]
               </h4>
             </span>
           </div>
@@ -108,7 +108,7 @@
             </h4>
             <span style="width: 40%">
               <h4 style="color: #000000; font-weight: bolder; text-align: right; margin-right: 20px;">
-                ({{ dataTotalPositifAll[1] }})
+                [{{ dataTotalPositifAll[1] }}]
               </h4>
             </span>
           </div>
@@ -132,14 +132,14 @@
             <div style="width: 40%">
               <h4 style="text-align: right; margin-right: 20px;">
                 <span style="color: #4FB769; font-weight: bolder;">{{ item.positif_persentase }} %</span>
-                <span style="color: #000000; font-weight: bolder;">({{ item.positif }})</span>
+                <span style="color: #000000; font-weight: bolder;">[{{ item.positif }}]</span>
               </h4>
             </div>
           </div>
           <GChart
             type="LineChart"
             :data="jsonDataKota[index].dataAkumulatif"
-            :options="lineChartNasionalOptions"
+            :options="lineChartKotaOptions"
           />
         </div>
       </div>
@@ -850,6 +850,55 @@ export default {
           width: '80%',
           bottom: 50
         }
+      },
+      barChartKotaOptions: {
+        height: 200,
+        width: 300,
+        orientation: 'horizontal',
+        colors: ['#6DD274'],
+        legend: {
+          position: 'none'
+        },
+        isStacked: true,
+        seriesType: 'bars',
+        hAxis: {
+          slantedText: true,
+          slantedTextAngle: -45
+        },
+        vAxis: {
+          viewWindow: {
+            max: 0
+          }
+        },
+        chartArea: {
+          width: '80%',
+          bottom: 50
+        }
+      },
+      lineChartKotaOptions: {
+        height: 200,
+        width: 300,
+        orientation: 'horizontal',
+        colors: ['#6DD274'],
+        legend: {
+          position: 'none',
+          alignment: 'center'
+        },
+        vAxis: {
+          viewWindow: {
+            min: 0,
+            max: 0
+          }
+        },
+        // curveType: 'function',
+        hAxis: {
+          slantedText: true,
+          slantedTextAngle: -45
+        },
+        chartArea: {
+          width: '80%',
+          bottom: 50
+        }
       }
     }
   },
@@ -1055,6 +1104,7 @@ export default {
     },
     fetchDataKabupatenHarian () {
       const self = this
+      let max = 0
       axios
         .get('https://covid19-public.digitalservice.id/api/v1/rekapitulasi/jabar/harian?level=kab')
         .then(function (response) {
@@ -1063,14 +1113,17 @@ export default {
             for (let i = 0; i < self.jsonDataKabupatenHarian.length; i++) {
               if (self.jsonDataKabupatenHarian[i].kode_kab === self.jsonDataKota[j].kode) {
                 const date = new Date(self.jsonDataKabupatenHarian[i].tanggal)
-                self.jsonDataKota[j].dataHarian.push([self.formatDate(date), self.jsonDataKabupatenHarian[i].positif]
-                )
+                self.jsonDataKota[j].dataHarian.push([self.formatDate(date), self.jsonDataKabupatenHarian[i].positif])
               }
               if (i === self.jsonDataKabupatenHarian.length - 1) {
                 self.jsonDataKota[j].dataHarian.splice(1, 1)
               }
+              if (self.jsonDataKabupatenHarian[i].positif > max) {
+                max = self.jsonDataKabupatenHarian[i].positif
+              }
             }
           }
+          self.barChartKotaOptions.vAxis.viewWindow.max = max + (Math.ceil(max / 5))
         })
         .catch(function (error) {
           console.log(error)
@@ -1078,6 +1131,7 @@ export default {
     },
     fetchDataKabupatenKumulatif () {
       const self = this
+      let max = 0
       axios
         .get('https://covid19-public.digitalservice.id/api/v1/rekapitulasi/jabar/kumulatif?level=kab')
         .then(function (response) {
@@ -1086,25 +1140,21 @@ export default {
             for (let i = 0; i < self.jsonDataKabupatenKumulatif.length; i++) {
               if (self.jsonDataKabupatenKumulatif[i].kode_kab === self.jsonDataKota[j].kode) {
                 const date = new Date(self.jsonDataKabupatenKumulatif[i].tanggal)
-                self.jsonDataKota[j].dataAkumulatif.push([self.formatDate(date), self.jsonDataKabupatenKumulatif[i].positif]
-                )
+                self.jsonDataKota[j].dataAkumulatif.push([self.formatDate(date), self.jsonDataKabupatenKumulatif[i].positif])
               }
               if (i === self.jsonDataKabupatenKumulatif.length - 1) {
                 self.jsonDataKota[j].dataAkumulatif.splice(1, 1)
               }
+              if (self.jsonDataKabupatenKumulatif[i].positif > max) {
+                max = self.jsonDataKabupatenKumulatif[i].positif
+              }
             }
           }
+          self.lineChartKotaOptions.vAxis.viewWindow.max = max + (Math.ceil(max / 5))
         })
         .catch(function (error) {
           console.log(error)
         })
-    }
-  },
-  head () {
-    return {
-      link: [
-        /* { rel: 'stylesheet', href: 'https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css' } */
-      ]
     }
   }
 }

@@ -7,13 +7,6 @@
       </h3>
       <small class="text-xl opacity-75">*Update Terakhir: {{ lastUpdatedAt }}</small>
     </header>
-    <!-- <section>
-        <BarStat />
-      </section>
-    <section class="m-4 mb-8 md:m-8">
-      <BarStatDetail />
-    </section> -->
-
     <section class="m-4 mb-8 md:m-8">
       <DataSummary />
     </section>
@@ -62,25 +55,25 @@
 </template>
 
 <script>
-/* eslint-disable */
 import { mapState } from 'vuex'
-import DataSummary from '~/components/_pages/index/DataSummary'
 import { faFirstAid, faBug } from '@fortawesome/free-solid-svg-icons'
+import DataSummary from '~/components/_pages/index/DataSummary'
 import { formatDateTimeShort } from '~/lib/date'
+import { analytics } from '~/lib/firebase'
 
 export default {
   components: {
     DataSummary,
     MapSebaranCovid: () => import('~/components/MapSebaranCovid'),
     MapFaskes: () => import('~/components/MapFaskes'),
-    BarStat: () => import('~/components/BarStat'),
-    BarStatDetail: () => import('~/components/BarStatDetail'),
     BarStatArea: () => import('~/components/BarStatArea'),
     BarStatJenisKelamin: () => import('~/components/BarStatJenisKelamin'),
     BarStatUsia: () => import('~/components/BarStatUsia'),
     BarStatHarianAkumulatif: () => import('~/components/BarStatHarianAkumulatif'),
     BarStatTable: () => import('~/components/BarStatTable')
-    // FontAwesomeIcon
+  },
+  async fetch () {
+    await this.$store.dispatch('statistics/getCases')
   },
   data () {
     return {
@@ -103,6 +96,13 @@ export default {
       return this.formatDateTimeShort(this.cases.updated_at)
     }
   },
+  mounted () {
+    this.$nextTick(() => {
+      if (process.browser) {
+        analytics.logEvent('dashboard_view')
+      }
+    })
+  },
   methods: {
     formatDateTimeShort,
     enableCovid () {
@@ -112,13 +112,6 @@ export default {
     enableRS () {
       this.stat.isActiveCovid = false
       this.stat.isActiveRS = true
-    }
-  },
-  head () {
-    return {
-      link: [
-        // { rel: 'stylesheet', href: 'https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css' }
-      ]
     }
   }
 }
