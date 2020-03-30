@@ -379,7 +379,7 @@ export default {
     }
   },
   mounted () {
-    this.tesMap()
+    // this.tesMap()
     this.createBasemap()
     this.importJSON()
       .then(() => {
