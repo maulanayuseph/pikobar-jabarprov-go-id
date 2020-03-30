@@ -379,7 +379,7 @@ export default {
     }
   },
   mounted () {
-    this.tesMap()
+    // this.tesMap()
     this.createBasemap()
     this.importJSON()
       .then(() => {
@@ -393,7 +393,7 @@ export default {
     }
   },
   methods: {
-    async setFilter(status, stage) {
+    setFilter (status, stage) {
       this.loading = true
       try {
         setTimeout(() => {

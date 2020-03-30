@@ -30,6 +30,7 @@
       <div class="mt-4">
         <MapSebaranCovid v-if="stat.isActiveCovid" />
         <MapFaskes v-if="stat.isActiveRS" />
+        <MapSebaranPolygon v-if="stat.isActivePolygon" />
       </div>
     </section>
 
