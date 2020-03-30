@@ -1,43 +1,32 @@
 <template>
   <div>
-    <div class="row mt-2 mb-2 pl-2">
-      <nuxt-link
-        tag="a"
-        style="border: 1px solid #2DAC55;"
-        class="btn btn-md mr-2"
-        :class="stat.isActiveHarian ? 'btnActive' : 'btnNonActive'"
-        to=""
-        @click.native="enableHarian"
+    <div class="flex flex-row items-stretch mb-4">
+      <button
+        class="button-selector mr-2"
+        :active="stat.isActiveHarian"
+        @click="enableHarian"
       >
         <font-awesome-icon :icon="fontChartBar" /> Angka Harian
-      </nuxt-link>
-      <nuxt-link
-        tag="a"
-        style="border: 1px solid #2DAC55;"
-        class="btn btn-md mr-2"
-        :class="stat.isActiveAkumulatif ? 'btnActive' : 'btnNonActive'"
-        to=""
-        @click.native="enableAkumulatif"
+      </button>
+      <button
+        class="button-selector"
+        :active="stat.isActiveAkumulatif"
+        @click="enableAkumulatif"
       >
         <font-awesome-icon :icon="fontChartLine" /> Kumulatif
-      </nuxt-link>
+      </button>
     </div>
 
-    <div v-if="stat.isActiveHarian" class="row mt-2 mb-2">
+    <section v-if="stat.isActiveHarian">
       <div style="overflow-x: auto; width: 100%; height: 100%; display: flex;">
-        <div
-          class="bg-white m-2 p-2"
-          style="border-radius: 0.8rem; box-shadow: 0 0 4px 0px rgba(0,0,0,0.05)"
-        >
-          <div class="row m-1">
-            <span style="width: 60%">
-              <h4 style="color: #828282; font-weight: bolder;">
-                Indonesia
-              </h4>
-            </span>
+        <div class="bg-white p-3 mr-4 mb-4 rounded-lg shadow-md">
+          <div class="flex flex-row justify-between items-center">
+            <h4 style="color: #828282; font-weight: bolder;">
+              Indonesia
+            </h4>
             <span style="width: 40%">
               <h4 style="color: #000000; font-weight: bolder; text-align: right; margin-right: 20px;">
-                ({{ dataTotalPositifAll[0] }})
+                [{{ dataTotalPositifAll[0] }}]
               </h4>
             </span>
           </div>
@@ -47,19 +36,14 @@
             :options="barChartNasionalOptions"
           />
         </div>
-        <div
-          class="bg-white m-2 p-2"
-          style="border-radius: 0.8rem; box-shadow: 0 0 4px 0px rgba(0,0,0,0.05)"
-        >
-          <div class="row m-1">
-            <span style="width: 60%">
-              <h4 style="color: #828282; font-weight: bolder;">
-                Jawa Barat
-              </h4>
-            </span>
+        <div class="bg-white p-3 mr-4 mb-4 rounded-lg shadow-md">
+          <div class="flex flex-row justify-between items-center">
+            <h4 style="color: #828282; font-weight: bolder;">
+              Jawa Barat
+            </h4>
             <span style="width: 40%">
               <h4 style="color: #000000; font-weight: bolder; text-align: right; margin-right: 20px;">
-                ({{ dataTotalPositifAll[1] }})
+                [{{ dataTotalPositifAll[1] }}]
               </h4>
             </span>
           </div>
@@ -72,10 +56,9 @@
         <div
           v-for="(item, index) in jsonDataKota"
           :key="item.kode"
-          class="bg-white m-2 p-2"
-          style="border-radius: 0.8rem; box-shadow: 0 0 4px 0px rgba(0,0,0,0.05)"
+          class="bg-white p-3 mr-4 mb-4 rounded-lg shadow-md"
         >
-          <div class="row m-1">
+          <div class="flex flex-row justify-between items-center">
             <div style="width: 60%">
               <h4 style="color: #828282; font-weight: bolder;">
                 {{ item.nama }}
@@ -84,34 +67,31 @@
             <div style="width: 40%">
               <h4 style="text-align: right; margin-right: 20px;">
                 <span style="color: #4FB769; font-weight: bolder;">{{ item.positif_persentase }} %</span>
-                <span style="color: #000000; font-weight: bolder;">({{ item.positif }})</span>
+                <span style="color: #000000; font-weight: bolder;">[{{ item.positif }}]</span>
               </h4>
             </div>
           </div>
           <GChart
             type="BarChart"
             :data="jsonDataKota[index].dataHarian"
-            :options="barChartNasionalOptions"
+            :options="barChartKotaOptions"
           />
         </div>
       </div>
-    </div>
+    </section>
 
-    <div v-if="stat.isActiveAkumulatif" class="row mt-2 mb-2 p3">
+    <section
+      v-if="stat.isActiveAkumulatif"
+    >
       <div style="overflow-x: auto; width: 100%; height: 100%; display: flex;">
-        <div
-          class="bg-white m-2 p-2"
-          style="border-radius: 0.8rem; box-shadow: 0 0 4px 0px rgba(0,0,0,0.05)"
-        >
-          <div class="row m-1">
-            <span style="width: 60%">
-              <h4 style="color: #828282; font-weight: bolder;">
-                Indonesia
-              </h4>
-            </span>
+        <div class="bg-white p-3 mr-4 mb-4 rounded-lg shadow-md">
+          <div class="flex flex-row justify-between items-center">
+            <h4 style="color: #828282; font-weight: bolder;">
+              Indonesia
+            </h4>
             <span style="width: 40%">
               <h4 style="color: #000000; font-weight: bolder; text-align: right; margin-right: 20px;">
-                ({{ dataTotalPositifAll[0] }})
+                [{{ dataTotalPositifAll[0] }}]
               </h4>
             </span>
           </div>
@@ -121,19 +101,14 @@
             :options="lineChartNasionalOptions"
           />
         </div>
-        <div
-          class="bg-white m-2 p-2"
-          style="border-radius: 0.8rem; box-shadow: 0 0 4px 0px rgba(0,0,0,0.05)"
-        >
-          <div class="row m-1">
-            <span style="width: 60%">
-              <h4 style="color: #828282; font-weight: bolder;">
-                Jawa Barat
-              </h4>
-            </span>
+        <div class="bg-white p-3 mr-4 mb-4 rounded-lg shadow-md">
+          <div class="flex flex-row justify-between items-center">
+            <h4 style="color: #828282; font-weight: bolder;">
+              Jawa Barat
+            </h4>
             <span style="width: 40%">
               <h4 style="color: #000000; font-weight: bolder; text-align: right; margin-right: 20px;">
-                ({{ dataTotalPositifAll[1] }})
+                [{{ dataTotalPositifAll[1] }}]
               </h4>
             </span>
           </div>
@@ -146,10 +121,9 @@
         <div
           v-for="(item, index) in jsonDataKota"
           :key="item.kode"
-          class="bg-white m-2 p-2"
-          style="border-radius: 0.8rem; box-shadow: 0 0 4px 0px rgba(0,0,0,0.05)"
+          class="bg-white p-3 mr-4 mb-4 rounded-lg shadow-md"
         >
-          <div class="row m-1">
+          <div class="flex flex-row justify-between items-center">
             <div style="width: 60%">
               <h4 style="color: #828282; font-weight: bolder;">
                 {{ item.nama }}
@@ -158,18 +132,18 @@
             <div style="width: 40%">
               <h4 style="text-align: right; margin-right: 20px;">
                 <span style="color: #4FB769; font-weight: bolder;">{{ item.positif_persentase }} %</span>
-                <span style="color: #000000; font-weight: bolder;">({{ item.positif }})</span>
+                <span style="color: #000000; font-weight: bolder;">[{{ item.positif }}]</span>
               </h4>
             </div>
           </div>
           <GChart
             type="LineChart"
             :data="jsonDataKota[index].dataAkumulatif"
-            :options="lineChartNasionalOptions"
+            :options="lineChartKotaOptions"
           />
         </div>
       </div>
-    </div>
+    </section>
   </div>
 </template>
 
@@ -876,6 +850,55 @@ export default {
           width: '80%',
           bottom: 50
         }
+      },
+      barChartKotaOptions: {
+        height: 200,
+        width: 300,
+        orientation: 'horizontal',
+        colors: ['#6DD274'],
+        legend: {
+          position: 'none'
+        },
+        isStacked: true,
+        seriesType: 'bars',
+        hAxis: {
+          slantedText: true,
+          slantedTextAngle: -45
+        },
+        vAxis: {
+          viewWindow: {
+            max: 0
+          }
+        },
+        chartArea: {
+          width: '80%',
+          bottom: 50
+        }
+      },
+      lineChartKotaOptions: {
+        height: 200,
+        width: 300,
+        orientation: 'horizontal',
+        colors: ['#6DD274'],
+        legend: {
+          position: 'none',
+          alignment: 'center'
+        },
+        vAxis: {
+          viewWindow: {
+            min: 0,
+            max: 0
+          }
+        },
+        // curveType: 'function',
+        hAxis: {
+          slantedText: true,
+          slantedTextAngle: -45
+        },
+        chartArea: {
+          width: '80%',
+          bottom: 50
+        }
       }
     }
   },
@@ -1081,6 +1104,7 @@ export default {
     },
     fetchDataKabupatenHarian () {
       const self = this
+      let max = 0
       axios
         .get('https://covid19-public.digitalservice.id/api/v1/rekapitulasi/jabar/harian?level=kab')
         .then(function (response) {
@@ -1089,14 +1113,17 @@ export default {
             for (let i = 0; i < self.jsonDataKabupatenHarian.length; i++) {
               if (self.jsonDataKabupatenHarian[i].kode_kab === self.jsonDataKota[j].kode) {
                 const date = new Date(self.jsonDataKabupatenHarian[i].tanggal)
-                self.jsonDataKota[j].dataHarian.push([self.formatDate(date), self.jsonDataKabupatenHarian[i].positif]
-                )
+                self.jsonDataKota[j].dataHarian.push([self.formatDate(date), self.jsonDataKabupatenHarian[i].positif])
               }
               if (i === self.jsonDataKabupatenHarian.length - 1) {
                 self.jsonDataKota[j].dataHarian.splice(1, 1)
               }
+              if (self.jsonDataKabupatenHarian[i].positif > max) {
+                max = self.jsonDataKabupatenHarian[i].positif
+              }
             }
           }
+          self.barChartKotaOptions.vAxis.viewWindow.max = max + (Math.ceil(max / 5))
         })
         .catch(function (error) {
           console.log(error)
@@ -1104,6 +1131,7 @@ export default {
     },
     fetchDataKabupatenKumulatif () {
       const self = this
+      let max = 0
       axios
         .get('https://covid19-public.digitalservice.id/api/v1/rekapitulasi/jabar/kumulatif?level=kab')
         .then(function (response) {
@@ -1112,25 +1140,21 @@ export default {
             for (let i = 0; i < self.jsonDataKabupatenKumulatif.length; i++) {
               if (self.jsonDataKabupatenKumulatif[i].kode_kab === self.jsonDataKota[j].kode) {
                 const date = new Date(self.jsonDataKabupatenKumulatif[i].tanggal)
-                self.jsonDataKota[j].dataAkumulatif.push([self.formatDate(date), self.jsonDataKabupatenKumulatif[i].positif]
-                )
+                self.jsonDataKota[j].dataAkumulatif.push([self.formatDate(date), self.jsonDataKabupatenKumulatif[i].positif])
               }
               if (i === self.jsonDataKabupatenKumulatif.length - 1) {
                 self.jsonDataKota[j].dataAkumulatif.splice(1, 1)
               }
+              if (self.jsonDataKabupatenKumulatif[i].positif > max) {
+                max = self.jsonDataKabupatenKumulatif[i].positif
+              }
             }
           }
+          self.lineChartKotaOptions.vAxis.viewWindow.max = max + (Math.ceil(max / 5))
         })
         .catch(function (error) {
           console.log(error)
         })
-    }
-  },
-  head () {
-    return {
-      link: [
-        /* { rel: 'stylesheet', href: 'https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css' } */
-      ]
     }
   }
 }
@@ -1163,5 +1187,16 @@ export default {
 .btnNonActive {
   color: #2DAC55;
   background-color: #FFFFFF;
+}
+</style>
+
+<style lang="scss" scoped>
+.button-selector {
+  @apply px-6 py-2 rounded-md border border-solid border-brand-green
+  text-brand-green bg-white;
+
+  &[active] {
+    @apply text-white bg-brand-green;
+  }
 }
 </style>

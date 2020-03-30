@@ -20,8 +20,8 @@ export const mutations = {
 }
 
 export const actions = {
-  getItems ({ state, commit }, options) {
-    if (!state.items || !state.items.length) {
+  getItems ({ state, commit }, options = { perPage: 3, fresh: false }) {
+    if (!state.items || !state.items.length || options.fresh) {
       return get(options)
         .then((arr) => {
           commit('setItems', arr)

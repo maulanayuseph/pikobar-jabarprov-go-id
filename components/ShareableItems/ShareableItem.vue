@@ -73,6 +73,23 @@ export default {
     }
   },
 
+  computed: {
+    fileExtension () {
+      if (typeof this.downloadURL === 'string' && this.downloadURL.length) {
+        const ext = /(jpe?g|png|bmp|gif|docx?|pdf|xls?|pptx?)/
+        const matched = ext.exec(this.downloadURL)
+        return matched ? matched[1] : null
+      }
+      return null
+    },
+    filename () {
+      if (!this.title || !this.fileExtension) {
+        return null
+      }
+      return `${this.title}.${this.fileExtension}`
+    }
+  },
+
   methods: {
     onDownload () {
       if (!this.downloadable || !this.downloadURL) {
@@ -85,8 +102,26 @@ export default {
         this.downloadFromFirebaseStorage(this.downloadURL)
       }
     },
+    saveBlob (blob, filename) {
+      if (!blob || !filename) {
+        return
+      }
+      const url = window.URL.createObjectURL(new Blob([blob]))
+      const anchor = document.getElementById('downloadable_anchor')
+      document.body.appendChild(anchor)
+      anchor.style = 'display: none'
+      anchor.href = url
+      anchor.download = filename
+      anchor.click()
+      window.URL.revokeObjectURL(url)
+    },
     downloadFromFirebaseStorage (publicURL) {
-      window.open(this.downloadURL, '_blank')
+      fetch(publicURL)
+        .then((response) => {
+          return response.blob()
+        }).then((blob) => {
+          this.saveBlob(blob, this.filename)
+        })
     },
     onShare () {
       const url = `whatsapp://send?text=${this.shareText}`

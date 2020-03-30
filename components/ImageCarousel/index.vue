@@ -6,7 +6,8 @@
           <VueCarouselSlide
             v-for="(item, index) in carouselItems"
             :key="index"
-            class="banner-slide"
+            :class="['banner-slide', item.action_url && 'cursor-pointer']"
+            @slide-click="onItemClick(item)"
           >
             <img role="bg" :src="item.url">
             <img role="main" :src="item.url">
@@ -56,7 +57,7 @@ export default {
       carouselConfig: {
         autoplay: true,
         autoplayTimeout: 4000,
-        paginationEnabled: true,
+        paginationEnabled: false,
         paginationColor: '#90a4ae',
         paginationActiveColor: '#00b0ff',
         paginationSize: 12,
@@ -97,6 +98,14 @@ export default {
           })
       }
     }
+  },
+
+  methods: {
+    onItemClick (item) {
+      if (item.action_url) {
+        window.open(item.action_url, '_blank')
+      }
+    }
   }
 }
 </script>
@@ -132,19 +141,16 @@ export default {
     // }
   }
 }
+
+.banner-slide.cursor-pointer:hover {
+  @apply opacity-50;
+}
 </style>
 
 <style lang="scss">
-// @screen sm {
-//   .VueCarousel-wrapper {
-//     @apply rounded-lg overflow-hidden shadow;
-//   }
-// }
-// .VueCarousel-pagination {
-//   background-color: transparent !important;
-// }
-// .VueCarousel-dot-container {
-//   margin-top: 0 !important;
-//   margin-bottom: 1rem !important;
-// }
+.VueCarousel,
+.VueCarousel-wrapper,
+.VueCarousel-inner {
+  height: 100% !important;
+}
 </style>

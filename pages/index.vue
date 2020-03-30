@@ -3,7 +3,11 @@
   <div class="container mx-auto">
     <section class="top-grid m-4 md:m-8">
       <div class="top-grid__banner rounded-lg overflow-hidden">
-        <img v-lazy="bannerImage" class="absolute inset-0 w-full h-full object-cover object-left-top">
+        <!-- <img v-lazy="bannerImage" class="absolute inset-0 w-full h-full object-cover object-left-top"> -->
+        <ImageCarousel
+          class="absolute inset-0 w-full h-full"
+          :items="banners"
+        />
       </div>
       <CallCard class="top-grid__call-card" title="Call Center" subtitle="Nomor Darurat" number="119" />
       <CallCard class="top-grid__call-card" title="Dinkes Jabar" subtitle="Pertanyaan Umum" number="0811 2093 306" />
@@ -102,8 +106,8 @@
             Lihat Disini
           </button> -->
           <a
-            class="px-10 py-4 rounded-lg text-white border-2 border-solid border-white hover:bg-brand-green-light"
-            :href="selfDiagnoseURL"
+            class="cursor-pointer px-10 py-4 rounded-lg text-white border-2 border-solid border-white hover:bg-brand-green-light"
+            :href.prop="selfDiagnoseURL"
             target="_blank"
           >
             <b>Nilai Diri Saya</b>
@@ -179,22 +183,6 @@
           class="text-center md:self-center px-4 py-2 rounded-lg text-brand-green-darker hover:bg-green-200 border-2 border-solid border-brand-green"
         >
           Lihat Rumah Sakit Lainnya
-        </nuxt-link>
-      </div>
-    </section>
-    <section class="mt-8 m-4 md:m-8 rounded-lg bg-white shadow-md p-5 md:p-8">
-      <div class="flex flex-col items-stretch">
-        <h3 class="text-lg lg:text-2xl">
-          <strong>Hubungi Call Center</strong>
-        </h3>
-        <CallCenter :count="6" />
-        <br>
-        <nuxt-link
-          tag="a"
-          to="/contact"
-          class="text-center md:self-center px-4 py-2 rounded-lg text-brand-green-darker hover:bg-green-200 border-2 border-solid border-brand-green"
-        >
-          Lihat Selengkapnya
         </nuxt-link>
       </div>
     </section>
@@ -371,7 +359,7 @@
               :title="item.title"
               :content="item.content"
               :date="formatDateTimeShort(item.published_at)"
-              :to="`/articles/${item.id}`"
+              :to="item.route"
             />
             <hr v-if="index < news.length - 1" class="my-8">
           </div>
@@ -393,6 +381,7 @@ import { ContentLoader } from 'vue-content-loader'
 import { mapState } from 'vuex'
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons'
 import { formatDateTimeShort } from '~/lib/date'
+import ImageCarousel from '~/components/ImageCarousel'
 import CallCard from '~/components/CallCard'
 import ContactListItem from '~/components/ContactList/ContactListItem'
 import CallCenter from '~/components/CallCenter'
@@ -404,6 +393,7 @@ import ShareableItems from '~/components/ShareableItems'
 export default {
   components: {
     ContentLoader,
+    ImageCarousel,
     CallCard,
     BlogPostPreview,
     ContactListItem,
@@ -431,7 +421,7 @@ export default {
     }),
     selfDiagnoseURL () {
       const config = this.$store.state['remote-config'].config
-      return config ? config.selfDiagnoseURL : '#'
+      return config ? config.selfDiagnoseURL : null
     },
     bannerImage () {
       if (this.banners && this.banners.length) {

@@ -1,121 +1,23 @@
 <template>
-  <div class="row">
-    <div
-      class="bg-white p-1 col-md mx-2 mb-4"
-      style="border-radius: 0.8rem; box-shadow: 0 0 4px 0px rgba(0,0,0,0.05), 0 4px 24px 0 rgba(0,0,0,0.1);"
-    >
-      <h4 class="m-3">
-        <b>Tabel Covid-19 Jawa Barat</b>
-      </h4>
-      <hr>
-      <div class="p-2 table-wrapper-scroll-y my-custom-scrollbar">
-        <mdb-datatable
-          :data="data"
-          :searching="false"
-          :pagination="false"
-          :tfoot="false"
-          bordered
-        />
-      </div>
-    </div>
+  <div
+    class="bg-white overflow-hidden rounded-lg shadow-md"
+  >
+    <h4 class="p-5 text-xl">
+      <b>Tabel Covid-19 Jawa Barat</b>
+    </h4>
+    <hr>
+    <SortableDatatable :data="data" />
   </div>
 </template>
 
-<style >
-  .my-custom-scrollbar {
-    position: relative;
-    height: 365px;
-    overflow-y: scroll;
-  }
-  .table-wrapper-scroll-y {
-    display: block;
-  }
-  .dataTables_wrapper {
-    max-width: 98% !important;
-  }
-
-  .table {
-    font-size: 14px;
-    font-weight: 500;
-  }
-
-  .table th {
-    border: #FFFFFF;
-  }
-  .table tr {
-    border: #E3E3E3;
-  }
-
-  tr th {
-    background-color: #EBEBEB;
-    color: #4F4F4F;
-    text-align: center;
-  }
-  tr td {
-    background-color: #FFFFFF;
-    text-align: center;
-  }
-
-  tr th + th{
-    background-color: #EBEBEB;
-    color: #4F4F4F;
-    text-align: left;
-  }
-  tr td + td{
-    background-color: #FFFFFF;
-    text-align: left;
-  }
-
-  tr th + th + th{
-    background-color: #009EDC;
-    color: #FFFFFF;
-    text-align: center;
-  }
-  tr td + td + td {
-    background-color: #E7F5FB;
-    text-align: center;
-  }
-
-  tr th + th + th + th{
-    background-color: #FDC74A;
-    color: #FFFFFF;
-  }
-  tr td + td + td + td{
-    background-color: #FFFAED;
-  }
-
-  tr th + th + th + th + th{
-    background-color: #FF4A4B;
-    color: #FFFFFF;
-  }
-  tr td + td + td + td + td{
-    background-color: #FFEDED;
-  }
-
-  tr th + th + th + th + th + th{
-    background-color: #00B167;
-    color: #FFFFFF;
-  }
-  tr td + td + td + td + td + td{
-    background-color: #E5F7F0;
-  }
-
-  tr th + th + th + th + th + th + th{
-    background-color: #B80000;
-    color: #FFFFFF;
-  }
-  tr td + td + td + td + td + td + td{
-    background-color: #FAE6E6;
-  }
-</style>
 <script>
 import axios from 'axios'
-import { mdbDatatable } from 'mdbvue'
+import SortableDatatable from '../SortableDatatable'
 
 export default {
   name: 'BarStatTable',
   components: {
-    mdbDatatable
+    SortableDatatable
   },
   data () {
     return {
@@ -124,37 +26,49 @@ export default {
         columns: [
           {
             label: 'No',
-            field: 'no'
+            field: 'no',
+            backgroundColor: '#eee'
           },
           {
             label: 'Nama Kota / Kabupaten',
             field: 'nama_kab',
-            sort: 'desc'
+            sort: 'desc',
+            backgroundColor: '#eee'
           },
           {
             label: 'ODP - Proses',
             field: 'odp_proses',
-            sort: 'desc'
+            sort: 'desc',
+            backgroundColor: '#009EDC',
+            textColor: 'white'
           },
           {
             label: 'PDP - Proses',
             field: 'pdp_proses',
-            sort: 'desc'
+            sort: 'desc',
+            backgroundColor: '#FDC74A',
+            textColor: 'white'
           },
           {
             label: 'Positif - Aktif',
             field: 'positif_aktif',
-            sort: 'desc'
+            sort: 'desc',
+            backgroundColor: '#FF4A4B',
+            textColor: 'white'
           },
           {
             label: 'Positif - Sembuh',
             field: 'positif_sembuh',
-            sort: 'desc'
+            sort: 'desc',
+            backgroundColor: '#00B167',
+            textColor: 'white'
           },
           {
             label: 'Positif - Meninggal',
             field: 'positif_meninggal',
-            sort: 'desc'
+            sort: 'desc',
+            backgroundColor: '#B80000',
+            textColor: 'white'
           }
         ],
         rows: [
@@ -250,28 +164,7 @@ export default {
           console.log(error)
         })
     }
-  },
-  head () {
-    return {
-      link: [
-        /* { rel: 'stylesheet', href: 'https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css' } */
-        { rel: 'stylesheet', href: 'https://use.fontawesome.com/releases/v5.8.2/css/all.css' }
-      ]
-    }
   }
 }
 
 </script>
-
-<style lang="scss" scoped>
-
-.btnActive {
-  color: #ffffff;
-  background-color: #2DAC55;
-}
-.btnNonActive {
-  color: #2DAC55;
-  background-color: #FFFFFF;
-}
-
-</style>

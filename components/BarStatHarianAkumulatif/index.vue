@@ -1,101 +1,97 @@
 <template>
   <div>
-    <div class="row mt-2 mb-2 pl-2">
-      <nuxt-link
-        tag="a"
-        style="border: 1px solid #2DAC55;"
-        class="btn btn-md mr-2"
-        :class="stat.isActiveHarian ? 'btnActive' : 'btnNonActive'"
-        to=""
-        @click.native="enableHarian"
+    <nav class="flex flex-row items-center">
+      <button
+        class="button-selector mr-2"
+        :active="stat.isActiveHarian"
+        @click="enableHarian"
       >
-        <font-awesome-icon :icon="fontChartBar" /> Angka Harian
-      </nuxt-link>
-      <nuxt-link
-        tag="a"
-        style="border: 1px solid #2DAC55;"
-        class="btn btn-md mr-2"
-        :class="stat.isActiveAkumulatif ? 'btnActive' : 'btnNonActive'"
-        to=""
-        @click.native="enableAkumulatif"
+        <font-awesome-icon :icon="fontChartBar" />
+        <span>
+          Angka Harian
+        </span>
+      </button>
+      <button
+        class="button-selector"
+        :active="stat.isActiveAkumulatif"
+        @click="enableAkumulatif"
       >
-        <font-awesome-icon :icon="fontChartLine" /> Kumulatif
-      </nuxt-link>
-    </div>
+        <font-awesome-icon :icon="fontChartLine" />
+        <span>
+          Kumulatif
+        </span>
+      </button>
+    </nav>
 
-    <div v-if="stat.isActiveHarian" class="row">
-      <div class="p-1 col-lg-6 col-md">
-        <div
-          class="bg-white p-1"
-          style="border-radius: 0.8rem; box-shadow: 0 0 4px 0px rgba(0,0,0,0.05), 0 4px 24px 0 rgba(0,0,0,0.1);"
-        >
-          <h4 class="m-3">
-            <b>Angka Harian ODP</b><br>
-            <b style="color: #828282;">(Orang Dalam Pemantauan)</b>
-          </h4>
-          <hr>
-          <GChart
-            type="BarChart"
-            :data="barChartHarianODPData"
-            :options="barChartHarianODPOptions"
-          />
-        </div>
+    <section
+      v-if="stat.isActiveHarian"
+      class="chart-container w-full mt-4"
+    >
+      <div
+        class="bg-white rounded-lg overflow-hidden shadow-md"
+      >
+        <h4 class="p-5 text-xl">
+          <b>Angka Harian ODP</b><br>
+          <small class="opacity-50">(Orang Dalam Pemantauan)</small>
+        </h4>
+        <hr>
+        <GChart
+          class="p-5"
+          type="BarChart"
+          :data="barChartHarianODPData"
+          :options="barChartHarianODPOptions"
+        />
       </div>
-      <div class="p-1 col-lg-6 col-md">
-        <div
-          class="bg-white p-1"
-          style="border-radius: 0.8rem; box-shadow: 0 0 4px 0px rgba(0,0,0,0.05), 0 4px 24px 0 rgba(0,0,0,0.1);"
-        >
-          <h4 class="m-3">
-            <b>Angka Harian PDP</b><br>
-            <b style="color: #828282;">(Pasien Dalam Pengawasan)</b>
-          </h4>
-          <hr>
-          <GChart
-            type="BarChart"
-            :data="barChartHarianPDPData"
-            :options="barChartHarianPDPOptions"
-          />
-        </div>
+      <div
+        class="overflow-hidden bg-white rounded-lg shadow-md"
+      >
+        <h4 class="p-5 text-xl">
+          <b>Angka Harian PDP</b><br>
+          <small class="opacity-50">(Pasien Dalam Pengawasan)</small>
+        </h4>
+        <hr>
+        <GChart
+          class="p-5"
+          type="BarChart"
+          :data="barChartHarianPDPData"
+          :options="barChartHarianPDPOptions"
+        />
       </div>
-    </div>
+    </section>
 
-    <div v-if="stat.isActiveAkumulatif" class="row">
-      <div class="p-1 col-lg-6 col-md">
-        <div
-          class="bg-white p-1"
-          style="border-radius: 0.8rem; box-shadow: 0 0 4px 0px rgba(0,0,0,0.05), 0 4px 24px 0 rgba(0,0,0,0.1);"
-        >
-          <h4 class="m-3">
-            <b>Kumulatif ODP</b><br>
-            <b style="color: #828282;">(Orang Dalam Pemantauan)</b>
-          </h4>
-          <hr>
-          <GChart
-            type="LineChart"
-            :data="barChartAkumulatifODPData"
-            :options="barChartAkumulatifODPOptions"
-          />
-        </div>
+    <section
+      v-if="stat.isActiveAkumulatif"
+      class="chart-container w-full mt-4"
+    >
+      <div
+        class="overflow-hidden bg-white rounded-lg shadow-md"
+      >
+        <h4 class="p-5 text-xl">
+          <b>Kumulatif ODP</b><br>
+          <small class="opacity-50">(Orang Dalam Pemantauan)</small>
+        </h4>
+        <hr>
+        <GChart
+          type="LineChart"
+          :data="barChartAkumulatifODPData"
+          :options="barChartAkumulatifODPOptions"
+        />
       </div>
-      <div class="p-1 col-lg-6 col-md">
-        <div
-          class="bg-white p-1"
-          style="border-radius: 0.8rem; box-shadow: 0 0 4px 0px rgba(0,0,0,0.05), 0 4px 24px 0 rgba(0,0,0,0.1);"
-        >
-          <h4 class="m-3">
-            <b>Kumulatif PDP</b><br>
-            <b style="color: #828282;">(Pasien Dalam Pengawasan)</b>
-          </h4>
-          <hr>
-          <GChart
-            type="LineChart"
-            :data="barChartAkumulatifPDPData"
-            :options="barChartAkumulatifPDPOptions"
-          />
-        </div>
+      <div
+        class="overflow-hidden bg-white rounded-lg shadow-md"
+      >
+        <h4 class="p-5 text-xl">
+          <b>Kumulatif PDP</b><br>
+          <small class="opacity-50">(Pasien Dalam Pengawasan)</small>
+        </h4>
+        <hr>
+        <GChart
+          type="LineChart"
+          :data="barChartAkumulatifPDPData"
+          :options="barChartAkumulatifPDPOptions"
+        />
       </div>
-    </div>
+    </section>
   </div>
 </template>
 
@@ -338,26 +334,29 @@ export default {
           console.log(error)
         })
     }
-  },
-  head () {
-    return {
-      link: [
-        /* { rel: 'stylesheet', href: 'https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css' } */
-      ]
-    }
   }
 }
 
 </script>
 
 <style lang="scss" scoped>
+.button-selector {
+  @apply px-6 py-2 rounded-md border border-solid border-brand-green
+  text-brand-green bg-white;
 
-.btnActive {
-  color: #ffffff;
-  background-color: #2DAC55;
+  &[active] {
+    @apply text-white bg-brand-green;
+  }
 }
-.btnNonActive {
-  color: #2DAC55;
-  background-color: #FFFFFF;
+
+.chart-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  column-gap: 1rem;
+  row-gap: 1rem;
+
+  @screen md {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 </style>
