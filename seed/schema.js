@@ -7,19 +7,5 @@ exports.schema = {
 	call_centers: {},
 	faqs: {},
 	infographics: {},
-	statistics: {
-		'jabar-dan-nasional': {
-			aktif: {},
-			sembuh: {},
-			meninggal: {},
-			odp: {
-				selesai: {},
-				total: {}
-			},
-			pdp: {
-				selesai: {},
-				total: {}
-			}
-		}
-	}
+	statistics: {}
 };
