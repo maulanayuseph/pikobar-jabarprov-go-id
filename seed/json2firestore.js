@@ -11,7 +11,6 @@ const json2firestore = (_JSON, db, schema) => {
   return Promise.all(
     Object.keys(schema).map(collection => {
       let promises = [];
-      console.log(_JSON[collection]);
       Object.keys(_JSON[collection]).map(_doc => {
         const doc_id = _doc;
         if (_doc === '__type__') return;
@@ -42,4 +41,6 @@ json2firestore(
   JSON.parse(fs.readFileSync('./firestore.json', 'utf8')),
   admin.firestore(),
   { ...schema }
-).then(() => console.log('done')).catch(e => console.log(e));
+)
+  .then(() => console.log('done'))
+  .catch(e => console.log(e));
