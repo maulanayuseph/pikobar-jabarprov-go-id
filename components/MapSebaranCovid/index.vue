@@ -393,7 +393,7 @@ export default {
     }
   },
   methods: {
-    async setFilter(status, stage) {
+    setFilter (status, stage) {
       this.loading = true
       try {
         setTimeout(() => {
