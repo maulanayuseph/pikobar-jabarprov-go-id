@@ -40,7 +40,7 @@ import BackToTopButton from '~/components/BackToTopButton'
 export default {
   components: {
     Appbar,
-    BackToTopButton
+    BackToTopButton,
     AppFooter,
     SponsorList,
     Navbar
