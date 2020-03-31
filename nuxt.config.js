@@ -107,7 +107,7 @@ export default {
     },
     themeColor: '#399F4F',
     manifest: {
-      name: 'Jabar COVID-19',
+      name: 'Pikobar | Jawa Barat',
       background_color: '#399F4F',
       display: 'standalone',
       orientation: 'portrait'

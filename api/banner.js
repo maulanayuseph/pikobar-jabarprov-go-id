@@ -1,8 +1,7 @@
 import { db } from '../lib/firebase'
 
-export function get (options = { perPage: 3 }) {
+export function get (options) {
   return db.collection('banners')
-    .limit(options.perPage)
     .get()
     .then((docs) => {
       if (!docs.empty) {
