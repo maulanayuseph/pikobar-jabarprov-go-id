@@ -49,6 +49,7 @@
     "@nuxtjs/tailwindcss": "^1.0.0",
     "babel-eslint": "^10.0.1",
     "eslint": "^6.1.0",
-    "eslint-plugin-nuxt": "^0.5.2"
+    "eslint-plugin-nuxt": "^0.5.2",
+    "node-firestore-import-export": "^0.14.1"
   }
 }
