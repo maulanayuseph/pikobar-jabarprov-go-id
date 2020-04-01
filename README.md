@@ -24,12 +24,18 @@ $ CREDENTIALS=/path/to/service_account.json npm run migrate
 ```
 
 ### Environment Variable Setup
-1. Copy file `.env.example` menjadi sebuah file baru yang bernama  `.env`
+1. Copy file `.env.example` menjadi sebuah file baru yang bernama  `.env`.
 ```bash
 cp .env.example .env
 ```
-2. Masukkan value yang ada di dalam service account credentials ke dalam file `.env`, untuk env variable dengan prefix `FIREBASE_ADMIN_*` (misalnya, attribute `private_key_id` pada credentials dimasukkan ke env variable `FIREBASE_ADMIN_PRIVATE_KEY_ID`).
-3.
+2. Masukkan value yang ada di dalam service account credentials ke dalam file `.env`, untuk env variable dengan prefix `FIREBASE_ADMIN_*`. Misalnya, attribute `private_key_id` pada credentials dimasukkan ke env variable `FIREBASE_ADMIN_PRIVATE_KEY_ID`.
+3. Di Firebase Console sidebar, pilih `Project Overview`. Lalu pilih `Add app`, pilih `Web`.
+![Add app](https://user-images.githubusercontent.com/4391973/78126183-53bd5c00-743c-11ea-9fdb-8bb7ae0d4aa2.png)
+4. Pada instruksi step 2 (`Add Firebase SDK`), masukkan value yang ada pada variabel `firebaseConfig` ke dalam file `.env`, untuk env variable dengan prefix `FIREBASE_*`. Misalnya, attribute `apiKey` dimasukkan ke env variable `FIREBASE_API_KEY`. Untuk berikutnya, value ini dapat diakses di Tab `General` pada `Project settings`.
+![firebaseConfig variable](https://user-images.githubusercontent.com/4391973/78128616-6a65b200-7440-11ea-854d-775a15094f80.png)
+5. Untuk mendapatkan env variable `FIREBASE_PUBLIC_VAPID_KEY`, di Firebase Console sidebar, pada menu :gear:, pilih `Project settings`, lalu pilih tab `Cloud Messaging`. Pada bagian `Web configuration > Web Push certificates`, pilih Generate key pair.
+![Cloud Messaging generate key pair](https://user-images.githubusercontent.com/4391973/78129695-2ecbe780-7442-11ea-9197-7e55bd284380.png)
+
 
 ## Build Setup
 
