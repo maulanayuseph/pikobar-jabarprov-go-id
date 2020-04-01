@@ -22,6 +22,9 @@ Pikobar menggunakan [Firebase](https://firebase.google.com/) sebagai backend.
 ```bash
 $ CREDENTIALS=/path/to/service_account.json npm run migrate
 ```
+6. Di Firebase Console, pada sidebar group `Develop`, pilih `Database`, lalu pilih tab `Rules`. Copy isi file `migration/firestore.rules` ke text area yang disediakan. Lalu pilih `Publish`.
+![Update Firestore Rules](https://user-images.githubusercontent.com/4391973/78131722-bb2bd980-7445-11ea-929d-26c5ee21012a.png)
+
 
 ### Environment Variable Setup
 1. Copy file `.env.example` menjadi sebuah file baru yang bernama  `.env`.
