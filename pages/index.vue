@@ -4,7 +4,7 @@
     <section class="m-4 md:m-8">
       <div class="flex flex-col lg:flex-row lg:items-stretch">
         <div class="w-full mb-6 lg:w-1/2 lg:mr-6 lg:mb-0">
-          <div class="relative rounded-lg overflow-hidden shadow-md" :style="{paddingTop: `${400 * 100/ 713}%`}">
+          <div class="relative container-with-ratio rounded-lg overflow-hidden shadow-md">
             <ImageCarousel
               class="absolute inset-0 w-full h-full"
               :items="banners"
@@ -12,8 +12,8 @@
           </div>
         </div>
         <div class="w-full lg:w-1/2">
-          <div class="relative" :style="{paddingTop: `${400 * 100/ 713}%`}">
-            <div class="absolute inset-0 w-full h-full top-grid">
+          <div class="relative container-with-ratio container-with-ratio--lg">
+            <div class="static lg:absolute lg:inset-0 w-full h-full top-grid">
               <CallCard class="top-grid__call-card" title="Call Center" subtitle="Nomor Darurat" number="119" />
               <CallCard class="top-grid__call-card" title="Dinkes Jabar" subtitle="Pertanyaan Umum" number="0811 2093 306" />
               <div
@@ -570,6 +570,17 @@ export default {
     column-gap: 1.5rem;
     align-items: stretch;
     row-gap: 1.5rem;
+  }
+}
+
+.container-with-ratio {
+  padding-top: (400 * 100/ 713) * 1%;
+
+  &--lg {
+    padding-top: 0;
+    @screen lg {
+      padding-top: (400 * 100/ 713) * 1%;
+    }
   }
 }
 </style>
