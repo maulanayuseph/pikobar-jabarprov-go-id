@@ -1,5 +1,5 @@
 <template>
-  <div class="container-map m-2">
+  <div class="container-map">
     <div class="bg-white col-md-12 p-0 " style="position:relative;border-radius: 0.8rem; box-shadow: 0 0 4px 0px rgba(0,0,0,0.05), 0 4px 24px 0 rgba(0,0,0,0.1);">
       <div id="map-polygon" style="height: 50em;z-index:0;" />
       <div class="filter-layer"> 
@@ -13,17 +13,9 @@
             <div data-v-dfef036a="" class="legend-color" style="background: rgb(45, 156, 219);margin-right: 0.5em;"></div>
               ODP - Proses
           </li>
-          <li @click="setFilter('odp', 'belumupdate')" :class="filter.odp.belumupdate ? 'filter-active' : ''">
-            <div class="legend-color" style="background:#2d9cdb; border: 2px solid #bdbdbd" /> &nbsp;
-            ODP (belum diupdate)
-          </li>
           <li @click="setFilter('pdp', 'proses')" :class="filter.pdp.proses ? 'filter-active' : ''">
             <div class="legend-color" style="background:#f2c94c;" /> &nbsp;
             PDP - Proses
-          </li>
-          <li @click="setFilter('pdp', 'belumupdate')" :class="filter.pdp.belumupdate ? 'filter-active' : ''">
-            <div class="legend-color" style="background:#f2c94c; border: 2px solid #bdbdbd" /> &nbsp;
-            PDP (belum diupdate)
           </li>
           <li @click="setFilter('positif', 'meninggal')" :class="filter.positif.meninggal ? 'filter-active' : ''">
             <div class="legend-color" style="background:#a51212; border: 2px solid #eb5757" /> &nbsp;
@@ -121,6 +113,7 @@
 import { loadModules } from 'esri-loader'
 import axios from 'axios'
 import { faFilter } from '@fortawesome/free-solid-svg-icons'
+import * as turf from '@turf/turf'
 
 export default {
   name: 'MapSebaranPolygon',
@@ -134,12 +127,10 @@ export default {
       listLayer: [],
       filter: {
         odp : {
-          proses: true,
-          belumupdate: false
+          proses: true
         },
         pdp: {
-          proses: false,
-          belumupdate: false
+          proses: false
         },
         positif: {
           aktif: false,
@@ -151,18 +142,13 @@ export default {
       faFilter,
       geoJSONData: [],
       kotaGeojson: {},
-      dataTitik: {
-        kabkot: [],
-        kecamatan: []
-      },
+      dataTitik: [],
       statusCovid: {
         odp: {
-          proses: [],
-          belumupdate: []
+          proses: []
         },
         pdp: {
-          proses: [],
-          belumupdate: []
+          proses: []
         },
         positif: {
           aktif: [],
@@ -172,12 +158,10 @@ export default {
       },
       labelStatusCovid: {
         odp: {
-          proses: 'ODP - Proses',
-          belumupdate: 'ODP - belum di update'
+          proses: 'ODP - Proses'
         },
         pdp: {
-          proses: 'PDP - Proses',
-          belumupdate: 'PDP - belum di update'
+          proses: 'PDP - Proses'
         },
         positif: {
           aktif: 'Positif - Aktif',
@@ -186,22 +170,19 @@ export default {
         }
       },
       featureLayer: {
-        kabkot: {
-          odp: {
-            proses: [],
-            belumupdate: []
-          },
-          pdp: {
-            proses: [],
-            belumupdate: []
-          },
-          positif: {
-            aktif: [],
-            meninggal: [],
-            sembuh: []
-          }
+        odp: {
+          proses: []
+        },
+        pdp: {
+          proses: []
+        },
+        positif: {
+          aktif: [],
+          meninggal: [],
+          sembuh: []
         }
-      }
+      },
+      areaLayer: []
     }
   },
   mounted () {
@@ -231,9 +212,10 @@ export default {
         }
       }
       this.map.removeAll()
-
+      this.map.add(this.areaLayer) // add batas wilayah
+      
       if (this.filter[status][stage]) {
-        this.map.add(this.featureLayer.kabkot[status][stage])
+        this.map.add(this.featureLayer[status][stage])
       }
       // try {
       //   setTimeout(() => {
@@ -300,7 +282,7 @@ export default {
         .then(function (response) {
           self.jsonData = response.data.data
           // self.geoJSONData = self.createGeoJSON(response.data.data)
-          self.createMap()
+          self.createMap(self.kotaGeojson, 'kota')
         })
         .catch(function (error) {
           console.log(error)
@@ -340,7 +322,7 @@ export default {
     },
     createBasemap () {
       // lazy load the required ArcGIS API for JavaScript modules and CSS
-      loadModules(['esri/Map', 'esri/views/MapView', 'esri/widgets/Legend', 'esri/widgets/Expand'], { css: true }).then(([ArcGISMap, MapView, Legend, Expand]) => {
+      loadModules(['esri/Map', 'esri/views/MapView', 'esri/widgets/Legend', 'esri/widgets/Expand', 'esri/geometry/Polygon', 'esri/geometry/support/webMercatorUtils', 'esri/core/watchUtils', 'esri/core/promiseUtils'], { css: true }).then(([ArcGISMap, MapView, Legend, Expand, Polygon, webMercatorUtils, watchUtils, promiseUtils]) => {
         this.map = new ArcGISMap({
           basemap: 'topo'
         })
@@ -365,56 +347,105 @@ export default {
 
           // Add widget to the bottom right corner of the view
           this.view.ui.add(expandLegend, "bottom-left");
+          
+
+          watchUtils.whenTrue(this.view, "stationary", (() => {
+            let activeGeoJSON = []
+            let level = 'kota'
+            const features = []
+            let area = []
+
+            console.log(this.view.zoom)
+            if(this.view.zoom >= 13) {
+              area = Polygon.fromExtent(this.view.extent)
+              level = 'kelurahan'
+              activeGeoJSON = this.kelurahanGeojson
+            } else if (this.view.zoom >= 11) { 
+              area = Polygon.fromExtent(this.view.extent)
+              level = 'kecamatan'
+              activeGeoJSON = this.kecamatanGeojson
+            } else {
+              level = 'kota'
+              activeGeoJSON = this.kotaGeojson
+            }
+
+            if (area.rings !== undefined) {
+              this.map.removeAll()
+              let screenRings = []
+              area.rings[0].forEach(element => {
+                let coord = webMercatorUtils.xyToLngLat(element[0], element[1])
+                screenRings.push(coord)
+              })
+              
+              let geojsonFeatures = {
+                type: "FeatureCollection",
+                features: []
+              }
+
+              let screenPolygon = {
+                "type": "Feature",
+                "properties": {
+                  "fill": "#00f"
+                },
+                "geometry": {
+                  "type": "Polygon",
+                  "coordinates": [screenRings]
+                }
+              }
+              let i = 0
+              activeGeoJSON.features.forEach((element) => {
+                i++
+                if (element.geometry !== null) {
+                  let gJSON = ''
+                  if (element.geometry.type === 'MultiPolygon') {
+                      gJSON = {
+                      "type": "Feature",
+                      "properties": {
+                        "fill": "#00f"
+                      },
+                      "geometry": {
+                        "type": "Polygon",
+                        "coordinates": element.geometry.coordinates[0]
+                      }
+                    }
+                  }  else {
+                    gJSON = element
+                  }
+                  
+                  let isInside = false
+                  let contain = turf.booleanContains(screenPolygon, gJSON);
+
+                  if (contain) {
+                    isInside = true
+                    geojsonFeatures.features.push(element)
+                  }
+                  
+                  if (!isInside) {
+                    let intersection = turf.booleanOverlap(gJSON, screenPolygon)
+                    if (intersection) {
+                      geojsonFeatures.features.push(element)
+                    }
+                  }
+                  
+                }
+              })  
+
+              console.log(i)
+
+              this.createMap(geojsonFeatures, level)
+            }
+            
+          }))
         });
+
+
+        
       })
     },
-    createMap () {
+    createMap (geojson, level) {
+      console.log(geojson)
       loadModules(['esri/Map', 'esri/Graphic', 'esri/PopupTemplate', 'esri/views/MapView', 'esri/layers/FeatureLayer', 'esri/geometry/Point', 'esri/symbols/SimpleMarkerSymbol',  'esri/renderers/UniqueValueRenderer', 'esri/geometry/Polygon', 'esri/layers/GeoJSONLayer', 'esri/symbols/SimpleFillSymbol', 'esri/layers/GraphicsLayer', 'esri/Basemap', 'esri/layers/TileLayer'], { css: true }).then(([ArcGISMap, Graphic, PopupTemplate, MapView, FeatureLayer, Point, SimpleMarkerSymbol, UniqueValueRenderer, Polygon, GeoJSONLayer, SimpleFillSymbol, GraphicsLayer, Basemap, TileLayer]) => {
-        const popupTemplate = new PopupTemplate({
-          title: 'Detail Data',
-          content: [
-            {
-              type: 'fields',
-              fieldInfos: [
-                {
-                  fieldName: 'kota',
-                  label: 'Kota'
-                },
-                {
-                  fieldName: 'status',
-                  label: 'Status'
-                },
-                {
-                  fieldName: 'jumlah',
-                  label: 'Jumlah'
-                }
-              ]
-            }
-          ]
-        })
-
-        const fields = [
-          {
-            name: 'ObjectID',
-            alias: 'ObjectID',
-            type: 'oid'
-          },
-          {
-            name: 'status',
-            alias: 'Status',
-            type: 'string'
-          },
-          {
-            name: 'kota',
-            alias: 'Kab/Kota',
-            type: 'string'
-          },
-          {
-            name: 'jumlah',
-            alias: 'Jumlah',
-            type: 'string'
-          }
-        ]
+        
         const simpleSymbol = JSON.parse(JSON.stringify(this.statusCovid)) 
 
         const listPolygonCovid = JSON.parse(JSON.stringify(this.statusCovid)) 
@@ -433,29 +464,11 @@ export default {
           }
         }
 
-        simpleSymbol.odp.belumupdate = new SimpleFillSymbol({
-          color: '#2d9cdb',
-          style: 'solid',
-          outline: {
-            color: '#bdbdbd',
-            width: 0
-          }
-        })
-
         simpleSymbol.pdp.proses = new SimpleFillSymbol({
           color: '#f2c94c',
           style: 'solid',
           outline: {
             color: 'white',
-            width: 0
-          }
-        })
-
-        simpleSymbol.pdp.belumupdate = new SimpleFillSymbol({
-          color: '#f2c94c',
-          style: 'solid',
-          outline: {
-            color: '#bdbdbd',
             width: 0
           }
         })
@@ -484,22 +497,82 @@ export default {
             width: 0
           }
         })
+        
 
-        console.log(this.dataTitik.kabkot)
 
-        this.kotaGeojson.features.forEach((elKota) => {
+        const popupTemplate = new PopupTemplate({
+          title: 'Detail Data',
+          content: [
+            {
+              type: 'fields',
+              fieldInfos: [
+                {
+                  fieldName: 'nama',
+                  label: level
+                },
+                {
+                  fieldName: 'status',
+                  label: 'Status'
+                },
+                {
+                  fieldName: 'jumlah',
+                  label: 'Jumlah'
+                }
+              ]
+            }
+          ]
+        })
+
+        const fields = [
+          {
+            name: 'ObjectID',
+            alias: 'ObjectID',
+            type: 'oid'
+          },
+          {
+            name: 'status',
+            alias: 'Status',
+            type: 'string'
+          },
+          {
+            name: 'nama',
+            alias: 'Nama',
+            type: 'string'
+          },
+          {
+            name: 'jumlah',
+            alias: 'Jumlah',
+            type: 'string'
+          }
+        ]
+
+        const listGraphicArea = []
+        geojson.features.forEach((elFeature) => {
           const polygonCovid = JSON.parse(JSON.stringify(this.statusCovid))
 
-          this.countPointCovid(elKota)
+          this.countPointCovid(elFeature, level)
 
-          let dataTitik = this.dataTitik.kabkot.find((elTitik) => {
-            return elTitik.kode === elKota.properties.bps_kode
+          let dataTitik = this.dataTitik.find((elTitik) => {
+            return elTitik.kode === elFeature.properties.bps_kode
           })
 
           const polygon = {
             type: "polygon",  // autocasts as new Polyline()
-            rings: elKota.geometry.coordinates[0]
+            rings: elFeature.geometry.coordinates[0]
           };
+
+          let drawBorderArea = new Graphic({
+            geometry: polygon,
+            symbol: {
+              type: "simple-line",  // autocasts as new SimpleLineSymbol()
+              color: "lightblue",
+              width: "2px",
+              style: "short-dot"
+            }
+          })
+
+          listGraphicArea.push(drawBorderArea)
+
           
           for (let status in this.statusCovid) {
             for (let stage in this.statusCovid[status]) {
@@ -508,7 +581,7 @@ export default {
                 symbol: simpleSymbol[status][stage],
                 attributes: {
                   status: this.labelStatusCovid[status][stage],
-                  kota: elKota.properties.kemendagri_nama,
+                  nama: elFeature.properties.kemendagri_nama,
                   jumlah: dataTitik.data[status][stage].length
                 },
               });
@@ -521,6 +594,13 @@ export default {
           }
 
         })
+
+        const glArea = new GraphicsLayer({
+          graphics: listGraphicArea
+        });
+
+        this.areaLayer = glArea
+        this.map.add(glArea) // add batas wilayah
         
         for (let status in this.statusCovid) {
           for (let stage in this.statusCovid[status]) {
@@ -542,7 +622,7 @@ export default {
               }
             }
 
-            this.featureLayer.kabkot[status][stage] = new FeatureLayer({
+            this.featureLayer[status][stage] = new FeatureLayer({
               source: listPolygonCovid[status][stage],
               renderer: renderer[status][stage],
               fields,
@@ -551,20 +631,36 @@ export default {
           }
         }
 
-        console.log(listPolygonCovid['positif']['aktif'])
-
-        this.map.add(this.featureLayer.kabkot['odp']['proses'])
+        let status = ''
+        let stage = ''
+        for (let propStatus in this.filter) {
+          for (let propStage in this.filter[propStatus]) {
+            if(this.filter[propStatus][propStage]) {
+              status = propStatus
+              stage = propStage
+              break;
+            }
+          }
+        }
+        this.map.add(this.featureLayer[status][stage])
       })
     },
-    countPointCovid (element) {
+    countPointCovid (element, level) {
+      let kodeTitik = ''
+      if (level === 'kota') {
+        kodeTitik = 'kode_kabkot'
+      } else if (level === 'kecamatan') {
+        kodeTitik = 'kode_kecamatan'
+      } else if (level === 'kelurahan') {
+        kodeTitik = 'kode_desa'
+      }
+
       let jumlahPasien = {
           odp: {
-            proses: '',
-            belumupdate: ''
+            proses: ''
           },
           pdp: {
-            proses: '',
-            belumupdate: ''
+            proses: ''
           },
           positif: {
             aktif: '',
@@ -573,42 +669,32 @@ export default {
           }
         }
         jumlahPasien.odp.proses = this.jsonData.filter ( ( d ) => {
-          if (d.status === 'ODP' && d.stage === 'Proses' && d.kode_kabkot === element.properties.bps_kode) {
-            return d
-          }
-        });
-        jumlahPasien.odp.belumupdate = this.jsonData.filter ( ( d ) => {
-          if (d.status === 'ODP' && d.stage === null && d.kode_kabkot === element.properties.bps_kode) {
+          if (d.status === 'ODP' && d.stage === 'Proses' && d[kodeTitik] === element.properties.bps_kode) {
             return d
           }
         });
         jumlahPasien.pdp.proses = this.jsonData.filter ( ( d ) => {
-          if (d.status === 'PDP' && d.stage === 'Proses' && d.kode_kabkot === element.properties.bps_kode) {
-            return d
-          }
-        });
-        jumlahPasien.pdp.belumupdate = this.jsonData.filter ( ( d ) => {
-          if (d.status === 'PDP' && d.stage === null && d.kode_kabkot === element.properties.bps_kode) {
+          if (d.status === 'PDP' && d.stage === 'Proses' && d[kodeTitik] === element.properties.bps_kode) {
             return d
           }
         });
         jumlahPasien.positif.aktif = this.jsonData.filter ( ( d ) => {
-          if (d.status === 'Positif' && d.stage === 'Aktif' && d.kode_kabkot === element.properties.bps_kode) {
+          if (d.status === 'Positif' && d.stage === 'Aktif' && d[kodeTitik] === element.properties.bps_kode) {
             return d
           }
         });
         jumlahPasien.positif.meninggal = this.jsonData.filter ( ( d ) => {
-          if (d.status === 'Positif' && d.stage === 'Meninggal' && d.kode_kabkot === element.properties.bps_kode) {
+          if (d.status === 'Positif' && d.stage === 'Meninggal' && d[kodeTitik] === element.properties.bps_kode) {
             return d
           }
         });
         jumlahPasien.positif.sembuh = this.jsonData.filter ( ( d ) => {
-          if (d.status === 'Positif' && d.stage === 'Sembuh' && d.kode_kabkot === element.properties.bps_kode) {
+          if (d.status === 'Positif' && d.stage === 'Sembuh' && d[kodeTitik] === element.properties.bps_kode) {
             return d
           }
         });
 
-        this.dataTitik.kabkot.push({
+        this.dataTitik.push({
           kode: element.properties.bps_kode,
           data: jumlahPasien
         })

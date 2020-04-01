@@ -87,8 +87,8 @@ export default {
   data () {
     return {
       stat: {
-        isActiveCovid: false,
-        isActivePolygon: true,
+        isActiveCovid: true,
+        isActivePolygon: false,
         isActiveRS: false
       },
       fontHospital: faFirstAid,
