@@ -31,6 +31,7 @@
 </template>
 
 <script>
+import _truncate from 'lodash/truncate'
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons'
 export default {
   props: {
@@ -69,7 +70,9 @@ export default {
   computed: {
     truncatedContent () {
       if (typeof this.content === 'string') {
-        return this.content.slice(0, this.content.indexOf('.') + 1)
+        return _truncate(this.content, {
+          length: 300
+        })
       }
       return ''
     }
