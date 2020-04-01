@@ -1,19 +1,35 @@
 # pikobar-jabarprov-go-id
 > Web Pikobar (Pusat Informasi dan Koordinasi COVID-19 Jawa Barat), dapat diakses di https://pikobar.jabarprov.go.id
 
+## Index
+- [Firebase Setup](#firebase-setup)
+  - [Firestore Setup](#firestore-setup)
+  - [Environment Variable Setup](#environment-variable-setup)
+- [Build Setup](#build-setup)
+- [Pedoman Kontributor](#pedoman-kontributor)
+
 ## Firebase Setup
+Pikobar menggunakan [Firebase](https://firebase.google.com/) sebagai backend.
+
+### Firestore Setup
 1. Masuk dengan Google Account, lalu buka https://console.firebase.google.com/.
-2. Buat project baru. Enable Analytics jika ingin mengerjakan fitur yang berhubungan dengan Analytics.
+2. Buat project baru dan enable Analytics.
 3. Di Firebase Console, pada sidebar group `Develop`, pilih `Database`, lalu pilih `Create database`. Pilih `Start in production mode`, lalu pilih location yang diinginkan untuk Cloud Firestore.
 ![Create Database](https://user-images.githubusercontent.com/4391973/77878823-69d3ec80-7283-11ea-8a83-62857b58f229.png)
-4. Di Firebase Console sidebar, pada menu :gear:, pilih `Project settings`. Pilih tab `Service accounts`, lalu pilih `Generate new private key`.
+4. Di Firebase Console sidebar, pada menu :gear:, pilih `Project settings`. Pilih tab `Service accounts`, lalu pilih `Generate new private key`. Service account credentials akan di-download dalam bentuk JSON.
 ![Generate service account private key](https://user-images.githubusercontent.com/4391973/77879531-d7344d00-7284-11ea-880c-bedab6e508bd.png)
-
-5. Copy file JSON yang di-download ke direktori `/seed`, lalu rename menjadi `service_account.json`.
-6. Masuk ke direktori `/seed`, lalu import data dari file `firestore.json` ke Firebase project
+5. Jalankan command berikut, dengan menyertakan credentials yang di-download pada step 4.
 ```bash
-$ node json2firestore
+$ CREDENTIALS=/path/to/service_account.json npm run migrate
 ```
+
+### Environment Variable Setup
+1. Copy file `.env.example` menjadi sebuah file baru yang bernama  `.env`
+```bash
+cp .env.example .env
+```
+2. Masukkan value yang ada di dalam service account credentials ke dalam file `.env`, untuk env variable dengan prefix `FIREBASE_ADMIN_*` (misalnya, attribute `private_key_id` pada credentials dimasukkan ke env variable `FIREBASE_ADMIN_PRIVATE_KEY_ID`).
+3.
 
 ## Build Setup
 

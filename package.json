@@ -10,7 +10,7 @@
     "start": "nuxt start",
     "generate": "nuxt generate",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
-    "migrate": "firestore-import --accountCredentials $SVC_ACC --backupFile seed/firestore.json"
+    "migrate": "firestore-import --accountCredentials $CREDENTIALS --backupFile migration/firestore.json"
   },
   "dependencies": {
     "@fortawesome/free-regular-svg-icons": "^5.13.0",
