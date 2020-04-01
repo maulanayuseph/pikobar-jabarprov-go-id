@@ -69,7 +69,7 @@ export default {
         },
         {
           id: 'map-kel',
-          title: 'Peta Sebaran Kelurahan',
+          title: 'Peta Titik Sebaran Kasus',
           component: () => import('../../Tableau/PetaPersebaranAllCases')
         }
       ],
