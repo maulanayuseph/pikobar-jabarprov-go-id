@@ -698,8 +698,13 @@ export default {
     addMarkerClusterLayer(cluster, element, wilayah = '', kabkotNama = '') {
       for (const key in cluster[element.feature.properties.bps_kode]) {
         for (const keySub in cluster[element.feature.properties.bps_kode][key]) {
-          const newLayer = cluster[element.feature.properties.bps_kode][key][keySub].addTo(this.map)
+
+          let newLayer = cluster[element.feature.properties.bps_kode][key][keySub]
+          if (this.filter[key][keySub]) {
+            newLayer.addTo(this.map)
+          }
           this.listLayer[key][keySub].push(newLayer)
+
           cluster[element.feature.properties.bps_kode][key][keySub].on('clusterclick', (c) => {
             let popup = ''
             popup += `<b> Status </b> : ${this.statusStageCorona(key, keySub)} <br>`
@@ -743,19 +748,19 @@ export default {
               }
               const isInside = turf.inside(point, element.feature)
               if (isInside) {
-                if (this.filter.odp.proses && elPasien.status === 'ODP' && elPasien.stage === 'Proses') {
+                if ( elPasien.status === 'ODP' && elPasien.stage === 'Proses') {
                   this.addMarkerLayer(this.kotaCluster, element, elPasien)
-                } else if (this.filter.odp.belumupdate && elPasien.status === 'ODP' && (elPasien.stage === '' || elPasien.stage === null)) {
+                } else if (elPasien.status === 'ODP' && (elPasien.stage === '' || elPasien.stage === null)) {
                   this.addMarkerLayer(this.kotaCluster, element, elPasien)
-                } else if (this.filter.pdp.proses && elPasien.status === 'PDP' && elPasien.stage === 'Proses') {
+                } else if (elPasien.status === 'PDP' && elPasien.stage === 'Proses') {
                   this.addMarkerLayer(this.kotaCluster, element, elPasien)
-                } else if (this.filter.pdp.belumupdate && elPasien.status === 'PDP' && (elPasien.stage === '' || elPasien.stage === null)) {
+                } else if ( elPasien.status === 'PDP' && (elPasien.stage === '' || elPasien.stage === null)) {
                   this.addMarkerLayer(this.kotaCluster, element, elPasien)
-                } else if (this.filter.positif.proses && elPasien.status === 'Positif' && elPasien.stage === 'Aktif') {
+                } else if ( elPasien.status === 'Positif' && elPasien.stage === 'Aktif') {
                   this.addMarkerLayer(this.kotaCluster, element, elPasien)
-                } else if (this.filter.positif.meninggal && elPasien.status === 'Positif' && elPasien.stage === 'Meninggal') {
+                } else if (elPasien.status === 'Positif' && elPasien.stage === 'Meninggal') {
                   this.addMarkerLayer(this.kotaCluster, element, elPasien)
-                } else if (this.filter.positif.sembuh && elPasien.status === 'Positif' && elPasien.stage === 'Sembuh') {
+                } else if (elPasien.status === 'Positif' && elPasien.stage === 'Sembuh') {
                   this.addMarkerLayer(this.kotaCluster, element, elPasien)
                 }
               }
@@ -793,19 +798,19 @@ export default {
               const isInside = turf.inside(point, element.feature)
               if (isInside) {
                 kabkotNama = elPasien.kabkot_str
-                if (this.filter.odp.proses && elPasien.status === 'ODP' && elPasien.stage === 'Proses') {
+                if ( elPasien.status === 'ODP' && elPasien.stage === 'Proses') {
                   this.addMarkerLayer(this.kecamatanCluster, element, elPasien)
-                } else if (this.filter.odp.belumupdate && elPasien.status === 'ODP' && (elPasien.stage === '' || elPasien.stage === null)) {
+                } else if (elPasien.status === 'ODP' && (elPasien.stage === '' || elPasien.stage === null)) {
                   this.addMarkerLayer(this.kecamatanCluster, element, elPasien)
-                } else if (this.filter.pdp.proses && elPasien.status === 'PDP' && elPasien.stage === 'Proses') {
+                } else if (elPasien.status === 'PDP' && elPasien.stage === 'Proses') {
                   this.addMarkerLayer(this.kecamatanCluster, element, elPasien)
-                } else if (this.filter.pdp.belumupdate && elPasien.status === 'PDP' && (elPasien.stage === '' || elPasien.stage === null)) {
+                } else if ( elPasien.status === 'PDP' && (elPasien.stage === '' || elPasien.stage === null)) {
                   this.addMarkerLayer(this.kecamatanCluster, element, elPasien)
-                } else if (this.filter.positif.proses && elPasien.status === 'Positif' && elPasien.stage === 'Aktif') {
+                } else if ( elPasien.status === 'Positif' && elPasien.stage === 'Aktif') {
                   this.addMarkerLayer(this.kecamatanCluster, element, elPasien)
-                } else if (this.filter.positif.meninggal && elPasien.status === 'Positif' && elPasien.stage === 'Meninggal') {
+                } else if (elPasien.status === 'Positif' && elPasien.stage === 'Meninggal') {
                   this.addMarkerLayer(this.kecamatanCluster, element, elPasien)
-                } else if (this.filter.positif.sembuh && elPasien.status === 'Positif' && elPasien.stage === 'Sembuh') {
+                } else if (elPasien.status === 'Positif' && elPasien.stage === 'Sembuh') {
                   this.addMarkerLayer(this.kecamatanCluster, element, elPasien)
                 }
               }
