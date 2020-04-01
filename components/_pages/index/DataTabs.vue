@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="tab-container">
-      <div class="relative md:hidden rounded-lg overflow-hidden border-2 border-solid border-brand-green">
+      <div class="relative md:hidden mt-4 rounded-lg overflow-hidden border-2 border-solid border-brand-green">
         <i
           class="pointer-events-none block absolute top-0 right-0 bottom-0 p-5 text-xl text-brand-green bg-white border-l-2 border-solid border-brand-green"
         >
@@ -10,13 +10,13 @@
         <select
           ref="dropdown"
           v-model="activeTabId"
-          class="w-full p-5 bg-white text-2xl text-green-700 font-bold"
+          class="w-full p-5 bg-white text-lg lg:text-2xl text-green-700 font-bold"
         >
           <option
             v-for="(tab, index) in tabs"
             :key="index"
             :value="tab.id"
-            class="text-lg text-gray-900 font-normal"
+            class="text-base lg:text-lg text-gray-900 font-normal"
           >
             {{ tab.title }}
           </option>
@@ -28,7 +28,7 @@
         <li
           v-for="(tab, index) in tabs"
           :key="index"
-          :class="['relative cursor-pointer p-4 sm:p-6 whitespace-no-wrap select-none hover:bg-gray-200', tab.id === activeTabId && 'border-b-4 border-solid border-brand-green']"
+          :class="['relative cursor-pointer px-4 py-4 sm:px-6 whitespace-no-wrap select-none hover:bg-gray-200', tab.id === activeTabId && 'border-b-4 border-solid border-brand-green']"
           style="transform: translateY(3px);"
           @click="activeTabId = tab.id"
         >
@@ -69,7 +69,7 @@ export default {
         },
         {
           id: 'map-kel',
-          title: 'Peta Sebaran Kelurahan',
+          title: 'Peta Titik Sebaran Kasus',
           component: () => import('../../Tableau/PetaPersebaranAllCases')
         }
       ],

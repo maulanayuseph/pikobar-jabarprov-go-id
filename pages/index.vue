@@ -78,7 +78,7 @@
         <b>Angka Kejadian di Jawa Barat</b><br>
         <small class="opacity-50">Update Terakhir: {{ lastUpdatedAt }}</small>
       </h2>
-      <DataTabs class="mt-4" />
+      <DataTabs />
       <div class="text-center md:self-center mb-8 xl:mt-8">
         <a
           target="_blank"

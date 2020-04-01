@@ -27,7 +27,7 @@ export default {
   },
   data () {
     return {
-      url: 'https://public.tableau.com/views/SISTEMPEMANTAUANCOVID-19JAWABARAT-BLACKVERSION/DashboardPikobar?:display_count=y&:toolbar=n&:origin=viz_share_link',
+      url: 'https://public.tableau.com/views/SISTEMPEMANTAUANCOVID-19JAWABARAT-BLACKVERSION/PetaPikobar?:display_count=y&:toolbar=n&:origin=viz_share_link',
       title: 'Disclaimer',
       disclaimer: `
       Perbesar peta untuk melihat jumlah titik akurat. Beberapa titik yang saling berdekatan terlihat menyatu pada pembesaran peta skala besar.
