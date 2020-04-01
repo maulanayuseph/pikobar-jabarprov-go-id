@@ -78,7 +78,7 @@
         <b>Angka Kejadian di Jawa Barat</b><br>
         <small class="opacity-50">Update Terakhir: {{ lastUpdatedAt }}</small>
       </h2>
-      <DataSummary class="mt-8" />
+      <DataTabs class="mt-4" />
       <div class="text-center md:self-center mb-8 xl:mt-8">
         <a
           target="_blank"
@@ -90,7 +90,6 @@
         </a>
       </div>
       <br>
-      <DataTabs />
       <br>
     </section>
     <section class="mt-8 m-4 md:mt-16 md:m-8">
@@ -398,7 +397,6 @@ import ContactListItem from '~/components/ContactList/ContactListItem'
 import CallCenter from '~/components/CallCenter'
 import BlogPostPreview from '~/components/Blog/BlogPostPreview'
 import DataTabs from '~/components/_pages/index/DataTabs'
-import DataSummary from '~/components/_pages/index/DataSummary'
 import ShareableItems from '~/components/ShareableItems'
 
 export default {
@@ -410,7 +408,6 @@ export default {
     ContactListItem,
     CallCenter,
     DataTabs,
-    DataSummary,
     ShareableItems
   },
   async fetch () {

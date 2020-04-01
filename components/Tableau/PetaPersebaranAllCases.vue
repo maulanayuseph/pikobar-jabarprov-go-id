@@ -1,5 +1,6 @@
 <template>
   <TableauViz
+    id="peta-sebaran-kelurahan"
     :title="title"
     :subtitle="subtitle"
     :disclaimer="disclaimer"

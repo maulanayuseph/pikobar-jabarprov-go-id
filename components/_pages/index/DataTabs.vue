@@ -60,7 +60,7 @@ export default {
         {
           id: 'stat',
           title: 'Statistik',
-          component: () => import('../../BarStatHarianAkumulatif')
+          component: () => import('./DataSummary')
         },
         {
           id: 'map-kota',
@@ -90,9 +90,6 @@ export default {
 
 <style lang="scss" scoped>
 .tab-container {
-  @apply p-5 bg-white rounded-lg shadow-md;
-  @screen md {
-    @apply p-0 bg-transparent rounded-none shadow-none;
-  }
+  //
 }
 </style>
