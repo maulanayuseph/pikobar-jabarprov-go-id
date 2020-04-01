@@ -89,10 +89,8 @@
           <FontAwesomeIcon class="ml-2" :icon="icon.faChevronRight" />
         </a>
       </div>
-      <br>
-      <br>
     </section>
-    <section class="mt-8 m-4 md:mt-16 md:m-8">
+    <section class="mt-4 m-4 md:mt-8 md:m-8">
       <h2 class="mb-0 md:mb-4 text-left text-2xl md:text-center md:text-3xl">
         <b>Apa yang Harus Dilakukan</b>
       </h2>
