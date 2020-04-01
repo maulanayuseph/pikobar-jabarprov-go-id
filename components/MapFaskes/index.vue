@@ -1,10 +1,10 @@
 <template>
   <div class="container-map m-2">
-    <div class="bg-white col-md-12 p-0 " style="border-radius: 0.8rem; box-shadow: 0 0 4px 0px rgba(0,0,0,0.05), 0 4px 24px 0 rgba(0,0,0,0.1);">
+    <div class="bg-white col-md-12 p-0 " style="position:relative;border-radius: 0.8rem; box-shadow: 0 0 4px 0px rgba(0,0,0,0.05), 0 4px 24px 0 rgba(0,0,0,0.1);">
       <div id="map-faskes" style="height: 50em;z-index:0;" />
       <div class="filter-layer">
         <div class="text-right">
-          <button class="btn btn-light" @click="showFilter">
+          <button class="btn bg-white rounded" @click="showFilter">
             <font-awesome-icon :icon="faFilter" />
           </button>
         </div>
@@ -77,81 +77,79 @@
         </div>
       </div>
       <div class="info-legend p-3">
-        <div class="container">
-          <b>Keterangan: </b>
-          <div class="row">
-            <div class="col-md-3">
-              <svg
-                style="float:left;"
-                width="18"
-                height="18"
-                viewBox="0 0 18 18"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg">
-                <rect
-                  x="1"
-                  y="1"
-                  width="16"
-                  height="16"
-                  rx="4"
-                  stroke="#5AAA4E"
-                />
-                <path d="M13.9996 7.54973V10.4503C13.9996 10.7177 13.783 10.9347 13.5151 10.9347H10.9348V13.5155C10.9348 13.783 10.7177 14 10.4503 14H7.54978C7.28235 14 7.0653 13.783 7.0653 13.5155V10.9347H4.48447C4.21656 10.9347 4 10.7177 4 10.4503V7.54973C4 7.2823 4.21656 7.06526 4.48447 7.06526H7.0653V4.48447C7.0653 4.21704 7.28235 4 7.54978 4H10.4504C10.7178 4 10.9348 4.21704 10.9348 4.48447V7.06526H13.5152C13.783 7.06526 13.9996 7.2823 13.9996 7.54973Z" fill="#6EBE62"/>
-                <path d="M13.9998 7.54973V10.4503C13.9998 10.7177 13.7832 10.9347 13.5153 10.9347H10.935V13.5155C10.935 13.783 10.7179 14 10.4505 14H9V4H10.4505C10.7179 4 10.935 4.21704 10.935 4.48447V7.06526H13.5153C13.7832 7.06526 13.9998 7.2823 13.9998 7.54973Z" fill="#5AAA4E" />
-              </svg>
-              &nbsp;
-              Rumah Sakit Rujukan Lini 1
-            </div>
-            <div class="col-md-3">
-              <svg
-                style="float:left"
-                width="18"
-                height="18"
-                viewBox="0 0 18 18"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg">
-                <rect
-                  x="1"
-                  y="1"
-                  width="16"
-                  height="16"
-                  rx="4"
-                  stroke="#F2C94C"
-                />
-                <path d="M13.9996 7.54973V10.4503C13.9996 10.7177 13.783 10.9347 13.5151 10.9347H10.9348V13.5155C10.9348 13.783 10.7177 14 10.4503 14H7.54978C7.28235 14 7.0653 13.783 7.0653 13.5155V10.9347H4.48447C4.21656 10.9347 4 10.7177 4 10.4503V7.54973C4 7.2823 4.21656 7.06526 4.48447 7.06526H7.0653V4.48447C7.0653 4.21704 7.28235 4 7.54978 4H10.4504C10.7178 4 10.9348 4.21704 10.9348 4.48447V7.06526H13.5152C13.783 7.06526 13.9996 7.2823 13.9996 7.54973Z" fill="#F2D57A" />
-                <path d="M13.9998 7.54973V10.4503C13.9998 10.7177 13.7832 10.9347 13.5153 10.9347H10.935V13.5155C10.935 13.783 10.7179 14 10.4505 14H9V4H10.4505C10.7179 4 10.935 4.21704 10.935 4.48447V7.06526H13.5153C13.7832 7.06526 13.9998 7.2823 13.9998 7.54973Z" fill="#F2C94C" />
-              </svg>
-              &nbsp;
-              Rumah Sakit Rujukan Lini 2
-            </div>
-            <div class="col-md-2">
-              <svg
-                style="float:left"
-                width="18"
-                height="18"
-                viewBox="0 0 18 18"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg">
-                <rect
-                  x="1"
-                  y="1"
-                  width="16"
-                  height="16"
-                  rx="4"
-                  stroke="#2D9CDB" />
-                <path d="M13.9996 7.54973V10.4503C13.9996 10.7177 13.783 10.9347 13.5151 10.9347H10.9348V13.5155C10.9348 13.783 10.7177 14 10.4503 14H7.54978C7.28235 14 7.0653 13.783 7.0653 13.5155V10.9347H4.48447C4.21656 10.9347 4 10.7177 4 10.4503V7.54973C4 7.2823 4.21656 7.06526 4.48447 7.06526H7.0653V4.48447C7.0653 4.21704 7.28235 4 7.54978 4H10.4504C10.7178 4 10.9348 4.21704 10.9348 4.48447V7.06526H13.5152C13.783 7.06526 13.9996 7.2823 13.9996 7.54973Z" fill="#56CCF2" />
-                <path d="M13.9998 7.54973V10.4503C13.9998 10.7177 13.7832 10.9347 13.5153 10.9347H10.935V13.5155C10.935 13.783 10.7179 14 10.4505 14H9V4H10.4505C10.7179 4 10.935 4.21704 10.935 4.48447V7.06526H13.5153C13.7832 7.06526 13.9998 7.2823 13.9998 7.54973Z" fill="#2D9CDB" />
-              </svg>
-              &nbsp;
-              Puskesmas
-            </div>
-            <div class="col-md" />
+        <b>Keterangan: </b>
+        <div class="flex mb-4">
+          <div class="w-1/4 h-auto">
+            <svg
+              style="float:left;"
+              width="18"
+              height="18"
+              viewBox="0 0 18 18"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg">
+              <rect
+                x="1"
+                y="1"
+                width="16"
+                height="16"
+                rx="4"
+                stroke="#5AAA4E"
+              />
+              <path d="M13.9996 7.54973V10.4503C13.9996 10.7177 13.783 10.9347 13.5151 10.9347H10.9348V13.5155C10.9348 13.783 10.7177 14 10.4503 14H7.54978C7.28235 14 7.0653 13.783 7.0653 13.5155V10.9347H4.48447C4.21656 10.9347 4 10.7177 4 10.4503V7.54973C4 7.2823 4.21656 7.06526 4.48447 7.06526H7.0653V4.48447C7.0653 4.21704 7.28235 4 7.54978 4H10.4504C10.7178 4 10.9348 4.21704 10.9348 4.48447V7.06526H13.5152C13.783 7.06526 13.9996 7.2823 13.9996 7.54973Z" fill="#6EBE62"/>
+              <path d="M13.9998 7.54973V10.4503C13.9998 10.7177 13.7832 10.9347 13.5153 10.9347H10.935V13.5155C10.935 13.783 10.7179 14 10.4505 14H9V4H10.4505C10.7179 4 10.935 4.21704 10.935 4.48447V7.06526H13.5153C13.7832 7.06526 13.9998 7.2823 13.9998 7.54973Z" fill="#5AAA4E" />
+            </svg>
+            &nbsp;
+            Rumah Sakit Rujukan Lini 1
           </div>
+          <div class="w-1/4 h-auto">
+            <svg
+              style="float:left"
+              width="18"
+              height="18"
+              viewBox="0 0 18 18"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg">
+              <rect
+                x="1"
+                y="1"
+                width="16"
+                height="16"
+                rx="4"
+                stroke="#F2C94C"
+              />
+              <path d="M13.9996 7.54973V10.4503C13.9996 10.7177 13.783 10.9347 13.5151 10.9347H10.9348V13.5155C10.9348 13.783 10.7177 14 10.4503 14H7.54978C7.28235 14 7.0653 13.783 7.0653 13.5155V10.9347H4.48447C4.21656 10.9347 4 10.7177 4 10.4503V7.54973C4 7.2823 4.21656 7.06526 4.48447 7.06526H7.0653V4.48447C7.0653 4.21704 7.28235 4 7.54978 4H10.4504C10.7178 4 10.9348 4.21704 10.9348 4.48447V7.06526H13.5152C13.783 7.06526 13.9996 7.2823 13.9996 7.54973Z" fill="#F2D57A" />
+              <path d="M13.9998 7.54973V10.4503C13.9998 10.7177 13.7832 10.9347 13.5153 10.9347H10.935V13.5155C10.935 13.783 10.7179 14 10.4505 14H9V4H10.4505C10.7179 4 10.935 4.21704 10.935 4.48447V7.06526H13.5153C13.7832 7.06526 13.9998 7.2823 13.9998 7.54973Z" fill="#F2C94C" />
+            </svg>
+            &nbsp;
+            Rumah Sakit Rujukan Lini 2
+          </div>
+          <div class="w-1/4 h-auto">
+            <svg
+              style="float:left"
+              width="18"
+              height="18"
+              viewBox="0 0 18 18"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg">
+              <rect
+                x="1"
+                y="1"
+                width="16"
+                height="16"
+                rx="4"
+                stroke="#2D9CDB" />
+              <path d="M13.9996 7.54973V10.4503C13.9996 10.7177 13.783 10.9347 13.5151 10.9347H10.9348V13.5155C10.9348 13.783 10.7177 14 10.4503 14H7.54978C7.28235 14 7.0653 13.783 7.0653 13.5155V10.9347H4.48447C4.21656 10.9347 4 10.7177 4 10.4503V7.54973C4 7.2823 4.21656 7.06526 4.48447 7.06526H7.0653V4.48447C7.0653 4.21704 7.28235 4 7.54978 4H10.4504C10.7178 4 10.9348 4.21704 10.9348 4.48447V7.06526H13.5152C13.783 7.06526 13.9996 7.2823 13.9996 7.54973Z" fill="#56CCF2" />
+              <path d="M13.9998 7.54973V10.4503C13.9998 10.7177 13.7832 10.9347 13.5153 10.9347H10.935V13.5155C10.935 13.783 10.7179 14 10.4505 14H9V4H10.4505C10.7179 4 10.935 4.21704 10.935 4.48447V7.06526H13.5153C13.7832 7.06526 13.9998 7.2823 13.9998 7.54973Z" fill="#2D9CDB" />
+            </svg>
+            &nbsp;
+            Puskesmas
+          </div>
+          <div class="w-1/4" />
         </div>
       </div>
-      <div v-if="loading" class="loading-page">
-        <div class="loading-image" />
-      </div>
+    </div>
+    <div v-if="loading" class="loading-page">
+      <div class="loading-image" />
     </div>
   </div>
 </template>
@@ -315,7 +313,7 @@ export default {
         filter: (feature, layer) => {
           if (self.filter.lini1 && feature.properties.rujukan) {
             return feature
-          } else if (self.filter.lini2 && feature.properties.tipe_faskes === 1) {
+          } else if (self.filter.lini2 && feature.properties.tipe_faskes === 1 && feature.properties.rujukan === null) {
             return feature
           } else if (self.filter.puskesmas && feature.properties.tipe_faskes === 2) {
             return feature
