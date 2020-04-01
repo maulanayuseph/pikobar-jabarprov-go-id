@@ -5,7 +5,7 @@
         <div id="map-wrap" style="height: 75%;z-index:0;" />
         <div class="filter-layer"> 
           <div class="text-right">
-            <button class="btn btn-light" @click="showFilter">
+            <button class="btn bg-white" @click="showFilter">
               <font-awesome-icon :icon="faFilter" />
             </button>
           </div>
@@ -42,8 +42,8 @@
         </div>
         <div class="info-legend p-2">
           <b>Keterangan: </b>
-          <div class="row">
-            <div class="col-md-3">
+          <div class="flex mb-4">
+            <div class="w-1/4 h-auto">
               <div class="legend-color" style="background:#2d9cdb" /> &nbsp;
               ODP - Proses
             </div>
@@ -51,7 +51,7 @@
               <div class="legend-color" style="background:#f2c94c; border: 2px solid #2d9cdb" /> &nbsp;
               ODP - naik satus ke PDP
             </div> -->
-            <div class="col-md-3">
+            <div class="w-1/4 h-auto">
               <div class="legend-color" style="background:#2d9cdb; border: 2px solid #bdbdbd" /> &nbsp;
               ODP (belum diupdate)
             </div>
@@ -59,16 +59,16 @@
               <div class="legend-color" style="background:#27ae60; border: 2px solid #f2c94c" /> &nbsp;
               PDP - Selesai
             </div> -->
-            <div class="col-md-3">
+            <div class="w-1/4 h-auto">
               <div class="legend-color" style="background:#f2c94c; border: 2px solid #bdbdbd" /> &nbsp;
               PDP (belum diupdate)
             </div>
-            <div class="col-md">
+            <div class="w-1/4 h-auto">
               <div class="legend-color" style="background:#a51212; border: 2px solid #eb5757" /> &nbsp;
               Positif - Meninggal
             </div>
           </div>
-          <div class="row">
+          <div class="flex mb-4">
             <!-- <div class="col-md">
               <div class="legend-color" style="background:#27ae60; border: 2px solid #3aa2dd" /> &nbsp;
               ODP - Selesai
@@ -77,7 +77,7 @@
               <div class="legend-color" style="background:#eb5757; border: 2px solid #3aa2dd" /> &nbsp;
               ODP - naik satus ke Positif
             </div> -->
-            <div class="col-md-3">
+            <div class="w-1/4 h-auto">
               <div class="legend-color" style="background:#f2c94c;" /> &nbsp;
               PDP - Proses
             </div>
@@ -85,11 +85,11 @@
               <div class="legend-color" style="background:#eb5757; border: 2px solid #f2c94c" /> &nbsp;
               PDP - naik status ke Positif
             </div> -->
-            <div class="col-md-3">
+            <div class="w-1/4 h-auto">
               <div class="legend-color" style="background:#eb5757" /> &nbsp;
               Positif - Aktif
             </div>
-            <div class="col-md">
+            <div class="w-1/4 h-auto">
               <div class="legend-color" style="background:#27ae60; border: 2px solid #eb5757" /> &nbsp;
               Positif - Sembuh
             </div>
@@ -352,7 +352,21 @@ export default {
       kotaCluster: [],
       kecamatanCluster: [],
       kelurahanCluster: [],
-      listLayer: [],
+      listLayer: {
+        odp : {
+          proses: [],
+          belumupdate: []
+        },
+        pdp: {
+          proses: [],
+          belumupdate: []
+        },
+        positif: {
+          proses: [],
+          meninggal: [],
+          sembuh: []
+        }
+      },
       wilayahLayer: [],
       styleBatasWilayah: {
         fillColor: 'blue',
@@ -394,24 +408,19 @@ export default {
   },
   methods: {
     setFilter (status, stage) {
-      this.loading = true
       try {
-        setTimeout(() => {
-          this.filter[status][stage] = !this.filter[status][stage]
-          if (this.zoom > 12) {
-            this.removeBatasWilayah()
-            this.removeLayer()
-            this.createLayerByKecamatan()
-          } else if (this.zoom < 12) {
-            this.removeBatasWilayah()
-            this.removeLayer()
-            this.createLayerPasienByKota()
+        this.removeLayer()
+        this.filter[status][stage] = !this.filter[status][stage] 
+        for (let status in this.filter) {
+          for (let stage in this.filter[status]) {
+            this.listLayer[status][stage].forEach((element) => {
+
+              if (this.filter[status][stage]) {
+                element.addTo(this.map)
+              }
+            })
           }
-          this.loading = false
-        }, 1000)
-        
-
-
+        }
       } catch (e) {
         console.log(e.message);
       }
@@ -492,13 +501,45 @@ export default {
         //   this.createLayerByKelurahan()
         // } else 
         if (this.map.getZoom() > 12 && this.zoom < 12) {
+          
           this.removeLayer()
           this.removeBatasWilayah()
+          this.listLayer = {
+            odp : {
+              proses: [],
+              belumupdate: []
+            },
+            pdp: {
+              proses: [],
+              belumupdate: []
+            },
+            positif: {
+              proses: [],
+              meninggal: [],
+              sembuh: []
+            }
+          }
           this.zoom = this.map.getZoom()
           this.createLayerByKecamatan()
         } else if (this.map.getZoom() < 12 && this.zoom > 12) {
+          
           this.removeLayer()
           this.removeBatasWilayah()
+          this.listLayer = {
+            odp : {
+              proses: [],
+              belumupdate: []
+            },
+            pdp: {
+              proses: [],
+              belumupdate: []
+            },
+            positif: {
+              proses: [],
+              meninggal: [],
+              sembuh: []
+            }
+          }
           this.zoom = this.map.getZoom()
           this.createLayerPasienByKota()
         }
@@ -525,10 +566,14 @@ export default {
       this.wilayahLayer = []
     },
     removeLayer () {
-      this.listLayer.forEach((element) => {
-        this.map.removeLayer(element)
-      })
-      this.listLayer = []
+
+      for (let status in this.filter) {
+        for (let stage in this.filter[status]) {
+          this.listLayer[status][stage].forEach((element) => {
+            this.map.removeLayer(element)
+          })
+        }
+      }
     },
     configCluster (className) {
       return {
@@ -654,7 +699,7 @@ export default {
       for (const key in cluster[element.feature.properties.bps_kode]) {
         for (const keySub in cluster[element.feature.properties.bps_kode][key]) {
           const newLayer = cluster[element.feature.properties.bps_kode][key][keySub].addTo(this.map)
-          this.listLayer.push(newLayer)
+          this.listLayer[key][keySub].push(newLayer)
           cluster[element.feature.properties.bps_kode][key][keySub].on('clusterclick', (c) => {
             let popup = ''
             popup += `<b> Status </b> : ${this.statusStageCorona(key, keySub)} <br>`
@@ -843,7 +888,7 @@ export default {
     color: #777;
 }
 .info-legend {
-  height: 25%;
+  height: 26%;
   overflow-y: auto;
   overflow-x: hidden;
   font-size: 13px;
