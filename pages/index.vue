@@ -4,7 +4,7 @@
     <section class="m-4 md:m-8">
       <div class="flex flex-col lg:flex-row lg:items-stretch">
         <div class="w-full mb-6 lg:w-1/2 lg:mr-6 lg:mb-0">
-          <div class="relative rounded-lg overflow-hidden shadow-md" :style="{paddingTop: `${400 * 100/ 713}%`}">
+          <div class="relative container-with-ratio rounded-lg overflow-hidden shadow-md">
             <ImageCarousel
               class="absolute inset-0 w-full h-full"
               :items="banners"
@@ -12,8 +12,8 @@
           </div>
         </div>
         <div class="w-full lg:w-1/2">
-          <div class="relative" :style="{paddingTop: `${400 * 100/ 713}%`}">
-            <div class="absolute inset-0 w-full h-full top-grid">
+          <div class="relative container-with-ratio container-with-ratio--lg">
+            <div class="static lg:absolute lg:inset-0 w-full h-full top-grid">
               <CallCard class="top-grid__call-card" title="Call Center" subtitle="Nomor Darurat" number="119" />
               <CallCard class="top-grid__call-card" title="Dinkes Jabar" subtitle="Pertanyaan Umum" number="0811 2093 306" />
               <div
@@ -78,21 +78,19 @@
         <b>Angka Kejadian di Jawa Barat</b><br>
         <small class="opacity-50">Update Terakhir: {{ lastUpdatedAt }}</small>
       </h2>
-      <DataSummary class="my-8" />
-      <div class="rounded-lg bg-white shadow-md overflow-hidden">
-        <PetaPersebaranAllCases />
+      <DataTabs class="mt-4" />
+      <div class="text-center md:self-center mb-8 xl:mt-8">
+        <a
+          target="_blank"
+          class="px-4 py-2 font-bold text-lg text-brand-green-darker hover:text-brand-green-light"
+          href="/data"
+        >
+          Lihat Selengkapnya
+          <FontAwesomeIcon class="ml-2" :icon="icon.faChevronRight" />
+        </a>
       </div>
-      <a
-        v-show="false"
-        target="_blank"
-        class="text-center md:self-center w-56 py-2 rounded-lg text-brand-green-darker hover:bg-green-200 border-2 border-solid border-brand-green"
-        href="/data"
-      >
-        Lihat Data Selengkapnya
-      </a>
-      <br>
     </section>
-    <section class="mt-8 m-4 md:mt-16 md:m-8">
+    <section class="mt-4 m-4 md:mt-8 md:m-8">
       <h2 class="mb-0 md:mb-4 text-left text-2xl md:text-center md:text-3xl">
         <b>Apa yang Harus Dilakukan</b>
       </h2>
@@ -396,8 +394,7 @@ import CallCard from '~/components/CallCard'
 import ContactListItem from '~/components/ContactList/ContactListItem'
 import CallCenter from '~/components/CallCenter'
 import BlogPostPreview from '~/components/Blog/BlogPostPreview'
-import DataSummary from '~/components/_pages/index/DataSummary'
-import PetaPersebaranAllCases from '~/components/Tableau/PetaPersebaranAllCases'
+import DataTabs from '~/components/_pages/index/DataTabs'
 import ShareableItems from '~/components/ShareableItems'
 
 export default {
@@ -408,8 +405,7 @@ export default {
     BlogPostPreview,
     ContactListItem,
     CallCenter,
-    DataSummary,
-    PetaPersebaranAllCases,
+    DataTabs,
     ShareableItems
   },
   async fetch () {
@@ -574,6 +570,17 @@ export default {
     column-gap: 1.5rem;
     align-items: stretch;
     row-gap: 1.5rem;
+  }
+}
+
+.container-with-ratio {
+  padding-top: (400 * 100/ 713) * 1%;
+
+  &--lg {
+    padding-top: 0;
+    @screen lg {
+      padding-top: (400 * 100/ 713) * 1%;
+    }
   }
 }
 </style>
