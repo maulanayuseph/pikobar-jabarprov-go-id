@@ -102,10 +102,11 @@
           <div class="w-1/4" />
         </div>
       </div> -->
+
+      <div v-if="loading" class="loading-page">
+        <div class="loading-image" />
+      </div>
     </div>
-    <!-- <div v-if="loading" class="loading-page">
-      <div class="loading-image" />
-    </div> -->
   </div>
 </template>
 
@@ -114,6 +115,7 @@ import { loadModules } from 'esri-loader'
 import axios from 'axios'
 import { faFilter } from '@fortawesome/free-solid-svg-icons'
 import * as turf from '@turf/turf'
+import { featureEach } from '@turf/turf'
 
 export default {
   name: 'MapSebaranPolygon',
@@ -200,7 +202,7 @@ export default {
   },
   methods: {
     setFilter (status, stage) {
-      this.loading = true
+      // this.loading = true
 
       for (let propStatus in this.filter) {
         for (let propStage in this.filter[propStatus]) {
@@ -282,6 +284,7 @@ export default {
         .then(function (response) {
           self.jsonData = response.data.data
           // self.geoJSONData = self.createGeoJSON(response.data.data)
+          
           self.createMap(self.kotaGeojson, 'kota')
         })
         .catch(function (error) {
@@ -322,8 +325,27 @@ export default {
     },
     createBasemap () {
       // lazy load the required ArcGIS API for JavaScript modules and CSS
-      loadModules(['esri/Map', 'esri/views/MapView', 'esri/widgets/Legend', 'esri/widgets/Expand', 'esri/geometry/Polygon', 'esri/geometry/support/webMercatorUtils', 'esri/core/watchUtils', 'esri/core/promiseUtils'], { css: true }).then(([ArcGISMap, MapView, Legend, Expand, Polygon, webMercatorUtils, watchUtils, promiseUtils]) => {
+      loadModules(['esri/Map', 'esri/views/MapView', 'esri/widgets/Legend', 'esri/widgets/Expand', 'esri/geometry/Polygon', 'esri/geometry/support/webMercatorUtils', 'esri/core/watchUtils', 'esri/core/promiseUtils', 'esri/widgets/Search', 'esri/Basemap', 'esri/layers/TileLayer'], { css: true }).then(([ArcGISMap, MapView, Legend, Expand, Polygon, webMercatorUtils, watchUtils, promiseUtils, Search, Basemap, TileLayer]) => {
+
+        //  const rbi = new Basemap({
+        //   baseLayers: [
+        //     // Menggunakan TileLayer untuk ambil mapserver supaya lebih cepat load peta nya
+        //     // https://developers.arcgis.com/javascript/latest/api-reference/esri-layers-TileLayer.html
+        //     // new TileLayer({
+        //     //   // Popular basemap
+        //     //   // https://developers.arcgis.com/javascript/latest/api-reference/esri-Map.html#basemap
+        //     //   url: 'https://services.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer'
+        //     // }),
+        //     new TileLayer({
+        //       url: 'https://portal.ina-sdi.or.id/arcgis/rest/services/RBI/Basemap/MapServer'
+        //     })
+        //   ],
+        //   title: 'Rupa Bumi Indonesia',
+        //   id: 'rbi',
+        //   thumbnailUrl: 'https://portal.ina-sdi.or.id/arcgis/rest/services/RBI/Basemap/MapServer/info/thumbnail'
+        // })
         this.map = new ArcGISMap({
+          // basemap: rbi
           basemap: 'topo'
         })
         this.view = new MapView({
@@ -345,9 +367,29 @@ export default {
             content: legend
           })
 
+
+          const searchWidget = new Search({
+            view: this.view,
+            zoomScale:200
+          });
           // Add widget to the bottom right corner of the view
           this.view.ui.add(expandLegend, "bottom-left");
           
+          this.view.ui.add(searchWidget, {
+            position: "top-left",
+            index: 2
+          });
+
+          this.view.ui.move('zoom', "bottom-right");
+
+          // Event handler that fires each time an action is clicked.
+          this.view.popup.on("trigger-action", ((event) => {
+              // Execute the measureThis() function if the measure-this action is clicked
+              if (event.action.id === "go-this") {
+                this.goThis()
+              }
+            })
+          )
 
           watchUtils.whenTrue(this.view, "stationary", (() => {
             let activeGeoJSON = []
@@ -355,7 +397,7 @@ export default {
             const features = []
             let area = []
 
-            console.log(this.view.zoom)
+            // console.log(this.view.zoom)
             if(this.view.zoom >= 13) {
               area = Polygon.fromExtent(this.view.extent)
               level = 'kelurahan'
@@ -370,69 +412,77 @@ export default {
             }
 
             if (area.rings !== undefined) {
-              this.map.removeAll()
-              let screenRings = []
-              area.rings[0].forEach(element => {
-                let coord = webMercatorUtils.xyToLngLat(element[0], element[1])
-                screenRings.push(coord)
-              })
-              
-              let geojsonFeatures = {
-                type: "FeatureCollection",
-                features: []
-              }
+              this.loading = true
 
-              let screenPolygon = {
-                "type": "Feature",
-                "properties": {
-                  "fill": "#00f"
-                },
-                "geometry": {
-                  "type": "Polygon",
-                  "coordinates": [screenRings]
+              setTimeout(() => {
+                this.map.removeAll()
+                let screenRings = []
+                area.rings[0].forEach(element => {
+                  let coord = webMercatorUtils.xyToLngLat(element[0], element[1])
+                  screenRings.push(coord)
+                })
+                
+                let geojsonFeatures = {
+                  type: "FeatureCollection",
+                  features: []
                 }
-              }
-              let i = 0
-              activeGeoJSON.features.forEach((element) => {
-                i++
-                if (element.geometry !== null) {
-                  let gJSON = ''
-                  if (element.geometry.type === 'MultiPolygon') {
-                      gJSON = {
-                      "type": "Feature",
-                      "properties": {
-                        "fill": "#00f"
-                      },
-                      "geometry": {
-                        "type": "Polygon",
-                        "coordinates": element.geometry.coordinates[0]
+
+                let screenPolygon = {
+                  "type": "Feature",
+                  "properties": {
+                    "fill": "#00f"
+                  },
+                  "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [screenRings]
+                  }
+                }
+                let i = 0
+                geojsonFeatures.features = activeGeoJSON.features.filter((element) => {
+                  i++
+                  if (element.geometry !== null) {
+                    let gJSON = ''
+                    if (element.geometry.type === 'MultiPolygon') {
+                        gJSON = {
+                        "type": "Feature",
+                        "properties": {
+                          "fill": "#00f"
+                        },
+                        "geometry": {
+                          "type": "Polygon",
+                          "coordinates": element.geometry.coordinates[0]
+                        }
+                      }
+                    }  else {
+                      gJSON = element
+                    }
+                    
+                    let isInside = false
+                    let contain = turf.booleanContains(screenPolygon, gJSON);
+
+                    if (contain) {
+                      isInside = true
+                      return element
+                    }
+                    
+                    if (!isInside) {
+                      let intersection = turf.booleanOverlap(gJSON, screenPolygon)
+                      if (intersection) {
+                        // geojsonFeatures.features.push(element)
+                        return element
                       }
                     }
-                  }  else {
-                    gJSON = element
+                    
                   }
-                  
-                  let isInside = false
-                  let contain = turf.booleanContains(screenPolygon, gJSON);
+                })  
 
-                  if (contain) {
-                    isInside = true
-                    geojsonFeatures.features.push(element)
-                  }
-                  
-                  if (!isInside) {
-                    let intersection = turf.booleanOverlap(gJSON, screenPolygon)
-                    if (intersection) {
-                      geojsonFeatures.features.push(element)
-                    }
-                  }
-                  
-                }
-              })  
+                // console.log(geojsonFeatures)
 
-              console.log(i)
+                this.createMap(geojsonFeatures, level)
+                this.loading = false
+              }, 500)
+              
 
-              this.createMap(geojsonFeatures, level)
             }
             
           }))
@@ -443,8 +493,8 @@ export default {
       })
     },
     createMap (geojson, level) {
-      console.log(geojson)
-      loadModules(['esri/Map', 'esri/Graphic', 'esri/PopupTemplate', 'esri/views/MapView', 'esri/layers/FeatureLayer', 'esri/geometry/Point', 'esri/symbols/SimpleMarkerSymbol',  'esri/renderers/UniqueValueRenderer', 'esri/geometry/Polygon', 'esri/layers/GeoJSONLayer', 'esri/symbols/SimpleFillSymbol', 'esri/layers/GraphicsLayer', 'esri/Basemap', 'esri/layers/TileLayer'], { css: true }).then(([ArcGISMap, Graphic, PopupTemplate, MapView, FeatureLayer, Point, SimpleMarkerSymbol, UniqueValueRenderer, Polygon, GeoJSONLayer, SimpleFillSymbol, GraphicsLayer, Basemap, TileLayer]) => {
+      // console.log(geojson)
+      loadModules(['esri/Map', 'esri/Graphic', 'esri/PopupTemplate', 'esri/views/MapView', 'esri/layers/FeatureLayer', 'esri/geometry/Point', 'esri/symbols/SimpleMarkerSymbol',  'esri/renderers/UniqueValueRenderer', 'esri/geometry/Polygon', 'esri/layers/GeoJSONLayer', 'esri/symbols/SimpleFillSymbol', 'esri/layers/GraphicsLayer', 'esri/Basemap', 'esri/layers/TileLayer', 'esri/layers/MapImageLayer'], { css: true }).then(([ArcGISMap, Graphic, PopupTemplate, MapView, FeatureLayer, Point, SimpleMarkerSymbol, UniqueValueRenderer, Polygon, GeoJSONLayer, SimpleFillSymbol, GraphicsLayer, Basemap, TileLayer, MapImageLayer]) => {
         
         const simpleSymbol = JSON.parse(JSON.stringify(this.statusCovid)) 
 
@@ -498,17 +548,25 @@ export default {
           }
         })
         
+        const GoToAction = {
+          title: "Go To",
+          id: "go-this"
+        };
 
+        let contentPopup = []
 
-        const popupTemplate = new PopupTemplate({
-          title: 'Detail Data',
-          content: [
+        if (level === 'kota') {
+          contentPopup = [
             {
               type: 'fields',
               fieldInfos: [
                 {
-                  fieldName: 'nama',
-                  label: level
+                  fieldName: 'provinsi',
+                  label: 'Provinsi'
+                },
+                {
+                  fieldName: 'kota',
+                  label: 'Kota'
                 },
                 {
                   fieldName: 'status',
@@ -518,9 +576,75 @@ export default {
                   fieldName: 'jumlah',
                   label: 'Jumlah'
                 }
-              ]
+              ],
             }
           ]
+        } else if(level === 'kecamatan') {
+          contentPopup = [
+            {
+              type: 'fields',
+              fieldInfos: [
+                {
+                  fieldName: 'provinsi',
+                  label: 'Provinsi'
+                },
+                {
+                  fieldName: 'kota',
+                  label: 'Kota'
+                },
+                {
+                  fieldName: 'kecamatan',
+                  label: 'Kecamatan'
+                },
+                {
+                  fieldName: 'status',
+                  label: 'Status'
+                },
+                {
+                  fieldName: 'jumlah',
+                  label: 'Jumlah'
+                }
+              ],
+            }
+          ]
+        } else {
+          contentPopup = [
+            {
+              type: 'fields',
+              fieldInfos: [
+                {
+                  fieldName: 'provinsi',
+                  label: 'Provinsi'
+                },
+                {
+                  fieldName: 'kota',
+                  label: 'Kota'
+                },
+                {
+                  fieldName: 'kecamatan',
+                  label: 'Kecamatan'
+                },
+                {
+                  fieldName: 'kelurahan',
+                  label: 'Kelurahan'
+                },
+                {
+                  fieldName: 'status',
+                  label: 'Status'
+                },
+                {
+                  fieldName: 'jumlah',
+                  label: 'Jumlah'
+                }
+              ],
+            }
+          ]
+        }
+        const popupTemplate = new PopupTemplate({
+          title: 'Detail Data',
+          content: contentPopup,
+          outFields: ['*']
+          // actions: [GoToAction]
         })
 
         const fields = [
@@ -535,13 +659,38 @@ export default {
             type: 'string'
           },
           {
-            name: 'nama',
-            alias: 'Nama',
+            name: 'provinsi',
+            alias: 'Provinsi',
+            type: 'string'
+          },
+          {
+            name: 'kota',
+            alias: 'Kota',
+            type: 'string'
+          },
+          {
+            name: 'kecamatan',
+            alias: 'kecamatan',
+            type: 'string'
+          },
+          {
+            name: 'kelurahan',
+            alias: 'Keluraham',
             type: 'string'
           },
           {
             name: 'jumlah',
             alias: 'Jumlah',
+            type: 'string'
+          },
+          {
+            name: 'bps_kode',
+            alias: 'Bps Kode',
+            type: 'string'
+          },
+          {
+            name: 'level',
+            alias: 'Level',
             type: 'string'
           }
         ]
@@ -551,8 +700,14 @@ export default {
           const polygonCovid = JSON.parse(JSON.stringify(this.statusCovid))
 
           this.countPointCovid(elFeature, level)
-
+          
+          let propKecamatanStr = ''
+          let propKotaStr = ''
+          let propKelurahanStr = ''
           let dataTitik = this.dataTitik.find((elTitik) => {
+            if (elTitik.kode === elFeature.properties.bps_kode) {
+
+            }
             return elTitik.kode === elFeature.properties.bps_kode
           })
 
@@ -572,23 +727,30 @@ export default {
           })
 
           listGraphicArea.push(drawBorderArea)
-
           
           for (let status in this.statusCovid) {
             for (let stage in this.statusCovid[status]) {
-              polygonCovid[status][stage] = new Graphic({
-                geometry: polygon,
-                symbol: simpleSymbol[status][stage],
-                attributes: {
-                  status: this.labelStatusCovid[status][stage],
-                  nama: elFeature.properties.kemendagri_nama,
-                  jumlah: dataTitik.data[status][stage].length
-                },
-              });
-              listPolygonCovid[status][stage].push(polygonCovid[status][stage])
+              if (dataTitik.data[status][stage].length > 0) {
+                polygonCovid[status][stage] = new Graphic({
+                  geometry: polygon,
+                  symbol: simpleSymbol[status][stage],
+                  attributes: {
+                    status: this.labelStatusCovid[status][stage],
+                    nama: elFeature.properties.kemendagri_nama,
+                    jumlah: dataTitik.data[status][stage].length,
+                    bps_kode: elFeature.properties.bps_kode,
+                    provinsi: 'Jawa Barat',
+                    kota: dataTitik.kota,
+                    kecamatan: dataTitik.kecamatan,
+                    kelurahan: dataTitik.kelurahan,
+                    level: level
+                  },
+                });
+                listPolygonCovid[status][stage].push(polygonCovid[status][stage])
 
-              if (maxPasien[status][stage] < dataTitik.data[status][stage].length) {
-                maxPasien[status][stage] = dataTitik.data[status][stage].length
+                if (maxPasien[status][stage] < dataTitik.data[status][stage].length) {
+                  maxPasien[status][stage] = dataTitik.data[status][stage].length
+                }
               }
             }
           }
@@ -602,6 +764,8 @@ export default {
         this.areaLayer = glArea
         this.map.add(glArea) // add batas wilayah
         
+        let statusActive = ''
+        let stageActive = ''
         for (let status in this.statusCovid) {
           for (let stage in this.statusCovid[status]) {
             renderer[status][stage] = {
@@ -628,24 +792,23 @@ export default {
               fields,
               popupTemplate
             })
-          }
-        }
-
-        let status = ''
-        let stage = ''
-        for (let propStatus in this.filter) {
-          for (let propStage in this.filter[propStatus]) {
-            if(this.filter[propStatus][propStage]) {
-              status = propStatus
-              stage = propStage
+ 
+            if(this.filter[status][stage]) {
+              statusActive = status
+              stageActive = stage
               break;
             }
           }
         }
-        this.map.add(this.featureLayer[status][stage])
+
+        this.map.add(this.featureLayer[statusActive][stageActive])
       })
     },
     countPointCovid (element, level) {
+      let kabkot_str = ''
+      let kecamatan_str = ''
+      let desa_str = ''
+
       let kodeTitik = ''
       if (level === 'kota') {
         kodeTitik = 'kode_kabkot'
@@ -655,7 +818,7 @@ export default {
         kodeTitik = 'kode_desa'
       }
 
-      let jumlahPasien = {
+      let dataPasien = {
           odp: {
             proses: ''
           },
@@ -668,27 +831,37 @@ export default {
             sembuh: ''
           }
         }
-        jumlahPasien.odp.proses = this.jsonData.filter ( ( d ) => {
+
+        // set nama kota, kecamatan, dan desa
+        this.jsonData.filter ( ( d ) => {
+          if (d[kodeTitik] === element.properties.bps_kode) {
+            kabkot_str = d.kabkot_str
+            kecamatan_str = d.kecamatan_str
+            desa_str = d.desa_str
+          }
+        });
+
+        dataPasien.odp.proses = this.jsonData.filter ( ( d ) => {
           if (d.status === 'ODP' && d.stage === 'Proses' && d[kodeTitik] === element.properties.bps_kode) {
             return d
           }
         });
-        jumlahPasien.pdp.proses = this.jsonData.filter ( ( d ) => {
+        dataPasien.pdp.proses = this.jsonData.filter ( ( d ) => {
           if (d.status === 'PDP' && d.stage === 'Proses' && d[kodeTitik] === element.properties.bps_kode) {
             return d
           }
         });
-        jumlahPasien.positif.aktif = this.jsonData.filter ( ( d ) => {
+        dataPasien.positif.aktif = this.jsonData.filter ( ( d ) => {
           if (d.status === 'Positif' && d.stage === 'Aktif' && d[kodeTitik] === element.properties.bps_kode) {
             return d
           }
         });
-        jumlahPasien.positif.meninggal = this.jsonData.filter ( ( d ) => {
+        dataPasien.positif.meninggal = this.jsonData.filter ( ( d ) => {
           if (d.status === 'Positif' && d.stage === 'Meninggal' && d[kodeTitik] === element.properties.bps_kode) {
             return d
           }
         });
-        jumlahPasien.positif.sembuh = this.jsonData.filter ( ( d ) => {
+        dataPasien.positif.sembuh = this.jsonData.filter ( ( d ) => {
           if (d.status === 'Positif' && d.stage === 'Sembuh' && d[kodeTitik] === element.properties.bps_kode) {
             return d
           }
@@ -696,7 +869,10 @@ export default {
 
         this.dataTitik.push({
           kode: element.properties.bps_kode,
-          data: jumlahPasien
+          data: dataPasien,
+          kota: kabkot_str,
+          kecamatan: kecamatan_str,
+          kelurahan: desa_str
         })
     },
     removeLayer () {
@@ -705,7 +881,32 @@ export default {
       })
       this.listLayer = []
     },
+    goThis() {
+      const attrLayer = this.view.popup.selectedFeature.attributes
+      let activeGeoJSON = this.kotaGeojson
+      if (attrLayer.level === 'kota') {
+        activeGeoJSON = this.kecamatanGeojson
+      }
+
+      let geoJSONSet = {
+        type:"FeatureCollection", 
+        features: []
+      }
+      
+      this.view.popup.selectedFeature.layer
+        .when((() => {
+          this.view.goTo(this.view.popup.selectedFeature.layer.fullExtent);
+        }))
+        
+     console.log(this.view.popup.selectedFeature)
+      let filteredFeatures = activeGeoJSON.features.filter(function(feature) {
+          return feature.properties.bps_kode.includes(attrLayer.bps_kode)
+      })
+      geoJSONSet.features = filteredFeatures
+      this.createMap(geoJSONSet, 'kecamatan')
+    },
     tesMap () {
+      
     }
   }
 }
