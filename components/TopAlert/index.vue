@@ -1,20 +1,29 @@
 <template>
   <div
-    v-if="!hideAlert && announcement"
-    class="border border-solid border-green-500 rounded-lg bg-green-100 px-4 py-8 md:px-8"
+    v-show="!isEnabled && announcement && !hideAnnouncement"
+    class="border border-solid border-green-500 rounded-lg bg-green-100 p-5 md:p-8"
   >
-    <div
-      class="max-w-3xl"
-    >
-      <h3 class="relative font-bold text-2xl lg:text-3xl text-gray-900 text-left pr-12 md:pr-0">
-        <FontAwesomeIcon
-          :icon="icon.faExclamationCircle"
-          class="mr-2 text-brand-green"
-        />
-        <span>
-          {{ announcement.title }}
+    <div class="max-w-3xl">
+      <header class="relative">
+        <h3 class="font-bold text-2xl lg:text-3xl text-gray-900 text-left pr-12 md:pr-0 leading-loose">
+          <FontAwesomeIcon
+            :icon="icon.faExclamationCircle"
+            class="mr-2 text-brand-green"
+          />
+          <span>
+            {{ announcement.title }}
+          </span>
+        </h3>
+        <span
+          class="cursor-pointer block absolute top-0 text-xl text-green-600 hover:text-green-800 leading-loose"
+          style="right: 0.5rem;"
+          @click.capture="hideAnnouncement = true"
+        >
+          <FontAwesomeIcon
+            :icon="icon.faTimesCircle"
+          />
         </span>
-      </h3>
+      </header>
       <br>
       <div
         class="text-base leading-loose"
@@ -38,23 +47,24 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
-import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons'
+import { faExclamationCircle, faTimesCircle } from '@fortawesome/free-solid-svg-icons'
 export default {
   data () {
     return {
       icon: {
-        faExclamationCircle
-      }
+        faExclamationCircle,
+        faTimesCircle
+      },
+      hideAnnouncement: false
     }
   },
   computed: {
-    ...mapState('remote-config', {
-      announcement: state => state.config.announcement || {}
-    }),
-    hideAlert () {
-      const config = this.$store.state['remote-config']
-      return config && config.enabled
+    announcement () {
+      const remoteConfig = this.$store.state['remote-config']
+      return remoteConfig.config ? remoteConfig.config.announcement : {}
+    },
+    isEnabled () {
+      return !this.announcement.enabled
     }
   },
   methods: {
