@@ -106,7 +106,7 @@
           <p class="text-white text-lg w-full lg:w-2/3">
             COVID-19 merupakan penyakit yang disebabkan Novel Coronavirus 2019.
             Meski bergejala mirip dengan flu biasa, COVID-19 sampai saat ini memiliki fatalitas lebih tinggi.
-            Virus ini juga menyebar dengan sangat cepat karena bisa pindah dari orang ke orang bahkan sebelum orang tersebut tidak menunjukkan gejala.
+            Virus ini juga menyebar dengan sangat cepat karena bisa pindah dari orang ke orang bahkan sebelum orang tersebut menunjukkan gejala.
             <br>
             <br>
             Penting bagi Anda untuk menilai kondisi secara mandiri. Anda bergejala?
@@ -267,7 +267,7 @@
       </h2>
       <article class="flex flex-col lg:flex-row">
         <img
-          v-lazy="'https://firebasestorage.googleapis.com/v0/b/jabarprov-covid19.appspot.com/o/public%2Fflatten.png?alt=media&token=afe8bb16-6cd5-4056-8d14-5c102f34a7c9'"
+          v-lazy="'https://firebasestorage.googleapis.com/v0/b/jabarprov-covid19.appspot.com/o/public%2Fflatten.jpeg?alt=media&token=3d989ffe-f369-4835-a232-7cf61686abd5'"
           class="order-2 lg:order-1 w-full h-full mb-8 lg:w-1/2 lg:mr-8 object-contain md:object-cover object-center rounded-lg"
         >
         <div class="order-1 lg:order-2 lg:w-1/2">
@@ -278,7 +278,7 @@
             jumlah orang terinfeksi akan meledak dan fasilitas layanan kesehatan akan kewalahan sehingga banyak kasus akan tidak tertangani.
           </p>
           <p class="font-bold text-lg">
-            Social distancing akan mengurangi laju penularan dan mengizinkan pasien terinfeksi untuk ditangani hingga sembuh, seperti di grafik terlampir.
+            Social distancing akan mengurangi laju penularan dan memungkinkan pasien terinfeksi untuk ditangani hingga sembuh, seperti di grafik terlampir.
           </p>
         </div>
       </article>
