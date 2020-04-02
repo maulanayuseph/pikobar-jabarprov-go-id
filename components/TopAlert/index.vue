@@ -3,7 +3,7 @@
     v-show="!isEnabled && announcement && !hideAnnouncement"
     class="border border-solid border-green-500 rounded-lg bg-green-100 p-5 md:p-8"
   >
-    <div class="max-w-3xl">
+    <div class="">
       <header class="relative">
         <h3 class="font-bold text-2xl lg:text-3xl text-gray-900 text-left pr-12 md:pr-0 leading-loose">
           <FontAwesomeIcon
@@ -60,11 +60,18 @@ export default {
   },
   computed: {
     announcement () {
-      const remoteConfig = this.$store.state['remote-config']
-      return remoteConfig.config ? remoteConfig.config.announcement : {}
+      try {
+        return this.$store.state['remote-config'].config.announcement
+      } catch (e) {
+        return {}
+      }
     },
     isEnabled () {
-      return !this.announcement.enabled
+      try {
+        return this.remoteConfig.config.announcement
+      } catch (e) {
+        return false
+      }
     }
   },
   methods: {
