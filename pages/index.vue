@@ -193,61 +193,69 @@
         </nuxt-link>
       </div>
     </section>
-    <section class="mt-8 m-4 md:m-8 rounded-lg bg-white shadow-md p-5 md:p-8">
-      <header class="lg:max-w-2xl">
-        <h2 class="mb-4 md:mb-8 text-left text-xl md:text-2xl">
-          <b>Lindungi Diri dan Orang Lain</b>
-        </h2>
-        <p>
-          Sampai saat ini COVID-19 belum memiliki vaksin, sehingga cara terbaik untuk tidak terinfeksi adalah dengan menghindari terekspos virus.
-        </p>
-      </header>
-      <br>
-      <div class="flex flex-col items-stretch lg:max-w-2xl">
-        <article class="text-gray-800">
-          <h3 class="text-lg text-black">
-            <b>COVID-19 dapat menyebar dari orang ke orang melalui tetesan kecil (droplet) saat batuk atau bersin.
-              Maka yang bisa Anda lakukan adalah:
-            </b>
-          </h3>
-          <br>
-          <ul style="list-style-type: none;">
-            <li class="li-check-mark">
-              Sering cuci tangan dengan sabun atau hand-sanitizer
-            </li>
-            <li class="li-check-mark">
-              Hindari menyentuh wajah, terutama hidung, mulut, dan mata
-            </li>
-            <li class="li-check-mark">
-              Bersihkan permukaan benda yang disentuh banyak orang
-            </li>
-            <li class="li-check-mark">
-              Social Distancing! Minimalisir kontak fisik dengan sesama
-            </li>
-            <li class="li-check-mark">
-              Jaga jarak 1-3 meter dengan orang yang sakit
-            </li>
-            <li class="li-check-mark">
-              Jika sakit, maka:
-              <ol style="list-style-type: decimal; list-style-position: inside;">
-                <li class="ml-0">
-                  Tinggal di rumah
-                </li>
-                <li class="ml-0">
-                  Gunakan masker
-                </li>
-              </ol>
-            </li>
-          </ul>
-        </article>
-        <nuxt-link
-          v-show="false"
-          tag="a"
-          to="#"
-          class="text-center md:self-center px-4 py-2 rounded-lg text-brand-green-darker hover:bg-green-200 border-2 border-solid border-brand-green"
+    <section class="md:flex flex-row flex-no-wrap mt-8 m-4 md:m-8 rounded-lg bg-white shadow-md p-5 md:p-8">
+      <div class="lg:w-1/2">
+        <header class="lg:max-w-2xl">
+          <h2 class="mb-4 md:mb-8 text-left text-xl md:text-2xl">
+            <b>Lindungi Diri dan Orang Lain</b>
+          </h2>
+          <p>
+            Sampai saat ini COVID-19 belum memiliki vaksin, sehingga cara terbaik untuk tidak terinfeksi adalah dengan menghindari terekspos virus.
+          </p>
+        </header>
+        <br>
+        <div class="flex flex-col items-stretch lg:max-w-2xl">
+          <article class="text-gray-800">
+            <h3 class="text-lg text-black">
+              <b>COVID-19 dapat menyebar dari orang ke orang melalui tetesan kecil (droplet) saat batuk atau bersin.
+                Maka yang bisa Anda lakukan adalah:
+              </b>
+            </h3>
+            <br>
+            <ul style="list-style-type: none;">
+              <li class="li-check-mark">
+                Sering cuci tangan dengan sabun atau hand-sanitizer
+              </li>
+              <li class="li-check-mark">
+                Hindari menyentuh wajah, terutama hidung, mulut, dan mata
+              </li>
+              <li class="li-check-mark">
+                Bersihkan permukaan benda yang disentuh banyak orang
+              </li>
+              <li class="li-check-mark">
+                Social Distancing! Minimalisir kontak fisik dengan sesama
+              </li>
+              <li class="li-check-mark">
+                Jaga jarak 1-3 meter dengan orang yang sakit
+              </li>
+              <li class="li-check-mark">
+                Jika sakit, maka:
+                <ol style="list-style-type: decimal; list-style-position: inside;">
+                  <li class="ml-0">
+                    Tinggal di rumah
+                  </li>
+                  <li class="ml-0">
+                    Gunakan masker
+                  </li>
+                </ol>
+              </li>
+            </ul>
+          </article>
+          <nuxt-link
+            v-show="false"
+            tag="a"
+            to="#"
+            class="text-center md:self-center px-4 py-2 rounded-lg text-brand-green-darker hover:bg-green-200 border-2 border-solid border-brand-green"
+          >
+            Lihat Selengkapnya
+          </nuxt-link>
+        </div>
+      </div>
+      <div class="hidden lg:block w-1/2">
+        <img
+          src="https://firebasestorage.googleapis.com/v0/b/jabarprov-covid19.appspot.com/o/public%2Flindungi-diri.jpeg?alt=media&token=e407e115-c82a-4159-b247-6976caab8051"
+          class="w-full h-full object-contain object-center"
         >
-          Lihat Selengkapnya
-        </nuxt-link>
       </div>
     </section>
     <section class="mt-2 m-4 md:mt-4 md:m-8 rounded-lg bg-white shadow-md p-5 md:p-8">
