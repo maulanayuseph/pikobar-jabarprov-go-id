@@ -1,13 +1,12 @@
 const fs = require('fs')
 const _snakeCase = require('lodash/snakeCase')
 
-let string = `HOST=localhost
-  PORT=8083
-  URL="http://localhost:8083"
-  NUXT_ENV_VERSION="1.2.0"
-  
-`
-
+let string = ''
+  .concat('HOST=localhost\n')
+  .concat('PORT=8083\n')
+  .concat('URL="http://localhost:8083"\n')
+  .concat('NUXT_ENV_VERSION="1.2.0"\n')
+  .concat('\n')
 /**
  * FOR FIREBASE ADMIN
  */

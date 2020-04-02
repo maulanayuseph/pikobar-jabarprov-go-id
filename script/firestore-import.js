@@ -1,11 +1,10 @@
-/* eslint-disable */
-
 require('dotenv').config()
 const firestoreImport = require('node-firestore-import-export').firestoreImport
 const firebaseAdmin = require('firebase-admin')
 const SECRET = require('../firebase-admin.config')
 const firebaseConfig = require('../firebase.config')
 const firestoreData = require('../migration/firestore.json')
+const firestoreImportConfig = require('../config.firestore-import')
 
 const appConfig = {
   credential: firebaseAdmin.credential.cert(SECRET),
@@ -28,6 +27,9 @@ const run = async () => {
         }).catch((e) => {
           console.log(e ? e.message : e)
         })
+      await new Promise((resolve) => {
+        setTimeout(() => resolve(), firestoreImportConfig.INTERVAL)
+      })
     }
   }
 }
