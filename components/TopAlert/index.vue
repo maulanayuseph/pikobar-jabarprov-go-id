@@ -1,11 +1,14 @@
 <template>
   <div
-    v-show="!isEnabled && announcement && !hideAnnouncement"
+    v-show="isEnabled && !hideAnnouncement"
     class="border border-solid border-green-500 rounded-lg bg-green-100 p-5 md:p-8"
   >
-    <div class="">
+    <div
+      v-if="announcement"
+      class=""
+    >
       <header class="relative">
-        <h3 class="font-bold text-2xl lg:text-3xl text-gray-900 text-left pr-12 md:pr-0 leading-loose">
+        <h3 class="font-bold text-xl lg:text-2xl text-gray-900 text-left pr-12 md:pr-0 leading-loose">
           <FontAwesomeIcon
             :icon="icon.faExclamationCircle"
             class="mr-2 text-brand-green"
@@ -61,14 +64,16 @@ export default {
   computed: {
     announcement () {
       try {
-        return this.$store.state['remote-config'].config.announcement
+        const remoteConfig = this.$store.state['remote-config']
+        return remoteConfig.config.announcement
       } catch (e) {
-        return {}
+        return null
       }
     },
     isEnabled () {
       try {
-        return this.remoteConfig.config.announcement
+        const remoteConfig = this.$store.state['remote-config']
+        return remoteConfig.config.announcement.enabled
       } catch (e) {
         return false
       }
