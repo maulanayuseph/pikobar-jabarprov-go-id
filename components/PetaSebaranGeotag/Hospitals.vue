@@ -16,24 +16,65 @@
     <template
       v-else-if="data"
     >
+      <LocationSelector
+        :value="value"
+        :options="options"
+        @change="$emit('change', $event)"
+      />
+      <hr>
       <div class="p-5">
-        <span class="mt-4">
-          Radius:
-        </span>
-        <div class="">
         <!--  -->
-        </div>
       </div>
     </template>
   </div>
 </template>
 
 <script>
+import LocationSelector from './LocationSelector'
 export default {
+  components: {
+    LocationSelector
+  },
+  model: {
+    prop: 'value',
+    event: 'change'
+  },
   props: {
+    value: {
+      type: Number,
+      default: 5
+    },
     data: {
       type: Object,
       default: null
+    }
+  },
+  data () {
+    return {
+      options: {
+        radius: [
+          {
+            value: 0.5,
+            label: '500 M'
+          },
+          {
+            value: 1,
+            label: '1 KM'
+          },
+          {
+            value: 5,
+            label: '5 KM'
+          },
+          {
+            value: 7,
+            label: '7 KM'
+          },
+          {
+            value: 10,
+            label: '10 KM'
+          }
+        ]
+      }
     }
   }
 }

@@ -30,9 +30,17 @@
       </p>
     </header>
     <br>
-    <div class="-mx-4 flex flex-col lg:flex-row lg:flex-no-wrap lg:items-stretch">
-      <Hospitals class="flex-auto w-1/2 m-4" :data="dataSebaran" />
-      <CovidCase class="flex-auto w-1/2 m-4" :data="dataSebaran" />
+    <div class="-mx-2 flex flex-col lg:flex-row lg:flex-no-wrap lg:items-stretch">
+      <Hospitals
+        v-model="hospitalRadius"
+        class="flex-auto w-1/2 m-2"
+        :data="dataSebaran"
+      />
+      <CovidCase
+        v-model="covidCaseRadius"
+        class="flex-auto w-1/2 m-2"
+        :data="dataSebaran"
+      />
     </div>
   </div>
 </template>
@@ -53,7 +61,10 @@ export default {
       },
       isGeolocationSupported: false,
       isRetrievingLocation: false,
-      dataSebaran: null
+      dataSebaran: null,
+
+      hospitalRadius: 5,
+      covidCaseRadius: 5
     }
   },
   mounted () {
