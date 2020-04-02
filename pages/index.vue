@@ -90,6 +90,9 @@
         </a>
       </div>
     </section>
+    <section class="mt-8 m-4 md:m-8 flex flex-col">
+      <PetaSebaranGeotag />
+    </section>
     <section class="mt-4 m-4 md:mt-8 md:m-8">
       <h2 class="mb-0 md:mb-4 text-left text-2xl md:text-center md:text-3xl">
         <b>Apa yang Harus Dilakukan</b>
@@ -396,6 +399,7 @@ import CallCenter from '~/components/CallCenter'
 import BlogPostPreview from '~/components/Blog/BlogPostPreview'
 import DataTabs from '~/components/_pages/index/DataTabs'
 import ShareableItems from '~/components/ShareableItems'
+import PetaSebaranGeotag from '~/components/PetaSebaranGeotag'
 
 export default {
   components: {
@@ -406,7 +410,8 @@ export default {
     ContactListItem,
     CallCenter,
     DataTabs,
-    ShareableItems
+    ShareableItems,
+    PetaSebaranGeotag
   },
   async fetch () {
     await this.$store.dispatch('hospitals/getItems')
