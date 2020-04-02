@@ -62,9 +62,7 @@ export default {
         .then(() => {
           this.isGeolocationSupported = true
           this.checkCurrentPermissionStatus({
-            onGranted: this.getUserLocation,
-            onDenied: this.onPermissionDenied,
-            onPrompt: null
+            onGranted: this.getUserLocation
           })
         })
         .catch((e) => {
@@ -126,7 +124,8 @@ export default {
       })
     },
     onPositionRetrievalError (err) {
-      switch (err) {
+      this.isRetrievingLocation = false
+      switch (err.code) {
         case 1:
           this.onPermissionDenied()
           break
