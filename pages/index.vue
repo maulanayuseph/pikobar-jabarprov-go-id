@@ -2,6 +2,9 @@
 <template>
   <div class="container mx-auto">
     <section class="m-4 md:m-8">
+      <TopAlert />
+    </section>
+    <section class="m-4 md:m-8">
       <div class="flex flex-col lg:flex-row lg:items-stretch">
         <div class="w-full mb-6 lg:w-1/2 lg:mr-6 lg:mb-0">
           <div class="relative container-with-ratio rounded-lg overflow-hidden shadow-md">
@@ -397,6 +400,7 @@ import { mapState } from 'vuex'
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons'
 import { formatDateTimeShort } from '~/lib/date'
 import { analytics } from '~/lib/firebase'
+import TopAlert from '~/components/TopAlert'
 import ImageCarousel from '~/components/ImageCarousel'
 import CallCard from '~/components/CallCard'
 import ContactListItem from '~/components/ContactList/ContactListItem'
@@ -408,6 +412,7 @@ import ShareableItems from '~/components/ShareableItems'
 export default {
   components: {
     ContentLoader,
+    TopAlert,
     ImageCarousel,
     CallCard,
     BlogPostPreview,
