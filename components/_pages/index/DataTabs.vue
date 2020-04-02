@@ -1,35 +1,13 @@
 <template>
   <div>
     <div class="tab-container">
-      <div class="relative md:hidden mt-4 rounded-lg overflow-hidden border-2 border-solid border-brand-green">
-        <i
-          class="pointer-events-none block absolute top-0 right-0 bottom-0 p-5 text-xl text-brand-green bg-white border-l-2 border-solid border-brand-green"
-        >
-          <FontAwesomeIcon :icon="icon.faChevronDown" />
-        </i>
-        <select
-          ref="dropdown"
-          v-model="activeTabId"
-          class="w-full p-5 bg-white text-lg lg:text-2xl text-green-700 font-bold"
-        >
-          <option
-            v-for="(tab, index) in tabs"
-            :key="index"
-            :value="tab.id"
-            class="text-base lg:text-lg text-gray-900 font-normal"
-          >
-            {{ tab.title }}
-          </option>
-        </select>
-      </div>
       <ul
-        class="hidden md:flex flex-row flex-no-wrap items-stretch border-b-2 border-solid border-gray-300"
+        class="overflow-x-auto md:overflow-x-hidden flex flex-row flex-no-wrap items-stretch border-b-2 border-solid border-gray-300"
       >
         <li
           v-for="(tab, index) in tabs"
           :key="index"
           :class="['relative cursor-pointer px-4 py-4 sm:px-6 whitespace-no-wrap select-none hover:bg-gray-200', tab.id === activeTabId && 'border-b-4 border-solid border-brand-green']"
-          style="transform: translateY(3px);"
           @click="activeTabId = tab.id"
         >
           <a :class="['text-lg', tab.id === activeTabId && 'font-bold text-brand-green']">

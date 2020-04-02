@@ -50,7 +50,7 @@ export default {
         {
           logo: '/img/logo-relawan-covid.png',
           alt: 'Relawan COVID-19',
-          url: '#',
+          url: 'https://relawancovid19.id/',
           height: '5em'
         },
         {
