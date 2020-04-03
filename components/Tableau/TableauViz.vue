@@ -1,9 +1,9 @@
 <template>
   <client-only>
-    <div class="relative overflow-hidden">
+    <div class="relative overflow-hidden rounded-lg shadow-md mb-8">
       <div
         v-show="hasReadDisclaimer && showMap"
-        id="vizContainer"
+        :id="`vizContainer-${id}`"
         class="w-full"
         style="min-height: 25vh;"
       />
@@ -13,7 +13,7 @@
       >
         <img class="absolute z-0 w-full h-full pointer-events-none object-cover object-center opacity-50" src="https://firebasestorage.googleapis.com/v0/b/jabarprov-covid19.appspot.com/o/public%2Fjabar-map.jpg?alt=media&token=2f8c56e1-8fab-4192-8cf1-c1adb9e3afb9">
         <div
-          class="relative block py-20 md:py-32 w-3/4 max-w-2xl mx-auto flex flex-col justify-center items-center"
+          class="relative block py-20 md:py-32 w-3/4 max-w-4xl mx-auto flex flex-col justify-center items-center"
           style="z-index: 1;"
         >
           <h4 class="text-lg md:text-xl">
@@ -22,7 +22,7 @@
           </h4>
           <br>
           <!-- eslint-disable-next-line -->
-        <p class="font-bold text-base md:text-lg lg:text-xl" v-html="disclaimer">
+        <p class="text-base md:text-lg lg:text-xl" v-html="disclaimer">
           </p>
           <br>
           <br>
@@ -41,6 +41,10 @@
 <script>
 export default {
   props: {
+    id: {
+      type: String,
+      required: true
+    },
     title: {
       type: String,
       default: ''
@@ -79,7 +83,7 @@ export default {
   methods: {
     renderTableauViz () {
       this.showMap = false
-      const placeholderDiv = document.getElementById('vizContainer')
+      const placeholderDiv = document.getElementById(`vizContainer-${this.id}`)
       const options = {
         showTabs: false,
         hideToolbar: true,

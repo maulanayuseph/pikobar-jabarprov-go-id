@@ -35,9 +35,9 @@
             <h4>
               <b>Jawa Barat</b>
             </h4>
-            <span>
+            <b>
               {{ sembuhJabar }}
-            </span>
+            </b>
           </div>
           <div class="flex justify-between items-baseline text-xl opacity-50">
             <h4>

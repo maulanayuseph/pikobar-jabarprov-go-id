@@ -17,7 +17,14 @@
           :active="stat.isActiveCovid"
           @click="enableCovid"
         >
-          <font-awesome-icon :icon="fontDiagnoses" /> Sebaran Covid-19
+          <font-awesome-icon :icon="fontDiagnoses" /> Sebaran Titik
+        </button>
+        <button
+          class="button-selector mr-2"
+          :active="stat.isActivePolygon"
+          @click="enablePolygon"
+        >
+          <font-awesome-icon :icon="fontDiagnoses" /> Sebaran Polygon
         </button>
         <button
           class="button-selector"
@@ -66,6 +73,7 @@ export default {
   components: {
     DataSummary,
     MapSebaranCovid: () => import('~/components/MapSebaranCovid'),
+    MapSebaranPolygon: () => import('~/components/MapSebaranPolygon'),
     MapFaskes: () => import('~/components/MapFaskes'),
     BarStatArea: () => import('~/components/BarStatArea'),
     BarStatJenisKelamin: () => import('~/components/BarStatJenisKelamin'),
@@ -80,6 +88,7 @@ export default {
     return {
       stat: {
         isActiveCovid: true,
+        isActivePolygon: false,
         isActiveRS: false
       },
       fontHospital: faFirstAid,
@@ -109,10 +118,17 @@ export default {
     enableCovid () {
       this.stat.isActiveCovid = true
       this.stat.isActiveRS = false
+      this.stat.isActivePolygon = false
     },
     enableRS () {
       this.stat.isActiveCovid = false
       this.stat.isActiveRS = true
+      this.stat.isActivePolygon = false
+    },
+    enablePolygon () {
+      this.stat.isActiveCovid = false
+      this.stat.isActiveRS = false
+      this.stat.isActivePolygon = true
     }
   }
 }

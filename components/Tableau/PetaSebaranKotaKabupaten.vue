@@ -1,6 +1,6 @@
 <template>
   <TableauViz
-    id="peta-sebaran-kelurahan"
+    id="peta-sebaran-kotkab"
     :title="title"
     :subtitle="subtitle"
     :disclaimer="disclaimer"
@@ -27,7 +27,7 @@ export default {
   },
   data () {
     return {
-      url: 'https://public.tableau.com/views/PetaSebaranODPPDP-BlueVersion/DashboardMapAllCases?:embed=y&:origin=viz_share_link&:toolbar=n&:embed_code_version=3&:loadOrderID=0&showTabs=false&:display_count=y',
+      url: 'https://public.tableau.com/views/SISTEMPEMANTAUANCOVID-19JAWABARAT-BLACKVERSION/PetaPikobar?:display_count=y&:toolbar=n&:origin=viz_share_link',
       title: 'Disclaimer',
       disclaimer: `
       Perbesar peta untuk melihat jumlah titik akurat. Beberapa titik yang saling berdekatan terlihat menyatu pada pembesaran peta skala besar.

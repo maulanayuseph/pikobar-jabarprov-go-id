@@ -1,5 +1,5 @@
 {
-  "name": "Pikobar",
+  "name": "pikobar-web",
   "version": "1.0.0",
   "description": "Pusat Informasi dan Koordinasi COVID-19 Jawa Barat",
   "author": "@jabardigitalservice",
@@ -9,7 +9,9 @@
     "build": "nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate",
-    "lint": "eslint --ext .js,.vue --ignore-path .gitignore ."
+    "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
+    "write:env": "node ./script/write-env.js",
+    "migrate": "node ./script/firestore-import.js"
   },
   "dependencies": {
     "@fortawesome/free-regular-svg-icons": "^5.13.0",
@@ -49,6 +51,7 @@
     "@nuxtjs/tailwindcss": "^1.0.0",
     "babel-eslint": "^10.0.1",
     "eslint": "^6.1.0",
-    "eslint-plugin-nuxt": "^0.5.2"
+    "eslint-plugin-nuxt": "^0.5.2",
+    "node-firestore-import-export": "^0.14.1"
   }
 }
