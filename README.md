@@ -1,4 +1,6 @@
-# pikobar-jabarprov-go-id
+# PIKOBAR WEB
+[![Netlify Status](https://api.netlify.com/api/v1/badges/b5ef963e-c5e3-45e7-999e-634950ac3b27/deploy-status)](https://app.netlify.com/sites/jabarprov-covid19/deploys)
+
 > Web Pikobar (Pusat Informasi dan Koordinasi COVID-19 Jawa Barat), dapat diakses di https://pikobar.jabarprov.go.id
 
 ## Build Setup
