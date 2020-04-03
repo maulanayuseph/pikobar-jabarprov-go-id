@@ -138,13 +138,13 @@
                 Anda bergejala?
               </p>
             </header>
-            <nuxt-link
-              tag="a"
+            <a
               class="mt-8 px-6 py-4 inline-block rounded-lg bg-brand-green text-white border-2 border-solid border-brand-green"
-              to="/faq"
+              href="https://forum.pikobar.jabarprov.go.id/"
+              target="_blank"
             >
               <b>Tanyakan Sekarang</b>
-            </nuxt-link>
+            </a>
           </div>
         </div>
         <div class="flex-1 rounded-lg bg-white shadow-md p-5 md:p-8">
