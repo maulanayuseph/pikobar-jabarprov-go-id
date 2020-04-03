@@ -1,6 +1,6 @@
 <template>
   <div class="container mx-auto p-5">
-    <header class="flex flex-row justify-center items-center">
+    <header class="flex flex-row justify-start md:justify-center items-center">
       <img
         class="w-20 mr-4 lg:mr-6 h-full object-contain object-center"
         src="/logo.jpg"
@@ -13,7 +13,7 @@
         </small>
       </h3>
     </header>
-    <section class="max-w-3xl mx-auto my-4 md:my-8 p-5 md:p-8 bg-white rounded-lg shadow-xl border border-solid border-gray-300">
+    <section class="max-w-3xl mx-auto my-8 md:p-8 md:bg-white md:rounded-lg md:shadow-xl md:border md:border-solid md:border-gray-300">
       <div class="html-content" v-html="contentToUse" />
     </section>
   </div>
@@ -51,7 +51,7 @@ export default {
       positive: `
         <p>
           Wargi Jabar yang baik,
-        </p>,
+        </p>
         <br>
         <p>
           Terima kasih telah memenuhi panggilan Tes Masif COVID-19 di Gereja Bethel Indonesia (GBI), Jalan Aruna No. 19, Bandung, pada 30 Maret - 1 April 2020.
