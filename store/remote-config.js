@@ -37,10 +37,12 @@ export const actions = {
           const enableDownload = remoteConfig.getValue('download_app_via_web_enabled')._value === 'true'
           const downloadAppURL = remoteConfig.getValue('download_app_url')._value
           const selfDiagnoseURL = remoteConfig.getValue('selfdiagnose_url')._value
+          const announcement = remoteConfig.getValue('announcement')._value
           commit('setConfig', {
             enableDownload,
             downloadAppURL,
-            selfDiagnoseURL
+            selfDiagnoseURL,
+            announcement: JSON.parse(announcement)
           })
         })
     }

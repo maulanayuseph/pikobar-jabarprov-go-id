@@ -1,5 +1,5 @@
 {
-  "name": "Pikobar",
+  "name": "pikobar-web",
   "version": "1.0.0",
   "description": "Pusat Informasi dan Koordinasi COVID-19 Jawa Barat",
   "author": "@jabardigitalservice",
@@ -10,7 +10,8 @@
     "start": "nuxt start",
     "generate": "nuxt generate",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
-    "migrate": "firestore-import --accountCredentials $CREDENTIALS --backupFile migration/firestore.json"
+    "write:env": "node ./script/write-env.js",
+    "migrate": "node ./script/firestore-import.js"
   },
   "dependencies": {
     "@fortawesome/free-regular-svg-icons": "^5.13.0",
