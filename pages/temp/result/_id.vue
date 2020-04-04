@@ -81,6 +81,7 @@ export default {
 </script>
 
 <style lang="scss">
+/* purgecss start ignore */
 .temp-result-call-button {
   color: #404040 !important;
   @apply inline-block px-3 py-1 rounded-md border border-solid border-green-300 bg-green-100;
@@ -89,4 +90,20 @@ export default {
     @apply opacity-50;
   }
 }
+
+.page-footer {
+  @apply py-8 flex flex-row flex-wrap justify-start items-center;
+
+  @screen md {
+    @apply justify-center;
+  }
+
+  > img {
+    @apply w-1/2 object-contain object-center;
+    @screen md {
+      @apply w-1/4;
+    }
+  }
+}
+/* purgecss end ignore */
 </style>
