@@ -4,10 +4,10 @@
   >
     <b class="text-lg">RDT (Rapid Diagnostic Test)</b>
     <div class="flex flex-col md:flex-row mb-4 mt-2">
-      <div class="w-full sm:w-3/6 md:w-3/6 lg:w-3/6 h-auto text-sm">
+      <div class="w-full md:w-3/6 lg:w-3/6 h-auto text-sm">
         Rapid Diagnostic Test (RDT) atau test diagnostik cepat merupakan test yang digunakan sebagai skrining medis awal untuk mendeteksi COVID-19. Pada hasil RDT yang Positif akan dilakukan pemeriksaan konfirmasi lebih lanjut dengan metode Polymerase Chain Reaction (PCR)
       </div>
-      <div class="w-full sm:w-1/6 md:w-1/6 lg:w-1/6 h-auto text-center">
+      <div class="w-full md:w-1/6 lg:w-1/6 h-auto text-center">
         <div class="text-4xl">
           {{ data.rdt.total }}
         </div>
@@ -20,7 +20,7 @@
           </div>
         </div>
       </div>
-      <div class="w-full sm:w-1/6 md:w-1/6 lg:w-1/6 pl-2 h-auto text-center">
+      <div class="w-full md:w-1/6 lg:w-1/6 pl-2 h-auto text-center">
         <div class="h-20 pt-3">
           <div class="mb-1">
             <span class="text-2xl">{{ data.rdt.positif }}</span>
@@ -31,7 +31,7 @@
           </div>
         </div>
       </div>
-      <div class="w-full sm:w-1/6 md:w-1/6 lg:w-1/6 pl-2 h-auto text-center">
+      <div class="w-full md:w-1/6 lg:w-1/6 pl-2 h-auto text-center">
         <div class="h-20 pt-3">
           <div class="mb-1">
             <span class="text-2xl">{{ data.rdt.negatif }}</span>
@@ -42,7 +42,7 @@
           </div>
         </div>
       </div>
-      <div class="w-full sm:w-1/6 md:w-1/6 lg:w-1/6 pl-2 h-auto text-center">
+      <div class="w-full md:w-1/6 lg:w-1/6 pl-2 h-auto text-center">
         <div class="h-20 pt-3">
           <div class="mb-1">
             <span class="text-2xl">{{ data.rdt.invalid }}</span>
@@ -133,6 +133,7 @@ export default {
     top: 100%;
     left: 50%;
     margin-left: -60px; /* Use half of the width (120/2 = 60), to center the tooltip */
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14)
   }
 
   .tooltip .tooltiptext::after {
