@@ -4,11 +4,18 @@
     <div class="bg-white col-md-12 shadow-md" style="height:50em;">
         <div id="map-wrap" style="height: 75%;z-index:0;" />
         <div class="filter-layer"> 
+
+          <div class="text-right mb-2">
+            <button class="btn bg-white" >
+              <font-awesome-icon :icon="faHome" @click="backToHome"/>
+            </button>
+          </div>
+
           <div class="text-right">
             <button class="btn bg-white" @click="showFilter">
               <font-awesome-icon :icon="faFilter" />
             </button>
-          </div>
+          </div> 
           <div data-v-dfef036a="" v-if="isShowFilter" class="filter-data">
             <li @click="setFilter('odp', 'proses')" :class="filter.odp.proses ? 'filter-active' : ''">
               <div data-v-dfef036a="" class="legend-color" style="background: rgb(45, 156, 219);margin-right: 0.5em;"></div>
@@ -207,9 +214,18 @@
 <script>
 import axios from 'axios'
 import * as turf from '@turf/turf'
-import { faFilter } from '@fortawesome/free-solid-svg-icons'
+import { faFilter, faHome } from '@fortawesome/free-solid-svg-icons'
+import { GeoSearchControl, OpenStreetMapProvider } from 'leaflet-geosearch';
 
 export default {
+  head: {
+    script: [
+      // { src: 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js' }
+    ],
+    link: [
+      { rel: 'stylesheet', href: 'https://unpkg.com/leaflet-geosearch@2.6.0/assets/css/leaflet.css' }
+    ]
+  },
   name: 'MapSebaranCovid',
   data () {
     return {
@@ -231,6 +247,7 @@ export default {
       },
       isShowFilter: false,
       faFilter: faFilter,
+      faHome: faHome,
       map: '',
       zoom: 8,
       isHidden: false,
@@ -428,6 +445,9 @@ export default {
     showFilter() {
       this.isShowFilter = !this.isShowFilter
     },
+    backToHome() {
+      this.map.flyTo([-6.932694, 107.627449], 8)
+    },
     importJSON () {
       const files = [
         {
@@ -486,11 +506,65 @@ export default {
         zoomOffset: -1
       }).addTo(this.map)
 
+      const provider = new OpenStreetMapProvider();
+
+      // add search control 
+      const searchControl = new GeoSearchControl({
+        provider: provider,
+        position: 'topleft'
+      }).addTo(this.map)
+      this.map.on('geosearch/showlocation', (e) => {
+        if (this.map.getZoom() > 12 && this.zoom < 12) {
+          
+          this.removeLayer()
+          this.removeBatasWilayah()
+          this.listLayer = {
+            odp : {
+              proses: [],
+              belumupdate: []
+            },
+            pdp: {
+              proses: [],
+              belumupdate: []
+            },
+            positif: {
+              proses: [],
+              meninggal: [],
+              sembuh: []
+            }
+          }
+          this.zoom = this.map.getZoom()
+          this.createLayerByKecamatan()
+        } else if (this.map.getZoom() < 12 && this.zoom > 12) {
+          
+          this.removeLayer()
+          this.removeBatasWilayah()
+          this.listLayer = {
+            odp : {
+              proses: [],
+              belumupdate: []
+            },
+            pdp: {
+              proses: [],
+              belumupdate: []
+            },
+            positif: {
+              proses: [],
+              meninggal: [],
+              sembuh: []
+            }
+          }
+          this.zoom = this.map.getZoom()
+          this.createLayerPasienByKota()
+        }
+      })
+
       // add zoom control with your options
       this.$L.control.zoom({
         position: 'bottomright'
       }).addTo(this.map)
-
+      
+      
       // on zoom
       // Here the events for zooming and dragging
       this.map.on('zoomend', () => {
@@ -941,6 +1015,9 @@ export default {
 }
 
 .filter-layer .btn {
+  width: 2em;
+  height: 2em;
+  border-radius: 5px;
   font-size: 0.8em;
   padding: 2px 6px;
   box-shadow: 0 1px 5px rgba(0,0,0,0.65);
@@ -1130,6 +1207,10 @@ export default {
     /* border-width: 4px; */
     margin-top: -29px;
     margin-left: -29px;
+  }
+
+  .glass {
+    height: 26px !important;
   }
   
 </style>
