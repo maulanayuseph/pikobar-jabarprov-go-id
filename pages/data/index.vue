@@ -11,6 +11,9 @@
       <DataSummary />
     </section>
     <section class="m-4 mb-8 md:m-8">
+      <DataRDT />
+    </section>
+    <section class="m-4 mb-8 md:m-8">
       <div class="flex flex-row items-stretch">
         <button
           class="button-selector mr-2"
@@ -72,6 +75,7 @@ import { formatDateTimeShort } from '~/lib/date'
 export default {
   components: {
     DataSummary,
+    DataRDT: () => import('~/components/DataRDT'),
     MapSebaranCovid: () => import('~/components/MapSebaranCovid'),
     MapSebaranPolygon: () => import('~/components/MapSebaranPolygon'),
     MapFaskes: () => import('~/components/MapFaskes'),
