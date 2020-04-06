@@ -38,7 +38,7 @@
             <span class="text-sm">({{ data.rdt_persentase_by_total.negatif.toFixed(2) }})%</span>
           </div>
           <div class="text-sm">
-            Negatif
+            Non Reaktif
           </div>
         </div>
       </div>
