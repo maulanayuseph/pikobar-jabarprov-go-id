@@ -176,8 +176,8 @@ export default {
       listLayer: [],
       filter: {
         lini1: true,
-        lini2: true,
-        puskesmas: true
+        lini2: false,
+        puskesmas: false
       },
       loading: false,
       faFilter,
