@@ -1,11 +1,12 @@
 import { db } from '../lib/firebase'
-import { slugifyInfographicRoute } from '../lib/slugify'
+import { slufigyDocumentRoute } from '../lib/slugify'
 
-export const ORDER_INDEX = 'published_date'
+export const ORDER_INDEX = 'published_at'
 export const ORDER_TYPE = 'desc'
 
 export function get (options = { perPage: 3 }) {
-  return db.collection('infographics')
+  return db.collection('documents')
+    .where('published', '==', true)
     .orderBy(ORDER_INDEX, 'desc')
     .limit(options.perPage)
     .get()
@@ -13,13 +14,12 @@ export function get (options = { perPage: 3 }) {
       if (!docs.empty) {
         return docs.docs.map((doc) => {
           const data = doc.data()
-          const route = slugifyInfographicRoute(doc.id, data.title)
+          const route = slufigyDocumentRoute(doc.id, data.title)
           return {
             ...data,
             id: doc.id,
-            published_date: data.published_date.toDate(),
+            published_at: data.published_at.toDate(),
             route,
-            downloadURL: data.images[0],
             shareText: `[Pikobar] Bagikan "${data.title}". Selengkapnya di ${process.env.URL}${route}`
           }
         })
@@ -29,19 +29,19 @@ export function get (options = { perPage: 3 }) {
 }
 
 export function getById (id) {
-  return db.collection('infographics')
+  return db.collection('documents')
+    .where('published', '==', true)
     .doc(id)
     .get()
     .then((doc) => {
       if (doc.exists) {
         const data = doc.data()
-        const route = slugifyInfographicRoute(doc.id, data.title)
+        const route = slufigyDocumentRoute(doc.id, data.title)
         return {
           ...data,
           id: doc.id,
-          published_date: data.published_date.toDate(),
+          published_at: data.published_at.toDate(),
           route,
-          downloadURL: data.images[0],
           shareText: `[Pikobar] Bagikan "${data.title}". Selengkapnya di ${process.env.URL}${route}`
         }
       }

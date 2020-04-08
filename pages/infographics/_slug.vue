@@ -1,8 +1,8 @@
 <template>
   <div
-    class="container sm:p-5 mx-auto"
+    class="container mx-auto"
   >
-    <div class="p-5 bg-white border-solid border-gray-300">
+    <div class="m-4 md:m-8 p-5 bg-white rounded-lg shadow-md">
       <section>
         <template v-if="isPending">
           <ContentLoader
@@ -21,13 +21,35 @@
           </ContentLoader>
         </template>
         <template v-else-if="item">
-          <h2 class="text-xl font-bold leading-tight">
-            {{ item.title }}
-          </h2>
+          <div class="flex flex-col justify-start items-start lg:flex-row lg:justify-between lg:items-center">
+            <h2 class="text-xl font-bold leading-tight mb-3 lg:mb-0">
+              {{ item.title }}
+            </h2>
+            <p class="flex-none text-sm text-gray-600">
+              <button
+                class="px-2 py-2 mr-1 rounded-md hover:bg-gray-300"
+                @click="beforeDownload"
+              >
+                <FontAwesomeIcon :icon="icon.faDownload" class="mr-1" />
+                <span>
+                  Unduh
+                </span>
+              </button>
+              <button
+                class="px-2 py-2 rounded-md hover:bg-gray-300"
+                @click="beforeShare"
+              >
+                <FontAwesomeIcon :icon="icon.faShare" class="mr-1" />
+                <span>
+                  Bagikan
+                </span>
+              </button>
+            </p>
+          </div>
           <br>
           <img
             :src="item.images[0] || null"
-            class="cursor-pointer w-full h-full object-contain object-center"
+            class="cursor-pointer w-full lg:max-w-2xl mx-auto h-full object-contain object-center"
           >
         </template>
       </section>
@@ -36,7 +58,9 @@
 </template>
 
 <script>
+import { faDownload, faShare } from '@fortawesome/free-solid-svg-icons'
 import { ContentLoader } from 'vue-content-loader'
+import { onDownload, onShare } from '~/lib/download-and-share-firestore-doc'
 import { analytics } from '~/lib/firebase'
 import { useArticleMetaInfo } from '~/lib/metainfo'
 
@@ -61,6 +85,10 @@ export default {
   },
   data () {
     return {
+      icon: {
+        faDownload,
+        faShare
+      },
       isPending: true
     }
   },
@@ -90,6 +118,12 @@ export default {
         .finally(() => {
           this.isPending = false
         })
+    },
+    beforeShare () {
+      onShare(this.item.shareText)
+    },
+    beforeDownload () {
+      onDownload(this.item.downloadURL, this.item.title)
     }
   },
   head () {
