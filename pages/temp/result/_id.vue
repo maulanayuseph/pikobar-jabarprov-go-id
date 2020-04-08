@@ -23,12 +23,18 @@
 /* eslint-disable import/no-webpack-loader-syntax */
 import contentForReactive from '!!html-loader!../../../assets/content/test-result/reactive.html'
 import contentForNonReactive from '!!html-loader!../../../assets/content/test-result/non-reactive.html'
+import contentForPositive from '!!html-loader!../../../assets/content/test-result/positive.html'
+import contentForNegative from '!!html-loader!../../../assets/content/test-result/negative.html'
+import contentForInconclusive from '!!html-loader!../../../assets/content/test-result/inconclusive.html'
 import contentFooter from '!!html-loader!../../../assets/content/test-result/footer.html'
 import { useNoIndexMeta } from '~/lib/metainfo'
 
 const PREFIX = {
   REACTIVE: 'r-',
-  NON_REACTIVE: 'nr-'
+  NON_REACTIVE: 'nr-',
+  POSITIVE: 'pos-',
+  NEGATIVE: 'neg-',
+  INCONCLUSIVE: 'inc-'
 }
 
 export default {
@@ -39,7 +45,10 @@ export default {
       redirect('/')
       return false
     }
-    if (!id.startsWith(PREFIX.REACTIVE) && !id.startsWith(PREFIX.NON_REACTIVE)) {
+    const isValid = Object.entries(PREFIX)
+      .map(([_, v]) => v)
+      .some(v => id.startsWith(v))
+    if (!isValid) {
       redirect('/')
       return false
     }
@@ -47,17 +56,15 @@ export default {
   },
   asyncData ({ params }) {
     const { id } = params
-    const isReactive = id.startsWith(PREFIX.REACTIVE)
-    const isNonReactive = id.startsWith(PREFIX.NON_REACTIVE)
+    const statusEntry = Object.entries(PREFIX)
+      .find(([key, value]) => id.startsWith(value))
     return {
-      isReactive,
-      isNonReactive
+      status: statusEntry ? statusEntry[1] : null
     }
   },
   data () {
     return {
-      isReactive: false,
-      isNonReactive: false,
+      status: null,
       contentForReactive,
       contentForNonReactive,
       contentFooter
@@ -65,13 +72,25 @@ export default {
   },
   computed: {
     contentToUse () {
-      if (this.isReactive) {
-        return this.contentForReactive.concat(contentFooter)
+      let content = ''
+      switch (this.status) {
+        case PREFIX.REACTIVE:
+          content = contentForReactive
+          break
+        case PREFIX.NON_REACTIVE:
+          content = contentForNonReactive
+          break
+        case PREFIX.INCONCLUSIVE:
+          content = contentForInconclusive
+          break
+        case PREFIX.NEGATIVE:
+          content = contentForNegative
+          break
+        case PREFIX.POSITIVE:
+          content = contentForPositive
+          break
       }
-      if (this.isNonReactive) {
-        return this.contentForNonReactive.concat(contentFooter)
-      }
-      return ''
+      return content.concat(contentFooter)
     }
   },
   head () {
