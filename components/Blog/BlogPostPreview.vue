@@ -19,7 +19,7 @@
         </p>
         <br>
         <!-- eslint-disable-next-line -->
-        <div class="content flex-1" v-html="truncatedContent" />
+        <div class="html-content html-content--preview flex-1" v-html="truncatedContent" />
       </section>
       <img
         v-if="image"
@@ -79,7 +79,3 @@ export default {
   }
 }
 </script>
-
-<style>
-
-</style>
