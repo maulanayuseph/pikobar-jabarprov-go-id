@@ -44,8 +44,8 @@ export default {
       }
     },
     addWindowEventListeners () {
-      window.addEventListener('scroll', this.onScrollListener)
-      window.addEventListener('scroll', this.onScrollEndListener)
+      window.addEventListener('scroll', this.onScrollListener, { passive: true })
+      window.addEventListener('scroll', this.onScrollEndListener, { passive: true })
     },
     removeWindowEventListeners () {
       window.removeEventListener('scroll', this.onScrollListener)

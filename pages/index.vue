@@ -9,7 +9,7 @@
     <section class="m-4 md:m-8">
       <div class="flex flex-col lg:flex-row lg:items-stretch">
         <div class="w-full mb-6 lg:w-1/2 lg:mr-6 lg:mb-0">
-          <div class="relative container-with-ratio rounded-lg overflow-hidden shadow-md">
+          <div class="relative container-with-ratio rounded-lg overflow-hidden lg:shadow-md border lg:border-none border-solid border-gray-300">
             <ImageCarousel
               class="absolute inset-0 w-full h-full"
               :items="banners"
@@ -128,7 +128,7 @@
       </div>
       <div class="flex flex-row flex-wrap items-stretch my-8">
         <div
-          class="w-full mb-8 lg:mb-0 lg:w-1/4 rounded-lg bg-white shadow-md lg:mr-8 p-5 md:p-8"
+          class="w-full mb-8 lg:mb-0 lg:w-1/4 rounded-lg bg-white lg:shadow-md border lg:border-none border-solid border-gray-300 lg:mr-8 p-5 md:p-8"
           style="min-width:320px"
         >
           <div class="flex flex-col justify-between items-start h-full">
@@ -152,7 +152,7 @@
             </a>
           </div>
         </div>
-        <div class="flex-1 rounded-lg bg-white shadow-md p-5 md:p-8">
+        <div class="flex-1 rounded-lg bg-white lg:shadow-md border lg:border-none border-solid border-gray-300 p-5 md:p-8">
           <div class="flex flex-col items-stretch">
             <h3 class="text-lg lg:text-2xl leading-loose">
               <strong>Hubungi Call Center</strong>
@@ -169,7 +169,7 @@
           </div>
         </div>
       </div>
-      <div class="flex flex-col items-stretch my-4 p-5 md:p-8 md:p-12 bg-white rounded-lg shadow-md">
+      <div class="flex flex-col items-stretch my-4 p-5 md:p-8 md:p-12 bg-white rounded-lg lg:shadow-md border lg:border-none border-solid border-gray-300">
         <h3 class="text-lg lg:text-2xl">
           <strong>Daftar Rumah Sakit Rujukan di Jawa Barat</strong>
         </h3>
@@ -198,7 +198,7 @@
         </nuxt-link>
       </div>
     </section>
-    <section class="md:flex flex-row flex-no-wrap mt-8 m-4 md:m-8 rounded-lg bg-white shadow-md p-5 md:p-8">
+    <section class="md:flex flex-row flex-no-wrap mt-8 m-4 md:m-8 rounded-lg bg-white lg:shadow-md border lg:border-none border-solid border-gray-300 p-5 md:p-8">
       <div class="lg:w-1/2">
         <header class="lg:max-w-2xl">
           <h2 class="mb-4 md:mb-8 text-left text-xl md:text-2xl">
@@ -263,13 +263,13 @@
         >
       </div>
     </section>
-    <section class="mt-2 m-4 md:mt-4 md:m-8 rounded-lg bg-white shadow-md p-5 md:p-8">
+    <section class="mt-2 m-4 md:mt-4 md:m-8 rounded-lg bg-white lg:shadow-md border lg:border-none border-solid border-gray-300 p-5 md:p-8">
       <h2 class="mb-4 md:mb-8 text-left text-xl md:text-2xl">
         <b>Kenapa harus Social Distancing (Jaga Jarak Sesama)?</b>
       </h2>
       <article class="flex flex-col lg:flex-row">
         <img
-          v-lazy="'https://firebasestorage.googleapis.com/v0/b/jabarprov-covid19.appspot.com/o/public%2Fflatten.jpeg?alt=media&token=3d989ffe-f369-4835-a232-7cf61686abd5'"
+          :src="'https://firebasestorage.googleapis.com/v0/b/jabarprov-covid19.appspot.com/o/public%2Fflatten.jpeg?alt=media&token=3d989ffe-f369-4835-a232-7cf61686abd5'"
           class="order-2 lg:order-1 w-full h-full mb-8 lg:w-1/2 lg:mr-8 object-contain md:object-cover object-center rounded-lg"
         >
         <div class="order-1 lg:order-2 lg:w-1/2">
@@ -291,7 +291,7 @@
       </h2>
       <div class="flex flex-col items-stretch">
         <article class="html-content text-gray-800 flex flex-col lg:flex-row">
-          <img v-lazy="'https://firebasestorage.googleapis.com/v0/b/jabarprov-covid19.appspot.com/o/public%2Fcovid-19.jpg?alt=media&token=3dbbb851-546b-4154-be27-ed8692f194a5'" class="hidden lg:block w-full h-full lg:w-1/2 lg:mr-8 object-cover object-center rounded-lg">
+          <img :src="'https://firebasestorage.googleapis.com/v0/b/jabarprov-covid19.appspot.com/o/public%2Fcovid-19.jpg?alt=media&token=3dbbb851-546b-4154-be27-ed8692f194a5'" class="hidden lg:block w-full h-full lg:w-1/2 lg:mr-8 object-cover object-center rounded-lg">
           <div class="w-full lg:w-1/2">
             <h3 class="text-xl text-black">
               <b>Apa Itu COVID-19?</b>
@@ -363,7 +363,7 @@
     </section>
     <br>
     <section class="m-4 md:m-8">
-      <div class="flex flex-col items-stretch p-8 rounded-lg bg-white shadow-md">
+      <div class="flex flex-col items-stretch p-8 rounded-lg bg-white lg:shadow-md border lg:border-none border-solid border-gray-300">
         <h2 class="text-left text-2xl md:text-3xl">
           <b>Berita Jabar</b>
         </h2>
@@ -530,7 +530,11 @@ export default {
   &__call-card {
     min-height: 100px;
     grid-column-end: span 1;
-    @apply shadow-md;
+    @apply border border-solid border-gray-300;
+
+    @screen lg {
+      @apply shadow-md border-none;
+    }
   }
 
   &__call-status {
@@ -538,7 +542,11 @@ export default {
     @apply p-5 flex items-center justify-between
     text-xl text-white
     bg-brand-green-dark
-    shadow-md;
+    border border-solid border-gray-300;
+
+    @screen lg {
+      @apply shadow-md border-none;
+    }
   }
 }
 

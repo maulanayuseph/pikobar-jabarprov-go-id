@@ -1,7 +1,10 @@
 <template>
   <div class="flex flex-row justify-start items-center">
     <a
-      class="appearance-none inline-block w-12 h-12 mr-6 rounded-full flex flex-row justify-center items-center shadow-lg bg-brand-green hover:bg-brand-green-lighter"
+      class="appearance-none inline-block w-12 h-12 mr-6 rounded-full
+            flex flex-row justify-center items-center
+            lg:shadow-lg border lg:border-none border-solid border-gray-300
+            bg-brand-green hover:bg-brand-green-lighter"
       :title="`Lakukan panggilan ke ${title}`"
       :href="`tel:${number}`"
     >

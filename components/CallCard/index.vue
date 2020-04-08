@@ -4,8 +4,9 @@
     flex flex-row flex-wrap justify-start items-center
     rounded-lg
     lg:flex-col lg:flex-no-wrap lg:items-start lg:p-6 bg-white
-    hover:bg-green-200"
-    style="box-shadow: 0 0 4px 0px rgba(0,0,0,0.05), 0 4px 24px 0 rgba(0,0,0,0.1);"
+    hover:bg-green-200
+    lg:shadow-md
+    border lg:border-none border-solid border-gray-300"
     @click.capture="onClick"
   >
     <div class="hidden sm:block lg:inline-flex lg:order-2 lg:w-full items-center text-green-500">

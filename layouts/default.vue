@@ -25,7 +25,7 @@
     </div>
     <BackToTopButton />
     <AppFooter class="container mx-auto pb-32">
-      <SponsorList class="m-4 md:m-8 p-5 md:p-8 rounded-lg bg-white shadow-md" />
+      <SponsorList class="m-4 md:m-8 p-5 md:p-8 rounded-lg bg-white lg:shadow-md lg:border-none border border-solid border-gray-300" />
     </AppFooter>
     <Navbar class="lg:hidden" />
   </div>
