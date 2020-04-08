@@ -127,6 +127,15 @@ export default {
     ** You can extend webpack config here
     */
     extend (config, ctx) {
+      const htmlLoader = config.module.rules.find(rule => rule.test.test('html'))
+      if (htmlLoader) {
+        console.log(htmlLoader)
+      } else {
+        config.module.rules.push({
+          test: /\.html$/,
+          use: ['html-loader']
+        })
+      }
     }
   }
 }
