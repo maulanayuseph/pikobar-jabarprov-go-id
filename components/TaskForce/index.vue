@@ -33,7 +33,7 @@
       <thead class="hidden md:table-header-group">
         <tr class="bg-gray-300 flex flex-col flex-no wrap md:table-row text-left text-gray-600">
           <th class="hidden md:table-cell p-4 w-1/12 text-center">
-            Kode
+            No.
           </th>
           <th class="p-4">
             Kota/Kab
@@ -69,7 +69,7 @@
             class="relative flex flex-col flex-no wrap md:table-row pl-5 md:pl-0 mb-8 md:mb-0"
           >
             <td class="hidden md:table-cell text-center">
-              {{ item.code }}
+              {{ index + 1 }}
             </td>
             <td class="title-cell text-lg font-bold md:font-normal md:text-base md:p-2 text-left">
               {{ item.name }}
