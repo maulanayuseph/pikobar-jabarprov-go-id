@@ -27,6 +27,8 @@
             :content="item.content"
             :to="item.backlink"
             :date="formatDateTimeShort(item.published_at)"
+            :news-channel="item.news_channel"
+            :news-channel-icon="item.news_channel_icon"
             class="bg-white rounded-lg mb-8 p-6 shadow-lg"
           />
         </template>

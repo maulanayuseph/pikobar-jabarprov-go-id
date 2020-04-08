@@ -34,6 +34,14 @@
           <CallCenter />
         </section>
       </div>
+      <div class="m-4 md:m-8 p-4 md:p-8 bg-white border-solid border border-gray-400 rounded-lg">
+        <section id="taskForceList">
+          <h2 class="mb-6 text-2xl font-bold leading-tight">
+            Website Gugus Tugas Kota/Kabupaten Jawa Barat
+          </h2>
+          <TaskForce />
+        </section>
+      </div>
     </div>
   </div>
 </template>
@@ -43,10 +51,12 @@ import { mapState } from 'vuex'
 import { analytics } from '~/lib/firebase'
 import ContactList from '~/components/ContactList'
 import CallCenter from '~/components/CallCenter'
+import TaskForce from '~/components/TaskForce'
 export default {
   components: {
     ContactList,
-    CallCenter
+    CallCenter,
+    TaskForce
   },
   computed: {
     ...mapState('hospitals', {
