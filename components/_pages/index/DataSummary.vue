@@ -6,7 +6,7 @@
           :is-pending="isPending"
           class="lg:mr-8 mb-8 lg:w-1/3 border border-solid"
           style="background-color: #FCDFE0; border-color: #FFB4B5;"
-          label="Positif COVID-19"
+          label="Terkonfirmasi"
         >
           <div class="flex justify-between items-baseline text-2xl">
             <h4>
