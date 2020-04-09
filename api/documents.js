@@ -30,7 +30,6 @@ export function get (options = { perPage: 3 }) {
 
 export function getById (id) {
   return db.collection('documents')
-    .where('published', '==', true)
     .doc(id)
     .get()
     .then((doc) => {
