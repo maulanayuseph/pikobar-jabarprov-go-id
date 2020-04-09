@@ -123,7 +123,7 @@ export default {
       return encodeURI(string)
     },
     getInfographicURL (item) {
-      return `/infographics/${this.encodeURI(item.title)}-inf.${item.id}`
+      return item.route
     }
   }
 }

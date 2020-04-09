@@ -96,6 +96,10 @@ export default {
 
   computed: {
     itemId () {
+      const id = this.$route.query.id
+      if (id) {
+        return id
+      }
       const slug = this.$route.params.slug
       if (slug.includes('-artcl.')) {
         const matched = regex.exec(slug)
