@@ -56,7 +56,7 @@ export default {
   },
   computed: {
     isTopLevelRoute () {
-      return this.$route.path.split('/').length <= 3
+      return this.$route.path.split('/').length < 3
     }
   },
   mounted () {
