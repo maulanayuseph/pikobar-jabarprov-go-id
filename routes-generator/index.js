@@ -1,4 +1,5 @@
 import {
+  slufigyDocumentRoute,
   slugifyArticleRoute,
   slugifyInfographicRoute
 } from '../lib/slugify'
@@ -31,8 +32,20 @@ export default async function () {
       }
       return []
     })
+  const documents = await firebase.db.collection('documents')
+    .get()
+    .then((docs) => {
+      if (!docs.empty) {
+        return docs.docs.map((doc) => {
+          const data = doc.data()
+          return slufigyDocumentRoute(doc.id, data.title)
+        })
+      }
+      return []
+    })
   return [
     ...infographics,
-    ...articles
+    ...articles,
+    ...documents
   ]
 }
