@@ -89,9 +89,9 @@ export default {
       return typeof format === 'function' ? format(value) : value
     },
     onClickItem (item) {
-      if (item.document_url) {
-        window.open(item.document_url, '_blank')
-      }
+      this.$router.push({
+        path: item.route
+      })
     },
     beforeDownload (item) {
       onDownload(item.document_url, item.title)
