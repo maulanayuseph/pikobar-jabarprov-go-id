@@ -16,7 +16,12 @@ export default {
     URL: process.env.URL
   },
   router: {
-    prefetchLinks: false
+    prefetchLinks: false,
+    extendRoutes (routes) {
+      for (const key in routes) {
+        routes[key].caseSensitive = true
+      }
+    }
   },
   generate: {
     fallback: true,
