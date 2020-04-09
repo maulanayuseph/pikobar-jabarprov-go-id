@@ -70,7 +70,7 @@ import { formatDateTimeShort } from '~/lib/date'
 import { analytics } from '~/lib/firebase'
 import { useArticleMetaInfo } from '~/lib/metainfo'
 
-const regex = /(?:(-artcl(\.|--)))(.*)$/
+const regex = /(?:(-artcl(\.|-)))(.*)$/
 export default {
   components: {
     ContentLoader
@@ -101,7 +101,7 @@ export default {
         return id
       }
       const slug = this.$route.params.slug
-      if (slug.includes('-artcl.') || slug.includes('-artcl--')) {
+      if (slug.includes('-artcl.') || slug.includes('-artcl-')) {
         const matched = regex.exec(slug)
         return matched && matched.length ? matched[3] : null
       } else {

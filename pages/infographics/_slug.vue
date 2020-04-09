@@ -64,7 +64,7 @@ import { onDownload, onShare } from '~/lib/download-and-share-firestore-doc'
 import { analytics } from '~/lib/firebase'
 import { useArticleMetaInfo } from '~/lib/metainfo'
 
-const regex = /(?:(-inf(\.|--)))(.*)$/
+const regex = /(?:(-inf(\.|-)))(.*)$/
 export default {
   components: {
     ContentLoader
@@ -99,7 +99,7 @@ export default {
         return id
       }
       const slug = this.$route.params.slug
-      if (slug.includes('-inf.') || slug.includes('-inf--')) {
+      if (slug.includes('-inf.') || slug.includes('-inf-')) {
         const matched = regex.exec(slug)
         return matched && matched.length ? matched[3] : null
       } else {

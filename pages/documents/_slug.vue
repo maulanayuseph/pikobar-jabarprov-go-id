@@ -89,7 +89,7 @@ import { analytics } from '~/lib/firebase'
 import { formatDateTimeShort } from '~/lib/date'
 import { useArticleMetaInfo } from '~/lib/metainfo'
 
-const regex = /(?:(-dcmnt(\.|--)))(.*)$/
+const regex = /(?:(-dcmnt(\.|-)))(.*)$/
 export default {
   components: {
     ContentLoader
@@ -125,7 +125,7 @@ export default {
         return id
       }
       const slug = this.$route.params.slug
-      if (slug.includes('-dcmnt.') || slug.includes('-dcmnt--')) {
+      if (slug.includes('-dcmnt.') || slug.includes('-dcmnt-')) {
         const matched = regex.exec(slug)
         return matched && matched.length ? matched[3] : null
       } else {
