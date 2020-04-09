@@ -73,6 +73,7 @@ export default {
   ** Plugins to load before mounting the App
   */
   plugins: [
+    { src: '~/plugins/numbro.js' },
     { src: '~/plugins/initial-data.js', mode: 'client' },
     { src: '~/plugins/service-worker.js', mode: 'client' },
     '~/plugins/vuex-router-sync.js',

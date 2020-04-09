@@ -32,7 +32,7 @@
                   </small>
                 </h6>
                 <summary class="text-5xl text-yellopx-40 font-bold">
-                  {{ cases ? cases.pertanyaan_terlayani : '' }}
+                  {{ cases ? formatNumber(cases.pertanyaan_terlayani) : '' }}
                 </summary>
               </div>
               <div
@@ -401,6 +401,7 @@ import { ContentLoader } from 'vue-content-loader'
 import { mapState } from 'vuex'
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons'
 import { formatDateTimeShort } from '~/lib/date'
+import { formatNumber } from '~/lib/number'
 import { analytics } from '~/lib/firebase'
 import TopAlert from '~/components/TopAlert'
 import ImageCarousel from '~/components/ImageCarousel'
@@ -502,7 +503,8 @@ export default {
     })
   },
   methods: {
-    formatDateTimeShort
+    formatDateTimeShort,
+    formatNumber
   }
 }
 
