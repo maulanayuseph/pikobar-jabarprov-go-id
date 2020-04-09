@@ -32,7 +32,7 @@
                   </small>
                 </h6>
                 <summary class="text-5xl text-yellopx-40 font-bold">
-                  {{ cases ? cases.pertanyaan_terlayani : '' }}
+                  {{ cases ? formatNumber(cases.pertanyaan_terlayani) : '' }}
                 </summary>
               </div>
               <div
@@ -340,26 +340,46 @@
       </div>
     </section>
     <section class="mt-8 m-4 md:mt-16 md:m-8">
-      <div class="flex justify-between items-center md:mb-4">
-        <h2 class="text-left text-2xl md:text-3xl">
-          <b>Info Praktikal</b>
-        </h2>
-        <nuxt-link
-          tag="a"
-          class="hidden md:inline-block text-center md:self-center px-4 py-2 rounded-lg text-brand-green-darker hover:bg-green-200 border-2 border-solid border-brand-green"
-          to="/infographics"
-        >
-          Lihat Selengkapnya
-        </nuxt-link>
+      <div class="bg-white rounded-lg shadow-md">
+        <div class="p-5 md:p-8 flex justify-between items-center">
+          <h2 class="text-left text-2xl md:text-3xl">
+            <b>Info Praktikal</b>
+          </h2>
+        </div>
+        <ShareableItems :items="shareableInfographics" />
+        <div class="text-center pb-5 md:pb-8">
+          <nuxt-link
+            tag="a"
+            class="inline-block text-center md:self-center px-4 py-2 mt-8  rounded-lg text-brand-green-darker hover:bg-green-200 border-2 border-solid border-brand-green"
+            to="/info/infographics"
+          >
+            Lihat Selengkapnya
+          </nuxt-link>
+        </div>
       </div>
-      <ShareableItems :items="shareableInfographics" />
-      <nuxt-link
-        tag="a"
-        class="inline-block md:hidden text-center md:self-center px-4 py-2 mt-8  rounded-lg text-brand-green-darker hover:bg-green-200 border-2 border-solid border-brand-green"
-        to="/infographics"
-      >
-        Lihat Selengkapnya
-      </nuxt-link>
+    </section>
+    <section class="m-4 md:m-8 md:mt-4">
+      <div class="bg-white rounded-lg shadow-md">
+        <div class="p-5 md:p-8 flex justify-between items-center">
+          <h2 class="text-left text-2xl md:text-3xl">
+            <b>Dokumen</b>
+          </h2>
+        </div>
+        <ShareableItemTable
+          class="px-5 md:px-8"
+          :columns="shareableDocumentsColumns"
+          :items="shareableDocuments"
+        />
+        <div class="text-center pb-5 md:pb-8">
+          <nuxt-link
+            tag="a"
+            class="inline-block text-center md:self-center px-4 py-2 mt-8  rounded-lg text-brand-green-darker hover:bg-green-200 border-2 border-solid border-brand-green"
+            to="/info/documents"
+          >
+            Lihat Selengkapnya
+          </nuxt-link>
+        </div>
+      </div>
     </section>
     <br>
     <section class="m-4 md:m-8">
@@ -401,6 +421,7 @@ import { ContentLoader } from 'vue-content-loader'
 import { mapState } from 'vuex'
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons'
 import { formatDateTimeShort } from '~/lib/date'
+import { formatNumber } from '~/lib/number'
 import { analytics } from '~/lib/firebase'
 import TopAlert from '~/components/TopAlert'
 import ImageCarousel from '~/components/ImageCarousel'
@@ -410,6 +431,7 @@ import CallCenter from '~/components/CallCenter'
 import BlogPostPreview from '~/components/Blog/BlogPostPreview'
 import DataTabs from '~/components/_pages/index/DataTabs'
 import ShareableItems from '~/components/ShareableItems'
+import ShareableItemTable from '~/components/ShareableItemTable'
 
 export default {
   components: {
@@ -421,11 +443,13 @@ export default {
     ContactListItem,
     CallCenter,
     DataTabs,
-    ShareableItems
+    ShareableItems,
+    ShareableItemTable
   },
   async fetch () {
     await this.$store.dispatch('hospitals/getItems')
     await this.$store.dispatch('infographics/getItems')
+    await this.$store.dispatch('documents/getItems')
   },
   data () {
     return {
@@ -441,6 +465,7 @@ export default {
       hospitals: state => state.hospitals.items.filter((_, index) => index < 3),
       remainingHospitalCount: state => state.hospitals.items.length - 3,
       infographics: state => state.infographics.items,
+      documents: state => state.documents.items,
       news: state => state.news.items,
       cases: state => state.statistics.cases
     }),
@@ -473,15 +498,36 @@ export default {
     },
     shareableInfographics () {
       return this.infographics
-        .filter((_, index) => index < 4)
+        .filter((_, index) => index < 6)
         .map((item) => {
           return {
-            title: item.title,
-            route: item.route,
+            ...item,
             shareable: true,
-            downloadable: true,
-            downloadURL: item.images[0],
-            shareText: `[Pikobar] Bagikan "${item.title}". Selengkapnya di ${process.env.URL}${item.route}`
+            downloadable: true
+          }
+        })
+    },
+    shareableDocumentsColumns () {
+      return [
+        {
+          prop: 'published_at',
+          format: v => formatDateTimeShort(v),
+          label: 'Tanggal Rilis'
+        },
+        {
+          prop: 'title',
+          label: 'Judul Dokumen'
+        }
+      ]
+    },
+    shareableDocuments () {
+      return this.documents
+        .filter((_, index) => index < 6)
+        .map((item) => {
+          return {
+            ...item,
+            shareable: true,
+            downloadable: true
           }
         })
     }
@@ -502,7 +548,8 @@ export default {
     })
   },
   methods: {
-    formatDateTimeShort
+    formatDateTimeShort,
+    formatNumber
   }
 }
 

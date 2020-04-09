@@ -21,7 +21,7 @@
           </ContentLoader>
         </template>
         <template v-else-if="item">
-          <div class="flex flex-col justify-start items-start lg:flex-row lg:justify-between lg:items-center">
+          <div class="flex flex-col justify-start items-start">
             <h2 class="text-xl font-bold leading-tight mb-3 lg:mb-0">
               {{ item.title }}
             </h2>
@@ -47,10 +47,34 @@
             </p>
           </div>
           <br>
-          <img
-            :src="item.images[0] || null"
-            class="cursor-pointer w-full lg:max-w-2xl mx-auto h-full object-contain object-center"
-          >
+          <div class="flex flex-row justify-start items-start">
+            <div class="hidden md:inline-block px-4 py-3 mr-4 text-red-600 rounded-lg border border-solid border-gray-300">
+              <FontAwesomeIcon :icon="icon.faFilePdf" style="font-size: 5rem;" />
+            </div>
+            <div style="display: grid; grid-template-columns: auto auto 1fr; gap: 1rem 0.5rem">
+              <span>
+                Tanggal Rilis
+              </span>
+              <small>:</small>
+              <p>
+                {{ formatDateTimeShort(item.published_at) }}
+              </p>
+              <span>
+                Judul
+              </span>
+              <small>:</small>
+              <p>
+                {{ item.title }}
+              </p>
+              <span>
+                Deskripsi
+              </span>
+              <small>:</small>
+              <p>
+                {{ item.description }}
+              </p>
+            </div>
+          </div>
         </template>
       </section>
     </div>
@@ -58,13 +82,14 @@
 </template>
 
 <script>
-import { faDownload, faShare } from '@fortawesome/free-solid-svg-icons'
+import { faDownload, faShare, faFilePdf } from '@fortawesome/free-solid-svg-icons'
 import { ContentLoader } from 'vue-content-loader'
 import { onDownload, onShare } from '~/lib/download-and-share-firestore-doc'
 import { analytics } from '~/lib/firebase'
+import { formatDateTimeShort } from '~/lib/date'
 import { useArticleMetaInfo } from '~/lib/metainfo'
 
-const regex = /(?:(-inf\.))(.*)$/
+const regex = /(?:(-dcmnt\.))(.*)$/
 export default {
   components: {
     ContentLoader
@@ -72,7 +97,7 @@ export default {
   validate ({ redirect, params }) {
     const { slug } = params
     if (!slug || typeof slug !== 'string') {
-      redirect('/articles')
+      redirect('/info/documents')
       return
     }
     return true
@@ -87,7 +112,8 @@ export default {
     return {
       icon: {
         faDownload,
-        faShare
+        faShare,
+        faFilePdf
       },
       isPending: true
     }
@@ -95,7 +121,7 @@ export default {
   computed: {
     itemId () {
       const slug = this.$route.params.slug
-      if (slug.includes('-inf.')) {
+      if (slug.includes('-dcmnt.')) {
         const matched = regex.exec(slug)
         return matched && matched.length ? matched[2] : null
       } else {
@@ -103,16 +129,17 @@ export default {
       }
     },
     item () {
-      return this.$store.getters['infographics/itemsMap'][this.itemId]
+      return this.$store.getters['documents/itemsMap'][this.itemId]
     }
   },
   methods: {
+    formatDateTimeShort,
     fetchItem () {
       this.isPending = true
-      return this.$store.dispatch('infographics/getItemById', this.itemId)
+      return this.$store.dispatch('documents/getItemById', this.itemId)
         .then(() => {
           if (process.client || process.browser) {
-            analytics.logEvent('infographic_detail_view', { id: this.$route.params.slug })
+            analytics.logEvent('document_detail_view', { id: this.$route.params.slug })
           }
         })
         .finally(() => {
@@ -123,20 +150,20 @@ export default {
       onShare(this.item.shareText)
     },
     beforeDownload () {
-      onDownload(this.item.downloadURL, this.item.title)
+      onDownload(this.item.document_url, this.item.title)
     }
   },
   head () {
     if (this.item) {
-      const { title, route, published_at: publishedAt, images = [] } = this.item
+      const { title, description, route, published_at: publishedAt } = this.item
       const date = publishedAt && typeof publishedAt.toISOString === 'function'
         ? publishedAt.toISOString()
         : ''
       return useArticleMetaInfo({
         title,
+        description,
         publishedTime: date,
-        url: `${process.env.URL}${route}`,
-        image: images[0]
+        url: `${process.env.URL}${route}`
       })
     }
   }

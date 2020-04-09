@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="tab-container">
+    <div>
       <ul
         class="overflow-x-auto md:overflow-x-hidden flex flex-row flex-no-wrap items-stretch border-b-2 border-solid border-gray-300"
       >
@@ -65,9 +65,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-.tab-container {
-  //
-}
-</style>

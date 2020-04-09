@@ -62,7 +62,7 @@ export default {
   /*
   ** Customize the progress-bar color
   */
-  loading: { color: '#fff' },
+  loading: { color: 'rgb(0,200,83)' },
   /*
   ** Global CSS
   */
@@ -73,6 +73,7 @@ export default {
   ** Plugins to load before mounting the App
   */
   plugins: [
+    { src: '~/plugins/numbro.js' },
     { src: '~/plugins/initial-data.js', mode: 'client' },
     { src: '~/plugins/service-worker.js', mode: 'client' },
     '~/plugins/vuex-router-sync.js',

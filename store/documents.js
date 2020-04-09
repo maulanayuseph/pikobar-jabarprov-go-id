@@ -1,6 +1,6 @@
 import _uniqBy from 'lodash/uniqBy'
 import _orderBy from 'lodash/orderBy'
-import { get, getById, ORDER_INDEX, ORDER_TYPE } from '~/api/infographic'
+import { get, getById, ORDER_INDEX, ORDER_TYPE } from '~/api/documents'
 
 export const state = () => ({
   items: []

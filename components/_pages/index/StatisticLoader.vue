@@ -1,5 +1,6 @@
 <script>
 import { ContentLoader } from 'vue-content-loader'
+import { formatNumber } from '~/lib/number'
 export default {
   functional: true,
   props: [
@@ -48,12 +49,12 @@ export default {
               <span
                 class="text-4xl font-bold inline-block"
                 style="color: #2DAC55; min-width: 2ch;">
-                { context.props.processed }
+                { formatNumber(context.props.processed) }
               </span>
               <span
                 class="text-sm font-bold ml-2"
                 style="color: #000000;">
-                { `(${context.props.processedPercentage}% )` }
+                { `(${formatNumber(context.props.processedPercentage)}% )` }
               </span>
               <p
                 class="mt-2 text-base whitespace-no-wrap"
@@ -65,12 +66,12 @@ export default {
               <span
                 class="text-2xl font-bold inline-block"
                 style="color: #2DAC55; min-width: 2ch;">
-                { context.props.finished }
+                { formatNumber(context.props.finished) }
               </span>
               <span
                 class="text-sm font-bold ml-2"
                 style="color: #000000;">
-                { `(${context.props.finishedPercentage}%)` }
+                { `(${formatNumber(context.props.finishedPercentage)}%)` }
               </span>
               <p
                 class="mt-2 text-base whitespace-no-wrap "
@@ -82,7 +83,7 @@ export default {
               <span
                 class="text-2xl font-bold inline-block"
                 style="color: #2DAC55; min-width: 2ch;">
-                { context.props.total }
+                { formatNumber(context.props.total) }
               </span>
               <p
                 class="mt-2 text-base whitespace-no-wrap"
