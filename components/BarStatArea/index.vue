@@ -148,7 +148,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 import { GChart } from 'vue-google-charts'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faChartBar, faChartLine } from '@fortawesome/free-solid-svg-icons'
@@ -158,6 +157,36 @@ export default {
   components: {
     GChart,
     FontAwesomeIcon
+  },
+  props: {
+    propsDataNasionalHarianKumulatif: {
+      type: Array,
+      default: () => ([])
+    },
+    propsDataRekapitulasiJabarProv: {
+      type: Object,
+      default: () => ({})
+    },
+    propsDataRekapitulasiJabarKab: {
+      type: Array,
+      default: () => ([])
+    },
+    propsDataRekapitulasiJabarHarianProv: {
+      type: Array,
+      default: () => ([])
+    },
+    propsDataRekapitulasiJabarKumulatifProv: {
+      type: Array,
+      default: () => ([])
+    },
+    propsDataRekapitulasiJabarHarianKab: {
+      type: Array,
+      default: () => ([])
+    },
+    propsDataRekapitulasiJabarKumulatifKab: {
+      type: Array,
+      default: () => ([])
+    }
   },
   data () {
     return {
@@ -902,16 +931,50 @@ export default {
       }
     }
   },
+  watch: {
+    propsDataNasionalHarianKumulatif () {
+      this.jsonDataNasionalHarianKumulatif = this.propsDataNasionalHarianKumulatif
+      this.fetchDataNasionalHarianKumulatif()
+      console.log('fetchDataNasionalHarianKumulatif')
+      console.log(this.fetchDataNasionalHarianKumulatif)
+    },
+    propsDataRekapitulasiJabarProv () {
+      this.jsonDataProvinsi = this.propsDataRekapitulasiJabarProv
+      this.fetchDataProvinsi()
+    },
+    propsDataRekapitulasiJabarKab () {
+      this.jsonDataKabupaten = this.propsDataRekapitulasiJabarKab
+      setTimeout(() => {
+        this.fetchDataKabupaten()
+      }, 2000)
+    },
+    propsDataRekapitulasiJabarHarianProv () {
+      this.jsonDataProvinsiHarian = this.propsDataRekapitulasiJabarHarianProv
+      this.fetchDataProvinsiHarian()
+    },
+    propsDataRekapitulasiJabarKumulatifProv () {
+      this.jsonDataProvinsiKumulatif = this.propsDataRekapitulasiJabarKumulatifProv
+      this.fetchDataProvinsiKumulatif()
+    },
+    propsDataRekapitulasiJabarHarianKab () {
+      this.jsonDataKabupatenHarian = this.propsDataRekapitulasiJabarHarianKab
+      this.fetchDataKabupatenHarian()
+    },
+    propsDataRekapitulasiJabarKumulatifKab () {
+      this.jsonDataKabupatenKumulatif = this.propsDataRekapitulasiJabarKumulatifKab
+      this.fetchDataProvinsiKumulatif()
+    }
+  },
   created () {
-    this.fetchDataNasionalHarianKumulatif()
-    this.fetchDataProvinsi()
-    setTimeout(() => {
-      this.fetchDataKabupaten()
-    }, 2000)
-    this.fetchDataProvinsiHarian()
-    this.fetchDataProvinsiKumulatif()
-    this.fetchDataKabupatenHarian()
-    this.fetchDataKabupatenKumulatif()
+    // this.fetchDataNasionalHarianKumulatif()
+    // this.fetchDataProvinsi()
+    // setTimeout(() => {
+    //   this.fetchDataKabupaten()
+    // }, 2000)
+    // this.fetchDataProvinsiHarian()
+    // this.fetchDataProvinsiKumulatif()
+    // this.fetchDataKabupatenHarian()
+    // this.fetchDataKabupatenKumulatif()
   },
   methods: {
     ifNullReturnZero (str) {
@@ -969,192 +1032,130 @@ export default {
     },
     fetchDataNasionalHarianKumulatif () {
       const self = this
-      axios
-        .get('https://indonesia-covid-19.mathdro.id/api/harian')
-        .then(function (response) {
-          self.jsonDataNasionalHarianKumulatif = response.data.data
-
-          for (let i = 0; i < self.jsonDataNasionalHarianKumulatif.length; i++) {
-            const date = new Date(self.jsonDataNasionalHarianKumulatif[i].tanggal)
-            // by Harian
-            self.ChartNasionalDataHarian.push([self.formatDate(date), self.jsonDataNasionalHarianKumulatif[i].jumlahKasusBaruperHari])
-            // by Akumulatif
-            self.ChartNasionalDataAkumulatif.push([self.formatDate(date), self.jsonDataNasionalHarianKumulatif[i].jumlahKasusKumulatif])
-          }
-          if (self.jsonDataNasionalHarianKumulatif[self.jsonDataNasionalHarianKumulatif.length - 1].jumlahKasusKumulatif === null) {
-            self.dataTotalPositifAll[0] = self.jsonDataNasionalHarianKumulatif[self.jsonDataNasionalHarianKumulatif.length - 2].jumlahKasusKumulatif
-          } else {
-            self.dataTotalPositifAll[0] = self.jsonDataNasionalHarianKumulatif[self.jsonDataNasionalHarianKumulatif.length - 1].jumlahKasusKumulatif
-          }
-          self.ChartNasionalDataHarian.splice(1, 1)
-          self.ChartNasionalDataAkumulatif.splice(1, 1)
-        })
-        .catch(function (error) {
-          console.log(error)
-        })
+      for (let i = 0; i < self.jsonDataNasionalHarianKumulatif.length; i++) {
+        const date = new Date(self.jsonDataNasionalHarianKumulatif[i].tanggal)
+        // by Harian
+        self.ChartNasionalDataHarian.push([self.formatDate(date), self.jsonDataNasionalHarianKumulatif[i].jumlahKasusBaruperHari])
+        // by Akumulatif
+        self.ChartNasionalDataAkumulatif.push([self.formatDate(date), self.jsonDataNasionalHarianKumulatif[i].jumlahKasusKumulatif])
+      }
+      if (self.jsonDataNasionalHarianKumulatif[self.jsonDataNasionalHarianKumulatif.length - 1].jumlahKasusKumulatif === null) {
+        self.dataTotalPositifAll[0] = self.jsonDataNasionalHarianKumulatif[self.jsonDataNasionalHarianKumulatif.length - 2].jumlahKasusKumulatif
+      } else {
+        self.dataTotalPositifAll[0] = self.jsonDataNasionalHarianKumulatif[self.jsonDataNasionalHarianKumulatif.length - 1].jumlahKasusKumulatif
+      }
+      self.ChartNasionalDataHarian.splice(1, 1)
+      self.ChartNasionalDataAkumulatif.splice(1, 1)
     },
     fetchDataProvinsi () {
       const self = this
-      axios
-        .get('https://covid19-public.digitalservice.id/api/v1/rekapitulasi/jabar?level=prov')
-        .then(function (response) {
-          self.jsonDataProvinsi = response.data.data.content
-
-          self.jsonDataResult.odp_total = self.jsonDataProvinsi.odp_total
-          self.jsonDataResult.odp_proses = self.jsonDataProvinsi.odp_proses
-          self.jsonDataResult.odp_proses_persen = ((self.jsonDataResult.odp_proses / self.jsonDataResult.odp_total) * 100).toFixed(2)
-          self.jsonDataResult.odp_selesai = self.jsonDataProvinsi.odp_selesai
-          self.jsonDataResult.odp_selesai_persen = ((self.jsonDataResult.odp_selesai / self.jsonDataResult.odp_total) * 100).toFixed(2)
-          self.jsonDataResult.pdp_total = self.jsonDataProvinsi.pdp_total
-          self.jsonDataResult.pdp_proses = self.jsonDataProvinsi.pdp_proses
-          self.jsonDataResult.pdp_proses_persen = ((self.jsonDataResult.pdp_proses / self.jsonDataResult.pdp_total) * 100).toFixed(2)
-          self.jsonDataResult.pdp_selesai = self.jsonDataProvinsi.pdp_selesai
-          self.jsonDataResult.pdp_selesai_persen = ((self.jsonDataResult.pdp_selesai / self.jsonDataResult.pdp_total) * 100).toFixed(2)
-          self.jsonDataResult.positif = self.jsonDataProvinsi.positif
-          self.jsonDataResult.sembuh = self.jsonDataProvinsi.sembuh
-          self.jsonDataResult.meninggal = self.jsonDataProvinsi.meninggal
-          self.dataTotalPositifAll[1] = self.jsonDataProvinsi.positif
-        })
-        .catch(function (error) {
-          console.log(error)
-        })
+      self.jsonDataResult.odp_total = self.jsonDataProvinsi.odp_total
+      self.jsonDataResult.odp_proses = self.jsonDataProvinsi.odp_proses
+      self.jsonDataResult.odp_proses_persen = ((self.jsonDataResult.odp_proses / self.jsonDataResult.odp_total) * 100).toFixed(2)
+      self.jsonDataResult.odp_selesai = self.jsonDataProvinsi.odp_selesai
+      self.jsonDataResult.odp_selesai_persen = ((self.jsonDataResult.odp_selesai / self.jsonDataResult.odp_total) * 100).toFixed(2)
+      self.jsonDataResult.pdp_total = self.jsonDataProvinsi.pdp_total
+      self.jsonDataResult.pdp_proses = self.jsonDataProvinsi.pdp_proses
+      self.jsonDataResult.pdp_proses_persen = ((self.jsonDataResult.pdp_proses / self.jsonDataResult.pdp_total) * 100).toFixed(2)
+      self.jsonDataResult.pdp_selesai = self.jsonDataProvinsi.pdp_selesai
+      self.jsonDataResult.pdp_selesai_persen = ((self.jsonDataResult.pdp_selesai / self.jsonDataResult.pdp_total) * 100).toFixed(2)
+      self.jsonDataResult.positif = self.jsonDataProvinsi.positif
+      self.jsonDataResult.sembuh = self.jsonDataProvinsi.sembuh
+      self.jsonDataResult.meninggal = self.jsonDataProvinsi.meninggal
+      self.dataTotalPositifAll[1] = self.jsonDataProvinsi.positif
     },
     fetchDataProvinsiHarian () {
       const self = this
       const today = new Date()
       const strToday = self.formatDate(today)
-
-      axios
-        .get('https://covid19-public.digitalservice.id/api/v1/rekapitulasi/jabar/harian?level=prov')
-        .then(function (response) {
-          self.jsonDataProvinsiHarian = response.data.data.content
-
-          let stop = false
-          for (let i = 0; i < self.jsonDataProvinsiHarian.length; i++) {
-            const date = new Date(self.jsonDataProvinsiHarian[i].tanggal)
-            if (stop === false) {
-              self.ChartJawaBaratDataHarian.push([self.formatDate(date), self.jsonDataProvinsiHarian[i].positif])
-            }
-            if (self.formatDate(date) === strToday) {
-              stop = true
-            }
-          }
-          self.ChartJawaBaratDataHarian.splice(1, 1)
-        })
-        .catch(function (error) {
-          console.log(error)
-        })
+      let stop = false
+      for (let i = 0; i < self.jsonDataProvinsiHarian.length; i++) {
+        const date = new Date(self.jsonDataProvinsiHarian[i].tanggal)
+        if (stop === false) {
+          self.ChartJawaBaratDataHarian.push([self.formatDate(date), self.jsonDataProvinsiHarian[i].positif])
+        }
+        if (self.formatDate(date) === strToday) {
+          stop = true
+        }
+      }
+      self.ChartJawaBaratDataHarian.splice(1, 1)
     },
     fetchDataProvinsiKumulatif () {
       const self = this
       const today = new Date()
       const strToday = self.formatDate(today)
-
-      axios
-        .get('https://covid19-public.digitalservice.id/api/v1/rekapitulasi/jabar/kumulatif?level=prov')
-        .then(function (response) {
-          self.jsonDataProvinsiKumulatif = response.data.data.content
-
-          let stop = false
-          for (let i = 0; i < self.jsonDataProvinsiKumulatif.length; i++) {
-            const date = new Date(self.jsonDataProvinsiKumulatif[i].tanggal)
-            if (stop === false) {
-              self.ChartJawaBaratDataAkumulatif.push([self.formatDate(date), self.jsonDataProvinsiKumulatif[i].positif])
-            }
-            if (self.jsonDataProvinsiKumulatif[self.jsonDataProvinsiKumulatif.length - 1].positif === null) {
-              self.dataTotalPositifAll[1] = self.jsonDataProvinsiKumulatif[self.jsonDataProvinsiKumulatif.length - 2].positif
-            }
-            if (self.formatDate(date) === strToday) {
-              stop = true
-            }
-          }
-          self.ChartJawaBaratDataAkumulatif.splice(1, 1)
-        })
-        .catch(function (error) {
-          console.log(error)
-        })
+      let stop = false
+      for (let i = 0; i < self.jsonDataProvinsiKumulatif.length; i++) {
+        const date = new Date(self.jsonDataProvinsiKumulatif[i].tanggal)
+        if (stop === false) {
+          self.ChartJawaBaratDataAkumulatif.push([self.formatDate(date), self.jsonDataProvinsiKumulatif[i].positif])
+        }
+        if (self.jsonDataProvinsiKumulatif[self.jsonDataProvinsiKumulatif.length - 1].positif === null) {
+          self.dataTotalPositifAll[1] = self.jsonDataProvinsiKumulatif[self.jsonDataProvinsiKumulatif.length - 2].positif
+        }
+        if (self.formatDate(date) === strToday) {
+          stop = true
+        }
+      }
+      self.ChartJawaBaratDataAkumulatif.splice(1, 1)
     },
     fetchDataKabupaten () {
       const self = this
-      axios
-        .get('https://covid19-public.digitalservice.id/api/v1/rekapitulasi/jabar?level=kab')
-        .then(function (response) {
-          self.jsonDataKabupaten = response.data.data.content
-          for (let j = 0; j < self.jsonDataKota.length; j++) {
-            for (let i = 0; i < self.jsonDataKabupaten.length; i++) {
-              if (self.jsonDataKabupaten[i].kode_kab === self.jsonDataKota[j].kode) {
-                self.jsonDataKota[j].odp_proses = self.jsonDataKabupaten[i].odp_proses
-                self.jsonDataKota[j].odp_selesai = self.jsonDataKabupaten[i].odp_selesai
-                self.jsonDataKota[j].odp_total = self.jsonDataKabupaten[i].odp_total
-                self.jsonDataKota[j].pdp_proses = self.jsonDataKabupaten[i].pdp_proses
-                self.jsonDataKota[j].pdp_selesai = self.jsonDataKabupaten[i].pdp_selesai
-                self.jsonDataKota[j].pdp_total = self.jsonDataKabupaten[i].pdp_total
-                self.jsonDataKota[j].positif = self.jsonDataKabupaten[i].positif
-                self.jsonDataKota[j].positif_persentase = ((self.jsonDataKota[j].positif / self.jsonDataResult.positif) * 100).toFixed(2)
-                self.jsonDataKota[j].sembuh = self.jsonDataKabupaten[i].sembuh
-                self.jsonDataKota[j].meninggal = self.jsonDataKabupaten[i].meninggal
-              }
-            }
+      for (let j = 0; j < self.jsonDataKota.length; j++) {
+        for (let i = 0; i < self.jsonDataKabupaten.length; i++) {
+          if (self.jsonDataKabupaten[i].kode_kab === self.jsonDataKota[j].kode) {
+            self.jsonDataKota[j].odp_proses = self.jsonDataKabupaten[i].odp_proses
+            self.jsonDataKota[j].odp_selesai = self.jsonDataKabupaten[i].odp_selesai
+            self.jsonDataKota[j].odp_total = self.jsonDataKabupaten[i].odp_total
+            self.jsonDataKota[j].pdp_proses = self.jsonDataKabupaten[i].pdp_proses
+            self.jsonDataKota[j].pdp_selesai = self.jsonDataKabupaten[i].pdp_selesai
+            self.jsonDataKota[j].pdp_total = self.jsonDataKabupaten[i].pdp_total
+            self.jsonDataKota[j].positif = self.jsonDataKabupaten[i].positif
+            self.jsonDataKota[j].positif_persentase = ((self.jsonDataKota[j].positif / self.jsonDataResult.positif) * 100).toFixed(2)
+            self.jsonDataKota[j].sembuh = self.jsonDataKabupaten[i].sembuh
+            self.jsonDataKota[j].meninggal = self.jsonDataKabupaten[i].meninggal
           }
-          self.jsonDataKota.sort(self.compareValues('positif', 'desc'))
-        })
-        .catch(function (error) {
-          console.log(error)
-        })
+        }
+      }
+      self.jsonDataKota.sort(self.compareValues('positif', 'desc'))
     },
     fetchDataKabupatenHarian () {
       const self = this
       let max = 0
-      axios
-        .get('https://covid19-public.digitalservice.id/api/v1/rekapitulasi/jabar/harian?level=kab')
-        .then(function (response) {
-          self.jsonDataKabupatenHarian = response.data.data.content
-          for (let j = 0; j < self.jsonDataKota.length; j++) {
-            for (let i = 0; i < self.jsonDataKabupatenHarian.length; i++) {
-              if (self.jsonDataKabupatenHarian[i].kode_kab === self.jsonDataKota[j].kode) {
-                const date = new Date(self.jsonDataKabupatenHarian[i].tanggal)
-                self.jsonDataKota[j].dataHarian.push([self.formatDate(date), self.jsonDataKabupatenHarian[i].positif])
-              }
-              if (i === self.jsonDataKabupatenHarian.length - 1) {
-                self.jsonDataKota[j].dataHarian.splice(1, 1)
-              }
-              if (self.jsonDataKabupatenHarian[i].positif > max) {
-                max = self.jsonDataKabupatenHarian[i].positif
-              }
-            }
+      for (let j = 0; j < self.jsonDataKota.length; j++) {
+        for (let i = 0; i < self.jsonDataKabupatenHarian.length; i++) {
+          if (self.jsonDataKabupatenHarian[i].kode_kab === self.jsonDataKota[j].kode) {
+            const date = new Date(self.jsonDataKabupatenHarian[i].tanggal)
+            self.jsonDataKota[j].dataHarian.push([self.formatDate(date), self.jsonDataKabupatenHarian[i].positif])
           }
-          self.barChartKotaOptions.vAxis.viewWindow.max = max + (Math.ceil(max / 5))
-        })
-        .catch(function (error) {
-          console.log(error)
-        })
+          if (i === self.jsonDataKabupatenHarian.length - 1) {
+            self.jsonDataKota[j].dataHarian.splice(1, 1)
+          }
+          if (self.jsonDataKabupatenHarian[i].positif > max) {
+            max = self.jsonDataKabupatenHarian[i].positif
+          }
+        }
+      }
+      self.barChartKotaOptions.vAxis.viewWindow.max = max + (Math.ceil(max / 5))
     },
     fetchDataKabupatenKumulatif () {
       const self = this
       let max = 0
-      axios
-        .get('https://covid19-public.digitalservice.id/api/v1/rekapitulasi/jabar/kumulatif?level=kab')
-        .then(function (response) {
-          self.jsonDataKabupatenKumulatif = response.data.data.content
-          for (let j = 0; j < self.jsonDataKota.length; j++) {
-            for (let i = 0; i < self.jsonDataKabupatenKumulatif.length; i++) {
-              if (self.jsonDataKabupatenKumulatif[i].kode_kab === self.jsonDataKota[j].kode) {
-                const date = new Date(self.jsonDataKabupatenKumulatif[i].tanggal)
-                self.jsonDataKota[j].dataAkumulatif.push([self.formatDate(date), self.jsonDataKabupatenKumulatif[i].positif])
-              }
-              if (i === self.jsonDataKabupatenKumulatif.length - 1) {
-                self.jsonDataKota[j].dataAkumulatif.splice(1, 1)
-              }
-              if (self.jsonDataKabupatenKumulatif[i].positif > max) {
-                max = self.jsonDataKabupatenKumulatif[i].positif
-              }
-            }
+      for (let j = 0; j < self.jsonDataKota.length; j++) {
+        for (let i = 0; i < self.jsonDataKabupatenKumulatif.length; i++) {
+          if (self.jsonDataKabupatenKumulatif[i].kode_kab === self.jsonDataKota[j].kode) {
+            const date = new Date(self.jsonDataKabupatenKumulatif[i].tanggal)
+            self.jsonDataKota[j].dataAkumulatif.push([self.formatDate(date), self.jsonDataKabupatenKumulatif[i].positif])
           }
-          self.lineChartKotaOptions.vAxis.viewWindow.max = max + (Math.ceil(max / 5))
-        })
-        .catch(function (error) {
-          console.log(error)
-        })
+          if (i === self.jsonDataKabupatenKumulatif.length - 1) {
+            self.jsonDataKota[j].dataAkumulatif.splice(1, 1)
+          }
+          if (self.jsonDataKabupatenKumulatif[i].positif > max) {
+            max = self.jsonDataKabupatenKumulatif[i].positif
+          }
+        }
+      }
+      self.lineChartKotaOptions.vAxis.viewWindow.max = max + (Math.ceil(max / 5))
     }
   }
 }

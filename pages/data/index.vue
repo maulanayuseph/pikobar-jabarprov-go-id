@@ -42,11 +42,19 @@
         <MapFaskes v-if="stat.isActiveRS" />
         <MapSebaranPolygon v-if="stat.isActivePolygon" />
       </div>
-    </section>
+    </section>-->
 
     <section class="m-4 mb-8 md:m-8">
-      <BarStatArea />
-    </section>-->
+      <BarStatArea
+        :propsDataRekapitulasiJabarProv.sync="jsonDataRekapitulasiJabarProv"
+        :propsDataRekapitulasiJabarKab.sync="jsonDataRekapitulasiJabarKab"
+        :propsDataRekapitulasiJabarHarianProv.sync="jsonDataRekapitulasiJabarHarianProv"
+        :propsDataRekapitulasiJabarHarianKab.sync="jsonDataRekapitulasiJabarHarianKab"
+        :propsDataRekapitulasiJabarKumulatifProv.sync="jsonDataRekapitulasiJabarKumulatifProv"
+        :propsDataRekapitulasiJabarKumulatifKab.sync="jsonDataRekapitulasiJabarKumulatifKab"
+        :propsDataNasionalHarianKumulatif.sync="jsonDataNasionalHarianKumulatif"
+      />
+    </section>
 
     <section class="m-4 mb-8 md:m-8">
       <BarStatTable :propsDataRekapitulasiJabarKab.sync="jsonDataRekapitulasiJabarKab" />
@@ -107,6 +115,7 @@ export default {
       jsonDataRekapitulasiJabarHarianKab: [],
       jsonDataRekapitulasiJabarKumulatifProv: [],
       jsonDataRekapitulasiJabarKumulatifKab: [],
+      jsonDataNasionalHarianKumulatif: []
     }
   },
   computed: {
@@ -121,11 +130,12 @@ export default {
     }
   },
   created () {
+    this.fetchDataNasionalHarian()
     this.fetchDataRekapitulasiJabarProv()
     this.fetchDataRekapitulasiJabarKab()
     this.fetchDataRekapitulasiJabarHarianProv()
-    this.fetchDataRekapitulasiJabarHarianKab()
     this.fetchDataRekapitulasiJabarKumulatifProv()
+    this.fetchDataRekapitulasiJabarHarianKab()
     this.fetchDataRekapitulasiJabarKumulatifKab()
   },
   methods: {
@@ -228,6 +238,17 @@ export default {
         .get('https://covid19-public.digitalservice.id/api/v1/rekapitulasi/jabar/kumulatif?level=kab')
         .then(function (response) {
           self.jsonDataRekapitulasiJabarKumulatifKab = response.data.data.content
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+    },
+    fetchDataNasionalHarian () {
+      const self = this
+      axios
+        .get('https://indonesia-covid-19.mathdro.id/api/harian')
+        .then(function (response) {
+          self.jsonDataNasionalHarianKumulatif = response.data.data
         })
         .catch(function (error) {
           console.log(error)
