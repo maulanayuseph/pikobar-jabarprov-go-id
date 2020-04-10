@@ -55,7 +55,7 @@
     <section class="m-4 mb-8 md:m-8">
       <div class="chart-container w-full">
         <BarStatJenisKelamin :propsDataRekapitulasiJabar.sync="jsonDataRekapitulasiJabar" />
-        <BarStatUsia />
+        <BarStatUsia :propsDataRekapitulasiJabar.sync="jsonDataRekapitulasiJabar" />
       </div>
     </section>
 
@@ -145,6 +145,9 @@ export default {
             }
           } catch (error) {
             Object.assign(self.jsonDataRekapitulasiJabar, {sembuh_per_gender: {laki_laki: 0, perempuan: 0}});
+            Object.assign(self.jsonDataRekapitulasiJabar, {sembuh_per_usia: {
+              bawah_5: 0, '6_19': 0, '20_29': 0, '30_39': 0, '40_49': 0, '50_59': 0, '60_69': 0, '70_79': 0, atas_80: 0
+            }})
           }
 
           try {
@@ -153,6 +156,9 @@ export default {
             }
           } catch (error) {
             Object.assign(self.jsonDataRekapitulasiJabar, {meninggal_per_gender: {laki_laki: 0, perempuan: 0}});
+            Object.assign(self.jsonDataRekapitulasiJabar, {meninggal_per_usia: {
+              bawah_5: 0, '6_19': 0, '20_29': 0, '30_39': 0, '40_49': 0, '50_59': 0, '60_69': 0, '70_79': 0, atas_80: 0
+            }})
           }
         })
         .catch(function (error) {
