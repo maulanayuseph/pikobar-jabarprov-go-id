@@ -13,7 +13,7 @@
     <section class="m-4 mb-8 md:m-8">
       <DataRDT :propsDataRekapitulasiJabar.sync="jsonDataRekapitulasiJabarProv" />
     </section>
-    <!-- <section class="m-4 mb-8 md:m-8">
+    <section class="m-4 mb-8 md:m-8">
       <div class="flex flex-row items-stretch">
         <button
           class="button-selector mr-2"
@@ -42,7 +42,7 @@
         <MapFaskes v-if="stat.isActiveRS" />
         <MapSebaranPolygon v-if="stat.isActivePolygon" />
       </div>
-    </section>-->
+    </section>
 
     <section class="m-4 mb-8 md:m-8">
       <BarStatArea
