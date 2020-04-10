@@ -54,7 +54,7 @@
 
     <section class="m-4 mb-8 md:m-8">
       <div class="chart-container w-full">
-        <BarStatJenisKelamin />
+        <BarStatJenisKelamin :propsDataRekapitulasiJabar.sync="jsonDataRekapitulasiJabar" />
         <BarStatUsia />
       </div>
     </section>
@@ -67,6 +67,7 @@
 
 <script>
 /* eslint-disable */
+import axios from 'axios'
 import { mapState } from 'vuex'
 import DataSummary from '~/components/_pages/index/DataSummary'
 import { faFirstAid, faBug } from '@fortawesome/free-solid-svg-icons'
@@ -96,7 +97,8 @@ export default {
         isActiveRS: false
       },
       fontHospital: faFirstAid,
-      fontDiagnoses: faBug
+      fontDiagnoses: faBug,
+      jsonDataRekapitulasiJabar: {},
     }
   },
   computed: {
@@ -109,6 +111,9 @@ export default {
       }
       return this.formatDateTimeShort(this.cases.updated_at)
     }
+  },
+  created () {
+    this.fetchDataRekapitulasiJabar()
   },
   methods: {
     formatDateTimeShort,
@@ -126,6 +131,33 @@ export default {
       this.stat.isActiveCovid = false
       this.stat.isActiveRS = false
       this.stat.isActivePolygon = true
+    },
+    fetchDataRekapitulasiJabar () {
+      const self = this
+      axios
+        .get('https://covid19-public.digitalservice.id/api/v1/rekapitulasi/jabar')
+        .then(function (response) {
+          self.jsonDataRekapitulasiJabar = response.data.data.content
+          self.jsonDataRekapitulasiJabar.positif_per_gender['laki_laki'] = self.jsonDataRekapitulasiJabar.positif_per_gender['laki-laki']
+          try {
+            if (typeof self.jsonDataRekapitulasiJabar.sembuh_per_gender['laki-laki'] !== "undefined") {
+              self.jsonDataRekapitulasiJabar.sembuh_per_gender['laki_laki'] = self.jsonDataRekapitulasiJabar.sembuh_per_gender['laki-laki']
+            }
+          } catch (error) {
+            Object.assign(self.jsonDataRekapitulasiJabar, {sembuh_per_gender: {laki_laki: 0, perempuan: 0}});
+          }
+
+          try {
+            if (typeof self.jsonDataRekapitulasiJabar.meninggal_per_gender['laki-laki'] !== "undefined") {
+              self.jsonDataRekapitulasiJabar.meninggal_per_gender['laki_laki'] = self.jsonDataRekapitulasiJabar.meninggal_per_gender['laki-laki']
+            }
+          } catch (error) {
+            Object.assign(self.jsonDataRekapitulasiJabar, {meninggal_per_gender: {laki_laki: 0, perempuan: 0}});
+          }
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
     }
   }
 }
