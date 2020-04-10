@@ -942,7 +942,6 @@ export default {
     },
     propsDataRekapitulasiJabarKab () {
       this.jsonDataKabupaten = this.propsDataRekapitulasiJabarKab
-      this.fetchDataKabupaten()
     },
     propsDataRekapitulasiJabarHarianProv () {
       this.jsonDataProvinsiHarian = this.propsDataRekapitulasiJabarHarianProv
@@ -960,17 +959,6 @@ export default {
       this.jsonDataKabupatenKumulatif = this.propsDataRekapitulasiJabarKumulatifKab
       this.fetchDataKabupatenKumulatif()
     }
-  },
-  created () {
-    // this.fetchDataNasionalHarianKumulatif()
-    // this.fetchDataProvinsi()
-    // setTimeout(() => {
-    //   this.fetchDataKabupaten()
-    // }, 2000)
-    // this.fetchDataProvinsiHarian()
-    // this.fetchDataProvinsiKumulatif()
-    // this.fetchDataKabupatenHarian()
-    // this.fetchDataKabupatenKumulatif()
   },
   methods: {
     ifNullReturnZero (str) {
@@ -1059,6 +1047,8 @@ export default {
       self.jsonDataResult.sembuh = self.jsonDataProvinsi.sembuh
       self.jsonDataResult.meninggal = self.jsonDataProvinsi.meninggal
       self.dataTotalPositifAll[1] = self.jsonDataProvinsi.positif
+
+      this.fetchDataKabupaten()
     },
     fetchDataProvinsiHarian () {
       const self = this
