@@ -183,32 +183,28 @@ export default {
         if (tempJenisKelaminNull < 0) {
           tempJenisKelaminNull = 0
         }
-      }
-      if (stat === 'PDP') {
+      } else if (stat === 'PDP') {
         tempJenisKelaminPria = parseInt(this.jsonDataRekapitulasiJabar.pdp_total_per_gender.laki_laki)
         tempJenisKelaminWanita = parseInt(this.jsonDataRekapitulasiJabar.pdp_total_per_gender.perempuan)
         tempJenisKelaminNull = parseInt(this.jsonDataRekapitulasiJabar.pdp_total) - parseInt(tempJenisKelaminPria + tempJenisKelaminWanita)
         if (tempJenisKelaminNull < 0) {
           tempJenisKelaminNull = 0
         }
-      }
-      if (stat === 'Positif Aktif') {
+      } else if (stat === 'Positif Aktif') {
         tempJenisKelaminPria = parseInt(this.jsonDataRekapitulasiJabar.positif_per_gender.laki_laki)
         tempJenisKelaminWanita = parseInt(this.jsonDataRekapitulasiJabar.positif_per_gender.perempuan)
         tempJenisKelaminNull = parseInt(this.jsonDataRekapitulasiJabar.positif) - parseInt(tempJenisKelaminPria + tempJenisKelaminWanita)
         if (tempJenisKelaminNull < 0) {
           tempJenisKelaminNull = 0
         }
-      }
-      if (stat === 'Positif - Sembuh') {
+      } else if (stat === 'Positif - Sembuh') {
         tempJenisKelaminPria = parseInt(this.jsonDataRekapitulasiJabar.sembuh_per_gender.laki_laki)
         tempJenisKelaminWanita = parseInt(this.jsonDataRekapitulasiJabar.sembuh_per_gender.perempuan)
         tempJenisKelaminNull = parseInt(this.jsonDataRekapitulasiJabar.sembuh) - parseInt(tempJenisKelaminPria + tempJenisKelaminWanita)
         if (tempJenisKelaminNull < 0) {
           tempJenisKelaminNull = 0
         }
-      }
-      if (stat === 'Positif - Meninggal') {
+      } else if (stat === 'Positif - Meninggal') {
         tempJenisKelaminPria = parseInt(this.jsonDataRekapitulasiJabar.meninggal_per_gender.laki_laki)
         tempJenisKelaminWanita = parseInt(this.jsonDataRekapitulasiJabar.meninggal_per_gender.perempuan)
         tempJenisKelaminNull = parseInt(this.jsonDataRekapitulasiJabar.meninggal) - parseInt(tempJenisKelaminPria + tempJenisKelaminWanita)
@@ -247,9 +243,9 @@ export default {
   color: #555;
   background-color: #fff;
   height: 30px;
-  width: 150px;
+  width: 160px;
   margin: auto;
-  padding: 5px;
+  padding: 0px;
 }
 
 </style>
