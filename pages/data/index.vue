@@ -11,7 +11,7 @@
       <DataSummary />
     </section>
     <section class="m-4 mb-8 md:m-8">
-      <DataRDT />
+      <DataRDT :propsDataRekapitulasiJabar.sync="jsonDataRekapitulasiJabar" />
     </section>
     <section class="m-4 mb-8 md:m-8">
       <div class="flex flex-row items-stretch">
@@ -135,7 +135,7 @@ export default {
     fetchDataRekapitulasiJabar () {
       const self = this
       axios
-        .get('https://covid19-public.digitalservice.id/api/v1/rekapitulasi/jabar')
+        .get('https://covid19-public.digitalservice.id/api/v1/rekapitulasi/jabar?level=prov')
         .then(function (response) {
           self.jsonDataRekapitulasiJabar = response.data.data.content
           self.jsonDataRekapitulasiJabar.positif_per_gender['laki_laki'] = self.jsonDataRekapitulasiJabar.positif_per_gender['laki-laki']

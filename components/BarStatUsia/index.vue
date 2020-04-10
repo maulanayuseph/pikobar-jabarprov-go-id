@@ -537,5 +537,6 @@ export default {
   width: 160px;
   margin: auto;
   padding: 0px;
+  margin-right: 20px;
 }
 </style>

@@ -9,7 +9,7 @@
       </div>
       <div class="w-full md:w-1/6 lg:w-1/6 h-auto text-center">
         <div class="text-4xl">
-          {{ data.rdt.total }}
+          {{ Number(data.rdt.total).toLocaleString('id-ID') }}
         </div>
         <!-- <div class="text-sm"> Jumlah RDT <span class="text-xs tooltip">&#9432;<span class="tooltiptext">Tooltip text</span></span></div> -->
         <div class="text-sm">
@@ -23,8 +23,8 @@
       <div class="w-full md:w-1/6 lg:w-1/6 pl-2 h-auto text-center">
         <div class="h-20 pt-3">
           <div class="mb-1">
-            <span class="text-2xl">{{ data.rdt.positif }}</span>
-            <span class="text-sm">({{ data.rdt_persentase_by_total.positif.toFixed(2) }})%</span>
+            <span class="text-2xl">{{ Number(data.rdt.positif).toLocaleString('id-ID') }}</span>
+            <span class="text-sm">({{ Number(data.rdt_persentase_by_total.positif.toFixed(2)).toLocaleString('id-ID') }})%</span>
           </div>
           <div class="text-sm">
             Reaktif
@@ -34,8 +34,8 @@
       <div class="w-full md:w-1/6 lg:w-1/6 pl-2 h-auto text-center">
         <div class="h-20 pt-3">
           <div class="mb-1">
-            <span class="text-2xl">{{ data.rdt.negatif }}</span>
-            <span class="text-sm">({{ data.rdt_persentase_by_total.negatif.toFixed(2) }})%</span>
+            <span class="text-2xl">{{ Number(data.rdt.negatif).toLocaleString('id-ID') }}</span>
+            <span class="text-sm">({{ Number(data.rdt_persentase_by_total.negatif.toFixed(2)).toLocaleString('id-ID') }})%</span>
           </div>
           <div class="text-sm">
             Non Reaktif
@@ -45,8 +45,8 @@
       <div class="w-full md:w-1/6 lg:w-1/6 pl-2 h-auto text-center">
         <div class="h-20 pt-3">
           <div class="mb-1">
-            <span class="text-2xl">{{ data.rdt.invalid }}</span>
-            <span class="text-sm">({{ data.rdt_persentase_by_total.invalid.toFixed(2) }})%</span>
+            <span class="text-2xl">{{ Number(data.rdt.invalid).toLocaleString('id-ID') }}</span>
+            <span class="text-sm">({{ Number(data.rdt_persentase_by_total.invalid.toFixed(2)).toLocaleString('id-ID') }})%</span>
           </div>
           <div class="text-sm">
             Invalid
@@ -58,11 +58,24 @@
 </template>
 
 <script>
-import axios from 'axios'
 
 export default {
   name: 'DataRDT',
   components: {
+  },
+  props: {
+    propsDataRekapitulasiJabar: {
+      type: Object,
+      default: () => ({
+        rdt: {
+          total: 0,
+          positif: 0,
+          negatif: 0,
+          invalid: 0,
+          belum_diketahui: 0
+        }
+      })
+    }
   },
   data () {
     return {
@@ -83,24 +96,19 @@ export default {
       }
     }
   },
-  created () {
-    this.fetchData()
+  watch: {
+    propsDataRekapitulasiJabar () {
+      this.data.rdt = this.propsDataRekapitulasiJabar.rdt
+      this.countPersentage()
+    }
   },
   methods: {
-    fetchData () {
+    countPersentage () {
       const self = this
-      axios
-        .get('https://covid19-public.digitalservice.id/api/v1/rekapitulasi/jabar')
-        .then(function (response) {
-          self.data.rdt = response.data.data.content.rdt
-          self.data.rdt_persentase_by_total.positif = self.data.rdt.positif / self.data.rdt.total * 100
-          self.data.rdt_persentase_by_total.negatif = self.data.rdt.negatif / self.data.rdt.total * 100
-          self.data.rdt_persentase_by_total.invalid = self.data.rdt.invalid / self.data.rdt.total * 100
-          self.data.rdt_persentase_by_total.belum_diketahui = self.data.rdt.belum_diketahui / self.data.rdt.total * 100
-        })
-        .catch(function (error) {
-          console.log(error)
-        })
+      self.data.rdt_persentase_by_total.positif = self.data.rdt.positif / self.data.rdt.total * 100
+      self.data.rdt_persentase_by_total.negatif = self.data.rdt.negatif / self.data.rdt.total * 100
+      self.data.rdt_persentase_by_total.invalid = self.data.rdt.invalid / self.data.rdt.total * 100
+      self.data.rdt_persentase_by_total.belum_diketahui = self.data.rdt.belum_diketahui / self.data.rdt.total * 100
     }
   }
 }
