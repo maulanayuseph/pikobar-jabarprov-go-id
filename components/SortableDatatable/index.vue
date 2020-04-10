@@ -58,7 +58,10 @@
               @click.capture="onClickTableHeader(col.field)"
             >
               <p class="pointer-events-none flex justify-between items-center">
-                <span>
+                <span
+                  class="textcenter"
+                  :class="{ textleft: index==1 }"
+                >
                   {{ col.label }}
                 </span>
                 <FontAwesomeIcon
@@ -124,7 +127,8 @@
               <td
                 v-for="(col, colIndex) in data.columns"
                 :key="colIndex"
-                class="border-b border-solid px-2 py-1"
+                :class="{ textleft: colIndex==1 }"
+                class="border-b border-solid px-2 py-1 textright"
                 style="border-color: rgba(0,0,0,0.1)"
               >
                 {{ getCellValue({row, column: col, rowIndex, columnIndex: colIndex}) }}
@@ -315,5 +319,16 @@ export default {
 .table {
   font-size: 14px;
   font-weight: 500;
+}
+
+.textcenter {
+  margin: auto;
+}
+.textleft {
+  text-align: left !important;
+  margin: unset;
+}
+.textright {
+  text-align: right;
 }
 </style>
