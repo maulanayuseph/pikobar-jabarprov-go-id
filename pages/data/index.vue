@@ -11,9 +11,9 @@
       <DataSummary />
     </section>
     <section class="m-4 mb-8 md:m-8">
-      <DataRDT :propsDataRekapitulasiJabar.sync="jsonDataRekapitulasiJabar" />
+      <DataRDT :propsDataRekapitulasiJabar.sync="jsonDataRekapitulasiJabarProv" />
     </section>
-    <section class="m-4 mb-8 md:m-8">
+    <!-- <section class="m-4 mb-8 md:m-8">
       <div class="flex flex-row items-stretch">
         <button
           class="button-selector mr-2"
@@ -46,7 +46,7 @@
 
     <section class="m-4 mb-8 md:m-8">
       <BarStatArea />
-    </section>
+    </section>-->
 
     <section class="m-4 mb-8 md:m-8">
       <BarStatTable />
@@ -54,13 +54,16 @@
 
     <section class="m-4 mb-8 md:m-8">
       <div class="chart-container w-full">
-        <BarStatJenisKelamin :propsDataRekapitulasiJabar.sync="jsonDataRekapitulasiJabar" />
-        <BarStatUsia :propsDataRekapitulasiJabar.sync="jsonDataRekapitulasiJabar" />
+        <BarStatJenisKelamin :propsDataRekapitulasiJabar.sync="jsonDataRekapitulasiJabarProv" />
+        <BarStatUsia :propsDataRekapitulasiJabar.sync="jsonDataRekapitulasiJabarProv" />
       </div>
     </section>
 
     <section class="m-4 md:m-8">
-      <BarStatHarianAkumulatif />
+      <BarStatHarianAkumulatif
+        :propsDataRekapitulasiJabarHarianProv.sync="jsonDataRekapitulasiJabarHarianProv"
+        :propsDataRekapitulasiJabarKumulatifProv.sync="jsonDataRekapitulasiJabarKumulatifProv"
+      />
     </section>
   </div>
 </template>
@@ -98,7 +101,12 @@ export default {
       },
       fontHospital: faFirstAid,
       fontDiagnoses: faBug,
-      jsonDataRekapitulasiJabar: {},
+      jsonDataRekapitulasiJabarProv: {},
+      jsonDataRekapitulasiJabarKab: {},
+      jsonDataRekapitulasiJabarHarianProv: [],
+      jsonDataRekapitulasiJabarHarianKab: [],
+      jsonDataRekapitulasiJabarKumulatifProv: [],
+      jsonDataRekapitulasiJabarKumulatifKab: [],
     }
   },
   computed: {
@@ -113,7 +121,12 @@ export default {
     }
   },
   created () {
-    this.fetchDataRekapitulasiJabar()
+    this.fetchDataRekapitulasiJabarProv()
+    this.fetchDataRekapitulasiJabarKab()
+    this.fetchDataRekapitulasiJabarHarianProv()
+    this.fetchDataRekapitulasiJabarHarianKab()
+    this.fetchDataRekapitulasiJabarKumulatifProv()
+    this.fetchDataRekapitulasiJabarKumulatifKab()
   },
   methods: {
     formatDateTimeShort,
@@ -132,34 +145,89 @@ export default {
       this.stat.isActiveRS = false
       this.stat.isActivePolygon = true
     },
-    fetchDataRekapitulasiJabar () {
+    fetchDataRekapitulasiJabarProv () {
       const self = this
       axios
         .get('https://covid19-public.digitalservice.id/api/v1/rekapitulasi/jabar?level=prov')
         .then(function (response) {
-          self.jsonDataRekapitulasiJabar = response.data.data.content
-          self.jsonDataRekapitulasiJabar.positif_per_gender['laki_laki'] = self.jsonDataRekapitulasiJabar.positif_per_gender['laki-laki']
+          self.jsonDataRekapitulasiJabarProv = response.data.data.content
+          self.jsonDataRekapitulasiJabarProv.positif_per_gender['laki_laki'] = self.jsonDataRekapitulasiJabarProv.positif_per_gender['laki-laki']
           try {
-            if (typeof self.jsonDataRekapitulasiJabar.sembuh_per_gender['laki-laki'] !== "undefined") {
-              self.jsonDataRekapitulasiJabar.sembuh_per_gender['laki_laki'] = self.jsonDataRekapitulasiJabar.sembuh_per_gender['laki-laki']
+            if (typeof self.jsonDataRekapitulasiJabarProv.sembuh_per_gender['laki-laki'] !== "undefined") {
+              self.jsonDataRekapitulasiJabarProv.sembuh_per_gender['laki_laki'] = self.jsonDataRekapitulasiJabarProv.sembuh_per_gender['laki-laki']
             }
           } catch (error) {
-            Object.assign(self.jsonDataRekapitulasiJabar, {sembuh_per_gender: {laki_laki: 0, perempuan: 0}});
-            Object.assign(self.jsonDataRekapitulasiJabar, {sembuh_per_usia: {
+            Object.assign(self.jsonDataRekapitulasiJabarProv, {sembuh_per_gender: {laki_laki: 0, perempuan: 0}});
+            Object.assign(self.jsonDataRekapitulasiJabarProv, {sembuh_per_usia: {
               bawah_5: 0, '6_19': 0, '20_29': 0, '30_39': 0, '40_49': 0, '50_59': 0, '60_69': 0, '70_79': 0, atas_80: 0
             }})
           }
 
           try {
-            if (typeof self.jsonDataRekapitulasiJabar.meninggal_per_gender['laki-laki'] !== "undefined") {
-              self.jsonDataRekapitulasiJabar.meninggal_per_gender['laki_laki'] = self.jsonDataRekapitulasiJabar.meninggal_per_gender['laki-laki']
+            if (typeof self.jsonDataRekapitulasiJabarProv.meninggal_per_gender['laki-laki'] !== "undefined") {
+              self.jsonDataRekapitulasiJabarProv.meninggal_per_gender['laki_laki'] = self.jsonDataRekapitulasiJabarProv.meninggal_per_gender['laki-laki']
             }
           } catch (error) {
-            Object.assign(self.jsonDataRekapitulasiJabar, {meninggal_per_gender: {laki_laki: 0, perempuan: 0}});
-            Object.assign(self.jsonDataRekapitulasiJabar, {meninggal_per_usia: {
+            Object.assign(self.jsonDataRekapitulasiJabarProv, {meninggal_per_gender: {laki_laki: 0, perempuan: 0}});
+            Object.assign(self.jsonDataRekapitulasiJabarProv, {meninggal_per_usia: {
               bawah_5: 0, '6_19': 0, '20_29': 0, '30_39': 0, '40_49': 0, '50_59': 0, '60_69': 0, '70_79': 0, atas_80: 0
             }})
           }
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+    },
+    fetchDataRekapitulasiJabarKab () {
+      const self = this
+      axios
+        .get('https://covid19-public.digitalservice.id/api/v1/rekapitulasi/jabar?level=kab')
+        .then(function (response) {
+          self.jsonDataRekapitulasiJabarKab = response.data.data.content
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+    },
+    fetchDataRekapitulasiJabarHarianProv () {
+      const self = this
+      axios
+        .get('https://covid19-public.digitalservice.id/api/v1/rekapitulasi/jabar/harian?level=prov')
+        .then(function (response) {
+          self.jsonDataRekapitulasiJabarHarianProv = response.data.data.content
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+    },
+    fetchDataRekapitulasiJabarHarianKab () {
+      const self = this
+      axios
+        .get('https://covid19-public.digitalservice.id/api/v1/rekapitulasi/jabar/harian?level=kab')
+        .then(function (response) {
+          self.jsonDataRekapitulasiJabarHarianKab = response.data.data.content
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+    },
+    fetchDataRekapitulasiJabarKumulatifProv () {
+      const self = this
+      axios
+        .get('https://covid19-public.digitalservice.id/api/v1/rekapitulasi/jabar/kumulatif?level=prov')
+        .then(function (response) {
+          self.jsonDataRekapitulasiJabarKumulatifProv = response.data.data.content
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+    },
+    fetchDataRekapitulasiJabarKumulatifKab () {
+      const self = this
+      axios
+        .get('https://covid19-public.digitalservice.id/api/v1/rekapitulasi/jabar/kumulatif?level=kab')
+        .then(function (response) {
+          self.jsonDataRekapitulasiJabarKumulatifKab = response.data.data.content
         })
         .catch(function (error) {
           console.log(error)
