@@ -935,8 +935,6 @@ export default {
     propsDataNasionalHarianKumulatif () {
       this.jsonDataNasionalHarianKumulatif = this.propsDataNasionalHarianKumulatif
       this.fetchDataNasionalHarianKumulatif()
-      console.log('fetchDataNasionalHarianKumulatif')
-      console.log(this.fetchDataNasionalHarianKumulatif)
     },
     propsDataRekapitulasiJabarProv () {
       this.jsonDataProvinsi = this.propsDataRekapitulasiJabarProv
@@ -944,9 +942,7 @@ export default {
     },
     propsDataRekapitulasiJabarKab () {
       this.jsonDataKabupaten = this.propsDataRekapitulasiJabarKab
-      setTimeout(() => {
-        this.fetchDataKabupaten()
-      }, 2000)
+      this.fetchDataKabupaten()
     },
     propsDataRekapitulasiJabarHarianProv () {
       this.jsonDataProvinsiHarian = this.propsDataRekapitulasiJabarHarianProv
@@ -962,7 +958,7 @@ export default {
     },
     propsDataRekapitulasiJabarKumulatifKab () {
       this.jsonDataKabupatenKumulatif = this.propsDataRekapitulasiJabarKumulatifKab
-      this.fetchDataProvinsiKumulatif()
+      this.fetchDataKabupatenKumulatif()
     }
   },
   created () {
