@@ -49,7 +49,7 @@
     </section>-->
 
     <section class="m-4 mb-8 md:m-8">
-      <BarStatTable />
+      <BarStatTable :propsDataRekapitulasiJabarKab.sync="jsonDataRekapitulasiJabarKab" />
     </section>
 
     <section class="m-4 mb-8 md:m-8">
@@ -102,7 +102,7 @@ export default {
       fontHospital: faFirstAid,
       fontDiagnoses: faBug,
       jsonDataRekapitulasiJabarProv: {},
-      jsonDataRekapitulasiJabarKab: {},
+      jsonDataRekapitulasiJabarKab: [],
       jsonDataRekapitulasiJabarHarianProv: [],
       jsonDataRekapitulasiJabarHarianKab: [],
       jsonDataRekapitulasiJabarKumulatifProv: [],
