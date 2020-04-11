@@ -17,13 +17,13 @@
               </a>
             </caption>
           </figcaption>
-          <nuxt-link
-            tag="a"
-            :to="to"
+          <a
+            :href="to"
+            target="_blank"
             class="text-brand-green text-lg lg:text-2xl hover:underline"
           >
             <strong>{{ title }}</strong>
-          </nuxt-link>
+          </a>
           <p class="text-base mt-2 opacity-75">
             {{ subtitle }}
           </p>
