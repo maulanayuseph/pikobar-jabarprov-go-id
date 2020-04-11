@@ -42,15 +42,15 @@
         <MapFaskes v-if="stat.isActiveRS" />
         <MapSebaranPolygon v-if="stat.isActivePolygon" /> -->
         <MapV2SebaranCluster
-          v-if="stat.isActiveCovid"
+          v-show="stat.isActiveCovid"
           :propsDataSebaranJabar.sync="jsonDataSebaranJabar"
         />
         <MapV2SebaranPolygon
-          v-if="stat.isActivePolygon"
+          v-show="stat.isActivePolygon"
           :propsDataSebaranJabar.sync="jsonDataSebaranJabar"
         />
         <MapV2SebaranFaskes
-          v-if="stat.isActiveRS"
+          v-show="stat.isActiveRS"
           :propsDataSebaranJabarFaskes.sync="jsonDataSebaranJabarFaskes"
         />
       </div>
@@ -276,7 +276,7 @@ export default {
     fetchDataSebaranJabar () {
       const self = this
       axios
-        .get('https://covid19-public.digitalservice.id/api/v1/sebaran/jabar')
+        .get('http://localhost/pikobar/sebaran_jabar.json')
         .then(function (response) {
           self.jsonDataSebaranJabar = response.data.data.content
         })
