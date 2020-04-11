@@ -942,6 +942,7 @@ export default {
     },
     propsDataRekapitulasiJabarKab () {
       this.jsonDataKabupaten = this.propsDataRekapitulasiJabarKab
+      this.fetchDataKabupaten()
     },
     propsDataRekapitulasiJabarHarianProv () {
       this.jsonDataProvinsiHarian = this.propsDataRekapitulasiJabarHarianProv
@@ -1047,8 +1048,6 @@ export default {
       self.jsonDataResult.sembuh = self.jsonDataProvinsi.sembuh
       self.jsonDataResult.meninggal = self.jsonDataProvinsi.meninggal
       self.dataTotalPositifAll[1] = self.jsonDataProvinsi.positif
-
-      this.fetchDataKabupaten()
     },
     fetchDataProvinsiHarian () {
       const self = this
@@ -1097,7 +1096,7 @@ export default {
             self.jsonDataKota[j].pdp_selesai = self.jsonDataKabupaten[i].pdp_selesai
             self.jsonDataKota[j].pdp_total = self.jsonDataKabupaten[i].pdp_total
             self.jsonDataKota[j].positif = self.jsonDataKabupaten[i].positif
-            self.jsonDataKota[j].positif_persentase = ((self.jsonDataKota[j].positif / self.jsonDataResult.positif) * 100).toFixed(2)
+            self.jsonDataKota[j].positif_persentase = ((parseInt(self.jsonDataKota[j].positif) / parseInt(self.jsonDataResult.positif)) * 100).toFixed(2)
             self.jsonDataKota[j].sembuh = self.jsonDataKabupaten[i].sembuh
             self.jsonDataKota[j].meninggal = self.jsonDataKabupaten[i].meninggal
           }
