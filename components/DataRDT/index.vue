@@ -4,10 +4,10 @@
   >
     <b class="text-lg">RDT (Rapid Diagnostic Test)</b>
     <div class="flex flex-col md:flex-row mb-4 mt-2">
-      <div class="w-full md:w-3/6 lg:w-3/6 h-auto text-sm">
-        Rapid Diagnostic Test (RDT) atau test diagnostik cepat merupakan test yang digunakan sebagai skrining medis awal untuk mendeteksi COVID-19. Pada hasil RDT yang Positif akan dilakukan pemeriksaan konfirmasi lebih lanjut dengan metode Polymerase Chain Reaction (PCR)
+      <div class="w-full md:w-3/6 lg:w-3/6 h-auto text-sm mr-10">
+        Rapid Diagnostic Test (RDT) atau test diagnostik cepat merupakan test yang digunakan sebagai skrining medis awal untuk mendeteksi COVID-19. Pada hasil RDT yang Reaktif akan dilakukan pemeriksaan konfirmasi lebih lanjut dengan metode Polymerase Chain Reaction (PCR)
       </div>
-      <div class="w-full md:w-1/6 lg:w-1/6 h-auto text-center">
+      <div class="w-full md:w-1/6 lg:w-1/6 h-auto text-left">
         <div class="text-4xl">
           {{ Number(data.rdt.total).toLocaleString('id-ID') }}
         </div>
@@ -20,7 +20,7 @@
           </div>
         </div>
       </div>
-      <div class="w-full md:w-1/6 lg:w-1/6 pl-2 h-auto text-center">
+      <div class="w-full md:w-1/6 lg:w-1/6 pl-2 h-auto text-left">
         <div class="h-20 pt-3">
           <div class="mb-1">
             <span class="text-2xl">{{ Number(data.rdt.positif).toLocaleString('id-ID') }}</span>
@@ -31,7 +31,7 @@
           </div>
         </div>
       </div>
-      <div class="w-full md:w-1/6 lg:w-1/6 pl-2 h-auto text-center">
+      <div class="w-full md:w-1/6 lg:w-1/6 pl-2 h-auto text-left">
         <div class="h-20 pt-3">
           <div class="mb-1">
             <span class="text-2xl">{{ Number(data.rdt.negatif).toLocaleString('id-ID') }}</span>
@@ -42,7 +42,7 @@
           </div>
         </div>
       </div>
-      <div class="w-full md:w-1/6 lg:w-1/6 pl-2 h-auto text-center">
+      <div class="w-full md:w-1/6 lg:w-1/6 pl-2 h-auto text-left">
         <div class="h-20 pt-3">
           <div class="mb-1">
             <span class="text-2xl">{{ Number(data.rdt.invalid).toLocaleString('id-ID') }}</span>
