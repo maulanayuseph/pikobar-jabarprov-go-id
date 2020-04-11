@@ -38,9 +38,21 @@
         </button>
       </div>
       <div class="mt-4">
-        <MapSebaranCovid v-if="stat.isActiveCovid" />
+        <!-- <MapSebaranCovid v-if="stat.isActiveCovid" />
         <MapFaskes v-if="stat.isActiveRS" />
-        <MapSebaranPolygon v-if="stat.isActivePolygon" />
+        <MapSebaranPolygon v-if="stat.isActivePolygon" /> -->
+        <MapV2SebaranCluster
+          v-if="stat.isActiveCovid"
+          :propsDataSebaranJabar.sync="jsonDataSebaranJabar"
+        />
+        <MapV2SebaranPolygon
+          v-if="stat.isActivePolygon"
+          :propsDataSebaranJabar.sync="jsonDataSebaranJabar"
+        />
+        <MapV2SebaranFaskes
+          v-if="stat.isActiveRS"
+          :propsDataSebaranJabarFaskes.sync="jsonDataSebaranJabarFaskes"
+        />
       </div>
     </section>
 
@@ -88,16 +100,19 @@ export default {
   components: {
     DataSummary,
     DataRDT: () => import('~/components/DataRDT'),
-    MapSebaranCovid: () => import('~/components/MapSebaranCovid'),
-    MapSebaranPolygon: () => import('~/components/MapSebaranPolygon'),
-    MapFaskes: () => import('~/components/MapFaskes'),
+    // MapSebaranCovid: () => import('~/components/MapSebaranCovid'),
+    // MapSebaranPolygon: () => import('~/components/MapSebaranPolygon'),
+    // MapFaskes: () => import('~/components/MapFaskes'),
     BarStat: () => import('~/components/BarStat'),
     BarStatDetail: () => import('~/components/BarStatDetail'),
     BarStatArea: () => import('~/components/BarStatArea'),
     BarStatJenisKelamin: () => import('~/components/BarStatJenisKelamin'),
     BarStatUsia: () => import('~/components/BarStatUsia'),
     BarStatHarianAkumulatif: () => import('~/components/BarStatHarianAkumulatif'),
-    BarStatTable: () => import('~/components/BarStatTable')
+    BarStatTable: () => import('~/components/BarStatTable'),
+    MapV2SebaranCluster: () => import('~/components/MapV2SebaranCluster'),
+    MapV2SebaranPolygon: () => import('~/components/MapV2SebaranPolygon'),
+    MapV2SebaranFaskes: () => import('~/components/MapV2SebaranFaskes')
     // FontAwesomeIcon
   },
   data () {
@@ -115,7 +130,9 @@ export default {
       jsonDataRekapitulasiJabarHarianKab: [],
       jsonDataRekapitulasiJabarKumulatifProv: [],
       jsonDataRekapitulasiJabarKumulatifKab: [],
-      jsonDataNasionalHarianKumulatif: []
+      jsonDataNasionalHarianKumulatif: [],
+      jsonDataSebaranJabar: [],
+      jsonDataSebaranJabarFaskes: []
     }
   },
   computed: {
@@ -132,11 +149,13 @@ export default {
   created () {
     this.fetchDataNasionalHarian()
     this.fetchDataRekapitulasiJabarProv()
-    this.fetchDataRekapitulasiJabarKab()
     this.fetchDataRekapitulasiJabarHarianProv()
     this.fetchDataRekapitulasiJabarKumulatifProv()
+    this.fetchDataRekapitulasiJabarKab()
     this.fetchDataRekapitulasiJabarHarianKab()
     this.fetchDataRekapitulasiJabarKumulatifKab()
+    this.fetchDataSebaranJabar()
+    this.fetchDataSebaranJabarFaskes()
   },
   methods: {
     formatDateTimeShort,
@@ -253,6 +272,28 @@ export default {
         .catch(function (error) {
           console.log(error)
         })
+    },
+    fetchDataSebaranJabar () {
+      const self = this
+      axios
+        .get('https://covid19-public.digitalservice.id/api/v1/sebaran/jabar')
+        .then(function (response) {
+          self.jsonDataSebaranJabar = response.data.data.content
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+    },
+    fetchDataSebaranJabarFaskes () {
+      const self = this
+      axios
+        .get('https://covid19-public.digitalservice.id/api/v1/sebaran/jabar/faskes')
+        .then(function (response) {
+          self.jsonDataSebaranJabarFaskes = response.data.data.content
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
     }
   }
 }
@@ -279,3 +320,4 @@ export default {
   }
 }
 </style>
+
