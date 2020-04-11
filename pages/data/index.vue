@@ -17,40 +17,51 @@
       <div class="flex flex-row items-stretch">
         <button
           class="button-selector mr-2"
-          :active="stat.isActiveCovid"
-          @click="enableCovid"
-        >
-          <font-awesome-icon :icon="fontDiagnoses" /> Sebaran Titik
-        </button>
-        <button
-          class="button-selector mr-2"
           :active="stat.isActivePolygon"
           @click="enablePolygon"
         >
-          <font-awesome-icon :icon="fontDiagnoses" /> Sebaran Polygon
+          <font-awesome-icon :icon="faMap" /> Sebaran Polygon
         </button>
         <button
-          class="button-selector"
-          :active="stat.isActiveRS"
-          @click="enableRS"
+          class="button-selector mr-2"
+          :active="stat.isActiveCluster"
+          @click="enableCluster"
         >
-          <font-awesome-icon :icon="fontHospital" /> Fasilitas Kesehatan
+          <font-awesome-icon :icon="faBug" /> Sebaran Titik
+        </button>
+        <button
+          class="button-selector mr-2"
+          :active="stat.isActiveFaskes"
+          @click="enableFaskes"
+        >
+          <font-awesome-icon :icon="faFirstAid" /> Fasilitas Kesehatan
+        </button>
+        <button
+          class="button-selector mr-2"
+          :active="stat.isActiveTimeslider"
+          @click="enableTimeslider"
+        >
+          <font-awesome-icon :icon="faCalendarMinus" /> Timeslider - Data Positif
         </button>
       </div>
       <div class="mt-4">
         <!-- <MapSebaranCovid v-if="stat.isActiveCovid" />
         <MapFaskes v-if="stat.isActiveRS" />
         <MapSebaranPolygon v-if="stat.isActivePolygon" /> -->
-        <MapV2SebaranCluster
-          v-show="stat.isActiveCovid"
-          :propsDataSebaranJabar.sync="jsonDataSebaranJabar"
-        />
         <MapV2SebaranPolygon
           v-show="stat.isActivePolygon"
           :propsDataSebaranJabar.sync="jsonDataSebaranJabar"
         />
+        <MapV2SebaranCluster
+          v-show="stat.isActiveCluster"
+          :propsDataSebaranJabar.sync="jsonDataSebaranJabar"
+        />
         <MapV2SebaranFaskes
-          v-show="stat.isActiveRS"
+          v-show="stat.isActiveFaskes"
+          :propsDataSebaranJabarFaskes.sync="jsonDataSebaranJabarFaskes"
+        />
+        <MapV2SebaranTimeslider
+          v-show="stat.isActiveTimeslider"
           :propsDataSebaranJabarFaskes.sync="jsonDataSebaranJabarFaskes"
         />
       </div>
@@ -93,7 +104,7 @@
 import axios from 'axios'
 import { mapState } from 'vuex'
 import DataSummary from '~/components/_pages/index/DataSummary'
-import { faFirstAid, faBug } from '@fortawesome/free-solid-svg-icons'
+import { faFirstAid, faBug, faMap, faCalendarMinus } from '@fortawesome/free-solid-svg-icons'
 import { formatDateTimeShort } from '~/lib/date'
 
 export default {
@@ -112,18 +123,22 @@ export default {
     BarStatTable: () => import('~/components/BarStatTable'),
     MapV2SebaranCluster: () => import('~/components/MapV2SebaranCluster'),
     MapV2SebaranPolygon: () => import('~/components/MapV2SebaranPolygon'),
-    MapV2SebaranFaskes: () => import('~/components/MapV2SebaranFaskes')
+    MapV2SebaranFaskes: () => import('~/components/MapV2SebaranFaskes'),
+    MapV2SebaranTimeslider: () => import('~/components/MapV2SebaranTimeslider')
     // FontAwesomeIcon
   },
   data () {
     return {
       stat: {
-        isActiveCovid: true,
-        isActivePolygon: false,
-        isActiveRS: false
+        isActivePolygon: true,
+        isActiveCluster: false,
+        isActiveFaskes: false,
+        isActiveTimeslider: false
       },
-      fontHospital: faFirstAid,
-      fontDiagnoses: faBug,
+      faFirstAid,
+      faBug,
+      faMap,
+      faCalendarMinus,
       jsonDataRekapitulasiJabarProv: {},
       jsonDataRekapitulasiJabarKab: [],
       jsonDataRekapitulasiJabarHarianProv: [],
@@ -159,20 +174,29 @@ export default {
   },
   methods: {
     formatDateTimeShort,
-    enableCovid () {
-      this.stat.isActiveCovid = true
-      this.stat.isActiveRS = false
-      this.stat.isActivePolygon = false
-    },
-    enableRS () {
-      this.stat.isActiveCovid = false
-      this.stat.isActiveRS = true
-      this.stat.isActivePolygon = false
-    },
     enablePolygon () {
-      this.stat.isActiveCovid = false
-      this.stat.isActiveRS = false
       this.stat.isActivePolygon = true
+      this.stat.isActiveCluster = false
+      this.stat.isActiveFaskes = false
+      this.stat.isActiveTimeslider = false
+    },
+    enableCluster () {
+      this.stat.isActivePolygon = false
+      this.stat.isActiveCluster = true
+      this.stat.isActiveFaskes = false
+      this.stat.isActiveTimeslider = false
+    },
+    enableFaskes () {
+      this.stat.isActivePolygon = false
+      this.stat.isActiveCluster = false
+      this.stat.isActiveFaskes = true
+      this.stat.isActiveTimeslider = false
+    },
+    enableTimeslider () {
+      this.stat.isActivePolygon = false
+      this.stat.isActiveCluster = false
+      this.stat.isActiveFaskes = false
+      this.stat.isActiveTimeslider = true
     },
     fetchDataRekapitulasiJabarProv () {
       const self = this
