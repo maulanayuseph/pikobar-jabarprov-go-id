@@ -153,20 +153,28 @@ export default {
   },
   watch: {
     propsDataSebaranJabarFaskes () {
+      console.log('faskes on watch')
       this.distributionProvinceData = this.propsDataSebaranJabarFaskes
       this.onChanges()
     }
   },
   mounted () {
-    console.log('on created')
     this.initMap()
-    if (this.distributionProvinceData) {
+    if (this.distributionProvinceData.length > 0) {
+      console.log('faskes on mounted ada')
       this.onChanges()
+    } else {
+      console.log('faskes on mounted no data')
     }
+  },
+  created () {
+    console.log('polygon on created')
+    this.distributionProvinceData = this.propsDataSebaranJabarFaskes
+    // this.onChanges()
   },
   methods: {
     onChanges () {
-      console.log('on changes')
+      console.log('faskes on changes')
       this.dataJson.lini1_rujukan = []
       this.dataJson.lini2_rujukan = []
       this.dataJson.lini1_non = []
@@ -290,12 +298,12 @@ export default {
             website = ''
           }
           const maxHeight = 250
-          const maxWidth = 300
+          const maxWidth = 320
           const popupHtml =
             `
-          <h5 style="font-size: larger;"><b>Detail Fasilitas Kesehatan</b></h5>
-          <br>
-          <table class="table table-sm" style="color: black;">
+          <h3 style="font-size: larger; margin-bottom: 5px;"><b>Detail Fasilitas Kesehatan</b></h3>
+          <hr>
+          <table class="table table-sm" style="color: black; font-size: small;">
               <tr><th width="100px"  style="vertical-align: top;">Nama Faskes</th><td width="150px">` +
             row.nama +
             `</td></tr>

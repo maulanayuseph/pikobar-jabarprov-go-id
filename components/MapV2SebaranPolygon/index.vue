@@ -112,7 +112,7 @@ import jsonKelurahan from '@/assets/kelurahanV2.json'
 export default {
   name: 'MapV2SebaranPolygon',
   props: {
-    propsDataSebaranJabar: {
+    propsDataSebaranJawaBarat: {
       type: Array,
       default: () => [{}]
     }
@@ -177,22 +177,30 @@ export default {
     }
   },
   watch: {
-    propsDataSebaranJabar () {
-      this.distributionProvinceData = this.propsDataSebaranJabar
+    propsDataSebaranJawaBarat () {
+      console.log('polygon on watch')
+      this.distributionProvinceData = this.propsDataSebaranJawaBarat
       this.onChanges()
     }
   },
   mounted () {
-    console.log('on created')
     this.initMap()
-    if (this.distributionProvinceData) {
+    if (this.distributionProvinceData.length > 0) {
+      console.log('polygon on mounted ada')
       this.onChanges()
+    } else {
+      console.log('polygon on mounted no data')
     }
+  },
+  created () {
+    console.log('polygon on created')
+    this.distributionProvinceData = this.propsDataSebaranJawaBarat
+    // this.onChanges()
   },
   methods: {
 
     onChanges () {
-      console.log('onChanges')
+      console.log('polygon on changes')
 
       this.dataJson.positif_proses = []
       this.dataJson.positif_meninggal = []
@@ -278,10 +286,10 @@ export default {
         if (this.map.getZoom() <= 10) {
           this.removeLayer()
           this.createLayerKota(this.filterActive)
-        } else if (this.map.getZoom() > 10 && this.map.getZoom() <= 13) {
+        } else if (this.map.getZoom() > 10 && this.map.getZoom() <= 12) {
           this.removeLayer()
           this.createLayerKecamatan(this.filterActive)
-        } else if (this.map.getZoom() > 13) {
+        } else if (this.map.getZoom() > 12) {
           this.removeLayer()
           this.createLayerKelurahan(this.filterActive)
         }
@@ -345,7 +353,7 @@ export default {
             fillOpacity: self.getColor(this.range, feature.properties.jumlah_kasus),
             weight: 0.5,
             opacity: 0.5,
-            color: '#F6F6F6'
+            color: '#333333'
           }
           // add layer to map
           layer.setStyle(styleBatasWilayah)
@@ -375,7 +383,7 @@ export default {
             fillOpacity: self.getColor(this.range, feature.properties.jumlah_kasus),
             weight: 0.5,
             opacity: 0.5,
-            color: '#F6F6F6'
+            color: '#333333'
           }
           // add layer to map
           layer.setStyle(styleBatasWilayah)

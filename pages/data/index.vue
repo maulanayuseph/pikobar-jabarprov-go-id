@@ -50,7 +50,7 @@
         <MapSebaranPolygon v-if="stat.isActivePolygon" /> -->
         <MapV2SebaranPolygon
           v-if="stat.isActivePolygon"
-          :propsDataSebaranJabar.sync="jsonDataSebaranJabar"
+          :propsDataSebaranJawaBarat.sync="jsonDataSebaranJawaBarat"
         />
         <MapV2SebaranCluster
           v-if="stat.isActiveCluster"
@@ -62,7 +62,7 @@
         />
         <MapV2SebaranTimeslider
           v-if="stat.isActiveTimeslider"
-          :propsDataSebaranJabarFaskes.sync="jsonDataSebaranJabarFaskes"
+          :propsDataSebaranJabar.sync="jsonDataSebaranJabar"
         />
       </div>
     </section>
@@ -130,9 +130,9 @@ export default {
   data () {
     return {
       stat: {
-        isActivePolygon: false,
+        isActivePolygon: true,
         isActiveCluster: false,
-        isActiveFaskes: true,
+        isActiveFaskes: false,
         isActiveTimeslider: false
       },
       faFirstAid,
@@ -147,6 +147,7 @@ export default {
       jsonDataRekapitulasiJabarKumulatifKab: [],
       jsonDataNasionalHarianKumulatif: [],
       jsonDataSebaranJabar: [],
+      jsonDataSebaranJawaBarat: [],
       jsonDataSebaranJabarFaskes: []
     }
   },
@@ -300,9 +301,10 @@ export default {
     fetchDataSebaranJabar () {
       const self = this
       axios
-        .get('http://localhost/pikobar/sebaran_jabar.json')
+        .get('https://covid19-public.digitalservice.id/api/v1/sebaran/jabar')
         .then(function (response) {
           self.jsonDataSebaranJabar = response.data.data.content
+          self.jsonDataSebaranJawaBarat = response.data.data.content
         })
         .catch(function (error) {
           console.log(error)
@@ -313,7 +315,7 @@ export default {
       axios
         .get('https://covid19-public.digitalservice.id/api/v1/sebaran/jabar/faskes')
         .then(function (response) {
-          self.jsonDataSebaranJabarFaskes = response.data.data.content
+          self.jsonDataSebaranJabarFaskes = response.data.data
         })
         .catch(function (error) {
           console.log(error)
@@ -523,22 +525,22 @@ export default {
 }
 
 .legend-layer {
-  position: absolute;
-  bottom: 10px;
-  left: 30px;
-  padding-right: 1em;
-  padding-top: 1em;
+  /* position: absolute; */
+  /* bottom: 10px; */
+  /* left: 30px; */
+  /* padding-right: 1em; */
+  /* padding-top: 1em; */
 }
 
 
 .legend-data {
-  background: rgb(0, 0, 0);
+  background: rgb(255,255,2555);
   margin-top: 0.5em;
   padding: 0.6em;
-  border-radius: 0.6em;
-  box-shadow: 0 1px 5px rgba(0,0,0,0.65);
+  /* border-radius: 0.6em; */
+  /* box-shadow: 0 1px 5px rgba(0,0,0,0.65); */
   line-height: 18px;
-  color: #a9a9a9;
+  color: #252525;
 }
 
 .legend-data ul {
@@ -558,4 +560,27 @@ export default {
   border: white 1px solid;
 }
 
+.leaflet-div-icon {
+  border: none!important;
+  border-radius: 20px;
+}
+
+.backdrop {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: black;
+  opacity: 0.5;
+  border-radius: 1em;
+}
+
+.text-disclaimer {
+  top:15%;
+  width: 100%;
+  position: absolute;
+  text-align: center;
+  color: #fff;
+}
 </style>

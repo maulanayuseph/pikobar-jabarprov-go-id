@@ -229,7 +229,7 @@ export default {
 
       isShowFilter: false,
       filter: {
-        positif_proses: true,
+        positif_proses: false,
         positif_meninggal: true,
         positif_sembuh: true,
         pdp_proses: false,
@@ -256,21 +256,29 @@ export default {
   },
   watch: {
     propsDataSebaranJabar () {
+      console.log('cluster on watch')
       this.distributionProvinceData = this.propsDataSebaranJabar
       this.onChanges()
     }
   },
   mounted () {
-    console.log('on created')
     this.initMap()
-    if (this.distributionProvinceData) {
+    if (this.distributionProvinceData.length > 0) {
+      console.log('cluster on mounted ada')
       this.onChanges()
+    } else {
+      console.log('cluster on mounted no data')
     }
+  },
+  created () {
+    console.log('polygon on created')
+    this.distributionProvinceData = this.propsDataSebaranJabar
+    // this.onChanges()
   },
   methods: {
 
     onChanges () {
-      console.log('onChanges')
+      console.log('cluster on changes')
 
       this.jsonData = []
       this.dataJson.positif_proses = []
@@ -506,12 +514,12 @@ export default {
     addMarkerLayer (cluster, element, elPasien, wilayah = '') {
       const m = this.$L.marker([elPasien.latitude, elPasien.longitude])
       const maxHeight = 250
-      const maxWidth = 280
+      const maxWidth = 320
       const popupHtml =
         `
-      <h5 style="font-size: larger;"><b>Detail Pasien</b></h5>
+      <h3 style="font-size: larger; margin-bottom: 5px;"><b>Detail Pasien</b></h3>
       <hr>
-      <table class="table table-sm" style="color: black; font-size-smaller;">
+      <table class="table table-sm" style="color: black; font-size: small;">
         <tr><th>ID</th><td>` + elPasien.id + `</td></tr>
         <tr><th>Status</th><td>` + elPasien.status + ' - ' + elPasien.stage + `</td></tr>
         <tr><th>JK</th><td>` + elPasien.gender + `</td></tr>
