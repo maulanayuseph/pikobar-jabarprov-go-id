@@ -94,6 +94,77 @@
           </li>
         </div>
       </div>
+      <div class="info-legend p-3">
+        <b>Keterangan: </b>
+        <div class="flex mb-1">
+          <div class="w-1/3 h-auto">
+            <div
+              class="legend-color cluster-positif-proses"
+              style="margin-right: 0.5em;" />Positif - Aktif <br>
+            <div
+              class="legend-color cluster-positif-sembuh"
+              style="margin-right: 0.5em;" />Positif - Sembuh <br>
+            <div
+              class="legend-color cluster-positif-meninggal"
+              style="margin-right: 0.5em;" />Positif - Meninggal <br>
+          </div>
+          <div class="w-1/3 h-auto">
+            <div
+              class="legend-color cluster-pdp-proses"
+              style="margin-right: 0.5em;" />PDP - Aktif <br>
+            <div
+              class="legend-color cluster-pdp-selesai"
+              style="margin-right: 0.5em;" />PDP - Selesai <br>
+            <div
+              class="legend-color cluster-pdp-meninggal"
+              style="margin-right: 0.5em;" />PDP - Meninggal <br>
+          </div>
+          <div class="w-1/3 h-auto">
+            <div
+              class="legend-color cluster-odp-proses"
+              style="margin-right: 0.5em;" />ODP - Aktif <br>
+            <div
+              class="legend-color cluster-odp-selesai"
+              style="margin-right: 0.5em;" />ODP - Selesai <br>
+            <div
+              class="legend-color cluster-odp-meninggal"
+              style="margin-right: 0.5em;" />ODP - Meninggal <br>
+          </div>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col-md mt-1">
+            <b>Catatan:</b><br>
+            Perbesar peta untuk melihat jumlah titik akurat. Beberapa titik yang saling berdekatan terlihat menyatu pada pembesaran peta skala besar.
+            Titik lokasi merupakan titik acak (random by system) wilayah yang tertera pada identitas kasus dan tidak menunjuk pada alamat persis masing-masing kasus.
+            Saat ini, data yang Pikobar tampilkan berasal dari sinkronisasi data dengan Dinas Kesehatan Kabupaten/Kota. Proses ini mungkin membutuhkan waktu 1-2 hari setiap perbaruan data terjadi. Oleh karena itu, untuk sementara Anda mungkin melihat perbedaan antara angka yang tampil di Pikobar dengan yang diumumkan di kabupaten/kota selama proses sinkronisasi berlangsung. Silakan periksa kembali 1-2 hari setelah perbaruan terakhir dari masing-masing kabupaten/kota.
+            Terima kasih dan mohon untuk dimaklumi.
+          </div>
+        </div>
+      </div>
+      <div v-if="!isHidden" class="disclaimer">
+        <div class="backdrop" />
+        <div class="text-disclaimer">
+          <div class="title">
+            Disclaimer
+          </div>
+          <!-- <div class="subtitle">
+            Sumber: Dinas Kesehatan Provinsi Jawa Barat
+          </div> -->
+          <div class="description mt-2 text-justify pl-5 pr-5">
+            Perbesar peta untuk melihat jumlah titik akurat. Beberapa titik yang saling berdekatan terlihat menyatu pada pembesaran peta skala besar.
+
+            Titik lokasi merupakan titik acak (random by system) wilayah yang tertera pada identitas kasus dan tidak menunjuk pada alamat persis masing-masing kasus.
+
+            Saat ini, data yang Pikobar tampilkan berasal dari sinkronisasi data dengan Dinas Kesehatan Kabupaten/Kota. Proses ini mungkin membutuhkan waktu 1-2 hari setiap perbaruan data terjadi. Oleh karena itu, untuk sementara Anda mungkin melihat perbedaan antara angka yang tampil di Pikobar dengan yang diumumkan di kabupaten/kota selama proses sinkronisasi berlangsung. Silakan periksa kembali 1-2 hari setelah perbaruan terakhir dari masing-masing kabupaten/kota.
+
+            Terima kasih dan mohon untuk dimaklumi.
+          </div>
+          <button class="px-6 py-2 bg-brand-green hover:bg-brand-green-lighter text-white rounded-lg shadow-md mt-8" style="color: #fff" @click="isHidden = !isHidden">
+            <b>Mengerti</b>
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -118,6 +189,7 @@ export default {
     return {
       map: '',
       zoom: 8,
+      isHidden: false,
       layerGroup: '',
 
       faFilter,
@@ -130,11 +202,11 @@ export default {
       clusterKelurahan: [],
 
       styleBatasWilayah: {
-        fillColor: 'blue',
-        fillOpacity: 0,
+        fillColor: '#D7B6AE',
+        fillOpacity: 0.1,
         weight: 0.5,
         opacity: 0.5,
-        color: '#F6F6F6'
+        color: '#ff3200'
       },
 
       markersList: [],
@@ -246,7 +318,7 @@ export default {
       }).setView([-6.932694, 107.627449], 8)
 
       this.$L.tileLayer(
-        'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',
+        'https://cartodb-basemaps-d.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png',
         {
           attribution: '© OpenStreetMap contributors',
           maxZoom: 18,

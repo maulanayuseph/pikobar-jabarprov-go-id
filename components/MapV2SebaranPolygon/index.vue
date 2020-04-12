@@ -94,8 +94,8 @@
           </li>
         </div>
       </div>
-      <div class="legend-layer">
-        <div class="legend-data" v-html="infolegend" />
+      <div class="legend-data info-legend p-3">
+        <div class="mb-1" v-html="infolegend" />
       </div>
     </div>
   </div>
@@ -124,6 +124,8 @@ export default {
 
       faFilter,
       faHome,
+
+      distributionProvinceData: [],
 
       dataKota: {},
       dataKecamatan: {},
@@ -236,7 +238,7 @@ export default {
       }).setView([-6.932694, 107.627449], 8)
 
       this.$L.tileLayer(
-        'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',
+        'https://cartodb-basemaps-d.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png',
         {
           attribution: '© OpenStreetMap contributors',
           maxZoom: 18,
@@ -314,7 +316,7 @@ export default {
             fillOpacity: self.getColor(this.range, feature.properties.jumlah_kasus),
             weight: 0.5,
             opacity: 0.5,
-            color: '#F6F6F6'
+            color: '#333333'
           }
           // add layer to map
           layer.setStyle(styleBatasWilayah)
@@ -454,10 +456,10 @@ export default {
       }
 
       // create legend
-      const labels = ['<b>Jumlah Kasus</b>', '<ul>']
+      const labels = ['<b>Jumlah Kasus</b>', '<br>', '<ul style="display: flex; margin-top: 10px;">']
       range.forEach((element) => {
         labels.push(
-          '<li><i style="background:#' + self.styleColorPolygon[self.filterActive] + '; ' +
+          '<li style="margin-right: 20px;"><i style="background:#' + self.styleColorPolygon[self.filterActive] + '; ' +
           'opacity: ' + element.transparant + ';"></i>' +
           element.from + ' - ' + element.to + '</li>'
         )
