@@ -10,9 +10,9 @@
     <section class="m-4 mb-8 md:m-8">
       <DataSummary />
     </section>
-    <section class="m-4 mb-8 md:m-8">
+    <!-- <section class="m-4 mb-8 md:m-8">
       <DataRDT :propsDataRekapitulasiJabar.sync="jsonDataRekapitulasiJabarProv" />
-    </section>
+    </section> -->
     <section class="m-4 mb-8 md:m-8">
       <div class="flex flex-row items-stretch">
         <button
@@ -36,13 +36,13 @@
         >
           <font-awesome-icon :icon="faFirstAid" /> Fasilitas Kesehatan
         </button>
-        <button
+        <!-- <button
           class="button-selector mr-2"
           :active="stat.isActiveTimeslider"
           @click="enableTimeslider"
         >
           <font-awesome-icon :icon="faCalendarMinus" /> Timeslider - Data Positif
-        </button>
+        </button> -->
       </div>
       <div class="mt-4">
         <!-- <MapSebaranCovid v-if="stat.isActiveCovid" />
