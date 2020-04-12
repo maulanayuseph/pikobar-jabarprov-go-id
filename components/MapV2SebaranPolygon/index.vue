@@ -94,6 +94,9 @@
           </li>
         </div>
       </div>
+      <div class="legend-layer">
+        <div class="legend-data" v-html="infolegend" />
+      </div>
     </div>
   </div>
 </template>
@@ -101,226 +104,432 @@
 <script>
 
 import { faFilter, faHome } from '@fortawesome/free-solid-svg-icons'
+import { GeoSearchControl, OpenStreetMapProvider } from 'leaflet-geosearch'
+import jsonKota from '@/assets/kotaV2.json'
+import jsonKecamatan from '@/assets/kecamatanV2.json'
+import jsonKelurahan from '@/assets/kelurahanV2.json'
 
 export default {
   name: 'MapV2SebaranPolygon',
+  props: {
+    propsDataSebaranJabar: {
+      type: Array,
+      default: () => [{}]
+    }
+  },
   data () {
     return {
       map: '',
       zoom: 8,
+
       faFilter,
       faHome,
+
+      dataKota: {},
+      dataKecamatan: {},
+      dataKelurahan: {},
+      dataJson: {
+        positif_proses: [],
+        positif_meninggal: [],
+        positif_sembuh: [],
+        pdp_proses: [],
+        pdp_selesai: [],
+        pdp_meninggal: [],
+        odp_proses: [],
+        odp_selesai: [],
+        odp_meninggal: []
+      },
+
+      layerGroup: '',
+      dataMarker: [],
+      dataLayer: [],
+
+      styleColorPolygon: {
+        positif_proses: 'EB5757',
+        positif_meninggal: 'A51212',
+        positif_sembuh: '27AE60',
+        pdp_proses: 'F2C94C',
+        pdp_selesai: 'F2C94C',
+        pdp_meninggal: 'F2C94C',
+        odp_proses: '2D9CDB',
+        odp_selesai: '2D9CDB',
+        odp_meninggal: '2D9CDB'
+      },
+
       isShowFilter: false,
       filter: {
-        positif_proses: false,
-        positif_meninggal: true,
-        positif_sembuh: true,
+        positif_proses: true,
+        positif_meninggal: false,
+        positif_sembuh: false,
         pdp_proses: false,
         pdp_selesai: false,
         pdp_meninggal: false,
         odp_proses: false,
         odp_selesai: false,
         odp_meninggal: false
-      }
+      },
+      filterActive: 'positif_proses',
+
+      range: [],
+      infolegend: ''
     }
   },
-  created () {
-    this.setFilter('positif_proses')
+  watch: {
+    propsDataSebaranJabar () {
+      this.distributionProvinceData = this.propsDataSebaranJabar
+      this.onChanges()
+    }
+  },
+  mounted () {
+    console.log('on created')
+    this.initMap()
+    if (this.distributionProvinceData) {
+      this.onChanges()
+    }
   },
   methods: {
+
+    onChanges () {
+      console.log('onChanges')
+
+      this.dataJson.positif_proses = []
+      this.dataJson.positif_meninggal = []
+      this.dataJson.positif_sembuh = []
+      this.dataJson.pdp_proses = []
+      this.dataJson.pdp_selesai = []
+      this.dataJson.pdp_meninggal = []
+      this.dataJson.odp_proses = []
+      this.dataJson.odp_selesai = []
+      this.dataJson.odp_meninggal = []
+
+      this.distributionProvinceData.forEach((row) => {
+        if (row.status === 'Positif' && row.stage === 'Proses') {
+          this.dataJson.positif_proses.push(row)
+        } else if (row.status === 'Positif' && row.stage === 'Selesai') {
+          this.dataJson.positif_meninggal.push(row)
+        } else if (row.status === 'Positif' && row.stage === 'Sembuh') {
+          this.dataJson.positif_sembuh.push(row)
+        } else if (row.status === 'PDP' && row.stage === 'Proses') {
+          this.dataJson.pdp_proses.push(row)
+        } else if (row.status === 'PDP' && row.stage === 'Selesai') {
+          this.dataJson.pdp_selesai.push(row)
+        } else if (row.status === 'PDP' && row.stage === 'Meninggal') {
+          this.dataJson.pdp_meninggal.push(row)
+        } else if (row.status === 'ODP' && row.stage === 'Proses') {
+          this.dataJson.odp_proses.push(row)
+        } else if (row.status === 'ODP' && row.stage === 'Selesai') {
+          this.dataJson.odp_selesai.push(row)
+        } else if (row.status === 'ODP' && row.stage === 'Meninggal') {
+          this.dataJson.odp_meninggal.push(row)
+        }
+      })
+
+      this.removeLayer()
+      this.removeMarker()
+      this.createLayerKota(this.filterActive)
+      this.setZoomLevel()
+    },
+
+    initMap () {
+      this.map = this.$L.map('map-wrap-polygon', {
+        zoomControl: false
+      }).setView([-6.932694, 107.627449], 8)
+
+      this.$L.tileLayer(
+        'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',
+        {
+          attribution: '© OpenStreetMap contributors',
+          maxZoom: 18,
+          tileSize: 512,
+          zoomOffset: -1
+        }
+      ).addTo(this.map)
+
+      // add zoom control with your options
+      this.$L.control
+        .zoom({
+          position: 'bottomright'
+        })
+        .addTo(this.map)
+
+      // add search control
+      const searchProvider = new OpenStreetMapProvider()
+      // eslint-disable-next-line no-unused-vars
+      const searchControl = new GeoSearchControl({
+        provider: searchProvider,
+        position: 'topleft',
+        showMarker: false,
+        autoClose: true
+      }).addTo(this.map)
+
+      this.map.on('geosearch/showlocation', (e) => {
+        this.zoom = this.map.getZoom()
+      })
+
+      // create layer group
+      this.layerGroup = this.$L.layerGroup().addTo(this.map)
+    },
+
+    setZoomLevel () {
+      // listening zoomed level
+      this.map.on('zoomend', () => {
+        if (this.map.getZoom() <= 10) {
+          this.removeLayer()
+          this.createLayerKota(this.filterActive)
+        } else if (this.map.getZoom() > 10 && this.map.getZoom() <= 13) {
+          this.removeLayer()
+          this.createLayerKecamatan(this.filterActive)
+        } else if (this.map.getZoom() > 13) {
+          this.removeLayer()
+          this.createLayerKelurahan(this.filterActive)
+        }
+      })
+    },
+
+    removeMarker () {
+      this.dataMarker.forEach((element) => {
+        this.map.removeLayer(element)
+      })
+      this.dataMarker = []
+    },
+
+    removeLayer () {
+      this.dataLayer.forEach((element) => {
+        this.map.removeLayer(element)
+      })
+      this.dataLayer = []
+    },
+
+    createLayerKota (category) {
+      const self = this
+      const result = this.createRange(self.styleColorPolygon[category], 'kota', this.dataJson[category], jsonKota.features)
+      this.range = result[0]
+      this.dataKota = result[1]
+
+      this.$L.geoJSON(this.dataKota, {
+        onEachFeature: (feature, layer, element) => {
+          // create style color gradien
+          const styleBatasWilayah = {
+            fillColor: '#' + self.styleColorPolygon[category],
+            fillOpacity: self.getColor(this.range, feature.properties.jumlah_kasus),
+            weight: 0.5,
+            opacity: 0.5,
+            color: '#F6F6F6'
+          }
+          // add layer to map
+          layer.setStyle(styleBatasWilayah)
+          const polygon = layer.addTo(self.map)
+          self.dataLayer.push(polygon)
+
+          // add tooltip
+          let popup = self.titleize(feature.properties.kemendagri_kabupaten_nama)
+          popup += '<br>Jumlah Kasus : ' + feature.properties.jumlah_kasus
+          layer.bindTooltip(popup)
+        }
+      })
+    },
+
+    createLayerKecamatan (category) {
+      const self = this
+      const result = this.createRange(self.styleColorPolygon[category], 'kecamatan', this.dataJson[category], jsonKecamatan.features)
+      this.range = result[0]
+      this.dataKecamatan = result[1]
+
+      this.$L.geoJSON(this.dataKecamatan, {
+        onEachFeature: (feature, layer, element) => {
+          // create style color gradien
+          const styleBatasWilayah = {
+            fillColor: '#' + self.styleColorPolygon[category],
+            fillOpacity: self.getColor(this.range, feature.properties.jumlah_kasus),
+            weight: 0.5,
+            opacity: 0.5,
+            color: '#F6F6F6'
+          }
+          // add layer to map
+          layer.setStyle(styleBatasWilayah)
+          const polygon = layer.addTo(self.map)
+          self.dataLayer.push(polygon)
+
+          // add tooltip
+          let popup = self.titleize(feature.properties.kemendagri_kabupaten_nama)
+          popup += '<br>Kecamatan ' + feature.properties.kemendagri_kecamatan_nama
+          popup += '<br>Jumlah Kasus : ' + feature.properties.jumlah_kasus
+          layer.bindTooltip(popup)
+        }
+      })
+    },
+
+    createLayerKelurahan (category) {
+      const self = this
+      const result = this.createRange(self.styleColorPolygon[category], 'kelurahan', this.dataJson[category], jsonKelurahan.features)
+      this.range = result[0]
+      this.dataKelurahan = result[1]
+
+      this.$L.geoJSON(this.dataKelurahan, {
+        onEachFeature: (feature, layer, element) => {
+          // create style color gradien
+          const styleBatasWilayah = {
+            fillColor: '#' + self.styleColorPolygon[category],
+            fillOpacity: self.getColor(this.range, feature.properties.jumlah_kasus),
+            weight: 0.5,
+            opacity: 0.5,
+            color: '#F6F6F6'
+          }
+          // add layer to map
+          layer.setStyle(styleBatasWilayah)
+          const polygon = layer.addTo(self.map)
+          self.dataLayer.push(polygon)
+
+          // add tooltip
+          let popup = self.titleize(feature.properties.kemendagri_kabupaten_nama)
+          popup += '<br>Kecamatan ' + feature.properties.kemendagri_kecamatan_nama
+          popup += '<br>Kel/Desa ' + feature.properties.kemendagri_desa_nama
+          popup += '<br>Jumlah Kasus :' + feature.properties.jumlah_kasus
+          layer.bindTooltip(popup)
+        }
+      })
+    },
+
+    createRange (hex, wilayah, data, geojson) {
+      const self = this
+      let max = 0
+      let min = 0
+      let z = 0
+      geojson.forEach((feature) => {
+        // count kasus by wilayah & category kasus
+        let sum = 0
+        if (wilayah === 'kota') {
+          data.forEach((row) => {
+            if (feature.properties.bps_kabupaten_kode === row.kode_kab) {
+              sum = sum + 1
+            }
+          })
+        } else if (wilayah === 'kecamatan') {
+          data.forEach((row) => {
+            if (feature.properties.bps_kecamatan_kode === row.kode_kec) {
+              sum = sum + 1
+            }
+          })
+        } else if (wilayah === 'kelurahan') {
+          data.forEach((row) => {
+            if (feature.properties.bps_desa_kode === row.kode_kel) {
+              sum = sum + 1
+            }
+          })
+        }
+        // add to element
+        const temp = { jumlah_kasus: sum }
+        feature.properties = { ...feature.properties, ...temp }
+        // get max kasus
+        if (feature.properties.jumlah_kasus > max) {
+          max = feature.properties.jumlah_kasus
+        }
+        // get min kasus
+        if (z === 0) {
+          min = feature.properties.jumlah_kasus
+        }
+        if (feature.properties.jumlah_kasus < min) {
+          min = feature.properties.jumlah_kasus
+        }
+        z = z + 1
+      })
+
+      // count range per list
+      const range = []
+      const div = Math.ceil((max - min) / 7)
+      let numFrom = 0
+      // create list
+      for (let i = 1; i <= 7; i++) {
+        if (min === 0) {
+          numFrom = 0
+        } else {
+          numFrom = min
+        }
+        range.push({
+          from: numFrom + ((i - 1) * div),
+          to: numFrom + (i * div),
+          color: this.shadeColor(hex, ((i * -20) + 60)),
+          transparant: 0.4 + (i * 0.085)
+        })
+      }
+
+      // create legend
+      const labels = ['<b>Jumlah Kasus</b>', '<ul>']
+      range.forEach((element) => {
+        labels.push(
+          '<li><i style="background:#' + self.styleColorPolygon[self.filterActive] + '; ' +
+          'opacity: ' + element.transparant + ';"></i>' +
+          element.from + ' - ' + element.to + '</li>'
+        )
+      })
+      labels.push('</ul>')
+      this.infolegend = labels.join('')
+      return [range, geojson]
+    },
+
+    shadeColor (color, percent) {
+      return '#' + color
+        .replace(/^#/, '')
+        .replace(
+          /../g, color => (
+            '0' + Math.min(255, Math.max(0, parseInt(color, 16) + percent)).toString(16)
+          ).substr(-2)
+        )
+    },
+
+    getColor (range, angka) {
+      let color = ''
+      range.forEach((element) => {
+        if (angka === 0) {
+          color = '0'
+        } else if (angka >= element.from && angka < element.to) {
+          color = element.transparant
+        }
+      })
+      return color
+    },
+
     showFilter () {
       this.isShowFilter = !this.isShowFilter
     },
+
     setFilter (category) {
+      this.removeMarker()
+      for (const cat of Object.keys(this.filter)) {
+        this.filter[cat] = false
+      }
       this.filter[category] = !this.filter[category]
-    }
-  },
-  head () {
-    return {
-      link: [
-        { rel: 'stylesheet', href: 'https://unpkg.com/leaflet-geosearch@2.6.0/assets/css/leaflet.css' }
-      ]
+      this.filterActive = category
+
+      if (this.map.getZoom() <= 10) {
+        this.removeLayer()
+        this.createLayerKota(this.filterActive)
+      } else if (this.map.getZoom() > 10 && this.map.getZoom() <= 13) {
+        this.removeLayer()
+        this.createLayerKecamatan(this.filterActive)
+      } else if (this.map.getZoom() > 13) {
+        this.removeLayer()
+        this.createLayerKelurahan(this.filterActive)
+      }
+    },
+
+    backToHome () {
+      this.map.flyTo([-6.932694, 107.627449], 8)
+    },
+
+    titleize (sentence) {
+      if (!sentence.split) {
+        return sentence
+      }
+      const titleizeWord = (name) => {
+        return name.charAt(0).toUpperCase() + name.slice(1).toLowerCase()
+      }
+      const result = []
+      sentence.split(' ').forEach((w) => {
+        result.push(titleizeWord(w))
+      })
+      return result.join(' ')
     }
   }
 }
 </script>
-<style>
-@import "leaflet.markercluster/dist/MarkerCluster.css";
-@import "leaflet.markercluster/dist/MarkerCluster.Default.css";
-
-</style>
-
-<style scoped>
-
-.btn {
-  border-radius: 0.25rem;
-}
-
-.container-map {
-    width:100%;
-    height:100%;
-    position: relative;
-}
-
-.filter-layer {
-    position: absolute;
-    top: 0px;
-    right: 10px;
-    padding-right: 1em;
-    padding-top: 1em;
-}
-
-.filter-layer .btn {
-    font-size: 0.8em;
-    padding: 2px 6px;
-    box-shadow: 0 1px 5px rgba(0,0,0,0.65);
-}
-
-.filter-data {
-    background: #fff;
-    margin-top: 0.5em;
-    padding: 0.6em;
-    border-radius: 0.6em;
-    box-shadow: 0 1px 5px rgba(0,0,0,0.65);
-}
-
-.filter-layer li {
-    list-style: none;
-    opacity: 0.4;
-    padding-bottom: 0.2em;
-}
-
-.filter-layer li:hover {
-    cursor: pointer;
-}
-
-.filter-active {
-    opacity: 1 !important;
-}
-
-.filter-data {
-    background: #fff;
-    color: black;
-    margin-top: 0.5em;
-    padding: 0.6em;
-    border-radius: 0.6em;
-    box-shadow: 0 1px 5px rgba(0,0,0,0.65);
-}
-
-.legend-color {
-    width: 1em;
-    height: 1em;
-    float: left;
-    border-radius: 10px;
-    margin-top: 4px;
-}
-
-.cluster {
-    border-radius: 50%;
-    text-align: center;
-    color: white;
-    font-weight: 700;
-    font-family: monospace;
-    height: 10px;
-    width: 10px;
-}
-
-.cluster-odp-proses {
-  /* box-shadow: 0 0 5px 0 rgb(45, 156, 219, 0.9); */
-  border: 2px solid rgb(45, 156, 219, 0.9);
-  background: rgb(45, 156, 219, 0.9);
-}
-
-.cluster-odp-selesai {
-  /* box-shadow: 0 0 5px 0 rgb(45, 156, 219, 0.9); */
-  border: 2px solid rgb(45, 156, 219, 0.9);
-  background: rgba(196, 195, 195, 0.9);
-}
-
-.cluster-odp-meninggal {
-  /* box-shadow: 0 0 5px 0 rgb(45, 156, 219, 0.9); */
-  border: 2px solid rgb(45, 156, 219, 0.9);
-  background: rgb(165,18,18, 0.9);
-}
-
-.cluster-pdp-proses {
-  /* box-shadow: 0 0 5px 0 rgb(242, 201, 76, 0.9); */
-  border: 2px solid rgb(242, 201, 76, 0.9);
-  background: rgb(242, 201, 76, 0.9);
-}
-
-.cluster-pdp-selesai {
-  /* box-shadow: 0 0 5px 0 rgb(242, 201, 76, 0.9); */
-  border: 2px solid rgb(242, 201, 76, 0.9);
-  background: rgba(196, 195, 195, 0.9);
-}
-
-.cluster-pdp-meninggal {
-  /* box-shadow: 0 0 5px 0 rgb(242, 201, 76, 0.9); */
-  border: 2px solid rgb(242, 201, 76, 0.9);
-  background: rgb(165,18,18, 0.9);
-}
-
-.cluster-positif-proses {
-  /* box-shadow: 0 0 5px 0 rgb(235, 87, 87, 0.9); */
-  border: 2px solid rgb(235, 87, 87, 0.9);
-  background: rgb(235, 87, 87, 0.9);
-}
-
-.cluster-positif-sembuh {
-  /* box-shadow: 0 0 5px 0 rgb(235, 87, 87, 0.9); */
-  border: 2px solid rgb(235, 87, 87, 0.9);
-  background: rgb(39, 174, 96, 0.9);
-}
-
-.cluster-positif-meninggal {
-  /* box-shadow: 0 0 5px 0 rgb(235, 87, 87, 0.9); */
-  border: 2px solid rgb(235, 87, 87, 0.9);
-  background: rgb(165,18,18, 0.9);
-}
-
-.digits-0 {
-  height: 17px;
-  width: 17px;
-  margin-top: -14px;
-  margin-left: -14px;
-}
-
-.digits-1 {
-  font-size: 14px;
-  height: 28px;
-  width: 28px;
-  line-height: 28px;
-  margin-top: -14px;
-  margin-left: -14px;
-}
-
-.digits-2 {
-  font-size: 16px;
-  height: 34px;
-  width: 34px;
-  line-height: 35px;
-  margin-top: -17px;
-  margin-left: -17px;
-}
-
-.digits-3 {
-  font-size: 18px;
-  height: 48px;
-  width: 47px;
-  line-height: 47px;
-  /* border-width: 3px; */
-  margin-top: -24px;
-  margin-left: -24px;
-}
-
-.digits-4 {
-  font-size: 18px;
-  height: 58px;
-  width: 58px;
-  line-height: 57px;
-  /* border-width: 4px; */
-  margin-top: -29px;
-  margin-left: -29px;
-}
-</style>
