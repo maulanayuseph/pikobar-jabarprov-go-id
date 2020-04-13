@@ -11,7 +11,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 import SortableDatatable from '../SortableDatatable'
 
 export default {
@@ -19,9 +18,16 @@ export default {
   components: {
     SortableDatatable
   },
+  props: {
+    propsDataRekapitulasiJabarKab: {
+      type: Array,
+      default: () => [{}]
+    }
+  },
   data () {
     return {
       jsonDataKabupaten: [],
+      temp: [],
       data: {
         columns: [
           {
@@ -76,8 +82,11 @@ export default {
       }
     }
   },
-  created () {
-    this.fetchDataKabupaten()
+  watch: {
+    propsDataRekapitulasiJabarKab () {
+      this.temp = this.propsDataRekapitulasiJabarKab
+      this.fetchDataKabupaten()
+    }
   },
   methods: {
     ifNullReturnZero (str) {
@@ -127,42 +136,33 @@ export default {
     },
     fetchDataKabupaten () {
       const self = this
-      axios
-        .get('https://covid19-public.digitalservice.id/api/v1/rekapitulasi/jabar?level=kab')
-        .then(function (response) {
-          // self.jsonDataKabupaten = response.data.data.content
-
-          for (let i = 0; i < response.data.data.content.length; i++) {
-            self.jsonDataKabupaten.push({
-              no: i + 1,
-              nama_kab: response.data.data.content[i].nama_kab,
-              odp_proses: self.ifNullReturnZero(response.data.data.content[i].odp_proses),
-              pdp_proses: self.ifNullReturnZero(response.data.data.content[i].pdp_proses),
-              positif_aktif: self.ifNullReturnZero(
-                self.ifNullReturnZero(response.data.data.content[i].positif) -
-                (self.ifNullReturnZero(response.data.data.content[i].sembuh) + self.ifNullReturnZero(response.data.data.content[i].meninggal))
-              ),
-              positif_sembuh: self.ifNullReturnZero(response.data.data.content[i].sembuh),
-              positif_meninggal: self.ifNullReturnZero(response.data.data.content[i].meninggal)
-            })
-          }
-          self.jsonDataKabupaten.sort(self.compareValues('positif_aktif', 'desc'))
-
-          for (let i = 0; i < self.jsonDataKabupaten.length; i++) {
-            self.data.rows.push({
-              no: i + 1,
-              nama_kab: self.jsonDataKabupaten[i].nama_kab,
-              odp_proses: self.ifNullReturnZero(self.jsonDataKabupaten[i].odp_proses),
-              pdp_proses: self.ifNullReturnZero(self.jsonDataKabupaten[i].pdp_proses),
-              positif_aktif: self.ifNullReturnZero(self.jsonDataKabupaten[i].positif_aktif),
-              positif_sembuh: self.ifNullReturnZero(self.jsonDataKabupaten[i].positif_sembuh),
-              positif_meninggal: self.ifNullReturnZero(self.jsonDataKabupaten[i].positif_meninggal)
-            })
-          }
+      for (let i = 0; i < self.temp.length; i++) {
+        self.jsonDataKabupaten.push({
+          no: i + 1,
+          nama_kab: self.temp[i].nama_kab,
+          odp_proses: self.ifNullReturnZero(self.temp[i].odp_proses),
+          pdp_proses: self.ifNullReturnZero(self.temp[i].pdp_proses),
+          positif_aktif: self.ifNullReturnZero(
+            self.ifNullReturnZero(self.temp[i].positif) -
+            (self.ifNullReturnZero(self.temp[i].sembuh) + self.ifNullReturnZero(self.temp[i].meninggal))
+          ),
+          positif_sembuh: self.ifNullReturnZero(self.temp[i].sembuh),
+          positif_meninggal: self.ifNullReturnZero(self.temp[i].meninggal)
         })
-        .catch(function (error) {
-          console.log(error)
+      }
+      self.jsonDataKabupaten.sort(self.compareValues('positif_aktif', 'desc'))
+
+      for (let i = 0; i < self.jsonDataKabupaten.length; i++) {
+        self.data.rows.push({
+          no: i + 1,
+          nama_kab: self.jsonDataKabupaten[i].nama_kab,
+          odp_proses: Number(self.ifNullReturnZero(self.jsonDataKabupaten[i].odp_proses)).toLocaleString('id-ID'),
+          pdp_proses: Number(self.ifNullReturnZero(self.jsonDataKabupaten[i].pdp_proses)).toLocaleString('id-ID'),
+          positif_aktif: Number(self.ifNullReturnZero(self.jsonDataKabupaten[i].positif_aktif)).toLocaleString('id-ID'),
+          positif_sembuh: Number(self.ifNullReturnZero(self.jsonDataKabupaten[i].positif_sembuh)).toLocaleString('id-ID'),
+          positif_meninggal: Number(self.ifNullReturnZero(self.jsonDataKabupaten[i].positif_meninggal)).toLocaleString('id-ID')
         })
+      }
     }
   }
 }

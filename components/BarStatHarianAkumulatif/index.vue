@@ -96,7 +96,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 import { GChart } from 'vue-google-charts'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faChartBar, faChartLine } from '@fortawesome/free-solid-svg-icons'
@@ -106,6 +105,16 @@ export default {
   components: {
     GChart,
     FontAwesomeIcon
+  },
+  props: {
+    propsDataRekapitulasiJabarHarianProv: {
+      type: Array,
+      default: () => ([])
+    },
+    propsDataRekapitulasiJabarKumulatifProv: {
+      type: Array,
+      default: () => ([])
+    }
   },
   data () {
     return {
@@ -245,9 +254,15 @@ export default {
       }
     }
   },
-  created () {
-    this.fetchDataProvinsiHarian()
-    this.fetchDataProvinsiKumulatif()
+  watch: {
+    propsDataRekapitulasiJabarHarianProv () {
+      this.jsonDataProvinsiHarian = this.propsDataRekapitulasiJabarHarianProv
+      this.fetchDataProvinsiHarian()
+    },
+    propsDataRekapitulasiJabarKumulatifProv () {
+      this.jsonDataProvinsiKumulatif = this.propsDataRekapitulasiJabarKumulatifProv
+      this.fetchDataProvinsiKumulatif()
+    }
   },
   methods: {
     ifNullReturnZero (str) {
@@ -283,56 +298,38 @@ export default {
       const today = new Date()
       const strToday = self.formatDate(today)
 
-      axios
-        .get('https://covid19-public.digitalservice.id/api/v1/rekapitulasi/jabar/harian?level=prov')
-        .then(function (response) {
-          self.jsonDataProvinsiHarian = response.data.data.content
-
-          let stop = false
-          for (let i = 0; i < self.jsonDataProvinsiHarian.length; i++) {
-            const date = new Date(self.jsonDataProvinsiHarian[i].tanggal)
-            if (stop === false) {
-              self.barChartHarianODPData.push([self.formatDate(date), self.jsonDataProvinsiHarian[i].odp])
-              self.barChartHarianPDPData.push([self.formatDate(date), self.jsonDataProvinsiHarian[i].pdp])
-            }
-            if (self.formatDate(date) === strToday) {
-              stop = true
-            }
-          }
-          self.barChartHarianODPData.splice(1, 1)
-          self.barChartHarianPDPData.splice(1, 1)
-        })
-        .catch(function (error) {
-          console.log(error)
-        })
+      let stop = false
+      for (let i = 0; i < self.jsonDataProvinsiHarian.length; i++) {
+        const date = new Date(self.jsonDataProvinsiHarian[i].tanggal)
+        if (stop === false) {
+          self.barChartHarianODPData.push([self.formatDate(date), self.jsonDataProvinsiHarian[i].odp])
+          self.barChartHarianPDPData.push([self.formatDate(date), self.jsonDataProvinsiHarian[i].pdp])
+        }
+        if (self.formatDate(date) === strToday) {
+          stop = true
+        }
+      }
+      self.barChartHarianODPData.splice(1, 1)
+      self.barChartHarianPDPData.splice(1, 1)
     },
     fetchDataProvinsiKumulatif () {
       const self = this
       const today = new Date()
       const strToday = self.formatDate(today)
 
-      axios
-        .get('https://covid19-public.digitalservice.id/api/v1/rekapitulasi/jabar/kumulatif?level=prov')
-        .then(function (response) {
-          self.jsonDataProvinsiKumulatif = response.data.data.content
-
-          let stop = false
-          for (let i = 0; i < self.jsonDataProvinsiKumulatif.length; i++) {
-            const date = new Date(self.jsonDataProvinsiKumulatif[i].tanggal)
-            if (stop === false) {
-              self.barChartAkumulatifODPData.push([self.formatDate(date), self.jsonDataProvinsiKumulatif[i].odp])
-              self.barChartAkumulatifPDPData.push([self.formatDate(date), self.jsonDataProvinsiKumulatif[i].pdp])
-            }
-            if (self.formatDate(date) === strToday) {
-              stop = true
-            }
-          }
-          self.barChartAkumulatifODPData.splice(1, 1)
-          self.barChartAkumulatifPDPData.splice(1, 1)
-        })
-        .catch(function (error) {
-          console.log(error)
-        })
+      let stop = false
+      for (let i = 0; i < self.jsonDataProvinsiKumulatif.length; i++) {
+        const date = new Date(self.jsonDataProvinsiKumulatif[i].tanggal)
+        if (stop === false) {
+          self.barChartAkumulatifODPData.push([self.formatDate(date), self.jsonDataProvinsiKumulatif[i].odp])
+          self.barChartAkumulatifPDPData.push([self.formatDate(date), self.jsonDataProvinsiKumulatif[i].pdp])
+        }
+        if (self.formatDate(date) === strToday) {
+          stop = true
+        }
+      }
+      self.barChartAkumulatifODPData.splice(1, 1)
+      self.barChartAkumulatifPDPData.splice(1, 1)
     }
   }
 }
