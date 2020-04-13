@@ -1,6 +1,6 @@
 <template>
 
-  <div class="container-map relative">
+  <div class="container-map">
     <div class="bg-white col-md-12 shadow-md" style="height:50em;">
         <div id="map-wrap" style="height: 75%;z-index:0;" />
         <div class="filter-layer"> 
@@ -216,6 +216,21 @@ import axios from 'axios'
 import * as turf from '@turf/turf'
 import { faFilter, faHome } from '@fortawesome/free-solid-svg-icons'
 import { GeoSearchControl, OpenStreetMapProvider } from 'leaflet-geosearch';
+// import kotaGeojson from '@/assets/kotaV2.json'
+// import kecamatanGeojson from '@/assets/kecamatanV2.json'
+// import kelurahanGeojson from '@/assets/kelurahanV2.json'
+
+let map = []
+let tileLayer = []
+let geojsonArea = []
+let geojsonActive =[]
+let markerClusters = []
+let provider = []
+let wilayahLayer = []
+let kotaCluster = []
+let kotaGeojson = []
+let kecamatanGeojson = []
+let kelurahanGeojson = []
 
 export default {
   head: {
@@ -248,7 +263,7 @@ export default {
       isShowFilter: false,
       faFilter: faFilter,
       faHome: faHome,
-      map: '',
+      // map: '',
       zoom: 8,
       isHidden: false,
       activeLayer: 'ODP',
@@ -277,18 +292,12 @@ export default {
         }
       },
       
-      provider: [],
       searchControl: [],
-      tileLayer: [],
-      geojsonArea: [],
-      geojsonActive: [],
-      markerClusters: []
     }
   },
   asyncData() {
     return {
-      wilayahLayer: [],
-      kotaCluster: [],
+      
       listLayer: {
         odp : {
           proses: [],
@@ -314,9 +323,7 @@ export default {
         kecamatan: [],
         kelurahan: []
       },
-      kotaGeojson: {},
-      kecamatanGeojson: {},
-      kelurahanGeojson: {},
+      
       jsonData: [],
     }
   },
@@ -329,23 +336,10 @@ export default {
       .then(() => {   
         this.fetchData()
       })
+
   },
   beforeDestroy () {
-    this.kotaGeojson = []
-    this.kecamatanGeojson = []
-    this.kelurahanGeojson = []
-    this.jsonData = []
-    this.maps = []
-    this.tileLayer = []
-    this.provider = []
-    this.searchControl = []
-    this.geojsonArea = []
-    this.listLayerAreaWilayah = []
-    // this.provider.destroy()
-    if (this.view) {
-      // destroy the map view
-      this.view.container = null
-    }
+    map.remove()
   },
   methods: {
     setFilter (status, stage) {
@@ -357,7 +351,7 @@ export default {
             this.listLayer[status][stage].forEach((element) => {
 
               if (this.filter[status][stage]) {
-                element.addTo(this.map)
+                element.addTo(map)
               }
             })
           }
@@ -370,26 +364,26 @@ export default {
       this.isShowFilter = !this.isShowFilter
     },
     backToHome() {
-      this.map.flyTo([-6.932694, 107.627449], 8)
+      map.flyTo([-6.932694, 107.627449], 8)
     },
     importJSON () {
       const files = [
         {
           name: 'kota.json',
           onLoad: (module) => {
-            this.kotaGeojson = module
+            kotaGeojson = module
           }
         },
         {
           name: 'kecamatan.json',
           onLoad: (module) => {
-            this.kecamatanGeojson = module
+            kecamatanGeojson = module
           }
         },
         {
           name: 'kelurahan.json',
           onLoad: (module) => {
-            this.kelurahanGeojson = module
+            kelurahanGeojson = module
           }
         }
       ]
@@ -414,66 +408,66 @@ export default {
         .then(function (response) {
           self.jsonData = response.data.data.content
           self.createMap('kota')
-
+          console.log('tes')
         })
         .catch(function (error) {
           console.log(error)
         })
     },
     createBasemap () {
-      this.map = new L.map('map-wrap', {
+      map = new L.map('map-wrap', {
         zoomControl: false
       }).setView([-6.932694, 107.627449], 8)
 
-      this.tileLayer = new L.tileLayer('https://cartodb-basemaps-d.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {
+      tileLayer = new L.tileLayer('https://cartodb-basemaps-d.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {
         attribution: '© OpenStreetMap contributors',
         maxZoom: 18,
         tileSize: 512,
         zoomOffset: -1
-      }).addTo(this.map)
+      }).addTo(map)
 
-      this.provider = new OpenStreetMapProvider();
+      provider = new OpenStreetMapProvider();
 
       // add search control 
       this.searchControl = new GeoSearchControl({
-        provider: this.provider,
+        provider: provider,
         position: 'topleft'
-      }).addTo(this.map)
-      this.map.on('geosearch/showlocation', (e) => {
+      }).addTo(map)
+      map.on('geosearch/showlocation', (e) => {
         this.createMapByZoomLevel()
       })
 
       // add zoom control with your options
       new L.control.zoom({
         position: 'bottomright'
-      }).addTo(this.map)
+      }).addTo(map)
       
       
       // // // on zoom
       // // // Here the events for zooming and dragging
-      this.map.on('zoomend', () => {
+      map.on('zoomend', () => {
         this.createMapByZoomLevel()
       })
 
       
-      this.map.on('dragend', () => {
-        // if (this.zoom > 15) {
-        //   this.removeLayer()
-        //   this.createLayerByKelurahan()
-        // } else 
-        if (this.map.getZoom()  > 12) {
-          this.removeLayer()
-          this.createLayerPasien('kelurahan')
-        }
-        else if (this.map.getZoom()  > 10) {
-          this.removeLayer()
-          this.createLayerPasien('kecamatan')
-        }
-      })
+      // map.on('dragend', () => {
+      //   // if (this.zoom > 15) {
+      //   //   this.removeLayer()
+      //   //   this.createLayerByKelurahan()
+      //   // } else 
+      //   if (map.getZoom()  > 12) {
+      //     this.removeLayer()
+      //     this.createLayerPasien('kelurahan')
+      //   }
+      //   else if (map.getZoom()  > 10) {
+      //     this.removeLayer()
+      //     this.createLayerPasien('kecamatan')
+      //   }
+      // })
       // end
 
       // // create layer group
-      // this.layerGroup = new L.layerGroup().addTo(this.map)
+      // this.layerGroup = new L.layerGroup().addTo(map)
     },
 
     configCluster (className) {
@@ -600,7 +594,7 @@ export default {
 
           let newLayer = cluster[kode_level][key][keySub]
           if (this.filter[key][keySub]) {
-            newLayer.addTo(this.map)
+            newLayer.addTo(map)
             this.listLayer[key][keySub].push(newLayer)
           }
 
@@ -628,9 +622,9 @@ export default {
               popup += `<b> Kota/Kabupaten </b> : ${ kabkotNama } <br>`
             }
 
-            new L.popup().setLatLng(c.layer.getLatLng()).setContent(popup).openOn(this.map)
+            new L.popup().setLatLng(c.layer.getLatLng()).setContent(popup).openOn(map)
           }).on('clustermouseout', (c) => {
-            this.map.closePopup()
+            map.closePopup()
           })
         }
       }
@@ -661,24 +655,24 @@ export default {
       let kotaCluster = []
 
       if (level === 'kota') {
-        geojsonActive = this.kotaGeojson
+        geojsonActive = kotaGeojson
         kode_wilayah = 'kode_kab'
       } else if(level === 'kecamatan') {
-        geojsonActive = this.kecamatanGeojson
+        geojsonActive = kecamatanGeojson
         kode_wilayah = 'kode_kec'
       } else {
         kode_wilayah = 'kode_kel'
-        geojsonActive = this.kelurahanGeojson
+        geojsonActive = kelurahanGeojson
       }
 
-      if (this.geojsonArea.length != 0) {
-        this.geojsonArea.remove()
+      if (geojsonArea.length != 0) {
+        geojsonArea.remove()
       }
 
-      this.geojsonArea = new L.geoJSON(geojsonActive, {
+      geojsonArea = new L.geoJSON(geojsonActive, {
         style: this.styleBatasWilayah,
         virtual: true
-      }).addTo(this.map)
+      }).addTo(map)
 
 
       let jsonData = this.jsonData
@@ -697,7 +691,7 @@ export default {
       new L.geoJSON(geoJSONArea, {
         style: this.styleBatasWilayah
       }).eachLayer((el) => {
-        if (this.map.getBounds().intersects(el._bounds)) {
+        if (map.getBounds().intersects(el._bounds)) {
             let nama_kab = '' 
             let nama_kec = '' 
             let nama_kel = '' 
@@ -736,14 +730,14 @@ export default {
       // }
     },
     async createMapByZoomLevel() {
-      if (this.map.getZoom() > 12) {
+      if (map.getZoom() > 12) {
         this.removeLayer ()
         
 
         this.level = 'kelurahan'
         this.createLayerPasien('kelurahan')
       }
-      else if (this.map.getZoom() > 10) {
+      else if (map.getZoom() > 10) {
 
         if (this.level !== 'kecamatan') {
           this.removeLayer ()
@@ -761,19 +755,19 @@ export default {
       }
     },
     removeBatasWilayah () {
-      this.wilayahLayer.forEach((element) => {
-        this.map.removeLayer(element)
+      wilayahLayer.forEach((element) => {
+        map.removeLayer(element)
         element.clearLayers()
         element.remove()
       })
-      this.wilayahLayer = []
+      wilayahLayer = []
     },
     removeLayer (all = true) {
       if (all) {
-        // for (let key in this.kotaCluster) {
+        // for (let key in kotaCluster) {
         //   for (let status in this.filter) {
         //     for (let stage in this.filter[status]) {
-        //       this.kotaCluster[key][status][stage].clearLayers()
+        //       kotaCluster[key][status][stage].clearLayers()
         //     }
         //   }
         // }
@@ -781,7 +775,7 @@ export default {
         for (let status in this.filter) {
           for (let stage in this.filter[status]) {
             this.listLayer[status][stage].forEach((element) => {
-              this.map.removeLayer(element)
+              map.removeLayer(element)
               element.clearLayers()
               element.remove()
             })
@@ -791,7 +785,7 @@ export default {
         for (let status in this.filter) {
           for (let stage in this.filter[status]) {
             this.listLayer[status][stage].forEach((element) => {
-              this.map.removeLayer(element)
+              map.removeLayer(element)
             })
           }
         }
