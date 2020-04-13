@@ -1,4 +1,5 @@
 require('dotenv').config()
+
 const APP_TITLE = 'Pikobar - Pusat Informasi dan Koordinasi COVID-19 Jawa Barat'
 export default {
   env: {
@@ -18,7 +19,15 @@ export default {
     prefetchLinks: false
   },
   generate: {
-    fallback: true
+    fallback: true,
+    interval: 100,
+    exclude: [
+      /^\/(\bdata\b).*$/
+    ],
+    async routes () {
+      const genFn = await import('./routes-generator').then(m => m ? m.default || m : null)
+      return genFn ? genFn() : []
+    }
   },
   server: {
     host: process.env.HOST,
@@ -41,7 +50,10 @@ export default {
       { hid: 'og:image', property: 'og:image', content: `${process.env.URL}/logo.jpg` },
       { hid: 'og:site_name', property: 'og:site_name', content: APP_TITLE },
       { hid: 'twitter:card', name: 'twitter:card', content: 'summary' },
-      { hid: 'twitter:site', name: 'twitter:site', content: '@jabardigital' }
+      { hid: 'twitter:site', name: 'twitter:site', content: '@jabardigital' },
+      { hid: 'twitter:title', name: 'twitter:title', content: APP_TITLE },
+      { hid: 'twitter:description', name: 'twitter:description', content: process.env.npm_package_description },
+      { hid: 'twitter:image', name: 'twitter:image', content: `${process.env.URL}/logo.jpg` }
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
@@ -50,7 +62,7 @@ export default {
   /*
   ** Customize the progress-bar color
   */
-  loading: { color: '#fff' },
+  loading: { color: 'rgb(0,200,83)' },
   /*
   ** Global CSS
   */
@@ -61,6 +73,7 @@ export default {
   ** Plugins to load before mounting the App
   */
   plugins: [
+    { src: '~/plugins/numbro.js' },
     { src: '~/plugins/initial-data.js', mode: 'client' },
     { src: '~/plugins/service-worker.js', mode: 'client' },
     '~/plugins/vuex-router-sync.js',
@@ -95,7 +108,7 @@ export default {
     },
     themeColor: '#399F4F',
     manifest: {
-      name: 'Jabar COVID-19',
+      name: 'Pikobar | Jawa Barat',
       background_color: '#399F4F',
       display: 'standalone',
       orientation: 'portrait'
@@ -115,6 +128,15 @@ export default {
     ** You can extend webpack config here
     */
     extend (config, ctx) {
+      const htmlLoader = config.module.rules.find(rule => rule.test.test('html'))
+      if (htmlLoader) {
+        console.log(htmlLoader)
+      } else {
+        config.module.rules.push({
+          test: /\.html$/,
+          use: ['html-loader']
+        })
+      }
     }
   }
 }

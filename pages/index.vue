@@ -1,67 +1,81 @@
 
 <template>
   <div class="container mx-auto">
-    <section class="top-grid m-4 md:m-8">
-      <div class="top-grid__banner rounded-lg overflow-hidden">
-        <!-- <img v-lazy="bannerImage" class="absolute inset-0 w-full h-full object-cover object-left-top"> -->
-        <ImageCarousel
-          class="absolute inset-0 w-full h-full"
-          :items="banners"
-        />
-      </div>
-      <CallCard class="top-grid__call-card" title="Call Center" subtitle="Nomor Darurat" number="119" />
-      <CallCard class="top-grid__call-card" title="Dinkes Jabar" subtitle="Pertanyaan Umum" number="0811 2093 306" />
-      <div
-        v-show="cases"
-        class="top-grid__call-status rounded-lg"
-      >
-        <h6>
-          <strong>Pertanyaan Terlayani</strong><br>
-          <small>
-            Telpon & Pesan Teks
-          </small>
-        </h6>
-        <summary class="text-5xl text-yellopx-40 font-bold">
-          {{ cases ? cases.pertanyaan_terlayani : '' }}
-        </summary>
-      </div>
-      <div
-        v-show="!cases"
-        class="top-grid__call-status rounded-lg"
-      >
-        <ContentLoader
-          :speed="2"
-          :height="100"
-          primary-color="rgba(255,255,255,0.3)"
-          secondary-color="rgba(255,255,255,0.1)"
-          class="w-full h-full max-w-xs"
-          style="grid-column-end: span 2;"
-        >
-          <rect
-            x="0"
-            y="0"
-            rx="8"
-            ry="6"
-            width="50%"
-            height="16"
-          />
-          <rect
-            x="0"
-            y="30"
-            rx="8"
-            ry="6"
-            width="66%"
-            height="16"
-          />
-          <rect
-            x="0"
-            y="64"
-            rx="8"
-            ry="6"
-            width="20%"
-            height="16"
-          />
-        </ContentLoader>
+    <client-only>
+      <section class="m-4 md:m-8">
+        <TopAlert />
+      </section>
+    </client-only>
+    <section class="m-4 md:m-8">
+      <div class="flex flex-col lg:flex-row lg:items-stretch">
+        <div class="w-full mb-6 lg:w-1/2 lg:mr-6 lg:mb-0">
+          <div class="relative container-with-ratio rounded-lg overflow-hidden shadow-md">
+            <ImageCarousel
+              class="absolute inset-0 w-full h-full"
+              :items="banners"
+            />
+          </div>
+        </div>
+        <div class="w-full lg:w-1/2">
+          <div class="relative container-with-ratio container-with-ratio--lg">
+            <div class="static lg:absolute lg:inset-0 w-full h-full top-grid">
+              <CallCard class="top-grid__call-card" title="Call Center" subtitle="Nomor Darurat" number="119" />
+              <CallCard class="top-grid__call-card" title="Dinkes Jabar" subtitle="Pertanyaan Umum" number="0811 2093 306" />
+              <div
+                v-show="cases"
+                class="top-grid__call-status rounded-lg"
+              >
+                <h6>
+                  <strong>Pertanyaan Terlayani</strong><br>
+                  <small>
+                    Telpon & Pesan Teks
+                  </small>
+                </h6>
+                <summary class="text-5xl text-yellopx-40 font-bold">
+                  {{ cases ? formatNumber(cases.pertanyaan_terlayani) : '' }}
+                </summary>
+              </div>
+              <div
+                v-show="!cases"
+                class="top-grid__call-status rounded-lg"
+              >
+                <ContentLoader
+                  :speed="2"
+                  :height="100"
+                  primary-color="rgba(255,255,255,0.3)"
+                  secondary-color="rgba(255,255,255,0.1)"
+                  class="w-full h-full max-w-xs"
+                  style="grid-column-end: span 2;"
+                >
+                  <rect
+                    x="0"
+                    y="0"
+                    rx="8"
+                    ry="6"
+                    width="50%"
+                    height="16"
+                  />
+                  <rect
+                    x="0"
+                    y="30"
+                    rx="8"
+                    ry="6"
+                    width="66%"
+                    height="16"
+                  />
+                  <rect
+                    x="0"
+                    y="64"
+                    rx="8"
+                    ry="6"
+                    width="20%"
+                    height="16"
+                  />
+                </ContentLoader>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
     <section class="mt-8 m-4 md:m-8 flex flex-col">
@@ -69,21 +83,19 @@
         <b>Angka Kejadian di Jawa Barat</b><br>
         <small class="opacity-50">Update Terakhir: {{ lastUpdatedAt }}</small>
       </h2>
-      <DataSummary class="my-8" />
-      <div class="rounded-lg bg-white shadow-md overflow-hidden">
-        <PetaPersebaranAllCases />
+      <DataTabs />
+      <div class="text-center md:self-center mb-8 xl:mt-8">
+        <a
+          target="_blank"
+          class="px-4 py-2 font-bold text-lg text-brand-green-darker hover:text-brand-green-light"
+          href="/data"
+        >
+          Lihat Selengkapnya
+          <FontAwesomeIcon class="ml-2" :icon="icon.faChevronRight" />
+        </a>
       </div>
-      <a
-        v-show="false"
-        target="_blank"
-        class="text-center md:self-center w-56 py-2 rounded-lg text-brand-green-darker hover:bg-green-200 border-2 border-solid border-brand-green"
-        href="/data"
-      >
-        Lihat Data Selengkapnya
-      </a>
-      <br>
     </section>
-    <section class="mt-8 m-4 md:mt-16 md:m-8">
+    <section class="mt-4 m-4 md:mt-8 md:m-8">
       <h2 class="mb-0 md:mb-4 text-left text-2xl md:text-center md:text-3xl">
         <b>Apa yang Harus Dilakukan</b>
       </h2>
@@ -96,7 +108,7 @@
           <p class="text-white text-lg w-full lg:w-2/3">
             COVID-19 merupakan penyakit yang disebabkan Novel Coronavirus 2019.
             Meski bergejala mirip dengan flu biasa, COVID-19 sampai saat ini memiliki fatalitas lebih tinggi.
-            Virus ini juga menyebar dengan sangat cepat karena bisa pindah dari orang ke orang bahkan sebelum orang tersebut tidak menunjukkan gejala.
+            Virus ini juga menyebar dengan sangat cepat karena bisa pindah dari orang ke orang bahkan sebelum orang tersebut menunjukkan gejala.
             <br>
             <br>
             Penting bagi Anda untuk menilai kondisi secara mandiri. Anda bergejala?
@@ -110,7 +122,7 @@
             :href.prop="selfDiagnoseURL"
             target="_blank"
           >
-            <b>Nilai Diri Saya</b>
+            <b>Periksa Diri Saya</b>
           </a>
         </div>
       </div>
@@ -131,13 +143,13 @@
                 Anda bergejala?
               </p>
             </header>
-            <nuxt-link
-              tag="a"
+            <a
               class="mt-8 px-6 py-4 inline-block rounded-lg bg-brand-green text-white border-2 border-solid border-brand-green"
-              to="/faq"
+              href="https://forum.pikobar.jabarprov.go.id/"
+              target="_blank"
             >
               <b>Tanyakan Sekarang</b>
-            </nuxt-link>
+            </a>
           </div>
         </div>
         <div class="flex-1 rounded-lg bg-white shadow-md p-5 md:p-8">
@@ -186,61 +198,69 @@
         </nuxt-link>
       </div>
     </section>
-    <section class="mt-8 m-4 md:m-8 rounded-lg bg-white shadow-md p-5 md:p-8">
-      <header class="lg:max-w-2xl">
-        <h2 class="mb-4 md:mb-8 text-left text-xl md:text-2xl">
-          <b>Lindungi Diri dan Orang Lain</b>
-        </h2>
-        <p>
-          Sampai saat ini COVID-19 belum memiliki vaksin, sehingga cara terbaik untuk tidak terinfeksi adalah dengan menghindari terekspos virus.
-        </p>
-      </header>
-      <br>
-      <div class="flex flex-col items-stretch lg:max-w-2xl">
-        <article class="text-gray-800">
-          <h3 class="text-lg text-black">
-            <b>COVID-19 dapat menyebar dari orang ke orang melalui tetesan kecil (droplet) saat batuk atau bersin.
-              Maka yang bisa Anda lakukan adalah:
-            </b>
-          </h3>
-          <br>
-          <ul style="list-style-type: none;">
-            <li class="li-check-mark">
-              Sering cuci tangan dengan sabun atau hand-sanitizer
-            </li>
-            <li class="li-check-mark">
-              Hindari menyentuh wajah, terutama hidung, mulut, dan mata
-            </li>
-            <li class="li-check-mark">
-              Bersihkan permukaan benda yang disentuh banyak orang
-            </li>
-            <li class="li-check-mark">
-              Social Distancing! Minimalisir kontak fisik dengan sesama
-            </li>
-            <li class="li-check-mark">
-              Jaga jarak 1-3 meter dengan orang yang sakit
-            </li>
-            <li class="li-check-mark">
-              Jika sakit, maka:
-              <ol style="list-style-type: decimal; list-style-position: inside;">
-                <li class="ml-0">
-                  Tinggal di rumah
-                </li>
-                <li class="ml-0">
-                  Gunakan masker
-                </li>
-              </ol>
-            </li>
-          </ul>
-        </article>
-        <nuxt-link
-          v-show="false"
-          tag="a"
-          to="#"
-          class="text-center md:self-center px-4 py-2 rounded-lg text-brand-green-darker hover:bg-green-200 border-2 border-solid border-brand-green"
+    <section class="md:flex flex-row flex-no-wrap mt-8 m-4 md:m-8 rounded-lg bg-white shadow-md p-5 md:p-8">
+      <div class="lg:w-1/2">
+        <header class="lg:max-w-2xl">
+          <h2 class="mb-4 md:mb-8 text-left text-xl md:text-2xl">
+            <b>Lindungi Diri dan Orang Lain</b>
+          </h2>
+          <p>
+            Sampai saat ini COVID-19 belum memiliki vaksin, sehingga cara terbaik untuk tidak terinfeksi adalah dengan menghindari terekspos virus.
+          </p>
+        </header>
+        <br>
+        <div class="flex flex-col items-stretch lg:max-w-2xl">
+          <article class="text-gray-800">
+            <h3 class="text-lg text-black">
+              <b>COVID-19 dapat menyebar dari orang ke orang melalui tetesan kecil (droplet) saat batuk atau bersin.
+                Maka yang bisa Anda lakukan adalah:
+              </b>
+            </h3>
+            <br>
+            <ul style="list-style-type: none;">
+              <li class="li-check-mark">
+                Sering cuci tangan dengan sabun atau hand-sanitizer
+              </li>
+              <li class="li-check-mark">
+                Hindari menyentuh wajah, terutama hidung, mulut, dan mata
+              </li>
+              <li class="li-check-mark">
+                Bersihkan permukaan benda yang disentuh banyak orang
+              </li>
+              <li class="li-check-mark">
+                Social Distancing! Minimalisir kontak fisik dengan sesama
+              </li>
+              <li class="li-check-mark">
+                Jaga jarak 1-3 meter dengan orang yang sakit
+              </li>
+              <li class="li-check-mark">
+                Jika sakit, maka:
+                <ol style="list-style-type: decimal; list-style-position: inside;">
+                  <li class="ml-0">
+                    Tinggal di rumah
+                  </li>
+                  <li class="ml-0">
+                    Gunakan masker
+                  </li>
+                </ol>
+              </li>
+            </ul>
+          </article>
+          <nuxt-link
+            v-show="false"
+            tag="a"
+            to="#"
+            class="text-center md:self-center px-4 py-2 rounded-lg text-brand-green-darker hover:bg-green-200 border-2 border-solid border-brand-green"
+          >
+            Lihat Selengkapnya
+          </nuxt-link>
+        </div>
+      </div>
+      <div class="hidden lg:block w-1/2">
+        <img
+          src="https://firebasestorage.googleapis.com/v0/b/jabarprov-covid19.appspot.com/o/public%2Flindungi-diri.jpeg?alt=media&token=e407e115-c82a-4159-b247-6976caab8051"
+          class="w-full h-full object-contain object-center"
         >
-          Lihat Selengkapnya
-        </nuxt-link>
       </div>
     </section>
     <section class="mt-2 m-4 md:mt-4 md:m-8 rounded-lg bg-white shadow-md p-5 md:p-8">
@@ -249,7 +269,7 @@
       </h2>
       <article class="flex flex-col lg:flex-row">
         <img
-          v-lazy="'https://firebasestorage.googleapis.com/v0/b/jabarprov-covid19.appspot.com/o/public%2Fflatten.png?alt=media&token=afe8bb16-6cd5-4056-8d14-5c102f34a7c9'"
+          v-lazy="'https://firebasestorage.googleapis.com/v0/b/jabarprov-covid19.appspot.com/o/public%2Fflatten.jpeg?alt=media&token=3d989ffe-f369-4835-a232-7cf61686abd5'"
           class="order-2 lg:order-1 w-full h-full mb-8 lg:w-1/2 lg:mr-8 object-contain md:object-cover object-center rounded-lg"
         >
         <div class="order-1 lg:order-2 lg:w-1/2">
@@ -260,7 +280,7 @@
             jumlah orang terinfeksi akan meledak dan fasilitas layanan kesehatan akan kewalahan sehingga banyak kasus akan tidak tertangani.
           </p>
           <p class="font-bold text-lg">
-            Social distancing akan mengurangi laju penularan dan mengizinkan pasien terinfeksi untuk ditangani hingga sembuh, seperti di grafik terlampir.
+            Social distancing akan mengurangi laju penularan dan memungkinkan pasien terinfeksi untuk ditangani hingga sembuh, seperti di grafik terlampir.
           </p>
         </div>
       </article>
@@ -320,26 +340,46 @@
       </div>
     </section>
     <section class="mt-8 m-4 md:mt-16 md:m-8">
-      <div class="flex justify-between items-center md:mb-4">
-        <h2 class="text-left text-2xl md:text-3xl">
-          <b>Info Praktikal</b>
-        </h2>
-        <nuxt-link
-          tag="a"
-          class="hidden md:inline-block text-center md:self-center px-4 py-2 rounded-lg text-brand-green-darker hover:bg-green-200 border-2 border-solid border-brand-green"
-          to="/infographics"
-        >
-          Lihat Selengkapnya
-        </nuxt-link>
+      <div class="bg-white rounded-lg shadow-md">
+        <div class="p-5 md:p-8 flex justify-between items-center">
+          <h2 class="text-left text-2xl md:text-3xl">
+            <b>Info Praktikal</b>
+          </h2>
+        </div>
+        <ShareableItems :items="shareableInfographics" />
+        <div class="text-center pb-5 md:pb-8">
+          <nuxt-link
+            tag="a"
+            class="inline-block text-center md:self-center px-4 py-2 mt-8  rounded-lg text-brand-green-darker hover:bg-green-200 border-2 border-solid border-brand-green"
+            to="/info/infographics"
+          >
+            Lihat Selengkapnya
+          </nuxt-link>
+        </div>
       </div>
-      <ShareableItems :items="shareableInfographics" />
-      <nuxt-link
-        tag="a"
-        class="inline-block md:hidden text-center md:self-center px-4 py-2 mt-8  rounded-lg text-brand-green-darker hover:bg-green-200 border-2 border-solid border-brand-green"
-        to="/infographics"
-      >
-        Lihat Selengkapnya
-      </nuxt-link>
+    </section>
+    <section class="m-4 md:m-8 md:mt-4">
+      <div class="bg-white rounded-lg shadow-md">
+        <div class="p-5 md:p-8 flex justify-between items-center">
+          <h2 class="text-left text-2xl md:text-3xl">
+            <b>Dokumen</b>
+          </h2>
+        </div>
+        <ShareableItemTable
+          class="px-5 md:px-8"
+          :columns="shareableDocumentsColumns"
+          :items="shareableDocuments"
+        />
+        <div class="text-center pb-5 md:pb-8">
+          <nuxt-link
+            tag="a"
+            class="inline-block text-center md:self-center px-4 py-2 mt-8  rounded-lg text-brand-green-darker hover:bg-green-200 border-2 border-solid border-brand-green"
+            to="/info/documents"
+          >
+            Lihat Selengkapnya
+          </nuxt-link>
+        </div>
+      </div>
     </section>
     <br>
     <section class="m-4 md:m-8">
@@ -381,26 +421,35 @@ import { ContentLoader } from 'vue-content-loader'
 import { mapState } from 'vuex'
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons'
 import { formatDateTimeShort } from '~/lib/date'
+import { formatNumber } from '~/lib/number'
+import { analytics } from '~/lib/firebase'
+import TopAlert from '~/components/TopAlert'
 import ImageCarousel from '~/components/ImageCarousel'
 import CallCard from '~/components/CallCard'
 import ContactListItem from '~/components/ContactList/ContactListItem'
 import CallCenter from '~/components/CallCenter'
 import BlogPostPreview from '~/components/Blog/BlogPostPreview'
-import DataSummary from '~/components/_pages/index/DataSummary'
-import PetaPersebaranAllCases from '~/components/Tableau/PetaPersebaranAllCases'
+import DataTabs from '~/components/_pages/index/DataTabs'
 import ShareableItems from '~/components/ShareableItems'
+import ShareableItemTable from '~/components/ShareableItemTable'
 
 export default {
   components: {
     ContentLoader,
+    TopAlert,
     ImageCarousel,
     CallCard,
     BlogPostPreview,
     ContactListItem,
     CallCenter,
-    DataSummary,
-    PetaPersebaranAllCases,
-    ShareableItems
+    DataTabs,
+    ShareableItems,
+    ShareableItemTable
+  },
+  async fetch () {
+    await this.$store.dispatch('hospitals/getItems')
+    await this.$store.dispatch('infographics/getItems')
+    await this.$store.dispatch('documents/getItems')
   },
   data () {
     return {
@@ -416,6 +465,7 @@ export default {
       hospitals: state => state.hospitals.items.filter((_, index) => index < 3),
       remainingHospitalCount: state => state.hospitals.items.length - 3,
       infographics: state => state.infographics.items,
+      documents: state => state.documents.items,
       news: state => state.news.items,
       cases: state => state.statistics.cases
     }),
@@ -448,21 +498,58 @@ export default {
     },
     shareableInfographics () {
       return this.infographics
-        .filter((_, index) => index < 4)
+        .filter((_, index) => index < 6)
         .map((item) => {
           return {
-            title: item.title,
-            route: item.route,
+            ...item,
             shareable: true,
-            downloadable: true,
-            downloadURL: item.images[0],
-            shareText: `[Pikobar] Bagikan "${item.title}". Selengkapnya di ${window.location.origin}${item.route}`
+            downloadable: true
+          }
+        })
+    },
+    shareableDocumentsColumns () {
+      return [
+        {
+          prop: 'published_at',
+          format: v => formatDateTimeShort(v),
+          label: 'Tanggal Rilis'
+        },
+        {
+          prop: 'title',
+          label: 'Judul Dokumen'
+        }
+      ]
+    },
+    shareableDocuments () {
+      return this.documents
+        .filter((_, index) => index < 6)
+        .map((item) => {
+          return {
+            ...item,
+            shareable: true,
+            downloadable: true
           }
         })
     }
   },
+  mounted () {
+    this.$nextTick(() => {
+      Promise.all([
+        this.$store.dispatch('statistics/getCases')
+      ]).then(() => {
+        Promise.all([
+          this.$store.dispatch('banners/getItems'),
+          this.$store.dispatch('news/getItems')
+        ])
+      })
+      if (process.browser) {
+        analytics.logEvent('homepage_view')
+      }
+    })
+  },
   methods: {
-    formatDateTimeShort
+    formatDateTimeShort,
+    formatNumber
   }
 }
 
@@ -472,6 +559,7 @@ export default {
 .top-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto 1fr;
   column-gap: 1.5rem;
   row-gap: 1.5rem;
 
@@ -487,6 +575,7 @@ export default {
   }
 
   &__call-card {
+    min-height: 100px;
     grid-column-end: span 1;
     @apply shadow-md;
   }
@@ -497,12 +586,6 @@ export default {
     text-xl text-white
     bg-brand-green-dark
     shadow-md;
-  }
-
-  @screen lg {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-template-rows: auto 1fr;
   }
 }
 
@@ -549,6 +632,17 @@ export default {
     column-gap: 1.5rem;
     align-items: stretch;
     row-gap: 1.5rem;
+  }
+}
+
+.container-with-ratio {
+  padding-top: (400 * 100/ 713) * 1%;
+
+  &--lg {
+    padding-top: 0;
+    @screen lg {
+      padding-top: (400 * 100/ 713) * 1%;
+    }
   }
 }
 </style>
