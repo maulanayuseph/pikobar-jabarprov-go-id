@@ -17,31 +17,43 @@
       <div class="flex flex-row items-stretch">
         <button
           class="button-selector mr-2"
+          style="display: flex;"
           :active="stat.isActivePolygon"
           @click="enablePolygon"
         >
-          <font-awesome-icon :icon="faMap" /> Sebaran Polygon
+          <img v-if="stat.isActivePolygon" src="/img/icon-sebaran-active.svg" style="margin-top: 2px; margin-right:5px;">
+          <img v-if="!stat.isActivePolygon" src="/img/icon-sebaran-inactive.svg" style="margin-top: 2px; margin-right:5px;">
+          Sebaran Polygon
         </button>
         <button
           class="button-selector mr-2"
+          style="display: flex;"
           :active="stat.isActiveCluster"
           @click="enableCluster"
         >
-          <font-awesome-icon :icon="faBug" /> Sebaran Titik
+          <img v-if="stat.isActiveCluster" src="/img/icon-sebaran-active.svg" style="margin-top: 2px; margin-right:5px;">
+          <img v-if="!stat.isActiveCluster" src="/img/icon-sebaran-inactive.svg" style="margin-top: 2px; margin-right:5px;">
+          Sebaran Titik
         </button>
         <button
           class="button-selector mr-2"
+          style="display: flex;"
           :active="stat.isActiveFaskes"
           @click="enableFaskes"
         >
-          <font-awesome-icon :icon="faFirstAid" /> Fasilitas Kesehatan
+          <img v-if="stat.isActiveFaskes" src="/img/icon-faskes-active.svg" style="margin-top: 2px; margin-right:5px;">
+          <img v-if="!stat.isActiveFaskes" src="/img/icon-faskes-inactive.svg" style="margin-top: 2px; margin-right:5px;">
+          Fasilitas Kesehatan
         </button>
         <!-- <button
           class="button-selector mr-2"
+          style="display: flex;"
           :active="stat.isActiveTimeslider"
           @click="enableTimeslider"
         >
-          <font-awesome-icon :icon="faCalendarMinus" /> Timeslider - Data Positif
+          <img v-if="stat.isActiveTimeslider" src="/img/icon-data-positif-active.svg" style="margin-top: 2px; margin-right:5px;">
+          <img v-if="!stat.isActiveTimeslider" src="/img/icon-data-positif-inactive.svg" style="margin-top: 2px; margin-right:5px;">
+          Timeslider - Data Positif
         </button> -->
       </div>
       <div class="mt-4">
