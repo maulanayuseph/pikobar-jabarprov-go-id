@@ -1,8 +1,8 @@
 <template>
   <div
-    class="container sm:p-5 mx-auto"
+    class="container mx-auto"
   >
-    <div class="p-5 bg-white border-solid border-gray-300">
+    <div class="m-4 md:m-8 p-5 bg-white rounded-lg shadow-md">
       <section>
         <template v-if="isPending">
           <ContentLoader
@@ -20,14 +20,36 @@
             />
           </ContentLoader>
         </template>
-        <template v-else-if="infographic">
-          <h2 class="text-xl font-bold leading-tight">
-            {{ infographic.title }}
-          </h2>
+        <template v-else-if="item">
+          <div class="flex flex-col justify-start items-start lg:flex-row lg:justify-between lg:items-center">
+            <h2 class="text-xl font-bold leading-tight mb-3 lg:mb-0">
+              {{ item.title }}
+            </h2>
+            <p class="flex-none text-sm text-gray-600">
+              <button
+                class="px-2 py-2 mr-1 rounded-md hover:bg-gray-300"
+                @click="beforeDownload"
+              >
+                <FontAwesomeIcon :icon="icon.faDownload" class="mr-1" />
+                <span>
+                  Unduh
+                </span>
+              </button>
+              <button
+                class="px-2 py-2 rounded-md hover:bg-gray-300"
+                @click="beforeShare"
+              >
+                <FontAwesomeIcon :icon="icon.faShare" class="mr-1" />
+                <span>
+                  Bagikan
+                </span>
+              </button>
+            </p>
+          </div>
           <br>
           <img
-            :src="infographic.images[0] || null"
-            class="cursor-pointer w-full h-full object-contain object-center"
+            :src="item.images[0] || null"
+            class="cursor-pointer w-full lg:max-w-2xl mx-auto h-full object-contain object-center"
           >
         </template>
       </section>
@@ -36,10 +58,11 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { faDownload, faShare } from '@fortawesome/free-solid-svg-icons'
 import { ContentLoader } from 'vue-content-loader'
+import { onDownload, onShare } from '~/lib/download-and-share-firestore-doc'
 import { analytics } from '~/lib/firebase'
-import { useDefaultMetaInfo, useArticleMetaInfo } from '~/lib/metainfo'
+import { useArticleMetaInfo } from '~/lib/metainfo'
 
 const regex = /(?:(-inf\.))(.*)$/
 export default {
@@ -54,10 +77,19 @@ export default {
     }
     return true
   },
+  async fetch () {
+    await this.fetchItem()
+      .then(() => {
+        this.isPending = false
+      })
+  },
   data () {
     return {
-      isPending: true,
-      infographic: null
+      icon: {
+        faDownload,
+        faShare
+      },
+      isPending: true
     }
   },
   computed: {
@@ -69,40 +101,34 @@ export default {
       } else {
         return slug
       }
-    }
-  },
-  watch: {
-    itemId: {
-      immediate: true,
-      handler (v) {
-        if (v) {
-          this.isPending = true
-          this.getItemById(v)
-            .then((item) => {
-              this.infographic = item
-            })
-            .then(() => {
-              if (process.client || process.browser) {
-                analytics.logEvent('infographic_detail_view', { id: this.$route.params.slug })
-              }
-            })
-            .finally(() => {
-              this.isPending = false
-            })
-        }
-      }
+    },
+    item () {
+      return this.$store.getters['infographics/itemsMap'][this.itemId]
     }
   },
   methods: {
-    ...mapActions('infographics', {
-      getItemById: 'getItemById'
-    })
+    fetchItem () {
+      this.isPending = true
+      return this.$store.dispatch('infographics/getItemById', this.itemId)
+        .then(() => {
+          if (process.client || process.browser) {
+            analytics.logEvent('infographic_detail_view', { id: this.$route.params.slug })
+          }
+        })
+        .finally(() => {
+          this.isPending = false
+        })
+    },
+    beforeShare () {
+      onShare(this.item.shareText)
+    },
+    beforeDownload () {
+      onDownload(this.item.downloadURL, this.item.title)
+    }
   },
   head () {
-    if (!this.infographic) {
-      return useDefaultMetaInfo()
-    } else {
-      const { title, route, published_at: publishedAt, images = [] } = this.infographic
+    if (this.item) {
+      const { title, route, published_at: publishedAt, images = [] } = this.item
       const date = publishedAt && typeof publishedAt.toISOString === 'function'
         ? publishedAt.toISOString()
         : ''

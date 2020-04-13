@@ -3,7 +3,10 @@
     <slot>
       <ul>
         <li v-for="(item, index) in items" :key="index">
-          <ShareableItem v-bind="item" />
+          <ShareableItem
+            class="px-5 md:px-8"
+            v-bind="item"
+          />
         </li>
       </ul>
     </slot>

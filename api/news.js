@@ -1,17 +1,12 @@
-import _kebabCase from 'lodash/kebabCase'
-import { db } from '~/lib/firebase'
+import { db } from '../lib/firebase'
+import { slugifyArticleRoute } from '../lib/slugify'
 
-function slugify (id, title) {
-  if (!id || !title) {
-    console.error('slugify: id and title must be supplied')
-    return '#'
-  }
-  return `/articles/${_kebabCase(title)}-artcl.${id}`
-}
+export const ORDER_INDEX = 'published_at'
+export const ORDER_TYPE = 'desc'
 
 export function get (options = { perPage: 3 }) {
   return db.collection('articles')
-    .orderBy('published_at', 'desc')
+    .orderBy(ORDER_INDEX, 'desc')
     .limit(options.perPage)
     .get()
     .then((docs) => {
@@ -22,7 +17,7 @@ export function get (options = { perPage: 3 }) {
             ...data,
             id: doc.id,
             published_at: data.published_at.toDate(),
-            route: slugify(doc.id, data.title)
+            route: slugifyArticleRoute(doc.id, data.title)
           }
         })
       }
@@ -41,7 +36,7 @@ export function getById (id) {
           ...data,
           id: doc.id,
           published_at: data.published_at.toDate(),
-          route: slugify(doc.id, data.title)
+          route: slugifyArticleRoute(doc.id, data.title)
         }
       }
       return null

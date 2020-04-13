@@ -942,7 +942,9 @@ export default {
     },
     propsDataRekapitulasiJabarKab () {
       this.jsonDataKabupaten = this.propsDataRekapitulasiJabarKab
-      this.fetchDataKabupaten()
+      setTimeout(() => {
+        this.fetchDataKabupaten()
+      }, 2000)
     },
     propsDataRekapitulasiJabarHarianProv () {
       this.jsonDataProvinsiHarian = this.propsDataRekapitulasiJabarHarianProv

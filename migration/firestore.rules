@@ -1,0 +1,38 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+  	match /articles/{articleId} {
+      allow read;
+    }
+  	match /articles_national/{articleId} {
+      allow read;
+    }
+    match /articles_world/{articleId} {
+      allow read;
+    }
+    match /banners/{bannerId} {
+      allow read;
+    }
+    match /broadcasts/{broadcastId} {
+      allow read;
+    }
+    match /call_centers/{id} {
+    	allow read;
+    }
+    match /emergency_numbers/{id} {
+      allow read;
+    }
+  	match /faqs/{id} {
+    	allow read;
+    }
+    match /infographics/{id} {
+    	allow read;
+    }
+    match /messages/{messageId} {
+      allow read;
+    }
+  	match /statistics/{id} {
+    	allow read;
+    }
+  }
+}

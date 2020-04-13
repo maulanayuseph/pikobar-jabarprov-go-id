@@ -10,9 +10,9 @@
     <section class="m-4 mb-8 md:m-8">
       <DataSummary />
     </section>
-    <section class="m-4 mb-8 md:m-8">
+    <!-- <section class="m-4 mb-8 md:m-8">
       <DataRDT :propsDataRekapitulasiJabar.sync="jsonDataRekapitulasiJabarProv" />
-    </section>
+    </section> -->
     <section class="m-4 mb-8 md:m-8">
       <div class="flex flex-row items-stretch">
         <button
@@ -36,13 +36,13 @@
         >
           <font-awesome-icon :icon="faFirstAid" /> Fasilitas Kesehatan
         </button>
-        <button
+        <!-- <button
           class="button-selector mr-2"
           :active="stat.isActiveTimeslider"
           @click="enableTimeslider"
         >
           <font-awesome-icon :icon="faCalendarMinus" /> Timeslider - Data Positif
-        </button>
+        </button> -->
       </div>
       <div class="mt-4">
         <!-- <MapSebaranCovid v-if="stat.isActiveCovid" />
@@ -50,50 +50,50 @@
         <MapSebaranPolygon v-if="stat.isActivePolygon" /> -->
         <MapV2SebaranPolygon
           v-if="stat.isActivePolygon"
-          :propsDataSebaranJawaBarat.sync="jsonDataSebaranJawaBarat"
+          :props-data-sebaran-jawa-barat.sync="jsonDataSebaranJawaBarat"
         />
         <MapV2SebaranCluster
           v-if="stat.isActiveCluster"
-          :propsDataSebaranJabar.sync="jsonDataSebaranJabar"
+          :props-data-sebaran-jabar.sync="jsonDataSebaranJabar"
         />
         <MapV2SebaranFaskes
           v-if="stat.isActiveFaskes"
-          :propsDataSebaranJabarFaskes.sync="jsonDataSebaranJabarFaskes"
+          :props-data-sebaran-jabar-faskes.sync="jsonDataSebaranJabarFaskes"
         />
         <MapV2SebaranTimeslider
           v-if="stat.isActiveTimeslider"
-          :propsDataSebaranJabar.sync="jsonDataSebaranJabar"
+          :props-data-sebaran-jabar.sync="jsonDataSebaranJabar"
         />
       </div>
     </section>
 
     <section class="m-4 mb-8 md:m-8">
       <BarStatArea
-        :propsDataRekapitulasiJabarProv.sync="jsonDataRekapitulasiJabarProv"
-        :propsDataRekapitulasiJabarKab.sync="jsonDataRekapitulasiJabarKab"
-        :propsDataRekapitulasiJabarHarianProv.sync="jsonDataRekapitulasiJabarHarianProv"
-        :propsDataRekapitulasiJabarHarianKab.sync="jsonDataRekapitulasiJabarHarianKab"
-        :propsDataRekapitulasiJabarKumulatifProv.sync="jsonDataRekapitulasiJabarKumulatifProv"
-        :propsDataRekapitulasiJabarKumulatifKab.sync="jsonDataRekapitulasiJabarKumulatifKab"
-        :propsDataNasionalHarianKumulatif.sync="jsonDataNasionalHarianKumulatif"
+        :props-data-rekapitulasi-jabar-prov.sync="jsonDataRekapitulasiJabarProv"
+        :props-data-rekapitulasi-jabar-kab.sync="jsonDataRekapitulasiJabarKab"
+        :props-data-rekapitulasi-jabar-harian-prov.sync="jsonDataRekapitulasiJabarHarianProv"
+        :props-data-rekapitulasi-jabar-harian-kab.sync="jsonDataRekapitulasiJabarHarianKab"
+        :props-data-rekapitulasi-jabar-kumulatif-prov.sync="jsonDataRekapitulasiJabarKumulatifProv"
+        :props-data-rekapitulasi-jabar-kumulatif-kab.sync="jsonDataRekapitulasiJabarKumulatifKab"
+        :props-data-nasional-harian-kumulatif.sync="jsonDataNasionalHarianKumulatif"
       />
     </section>
 
     <section class="m-4 mb-8 md:m-8">
-      <BarStatTable :propsDataRekapitulasiJabarKab.sync="jsonDataRekapitulasiJabarKab" />
+      <BarStatTable :props-data-rekapitulasi-jabar-kab.sync="jsonDataRekapitulasiJabarKab" />
     </section>
 
     <section class="m-4 mb-8 md:m-8">
       <div class="chart-container w-full">
-        <BarStatJenisKelamin :propsDataRekapitulasiJabar.sync="jsonDataRekapitulasiJabarProv" />
-        <BarStatUsia :propsDataRekapitulasiJabar.sync="jsonDataRekapitulasiJabarProv" />
+        <BarStatJenisKelamin :props-data-rekapitulasi-jabar.sync="jsonDataRekapitulasiJabarProv" />
+        <BarStatUsia :props-data-rekapitulasi-jabar.sync="jsonDataRekapitulasiJabarProv" />
       </div>
     </section>
 
     <section class="m-4 md:m-8">
       <BarStatHarianAkumulatif
-        :propsDataRekapitulasiJabarHarianProv.sync="jsonDataRekapitulasiJabarHarianProv"
-        :propsDataRekapitulasiJabarKumulatifProv.sync="jsonDataRekapitulasiJabarKumulatifProv"
+        :props-data-rekapitulasi-jabar-harian-prov.sync="jsonDataRekapitulasiJabarHarianProv"
+        :props-data-rekapitulasi-jabar-kumulatif-prov.sync="jsonDataRekapitulasiJabarKumulatifProv"
       />
     </section>
   </div>
@@ -106,6 +106,7 @@ import { mapState } from 'vuex'
 import DataSummary from '~/components/_pages/index/DataSummary'
 import { faFirstAid, faBug, faMap, faCalendarMinus } from '@fortawesome/free-solid-svg-icons'
 import { formatDateTimeShort } from '~/lib/date'
+import { analytics } from '~/lib/firebase'
 
 export default {
   components: {

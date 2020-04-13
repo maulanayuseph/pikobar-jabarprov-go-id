@@ -1,28 +1,26 @@
-import _kebabCase from 'lodash/kebabCase'
-import { db } from '~/lib/firebase'
+import { db } from '../lib/firebase'
+import { slugifyInfographicRoute } from '../lib/slugify'
 
-function slugify (id, title) {
-  if (!id || !title) {
-    console.error('slugify: id and title must be supplied')
-    return '#'
-  }
-  return `/infographics/${_kebabCase(title)}-inf.${id}`
-}
+export const ORDER_INDEX = 'published_date'
+export const ORDER_TYPE = 'desc'
 
 export function get (options = { perPage: 3 }) {
   return db.collection('infographics')
-    .orderBy('published_date', 'desc')
+    .orderBy(ORDER_INDEX, 'desc')
     .limit(options.perPage)
     .get()
     .then((docs) => {
       if (!docs.empty) {
         return docs.docs.map((doc) => {
           const data = doc.data()
+          const route = slugifyInfographicRoute(doc.id, data.title)
           return {
             ...data,
             id: doc.id,
             published_date: data.published_date.toDate(),
-            route: slugify(doc.id, data.title)
+            route,
+            downloadURL: data.images[0],
+            shareText: `[Pikobar] Bagikan "${data.title}". Selengkapnya di ${process.env.URL}${route}`
           }
         })
       }
@@ -37,11 +35,14 @@ export function getById (id) {
     .then((doc) => {
       if (doc.exists) {
         const data = doc.data()
+        const route = slugifyInfographicRoute(doc.id, data.title)
         return {
           ...data,
           id: doc.id,
           published_date: data.published_date.toDate(),
-          route: slugify(doc.id, data.title)
+          route,
+          downloadURL: data.images[0],
+          shareText: `[Pikobar] Bagikan "${data.title}". Selengkapnya di ${process.env.URL}${route}`
         }
       }
       return null

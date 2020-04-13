@@ -6,14 +6,14 @@
           :is-pending="isPending"
           class="lg:mr-8 mb-8 lg:w-1/3 border border-solid"
           style="background-color: #FCDFE0; border-color: #FFB4B5;"
-          label="Positif COVID-19"
+          label="Terkonfirmasi"
         >
           <div class="flex justify-between items-baseline text-2xl">
             <h4>
               <b>Jawa Barat</b>
             </h4>
             <b>
-              {{ positifJabar }}
+              {{ formatNumber(positifJabar) }}
             </b>
           </div>
           <div class="flex justify-between items-baseline text-xl opacity-50">
@@ -21,7 +21,7 @@
               Indonesia
             </h4>
             <b>
-              {{ positifNasional }}
+              {{ formatNumber(positifNasional) }}
             </b>
           </div>
         </CounterCardLoader>
@@ -35,16 +35,16 @@
             <h4>
               <b>Jawa Barat</b>
             </h4>
-            <span>
-              {{ sembuhJabar }}
-            </span>
+            <b>
+              {{ formatNumber(sembuhJabar) }}
+            </b>
           </div>
           <div class="flex justify-between items-baseline text-xl opacity-50">
             <h4>
               Indonesia
             </h4>
             <b>
-              {{ sembuhNasional }}
+              {{ formatNumber(sembuhNasional) }}
             </b>
           </div>
         </CounterCardLoader>
@@ -59,7 +59,7 @@
               <b>Jawa Barat</b>
             </h4>
             <b>
-              {{ meninggalJabar }}
+              {{ formatNumber(meninggalJabar) }}
             </b>
           </div>
           <div class="flex justify-between items-baseline text-xl opacity-50">
@@ -67,7 +67,7 @@
               Indonesia
             </h4>
             <b>
-              {{ meninggalNasional }}
+              {{ formatNumber(meninggalNasional) }}
             </b>
           </div>
         </CounterCardLoader>
@@ -132,6 +132,7 @@ import _get from 'lodash/get'
 import _round from 'lodash/round'
 import CounterCardLoader from './CounterCardLoader'
 import StatisticLoader from './StatisticLoader'
+import { formatNumber } from '~/lib/number'
 
 export default {
   components: {
@@ -183,7 +184,8 @@ export default {
     }
   },
   methods: {
-    _round
+    _round,
+    formatNumber
   }
 }
 </script>

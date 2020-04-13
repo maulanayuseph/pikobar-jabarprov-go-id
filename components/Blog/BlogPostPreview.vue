@@ -19,7 +19,7 @@
         </p>
         <br>
         <!-- eslint-disable-next-line -->
-        <div class="content flex-1" v-html="truncatedContent" />
+        <div class="html-content html-content--preview flex-1" v-html="truncatedContent" />
       </section>
       <img
         v-if="image"
@@ -31,6 +31,7 @@
 </template>
 
 <script>
+import _truncate from 'lodash/truncate'
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons'
 export default {
   props: {
@@ -69,14 +70,12 @@ export default {
   computed: {
     truncatedContent () {
       if (typeof this.content === 'string') {
-        return this.content.slice(0, this.content.indexOf('.') + 1)
+        return _truncate(this.content, {
+          length: 300
+        })
       }
       return ''
     }
   }
 }
 </script>
-
-<style>
-
-</style>

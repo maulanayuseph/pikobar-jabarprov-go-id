@@ -464,7 +464,7 @@ export default {
       }
 
       // create legend
-      const labels = ['<b>Jumlah Kasus</b>', '<br>', '<ul style="display: flex; margin-top: 10px;">']
+      const labels = ['<b>Jumlah Kasus: </b>', '<br>', '<ul style="display: flex; margin-top: 10px;">']
       range.forEach((element) => {
         labels.push(
           '<li style="margin-right: 20px;"><i style="background:#' + self.styleColorPolygon[self.filterActive] + '; ' +
