@@ -174,6 +174,14 @@ export default {
     this.fetchDataSebaranJabar()
     this.fetchDataSebaranJabarFaskes()
   },
+  mounted () {
+    this.$store.dispatch('statistics/getCases')
+    this.$nextTick(() => {
+      if (process.browser) {
+        analytics.logEvent('dashboard_view')
+      }
+    })
+  },
   methods: {
     formatDateTimeShort,
     enablePolygon () {
