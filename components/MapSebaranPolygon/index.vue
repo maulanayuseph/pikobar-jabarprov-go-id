@@ -2,7 +2,12 @@
   <div class="container-map">
     <div class="bg-white col-md-12 p-0 " style="position:relative;border-radius: 0.8rem; box-shadow: 0 0 4px 0px rgba(0,0,0,0.05), 0 4px 24px 0 rgba(0,0,0,0.1);">
       <div id="map-polygon" style="height: 50em;z-index:0;" />
-      <div class="filter-layer"> 
+      <div class="filter-layer">
+        <div class="text-right mb-2">
+          <button class="btn bg-white" >
+            <font-awesome-icon :icon="faHome" @click="backToHome"/>
+          </button>
+        </div> 
         <div class="text-right">
           <button class="btn bg-white rounded" @click="showFilter">
             <font-awesome-icon :icon="faFilter" />
@@ -113,7 +118,7 @@
 <script>
 import { loadModules } from 'esri-loader'
 import axios from 'axios'
-import { faFilter } from '@fortawesome/free-solid-svg-icons'
+import { faFilter, faHome } from '@fortawesome/free-solid-svg-icons'
 import * as turf from '@turf/turf'
 import { featureEach } from '@turf/turf'
 
@@ -142,6 +147,7 @@ export default {
       },
       loading: false,
       faFilter,
+      faHome,
       geoJSONData: [],
       kotaGeojson: {},
       dataTitik: [],
@@ -201,6 +207,26 @@ export default {
     }
   },
   methods: {
+    backToHome() {
+      loadModules(['esri/geometry/Polygon', 'esri/geometry/support/webMercatorUtils'], { css: true }).then(([Polygon, webMercatorUtils]) => {
+        this.view.center = [107.627449, -6.932694] 
+        this.view.zoom = 8;  
+        let activeGeoJSON = []
+        let level = 'kota'
+        const features = []
+        let area = []
+        level = 'kota'
+        let geojsonFeatures = this.kotaGeojson
+
+        this.loading = true
+        setTimeout(() => {
+          this.map.removeAll()
+
+          this.createMap(geojsonFeatures, level)
+          this.loading = false
+        }, 500)
+      })
+    },
     setFilter (status, stage) {
       // this.loading = true
 
@@ -408,12 +434,11 @@ export default {
               activeGeoJSON = this.kecamatanGeojson
             } else {
               level = 'kota'
-              activeGeoJSON = this.kotaGeojson
+              geojsonFeatures = this.kotaGeojson
             }
 
             if (area.rings !== undefined) {
               this.loading = true
-
               setTimeout(() => {
                 this.map.removeAll()
                 let screenRings = []
@@ -481,8 +506,6 @@ export default {
                 this.createMap(geojsonFeatures, level)
                 this.loading = false
               }, 500)
-              
-
             }
             
           }))
@@ -981,6 +1004,9 @@ export default {
 }
 
 .filter-layer .btn {
+  width: 2em;
+  height: 2em;
+  border-radius: 5px;
   font-size: 0.8em;
   padding: 2px 6px;
   box-shadow: 0 1px 5px rgba(0,0,0,0.65);

@@ -1,6 +1,7 @@
 
 import Vue from 'vue'
 import Vue2LeafletMarkerCluster from 'vue2-leaflet-markercluster'
+import VGeosearch from 'vue2-leaflet-geosearch'
 import * as Vue2Leaflet from 'vue2-leaflet'
 import * as L from 'leaflet'
 
@@ -27,6 +28,7 @@ Vue.component('l-tile-layer', Vue2Leaflet.LTileLayer)
 Vue.component('l-tooltip', Vue2Leaflet.LTooltip)
 Vue.component('l-lwms-tile-layer', Vue2Leaflet.LWMSTileLayer)
 Vue.component('v-marker-cluster', Vue2LeafletMarkerCluster)
+Vue.component('v-geosearch', VGeosearch)
 
 // Build icon assets.
 delete L.Icon.Default.prototype._getIconUrl

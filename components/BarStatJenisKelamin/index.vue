@@ -2,33 +2,25 @@
   <div
     class="bg-white overflow-hidden rounded-lg shadow-md"
   >
-    <h4 class="p-5 text-xl">
-      <b>Jenis Kelamin</b>
-    </h4>
-    <hr>
-    <div class="flex flex-row items-stretch p-5 pb-0">
-      <button
-        class="button-selector mr-2"
-        :active="stat.isPositif"
-        @click="changeGroupJenisKelamin('Positif')"
+    <div class="flex">
+      <h4 class="p-5 text-xl w-1/2">
+        <b>Jenis Kelamin</b>
+      </h4>
+      <select
+        v-model="optionSelected"
+        class="select-option-selector w-1/2"
+        @change="changeGroupJenisKelamin($event.target.value)"
       >
-        Positif
-      </button>
-      <button
-        class="button-selector mr-2"
-        :active="stat.isODP"
-        @click="changeGroupJenisKelamin('ODP')"
-      >
-        ODP
-      </button>
-      <button
-        class="button-selector"
-        :active="stat.isPDP"
-        @click="changeGroupJenisKelamin('PDP')"
-      >
-        PDP
-      </button>
+        <option
+          v-for="list in optionList"
+          :key="list"
+          :value="list"
+        >
+          {{ list }}
+        </option>
+      </select>
     </div>
+    <hr>
     <GChart
       class="p-5"
       type="PieChart"
@@ -39,7 +31,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 import { GChart } from 'vue-google-charts'
 
 export default {
@@ -47,14 +38,79 @@ export default {
   components: {
     GChart
   },
+  props: {
+    propsDataRekapitulasiJabar: {
+      type: Object,
+      default: () => ({
+        kode_prov: '',
+        nama_prov: '',
+        odp_total: 0,
+        odp_total_per_gender: {
+          laki_laki: 0,
+          perempuan: 0
+        },
+        pdp_total: 0,
+        pdp_total_per_gender: {
+          laki_laki: 0,
+          perempuan: 0
+        },
+        positif: 0,
+        positif_per_gender: {
+          laki_laki: 0,
+          perempuan: 0
+        },
+        sembuh: 0,
+        sembuh_per_gender: {
+          laki_laki: 0,
+          perempuan: 0
+        },
+        meninggal: 0,
+        meninggal_per_gender: {
+          laki_laki: 0,
+          perempuan: 0
+        }
+      })
+    }
+  },
   data () {
     return {
-      stat: {
-        isPositif: false,
-        isODP: false,
-        isPDP: true
+      optionList: [
+        'ODP',
+        'PDP',
+        'Positif Aktif',
+        'Positif - Sembuh',
+        'Positif - Meninggal'
+      ],
+      optionSelected: 'Positif Aktif',
+      jsonDataRekapitulasiJabar: {
+        kode_prov: '',
+        nama_prov: '',
+        odp_total: 0,
+        odp_total_per_gender: {
+          laki_laki: 0,
+          perempuan: 0
+        },
+        pdp_total: 0,
+        pdp_total_per_gender: {
+          laki_laki: 0,
+          perempuan: 0
+        },
+        positif: 0,
+        positif_per_gender: {
+          laki_laki: 0,
+          perempuan: 0
+        },
+        sembuh: 0,
+        sembuh_per_gender: {
+          laki_laki: 0,
+          perempuan: 0
+        },
+        meninggal: 0,
+        meninggal_per_gender: {
+          laki_laki: 0,
+          perempuan: 0
+        }
       },
-      jsonDataSebaranJabar: [],
       pieChartJenisKelaminData: [
         ['Jenis Kelamin', 'Data'],
         ['Pria', 0],
@@ -77,8 +133,11 @@ export default {
       }
     }
   },
-  created () {
-    this.fetchDataSebaranJabar()
+  watch: {
+    propsDataRekapitulasiJabar () {
+      this.jsonDataRekapitulasiJabar = this.propsDataRekapitulasiJabar
+      this.changeGroupJenisKelamin('Positif Aktif')
+    }
   },
   methods: {
     ifNullReturnZero (str) {
@@ -101,20 +160,6 @@ export default {
       }
       return [day, month, year].join('-')
     },
-    fetchDataSebaranJabar () {
-      const self = this
-      axios
-        .get('https://covid19-public.digitalservice.id/api/v1/sebaran/jabar')
-        .then(function (response) {
-          self.jsonDataSebaranJabar = response.data.data.content
-
-          // by jenis_kelamin
-          self.changeGroupJenisKelamin('ODP')
-        })
-        .catch(function (error) {
-          console.log(error)
-        })
-    },
     resetPieChartJenisKelaminData () {
       this.pieChartJenisKelaminData = [
         ['Jenis Kelamin', 'Data'],
@@ -126,35 +171,48 @@ export default {
     changeGroupJenisKelamin (stat) {
       const self = this
       this.resetPieChartJenisKelaminData()
-      if (stat === 'Positif') {
-        this.stat.isPositif = true
-        this.stat.isODP = false
-        this.stat.isPDP = false
-      }
-      if (stat === 'ODP') {
-        this.stat.isPositif = false
-        this.stat.isODP = true
-        this.stat.isPDP = false
-      }
-      if (stat === 'PDP') {
-        this.stat.isPositif = false
-        this.stat.isODP = false
-        this.stat.isPDP = true
-      }
+
       let tempJenisKelaminPria = 0
       let tempJenisKelaminWanita = 0
       let tempJenisKelaminNull = 0
-      for (let i = 0; i < self.jsonDataSebaranJabar.length; i++) {
-        if (self.jsonDataSebaranJabar[i].status === stat) {
-          if (self.jsonDataSebaranJabar[i].gender === 'Laki-laki') {
-            tempJenisKelaminPria += 1
-          } else if (self.jsonDataSebaranJabar[i].gender === 'Perempuan') {
-            tempJenisKelaminWanita += 1
-          } else {
-            tempJenisKelaminNull += 1
-          }
+
+      if (stat === 'ODP') {
+        tempJenisKelaminPria = parseInt(this.jsonDataRekapitulasiJabar.odp_total_per_gender.laki_laki)
+        tempJenisKelaminWanita = parseInt(this.jsonDataRekapitulasiJabar.odp_total_per_gender.perempuan)
+        tempJenisKelaminNull = parseInt(this.jsonDataRekapitulasiJabar.odp_total) - parseInt(tempJenisKelaminPria + tempJenisKelaminWanita)
+        if (tempJenisKelaminNull < 0) {
+          tempJenisKelaminNull = 0
+        }
+      } else if (stat === 'PDP') {
+        tempJenisKelaminPria = parseInt(this.jsonDataRekapitulasiJabar.pdp_total_per_gender.laki_laki)
+        tempJenisKelaminWanita = parseInt(this.jsonDataRekapitulasiJabar.pdp_total_per_gender.perempuan)
+        tempJenisKelaminNull = parseInt(this.jsonDataRekapitulasiJabar.pdp_total) - parseInt(tempJenisKelaminPria + tempJenisKelaminWanita)
+        if (tempJenisKelaminNull < 0) {
+          tempJenisKelaminNull = 0
+        }
+      } else if (stat === 'Positif Aktif') {
+        tempJenisKelaminPria = parseInt(this.jsonDataRekapitulasiJabar.positif_per_gender.laki_laki)
+        tempJenisKelaminWanita = parseInt(this.jsonDataRekapitulasiJabar.positif_per_gender.perempuan)
+        tempJenisKelaminNull = parseInt(this.jsonDataRekapitulasiJabar.positif) - parseInt(tempJenisKelaminPria + tempJenisKelaminWanita)
+        if (tempJenisKelaminNull < 0) {
+          tempJenisKelaminNull = 0
+        }
+      } else if (stat === 'Positif - Sembuh') {
+        tempJenisKelaminPria = parseInt(this.jsonDataRekapitulasiJabar.sembuh_per_gender.laki_laki)
+        tempJenisKelaminWanita = parseInt(this.jsonDataRekapitulasiJabar.sembuh_per_gender.perempuan)
+        tempJenisKelaminNull = parseInt(this.jsonDataRekapitulasiJabar.sembuh) - parseInt(tempJenisKelaminPria + tempJenisKelaminWanita)
+        if (tempJenisKelaminNull < 0) {
+          tempJenisKelaminNull = 0
+        }
+      } else if (stat === 'Positif - Meninggal') {
+        tempJenisKelaminPria = parseInt(this.jsonDataRekapitulasiJabar.meninggal_per_gender.laki_laki)
+        tempJenisKelaminWanita = parseInt(this.jsonDataRekapitulasiJabar.meninggal_per_gender.perempuan)
+        tempJenisKelaminNull = parseInt(this.jsonDataRekapitulasiJabar.meninggal) - parseInt(tempJenisKelaminPria + tempJenisKelaminWanita)
+        if (tempJenisKelaminNull < 0) {
+          tempJenisKelaminNull = 0
         }
       }
+
       self.pieChartJenisKelaminData = [
         ['Jenis Kelamin', 'Data'],
         ['Pria', tempJenisKelaminPria],
@@ -176,4 +234,18 @@ export default {
     @apply text-white bg-brand-green;
   }
 }
+
+.select-option-selector {
+  border-radius: 0.2rem;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #555;
+  color: #555;
+  background-color: #fff;
+  height: 30px;
+  width: 160px;
+  margin: auto;
+  padding: 0px;
+}
+
 </style>
