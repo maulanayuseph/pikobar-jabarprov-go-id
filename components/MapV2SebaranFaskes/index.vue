@@ -181,13 +181,13 @@ export default {
       this.dataJson.lini2_non = []
 
       this.distributionProvinceData.forEach((row) => {
-        if (row.tipe_faskes === 1 && row.rujukan === true) {
+        if (row.tipe_faskes === 1 && row.nomor_rujukan === 1) {
           this.dataJson.lini1_rujukan.push(row)
-        } else if (row.tipe_faskes === 2 && row.rujukan === true) {
+        } else if (row.tipe_faskes === 1 && row.nomor_rujukan === 2) {
           this.dataJson.lini2_rujukan.push(row)
-        } else if (row.tipe_faskes === 1 && ((row.rujukan === false) || (row.rujukan === null))) {
+        } else if (row.tipe_faskes === 1 && row.nomor_rujukan === undefined) {
           this.dataJson.lini1_non.push(row)
-        } else if (row.tipe_faskes === 2 && ((row.rujukan === false) || (row.rujukan === null))) {
+        } else if (row.tipe_faskes === 2 && row.nomor_rujukan === undefined) {
           this.dataJson.lini2_non.push(row)
         }
       })
@@ -287,9 +287,19 @@ export default {
       this.dataJson[category].forEach((row) => {
         if (row.latitude !== '' && row.latitude !== 'null' && row.latitude !== null &&
         row.longitude !== '' && row.longitude !== 'null' && row.longitude !== null) {
+          let tipefaskes = ''
+          if (row.tipe_faskes === 1) {
+            tipefaskes = 'Rumah Sakit'
+          } else {
+            tipefaskes = 'Puskesmas'
+          }
           let rujukan = ''
-          if (row.rujukan === true) {
-            rujukan = 'Ya'
+          if (row.nomor_rujukan === 'undefined') {
+            rujukan = 'Tidak'
+          } else if (row.nomor_rujukan === 1) {
+            rujukan = 'Rujukan ke-1'
+          } else if (row.nomor_rujukan === 2) {
+            rujukan = 'Rujukan ke-2'
           } else {
             rujukan = 'Tidak'
           }
@@ -308,7 +318,7 @@ export default {
             row.nama +
             `</td></tr>
               <tr><th>Tipe Faskes</th><td>` +
-            row.tipe_faskes +
+            tipefaskes +
             `</td></tr>
               <tr><th>Rujukan</th><td>` +
             rujukan +
