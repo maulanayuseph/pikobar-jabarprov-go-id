@@ -65,7 +65,7 @@
       <table class="table w-full border-t border-solid border-gray-300">
         <thead class="select-none">
           <tr>
-            <th
+            <!-- <th
               v-for="(col, index) in data.columns"
               :key="index"
               ref="tableHeaders"
@@ -73,6 +73,14 @@
               style="padding-left: 1.5em !important;"
               :style="{backgroundColor: col.backgroundColor || '', color: col.textColor || ''}"
               @click.capture="onClickTableHeader(col.field)"
+            > -->
+            <th
+              v-for="(col, index) in data.columns"
+              :key="index"
+              ref="tableHeaders"
+              class="px-2 py-1 hover:opacity-75"
+              style="padding-left: 1.5em !important;"
+              :style="{backgroundColor: col.backgroundColor || '', color: col.textColor || ''}"
             >
               <p class="pointer-events-none flex justify-between items-center">
                 <span
@@ -81,10 +89,10 @@
                 >
                   {{ col.label }}
                 </span>
-                <FontAwesomeIcon
+                <!-- <FontAwesomeIcon
                   v-if="index > 0"
                   :icon="getSortIcon(col.field)"
-                />
+                /> -->
               </p>
             </th>
           </tr>
