@@ -16,7 +16,7 @@
           Jumlah RDT
           <div class="tooltip pl-1">
             &#9432;
-            <span class="tooltiptext text-xs">Jumlah Rapid Test (RDT) yang telah dilakukan</span>
+            <span class="tooltiptext text-xs">Jumlah Rapid Diagnostic Test (RDT) yang telah dilakukan</span>
           </div>
         </div>
       </div>
