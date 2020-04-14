@@ -1,6 +1,6 @@
 <template>
   <div
-    class="rdt-main text-white overflow-hidden rounded-lg shadow-md p-3"
+    class="rdt-main text-white overflow-hidden rounded-lg shadow-md p-5"
   >
     <b class="text-lg">RDT (Rapid Diagnostic Test)</b>
     <div class="flex flex-col md:flex-row mb-4 mt-2">
