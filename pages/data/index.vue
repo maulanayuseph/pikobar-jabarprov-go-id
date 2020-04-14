@@ -10,9 +10,9 @@
     <section class="m-4 mb-8 md:m-8">
       <DataSummary />
     </section>
-    <!-- <section class="m-4 mb-8 md:m-8">
-      <DataRDT :propsDataRekapitulasiJabar.sync="jsonDataRekapitulasiJabarProv" />
-    </section> -->
+    <section class="m-4 mb-8 md:m-8">
+      <DataRDT :props-data-rekapitulasi-jabar.sync="jsonDataRekapitulasiJabarProv" />
+    </section>
     <section class="m-4 mb-8 md:m-8">
       <div class="flex flex-row items-stretch">
         <button
