@@ -1,9 +1,21 @@
 <template>
 
   <div class="container-map">
-    <div class="bg-white col-md-12 shadow-md" style="height:50em;">
-        <div id="map-wrap" style="height: 100%;z-index:0;" />
-        <div class="filter-layer"> 
+    <div class="bg-white col-md-12 shadow-md" >
+        <div
+          style="height: 450px;  position: relative;"
+        >
+         <div id="map-wrap" />
+          <div class="control-bottom-left">
+            <div class="time-slider p-5">
+              <vue-slider v-model="sliderValue" :min="min" :max="max" tooltip="none" @change="onChangeTimeSlider()" />
+              {{ 
+                new Date(sliderValue).toLocaleDateString(['ban', 'id'],{ weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) 
+              }}
+            </div>
+          </div>
+        </div>
+        <!-- <div class="filter-layer"> 
 
           <div class="text-right mb-2">
             <button class="btn bg-white" >
@@ -47,6 +59,39 @@
               </li>
             </div>
           </div> 
+        </div> -->
+
+        
+        <div class="info-legend p-2">
+          <b>Keterangan: </b>
+          <div class="flex mb-4">
+            <div class="w-1/3 h-auto">
+              <div class="legend-color" style="background:#a51212; border: 2px solid #eb5757" /> &nbsp;
+              Positif - Meninggal
+            </div>
+
+            <div class="w-1/3 h-auto">
+              <div class="legend-color" style="background:#eb5757" /> &nbsp;
+              Positif - Aktif
+            </div>
+            <div class="w-1/3 h-auto">
+              <div class="legend-color" style="background:#27ae60; border: 2px solid #eb5757" /> &nbsp;
+              Positif - Sembuh
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-md mt-1">
+              <b>Catatan:</b><br>
+              Perbesar peta untuk melihat jumlah titik akurat. Beberapa titik yang saling berdekatan terlihat menyatu pada pembesaran peta skala besar.
+
+              Titik lokasi merupakan titik acak (random by system) wilayah yang tertera pada identitas kasus dan tidak menunjuk pada alamat persis masing-masing kasus.
+
+              Saat ini, data yang Pikobar tampilkan berasal dari sinkronisasi data dengan Dinas Kesehatan Kabupaten/Kota. Proses ini mungkin membutuhkan waktu 1-2 hari setiap perbaruan data terjadi. Oleh karena itu, untuk sementara Anda mungkin melihat perbedaan antara angka yang tampil di Pikobar dengan yang diumumkan di kabupaten/kota selama proses sinkronisasi berlangsung. Silakan periksa kembali 1-2 hari setelah perbaruan terakhir dari masing-masing kabupaten/kota.
+
+              Terima kasih dan mohon untuk dimaklumi.
+            </div>
+          </div>
         </div>
         <div v-if="!isHidden" class="disclaimer">
           <div class="backdrop" />
@@ -131,6 +176,11 @@
 </template>
 
 <script>
+
+import VueSlider from 'vue-slider-component/dist-css/vue-slider-component.umd.min.js'
+import 'vue-slider-component/dist-css/vue-slider-component.css'
+import 'vue-slider-component/theme/default.css'
+
 import axios from 'axios'
 import * as turf from '@turf/turf'
 import { faFilter, faHome } from '@fortawesome/free-solid-svg-icons'
@@ -160,6 +210,9 @@ export default {
     ]
   },
   name: 'MapSebaranCovid',
+  components: {
+    VueSlider
+  },
   props: {
     propsDataSebaranJabar: {
       type: Array,
@@ -168,6 +221,11 @@ export default {
   },
   data () {
     return {
+      dataSlide: 0,
+      sliderValue: new Date(),
+      min: new Date().setDate(new Date().getDate() - 5),
+      max: new Date().setDate(new Date().getDate()),
+
       map: [],
       loading: false,
       filter: {
@@ -218,12 +276,12 @@ export default {
       },
       
       searchControl: [],
+      listMarker: [],
     }
   },
   asyncData() {
     return {
-      
-      listLayer: {
+      listMarkerCluster: {
         odp : {
           proses: [],
           belumupdate: []
@@ -274,7 +332,7 @@ export default {
         this.filter[status][stage] = !this.filter[status][stage] 
         for (let status in this.filter) {
           for (let stage in this.filter[status]) {
-            this.listLayer[status][stage].forEach((element) => {
+            this.listMarkerCluster[status][stage].forEach((element) => {
 
               if (this.filter[status][stage]) {
                 element.addTo(this.map)
@@ -398,174 +456,75 @@ export default {
       // // create layer group
       // this.layerGroup = new L.layerGroup().addTo(this.map)
     },
-
-    configCluster (className) {
-      return {
-        chunkedLoading: true,
-        singleMarkerMode: true,
-        maxClusterRadius: 10000,
-        spiderfyOnMaxZoom: true,
-        showCoverageOnHover: false,
-        zoomToBoundsOnClick: false,
-        spiderLegPolylineOptions: { weight: 1.5, color: '#222', opacity: 0 },
-        iconCreateFunction: (cluster) => {
-          // get the number of items in the cluster
-          let count = cluster.getChildCount()
-          const digits = (count + '').length
-          let classMarker = 'cluster ' + className + ' digits-' + digits
-          
-          if (count === 1) {
-            count = ''
-            classMarker = 'cluster ' + className + ' digits-0'
-          }
-          return new L.divIcon({
-            html: count,
-            className:  classMarker,
-            iconSize: null
-          })
-        }
-      }
-    },
     statusStageCorona (status, stage) {
       return this.statusStage[status][stage]
     },
-    paramMarkerCluster () {
-      const markerClusters = {
-        odp: {
-          proses: '',
-          // selesai: '',
-          // pdp: '',
-          // positif: '',
-          belumupdate: ''
-        },
-        pdp: {
-          proses: '',
-          // selesai: '',
-          // positif: '',
-          belumupdate: ''
-        },
-        positif: {
-          proses: '',
-          meninggal: '',
-          sembuh: ''
+    addMarkerLayer(kode_level, elPasien) {
+      if (elPasien.status === 'Positif') {
+        // set minimum date
+        const tanggal_konfirmasi_time = new Date(elPasien.tanggal_konfirmasi).getTime()
+        if (tanggal_konfirmasi_time < this.min) {
+          this.min = tanggal_konfirmasi_time  
         }
-      }
-      markerClusters.positif.proses = new L.markerClusterGroup(this.configCluster('cluster-positif-proses'))
-      markerClusters.positif.meninggal = new L.markerClusterGroup(this.configCluster('cluster-positif-meninggal'))
-      markerClusters.positif.sembuh = new L.markerClusterGroup(this.configCluster('cluster-positif-sembuh'))
-      markerClusters.pdp.proses = new L.markerClusterGroup(this.configCluster('cluster-pdp-proses'))
-      // markerClusters.pdp.selesai = new L.markerClusterGroup(this.configCluster('cluster-pdp-selesai'))
-      // markerClusters.pdp.positif = new L.markerClusterGroup(this.configCluster('cluster-pdp-positif'))
-      markerClusters.pdp.belumupdate = new L.markerClusterGroup(this.configCluster('cluster-pdp-belumupdate'))
-      markerClusters.odp.proses = new L.markerClusterGroup(this.configCluster('cluster-odp-proses'))
-      // markerClusters.odp.selesai = new L.markerClusterGroup(this.configCluster('cluster-odp-selesai'))
-      // markerClusters.odp.pdp = new L.markerClusterGroup(this.configCluster('cluster-odp-pdp'))
-      // markerClusters.odp.positif = new L.markerClusterGroup(this.configCluster('cluster-odp-positif'))
-      markerClusters.odp.belumupdate = new L.markerClusterGroup(this.configCluster('cluster-odp-belumupdate'))
-      return markerClusters
-    },
-    addMarkerLayer(cluster, kode_level, elPasien) {
-      const m = new L.marker([elPasien.latitude, elPasien.longitude], {virtual : true })
-      let popup = `<b> Status </b> : ${elPasien.status} <br>`
 
-      if (elPasien.nama_kab !== '' && elPasien.nama_kab !== null) {
-        popup += '<b> Kab/Kota </b> : ' + elPasien.nama_kab + '<br />'
-      }
+        let icon = ''
+        if (elPasien.stage === 'Proses') {
+          icon = new L.divIcon({
+            className:  'cluster cluster-positif-proses digits-0',
+            iconSize: null
+          })
 
-      if (elPasien.nama_kec !== '' && elPasien.nama_kec !== null) {
-        popup += '<b> Kecamatan </b> : ' + elPasien.nama_kec + '<br />'
-      }
-
-      if (elPasien.gender !== '' && elPasien.gender !== null) {
-        popup += '<b> Jenis Kelamin </b> : ' + elPasien.gender + '<br />'
-      }
-
-      if (elPasien.umur !== '' && elPasien.umur !== null) {
-        popup += '<b> Usia </b> : ' + elPasien.umur + ' tahun <br />'
-      }
-      m.bindPopup(popup)
-      m.on('mouseover', function (e) {
-        this.openPopup()
-      })
-      m.on('mouseout', function (e) {
-        this.closePopup()
-      })
-      
-    
-      if (elPasien.status == 'Positif' && elPasien.stage === 'Proses') {
-        cluster[kode_level].positif.proses.addLayer(m)
-      } else if (elPasien.status === 'Positif' && elPasien.stage === 'Meninggal') {
-        cluster[kode_level].positif.meninggal.addLayer(m)
-      } else if (elPasien.status === 'Positif' && elPasien.stage === 'Sembuh') {
-        cluster[kode_level].positif.sembuh.addLayer(m)
-      } else if (elPasien.status === 'PDP' && elPasien.stage === 'Proses') {
-        cluster[kode_level].pdp.proses.addLayer(m)
-      } else if (elPasien.status === 'PDP' && elPasien.stage === 'Selesai') {
-        // cluster[kode_level].pdp.selesai.addLayer(m)
-      } else if (elPasien.status === 'PDP' && elPasien.stage === 'Positif') {
-        // cluster[kode_level].pdp.positif.addLayer(m)
-      } else if (elPasien.status === 'PDP' && elPasien.stage === null) {
-        cluster[kode_level].pdp.belumupdate.addLayer(m)
-      } else if (elPasien.status === 'ODP' && elPasien.stage === 'Proses') {
-        cluster[kode_level].odp.proses.addLayer(m)
-      } else if (elPasien.status === 'ODP' && elPasien.stage === 'Selesai') {
-        // cluster[kode_level].odp.selesai.addLayer(m)
-      } else if (elPasien.status === 'ODP' && elPasien.stage === 'PDP') {
-        // cluster[kode_level].odp.pdp.addLayer(m)
-      } else if (elPasien.status === 'ODP' && elPasien.stage === 'Positif') {
-        // cluster[kode_level].odp.positif.addLayer(m)
-      } else {
-        cluster[kode_level].odp.belumupdate.addLayer(m)
-      }
-    },
-    addMarkerClusterLayer(cluster, kode_level = '', wilayah = '', kabkotNama = '', kecNama = '', kelNama = '') {
-      for (const key in cluster[kode_level]) {
-        for (const keySub in cluster[kode_level][key]) {
-          // console.log(cluster[kode_level][key][keySub])
-
-          let newLayer = cluster[kode_level][key][keySub]
-          if (this.filter[key][keySub]) {
-            newLayer.addTo(this.map)
-            this.listLayer[key][keySub].push(newLayer)
-          }
-
-          cluster[kode_level][key][keySub].on('clusterclick', (c) => {
-            let popup = ''
-            popup += `<b> Status </b> : ${this.statusStageCorona(key, keySub)} <br>`
-            popup += `<b> Jumlah </b> : ${c.layer._childCount} kasus <br>`
-
-            if (wilayah === 'kelurahan')  {
-              if (kabkotNama !== '') {
-                popup += `<b> Kota/Kabupaten </b> : ${ kabkotNama } <br>`
-              }
-              if (kecNama !== '') {
-                popup += `<b> Kecamatan </b> : ${ kecNama } <br>`
-
-              }
-              popup += `<b> Kelurahan </b> : ${kelNama} <br>`
-            }
-            else if (wilayah === 'kecamatan') {
-              if (kabkotNama !== '') {
-                popup += `<b> Kota/Kabupaten </b> : ${ kabkotNama } <br>`
-              }
-              popup += `<b> Kecamatan </b> : ${kecNama} <br>`
-            }  else {
-              popup += `<b> Kota/Kabupaten </b> : ${ kabkotNama } <br>`
-            }
-
-            new L.popup().setLatLng(c.layer.getLatLng()).setContent(popup).openOn(this.map)
-          }).on('clustermouseout', (c) => {
-            this.map.closePopup()
+        } else if (elPasien.stage === 'Meninggal') {
+          icon = new L.divIcon({
+            className:  'cluster cluster-positif-meninggal digits-0',
+            iconSize: null
+          })
+        } else if (elPasien.stage === 'Sembuh') {
+          icon = new L.divIcon({
+            className:  'cluster cluster-positif-sembuh digits-0',
+            iconSize: null
           })
         }
-      }
 
+        const m = new L.marker([elPasien.latitude, elPasien.longitude], {virtual : true, attributes: elPasien, icon })
+        let popup = `<b> Status </b> : ${elPasien.status} <br>`
+
+        if (elPasien.nama_kab !== '' && elPasien.nama_kab !== null) {
+          popup += '<b> Kab/Kota </b> : ' + elPasien.nama_kab + '<br />'
+        }
+
+        if (elPasien.nama_kec !== '' && elPasien.nama_kec !== null) {
+          popup += '<b> Kecamatan </b> : ' + elPasien.nama_kec + '<br />'
+        }
+
+        if (elPasien.gender !== '' && elPasien.gender !== null) {
+          popup += '<b> Jenis Kelamin </b> : ' + elPasien.gender + '<br />'
+        }
+
+        if (elPasien.umur !== '' && elPasien.umur !== null) {
+          popup += '<b> Usia </b> : ' + elPasien.umur + ' tahun <br />'
+        }
+        m.bindPopup(popup)
+        m.on('mouseover', function (e) {
+          this.openPopup()
+        })
+        m.on('mouseout', function (e) {
+          this.closePopup()
+        })
+        m.addTo(this.map)
+        this.listMarker.push(m)
+      }
+      
+
+      
+    
+      
     },
     createMap (level) {
       this.createLayerPasien(level)
     },
     createLayerPasien(level) {
-      this.listLayer = {
+      this.listMarkerCluster = {
         odp : {
           proses: [],
           belumupdate: []
@@ -627,44 +586,22 @@ export default {
             let nama_kab = '' 
             let nama_kec = '' 
             let nama_kel = '' 
-            const markerClusters = this.paramMarkerCluster()
-            kotaCluster[el.feature.properties.bps_kode] = markerClusters
             let deleted_list = []
             for (let i in result[el.feature.properties.bps_kode]) {
               nama_kab = result[el.feature.properties.bps_kode][i].nama_kab 
               nama_kec = result[el.feature.properties.bps_kode][i].nama_kec
               nama_kel = result[el.feature.properties.bps_kode][i].nama_kel
-              this.addMarkerLayer(kotaCluster, el.feature.properties.bps_kode, result[el.feature.properties.bps_kode][i])
+              this.addMarkerLayer(el.feature.properties.bps_kode, result[el.feature.properties.bps_kode][i])
               deleted_list.push(i)
             }
 
             for (let i in deleted_list) {
               result[el.feature.properties.bps_kode].splice(i, 1)
             }
-            this.addMarkerClusterLayer(kotaCluster, el.feature.properties.bps_kode, level, nama_kab, nama_kec, nama_kel)
+            // this.addMarkerClusterLayer(kotaCluster, el.feature.properties.bps_kode, level, nama_kab, nama_kec, nama_kel)
         }
       })
-      // for (let kode_level in result) {
-      //   let nama_kab = '' 
-      //   let nama_kec = '' 
-      //   let nama_kel = '' 
-      //   const markerClusters = this.paramMarkerCluster()
-      //   kotaCluster[kode_level] = markerClusters
-      //   for (let i in result[kode_level]) {
-      //     nama_kab = result[kode_level][i].nama_kab 
-      //     nama_kec = result[kode_level][i].nama_kec
-      //     nama_kel = result[kode_level][i].nama_kel
-      //     this.addMarkerLayer(kotaCluster, kode_level, result[kode_level][i])
-      //   }
-
-      //   console.log(kotaCluster)
-      //   console.log(kode_level)
-      //   console.log(level)
-      //   console.log(nama_kab)
-      //   console.log(nama_kec)
-      //   console.log(nama_kel)
-      //   this.addMarkerClusterLayer(kotaCluster, kode_level, level, nama_kab, nama_kec, nama_kel)
-      // }
+      
     },
     async createMapByZoomLevel() {
       if (this.map.getZoom() > 12) {
@@ -701,52 +638,48 @@ export default {
     },
     removeLayer (all = true) {
       if (all) {
-        // for (let key in kotaCluster) {
-        //   for (let status in this.filter) {
-        //     for (let stage in this.filter[status]) {
-        //       kotaCluster[key][status][stage].clearLayers()
-        //     }
-        //   }
-        // }
+        for (let key in kotaCluster) {
+          for (let status in this.filter) {
+            for (let stage in this.filter[status]) {
+              kotaCluster[key][status][stage].clearLayers()
+            }
+          }
+        }
 
         for (let status in this.filter) {
           for (let stage in this.filter[status]) {
-            this.listLayer[status][stage].forEach((element) => {
+            this.listMarkerCluster[status][stage].forEach((element) => {
               this.map.removeLayer(element)
               element.clearLayers()
               element.remove()
             })
           }
         }
+        this.listMarkerCluster = []
+
       } else {
         for (let status in this.filter) {
           for (let stage in this.filter[status]) {
-            this.listLayer[status][stage].forEach((element) => {
+            this.listMarkerCluster[status][stage].forEach((element) => {
               this.map.removeLayer(element)
             })
           }
         }
       }
 
-      this.listLayer = []
     },
-    isMarkerInsidePolygon(marker, poly) {
-      var polyPoints = poly.getLatLngs();       
-      var x = marker[0], y = marker[1];
-
-      var inside = false;
-      for (var i = 0, j = polyPoints.length - 1; i < polyPoints.length; j = i++) {
-          var xi = polyPoints[i].lat, yi = polyPoints[i].lng;
-          var xj = polyPoints[j].lat, yj = polyPoints[j].lng;
-
-          var intersect = ((yi > y) != (yj > y))
-              && (x < (xj - xi) * (y - yi) / (yj - yi) + xi);
-          if (intersect) inside = !inside;
-      }
-
-      return inside;
+    onChangeTimeSlider() {
+      this.listMarker.forEach((el) => {
+        this.map.removeLayer(el)
+      })
+      this.listMarker.forEach((el) => {
+        let tanggal_konfirmasi = new Date(el.options.attributes.tanggal_konfirmasi)
+        if (tanggal_konfirmasi.getTime() <= this.sliderValue) {
+          el.addTo(this.map)
+        }
+      })
     },
-    tesMap () {
+    tes () {
       
     }
   }
@@ -756,6 +689,8 @@ export default {
 #map-wrap{
   border-top-left-radius: 1em;
   border-top-right-radius: 1em;
+  height: 100%; z-index: 0;
+    position: relative;
 }
 .container-map {
   width:100%; height:100%;
@@ -778,6 +713,7 @@ export default {
     color: #777;
 }
 .info-legend {
+  height: 26%;
   overflow-y: auto;
   overflow-x: hidden;
   font-size: 13px;
@@ -879,6 +815,24 @@ export default {
     top:0;
   }
 }
+
+.control-bottom-left {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  padding-left: 1em;
+  padding-bottom: 1em;
+}
+
+
+.time-slider {
+  border-radius: 5px;
+  font-size: 0.8em;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.65);
+  background: #ffffff;
+  width: 20em;
+}
+
 </style>
 <style>
 @import "leaflet.markercluster/dist/MarkerCluster.css";
