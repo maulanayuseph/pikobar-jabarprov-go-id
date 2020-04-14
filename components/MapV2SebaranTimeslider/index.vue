@@ -15,7 +15,7 @@
             </div>
           </div>
         </div>
-        <!-- <div class="filter-layer"> 
+        <div class="filter-layer"> 
 
           <div class="text-right mb-2">
             <button class="btn bg-white" >
@@ -23,7 +23,7 @@
             </button>
           </div>
 
-          <div class="text-right">
+          <!-- <div class="text-right">
             <button class="btn bg-white" @click="showFilter">
               <font-awesome-icon :icon="faFilter" />
             </button>
@@ -58,8 +58,8 @@
                 Positif - Sembuh
               </li>
             </div>
-          </div> 
-        </div> -->
+          </div>  -->
+        </div> 
 
         
         <div class="info-legend p-2">
