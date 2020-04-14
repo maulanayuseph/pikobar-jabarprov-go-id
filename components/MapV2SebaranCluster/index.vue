@@ -271,7 +271,7 @@ export default {
     }
   },
   created () {
-    console.log('polygon on created')
+    console.log('cluster on created')
     this.distributionProvinceData = this.propsDataSebaranJabar
     // this.onChanges()
   },

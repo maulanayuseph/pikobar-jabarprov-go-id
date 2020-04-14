@@ -30,11 +30,11 @@ export default {
       temp: [],
       data: {
         columns: [
-          {
-            label: 'No',
-            field: 'no',
-            backgroundColor: '#eee'
-          },
+          // {
+          //   label: 'No',
+          //   field: 'no',
+          //   backgroundColor: '#eee'
+          // },
           {
             label: 'Nama Kota / Kabupaten',
             field: 'nama_kab',
@@ -138,7 +138,7 @@ export default {
       const self = this
       for (let i = 0; i < self.temp.length; i++) {
         self.jsonDataKabupaten.push({
-          no: i + 1,
+          // no: i + 1,
           nama_kab: self.temp[i].nama_kab,
           odp_proses: self.ifNullReturnZero(self.temp[i].odp_proses),
           pdp_proses: self.ifNullReturnZero(self.temp[i].pdp_proses),
@@ -154,13 +154,13 @@ export default {
 
       for (let i = 0; i < self.jsonDataKabupaten.length; i++) {
         self.data.rows.push({
-          no: i + 1,
+          // no: i + 1,
           nama_kab: self.jsonDataKabupaten[i].nama_kab,
-          odp_proses: Number(self.ifNullReturnZero(self.jsonDataKabupaten[i].odp_proses)).toLocaleString('id-ID'),
-          pdp_proses: Number(self.ifNullReturnZero(self.jsonDataKabupaten[i].pdp_proses)).toLocaleString('id-ID'),
-          positif_aktif: Number(self.ifNullReturnZero(self.jsonDataKabupaten[i].positif_aktif)).toLocaleString('id-ID'),
-          positif_sembuh: Number(self.ifNullReturnZero(self.jsonDataKabupaten[i].positif_sembuh)).toLocaleString('id-ID'),
-          positif_meninggal: Number(self.ifNullReturnZero(self.jsonDataKabupaten[i].positif_meninggal)).toLocaleString('id-ID')
+          odp_proses: self.ifNullReturnZero(self.jsonDataKabupaten[i].odp_proses),
+          pdp_proses: self.ifNullReturnZero(self.jsonDataKabupaten[i].pdp_proses),
+          positif_aktif: self.ifNullReturnZero(self.jsonDataKabupaten[i].positif_aktif),
+          positif_sembuh: self.ifNullReturnZero(self.jsonDataKabupaten[i].positif_sembuh),
+          positif_meninggal: self.ifNullReturnZero(self.jsonDataKabupaten[i].positif_meninggal)
         })
       }
     }
