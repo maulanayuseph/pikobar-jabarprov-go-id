@@ -5,9 +5,25 @@
         class="my-4 flex flex-row items-stretch flex-wrap"
       >
         <label class="inline-block font-bold text-gray-800 mr-4">
-          {{ multipleSort ? 'Sorting Order' : 'Sort By' }} :
+          {{ multipleSort ? 'Sorting Order' : 'Urutkan' }} :
         </label>
-        <template v-if="!sortingOrder.length">
+        <select
+          v-model="optionSelected"
+          class="select-option-selector w-1/2"
+          :style="{backgroundColor: getColumnBackgroundColor(optionSelected), color: getColumnTextColor(optionSelected)}"
+          @change="onClickTableHeader($event.target.value)"
+        >
+          <option
+            v-for="list in optionList"
+            :key="list.id"
+            :selected="optionSelected == list.col"
+            :value="list.col"
+          >
+            {{ list.text }}
+          </option>
+        </select>
+
+        <!-- <template v-if="!sortingOrder.length">
           <b>
             -
           </b>
@@ -42,32 +58,41 @@
               :icon="icon.faArrowRight"
             />
           </p>
-        </template>
+        </template> -->
       </div>
     </header>
     <div class="my-custom-scrollbar">
       <table class="table w-full border-t border-solid border-gray-300">
         <thead class="select-none">
           <tr>
-            <th
+            <!-- <th
               v-for="(col, index) in data.columns"
               :key="index"
               ref="tableHeaders"
               class="cursor-pointer px-2 py-1 hover:opacity-75"
+              style="padding-left: 1.5em !important;"
               :style="{backgroundColor: col.backgroundColor || '', color: col.textColor || ''}"
               @click.capture="onClickTableHeader(col.field)"
+            > -->
+            <th
+              v-for="(col, index) in data.columns"
+              :key="index"
+              ref="tableHeaders"
+              class="px-2 py-1 hover:opacity-75"
+              style="padding-left: 1.5em !important;"
+              :style="{backgroundColor: col.backgroundColor || '', color: col.textColor || ''}"
             >
               <p class="pointer-events-none flex justify-between items-center">
                 <span
                   class="textcenter"
-                  :class="{ textleft: index==1 }"
+                  :class="{ textleft: index==0 }"
                 >
                   {{ col.label }}
                 </span>
-                <FontAwesomeIcon
+                <!-- <FontAwesomeIcon
                   v-if="index > 0"
                   :icon="getSortIcon(col.field)"
-                />
+                /> -->
               </p>
             </th>
           </tr>
@@ -75,7 +100,9 @@
         <tbody>
           <template v-if="!sortedRows || !sortedRows.length">
             <tr>
-              <td :colspan="data.columns.length">
+              <td
+                :colspan="data.columns.length"
+              >
                 <div
                   class="w-full p-5"
                   style="min-height: 300px;"
@@ -127,9 +154,9 @@
               <td
                 v-for="(col, colIndex) in data.columns"
                 :key="colIndex"
-                :class="{ textleft: colIndex==1 }"
+                :class="{ textleft: colIndex==0 }"
                 class="border-b border-solid px-2 py-1 textright"
-                style="border-color: rgba(0,0,0,0.1)"
+                style="border-color: rgba(0,0,0,0.1); padding-left: 1.5em !important;"
               >
                 {{ getCellValue({row, column: col, rowIndex, columnIndex: colIndex}) }}
               </td>
@@ -196,7 +223,17 @@ export default {
       sortingTypes: ['none', 'up', 'down'],
       currentSorting: {},
       sortingOrder: [],
-      sortedRows: []
+      sortedRows: [],
+      optionList: [
+        // { id: 1, col: 'no', text: 'No' },
+        { id: 2, col: 'nama_kab', text: 'Nama Kota / Kabupaten' },
+        { id: 3, col: 'odp_proses', text: 'ODP Proses' },
+        { id: 4, col: 'pdp_proses', text: 'PDP Proses' },
+        { id: 5, col: 'positif_aktif', text: 'Positif Aktif' },
+        { id: 6, col: 'positif_sembuh', text: 'Positif - Sembuh' },
+        { id: 7, col: 'positif_meninggal', text: 'Positif - Meninggal' }
+      ],
+      optionSelected: 'positif_aktif'
     }
   },
   watch: {
@@ -236,6 +273,8 @@ export default {
       obj[col.field] = 'none'
       return obj
     }, {})
+    this.currentSorting.positif_aktif = 'down'
+    this.sortingOrder.push(['positif_aktif', 'down'])
   },
   methods: {
     getSortIcon (field) {
@@ -255,7 +294,11 @@ export default {
       }
     },
     getCellValue ({ row, column, rowIndex, columnIndex }) {
-      return _get(row, column.field)
+      if (columnIndex > 0) {
+        return Number(_get(row, column.field)).toLocaleString('id-ID')
+      } else {
+        return _get(row, column.field)
+      }
     },
     getColumnLabel (field) {
       const col = this.data.columns.find(c => c.field === field)
@@ -301,7 +344,13 @@ export default {
       this.$set(this.currentSorting, field, 'none')
     },
     onClickTableHeader (field) {
-      const newSorting = this.updateColumnSorting(field)
+      // const newSorting = this.updateColumnSorting(field)
+      let newSorting = 'down'
+      if (field === 'nama_kab') {
+        newSorting = 'up'
+      } else {
+        newSorting = 'down'
+      }
       this.upsertSorting(field, newSorting)
     }
   }
@@ -331,4 +380,23 @@ export default {
 .textright {
   text-align: right;
 }
+
+.select-option-selector {
+  border-radius: 0.4rem;
+  // border-width: 1px;
+  border-style: solid;
+  border-color: #555;
+  color: #555;
+  background-color: #fff;
+  height: 30px;
+  width: 210px;
+  left: 0;
+  padding-left: 10px;
+}
+
+select option {
+  background: #FFFFFF;
+  color: #555;
+}
+
 </style>

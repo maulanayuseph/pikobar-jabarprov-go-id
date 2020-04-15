@@ -117,7 +117,8 @@ export default {
   purgeCSS: {
     whitelistPatterns: [
       /(^|\.)fa-/, /-fa($|\.)/,
-      /(^|\.)leaflet-/
+      /(^|\.)leaflet-/,
+      /(^|\.)vue-slider-/
     ]
   },
   /*
