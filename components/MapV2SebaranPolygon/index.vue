@@ -446,10 +446,10 @@ export default {
 
       // count range per list
       const range = []
-      const div = Math.ceil((max - min) / 7)
+      const div = Math.ceil((max - min) / 5)
       let numFrom = 0
       // create list
-      for (let i = 1; i <= 7; i++) {
+      for (let i = 1; i <= 5; i++) {
         if (min === 0) {
           numFrom = 0
         } else {
@@ -458,8 +458,8 @@ export default {
         range.push({
           from: numFrom + ((i - 1) * div),
           to: numFrom + (i * div),
-          color: this.shadeColor(hex, ((i * -20) + 60)),
-          transparant: 0.4 + (i * 0.085)
+          // color: this.shadeColor(hex, ((i * -20) + 60)),
+          transparant: 0.1 + (i * (1 / 5))
         })
       }
 
