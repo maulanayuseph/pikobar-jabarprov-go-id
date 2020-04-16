@@ -168,7 +168,7 @@ export default {
     }
   },
   created () {
-    console.log('polygon on created')
+    console.log('faskes on created')
     this.distributionProvinceData = this.propsDataSebaranJabarFaskes
     // this.onChanges()
   },

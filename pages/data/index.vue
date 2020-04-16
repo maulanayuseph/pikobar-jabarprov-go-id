@@ -10,9 +10,9 @@
     <section class="m-4 mb-8 md:m-8">
       <DataSummary />
     </section>
-    <!-- <section class="m-4 mb-8 md:m-8">
-      <DataRDT :propsDataRekapitulasiJabar.sync="jsonDataRekapitulasiJabarProv" />
-    </section> -->
+    <section class="m-4 mb-8 md:m-8">
+      <DataRDT :props-data-rekapitulasi-jabar.sync="jsonDataRekapitulasiJabarProv" />
+    </section>
     <section class="m-4 mb-8 md:m-8">
       <div class="flex flex-row items-stretch">
         <button
@@ -45,7 +45,7 @@
           <img v-if="!stat.isActiveFaskes" src="/img/icon-faskes-inactive.svg" style="margin-top: 2px; margin-right:5px;">
           Fasilitas Kesehatan
         </button>
-        <button
+        <!-- <button
           class="button-selector mr-2"
           style="display: flex;"
           :active="stat.isActiveTimeslider"
@@ -54,7 +54,7 @@
           <img v-if="stat.isActiveTimeslider" src="/img/icon-data-positif-active.svg" style="margin-top: 2px; margin-right:5px;">
           <img v-if="!stat.isActiveTimeslider" src="/img/icon-data-positif-inactive.svg" style="margin-top: 2px; margin-right:5px;">
           Timeslider - Data Positif
-        </button>
+        </button> -->
       </div>
       <div class="mt-4">
         <!-- <MapSebaranCovid v-if="stat.isActiveCovid" />
@@ -72,10 +72,10 @@
           v-if="stat.isActiveFaskes"
           :props-data-sebaran-jabar-faskes.sync="jsonDataSebaranJabarFaskes"
         />
-        <MapV2SebaranTimeslider
+        <!-- <MapV2SebaranTimeslider
           v-if="stat.isActiveTimeslider"
           :props-data-sebaran-jabar.sync="jsonDataSebaranJabar"
-        />
+        /> -->
       </div>
     </section>
 
