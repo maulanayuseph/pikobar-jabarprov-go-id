@@ -1,175 +1,128 @@
 <template>
-
   <div class="container-map">
-    <div class="bg-white col-md-12 shadow-md" >
-        <div
-          style="height: 450px;  position: relative;"
-        >
-         <div id="map-wrap" />
-          <div class="control-bottom-left">
-            <div class="time-slider p-5">
-              <vue-slider v-model="sliderValue" :min="min" :max="max" tooltip="none" @change="onChangeTimeSlider()" />
-              {{ 
-                new Date(sliderValue).toLocaleDateString(['ban', 'id'],{ weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) 
-              }}
+    <div class="bg-white col-md-12 shadow-md">
+      <div
+        style="height: 450px;  position: relative;"
+      >
+        <div id="map-wrap" />
+        <div class="control-bottom-left">
+          <div class="time-slider p-5">
+            <vue-slider v-model="sliderValue" :min="min" :max="max" tooltip="none" @change="onChangeTimeSlider()" />
+            {{
+              new Date(sliderValue).toLocaleDateString(['ban', 'id'],{ weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
+            }}
+            <div>
+              <label class="md:w-2/3 block text-gray-500  font-bold">
+                <input class="mr-2" type="checkbox" @click="onClickGroup()">
+                <span class="text-xs">
+                  Grup per Kota
+                </span>
+              </label>
             </div>
           </div>
         </div>
-        <div class="filter-layer"> 
+      </div>
+      <div class="filter-layer">
+        <div class="text-right mb-2">
+          <button class="btn bg-white">
+            <font-awesome-icon :icon="faHome" @click="backToHome" />
+          </button>
+        </div>
 
-          <div class="text-right mb-2">
-            <button class="btn bg-white" >
-              <font-awesome-icon :icon="faHome" @click="backToHome"/>
-            </button>
-          </div>
+        <!-- <div class="text-right">
+          <button class="btn bg-white" @click="showFilter">
+            <font-awesome-icon :icon="faFilter" />
+          </button>
 
-          <!-- <div class="text-right">
-            <button class="btn bg-white" @click="showFilter">
-              <font-awesome-icon :icon="faFilter" />
-            </button>
-
-            <div data-v-dfef036a="" v-if="isShowFilter" class="filter-data">
-              <li @click="setFilter('odp', 'proses')" :class="filter.odp.proses ? 'filter-active' : ''">
-                <div data-v-dfef036a="" class="legend-color" style="background: rgb(45, 156, 219);margin-right: 0.5em;"></div>
-                  ODP - Proses
-              </li>
-              <li @click="setFilter('odp', 'belumupdate')" :class="filter.odp.belumupdate ? 'filter-active' : ''">
-                <div class="legend-color" style="background:#2d9cdb; border: 2px solid #bdbdbd" /> &nbsp;
-                ODP (belum diupdate)
-              </li>
-              <li @click="setFilter('pdp', 'proses')" :class="filter.pdp.proses ? 'filter-active' : ''">
-                <div class="legend-color" style="background:#f2c94c;" /> &nbsp;
-                PDP - Proses
-              </li>
-              <li @click="setFilter('pdp', 'belumupdate')" :class="filter.pdp.belumupdate ? 'filter-active' : ''">
-                <div class="legend-color" style="background:#f2c94c; border: 2px solid #bdbdbd" /> &nbsp;
-                PDP (belum diupdate)
-              </li>
-              <li @click="setFilter('positif', 'meninggal')" :class="filter.positif.meninggal ? 'filter-active' : ''">
-                <div class="legend-color" style="background:#a51212; border: 2px solid #eb5757" /> &nbsp;
-                Positif - Meninggal
-              </li>
-              <li @click="setFilter('positif', 'proses')" :class="filter.positif.proses ? 'filter-active' : ''">
-                <div class="legend-color" style="background:#eb5757" /> &nbsp;
-                Positif - Aktif
-              </li>
-              <li @click="setFilter('positif', 'sembuh')" :class="filter.positif.sembuh ? 'filter-active' : ''">
-                <div class="legend-color" style="background:#27ae60; border: 2px solid #eb5757" /> &nbsp;
-                Positif - Sembuh
-              </li>
-            </div>
-          </div>  -->
-        </div> 
-
-        
-        <div class="info-legend p-2">
-          <b>Keterangan: </b>
-          <div class="flex mb-4">
-            <div class="w-1/3 h-auto">
+          <div data-v-dfef036a="" v-if="isShowFilter" class="filter-data">
+            <li @click="setFilter('odp', 'proses')" :class="filter.odp.proses ? 'filter-active' : ''">
+              <div data-v-dfef036a="" class="legend-color" style="background: rgb(45, 156, 219);margin-right: 0.5em;"></div>
+                ODP - Proses
+            </li>
+            <li @click="setFilter('odp', 'belumupdate')" :class="filter.odp.belumupdate ? 'filter-active' : ''">
+              <div class="legend-color" style="background:#2d9cdb; border: 2px solid #bdbdbd" /> &nbsp;
+              ODP (belum diupdate)
+            </li>
+            <li @click="setFilter('pdp', 'proses')" :class="filter.pdp.proses ? 'filter-active' : ''">
+              <div class="legend-color" style="background:#f2c94c;" /> &nbsp;
+              PDP - Proses
+            </li>
+            <li @click="setFilter('pdp', 'belumupdate')" :class="filter.pdp.belumupdate ? 'filter-active' : ''">
+              <div class="legend-color" style="background:#f2c94c; border: 2px solid #bdbdbd" /> &nbsp;
+              PDP (belum diupdate)
+            </li>
+            <li @click="setFilter('positif', 'meninggal')" :class="filter.positif.meninggal ? 'filter-active' : ''">
               <div class="legend-color" style="background:#a51212; border: 2px solid #eb5757" /> &nbsp;
               Positif - Meninggal
-            </div>
-
-            <div class="w-1/3 h-auto">
+            </li>
+            <li @click="setFilter('positif', 'proses')" :class="filter.positif.proses ? 'filter-active' : ''">
               <div class="legend-color" style="background:#eb5757" /> &nbsp;
               Positif - Aktif
-            </div>
-            <div class="w-1/3 h-auto">
+            </li>
+            <li @click="setFilter('positif', 'sembuh')" :class="filter.positif.sembuh ? 'filter-active' : ''">
               <div class="legend-color" style="background:#27ae60; border: 2px solid #eb5757" /> &nbsp;
               Positif - Sembuh
-            </div>
+            </li>
           </div>
-          <hr>
-          <div class="row">
-            <div class="col-md mt-1">
-              <b>Catatan:</b><br>
-              Perbesar peta untuk melihat jumlah titik akurat. Beberapa titik yang saling berdekatan terlihat menyatu pada pembesaran peta skala besar.
+        </div>  -->
+      </div>
 
-              Titik lokasi merupakan titik acak (random by system) wilayah yang tertera pada identitas kasus dan tidak menunjuk pada alamat persis masing-masing kasus.
-
-              Saat ini, data yang Pikobar tampilkan berasal dari sinkronisasi data dengan Dinas Kesehatan Kabupaten/Kota. Proses ini mungkin membutuhkan waktu 1-2 hari setiap perbaruan data terjadi. Oleh karena itu, untuk sementara Anda mungkin melihat perbedaan antara angka yang tampil di Pikobar dengan yang diumumkan di kabupaten/kota selama proses sinkronisasi berlangsung. Silakan periksa kembali 1-2 hari setelah perbaruan terakhir dari masing-masing kabupaten/kota.
-
-              Terima kasih dan mohon untuk dimaklumi.
-            </div>
+      <div class="info-legend p-2">
+        <b>Keterangan: </b>
+        <div class="flex mb-4">
+          <div class="w-1/3 h-auto">
+            <div class="legend-color" style="background:#a51212; border: 2px solid #eb5757" /> &nbsp;
+            Positif - Meninggal
           </div>
-        </div>
-        <div v-if="!isHidden" class="disclaimer">
-          <div class="backdrop" />
-          <div class="text-disclaimer">
-            <div class="title">
-              Disclaimer
-            </div>
-            <!-- <div class="subtitle">
-              Sumber: Dinas Kesehatan Provinsi Jawa Barat
-            </div> -->
-            <div class="description mt-2 text-justify pl-5 pr-5">
-              Perbesar peta untuk melihat jumlah titik akurat. Beberapa titik yang saling berdekatan terlihat menyatu pada pembesaran peta skala besar.
 
-              Titik lokasi merupakan titik acak (random by system) wilayah yang tertera pada identitas kasus dan tidak menunjuk pada alamat persis masing-masing kasus.
-
-              Saat ini, data yang Pikobar tampilkan berasal dari sinkronisasi data dengan Dinas Kesehatan Kabupaten/Kota. Proses ini mungkin membutuhkan waktu 1-2 hari setiap perbaruan data terjadi. Oleh karena itu, untuk sementara Anda mungkin melihat perbedaan antara angka yang tampil di Pikobar dengan yang diumumkan di kabupaten/kota selama proses sinkronisasi berlangsung. Silakan periksa kembali 1-2 hari setelah perbaruan terakhir dari masing-masing kabupaten/kota.
-
-              Terima kasih dan mohon untuk dimaklumi.
-            </div>
-            <button class="px-6 py-2 bg-brand-green hover:bg-brand-green-lighter text-white rounded-lg shadow-md mt-8" style="color: #fff" @click="isHidden = !isHidden">
-              <b>Mengerti</b>
-            </button>
+          <div class="w-1/3 h-auto">
+            <div class="legend-color" style="background:#eb5757" /> &nbsp;
+            Positif - Aktif
+          </div>
+          <div class="w-1/3 h-auto">
+            <div class="legend-color" style="background:#27ae60; border: 2px solid #eb5757" /> &nbsp;
+            Positif - Sembuh
           </div>
         </div>
-      <div class="loading-page" v-if="loading">
-        <p>
-          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="margin: auto; display: block; shape-rendering: auto;" width="200px" height="200px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
-            <g transform="rotate(0 50 50)">
-              <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#85a2b6">
-                <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.9166666666666666s" repeatCount="indefinite"></animate>
-              </rect>
-            </g><g transform="rotate(30 50 50)">
-              <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#85a2b6">
-                <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.8333333333333334s" repeatCount="indefinite"></animate>
-              </rect>
-            </g><g transform="rotate(60 50 50)">
-              <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#85a2b6">
-                <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.75s" repeatCount="indefinite"></animate>
-              </rect>
-            </g><g transform="rotate(90 50 50)">
-              <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#85a2b6">
-                <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.6666666666666666s" repeatCount="indefinite"></animate>
-              </rect>
-            </g><g transform="rotate(120 50 50)">
-              <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#85a2b6">
-                <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.5833333333333334s" repeatCount="indefinite"></animate>
-              </rect>
-            </g><g transform="rotate(150 50 50)">
-              <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#85a2b6">
-                <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.5s" repeatCount="indefinite"></animate>
-              </rect>
-            </g><g transform="rotate(180 50 50)">
-              <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#85a2b6">
-                <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.4166666666666667s" repeatCount="indefinite"></animate>
-              </rect>
-            </g><g transform="rotate(210 50 50)">
-              <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#85a2b6">
-                <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.3333333333333333s" repeatCount="indefinite"></animate>
-              </rect>
-            </g><g transform="rotate(240 50 50)">
-              <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#85a2b6">
-                <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.25s" repeatCount="indefinite"></animate>
-              </rect>
-            </g><g transform="rotate(270 50 50)">
-              <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#85a2b6">
-                <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.16666666666666666s" repeatCount="indefinite"></animate>
-              </rect>
-            </g><g transform="rotate(300 50 50)">
-              <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#85a2b6">
-                <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.08333333333333333s" repeatCount="indefinite"></animate>
-              </rect>
-            </g><g transform="rotate(330 50 50)">
-              <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#85a2b6">
-                <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="0s" repeatCount="indefinite"></animate>
-              </rect>
-            </g>
-          </svg>
-        </p>
+        <hr>
+        <div class="row">
+          <div class="col-md mt-1">
+            <b>Catatan:</b><br>
+            Perbesar peta untuk melihat jumlah titik akurat. Beberapa titik yang saling berdekatan terlihat menyatu pada pembesaran peta skala besar.
+
+            Titik lokasi merupakan titik acak (random by system) wilayah yang tertera pada identitas kasus dan tidak menunjuk pada alamat persis masing-masing kasus.
+
+            Saat ini, data yang Pikobar tampilkan berasal dari sinkronisasi data dengan Dinas Kesehatan Kabupaten/Kota. Proses ini mungkin membutuhkan waktu 1-2 hari setiap perbaruan data terjadi. Oleh karena itu, untuk sementara Anda mungkin melihat perbedaan antara angka yang tampil di Pikobar dengan yang diumumkan di kabupaten/kota selama proses sinkronisasi berlangsung. Silakan periksa kembali 1-2 hari setelah perbaruan terakhir dari masing-masing kabupaten/kota.
+
+            Terima kasih dan mohon untuk dimaklumi.
+          </div>
+        </div>
+      </div>
+      <div v-if="!isHidden" class="disclaimer">
+        <div class="backdrop" />
+        <div class="text-disclaimer">
+          <div class="title">
+            Disclaimer
+          </div>
+          <!-- <div class="subtitle">
+            Sumber: Dinas Kesehatan Provinsi Jawa Barat
+          </div> -->
+          <div class="description mt-2 text-justify pl-5 pr-5">
+            Perbesar peta untuk melihat jumlah titik akurat. Beberapa titik yang saling berdekatan terlihat menyatu pada pembesaran peta skala besar.
+
+            Titik lokasi merupakan titik acak (random by system) wilayah yang tertera pada identitas kasus dan tidak menunjuk pada alamat persis masing-masing kasus.
+
+            Saat ini, data yang Pikobar tampilkan berasal dari sinkronisasi data dengan Dinas Kesehatan Kabupaten/Kota. Proses ini mungkin membutuhkan waktu 1-2 hari setiap perbaruan data terjadi. Oleh karena itu, untuk sementara Anda mungkin melihat perbedaan antara angka yang tampil di Pikobar dengan yang diumumkan di kabupaten/kota selama proses sinkronisasi berlangsung. Silakan periksa kembali 1-2 hari setelah perbaruan terakhir dari masing-masing kabupaten/kota.
+
+            Terima kasih dan mohon untuk dimaklumi.
+          </div>
+          <button class="px-6 py-2 bg-brand-green hover:bg-brand-green-lighter text-white rounded-lg shadow-md mt-8" style="color: #fff" @click="isHidden = !isHidden">
+            <b>Mengerti</b>
+          </button>
+        </div>
+      </div>
+      <div v-if="loading" class="loading-page">
+        <div class="loading-image" />
       </div>
     </div>
   </div>
@@ -181,35 +134,23 @@ import VueSlider from 'vue-slider-component/dist-css/vue-slider-component.umd.mi
 import 'vue-slider-component/dist-css/vue-slider-component.css'
 import 'vue-slider-component/theme/default.css'
 
-import axios from 'axios'
-import * as turf from '@turf/turf'
+import * as L from 'leaflet'
+// import * as turf from '@turf/turf'
 import { faFilter, faHome } from '@fortawesome/free-solid-svg-icons'
-import { GeoSearchControl, OpenStreetMapProvider } from 'leaflet-geosearch';
-// import kotaGeojson from '@/assets/kotaV2.json'
-// import kecamatanGeojson from '@/assets/kecamatanV2.json'
-// import kelurahanGeojson from '@/assets/kelurahanV2.json'
+import { GeoSearchControl, OpenStreetMapProvider } from 'leaflet-geosearch'
+import jsonKota from '@/assets/kotaV2.json'
+import jsonKecamatan from '@/assets/kecamatanV2.json'
+import jsonKelurahan from '@/assets/kelurahanV2.json'
 
+// eslint-disable-next-line no-unused-vars
 let tileLayer = []
+// eslint-disable-next-line prefer-const
 let geojsonArea = []
-let geojsonActive =[]
-let markerClusters = []
 let provider = []
-let wilayahLayer = []
-let kotaCluster = []
-let kotaGeojson = []
-let kecamatanGeojson = []
-let kelurahanGeojson = []
+// let wilayahLayer = []
 
 export default {
-  head: {
-    script: [
-      // { src: 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js' }
-    ],
-    link: [
-      { rel: 'stylesheet', href: 'https://unpkg.com/leaflet-geosearch@2.6.0/assets/css/leaflet.css' }
-    ]
-  },
-  name: 'MapSebaranCovid',
+  name: 'MapV2SebaranTimeSlider',
   components: {
     VueSlider
   },
@@ -219,70 +160,10 @@ export default {
       default: () => [{}]
     }
   },
-  data () {
-    return {
-      dataSlide: 0,
-      sliderValue: new Date(),
-      min: new Date().setDate(new Date().getDate() - 5),
-      max: new Date().setDate(new Date().getDate()),
-
-      map: [],
-      loading: false,
-      filter: {
-        odp : {
-          proses: false,
-          belumupdate: false
-        },
-        pdp: {
-          proses: false,
-          belumupdate: false
-        },
-        positif: {
-          proses: true,
-          meninggal: true,
-          sembuh: true
-        }
-      },
-      isShowFilter: false,
-      faFilter: faFilter,
-      faHome: faHome,
-      // map: '',
-      zoom: 8,
-      isHidden: false,
-      activeLayer: 'ODP',
-      styleBatasWilayah: {
-        fillColor: 'blue',
-        weight: 1,
-        opacity: 1,
-        color: '#D7B6AE',
-        fillOpacity: 0
-      },
-      level: 'kota',
-      
-      statusStage: {
-        positif: {
-          proses: 'Positif - Aktif',
-          meninggal: 'Positif - Meninggal',
-          sembuh: 'Positif - Sembuh'
-        },
-        pdp: {
-          proses: 'PDP - Proses',
-          belumupdate: 'PDP (belum diupdate)'
-        },
-        odp: {
-          proses: 'ODP - Proses',
-          belumupdate: 'ODP (belum diupdate)'
-        }
-      },
-      
-      searchControl: [],
-      listMarker: [],
-    }
-  },
-  asyncData() {
+  asyncData () {
     return {
       listMarkerCluster: {
-        odp : {
+        odp: {
           proses: [],
           belumupdate: []
         },
@@ -306,21 +187,75 @@ export default {
         kecamatan: [],
         kelurahan: []
       },
-      
-      jsonData: [],
+      jsonData: []
+    }
+  },
+  data () {
+    return {
+      dataSlide: 0,
+      sliderValue: new Date(),
+      min: new Date().setDate(new Date().getDate() - 5),
+      max: new Date().setDate(new Date().getDate()),
+
+      map: [],
+      loading: false,
+      filter: {
+        odp: {
+          proses: false,
+          belumupdate: false
+        },
+        pdp: {
+          proses: false,
+          belumupdate: false
+        },
+        positif: {
+          proses: true,
+          meninggal: true,
+          sembuh: true
+        }
+      },
+      isShowFilter: false,
+      faFilter,
+      faHome,
+      // map: '',
+      zoom: 8,
+      isHidden: false,
+      activeLayer: 'ODP',
+      styleBatasWilayah: {
+        fillColor: 'blue',
+        weight: 1,
+        opacity: 1,
+        color: '#D7B6AE',
+        fillOpacity: 0
+      },
+      level: 'kota',
+      statusStage: {
+        positif_proses: 'Positif - Aktif',
+        positif_meninggal: 'Positif - Meninggal',
+        positif_sembuh: 'Positif - Sembuh',
+        pdp_proses: 'PDP - Proses',
+        pdp_selesai: 'PDP - Selesai',
+        pdp_meninggal: 'PDP - Meninggal',
+        odp_proses: 'ODP - Proses',
+        odp_selesai: 'ODP - Selesai',
+        odp_meninggal: 'ODP - Meninggal'
+      },
+      searchControl: [],
+      listMarker: [],
+      deletedListMarker: [],
+      markerClusters: [],
+      listWilActive: [],
+      isGrouping: false
     }
   },
   beforeMount () {
     // this.tesMap()
   },
-  mounted() {
-    this.createBasemap() 
+  mounted () {
+    this.createBasemap()
+    this.fetchData()
   },
-  created() {
-    this.importJSON()
-      .then(() => {   
-        this.fetchData()
-      })
+  created () {
   },
   beforeDestroy () {
     this.map = ''
@@ -329,11 +264,10 @@ export default {
     setFilter (status, stage) {
       try {
         this.removeLayer(false)
-        this.filter[status][stage] = !this.filter[status][stage] 
-        for (let status in this.filter) {
-          for (let stage in this.filter[status]) {
+        this.filter[status][stage] = !this.filter[status][stage]
+        for (const status in this.filter) {
+          for (const stage in this.filter[status]) {
             this.listMarkerCluster[status][stage].forEach((element) => {
-
               if (this.filter[status][stage]) {
                 element.addTo(this.map)
               }
@@ -341,49 +275,14 @@ export default {
           }
         }
       } catch (e) {
-        console.log(e.message);
+        console.log(e.message)
       }
     },
-    showFilter() {
+    showFilter () {
       this.isShowFilter = !this.isShowFilter
     },
-    backToHome() {
+    backToHome () {
       this.map.flyTo([-6.932694, 107.627449], 8)
-    },
-    importJSON () {
-      const files = [
-        {
-          name: 'kota.json',
-          onLoad: (module) => {
-            kotaGeojson = module
-          }
-        },
-        {
-          name: 'kecamatan.json',
-          onLoad: (module) => {
-            kecamatanGeojson = module
-          }
-        },
-        {
-          name: 'kelurahan.json',
-          onLoad: (module) => {
-            kelurahanGeojson = module
-          }
-        }
-      ]
-      const promises = files.map((file) => {
-        return new Promise((resolve) => {
-          import(`~/assets/${file.name}`)
-            .then(m => {
-              return m ? m.default || m : {}
-            }).then(module => {
-              file.onLoad(module)
-            }).finally(() => {
-              resolve()
-            })
-        })
-      })
-      return Promise.all(promises)
     },
     fetchData () {
       const self = this
@@ -401,23 +300,22 @@ export default {
       self.createMap('kota')
     },
     createBasemap () {
-
-      this.map = new L.map('map-wrap', {
+      this.map = new L.Map('map-wrap', {
         zoomControl: false
       }).setView([-6.932694, 107.627449], 8)
 
-      tileLayer = new L.tileLayer('https://cartodb-basemaps-d.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {
+      tileLayer = new L.TileLayer('https://cartodb-basemaps-d.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {
         attribution: '© OpenStreetMap contributors',
         maxZoom: 18,
         tileSize: 512,
         zoomOffset: -1
       }).addTo(this.map)
 
-      provider = new OpenStreetMapProvider();
+      provider = new OpenStreetMapProvider()
 
-      // add search control 
+      // add search control
       this.searchControl = new GeoSearchControl({
-        provider: provider,
+        provider,
         position: 'topleft'
       }).addTo(this.map)
       this.map.on('geosearch/showlocation', (e) => {
@@ -425,23 +323,20 @@ export default {
       })
 
       // add zoom control with your options
+      // eslint-disable-next-line new-cap
       new L.control.zoom({
         position: 'bottomright'
       }).addTo(this.map)
-      
-      
       // // // on zoom
       // // // Here the events for zooming and dragging
       this.map.on('zoomend', () => {
         this.createMapByZoomLevel()
       })
-
-      
       // this.map.on('dragend', () => {
       //   // if (this.zoom > 15) {
       //   //   this.removeLayer()
       //   //   this.createLayerByKelurahan()
-      //   // } else 
+      //   // } else
       //   if (this.map.getZoom()  > 12) {
       //     this.removeLayer()
       //     this.createLayerPasien('kelurahan')
@@ -456,76 +351,12 @@ export default {
       // // create layer group
       // this.layerGroup = new L.layerGroup().addTo(this.map)
     },
-    statusStageCorona (status, stage) {
-      return this.statusStage[status][stage]
-    },
-    addMarkerLayer(kode_level, elPasien) {
-      if (elPasien.status === 'Positif') {
-        // set minimum date
-        const tanggal_konfirmasi_time = new Date(elPasien.tanggal_konfirmasi).getTime()
-        if (tanggal_konfirmasi_time < this.min) {
-          this.min = tanggal_konfirmasi_time  
-        }
-
-        let icon = ''
-        if (elPasien.stage === 'Proses') {
-          icon = new L.divIcon({
-            className:  'cluster cluster-positif-proses digits-0',
-            iconSize: null
-          })
-
-        } else if (elPasien.stage === 'Meninggal') {
-          icon = new L.divIcon({
-            className:  'cluster cluster-positif-meninggal digits-0',
-            iconSize: null
-          })
-        } else if (elPasien.stage === 'Sembuh') {
-          icon = new L.divIcon({
-            className:  'cluster cluster-positif-sembuh digits-0',
-            iconSize: null
-          })
-        }
-
-        const m = new L.marker([elPasien.latitude, elPasien.longitude], {virtual : true, attributes: elPasien, icon })
-        let popup = `<b> Status </b> : ${elPasien.status} <br>`
-
-        if (elPasien.nama_kab !== '' && elPasien.nama_kab !== null) {
-          popup += '<b> Kab/Kota </b> : ' + elPasien.nama_kab + '<br />'
-        }
-
-        if (elPasien.nama_kec !== '' && elPasien.nama_kec !== null) {
-          popup += '<b> Kecamatan </b> : ' + elPasien.nama_kec + '<br />'
-        }
-
-        if (elPasien.gender !== '' && elPasien.gender !== null) {
-          popup += '<b> Jenis Kelamin </b> : ' + elPasien.gender + '<br />'
-        }
-
-        if (elPasien.umur !== '' && elPasien.umur !== null) {
-          popup += '<b> Usia </b> : ' + elPasien.umur + ' tahun <br />'
-        }
-        m.bindPopup(popup)
-        m.on('mouseover', function (e) {
-          this.openPopup()
-        })
-        m.on('mouseout', function (e) {
-          this.closePopup()
-        })
-        m.addTo(this.map)
-        this.listMarker.push(m)
-      }
-      
-
-      
-    
-      
-    },
     createMap (level) {
       this.createLayerPasien(level)
     },
-    createLayerPasien(level) {
+    createLayerPasien (level) {
       this.listMarkerCluster = {
-        odp : {
+        odp: {
           proses: [],
           belumupdate: []
         },
@@ -538,149 +369,343 @@ export default {
           meninggal: [],
           sembuh: []
         }
-      } 
+      }
       let geojsonActive = []
-      let kode_wilayah = ''
-
-      let kotaCluster = []
+      let kodeWilayahDataMarker = ''
+      let kodeWilayahJSON = ''
 
       if (level === 'kota') {
-        geojsonActive = kotaGeojson
-        kode_wilayah = 'kode_kab'
-      } else if(level === 'kecamatan') {
-        geojsonActive = kecamatanGeojson
-        kode_wilayah = 'kode_kec'
+        geojsonActive = jsonKota
+        kodeWilayahDataMarker = 'kode_kab'
+        kodeWilayahJSON = 'bps_kabupaten_kode'
+      } else if (level === 'kecamatan') {
+        geojsonActive = jsonKecamatan
+        kodeWilayahDataMarker = 'kode_kec'
+        kodeWilayahJSON = 'bps_kecamatan_kode'
       } else {
-        kode_wilayah = 'kode_kel'
-        geojsonActive = kelurahanGeojson
+        kodeWilayahDataMarker = 'kode_kel'
+        geojsonActive = jsonKelurahan
+        kodeWilayahJSON = 'bps_kelurahan_kode'
       }
 
-      if (geojsonArea.length != 0) {
+      if (geojsonArea.length !== 0) {
         geojsonArea.remove()
       }
-
-      geojsonArea = new L.geoJSON(geojsonActive, {
-        style: this.styleBatasWilayah,
-        virtual: true
+      geojsonArea = new L.GeoJSON(geojsonActive, {
+        style: this.styleBatasWilayah
       }).addTo(this.map)
-
-
-      let jsonData = this.jsonData
+      const jsonData = this.jsonData
       const result = jsonData.reduce(function (r, a) {
-        r[a[kode_wilayah]] = r[a[kode_wilayah]] || [];
-        r[a[kode_wilayah]].push(a);
-        return r;
+        r[a[kodeWilayahDataMarker]] = r[a[kodeWilayahDataMarker]] || []
+        r[a[kodeWilayahDataMarker]].push(a)
+        return r
       }, Object.create(null))
-
-      const keys_result = Object.keys(result) 
-      let geoJSONArea = geojsonActive.features.filter((el) => {
-        return keys_result.includes(el.properties.bps_kode)
+      const keysResult = Object.keys(result)
+      const geoJSONArea = geojsonActive.features.filter((el) => {
+        return keysResult.includes(el.properties[kodeWilayahJSON])
       })
-
-      
-      // console.log(grouped)
-      new L.geoJSON(geoJSONArea, {
+      console.log(geoJSONArea)
+      new L.GeoJSON(geoJSONArea, {
         style: this.styleBatasWilayah
       }).eachLayer((el) => {
-        if (this.map.getBounds().intersects(el._bounds)) {
-            let nama_kab = '' 
-            let nama_kec = '' 
-            let nama_kel = '' 
-            let deleted_list = []
-            for (let i in result[el.feature.properties.bps_kode]) {
-              nama_kab = result[el.feature.properties.bps_kode][i].nama_kab 
-              nama_kec = result[el.feature.properties.bps_kode][i].nama_kec
-              nama_kel = result[el.feature.properties.bps_kode][i].nama_kel
-              this.addMarkerLayer(el.feature.properties.bps_kode, result[el.feature.properties.bps_kode][i])
-              deleted_list.push(i)
+        this.markerClusters[el.feature.properties[kodeWilayahJSON]] = this.paramMarkerCluster()
+        this.listWilActive.push(el)
+        for (const keyStatus in this.statusStage) {
+          this.markerClusters[el.feature.properties[kodeWilayahJSON]][keyStatus].on('clusterclick', (c) => {
+            let popup = ''
+            popup += `<b> Status </b> : ${this.statusStageCorona(keyStatus)} <br>`
+            popup += `<b> Jumlah </b> : ${c.layer._childCount} kasus <br>`
+            popup += `<b> Kota/Kabupaten </b> : ${el.feature.properties.kemendagri_kabupaten_nama} <br>`
+
+            if (el.feature.properties.kemendagri_kecamatan_nama !== undefined) {
+              popup += `<b> Kecamatan </b> : ${el.feature.properties.kemendagri_kecamatan_nama} <br>`
             }
 
-            for (let i in deleted_list) {
-              result[el.feature.properties.bps_kode].splice(i, 1)
+            if (el.feature.properties.kemendagri_desa_nama) {
+              popup += `<b> Kel/Desa </b> : ${el.feature.properties.kemendagri_desa_nama} <br>`
             }
-            // this.addMarkerClusterLayer(kotaCluster, el.feature.properties.bps_kode, level, nama_kab, nama_kec, nama_kel)
+            this.$L.popup().setLatLng(c.layer.getLatLng()).setContent(popup).openOn(this.map)
+          }).on('clustermouseout', (c) => {
+            this.map.closePopup()
+          })
         }
-      })
-      
-    },
-    async createMapByZoomLevel() {
-      if (this.map.getZoom() > 12) {
-        this.removeLayer ()
-        
+        const deletedList = []
+        for (const i in result[el.feature.properties[kodeWilayahJSON]]) {
+          // namaKab = result[el.feature.properties.bps_kode][i].nama_kab
+          // namaKec = result[el.feature.properties.bps_kode][i].nama_kec
+          // namaKel = result[el.feature.properties.bps_kode][i].nama_kel
+          this.addMarkerLayer(level, el.feature.properties[kodeWilayahJSON], result[el.feature.properties[kodeWilayahJSON]][i])
+          deletedList.push(i)
+        }
 
+        for (const i in deletedList) {
+          result[el.feature.properties[kodeWilayahJSON]].splice(i, 1)
+        }
+
+        if (this.isGrouping) {
+          const markProses = this.markerClusters[el.feature.properties[kodeWilayahJSON]].positif_proses.addTo(this.map)
+          const markSembuh = this.markerClusters[el.feature.properties[kodeWilayahJSON]].positif_sembuh.addTo(this.map)
+          const markMeninggal = this.markerClusters[el.feature.properties[kodeWilayahJSON]].positif_meninggal.addTo(this.map)
+          this.deletedListMarker.push(markProses)
+          this.deletedListMarker.push(markSembuh)
+          this.deletedListMarker.push(markMeninggal)
+        }
+        // this.addMarkerClusterLayer(kotaCluster, el.feature.properties.bps_kode, level, namaKab, namaKec, namaKel)
+      })
+    },
+    createMapByZoomLevel () {
+      if (this.map.getZoom() > 12) {
         this.level = 'kelurahan'
         this.createLayerPasien('kelurahan')
-      }
-      else if (this.map.getZoom() > 10) {
-
+      } else if (this.map.getZoom() > 10) {
         if (this.level !== 'kecamatan') {
-          this.removeLayer ()
-
           this.level = 'kecamatan'
           this.createLayerPasien('kecamatan')
         }
-      }
-      else {
-        if (this.level !== 'kota') {
-          this.removeLayer ()
-          this.level = 'kota'
-          this.createLayerPasien('kota')
-        }
+      } else if (this.level !== 'kota') {
+        this.level = 'kota'
+        this.createLayerPasien('kota')
       }
     },
-    removeBatasWilayah () {
-      wilayahLayer.forEach((element) => {
-        this.map.removeLayer(element)
-        element.clearLayers()
-        element.remove()
+    statusStageCorona (status) {
+      return this.statusStage[status]
+    },
+    createMarkerPasien (elPasien, icon, stage) {
+      const m = new L.Marker([elPasien.latitude, elPasien.longitude], { virtual: true, attributes: elPasien, icon })
+      let popup = `<b> Status </b> : ${elPasien.status} - ${stage} <br>`
+
+      if (elPasien.nama_kab !== '' && elPasien.nama_kab !== null) {
+        popup += '<b> Kab/Kota </b> : ' + elPasien.nama_kab + '<br />'
+      }
+
+      if (elPasien.nama_kec !== '' && elPasien.nama_kec !== null) {
+        popup += '<b> Kecamatan </b> : ' + elPasien.nama_kec + '<br />'
+      }
+
+      if (elPasien.gender !== '' && elPasien.gender !== null) {
+        popup += '<b> Jenis Kelamin </b> : ' + elPasien.gender + '<br />'
+      }
+
+      if (elPasien.umur !== '' && elPasien.umur !== null) {
+        popup += '<b> Usia </b> : ' + elPasien.umur + ' tahun <br />'
+      }
+      m.bindPopup(popup)
+      m.on('mouseover', function (e) {
+        this.openPopup()
       })
-      wilayahLayer = []
+      m.on('mouseout', function (e) {
+        this.closePopup()
+      })
+
+      return m
     },
-    removeLayer (all = true) {
-      if (all) {
-        for (let key in kotaCluster) {
-          for (let status in this.filter) {
-            for (let stage in this.filter[status]) {
-              kotaCluster[key][status][stage].clearLayers()
+    addMarkerLayer (kodeLevel, kodeWilayah, elPasien) {
+      let icon = ''
+      let updateMarker = false
+      if (elPasien.status === 'Positif') {
+        // set minimum date
+        const tanggalKonfirmasiTime = new Date(elPasien.tanggal_konfirmasi).getTime()
+        const tanggalUpdateTime = new Date(elPasien.tanggal_update).getTime()
+        if (tanggalKonfirmasiTime < this.min) {
+          this.min = tanggalKonfirmasiTime
+        }
+        if (elPasien.stage === 'Meninggal' && tanggalUpdateTime <= this.sliderValue) {
+          icon = new L.DivIcon({
+            className: 'cluster cluster-positif-meninggal digits-0',
+            iconSize: null
+          })
+          updateMarker = this.createMarkerPasien(elPasien, icon, 'Meninggal')
+        } else if (elPasien.stage === 'Sembuh' && tanggalUpdateTime <= this.sliderValue) {
+          icon = new L.DivIcon({
+            className: 'cluster cluster-positif-sembuh digits-0',
+            iconSize: null
+          })
+          updateMarker = this.createMarkerPasien(elPasien, icon, 'Sembuh')
+        }
+
+        elPasien.updateMarker = updateMarker
+        icon = new L.DivIcon({
+          className: 'cluster cluster-positif-proses digits-0',
+          iconSize: null
+        })
+        const marker = this.createMarkerPasien(elPasien, icon, 'Proses')
+
+        if (new Date(elPasien.tanggal_konfirmasi).getTime() <= this.sliderValue) {
+          if (updateMarker) {
+            if (updateMarker.options.attributes.stage === 'Sembuh') {
+              this.markerClusters[kodeWilayah].positif_sembuh.addLayer(updateMarker)
+            } else {
+              this.markerClusters[kodeWilayah].positif_meninggal.addLayer(updateMarker)
+            }
+
+            if (!this.isGrouping) {
+              updateMarker.addTo(this.map)
+              this.deletedListMarker.push(updateMarker)
+            }
+          } else {
+            this.markerClusters[kodeWilayah].positif_proses.addLayer(marker)
+            if (!this.isGrouping) {
+              marker.addTo(this.map)
+              this.deletedListMarker.push(marker)
             }
           }
         }
+        this.listMarker.push(marker)
+      }
+    },
+    configCluster (className) {
+      return {
+        singleMarkerMode: true,
+        maxClusterRadius: 10000,
+        spiderfyOnMaxZoom: true,
+        showCoverageOnHover: false,
+        zoomToBoundsOnClick: false,
+        spiderLegPolylineOptions: { weight: 1.5, color: '#222', opacity: 0 },
+        iconCreateFunction: (cluster) => {
+          // get the number of items in the cluster
+          let count = cluster.getChildCount()
+          const digits = (count + '').length
+          let classMarker = 'cluster ' + className + ' digits-' + digits
 
-        for (let status in this.filter) {
-          for (let stage in this.filter[status]) {
-            this.listMarkerCluster[status][stage].forEach((element) => {
-              this.map.removeLayer(element)
-              element.clearLayers()
-              element.remove()
-            })
+          if (count === 1) {
+            count = ''
+            classMarker = 'cluster ' + className + ' digits-0'
           }
-        }
-        this.listMarkerCluster = []
-
-      } else {
-        for (let status in this.filter) {
-          for (let stage in this.filter[status]) {
-            this.listMarkerCluster[status][stage].forEach((element) => {
-              this.map.removeLayer(element)
-            })
-          }
+          return this.$L.divIcon({
+            html: count,
+            className: classMarker,
+            iconSize: null
+          })
         }
       }
+    },
+    paramMarkerCluster () {
+      return {
+        positif_proses: this.$L.markerClusterGroup(this.configCluster('cluster-positif-proses')),
+        positif_meninggal: this.$L.markerClusterGroup(this.configCluster('cluster-positif-meninggal')),
+        positif_sembuh: this.$L.markerClusterGroup(this.configCluster('cluster-positif-sembuh')),
+        pdp_proses: this.$L.markerClusterGroup(this.configCluster('cluster-pdp-proses')),
+        pdp_selesai: this.$L.markerClusterGroup(this.configCluster('cluster-pdp-selesai')),
+        pdp_meninggal: this.$L.markerClusterGroup(this.configCluster('cluster-pdp-meninggal')),
+        odp_proses: this.$L.markerClusterGroup(this.configCluster('cluster-odp-proses')),
+        odp_selesai: this.$L.markerClusterGroup(this.configCluster('cluster-odp-selesai')),
+        odp_meninggal: this.$L.markerClusterGroup(this.configCluster('cluster-odp-meninggal'))
+      }
+    },
+    addCluster () {
 
     },
-    onChangeTimeSlider() {
-      this.listMarker.forEach((el) => {
+    removeLayer () {
+      this.deletedListMarker.forEach((el) => {
         this.map.removeLayer(el)
       })
+    },
+    onChangeTimeSlider () {
+      const listMarker = []
+      this.removeLayer()
+
       this.listMarker.forEach((el) => {
-        let tanggal_konfirmasi = new Date(el.options.attributes.tanggal_konfirmasi)
-        if (tanggal_konfirmasi.getTime() <= this.sliderValue) {
-          el.addTo(this.map)
+        const tanggalKonfirmasi = new Date(el.options.attributes.tanggal_konfirmasi)
+        const tanggalUpdate = new Date(el.options.attributes.tanggal_update)
+        if (tanggalKonfirmasi.getTime() <= this.sliderValue) {
+          let m = []
+          if (el.options.attributes.updateMarker && tanggalUpdate.getTime() < this.sliderValue) {
+            m = el.options.attributes.updateMarker
+          } else {
+            m = el
+          }
+
+          listMarker.push(m)
+          if (!this.isGrouping) {
+            m.addTo(this.map)
+          }
         }
       })
+      if (!this.isGrouping) {
+        this.deletedListMarker = listMarker
+      } else {
+        const groupCluster = []
+        let kodeWilayahJSON = ''
+
+        if (this.level === 'kota') {
+          kodeWilayahJSON = 'bps_kabupaten_kode'
+        } else if (this.level === 'kecamatan') {
+          kodeWilayahJSON = 'bps_kecamatan_kode'
+        } else {
+          kodeWilayahJSON = 'bps_kelurahan_kode'
+        }
+        for (const i in this.listWilActive) {
+          const deletedArr = []
+          groupCluster[this.listWilActive[i].feature.properties[kodeWilayahJSON]] = this.paramMarkerCluster()
+          this.createPopupCluster(groupCluster, this.listWilActive[i], kodeWilayahJSON)
+          console.log(groupCluster)
+          for (const j in listMarker) {
+            if (this.level === 'kota') {
+              const tanggalUpdate = new Date(listMarker[j].options.attributes.tanggal_update)
+              if (this.listWilActive[i].feature.properties[kodeWilayahJSON] === listMarker[j].options.attributes.kode_kab) {
+                if (listMarker[j].options.attributes.stage === 'Sembuh' && listMarker[j].options.attributes.updateMarker && tanggalUpdate.getTime() < this.sliderValue) {
+                  groupCluster[this.listWilActive[i].feature.properties[kodeWilayahJSON]].positif_sembuh.addLayer(listMarker[j])
+                } else if (listMarker[j].options.attributes.stage === 'Meninggal' && listMarker[j].options.attributes.updateMarker && tanggalUpdate.getTime() < this.sliderValue) {
+                  groupCluster[this.listWilActive[i].feature.properties[kodeWilayahJSON]].positif_meninggal.addLayer(listMarker[j])
+                } else {
+                  console.log(this.listWilActive[i].feature.properties[kodeWilayahJSON])
+                  groupCluster[this.listWilActive[i].feature.properties[kodeWilayahJSON]].positif_proses.addLayer(listMarker[j])
+                }
+                deletedArr.push(i)
+              }
+            }
+          }
+
+          for (const j in deletedArr) {
+            listMarker.splice(j, 1)
+          }
+
+          const markProses = groupCluster[this.listWilActive[i].feature.properties[kodeWilayahJSON]].positif_proses.addTo(this.map)
+          const markSembuh = groupCluster[this.listWilActive[i].feature.properties[kodeWilayahJSON]].positif_sembuh.addTo(this.map)
+          const markMeninggal = groupCluster[this.listWilActive[i].feature.properties[kodeWilayahJSON]].positif_meninggal.addTo(this.map)
+          this.deletedListMarker.push(markProses)
+          this.deletedListMarker.push(markSembuh)
+          this.deletedListMarker.push(markMeninggal)
+        }
+      }
+    },
+    createPopupCluster (cluster, el, kodeWilayah) {
+      for (const keyStatus in this.statusStage) {
+        cluster[el.feature.properties[kodeWilayah]][keyStatus].on('clusterclick', (c) => {
+          let popup = ''
+          popup += `<b> Status </b> : ${this.statusStageCorona(keyStatus)} <br>`
+          popup += `<b> Jumlah </b> : ${c.layer._childCount} kasus <br>`
+          popup += `<b> Kota/Kabupaten </b> : ${el.feature.properties.kemendagri_kabupaten_nama} <br>`
+
+          if (el.feature.properties.kemendagri_kecamatan_nama !== undefined) {
+            popup += `<b> Kecamatan </b> : ${el.feature.properties.kemendagri_kecamatan_nama} <br>`
+          }
+
+          if (el.feature.properties.kemendagri_desa_nama) {
+            popup += `<b> Kel/Desa </b> : ${el.feature.properties.kemendagri_desa_nama} <br>`
+          }
+          this.$L.popup().setLatLng(c.layer.getLatLng()).setContent(popup).openOn(this.map)
+        }).on('clustermouseout', (c) => {
+          this.map.closePopup()
+        })
+      }
+      return cluster
+    },
+    onClickGroup () {
+      this.isGrouping = !this.isGrouping
+      this.onChangeTimeSlider()
     },
     tes () {
-      
+    }
+  },
+  head () {
+    return {
+      script: [
+        // { src: 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js' }
+      ],
+      link: [
+        { rel: 'stylesheet', href: 'https://unpkg.com/leaflet-geosearch@2.6.0/assets/css/leaflet.css' }
+      ]
     }
   }
 }
@@ -716,7 +741,6 @@ export default {
   height: 26%;
   overflow-y: auto;
   overflow-x: hidden;
-  font-size: 13px;
 }
 .legend {
     line-height: 18px;
@@ -807,7 +831,6 @@ export default {
   }
 }
 
-
 @media only screen and (max-width: 340px) {
   .text-disclaimer .description{
     overflow: auto;
@@ -823,7 +846,6 @@ export default {
   padding-left: 1em;
   padding-bottom: 1em;
 }
-
 
 .time-slider {
   border-radius: 5px;
@@ -929,8 +951,8 @@ export default {
   }
 
   .digits-0 {
-    height: 17px;
-    width: 17px;
+    height: 14px;
+    width: 14px;
     margin-top: -14px;
     margin-left: -14px;
   }
@@ -976,5 +998,11 @@ export default {
   .glass {
     height: 26px !important;
   }
-  
+  .loading-image {
+    height: 10em;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image:
+          url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBzdHlsZT0ibWFyZ2luOiBhdXRvOyBkaXNwbGF5OiBibG9jazsgc2hhcGUtcmVuZGVyaW5nOiBhdXRvOyIgd2lkdGg9IjIwMHB4IiBoZWlnaHQ9IjIwMHB4IiB2aWV3Qm94PSIwIDAgMTAwIDEwMCIgcHJlc2VydmVBc3BlY3RSYXRpbz0ieE1pZFlNaWQiPgogICAgICAgICAgICA8ZyB0cmFuc2Zvcm09InJvdGF0ZSgwIDUwIDUwKSI+CiAgICAgICAgICAgICAgPHJlY3QgeD0iNDciIHk9IjI0IiByeD0iMyIgcnk9IjYiIHdpZHRoPSI2IiBoZWlnaHQ9IjEyIiBmaWxsPSIjODVhMmI2Ij4KICAgICAgICAgICAgICAgIDxhbmltYXRlIGF0dHJpYnV0ZU5hbWU9Im9wYWNpdHkiIHZhbHVlcz0iMTswIiBrZXlUaW1lcz0iMDsxIiBkdXI9IjFzIiBiZWdpbj0iLTAuOTE2NjY2NjY2NjY2NjY2NnMiIHJlcGVhdENvdW50PSJpbmRlZmluaXRlIj48L2FuaW1hdGU+CiAgICAgICAgICAgICAgPC9yZWN0PgogICAgICAgICAgICA8L2c+PGcgdHJhbnNmb3JtPSJyb3RhdGUoMzAgNTAgNTApIj4KICAgICAgICAgICAgICA8cmVjdCB4PSI0NyIgeT0iMjQiIHJ4PSIzIiByeT0iNiIgd2lkdGg9IjYiIGhlaWdodD0iMTIiIGZpbGw9IiM4NWEyYjYiPgogICAgICAgICAgICAgICAgPGFuaW1hdGUgYXR0cmlidXRlTmFtZT0ib3BhY2l0eSIgdmFsdWVzPSIxOzAiIGtleVRpbWVzPSIwOzEiIGR1cj0iMXMiIGJlZ2luPSItMC44MzMzMzMzMzMzMzMzMzM0cyIgcmVwZWF0Q291bnQ9ImluZGVmaW5pdGUiPjwvYW5pbWF0ZT4KICAgICAgICAgICAgICA8L3JlY3Q+CiAgICAgICAgICAgIDwvZz48ZyB0cmFuc2Zvcm09InJvdGF0ZSg2MCA1MCA1MCkiPgogICAgICAgICAgICAgIDxyZWN0IHg9IjQ3IiB5PSIyNCIgcng9IjMiIHJ5PSI2IiB3aWR0aD0iNiIgaGVpZ2h0PSIxMiIgZmlsbD0iIzg1YTJiNiI+CiAgICAgICAgICAgICAgICA8YW5pbWF0ZSBhdHRyaWJ1dGVOYW1lPSJvcGFjaXR5IiB2YWx1ZXM9IjE7MCIga2V5VGltZXM9IjA7MSIgZHVyPSIxcyIgYmVnaW49Ii0wLjc1cyIgcmVwZWF0Q291bnQ9ImluZGVmaW5pdGUiPjwvYW5pbWF0ZT4KICAgICAgICAgICAgICA8L3JlY3Q+CiAgICAgICAgICAgIDwvZz48ZyB0cmFuc2Zvcm09InJvdGF0ZSg5MCA1MCA1MCkiPgogICAgICAgICAgICAgIDxyZWN0IHg9IjQ3IiB5PSIyNCIgcng9IjMiIHJ5PSI2IiB3aWR0aD0iNiIgaGVpZ2h0PSIxMiIgZmlsbD0iIzg1YTJiNiI+CiAgICAgICAgICAgICAgICA8YW5pbWF0ZSBhdHRyaWJ1dGVOYW1lPSJvcGFjaXR5IiB2YWx1ZXM9IjE7MCIga2V5VGltZXM9IjA7MSIgZHVyPSIxcyIgYmVnaW49Ii0wLjY2NjY2NjY2NjY2NjY2NjZzIiByZXBlYXRDb3VudD0iaW5kZWZpbml0ZSI+PC9hbmltYXRlPgogICAgICAgICAgICAgIDwvcmVjdD4KICAgICAgICAgICAgPC9nPjxnIHRyYW5zZm9ybT0icm90YXRlKDEyMCA1MCA1MCkiPgogICAgICAgICAgICAgIDxyZWN0IHg9IjQ3IiB5PSIyNCIgcng9IjMiIHJ5PSI2IiB3aWR0aD0iNiIgaGVpZ2h0PSIxMiIgZmlsbD0iIzg1YTJiNiI+CiAgICAgICAgICAgICAgICA8YW5pbWF0ZSBhdHRyaWJ1dGVOYW1lPSJvcGFjaXR5IiB2YWx1ZXM9IjE7MCIga2V5VGltZXM9IjA7MSIgZHVyPSIxcyIgYmVnaW49Ii0wLjU4MzMzMzMzMzMzMzMzMzRzIiByZXBlYXRDb3VudD0iaW5kZWZpbml0ZSI+PC9hbmltYXRlPgogICAgICAgICAgICAgIDwvcmVjdD4KICAgICAgICAgICAgPC9nPjxnIHRyYW5zZm9ybT0icm90YXRlKDE1MCA1MCA1MCkiPgogICAgICAgICAgICAgIDxyZWN0IHg9IjQ3IiB5PSIyNCIgcng9IjMiIHJ5PSI2IiB3aWR0aD0iNiIgaGVpZ2h0PSIxMiIgZmlsbD0iIzg1YTJiNiI+CiAgICAgICAgICAgICAgICA8YW5pbWF0ZSBhdHRyaWJ1dGVOYW1lPSJvcGFjaXR5IiB2YWx1ZXM9IjE7MCIga2V5VGltZXM9IjA7MSIgZHVyPSIxcyIgYmVnaW49Ii0wLjVzIiByZXBlYXRDb3VudD0iaW5kZWZpbml0ZSI+PC9hbmltYXRlPgogICAgICAgICAgICAgIDwvcmVjdD4KICAgICAgICAgICAgPC9nPjxnIHRyYW5zZm9ybT0icm90YXRlKDE4MCA1MCA1MCkiPgogICAgICAgICAgICAgIDxyZWN0IHg9IjQ3IiB5PSIyNCIgcng9IjMiIHJ5PSI2IiB3aWR0aD0iNiIgaGVpZ2h0PSIxMiIgZmlsbD0iIzg1YTJiNiI+CiAgICAgICAgICAgICAgICA8YW5pbWF0ZSBhdHRyaWJ1dGVOYW1lPSJvcGFjaXR5IiB2YWx1ZXM9IjE7MCIga2V5VGltZXM9IjA7MSIgZHVyPSIxcyIgYmVnaW49Ii0wLjQxNjY2NjY2NjY2NjY2NjdzIiByZXBlYXRDb3VudD0iaW5kZWZpbml0ZSI+PC9hbmltYXRlPgogICAgICAgICAgICAgIDwvcmVjdD4KICAgICAgICAgICAgPC9nPjxnIHRyYW5zZm9ybT0icm90YXRlKDIxMCA1MCA1MCkiPgogICAgICAgICAgICAgIDxyZWN0IHg9IjQ3IiB5PSIyNCIgcng9IjMiIHJ5PSI2IiB3aWR0aD0iNiIgaGVpZ2h0PSIxMiIgZmlsbD0iIzg1YTJiNiI+CiAgICAgICAgICAgICAgICA8YW5pbWF0ZSBhdHRyaWJ1dGVOYW1lPSJvcGFjaXR5IiB2YWx1ZXM9IjE7MCIga2V5VGltZXM9IjA7MSIgZHVyPSIxcyIgYmVnaW49Ii0wLjMzMzMzMzMzMzMzMzMzMzNzIiByZXBlYXRDb3VudD0iaW5kZWZpbml0ZSI+PC9hbmltYXRlPgogICAgICAgICAgICAgIDwvcmVjdD4KICAgICAgICAgICAgPC9nPjxnIHRyYW5zZm9ybT0icm90YXRlKDI0MCA1MCA1MCkiPgogICAgICAgICAgICAgIDxyZWN0IHg9IjQ3IiB5PSIyNCIgcng9IjMiIHJ5PSI2IiB3aWR0aD0iNiIgaGVpZ2h0PSIxMiIgZmlsbD0iIzg1YTJiNiI+CiAgICAgICAgICAgICAgICA8YW5pbWF0ZSBhdHRyaWJ1dGVOYW1lPSJvcGFjaXR5IiB2YWx1ZXM9IjE7MCIga2V5VGltZXM9IjA7MSIgZHVyPSIxcyIgYmVnaW49Ii0wLjI1cyIgcmVwZWF0Q291bnQ9ImluZGVmaW5pdGUiPjwvYW5pbWF0ZT4KICAgICAgICAgICAgICA8L3JlY3Q+CiAgICAgICAgICAgIDwvZz48ZyB0cmFuc2Zvcm09InJvdGF0ZSgyNzAgNTAgNTApIj4KICAgICAgICAgICAgICA8cmVjdCB4PSI0NyIgeT0iMjQiIHJ4PSIzIiByeT0iNiIgd2lkdGg9IjYiIGhlaWdodD0iMTIiIGZpbGw9IiM4NWEyYjYiPgogICAgICAgICAgICAgICAgPGFuaW1hdGUgYXR0cmlidXRlTmFtZT0ib3BhY2l0eSIgdmFsdWVzPSIxOzAiIGtleVRpbWVzPSIwOzEiIGR1cj0iMXMiIGJlZ2luPSItMC4xNjY2NjY2NjY2NjY2NjY2NnMiIHJlcGVhdENvdW50PSJpbmRlZmluaXRlIj48L2FuaW1hdGU+CiAgICAgICAgICAgICAgPC9yZWN0PgogICAgICAgICAgICA8L2c+PGcgdHJhbnNmb3JtPSJyb3RhdGUoMzAwIDUwIDUwKSI+CiAgICAgICAgICAgICAgPHJlY3QgeD0iNDciIHk9IjI0IiByeD0iMyIgcnk9IjYiIHdpZHRoPSI2IiBoZWlnaHQ9IjEyIiBmaWxsPSIjODVhMmI2Ij4KICAgICAgICAgICAgICAgIDxhbmltYXRlIGF0dHJpYnV0ZU5hbWU9Im9wYWNpdHkiIHZhbHVlcz0iMTswIiBrZXlUaW1lcz0iMDsxIiBkdXI9IjFzIiBiZWdpbj0iLTAuMDgzMzMzMzMzMzMzMzMzMzNzIiByZXBlYXRDb3VudD0iaW5kZWZpbml0ZSI+PC9hbmltYXRlPgogICAgICAgICAgICAgIDwvcmVjdD4KICAgICAgICAgICAgPC9nPjxnIHRyYW5zZm9ybT0icm90YXRlKDMzMCA1MCA1MCkiPgogICAgICAgICAgICAgIDxyZWN0IHg9IjQ3IiB5PSIyNCIgcng9IjMiIHJ5PSI2IiB3aWR0aD0iNiIgaGVpZ2h0PSIxMiIgZmlsbD0iIzg1YTJiNiI+CiAgICAgICAgICAgICAgICA8YW5pbWF0ZSBhdHRyaWJ1dGVOYW1lPSJvcGFjaXR5IiB2YWx1ZXM9IjE7MCIga2V5VGltZXM9IjA7MSIgZHVyPSIxcyIgYmVnaW49IjBzIiByZXBlYXRDb3VudD0iaW5kZWZpbml0ZSI+PC9hbmltYXRlPgogICAgICAgICAgICAgIDwvcmVjdD4KICAgICAgICAgICAgPC9nPgogICAgICAgICAgPC9zdmc+")
+  }
 </style>
