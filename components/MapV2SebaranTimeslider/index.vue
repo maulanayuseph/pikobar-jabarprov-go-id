@@ -148,7 +148,11 @@ let tileLayer = []
 let geojsonArea = []
 let provider = []
 // let wilayahLayer = []
-
+let listWilActive = []
+const markerClusters = []
+const deletedListCluster = []
+let deletedListMarker = []
+let mapView = []
 export default {
   name: 'MapV2SebaranTimeSlider',
   components: {
@@ -243,8 +247,8 @@ export default {
       searchControl: [],
       listMarker: [],
       deletedListMarker: [],
-      markerClusters: [],
-      listWilActive: [],
+      deletedListCluster: [],
+      groupCluster: [],
       isGrouping: false
     }
   },
@@ -258,7 +262,7 @@ export default {
   created () {
   },
   beforeDestroy () {
-    this.map = ''
+    mapView = ''
   },
   methods: {
     setFilter (status, stage) {
@@ -269,7 +273,7 @@ export default {
           for (const stage in this.filter[status]) {
             this.listMarkerCluster[status][stage].forEach((element) => {
               if (this.filter[status][stage]) {
-                element.addTo(this.map)
+                element.addTo(mapView)
               }
             })
           }
@@ -282,7 +286,7 @@ export default {
       this.isShowFilter = !this.isShowFilter
     },
     backToHome () {
-      this.map.flyTo([-6.932694, 107.627449], 8)
+      mapView.flyTo([-6.932694, 107.627449], 8)
     },
     fetchData () {
       const self = this
@@ -300,7 +304,7 @@ export default {
       self.createMap('kota')
     },
     createBasemap () {
-      this.map = new L.Map('map-wrap', {
+      mapView = new L.Map('map-wrap', {
         zoomControl: false
       }).setView([-6.932694, 107.627449], 8)
 
@@ -309,7 +313,7 @@ export default {
         maxZoom: 18,
         tileSize: 512,
         zoomOffset: -1
-      }).addTo(this.map)
+      }).addTo(mapView)
 
       provider = new OpenStreetMapProvider()
 
@@ -317,31 +321,31 @@ export default {
       this.searchControl = new GeoSearchControl({
         provider,
         position: 'topleft'
-      }).addTo(this.map)
-      this.map.on('geosearch/showlocation', (e) => {
-        this.createMapByZoomLevel()
+      }).addTo(mapView)
+      mapView.on('geosearch/showlocation', (e) => {
+        // this.createMapByZoomLevel()
       })
 
       // add zoom control with your options
       // eslint-disable-next-line new-cap
       new L.control.zoom({
         position: 'bottomright'
-      }).addTo(this.map)
+      }).addTo(mapView)
       // // // on zoom
       // // // Here the events for zooming and dragging
-      this.map.on('zoomend', () => {
-        this.createMapByZoomLevel()
+      mapView.on('zoomend', () => {
+        // this.createMapByZoomLevel()
       })
-      // this.map.on('dragend', () => {
+      // mapView.on('dragend', () => {
       //   // if (this.zoom > 15) {
       //   //   this.removeLayer()
       //   //   this.createLayerByKelurahan()
       //   // } else
-      //   if (this.map.getZoom()  > 12) {
+      //   if (mapView.getZoom()  > 12) {
       //     this.removeLayer()
       //     this.createLayerPasien('kelurahan')
       //   }
-      //   else if (this.map.getZoom()  > 10) {
+      //   else if (mapView.getZoom()  > 10) {
       //     this.removeLayer()
       //     this.createLayerPasien('kecamatan')
       //   }
@@ -349,7 +353,7 @@ export default {
       // end
 
       // // create layer group
-      // this.layerGroup = new L.layerGroup().addTo(this.map)
+      // this.layerGroup = new L.layerGroup().addTo(mapView)
     },
     createMap (level) {
       this.createLayerPasien(level)
@@ -393,7 +397,7 @@ export default {
       }
       geojsonArea = new L.GeoJSON(geojsonActive, {
         style: this.styleBatasWilayah
-      }).addTo(this.map)
+      }).addTo(mapView)
       const jsonData = this.jsonData
       const result = jsonData.reduce(function (r, a) {
         r[a[kodeWilayahDataMarker]] = r[a[kodeWilayahDataMarker]] || []
@@ -404,14 +408,15 @@ export default {
       const geoJSONArea = geojsonActive.features.filter((el) => {
         return keysResult.includes(el.properties[kodeWilayahJSON])
       })
-      console.log(geoJSONArea)
+      listWilActive = []
+
       new L.GeoJSON(geoJSONArea, {
         style: this.styleBatasWilayah
       }).eachLayer((el) => {
-        this.markerClusters[el.feature.properties[kodeWilayahJSON]] = this.paramMarkerCluster()
-        this.listWilActive.push(el)
+        markerClusters[el.feature.properties[kodeWilayahJSON]] = this.paramMarkerCluster()
+        listWilActive.push(el)
         for (const keyStatus in this.statusStage) {
-          this.markerClusters[el.feature.properties[kodeWilayahJSON]][keyStatus].on('clusterclick', (c) => {
+          markerClusters[el.feature.properties[kodeWilayahJSON]][keyStatus].on('clusterclick', (c) => {
             let popup = ''
             popup += `<b> Status </b> : ${this.statusStageCorona(keyStatus)} <br>`
             popup += `<b> Jumlah </b> : ${c.layer._childCount} kasus <br>`
@@ -424,9 +429,9 @@ export default {
             if (el.feature.properties.kemendagri_desa_nama) {
               popup += `<b> Kel/Desa </b> : ${el.feature.properties.kemendagri_desa_nama} <br>`
             }
-            this.$L.popup().setLatLng(c.layer.getLatLng()).setContent(popup).openOn(this.map)
+            this.$L.popup().setLatLng(c.layer.getLatLng()).setContent(popup).openOn(mapView)
           }).on('clustermouseout', (c) => {
-            this.map.closePopup()
+            mapView.closePopup()
           })
         }
         const deletedList = []
@@ -443,26 +448,29 @@ export default {
         }
 
         if (this.isGrouping) {
-          const markProses = this.markerClusters[el.feature.properties[kodeWilayahJSON]].positif_proses.addTo(this.map)
-          const markSembuh = this.markerClusters[el.feature.properties[kodeWilayahJSON]].positif_sembuh.addTo(this.map)
-          const markMeninggal = this.markerClusters[el.feature.properties[kodeWilayahJSON]].positif_meninggal.addTo(this.map)
-          this.deletedListMarker.push(markProses)
-          this.deletedListMarker.push(markSembuh)
-          this.deletedListMarker.push(markMeninggal)
+          const markProses = markerClusters[el.feature.properties[kodeWilayahJSON]].positif_proses.addTo(mapView)
+          const markSembuh = markerClusters[el.feature.properties[kodeWilayahJSON]].positif_sembuh.addTo(mapView)
+          const markMeninggal = markerClusters[el.feature.properties[kodeWilayahJSON]].positif_meninggal.addTo(mapView)
+          deletedListCluster.push(markProses)
+          deletedListCluster.push(markSembuh)
+          deletedListCluster.push(markMeninggal)
         }
         // this.addMarkerClusterLayer(kotaCluster, el.feature.properties.bps_kode, level, namaKab, namaKec, namaKel)
       })
     },
     createMapByZoomLevel () {
-      if (this.map.getZoom() > 12) {
+      if (mapView.getZoom() > 12) {
+        this.removeLayer()
         this.level = 'kelurahan'
         this.createLayerPasien('kelurahan')
-      } else if (this.map.getZoom() > 10) {
+      } else if (mapView.getZoom() > 10) {
         if (this.level !== 'kecamatan') {
+          this.removeLayer()
           this.level = 'kecamatan'
           this.createLayerPasien('kecamatan')
         }
       } else if (this.level !== 'kota') {
+        this.removeLayer()
         this.level = 'kota'
         this.createLayerPasien('kota')
       }
@@ -533,20 +541,20 @@ export default {
         if (new Date(elPasien.tanggal_konfirmasi).getTime() <= this.sliderValue) {
           if (updateMarker) {
             if (updateMarker.options.attributes.stage === 'Sembuh') {
-              this.markerClusters[kodeWilayah].positif_sembuh.addLayer(updateMarker)
+              markerClusters[kodeWilayah].positif_sembuh.addLayer(updateMarker)
             } else {
-              this.markerClusters[kodeWilayah].positif_meninggal.addLayer(updateMarker)
+              markerClusters[kodeWilayah].positif_meninggal.addLayer(updateMarker)
             }
 
             if (!this.isGrouping) {
-              updateMarker.addTo(this.map)
-              this.deletedListMarker.push(updateMarker)
+              updateMarker.addTo(mapView)
+              deletedListMarker.push(updateMarker)
             }
           } else {
-            this.markerClusters[kodeWilayah].positif_proses.addLayer(marker)
+            markerClusters[kodeWilayah].positif_proses.addLayer(marker)
             if (!this.isGrouping) {
-              marker.addTo(this.map)
-              this.deletedListMarker.push(marker)
+              marker.addTo(mapView)
+              deletedListMarker.push(marker)
             }
           }
         }
@@ -596,8 +604,12 @@ export default {
 
     },
     removeLayer () {
-      this.deletedListMarker.forEach((el) => {
-        this.map.removeLayer(el)
+      deletedListMarker.forEach((el) => {
+        mapView.removeLayer(el)
+      })
+
+      deletedListCluster.forEach((el) => {
+        el.clearLayers()
       })
     },
     onChangeTimeSlider () {
@@ -617,42 +629,50 @@ export default {
 
           listMarker.push(m)
           if (!this.isGrouping) {
-            m.addTo(this.map)
+            m.addTo(mapView)
           }
         }
       })
       if (!this.isGrouping) {
-        this.deletedListMarker = listMarker
+        deletedListMarker = listMarker
       } else {
-        const groupCluster = []
+        // const groupCluster = []
         let kodeWilayahJSON = ''
+        let kodeWilayahDataMarker = ''
 
         if (this.level === 'kota') {
+          kodeWilayahDataMarker = 'kode_kab'
           kodeWilayahJSON = 'bps_kabupaten_kode'
         } else if (this.level === 'kecamatan') {
+          kodeWilayahDataMarker = 'kode_kec'
           kodeWilayahJSON = 'bps_kecamatan_kode'
         } else {
+          kodeWilayahDataMarker = 'kode_kel'
           kodeWilayahJSON = 'bps_kelurahan_kode'
         }
-        for (const i in this.listWilActive) {
+
+        const statusByStage = []
+        statusByStage.Sembuh = 'positif_sembuh'
+        statusByStage.Meninggal = 'positif_meninggal'
+        for (const i in listWilActive) {
+          // console.log(listWilActive[i].feature.properties)
+          // console.log(listWilActive[i].feature.properties[kodeWilayahJSON])
+          // console.log(kodeWilayahJSON)
           const deletedArr = []
-          groupCluster[this.listWilActive[i].feature.properties[kodeWilayahJSON]] = this.paramMarkerCluster()
-          this.createPopupCluster(groupCluster, this.listWilActive[i], kodeWilayahJSON)
-          console.log(groupCluster)
+          markerClusters[listWilActive[i].feature.properties[kodeWilayahJSON]].positif_proses.clearLayers()
+          markerClusters[listWilActive[i].feature.properties[kodeWilayahJSON]].positif_sembuh.clearLayers()
+          markerClusters[listWilActive[i].feature.properties[kodeWilayahJSON]].positif_meninggal.clearLayers()
+          this.createPopupCluster(markerClusters, listWilActive[i], kodeWilayahJSON)
           for (const j in listMarker) {
-            if (this.level === 'kota') {
-              const tanggalUpdate = new Date(listMarker[j].options.attributes.tanggal_update)
-              if (this.listWilActive[i].feature.properties[kodeWilayahJSON] === listMarker[j].options.attributes.kode_kab) {
-                if (listMarker[j].options.attributes.stage === 'Sembuh' && listMarker[j].options.attributes.updateMarker && tanggalUpdate.getTime() < this.sliderValue) {
-                  groupCluster[this.listWilActive[i].feature.properties[kodeWilayahJSON]].positif_sembuh.addLayer(listMarker[j])
-                } else if (listMarker[j].options.attributes.stage === 'Meninggal' && listMarker[j].options.attributes.updateMarker && tanggalUpdate.getTime() < this.sliderValue) {
-                  groupCluster[this.listWilActive[i].feature.properties[kodeWilayahJSON]].positif_meninggal.addLayer(listMarker[j])
-                } else {
-                  console.log(this.listWilActive[i].feature.properties[kodeWilayahJSON])
-                  groupCluster[this.listWilActive[i].feature.properties[kodeWilayahJSON]].positif_proses.addLayer(listMarker[j])
-                }
-                deletedArr.push(i)
+            const tanggalUpdate = new Date(listMarker[j].options.attributes.tanggal_update)
+            if (listWilActive[i].feature.properties[kodeWilayahJSON] === listMarker[j].options.attributes[kodeWilayahDataMarker]) {
+              if (listMarker[j].options.attributes.updateMarker && tanggalUpdate.getTime() < this.sliderValue) {
+                const status = statusByStage[listMarker[j].options.attributes.stage]
+                markerClusters[listWilActive[i].feature.properties[kodeWilayahJSON]][status].addLayer(listMarker[j])
+              } else {
+                markerClusters[listWilActive[i].feature.properties[kodeWilayahJSON]].positif_proses.addLayer(listMarker[j])
               }
+              deletedArr.push(i)
             }
           }
 
@@ -660,12 +680,15 @@ export default {
             listMarker.splice(j, 1)
           }
 
-          const markProses = groupCluster[this.listWilActive[i].feature.properties[kodeWilayahJSON]].positif_proses.addTo(this.map)
-          const markSembuh = groupCluster[this.listWilActive[i].feature.properties[kodeWilayahJSON]].positif_sembuh.addTo(this.map)
-          const markMeninggal = groupCluster[this.listWilActive[i].feature.properties[kodeWilayahJSON]].positif_meninggal.addTo(this.map)
-          this.deletedListMarker.push(markProses)
-          this.deletedListMarker.push(markSembuh)
-          this.deletedListMarker.push(markMeninggal)
+          markerClusters[listWilActive[i].feature.properties[kodeWilayahJSON]].positif_proses.addTo(mapView)
+          markerClusters[listWilActive[i].feature.properties[kodeWilayahJSON]].positif_sembuh.addTo(mapView)
+          markerClusters[listWilActive[i].feature.properties[kodeWilayahJSON]].positif_meninggal.addTo(mapView)
+          // deletedListMarker.push(markProses)
+          // deletedListMarker.push(markSembuh)
+          // deletedListMarker.push(markMeninggal)
+          deletedListCluster.push(markerClusters[listWilActive[i].feature.properties[kodeWilayahJSON]].positif_sembuh)
+          deletedListCluster.push(markerClusters[listWilActive[i].feature.properties[kodeWilayahJSON]].positif_meninggal)
+          deletedListCluster.push(markerClusters[listWilActive[i].feature.properties[kodeWilayahJSON]].positif_proses)
         }
       }
     },
@@ -684,9 +707,9 @@ export default {
           if (el.feature.properties.kemendagri_desa_nama) {
             popup += `<b> Kel/Desa </b> : ${el.feature.properties.kemendagri_desa_nama} <br>`
           }
-          this.$L.popup().setLatLng(c.layer.getLatLng()).setContent(popup).openOn(this.map)
+          this.$L.popup().setLatLng(c.layer.getLatLng()).setContent(popup).openOn(mapView)
         }).on('clustermouseout', (c) => {
-          this.map.closePopup()
+          mapView.closePopup()
         })
       }
       return cluster
