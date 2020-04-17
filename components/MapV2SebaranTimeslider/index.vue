@@ -11,12 +11,12 @@
             {{
               new Date(sliderValue).toLocaleDateString(['ban', 'id'],{ weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
             }}
-            <div>
+            <div class="timeslider">
               <label class="block text-gray-500  font-bold">
-                <input class="mr-2 cb-group-timeslider" type="checkbox" @click="onClickGroup()">
-                <span class="text-xs">
+                <input class="mr-2" type="checkbox" @click="onClickGroup()">
+                <div class="text-xs text-label">
                   Pengelompokan berdasarkan Kota/ Kabupaten
-                </span>
+                </div>
               </label>
             </div>
           </div>
@@ -878,10 +878,17 @@ export default {
   width: 20em;
 }
 
-.cb-group-timeslider {
+.timeslider input{
   vertical-align: middle;
   position: relative;
+  float: left;
+  margin-top: 4px;
 }
+
+.timeslider .text-label {
+  margin-left: 25px;
+}
+
 </style>
 <style>
 @import "leaflet.markercluster/dist/MarkerCluster.css";
