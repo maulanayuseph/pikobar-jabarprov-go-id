@@ -80,6 +80,12 @@ export default {
           logo: '/img/logo-cyber-army.png',
           alt: 'Cyber Army',
           url: 'https://www.cyberarmy.id/'
+        },
+        {
+          logo: '/img/logo-geospatial.png',
+          alt: 'Geospatial Creative Institute',
+          url: 'https://www.linkedin.com/company/geospatial-creative-institute/',
+          height: '5em'
         }
       ]
     }
