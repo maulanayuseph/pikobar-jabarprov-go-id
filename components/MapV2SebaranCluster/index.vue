@@ -520,7 +520,6 @@ export default {
       <h3 style="font-size: larger; margin-bottom: 5px;"><b>Detail Pasien</b></h3>
       <hr>
       <table class="table table-sm" style="color: black; font-size: small;">
-        <tr><th>ID</th><td>` + elPasien.id + `</td></tr>
         <tr><th>Status</th><td>` + elPasien.status + ' - ' + elPasien.stage + `</td></tr>
         <tr><th>JK</th><td>` + elPasien.gender + `</td></tr>
         <tr><th>Umur</th><td>` + elPasien.umur + `</td></tr>
