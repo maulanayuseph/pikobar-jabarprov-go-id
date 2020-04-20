@@ -10,7 +10,8 @@
             <div class="flex mb-4">
               <div class="w-1/6 h-auto">
                 <font-awesome-icon v-if="!isStartPlayer" :icon="faPlay" @click="startTimeSlider" />
-                <font-awesome-icon v-if="isStartPlayer" :icon="faPause" @click="stopTimeSlider" />
+                <font-awesome-icon v-if="isStartPlayer" :icon="faPause" @click="pauseTimeSlider" />
+                <font-awesome-icon class="ml-1" :icon="faStop" @click="stopTimeSlider" />
               </div>
               <div class="w-5/6 h-auto">
                 <vue-slider v-model="sliderValue" :min="min" :max="max" tooltip="none" @change="onChangeTimeSlider()" />
@@ -144,7 +145,7 @@ import 'vue-slider-component/theme/default.css'
 
 import * as L from 'leaflet'
 // import * as turf from '@turf/turf'
-import { faFilter, faHome, faPlay, faPause } from '@fortawesome/free-solid-svg-icons'
+import { faFilter, faHome, faPlay, faPause, faStop } from '@fortawesome/free-solid-svg-icons'
 import { GeoSearchControl, OpenStreetMapProvider } from 'leaflet-geosearch'
 import jsonKota from '@/assets/kotaV2.json'
 import jsonKecamatan from '@/assets/kecamatanV2.json'
@@ -232,6 +233,7 @@ export default {
       faHome,
       faPlay,
       faPause,
+      faStop,
       // map: '',
       zoom: 8,
       isHidden: false,
@@ -733,8 +735,13 @@ export default {
       this.isStartPlayer = true
       this.moveTimeDay()
     },
+    pauseTimeSlider () {
+      this.isStartPlayer = false
+    },
     stopTimeSlider () {
       this.isStartPlayer = false
+      this.sliderValue = this.min
+      this.onChangeTimeSlider()
     },
     moveTimeDay () {
       setTimeout(() => {
@@ -745,6 +752,8 @@ export default {
           this.sliderValue = date
           this.onChangeTimeSlider()
           this.moveTimeDay()
+        } else {
+          this.isStartPlayer = false
         }
       }, 1000)
     },
@@ -905,7 +914,7 @@ export default {
   font-size: 0.8em;
   box-shadow: 0 1px 5px rgba(0,0,0,0.65);
   background: #ffffff;
-  width: 20em;
+  width: 25em;
 }
 
 .timeslider input{
