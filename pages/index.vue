@@ -136,12 +136,6 @@
               <h3 class="text-lg lg:text-2xl">
                 <strong>Tanya kepada sesama wargi Jabar soal penanganan COVID-19 di Forum Pikobar!</strong>
               </h3>
-              <br>
-              <br>
-              <p>
-                Penting bagi Anda untuk menilai kondisi secara mandiri.
-                Anda bergejala?
-              </p>
             </header>
             <a
               class="mt-8 px-6 py-4 inline-block rounded-lg bg-brand-green text-white border-2 border-solid border-brand-green"
