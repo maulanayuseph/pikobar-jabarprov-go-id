@@ -101,7 +101,7 @@
       </h2>
       <div class="p-5 mt-4 md:mt-12 md:p-8 rounded-lg bg-brand-green-dark">
         <h3 class="text-xl lg:text-2xl text-white">
-          <strong>Ketahui Resiko dari COVID-19</strong>
+          <strong>Ketahui Risiko dari COVID-19</strong>
         </h3>
         <br>
         <div class="flex flex-col lg:flex-row justify-between items-start">
@@ -134,14 +134,8 @@
           <div class="flex flex-col justify-between items-start h-full">
             <header>
               <h3 class="text-lg lg:text-2xl">
-                <strong>Punya Pertanyaan Terkait COVID-19?</strong>
+                <strong>Tanya kepada sesama wargi Jabar soal penanganan COVID-19 di Forum Pikobar!</strong>
               </h3>
-              <br>
-              <br>
-              <p>
-                Penting bagi Anda untuk menilai kondisi secara mandiri.
-                Anda bergejala?
-              </p>
             </header>
             <a
               class="mt-8 px-6 py-4 inline-block rounded-lg bg-brand-green text-white border-2 border-solid border-brand-green"
