@@ -7,7 +7,15 @@
         <div id="map-wrap" />
         <div class="control-bottom-left">
           <div class="time-slider p-5">
-            <vue-slider v-model="sliderValue" :min="min" :max="max" tooltip="none" @change="onChangeTimeSlider()" />
+            <div class="flex mb-4">
+              <div class="w-1/6 h-auto">
+                <font-awesome-icon v-if="!isStartPlayer" :icon="faPlay" @click="startTimeSlider" />
+                <font-awesome-icon v-if="isStartPlayer" :icon="faPause" @click="stopTimeSlider" />
+              </div>
+              <div class="w-5/6 h-auto">
+                <vue-slider v-model="sliderValue" :min="min" :max="max" tooltip="none" @change="onChangeTimeSlider()" />
+              </div>
+            </div>
             {{
               new Date(sliderValue).toLocaleDateString(['ban', 'id'],{ weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
             }}
@@ -136,7 +144,7 @@ import 'vue-slider-component/theme/default.css'
 
 import * as L from 'leaflet'
 // import * as turf from '@turf/turf'
-import { faFilter, faHome } from '@fortawesome/free-solid-svg-icons'
+import { faFilter, faHome, faPlay, faPause } from '@fortawesome/free-solid-svg-icons'
 import { GeoSearchControl, OpenStreetMapProvider } from 'leaflet-geosearch'
 import jsonKota from '@/assets/kotaV2.json'
 import jsonKecamatan from '@/assets/kecamatanV2.json'
@@ -196,6 +204,7 @@ export default {
   },
   data () {
     return {
+      isStartPlayer: false,
       dataSlide: 0,
       sliderValue: new Date(),
       min: new Date().setDate(new Date().getDate() - 5),
@@ -221,6 +230,8 @@ export default {
       isShowFilter: false,
       faFilter,
       faHome,
+      faPlay,
+      faPause,
       // map: '',
       zoom: 8,
       isHidden: false,
@@ -717,6 +728,25 @@ export default {
     onClickGroup () {
       this.isGrouping = !this.isGrouping
       this.onChangeTimeSlider()
+    },
+    startTimeSlider () {
+      this.isStartPlayer = true
+      this.moveTimeDay()
+    },
+    stopTimeSlider () {
+      this.isStartPlayer = false
+    },
+    moveTimeDay () {
+      setTimeout(() => {
+        let date = new Date(this.sliderValue)
+        date = date.setDate(date.getDate() + 1)
+        if (date < new Date().getTime() && this.isStartPlayer) {
+          console.log(this.sliderValue + ' = ' + this.min)
+          this.sliderValue = date
+          this.onChangeTimeSlider()
+          this.moveTimeDay()
+        }
+      }, 1000)
     },
     tes () {
     }
