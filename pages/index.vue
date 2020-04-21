@@ -20,7 +20,15 @@
           <div class="relative container-with-ratio container-with-ratio--lg">
             <div class="static lg:absolute lg:inset-0 w-full h-full top-grid">
               <CallCard class="top-grid__call-card" title="Call Center" subtitle="Nomor Darurat" number="119" />
-              <CallCard class="top-grid__call-card" title="Dinkes Jabar" subtitle="Pertanyaan Umum" number="0811 2093 306" />
+              <CallCard
+                class="top-grid__call-card"
+                title="Hotline Pikobar"
+                subtitle="Chat WA seputar COVID-19"
+                number="0811 1310 3515"
+                href="https://s.id/ChatbotPikobar"
+                :icon="require('@fortawesome/free-brands-svg-icons').faWhatsapp"
+                icon-class="text-4xl"
+              />
               <div
                 v-show="cases"
                 class="top-grid__call-status rounded-lg"
