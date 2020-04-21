@@ -418,63 +418,63 @@ export default {
           {
             c: [
               { v: 100, f: '>80' },
-              { v: parseInt(this.jsonDataRekapitulasiJabar[filter].atas_80) * -1, f: (parseInt(this.jsonDataRekapitulasiJabar[filter].atas_80) * -1).toString() },
+              { v: parseInt(this.jsonDataRekapitulasiJabar[filter].atas_80) * -1, f: (parseInt(this.jsonDataRekapitulasiJabar[filter].atas_80)).toString() },
               { v: parseInt(this.jsonDataRekapitulasiJabar[filter].atas_80), f: parseInt(this.jsonDataRekapitulasiJabar[filter].atas_80).toString() }
             ]
           },
           {
             c: [
               { v: 80, f: '70-79' },
-              { v: parseInt(this.jsonDataRekapitulasiJabar[filter]['70_79']) * -1, f: (parseInt(this.jsonDataRekapitulasiJabar[filter]['70_79']) * -1).toString() },
+              { v: parseInt(this.jsonDataRekapitulasiJabar[filter]['70_79']) * -1, f: (parseInt(this.jsonDataRekapitulasiJabar[filter]['70_79'])).toString() },
               { v: parseInt(this.jsonDataRekapitulasiJabar[filter]['70_79']), f: parseInt(this.jsonDataRekapitulasiJabar[filter]['70_79']).toString() }
             ]
           },
           {
             c: [
               { v: 70, f: '60-69' },
-              { v: parseInt(this.jsonDataRekapitulasiJabar[filter]['60_69']) * -1, f: (parseInt(this.jsonDataRekapitulasiJabar[filter]['60_69']) * -1).toString() },
+              { v: parseInt(this.jsonDataRekapitulasiJabar[filter]['60_69']) * -1, f: (parseInt(this.jsonDataRekapitulasiJabar[filter]['60_69'])).toString() },
               { v: parseInt(this.jsonDataRekapitulasiJabar[filter]['60_69']), f: parseInt(this.jsonDataRekapitulasiJabar[filter]['60_69']).toString() }
             ]
           },
           {
             c: [
               { v: 60, f: '50-59' },
-              { v: parseInt(this.jsonDataRekapitulasiJabar[filter]['50_59']) * -1, f: (parseInt(this.jsonDataRekapitulasiJabar[filter]['50_59']) * -1).toString() },
+              { v: parseInt(this.jsonDataRekapitulasiJabar[filter]['50_59']) * -1, f: (parseInt(this.jsonDataRekapitulasiJabar[filter]['50_59'])).toString() },
               { v: parseInt(this.jsonDataRekapitulasiJabar[filter]['50_59']), f: parseInt(this.jsonDataRekapitulasiJabar[filter]['50_59']).toString() }
             ]
           },
           {
             c: [
               { v: 50, f: '40-49' },
-              { v: parseInt(this.jsonDataRekapitulasiJabar[filter]['40_49']) * -1, f: (parseInt(this.jsonDataRekapitulasiJabar[filter]['40_49']) * -1).toString() },
+              { v: parseInt(this.jsonDataRekapitulasiJabar[filter]['40_49']) * -1, f: (parseInt(this.jsonDataRekapitulasiJabar[filter]['40_49'])).toString() },
               { v: parseInt(this.jsonDataRekapitulasiJabar[filter]['40_49']), f: parseInt(this.jsonDataRekapitulasiJabar[filter]['40_49']).toString() }
             ]
           },
           {
             c: [
               { v: 40, f: '30-39' },
-              { v: parseInt(this.jsonDataRekapitulasiJabar[filter]['30_39']) * -1, f: (parseInt(this.jsonDataRekapitulasiJabar[filter]['30_39']) * -1).toString() },
+              { v: parseInt(this.jsonDataRekapitulasiJabar[filter]['30_39']) * -1, f: (parseInt(this.jsonDataRekapitulasiJabar[filter]['30_39'])).toString() },
               { v: parseInt(this.jsonDataRekapitulasiJabar[filter]['30_39']), f: parseInt(this.jsonDataRekapitulasiJabar[filter]['30_39']).toString() }
             ]
           },
           {
             c: [
               { v: 30, f: '20-29' },
-              { v: parseInt(this.jsonDataRekapitulasiJabar[filter]['20_29']) * -1, f: (parseInt(this.jsonDataRekapitulasiJabar[filter]['20_29']) * -1).toString() },
+              { v: parseInt(this.jsonDataRekapitulasiJabar[filter]['20_29']) * -1, f: (parseInt(this.jsonDataRekapitulasiJabar[filter]['20_29'])).toString() },
               { v: parseInt(this.jsonDataRekapitulasiJabar[filter]['20_29']), f: parseInt(this.jsonDataRekapitulasiJabar[filter]['20_29']).toString() }
             ]
           },
           {
             c: [
               { v: 20, f: '6-19' },
-              { v: parseInt(this.jsonDataRekapitulasiJabar[filter]['6_19']) * -1, f: (parseInt(this.jsonDataRekapitulasiJabar[filter]['6_19']) * -1).toString() },
+              { v: parseInt(this.jsonDataRekapitulasiJabar[filter]['6_19']) * -1, f: (parseInt(this.jsonDataRekapitulasiJabar[filter]['6_19'])).toString() },
               { v: parseInt(this.jsonDataRekapitulasiJabar[filter]['6_19']), f: parseInt(this.jsonDataRekapitulasiJabar[filter]['6_19']).toString() }
             ]
           },
           {
             c: [
               { v: 10, f: '<5' },
-              { v: parseInt(this.jsonDataRekapitulasiJabar[filter].bawah_5) * -1, f: (parseInt(this.jsonDataRekapitulasiJabar[filter].bawah_5) * -1).toString() },
+              { v: parseInt(this.jsonDataRekapitulasiJabar[filter].bawah_5) * -1, f: (parseInt(this.jsonDataRekapitulasiJabar[filter].bawah_5)).toString() },
               { v: parseInt(this.jsonDataRekapitulasiJabar[filter].bawah_5), f: parseInt(this.jsonDataRekapitulasiJabar[filter].bawah_5).toString() }
             ]
           }
