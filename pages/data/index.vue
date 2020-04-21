@@ -226,28 +226,28 @@ export default {
         .get('https://covid19-public.digitalservice.id/api/v1/rekapitulasi/jabar?level=prov')
         .then(function (response) {
           self.jsonDataRekapitulasiJabarProv = response.data.data.content
-          self.jsonDataRekapitulasiJabarProv.positif_per_gender['laki_laki'] = self.jsonDataRekapitulasiJabarProv.positif_per_gender['laki-laki']
-          try {
-            if (typeof self.jsonDataRekapitulasiJabarProv.sembuh_per_gender['laki-laki'] !== "undefined") {
-              self.jsonDataRekapitulasiJabarProv.sembuh_per_gender['laki_laki'] = self.jsonDataRekapitulasiJabarProv.sembuh_per_gender['laki-laki']
-            }
-          } catch (error) {
-            Object.assign(self.jsonDataRekapitulasiJabarProv, {sembuh_per_gender: {laki_laki: 0, perempuan: 0}});
-            Object.assign(self.jsonDataRekapitulasiJabarProv, {sembuh_per_usia: {
-              bawah_5: 0, '6_19': 0, '20_29': 0, '30_39': 0, '40_49': 0, '50_59': 0, '60_69': 0, '70_79': 0, atas_80: 0
-            }})
-          }
+          // self.jsonDataRekapitulasiJabarProv.positif_per_gender['laki_laki'] = self.jsonDataRekapitulasiJabarProv.positif_per_gender['laki-laki']
+          // try {
+          //   if (typeof self.jsonDataRekapitulasiJabarProv.sembuh_per_gender['laki-laki'] !== "undefined") {
+          //     self.jsonDataRekapitulasiJabarProv.sembuh_per_gender['laki_laki'] = self.jsonDataRekapitulasiJabarProv.sembuh_per_gender['laki-laki']
+          //   }
+          // } catch (error) {
+          //   Object.assign(self.jsonDataRekapitulasiJabarProv, {sembuh_per_gender: {laki_laki: 0, perempuan: 0}});
+          //   Object.assign(self.jsonDataRekapitulasiJabarProv, {sembuh_per_usia: {
+          //     bawah_5: 0, '6_19': 0, '20_29': 0, '30_39': 0, '40_49': 0, '50_59': 0, '60_69': 0, '70_79': 0, atas_80: 0
+          //   }})
+          // }
 
-          try {
-            if (typeof self.jsonDataRekapitulasiJabarProv.meninggal_per_gender['laki-laki'] !== "undefined") {
-              self.jsonDataRekapitulasiJabarProv.meninggal_per_gender['laki_laki'] = self.jsonDataRekapitulasiJabarProv.meninggal_per_gender['laki-laki']
-            }
-          } catch (error) {
-            Object.assign(self.jsonDataRekapitulasiJabarProv, {meninggal_per_gender: {laki_laki: 0, perempuan: 0}});
-            Object.assign(self.jsonDataRekapitulasiJabarProv, {meninggal_per_usia: {
-              bawah_5: 0, '6_19': 0, '20_29': 0, '30_39': 0, '40_49': 0, '50_59': 0, '60_69': 0, '70_79': 0, atas_80: 0
-            }})
-          }
+          // try {
+          //   if (typeof self.jsonDataRekapitulasiJabarProv.meninggal_per_gender['laki-laki'] !== "undefined") {
+          //     self.jsonDataRekapitulasiJabarProv.meninggal_per_gender['laki_laki'] = self.jsonDataRekapitulasiJabarProv.meninggal_per_gender['laki-laki']
+          //   }
+          // } catch (error) {
+          //   Object.assign(self.jsonDataRekapitulasiJabarProv, {meninggal_per_gender: {laki_laki: 0, perempuan: 0}});
+          //   Object.assign(self.jsonDataRekapitulasiJabarProv, {meninggal_per_usia: {
+          //     bawah_5: 0, '6_19': 0, '20_29': 0, '30_39': 0, '40_49': 0, '50_59': 0, '60_69': 0, '70_79': 0, atas_80: 0
+          //   }})
+          // }
         })
         .catch(function (error) {
           console.log(error)
