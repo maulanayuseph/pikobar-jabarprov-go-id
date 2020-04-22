@@ -293,11 +293,11 @@ export default {
       optionList: [
         'ODP',
         'PDP',
-        'Positif Aktif',
+        'Positif - Aktif',
         'Positif - Sembuh',
         'Positif - Meninggal'
       ],
-      optionSelected: 'Positif Aktif',
+      optionSelected: 'Positif - Aktif',
       jsonDataRekapitulasiJabar: {
         kode_prov: '',
         nama_prov: '',
@@ -527,7 +527,7 @@ export default {
           title: 'Umur',
           viewWindowMode: 'explicit',
           viewWindow: {
-            min: -150,
+            min: 150,
             max: 150
           },
           ticks: [
@@ -547,7 +547,7 @@ export default {
   watch: {
     propsDataRekapitulasiJabar () {
       this.jsonDataRekapitulasiJabar = this.propsDataRekapitulasiJabar
-      this.changeGroupUsia('Positif Aktif')
+      this.changeGroupUsia('Positif - Aktif')
     }
   },
   methods: {
@@ -702,7 +702,7 @@ export default {
         filter = 'odp_total_per_usia'
       } else if (stat === 'PDP') {
         filter = 'pdp_total_per_usia'
-      } else if (stat === 'Positif Aktif') {
+      } else if (stat === 'Positif - Aktif') {
         filter = 'positif_per_usia'
       } else if (stat === 'Positif - Sembuh') {
         filter = 'sembuh_per_usia'
@@ -863,7 +863,7 @@ export default {
         if (self.barChartAnakUmurJenisKelaminData.rows[j].c[1].v * -1 > maxAnak) {
           maxAnak = self.barChartAnakUmurJenisKelaminData.rows[j].c[1].v * -1
         }
-        ascAnak = Math.ceil(maxAnak / 10)
+        ascAnak = Math.ceil(maxAnak / 4)
         self.barChartAnakUmurJenisKelaminOptions.hAxis.viewWindow.min = (maxAnak + asc) * -1
         self.barChartAnakUmurJenisKelaminOptions.hAxis.viewWindow.max = maxAnak + asc
       }
@@ -871,7 +871,7 @@ export default {
       // set number of scala
       self.barChartAnakUmurJenisKelaminOptions.hAxis.ticks = []
       if (maxAnak > 0) {
-        ascAnak = Math.ceil(maxAnak / 10)
+        ascAnak = Math.ceil(maxAnak / 4)
         for (let k = 0; k <= maxAnak + ascAnak; k = k + ascAnak) {
           self.barChartAnakUmurJenisKelaminOptions.hAxis.ticks.push({ v: k * -1, f: k.toString() })
         }
