@@ -77,11 +77,11 @@ export default {
       optionList: [
         'ODP',
         'PDP',
-        'Positif Aktif',
+        'Positif - Aktif',
         'Positif - Sembuh',
         'Positif - Meninggal'
       ],
-      optionSelected: 'Positif Aktif',
+      optionSelected: 'Positif - Aktif',
       jsonDataRekapitulasiJabar: {
         kode_prov: '',
         nama_prov: '',
@@ -136,7 +136,7 @@ export default {
   watch: {
     propsDataRekapitulasiJabar () {
       this.jsonDataRekapitulasiJabar = this.propsDataRekapitulasiJabar
-      this.changeGroupJenisKelamin('Positif Aktif')
+      this.changeGroupJenisKelamin('Positif - Aktif')
     }
   },
   methods: {
@@ -190,7 +190,7 @@ export default {
         if (tempJenisKelaminNull < 0) {
           tempJenisKelaminNull = 0
         }
-      } else if (stat === 'Positif Aktif') {
+      } else if (stat === 'Positif - Aktif') {
         tempJenisKelaminPria = parseInt(this.jsonDataRekapitulasiJabar.positif_per_gender.laki_laki)
         tempJenisKelaminWanita = parseInt(this.jsonDataRekapitulasiJabar.positif_per_gender.perempuan)
         tempJenisKelaminNull = parseInt(this.jsonDataRekapitulasiJabar.positif) - parseInt(tempJenisKelaminPria + tempJenisKelaminWanita)
