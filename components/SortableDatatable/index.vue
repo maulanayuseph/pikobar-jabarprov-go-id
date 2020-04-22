@@ -229,7 +229,7 @@ export default {
         { id: 2, col: 'nama_kab', text: 'Nama Kota / Kabupaten' },
         { id: 3, col: 'odp_proses', text: 'ODP Proses' },
         { id: 4, col: 'pdp_proses', text: 'PDP Proses' },
-        { id: 5, col: 'positif_aktif', text: 'Positif Aktif' },
+        { id: 5, col: 'positif_aktif', text: 'Positif - Aktif' },
         { id: 6, col: 'positif_sembuh', text: 'Positif - Sembuh' },
         { id: 7, col: 'positif_meninggal', text: 'Positif - Meninggal' }
       ],
