@@ -663,28 +663,28 @@ export default {
         rows: [
           {
             c: [
-              { v: 18, f: '(6 - 18 tahun)     Anak Usia Sekolah' },
+              { v: 18, f: '( 6 - 18 tahun )     Anak Usia Sekolah' },
               { v: 0, f: '0' },
               { v: 0, f: '0' }
             ]
           },
           {
             c: [
-              { v: 6, f: '(5 - 6 tahun)     Anak Pra Sekolah' },
+              { v: 6, f: '( 5 - 6 tahun )     Anak Pra Sekolah' },
               { v: 0, f: '0' },
               { v: 0, f: '0' }
             ]
           },
           {
             c: [
-              { v: 5, f: '(1 - 5 tahun)     Anak Balita' },
+              { v: 5, f: '( 1 - 5 tahun )     Anak Balita' },
               { v: 0, f: '0' },
               { v: 0, f: '0' }
             ]
           },
           {
             c: [
-              { v: 1, f: '(0 - 1 tahun)     Bayi' },
+              { v: 1, f: '( 0 - 1 tahun )     Bayi' },
               { v: 0, f: '0' },
               { v: 0, f: '0' }
             ]
@@ -824,28 +824,28 @@ export default {
         rows: [
           {
             c: [
-              { v: 18, f: '(6 - 18 tahun) Anak Usia Sekolah' },
+              { v: 18, f: '( 6 - 18 tahun ) Anak Usia Sekolah' },
               { v: parseInt(this.jsonDataRekapitulasiJabar[filter].anak.laki_laki['6_18']) * -1, f: (parseInt(this.jsonDataRekapitulasiJabar[filter].anak.laki_laki['6_18'])).toString() },
               { v: parseInt(this.jsonDataRekapitulasiJabar[filter].anak.perempuan['6_18']), f: parseInt(this.jsonDataRekapitulasiJabar[filter].anak.perempuan['6_18']).toString() }
             ]
           },
           {
             c: [
-              { v: 6, f: '(5 - 6 tahun) Anak Pra Sekolah' },
+              { v: 6, f: '( 5 - 6 tahun ) Anak Pra Sekolah' },
               { v: parseInt(this.jsonDataRekapitulasiJabar[filter].anak.laki_laki['5_6']) * -1, f: (parseInt(this.jsonDataRekapitulasiJabar[filter].anak.laki_laki['5_6'])).toString() },
               { v: parseInt(this.jsonDataRekapitulasiJabar[filter].anak.perempuan['5_6']), f: parseInt(this.jsonDataRekapitulasiJabar[filter].anak.perempuan['5_6']).toString() }
             ]
           },
           {
             c: [
-              { v: 5, f: '(1 - 5 tahun) Anak Balita' },
+              { v: 5, f: '( 1 - 5 tahun ) Anak Balita' },
               { v: parseInt(this.jsonDataRekapitulasiJabar[filter].anak.laki_laki['1_5']) * -1, f: (parseInt(this.jsonDataRekapitulasiJabar[filter].anak.laki_laki['1_5'])).toString() },
               { v: parseInt(this.jsonDataRekapitulasiJabar[filter].anak.perempuan['1_5']), f: parseInt(this.jsonDataRekapitulasiJabar[filter].anak.perempuan['1_5']).toString() }
             ]
           },
           {
             c: [
-              { v: 1, f: '(0 - 1 tahun) Bayi' },
+              { v: 1, f: '( 0 - 1 tahun ) Bayi' },
               { v: parseInt(this.jsonDataRekapitulasiJabar[filter].anak.laki_laki.bawah_1) * -1, f: (parseInt(this.jsonDataRekapitulasiJabar[filter].anak.laki_laki.bawah_1)).toString() },
               { v: parseInt(this.jsonDataRekapitulasiJabar[filter].anak.perempuan.bawah_1), f: parseInt(this.jsonDataRekapitulasiJabar[filter].anak.perempuan.bawah_1).toString() }
             ]
