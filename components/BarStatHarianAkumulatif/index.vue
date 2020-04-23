@@ -153,8 +153,8 @@ export default {
         count_kota: 0
       },
       barChartHarianODPData: [
-        ['Tanggal', 'Total Pemantauan'],
-        ['0', 0]
+        ['Tanggal', 'Selesai Pemantauan', 'Proses Pemantauan'],
+        ['0', 0, 0]
       ],
       barChartHarianODPOptions: {
         height: 450,
@@ -175,8 +175,8 @@ export default {
         }
       },
       barChartHarianPDPData: [
-        ['Tanggal', 'Total Pengawasan'],
-        ['0', 0]
+        ['Tanggal', 'Selesai Pengawasan', 'Proses Pengawasan'],
+        ['0', 0, 0]
       ],
       barChartHarianPDPOptions: {
         height: 450,
@@ -202,13 +202,13 @@ export default {
         }
       },
       barChartAkumulatifODPData: [
-        ['Tanggal', 'Total ODP'],
-        ['0', 0]
+        ['Tanggal', 'Selesai Pemantauan', 'Proses Pemantauan', 'Total ODP'],
+        ['0', 0, 0, 0]
       ],
       barChartAkumulatifODPOptions: {
         height: 450,
         orientation: 'horizontal',
-        colors: ['#6DD274', '#1AB762', '#009F5D'],
+        colors: ['#89D06E', '#5AB55B', '#009D57'],
         legend: {
           position: 'bottom',
           alignment: 'center',
@@ -225,13 +225,13 @@ export default {
         }
       },
       barChartAkumulatifPDPData: [
-        ['Tanggal', 'Total PDP'],
-        ['0', 0]
+        ['Tanggal', 'Selesai Pengawasan', 'Proses Pengawasan', 'Total PDP'],
+        ['0', 0, 0, 0]
       ],
       barChartAkumulatifPDPOptions: {
         height: 450,
         orientation: 'horizontal',
-        colors: ['#F6D039', '#F18931', '#F55A2A'],
+        colors: ['#EED138', '#E08D3B', '#E0633B'],
         legend: {
           position: 'bottom',
           alignment: 'center',
@@ -302,8 +302,10 @@ export default {
       for (let i = 0; i < self.jsonDataProvinsiHarian.length; i++) {
         const date = new Date(self.jsonDataProvinsiHarian[i].tanggal)
         if (stop === false) {
-          self.barChartHarianODPData.push([self.formatDate(date), self.jsonDataProvinsiHarian[i].odp])
-          self.barChartHarianPDPData.push([self.formatDate(date), self.jsonDataProvinsiHarian[i].pdp])
+          self.barChartHarianODPData.push([self.formatDate(date), self.jsonDataProvinsiHarian[i].odp_selesai, self.jsonDataProvinsiHarian[i].odp_proses])
+          self.barChartHarianPDPData.push([self.formatDate(date), self.jsonDataProvinsiHarian[i].pdp_selesai, self.jsonDataProvinsiHarian[i].pdp_proses])
+          // self.barChartHarianODPData.push([self.formatDate(date), self.jsonDataProvinsiHarian[i].odp / 2, self.jsonDataProvinsiHarian[i].odp / 3])
+          // self.barChartHarianPDPData.push([self.formatDate(date), self.jsonDataProvinsiHarian[i].pdp / 2, self.jsonDataProvinsiHarian[i].pdp / 3])
         }
         if (self.formatDate(date) === strToday) {
           stop = true
@@ -321,8 +323,10 @@ export default {
       for (let i = 0; i < self.jsonDataProvinsiKumulatif.length; i++) {
         const date = new Date(self.jsonDataProvinsiKumulatif[i].tanggal)
         if (stop === false) {
-          self.barChartAkumulatifODPData.push([self.formatDate(date), self.jsonDataProvinsiKumulatif[i].odp])
-          self.barChartAkumulatifPDPData.push([self.formatDate(date), self.jsonDataProvinsiKumulatif[i].pdp])
+          self.barChartAkumulatifODPData.push([self.formatDate(date), self.jsonDataProvinsiKumulatif[i].odp_selesai, self.jsonDataProvinsiKumulatif[i].odp_proses, self.jsonDataProvinsiKumulatif[i].odp])
+          self.barChartAkumulatifPDPData.push([self.formatDate(date), self.jsonDataProvinsiKumulatif[i].pdp_selesai, self.jsonDataProvinsiKumulatif[i].pdp_proses, self.jsonDataProvinsiKumulatif[i].pdp])
+          // self.barChartAkumulatifODPData.push([self.formatDate(date), self.jsonDataProvinsiKumulatif[i].odp / 2, self.jsonDataProvinsiKumulatif[i].odp / 3, self.jsonDataProvinsiKumulatif[i].odp * 0.75])
+          // self.barChartAkumulatifPDPData.push([self.formatDate(date), self.jsonDataProvinsiKumulatif[i].pdp / 2, self.jsonDataProvinsiKumulatif[i].pdp / 3, self.jsonDataProvinsiKumulatif[i].pdp * 0.75])
         }
         if (self.formatDate(date) === strToday) {
           stop = true
