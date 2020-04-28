@@ -14,9 +14,9 @@
       <DataRDT :props-data-rekapitulasi-jabar.sync="jsonDataRekapitulasiJabarProv" />
     </section>
     <section class="m-4 mb-8 md:m-8">
-      <div class="flex flex-row items-stretch">
+      <div class="items-stretch flex flex-col xl:flex-row xl:flex-no-wrap">
         <button
-          class="button-selector mr-2"
+          class="button-selector m-1 w-full xl:w-auto "
           style="display: flex;"
           :active="stat.isActivePolygon"
           @click="enablePolygon"
@@ -26,7 +26,7 @@
           Sebaran Polygon
         </button>
         <button
-          class="button-selector mr-2"
+          class="button-selector m-1 w-full xl:w-auto "
           style="display: flex;"
           :active="stat.isActiveCluster"
           @click="enableCluster"
@@ -36,7 +36,7 @@
           Sebaran Titik
         </button>
         <button
-          class="button-selector mr-2"
+          class="button-selector m-1 w-full xl:w-auto "
           style="display: flex;"
           :active="stat.isActiveFaskes"
           @click="enableFaskes"
@@ -46,7 +46,7 @@
           Fasilitas Kesehatan
         </button>
         <button
-          class="button-selector mr-2"
+          class="button-selector m-1 w-full xl:w-auto "
           style="display: flex;"
           :active="stat.isActiveTimeslider"
           @click="enableTimeslider"

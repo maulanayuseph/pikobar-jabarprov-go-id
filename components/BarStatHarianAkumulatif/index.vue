@@ -155,9 +155,9 @@ export default {
       barChartHarianODPData: [
         [
           'Tanggal',
-          'Selesai Pemantauan',
-          { type: 'string', role: 'tooltip', p: { html: true } },
           'Proses Pemantauan',
+          { type: 'string', role: 'tooltip', p: { html: true } },
+          'Selesai Pemantauan',
           { type: 'string', role: 'tooltip', p: { html: true } }
         ],
         ['0', 0, '', 0, '']
@@ -184,9 +184,9 @@ export default {
       barChartHarianPDPData: [
         [
           'Tanggal',
-          'Selesai Pengawasan',
-          { type: 'string', role: 'tooltip', p: { html: true } },
           'Proses Pengawasan',
+          { type: 'string', role: 'tooltip', p: { html: true } },
+          'Selesai Pengawasan',
           { type: 'string', role: 'tooltip', p: { html: true } }
         ],
         ['0', 0, '', 0, '']
@@ -218,9 +218,9 @@ export default {
       barChartAkumulatifODPData: [
         [
           'Tanggal',
-          'Selesai Pemantauan',
-          { type: 'string', role: 'tooltip', p: { html: true } },
           'Proses Pemantauan',
+          { type: 'string', role: 'tooltip', p: { html: true } },
+          'Selesai Pemantauan',
           { type: 'string', role: 'tooltip', p: { html: true } },
           'Total ODP',
           { type: 'string', role: 'tooltip', p: { html: true } }
@@ -250,9 +250,9 @@ export default {
       barChartAkumulatifPDPData: [
         [
           'Tanggal',
-          'Selesai Pengawasan',
-          { type: 'string', role: 'tooltip', p: { html: true } },
           'Proses Pengawasan',
+          { type: 'string', role: 'tooltip', p: { html: true } },
+          'Selesai Pengawasan',
           { type: 'string', role: 'tooltip', p: { html: true } },
           'Total PDP',
           { type: 'string', role: 'tooltip', p: { html: true } }
@@ -336,18 +336,18 @@ export default {
         if (stop === false) {
           let tooltipODP = '<table style="white-space: nowrap; margin: 10px;">'
           tooltipODP += '<tr><td style="font-size: larger;">' + self.formatDate(date) + '</td><td></td></tr>'
-          tooltipODP += '<tr><td style="font-size: larger;">Total ODP</td><td><b style="margin-left: 10px;">' + self.jsonDataProvinsiHarian[i].odp + '</b></td></tr>'
           tooltipODP += '<tr><td>Proses Pemantauan </td><td><b style="margin-left: 10px;">' + self.jsonDataProvinsiHarian[i].odp_proses + '</b></td></tr>'
           tooltipODP += '<tr><td>Selesai Pemantauan </td><td><b style="margin-left: 10px;">' + self.jsonDataProvinsiHarian[i].odp_selesai + '</b></td></tr>'
+          tooltipODP += '<tr><td style="font-size: larger;">Total ODP</td><td><b style="margin-left: 10px;">' + self.jsonDataProvinsiHarian[i].odp + '</b></td></tr>'
           tooltipODP += '</table>'
           let tooltipPDP = '<table style="white-space: nowrap; margin: 10px;">'
           tooltipPDP += '<tr><td style="font-size: larger;">' + self.formatDate(date) + '</td><td></td></tr>'
-          tooltipPDP += '<tr><td style="font-size: larger;">Total PDP</td><td><b style="margin-left: 10px;">' + self.jsonDataProvinsiHarian[i].pdp + '</b></td></tr>'
           tooltipPDP += '<tr><td>Proses Pengawasan </td><td><b style="margin-left: 10px;">' + self.jsonDataProvinsiHarian[i].pdp_proses + '</b></td></tr>'
           tooltipPDP += '<tr><td>Selesai Pengawasan </td><td><b style="margin-left: 10px;">' + self.jsonDataProvinsiHarian[i].pdp_selesai + '</b></td></tr>'
+          tooltipPDP += '<tr><td style="font-size: larger;">Total PDP</td><td><b style="margin-left: 10px;">' + self.jsonDataProvinsiHarian[i].pdp + '</b></td></tr>'
           tooltipPDP += '</table>'
-          self.barChartHarianODPData.push([self.formatDate(date), self.jsonDataProvinsiHarian[i].odp_selesai, tooltipODP, self.jsonDataProvinsiHarian[i].odp_proses, tooltipODP])
-          self.barChartHarianPDPData.push([self.formatDate(date), self.jsonDataProvinsiHarian[i].pdp_selesai, tooltipPDP, self.jsonDataProvinsiHarian[i].pdp_proses, tooltipPDP])
+          self.barChartHarianODPData.push([self.formatDate(date), self.jsonDataProvinsiHarian[i].odp_proses, tooltipODP, self.jsonDataProvinsiHarian[i].odp_selesai, tooltipODP])
+          self.barChartHarianPDPData.push([self.formatDate(date), self.jsonDataProvinsiHarian[i].pdp_proses, tooltipPDP, self.jsonDataProvinsiHarian[i].pdp_selesai, tooltipPDP])
         }
         if (self.formatDate(date) === strToday) {
           stop = true
@@ -367,18 +367,18 @@ export default {
         if (stop === false) {
           let tooltipODP = '<table style="white-space: nowrap; margin: 10px;">'
           tooltipODP += '<tr><td style="font-size: larger;">' + self.formatDate(date) + '</td><td></td></tr>'
-          tooltipODP += '<tr><td style="font-size: larger;">Total ODP</td><td><b style="margin-left: 10px;">' + self.jsonDataProvinsiKumulatif[i].odp + '</b></td></tr>'
           tooltipODP += '<tr><td>Proses Pemantauan </td><td><b style="margin-left: 10px;">' + self.jsonDataProvinsiKumulatif[i].odp_proses + '</b></td></tr>'
           tooltipODP += '<tr><td>Selesai Pemantauan </td><td><b style="margin-left: 10px;">' + self.jsonDataProvinsiKumulatif[i].odp_selesai + '</b></td></tr>'
+          tooltipODP += '<tr><td style="font-size: larger;">Total ODP</td><td><b style="margin-left: 10px;">' + self.jsonDataProvinsiKumulatif[i].odp + '</b></td></tr>'
           tooltipODP += '</table>'
           let tooltipPDP = '<table style="white-space: nowrap; margin: 10px;">'
           tooltipPDP += '<tr><td style="font-size: larger;">' + self.formatDate(date) + '</td><td></td></tr>'
-          tooltipPDP += '<tr><td style="font-size: larger;">Total PDP</td><td><b style="margin-left: 10px;">' + self.jsonDataProvinsiKumulatif[i].pdp + '</b></td></tr>'
           tooltipPDP += '<tr><td>Proses Pengawasan </td><td><b style="margin-left: 10px;">' + self.jsonDataProvinsiKumulatif[i].pdp_proses + '</b></td></tr>'
           tooltipPDP += '<tr><td>Selesai Pengawasan </td><td><b style="margin-left: 10px;">' + self.jsonDataProvinsiKumulatif[i].pdp_selesai + '</b></td></tr>'
+          tooltipPDP += '<tr><td style="font-size: larger;">Total PDP</td><td><b style="margin-left: 10px;">' + self.jsonDataProvinsiKumulatif[i].pdp + '</b></td></tr>'
           tooltipPDP += '</table>'
-          self.barChartAkumulatifODPData.push([self.formatDate(date), self.jsonDataProvinsiKumulatif[i].odp_selesai, tooltipODP, self.jsonDataProvinsiKumulatif[i].odp_proses, tooltipODP, self.jsonDataProvinsiKumulatif[i].odp, tooltipODP])
-          self.barChartAkumulatifPDPData.push([self.formatDate(date), self.jsonDataProvinsiKumulatif[i].pdp_selesai, tooltipPDP, self.jsonDataProvinsiKumulatif[i].pdp_proses, tooltipPDP, self.jsonDataProvinsiKumulatif[i].pdp, tooltipPDP])
+          self.barChartAkumulatifODPData.push([self.formatDate(date), self.jsonDataProvinsiKumulatif[i].odp_proses, tooltipODP, self.jsonDataProvinsiKumulatif[i].odp_selesai, tooltipODP, self.jsonDataProvinsiKumulatif[i].odp, tooltipODP])
+          self.barChartAkumulatifPDPData.push([self.formatDate(date), self.jsonDataProvinsiKumulatif[i].pdp_proses, tooltipPDP, self.jsonDataProvinsiKumulatif[i].pdp_selesai, tooltipPDP, self.jsonDataProvinsiKumulatif[i].pdp, tooltipPDP])
         }
         if (self.formatDate(date) === strToday) {
           stop = true
