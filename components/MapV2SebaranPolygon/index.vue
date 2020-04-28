@@ -215,7 +215,7 @@ export default {
       this.distributionProvinceData.forEach((row) => {
         if (row.status === 'Positif' && row.stage === 'Proses') {
           this.dataJson.positif_proses.push(row)
-        } else if (row.status === 'Positif' && row.stage === 'Selesai') {
+        } else if (row.status === 'Positif' && row.stage === 'Meninggal') {
           this.dataJson.positif_meninggal.push(row)
         } else if (row.status === 'Positif' && row.stage === 'Sembuh') {
           this.dataJson.positif_sembuh.push(row)
