@@ -24,6 +24,7 @@
     "firebase": "^7.11.0",
     "firebase-admin": "^8.10.0",
     "leaflet-search": "^2.9.8",
+    "lodash": "^4.17.15",
     "mdbvue": "^6.5.1",
     "node-sass": "^4.13.1",
     "numbro": "^2.2.0",
@@ -45,6 +46,7 @@
     "vuex-router-sync": "^5.0.0"
   },
   "devDependencies": {
+    "@babel/runtime-corejs2": "^7.9.2",
     "@fortawesome/free-brands-svg-icons": "^5.12.1",
     "@fortawesome/free-solid-svg-icons": "^5.12.1",
     "@nuxtjs/eslint-config": "^2.0.0",
@@ -52,6 +54,7 @@
     "@nuxtjs/fontawesome": "^1.1.1",
     "@nuxtjs/tailwindcss": "^1.0.0",
     "babel-eslint": "^10.0.1",
+    "core-js": "^2.6.11",
     "eslint": "^6.1.0",
     "eslint-plugin-nuxt": "^0.5.2",
     "html-loader": "^1.1.0",
