@@ -237,7 +237,10 @@ export default {
 }
 
 .appbar-menu-item.nuxt-link-active {
-  @apply text-green-700;
+  &,
+  > * {
+    @apply text-brand-green font-bold;
+  }
 }
 
 .button-allow-notif {
