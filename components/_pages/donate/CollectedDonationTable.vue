@@ -14,8 +14,8 @@
       </tr>
     </thead>
     <tbody>
-      <template v-if="tabelData && tabelData.length">
-        <tr v-for="(row, rowIndex) in tabelData" :key="rowIndex">
+      <template v-if="tableData && tableData.length">
+        <tr v-for="(row, rowIndex) in tableData" :key="rowIndex">
           <td
             v-for="(col, colIndex) in columns"
             :key="col.prop"
@@ -25,12 +25,67 @@
           </td>
         </tr>
       </template>
+      <template v-else>
+        <tr>
+          <td
+            :colspan="columns.length"
+          >
+            <div
+              class="w-full p-5"
+              style="min-height: 300px;"
+            >
+              <ContentLoader
+                class="w-full lg:hidden"
+                :speed="3"
+                :width="400"
+                :height="200"
+                primary-color="#eee"
+                secondary-color="#fff"
+              >
+                <rect
+                  v-for="i in 6"
+                  :key="i"
+                  x="0"
+                  :y="((i - 1) * 36)"
+                  width="100%"
+                  height="18"
+                  rx="3"
+                  ry="3"
+                />
+              </ContentLoader>
+              <ContentLoader
+                class="w-full hidden lg:block"
+                :speed="3"
+                :width="400"
+                :height="100"
+                primary-color="#eee"
+                secondary-color="#fff"
+              >
+                <rect
+                  v-for="i in 6"
+                  :key="i"
+                  x="0"
+                  :y="((i - 1) * 16)"
+                  width="100%"
+                  height="8"
+                  rx="3"
+                  ry="3"
+                />
+              </ContentLoader>
+            </div>
+          </td>
+        </tr>
+      </template>
     </tbody>
   </table>
 </template>
 
 <script>
+import { ContentLoader } from 'vue-content-loader'
 export default {
+  components: {
+    ContentLoader
+  },
   data () {
     return {
       columns: [
@@ -51,19 +106,30 @@ export default {
           label: 'Satuan'
         }
       ],
-      tabelData: new Array(10).fill(null).map((_, index) => {
-        return {
-          matg_id: 'Sarung Tangan Bedah',
-          donatur_name: 'PT Kimia Farma',
-          material_desc: '1340',
-          uom: '50 pasang/box'
-        }
-      })
+      tableData: null
     }
+  },
+  mounted () {
+    this.getTableData()
   },
   methods: {
     getCellValue (column, row, columnIndex, rowIndex) {
       return row[column.prop]
+    },
+    getTableData () {
+      this.tableData = null
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          this.tableData = new Array(20).fill(null).map((_, index) => {
+            return {
+              matg_id: 'Sarung Tangan Bedah',
+              donatur_name: 'PT Kimia Farma',
+              material_desc: 1340,
+              uom: '50 pasang/box'
+            }
+          })
+        }, 2000)
+      })
     }
   }
 }
