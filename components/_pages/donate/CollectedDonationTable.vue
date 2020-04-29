@@ -1,83 +1,90 @@
 <template>
-  <table class="w-full text-left">
-    <thead>
-      <tr>
-        <th
-          v-for="col in columns"
-          :key="col.prop"
-          class="bg-gray-300 uppercase text-gray-600 text-sm px-4 py-2 border-t-2 border-b-2 border-solid border-gray-400"
-        >
-          <b>
-            {{ col.label }}
-          </b>
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      <template v-if="tableData && tableData.length">
-        <tr v-for="(row, rowIndex) in tableData" :key="rowIndex">
-          <td
-            v-for="(col, colIndex) in columns"
-            :key="col.prop"
-            class="px-4 py-2 text-gray-800 border-b-2 border-solid border-gray-300"
-          >
-            {{ getCellValue(col, row, colIndex, rowIndex) }}
-          </td>
-        </tr>
-      </template>
-      <template v-else>
-        <tr>
-          <td
-            :colspan="columns.length"
-          >
-            <div
-              class="w-full p-5"
-              style="min-height: 300px;"
+  <div>
+    <h4 class="text-center text-xl md:text-3xl">
+      <b>Logistik yang Terkumpul</b>
+    </h4>
+    <div class="overflow-x-auto">
+      <table class="mt-12 w-full text-left">
+        <thead>
+          <tr>
+            <th
+              v-for="col in columns"
+              :key="col.prop"
+              class="bg-gray-300 uppercase text-gray-600 text-sm px-4 py-2 border-t-2 border-b-2 border-solid border-gray-400"
             >
-              <ContentLoader
-                class="w-full lg:hidden"
-                :speed="3"
-                :width="400"
-                :height="200"
-                primary-color="#eee"
-                secondary-color="#fff"
+              <b>
+                {{ col.label }}
+              </b>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <template v-if="tableData && tableData.length">
+            <tr v-for="(row, rowIndex) in tableData" :key="rowIndex">
+              <td
+                v-for="(col, colIndex) in columns"
+                :key="col.prop"
+                class="px-4 py-2 text-gray-800 border-b-2 border-solid border-gray-300"
               >
-                <rect
-                  v-for="i in 6"
-                  :key="i"
-                  x="0"
-                  :y="((i - 1) * 36)"
-                  width="100%"
-                  height="18"
-                  rx="3"
-                  ry="3"
-                />
-              </ContentLoader>
-              <ContentLoader
-                class="w-full hidden lg:block"
-                :speed="3"
-                :width="400"
-                :height="100"
-                primary-color="#eee"
-                secondary-color="#fff"
+                {{ getCellValue(col, row, colIndex, rowIndex) }}
+              </td>
+            </tr>
+          </template>
+          <template v-else>
+            <tr>
+              <td
+                :colspan="columns.length"
               >
-                <rect
-                  v-for="i in 6"
-                  :key="i"
-                  x="0"
-                  :y="((i - 1) * 16)"
-                  width="100%"
-                  height="8"
-                  rx="3"
-                  ry="3"
-                />
-              </ContentLoader>
-            </div>
-          </td>
-        </tr>
-      </template>
-    </tbody>
-  </table>
+                <div
+                  class="w-full p-5"
+                  style="min-height: 300px;"
+                >
+                  <ContentLoader
+                    class="w-full lg:hidden"
+                    :speed="3"
+                    :width="400"
+                    :height="200"
+                    primary-color="#eee"
+                    secondary-color="#fff"
+                  >
+                    <rect
+                      v-for="i in 6"
+                      :key="i"
+                      x="0"
+                      :y="((i - 1) * 36)"
+                      width="100%"
+                      height="18"
+                      rx="3"
+                      ry="3"
+                    />
+                  </ContentLoader>
+                  <ContentLoader
+                    class="w-full hidden lg:block"
+                    :speed="3"
+                    :width="400"
+                    :height="100"
+                    primary-color="#eee"
+                    secondary-color="#fff"
+                  >
+                    <rect
+                      v-for="i in 6"
+                      :key="i"
+                      x="0"
+                      :y="((i - 1) * 16)"
+                      width="100%"
+                      height="8"
+                      rx="3"
+                      ry="3"
+                    />
+                  </ContentLoader>
+                </div>
+              </td>
+            </tr>
+          </template>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </template>
 
 <script>
