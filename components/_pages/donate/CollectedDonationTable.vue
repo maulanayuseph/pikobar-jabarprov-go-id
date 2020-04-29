@@ -128,6 +128,7 @@ export default {
               uom: '50 pasang/box'
             }
           })
+          resolve()
         }, 2000)
       })
     }
