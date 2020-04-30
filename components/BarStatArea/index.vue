@@ -59,12 +59,12 @@
           class="bg-white p-3 mr-4 mb-4 rounded-lg shadow-md"
         >
           <div class="flex flex-row justify-between items-center">
-            <div style="width: 60%">
+            <div style="width: 50%">
               <h4 style="color: #828282; font-weight: bolder;">
                 {{ item.nama }}
               </h4>
             </div>
-            <div style="width: 40%">
+            <div style="width: 50%">
               <h4 style="text-align: right; margin-right: 20px;">
                 <span style="color: #4FB769; font-weight: bolder;">{{ item.positif_persentase }} %</span>
                 <span style="color: #000000; font-weight: bolder;">[{{ item.positif }}]</span>
