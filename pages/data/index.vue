@@ -111,6 +111,10 @@
         :props-data-rekapitulasi-jabar-kumulatif-prov.sync="jsonDataRekapitulasiJabarKumulatifProv"
       />
     </section>
+
+    <section class="m-4 md:m-8 text-center">
+      Dapatkan akses API Publik - Data Pikobar di sini <a class="text-base bg-green-100 py-1 px-2 rounded text-white align-middle" href="https://covid19-public.digitalservice.id/api/v1/">Akses API</a>
+    </section>
   </div>
 </template>
 
@@ -376,7 +380,12 @@ export default {
 @import "leaflet-geosearch/assets/css/leaflet.css";
 @import "leaflet.markercluster/dist/MarkerCluster.css";
 @import "leaflet.markercluster/dist/MarkerCluster.Default.css";
-
+.bg-green-100 {
+  background-color: #0BA687;
+}
+.text-white {
+  color: white;
+}
 .btn {
   border-radius: 0.25rem;
 }
