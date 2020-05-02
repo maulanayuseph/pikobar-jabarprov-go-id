@@ -3,42 +3,46 @@
     class="pcr-main text-white overflow-hidden rounded-lg shadow-md p-5"
   >
     <b class="text-lg">PCR (Polymerase Chain Reaction)</b>
-    <div class="flex flex-col md:flex-row mb-4 mt-2">
+    <div class="flex flex-col md:flex-row mb-2 mt-2">
       <div class="w-full md:w-3/6 lg:w-3/6 h-auto text-sm mr-10">
-        Polymerase Chain Reaction atau PCR merupakan pemeriksaan diagnostik yang dianggap paling akurat untuk memastikan apakah seseorang menderita COVID-19 atau tidak.
+        <br>Polymerase Chain Reaction atau PCR merupakan pemeriksaan diagnostik yang dianggap paling akurat untuk memastikan apakah seseorang menderita COVID-19 atau tidak.<br><br>
       </div>
-      <div class="w-full md:w-1/6 lg:w-1/6 h-auto text-left">
-        <div class="text-4xl">
-          {{ Number(data.pcr.total).toLocaleString('id-ID') }}
-        </div>
-        <!-- <div class="text-sm"> Jumlah RDT <span class="text-xs tooltip">&#9432;<span class="tooltiptext">Tooltip text</span></span></div> -->
-        <div class="text-sm">
-          Jumlah PCR
-          <div class="tooltip pl-1">
-            &#9432;
-            <span class="tooltiptext text-xs">Jumlah Polymerase Chain Reaction (PCR) yang telah dilakukan</span>
+      <div class="w-full md:w-3/6 lg:w-3/6 h-auto text-sm mr-10 row">
+        <div class="flex flex-col md:flex-row h-auto text-left">
+          <div class="w-full md:w-1/3 lg:w-1/3 h-auto text-left">
+            <div class="text-4xl">
+              {{ Number(data.pcr.total).toLocaleString('id-ID') }}
+            </div>
+            <!-- <div class="text-sm"> Jumlah RDT <span class="text-xs tooltip">&#9432;<span class="tooltiptext">Tooltip text</span></span></div> -->
+            <div class="text-sm">
+              Jumlah PCR
+              <div class="tooltip pl-1">
+                &#9432;
+                <span class="tooltiptext text-xs">Jumlah Polymerase Chain Reaction (PCR) yang telah dilakukan</span>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-      <div class="w-full md:w-1/6 lg:w-1/6 pl-2 h-auto text-left">
-        <div class="h-20 pt-3">
-          <div class="mb-1">
-            <span class="text-2xl">{{ Number(data.pcr.positif).toLocaleString('id-ID') }}</span>
-            <span class="text-sm">({{ Number(data.pcr_persentase_by_total.positif.toFixed(2)).toLocaleString('id-ID') }})%</span>
+          <div class="w-full md:w-1/3 lg:w-1/3 pl-2 h-auto text-left">
+            <div class="h-20 pt-3">
+              <div class="mb-1">
+                <span class="text-2xl">{{ Number(data.pcr.positif).toLocaleString('id-ID') }}</span>
+                <span class="text-sm">({{ Number(data.pcr_persentase_by_total.positif.toFixed(2)).toLocaleString('id-ID') }})%</span>
+              </div>
+              <div class="text-sm">
+                Positif
+              </div>
+            </div>
           </div>
-          <div class="text-sm">
-            Reaktif
-          </div>
-        </div>
-      </div>
-      <div class="w-full md:w-1/6 lg:w-1/6 pl-2 h-auto text-left">
-        <div class="h-20 pt-3">
-          <div class="mb-1">
-            <span class="text-2xl">{{ Number(data.pcr.negatif).toLocaleString('id-ID') }}</span>
-            <span class="text-sm">({{ Number(data.pcr_persentase_by_total.negatif.toFixed(2)).toLocaleString('id-ID') }})%</span>
-          </div>
-          <div class="text-sm">
-            Non Reaktif
+          <div class="w-full md:w-1/3 lg:w-1/3 pl-2 h-auto text-left">
+            <div class="h-20 pt-3">
+              <div class="mb-1">
+                <span class="text-2xl">{{ Number(data.pcr.negatif).toLocaleString('id-ID') }}</span>
+                <span class="text-sm">({{ Number(data.pcr_persentase_by_total.negatif.toFixed(2)).toLocaleString('id-ID') }})%</span>
+              </div>
+              <div class="text-sm">
+                Negatif
+              </div>
+            </div>
           </div>
         </div>
       </div>
