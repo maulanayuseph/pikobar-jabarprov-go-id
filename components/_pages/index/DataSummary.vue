@@ -12,17 +12,27 @@
             <h4>
               <b>Jawa Barat</b>
             </h4>
-            <b>
-              {{ formatNumber(positifJabar) }}
-            </b>
+            <span>
+              <b>
+                {{ formatNumber(positifJabar) }}
+              </b>
+              <b>
+                <span class="text-xl tag-red-100 py-0 px-1 rounded text-white align-middle">{{ formatNumberPlusMinus(pertumbuhan.jabarPositif) }}</span>
+              </b>
+            </span>
           </div>
-          <div class="flex justify-between items-baseline text-xl opacity-50">
+          <div class="flex justify-between items-baseline text-xl">
             <h4>
-              Indonesia
+              <b>Indonesia</b>
             </h4>
-            <b>
-              {{ formatNumber(positifNasional) }}
-            </b>
+            <span>
+              <b>
+                {{ formatNumber(positifNasional) }}
+              </b>
+              <b>
+                <span class="text-base tag-red-100 py-0 px-1 rounded text-white align-middle">{{ formatNumberPlusMinus(pertumbuhan.nasionalPositif) }}</span>
+              </b>
+            </span>
           </div>
         </CounterCardLoader>
         <CounterCardLoader
@@ -35,17 +45,27 @@
             <h4>
               <b>Jawa Barat</b>
             </h4>
-            <b>
-              {{ formatNumber(sembuhJabar) }}
-            </b>
+            <span>
+              <b>
+                {{ formatNumber(sembuhJabar) }}
+              </b>
+              <b>
+                <span class="text-xl tag-green-100 py-0 px-1 rounded text-white align-middle">{{ formatNumberPlusMinus(pertumbuhan.jabarSembuh) }}</span>
+              </b>
+            </span>
           </div>
-          <div class="flex justify-between items-baseline text-xl opacity-50">
+          <div class="flex justify-between items-baseline text-xl">
             <h4>
-              Indonesia
+              <b>Indonesia</b>
             </h4>
-            <b>
-              {{ formatNumber(sembuhNasional) }}
-            </b>
+            <span>
+              <b>
+                {{ formatNumber(sembuhNasional) }}
+              </b>
+              <b>
+                <span class="text-base tag-green-100 py-0 px-1 rounded text-white align-middle">{{ formatNumberPlusMinus(pertumbuhan.nasionalSembuh) }}</span>
+              </b>
+            </span>
           </div>
         </CounterCardLoader>
         <CounterCardLoader
@@ -58,17 +78,27 @@
             <h4>
               <b>Jawa Barat</b>
             </h4>
-            <b>
-              {{ formatNumber(meninggalJabar) }}
-            </b>
+            <span>
+              <b>
+                {{ formatNumber(meninggalJabar) }}
+              </b>
+              <b>
+                <span class="text-xl tag-orange-100 py-0 px-1 rounded text-white align-middle">{{ formatNumberPlusMinus(pertumbuhan.jabarMeninggal) }}</span>
+              </b>
+            </span>
           </div>
-          <div class="flex justify-between items-baseline text-xl opacity-50">
+          <div class="flex justify-between items-baseline text-xl">
             <h4>
-              Indonesia
+              <b>Indonesia</b>
             </h4>
-            <b>
-              {{ formatNumber(meninggalNasional) }}
-            </b>
+            <span>
+              <b>
+                {{ formatNumber(meninggalNasional) }}
+              </b>
+              <b>
+                <span class="text-base tag-orange-100 py-0 px-1 rounded text-white align-middle">{{ formatNumberPlusMinus(pertumbuhan.nasionalMeninggal) }}</span>
+              </b>
+            </span>
           </div>
         </CounterCardLoader>
       </section>
@@ -128,16 +158,31 @@
 </template>
 
 <script>
+import axios from 'axios'
 import _get from 'lodash/get'
 import _round from 'lodash/round'
 import CounterCardLoader from './CounterCardLoader'
 import StatisticLoader from './StatisticLoader'
-import { formatNumber } from '~/lib/number'
+import { formatNumber, formatNumberPlusMinus } from '~/lib/number'
 
 export default {
   components: {
     CounterCardLoader,
     StatisticLoader
+  },
+  data () {
+    return {
+      jsonDataRekapitulasiJabarKumulatifProv: [],
+      jsonDataNasionalHarianKumulatif: [],
+      pertumbuhan: {
+        jabarPositif: 0,
+        jabarSembuh: 0,
+        jabarMeninggal: 0,
+        nasionalPositif: 0,
+        nasionalSembuh: 0,
+        nasionalMeninggal: 0
+      }
+    }
   },
   computed: {
     cases () {
@@ -183,14 +228,66 @@ export default {
       return this.$store.state.statistics.cases === null
     }
   },
+  created () {
+    this.fetchDataRekapitulasiJabarKumulatifProv()
+    this.fetchDataNasionalHarian()
+  },
   methods: {
     _round,
-    formatNumber
+    formatNumber,
+    formatNumberPlusMinus,
+    fetchDataRekapitulasiJabarKumulatifProv () {
+      const self = this
+      axios
+        .get('https://covid19-public.digitalservice.id/api/v1/rekapitulasi/jabar/kumulatif?level=prov')
+        .then(function (response) {
+          self.jsonDataRekapitulasiJabarKumulatifProv = response.data.data.content
+          const numArr = self.jsonDataRekapitulasiJabarKumulatifProv.length
+          self.pertumbuhan.jabarPositif = self.jsonDataRekapitulasiJabarKumulatifProv[numArr - 1].positif - self.jsonDataRekapitulasiJabarKumulatifProv[numArr - 2].positif
+          self.pertumbuhan.jabarSembuh = self.jsonDataRekapitulasiJabarKumulatifProv[numArr - 1].sembuh - self.jsonDataRekapitulasiJabarKumulatifProv[numArr - 2].sembuh
+          self.pertumbuhan.jabarMeninggal = self.jsonDataRekapitulasiJabarKumulatifProv[numArr - 1].meninggal - self.jsonDataRekapitulasiJabarKumulatifProv[numArr - 2].meninggal
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+    },
+    fetchDataNasionalHarian () {
+      const self = this
+      axios
+        .get('https://indonesia-covid-19.mathdro.id/api/harian')
+        .then(function (response) {
+          self.jsonDataNasionalHarianKumulatif = response.data.data
+          const numArr = self.jsonDataNasionalHarianKumulatif.length
+          if (self.jsonDataNasionalHarianKumulatif[numArr - 1].jumlahKasusBaruperHari !== null) {
+            self.pertumbuhan.nasionalPositif = self.jsonDataNasionalHarianKumulatif[numArr - 1].jumlahKasusBaruperHari
+            self.pertumbuhan.nasionalSembuh = self.jsonDataNasionalHarianKumulatif[numArr - 1].jumlahKasusSembuhperHari
+            self.pertumbuhan.nasionalMeninggal = self.jsonDataNasionalHarianKumulatif[numArr - 1].jumlahKasusMeninggalperHari
+          } else {
+            self.pertumbuhan.nasionalPositif = self.jsonDataNasionalHarianKumulatif[numArr - 2].jumlahKasusBaruperHari
+            self.pertumbuhan.nasionalSembuh = self.jsonDataNasionalHarianKumulatif[numArr - 2].jumlahKasusSembuhperHari
+            self.pertumbuhan.nasionalMeninggal = self.jsonDataNasionalHarianKumulatif[numArr - 2].jumlahKasusMeninggalperHari
+          }
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+    }
   }
 }
 </script>
 <style lang="scss" scoped>
-
+.text-white {
+  color: white;
+}
+.tag-red-100 {
+  background-color: #EF6464;
+}
+.tag-green-100 {
+  background-color: #3BB46E;
+}
+.tag-orange-100 {
+  background-color: #EFA965;
+}
 .btnActive {
   color: #ffffff;
   background-color: #2DAC55;
