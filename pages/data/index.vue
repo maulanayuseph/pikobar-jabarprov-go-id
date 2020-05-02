@@ -381,7 +381,7 @@ export default {
 @import "leaflet.markercluster/dist/MarkerCluster.css";
 @import "leaflet.markercluster/dist/MarkerCluster.Default.css";
 .bg-green-100 {
-  background-color: #0BA687;
+  background-color: #5AAA4E;
 }
 .text-white {
   color: white;
