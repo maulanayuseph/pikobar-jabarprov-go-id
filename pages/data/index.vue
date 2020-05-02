@@ -113,7 +113,7 @@
     </section>
 
     <section class="m-4 md:m-8 text-center">
-      Dapatkan akses API Publik - Data Pikobar di sini <a class="text-base bg-green-100 py-1 px-2 rounded text-white align-middle" href="https://covid19-public.digitalservice.id/api/v1/">Akses API</a>
+      <b>Dapatkan akses API Publik - Data Pikobar di sini <a class="text-base bg-green-100 py-3 px-3 rounded text-white align-middle" href="https://covid19-public.digitalservice.id/api/v1/">Akses API</a></b>
     </section>
   </div>
 </template>
