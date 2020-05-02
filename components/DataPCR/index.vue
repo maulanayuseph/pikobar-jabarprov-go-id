@@ -1,30 +1,30 @@
 <template>
   <div
-    class="rdt-main text-white overflow-hidden rounded-lg shadow-md p-5"
+    class="pcr-main text-white overflow-hidden rounded-lg shadow-md p-5"
   >
-    <b class="text-lg">RDT (Rapid Diagnostic Test)</b>
+    <b class="text-lg">PCR (Polymerase Chain Reaction)</b>
     <div class="flex flex-col md:flex-row mb-4 mt-2">
       <div class="w-full md:w-3/6 lg:w-3/6 h-auto text-sm mr-10">
-        Rapid Diagnostic Test (RDT) atau test diagnostik cepat merupakan test yang digunakan sebagai skrining medis awal untuk mendeteksi COVID-19. Pada hasil RDT yang Reaktif akan dilakukan pemeriksaan konfirmasi lebih lanjut dengan metode Polymerase Chain Reaction (PCR).
+        Polymerase Chain Reaction atau PCR merupakan pemeriksaan diagnostik yang dianggap paling akurat untuk memastikan apakah seseorang menderita COVID-19 atau tidak.
       </div>
       <div class="w-full md:w-1/6 lg:w-1/6 h-auto text-left">
         <div class="text-4xl">
-          {{ Number(data.rdt.total).toLocaleString('id-ID') }}
+          {{ Number(data.pcr.total).toLocaleString('id-ID') }}
         </div>
         <!-- <div class="text-sm"> Jumlah RDT <span class="text-xs tooltip">&#9432;<span class="tooltiptext">Tooltip text</span></span></div> -->
         <div class="text-sm">
-          Jumlah RDT
+          Jumlah PCR
           <div class="tooltip pl-1">
             &#9432;
-            <span class="tooltiptext text-xs">Jumlah Rapid Diagnostic Test (RDT) yang telah dilakukan</span>
+            <span class="tooltiptext text-xs">Jumlah Polymerase Chain Reaction (PCR) yang telah dilakukan</span>
           </div>
         </div>
       </div>
       <div class="w-full md:w-1/6 lg:w-1/6 pl-2 h-auto text-left">
         <div class="h-20 pt-3">
           <div class="mb-1">
-            <span class="text-2xl">{{ Number(data.rdt.positif).toLocaleString('id-ID') }}</span>
-            <span class="text-sm">({{ Number(data.rdt_persentase_by_total.positif.toFixed(2)).toLocaleString('id-ID') }})%</span>
+            <span class="text-2xl">{{ Number(data.pcr.positif).toLocaleString('id-ID') }}</span>
+            <span class="text-sm">({{ Number(data.pcr_persentase_by_total.positif.toFixed(2)).toLocaleString('id-ID') }})%</span>
           </div>
           <div class="text-sm">
             Reaktif
@@ -34,22 +34,11 @@
       <div class="w-full md:w-1/6 lg:w-1/6 pl-2 h-auto text-left">
         <div class="h-20 pt-3">
           <div class="mb-1">
-            <span class="text-2xl">{{ Number(data.rdt.negatif).toLocaleString('id-ID') }}</span>
-            <span class="text-sm">({{ Number(data.rdt_persentase_by_total.negatif.toFixed(2)).toLocaleString('id-ID') }})%</span>
+            <span class="text-2xl">{{ Number(data.pcr.negatif).toLocaleString('id-ID') }}</span>
+            <span class="text-sm">({{ Number(data.pcr_persentase_by_total.negatif.toFixed(2)).toLocaleString('id-ID') }})%</span>
           </div>
           <div class="text-sm">
             Non Reaktif
-          </div>
-        </div>
-      </div>
-      <div class="w-full md:w-1/6 lg:w-1/6 pl-2 h-auto text-left">
-        <div class="h-20 pt-3">
-          <div class="mb-1">
-            <span class="text-2xl">{{ Number(data.rdt.invalid).toLocaleString('id-ID') }}</span>
-            <span class="text-sm">({{ Number(data.rdt_persentase_by_total.invalid.toFixed(2)).toLocaleString('id-ID') }})%</span>
-          </div>
-          <div class="text-sm">
-            Invalid
           </div>
         </div>
       </div>
@@ -60,19 +49,18 @@
 <script>
 
 export default {
-  name: 'DataRDT',
+  name: 'DataPCR',
   components: {
   },
   props: {
     propsDataRekapitulasiJabar: {
       type: Object,
       default: () => ({
-        rdt: {
-          total: 0,
+        pcr: {
           positif: 0,
           negatif: 0,
-          invalid: 0,
-          belum_diketahui: 0
+          jumlah_sampling: 0,
+          tanggal: 0
         }
       })
     }
@@ -80,35 +68,32 @@ export default {
   data () {
     return {
       data: {
-        rdt: {
+        pcr: {
           total: 0,
           positif: 0,
           negatif: 0,
-          invalid: 0,
-          belum_diketahui: 0
+          jumlah_sampling: 0,
+          tanggal: 0
         },
-        rdt_persentase_by_total: {
+        pcr_persentase_by_total: {
           positif: 0,
-          negatif: 0,
-          invalid: 0,
-          belum_diketahui: 0
+          negatif: 0
         }
       }
     }
   },
   watch: {
     propsDataRekapitulasiJabar () {
-      this.data.rdt = this.propsDataRekapitulasiJabar.rdt
+      this.data.pcr = this.propsDataRekapitulasiJabar.pcr
       this.countPersentage()
     }
   },
   methods: {
     countPersentage () {
       const self = this
-      self.data.rdt_persentase_by_total.positif = self.data.rdt.positif / self.data.rdt.total * 100
-      self.data.rdt_persentase_by_total.negatif = self.data.rdt.negatif / self.data.rdt.total * 100
-      self.data.rdt_persentase_by_total.invalid = self.data.rdt.invalid / self.data.rdt.total * 100
-      self.data.rdt_persentase_by_total.belum_diketahui = self.data.rdt.belum_diketahui / self.data.rdt.total * 100
+      self.data.pcr.total = self.data.pcr.positif + self.data.pcr.negatif
+      self.data.pcr_persentase_by_total.positif = self.data.pcr.positif / self.data.pcr.total * 100
+      self.data.pcr_persentase_by_total.negatif = self.data.pcr.negatif / self.data.pcr.total * 100
     }
   }
 }
@@ -116,8 +101,8 @@ export default {
 </script>
 
 <style scoped>
-  .rdt-main {
-    background-color: #5AAA4E;
+  .pcr-main {
+    background-color: #41A5DE;
   }
   /* Tooltip container */
   .tooltip {

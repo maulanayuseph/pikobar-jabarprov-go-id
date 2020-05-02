@@ -14,6 +14,9 @@
       <DataRDT :props-data-rekapitulasi-jabar.sync="jsonDataRekapitulasiJabarProv" />
     </section>
     <section class="m-4 mb-8 md:m-8">
+      <DataPCR :props-data-rekapitulasi-jabar.sync="jsonDataRekapitulasiJabarProv" />
+    </section>
+    <section class="m-4 mb-8 md:m-8">
       <div class="items-stretch flex flex-col xl:flex-row xl:flex-no-wrap">
         <button
           class="button-selector m-1 w-full xl:w-auto "
@@ -124,6 +127,7 @@ export default {
   components: {
     DataSummary,
     DataRDT: () => import('~/components/DataRDT'),
+    DataPCR: () => import('~/components/DataPCR'),
     // MapSebaranCovid: () => import('~/components/MapSebaranCovid'),
     // MapSebaranPolygon: () => import('~/components/MapSebaranPolygon'),
     // MapFaskes: () => import('~/components/MapFaskes'),
