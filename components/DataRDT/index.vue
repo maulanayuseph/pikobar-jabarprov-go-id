@@ -3,53 +3,69 @@
     class="rdt-main text-white overflow-hidden rounded-lg shadow-md p-5"
   >
     <b class="text-lg">RDT (Rapid Diagnostic Test)</b>
-    <div class="flex flex-col md:flex-row mb-4 mt-2">
-      <div class="w-full md:w-3/6 lg:w-3/6 h-auto text-sm mr-10">
-        Rapid Diagnostic Test (RDT) atau test diagnostik cepat merupakan test yang digunakan sebagai skrining medis awal untuk mendeteksi COVID-19. Pada hasil RDT yang Reaktif akan dilakukan pemeriksaan konfirmasi lebih lanjut dengan metode Polymerase Chain Reaction (PCR)
+    <div class="flex flex-col md:flex-row mb-2 mt-2">
+      <div class="w-full md:w-3/6 lg:w-3/6 h-auto text-sm mr-10 mt-2">
+        Rapid Diagnostic Test (RDT) atau test diagnostik cepat merupakan test yang digunakan sebagai skrining medis awal untuk mendeteksi COVID-19. Pada hasil RDT yang Reaktif akan dilakukan pemeriksaan konfirmasi lebih lanjut dengan metode Polymerase Chain Reaction (PCR).
+        <span>
+          <br><br>
+        </span>
+        <span>
+          <b>
+            Jika Anda ingin mengikuti Tes Masif COVID-19,
+            daftarkan diri Anda di sini <br><a class="text-sm bg-red-100 py-0 px-1 rounded text-green-500 align-middle" href="https://pikobar.jabarprov.go.id/temp/disclaimer/rdt/?uid=_userUID">Daftar RDT</a>
+            <br><br>
+          </b>
+        </span>
       </div>
-      <div class="w-full md:w-1/6 lg:w-1/6 h-auto text-left">
-        <div class="text-4xl">
-          {{ Number(data.rdt.total).toLocaleString('id-ID') }}
-        </div>
-        <!-- <div class="text-sm"> Jumlah RDT <span class="text-xs tooltip">&#9432;<span class="tooltiptext">Tooltip text</span></span></div> -->
-        <div class="text-sm">
-          Jumlah RDT
-          <div class="tooltip pl-1">
-            &#9432;
-            <span class="tooltiptext text-xs">Jumlah Rapid Diagnostic Test (RDT) yang telah dilakukan</span>
-          </div>
-        </div>
-      </div>
-      <div class="w-full md:w-1/6 lg:w-1/6 pl-2 h-auto text-left">
-        <div class="h-20 pt-3">
-          <div class="mb-1">
-            <span class="text-2xl">{{ Number(data.rdt.positif).toLocaleString('id-ID') }}</span>
-            <span class="text-sm">({{ Number(data.rdt_persentase_by_total.positif.toFixed(2)).toLocaleString('id-ID') }})%</span>
-          </div>
-          <div class="text-sm">
-            Reaktif
-          </div>
-        </div>
-      </div>
-      <div class="w-full md:w-1/6 lg:w-1/6 pl-2 h-auto text-left">
-        <div class="h-20 pt-3">
-          <div class="mb-1">
-            <span class="text-2xl">{{ Number(data.rdt.negatif).toLocaleString('id-ID') }}</span>
-            <span class="text-sm">({{ Number(data.rdt_persentase_by_total.negatif.toFixed(2)).toLocaleString('id-ID') }})%</span>
-          </div>
-          <div class="text-sm">
-            Non Reaktif
+      <div class="w-full md:w-3/6 lg:w-3/6 h-auto text-sm mr-10 row">
+        <div class="flex flex-col md:flex-row h-auto text-left">
+          <div class="w-full md:w-1/3 lg:w-1/3 pl-2 h-auto text-left">
+            <div class="text-4xl">
+              {{ Number(data.rdt.total).toLocaleString('id-ID') }}
+            </div>
+            <!-- <div class="text-sm"> Jumlah RDT <span class="text-xs tooltip">&#9432;<span class="tooltiptext">Tooltip text</span></span></div> -->
+            <div class="text-sm">
+              Jumlah RDT
+              <div class="tooltip pl-1">
+                &#9432;
+                <span class="tooltiptext text-xs">Jumlah Rapid Diagnostic Test (RDT) yang telah dilakukan</span>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="w-full md:w-1/6 lg:w-1/6 pl-2 h-auto text-left">
-        <div class="h-20 pt-3">
-          <div class="mb-1">
-            <span class="text-2xl">{{ Number(data.rdt.invalid).toLocaleString('id-ID') }}</span>
-            <span class="text-sm">({{ Number(data.rdt_persentase_by_total.invalid.toFixed(2)).toLocaleString('id-ID') }})%</span>
+        <div class="flex flex-col md:flex-row h-auto text-left">
+          <div class="w-full md:w-1/3 lg:w-1/3 pl-2 h-auto text-left">
+            <div class="h-20 pt-3">
+              <div class="mb-1">
+                <span class="text-2xl">{{ Number(data.rdt.positif).toLocaleString('id-ID') }}</span>
+                <span class="text-sm">({{ Number(data.rdt_persentase_by_total.positif.toFixed(2)).toLocaleString('id-ID') }})%</span>
+              </div>
+              <div class="text-sm">
+                Reaktif
+              </div>
+            </div>
           </div>
-          <div class="text-sm">
-            Invalid
+          <div class="w-full md:w-1/3 lg:w-1/3 pl-2 h-auto text-left">
+            <div class="h-20 pt-3">
+              <div class="mb-1">
+                <span class="text-2xl">{{ Number(data.rdt.negatif).toLocaleString('id-ID') }}</span>
+                <span class="text-sm">({{ Number(data.rdt_persentase_by_total.negatif.toFixed(2)).toLocaleString('id-ID') }})%</span>
+              </div>
+              <div class="text-sm">
+                Non Reaktif
+              </div>
+            </div>
+          </div>
+          <div class="w-full md:w-1/3 lg:w-1/3 pl-2 h-auto text-left">
+            <div class="h-20 pt-3">
+              <div class="mb-1">
+                <span class="text-2xl">{{ Number(data.rdt.invalid).toLocaleString('id-ID') }}</span>
+                <span class="text-sm">({{ Number(data.rdt_persentase_by_total.invalid.toFixed(2)).toLocaleString('id-ID') }})%</span>
+              </div>
+              <div class="text-sm">
+                Invalid
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -118,6 +134,9 @@ export default {
 <style scoped>
   .rdt-main {
     background-color: #5AAA4E;
+  }
+  .text-green {
+    color: #5AAA4E !important;
   }
   /* Tooltip container */
   .tooltip {
