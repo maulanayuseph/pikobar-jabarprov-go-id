@@ -4,8 +4,14 @@
   >
     <b class="text-lg">PCR (Polymerase Chain Reaction)</b>
     <div class="flex flex-col md:flex-row mb-2 mt-2">
-      <div class="w-full md:w-3/6 lg:w-3/6 h-auto text-sm mr-10">
-        <br>Polymerase Chain Reaction atau PCR merupakan pemeriksaan diagnostik yang dianggap paling akurat untuk memastikan apakah seseorang menderita COVID-19 atau tidak.<br><br>
+      <div class="w-full md:w-3/6 lg:w-3/6 h-auto text-sm mr-10 mt-2">
+        Polymerase Chain Reaction atau PCR merupakan pemeriksaan diagnostik yang dianggap paling akurat untuk memastikan apakah seseorang menderita COVID-19 atau tidak.<br>
+        <br><b style="font-size: larger;">Disclaimer :</b><br>
+        <span style="opacity: 0.6;">Angka Positif setelah tes PCR didapatkan berdasarkan hasil pengecekan yang dikeluarkan Laboratorium Kesehatan Daerah Jawa Barat. </span>
+        <span v-if="showMore" style="opacity: 0.6;">Angka Positif hasil tes PCR tidak merepresentasikan seluruh kasus Terkonfirmasi di Jawa Barat dikarenakan terdapat sumber pengujian lain selain Laboratorium Kesehatan Daerah Jawa Barat. </span>
+        <b><a v-if="!showMore" style="color: #17689D; cursor:pointer;" @click="clickShowMore"> Selengkapnya</a></b>
+        <b><a v-if="showMore" style="color: #17689D; cursor:pointer;" @click="clickShowMore"> Sembunyikan</a></b>
+        <br>
       </div>
       <div class="w-full md:w-3/6 lg:w-3/6 h-auto text-sm mr-10 row">
         <div class="flex flex-col md:flex-row h-auto text-left">
@@ -83,7 +89,8 @@ export default {
           positif: 0,
           negatif: 0
         }
-      }
+      },
+      showMore: false
     }
   },
   watch: {
@@ -98,6 +105,9 @@ export default {
       self.data.pcr.total = self.data.pcr.positif + self.data.pcr.negatif
       self.data.pcr_persentase_by_total.positif = self.data.pcr.positif / self.data.pcr.total * 100
       self.data.pcr_persentase_by_total.negatif = self.data.pcr.negatif / self.data.pcr.total * 100
+    },
+    clickShowMore () {
+      this.showMore = !this.showMore
     }
   }
 }
