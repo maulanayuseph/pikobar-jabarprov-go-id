@@ -14,6 +14,9 @@
       <DataRDT :props-data-rekapitulasi-jabar.sync="jsonDataRekapitulasiJabarProv" />
     </section>
     <section class="m-4 mb-8 md:m-8">
+      <DataPCR :props-data-rekapitulasi-jabar.sync="jsonDataRekapitulasiJabarProv" />
+    </section>
+    <section class="m-4 mb-8 md:m-8">
       <div class="items-stretch flex flex-col xl:flex-row xl:flex-no-wrap">
         <button
           class="button-selector m-1 w-full xl:w-auto "
@@ -108,6 +111,10 @@
         :props-data-rekapitulasi-jabar-kumulatif-prov.sync="jsonDataRekapitulasiJabarKumulatifProv"
       />
     </section>
+
+    <section class="m-4 md:m-8 text-center">
+      <b>Dapatkan akses API Publik - Data Pikobar di sini <a class="text-base bg-green-100 py-3 px-3 rounded text-white align-middle" href="https://covid19-public.digitalservice.id/api/v1/">Akses API</a></b>
+    </section>
   </div>
 </template>
 
@@ -124,6 +131,7 @@ export default {
   components: {
     DataSummary,
     DataRDT: () => import('~/components/DataRDT'),
+    DataPCR: () => import('~/components/DataPCR'),
     // MapSebaranCovid: () => import('~/components/MapSebaranCovid'),
     // MapSebaranPolygon: () => import('~/components/MapSebaranPolygon'),
     // MapFaskes: () => import('~/components/MapFaskes'),
@@ -372,7 +380,12 @@ export default {
 @import "leaflet-geosearch/assets/css/leaflet.css";
 @import "leaflet.markercluster/dist/MarkerCluster.css";
 @import "leaflet.markercluster/dist/MarkerCluster.Default.css";
-
+.bg-green-100 {
+  background-color: #5AAA4E;
+}
+.text-white {
+  color: white;
+}
 .btn {
   border-radius: 0.25rem;
 }
