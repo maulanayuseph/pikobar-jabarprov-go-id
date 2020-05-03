@@ -28,69 +28,88 @@
         </div>
         <div
           v-if="isShowFilter"
-          class="filter-data">
+          class="filter-data"
+        >
           <li
             :class="filter.positif_proses?'filter-active':''"
-            @click="setFilter('positif_proses')">
+            @click="setFilter('positif_proses')"
+          >
             <div
               class="legend-color cluster-positif-proses"
-              style="margin-right: 0.5em;" />Positif - Aktif
+              style="margin-right: 0.5em;"
+            />Positif - Aktif
           </li>
           <li
             :class="filter.positif_sembuh?'filter-active':''"
-            @click="setFilter('positif_sembuh')">
+            @click="setFilter('positif_sembuh')"
+          >
             <div
               class="legend-color cluster-positif-sembuh"
-              style="margin-right: 0.5em;" />Positif - Sembuh
+              style="margin-right: 0.5em;"
+            />Positif - Sembuh
           </li>
           <li
             :class="filter.positif_meninggal?'filter-active':''"
-            @click="setFilter('positif_meninggal')">
+            @click="setFilter('positif_meninggal')"
+          >
             <div
               class="legend-color cluster-positif-meninggal"
-              style="margin-right: 0.5em;" />Positif - Meninggal
+              style="margin-right: 0.5em;"
+            />Positif - Meninggal
           </li>
           <li
             :class="filter.pdp_proses?'filter-active':''"
-            @click="setFilter('pdp_proses')">
+            @click="setFilter('pdp_proses')"
+          >
             <div
               class="legend-color cluster-pdp-proses"
-              style="margin-right: 0.5em;" />PDP - Proses
+              style="margin-right: 0.5em;"
+            />PDP - Proses
           </li>
           <li
             :class="filter.pdp_selesai?'filter-active':''"
-            @click="setFilter('pdp_selesai')">
+            @click="setFilter('pdp_selesai')"
+          >
             <div
               class="legend-color cluster-pdp-selesai"
-              style="margin-right: 0.5em;" />PDP - Selesai
+              style="margin-right: 0.5em;"
+            />PDP - Selesai
           </li>
           <li
             :class="filter.pdp_meninggal?'filter-active':''"
-            @click="setFilter('pdp_meninggal')">
+            @click="setFilter('pdp_meninggal')"
+          >
             <div
               class="legend-color cluster-pdp-meninggal"
-              style="margin-right: 0.5em;" />PDP - Meninggal
+              style="margin-right: 0.5em;"
+            />PDP - Meninggal
           </li>
           <li
             :class="filter.odp_proses?'filter-active':''"
-            @click="setFilter('odp_proses')">
+            @click="setFilter('odp_proses')"
+          >
             <div
               class="legend-color cluster-odp-proses"
-              style="margin-right: 0.5em;" />ODP - Proses
+              style="margin-right: 0.5em;"
+            />ODP - Proses
           </li>
           <li
             :class="filter.odp_selesai?'filter-active':''"
-            @click="setFilter('odp_selesai')">
+            @click="setFilter('odp_selesai')"
+          >
             <div
               class="legend-color cluster-odp-selesai"
-              style="margin-right: 0.5em;" />ODP - Selesai
+              style="margin-right: 0.5em;"
+            />ODP - Selesai
           </li>
           <li
             :class="filter.odp_meninggal?'filter-active':''"
-            @click="setFilter('odp_meninggal')">
+            @click="setFilter('odp_meninggal')"
+          >
             <div
               class="legend-color cluster-odp-meninggal"
-              style="margin-right: 0.5em;" />ODP - Meninggal
+              style="margin-right: 0.5em;"
+            />ODP - Meninggal
           </li>
         </div>
       </div>
@@ -100,35 +119,44 @@
           <div class="w-1/3 h-auto">
             <div
               class="legend-color cluster-positif-proses"
-              style="margin-right: 0.5em;" />Positif - Aktif <br>
+              style="margin-right: 0.5em;"
+            />Positif - Aktif <br>
             <div
               class="legend-color cluster-positif-sembuh"
-              style="margin-right: 0.5em;" />Positif - Sembuh <br>
+              style="margin-right: 0.5em;"
+            />Positif - Sembuh <br>
             <div
               class="legend-color cluster-positif-meninggal"
-              style="margin-right: 0.5em;" />Positif - Meninggal <br>
+              style="margin-right: 0.5em;"
+            />Positif - Meninggal <br>
           </div>
           <div class="w-1/3 h-auto">
             <div
               class="legend-color cluster-pdp-proses"
-              style="margin-right: 0.5em;" />PDP - Aktif <br>
+              style="margin-right: 0.5em;"
+            />PDP - Aktif <br>
             <div
               class="legend-color cluster-pdp-selesai"
-              style="margin-right: 0.5em;" />PDP - Selesai <br>
+              style="margin-right: 0.5em;"
+            />PDP - Selesai <br>
             <div
               class="legend-color cluster-pdp-meninggal"
-              style="margin-right: 0.5em;" />PDP - Meninggal <br>
+              style="margin-right: 0.5em;"
+            />PDP - Meninggal <br>
           </div>
           <div class="w-1/3 h-auto">
             <div
               class="legend-color cluster-odp-proses"
-              style="margin-right: 0.5em;" />ODP - Aktif <br>
+              style="margin-right: 0.5em;"
+            />ODP - Aktif <br>
             <div
               class="legend-color cluster-odp-selesai"
-              style="margin-right: 0.5em;" />ODP - Selesai <br>
+              style="margin-right: 0.5em;"
+            />ODP - Selesai <br>
             <div
               class="legend-color cluster-odp-meninggal"
-              style="margin-right: 0.5em;" />ODP - Meninggal <br>
+              style="margin-right: 0.5em;"
+            />ODP - Meninggal <br>
           </div>
         </div>
         <hr>
