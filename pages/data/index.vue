@@ -95,7 +95,10 @@
     </section>
 
     <section class="m-4 mb-8 md:m-8">
-      <BarStatTable :props-data-rekapitulasi-jabar-kab.sync="jsonDataRekapitulasiJabarKab" />
+      <BarStatTable
+        :props-data-rekapitulasi-jabar-kab.sync="jsonDataRekapitulasiJabarKab"
+        :props-data-rekapitulasi-jabar-kumulatif-kab.sync="jsonDataRekapitulasiJabarKumulatifKab"
+      />
     </section>
 
     <section class="m-4 mb-8 md:m-8">
