@@ -86,6 +86,16 @@ export default {
           alt: 'Geospatial Creative Institute',
           url: 'https://www.linkedin.com/company/geospatial-creative-institute/',
           height: '5em'
+        },
+        {
+          logo: '/img/logo-sipandu.png',
+          alt: 'Sipandu',
+          url: 'https://sipandu.co.id/'
+        },
+        {
+          logo: '/img/logo-ivosights.jpeg',
+          alt: 'Ivosights',
+          url: 'https://www.ivosights.com/'
         }
       ]
     }
