@@ -511,10 +511,10 @@ export default {
             this.jsonDataKota[index].positif_aktif_total = this.temporary[i].positif
             this.jsonDataKota[index].positif_sembuh_total = this.temporary[i].sembuh
             this.jsonDataKota[index].positif_meninggal_total = this.temporary[i].meninggal
-            this.jsonDataKota[index].odp_proses_total = this.temporary[i].odp
-            this.jsonDataKota[index].odp_selesai_total = this.temporary[i].odp
-            this.jsonDataKota[index].pdp_proses_total = this.temporary[i].pdp
-            this.jsonDataKota[index].pdp_selesai_total = this.temporary[i].pdp
+            this.jsonDataKota[index].odp_proses_total = this.temporary[i].odp_proses
+            this.jsonDataKota[index].odp_selesai_total = this.temporary[i].odp_selesai
+            this.jsonDataKota[index].pdp_proses_total = this.temporary[i].pdp_proses
+            this.jsonDataKota[index].pdp_selesai_total = this.temporary[i].pdp_selesai
           }
         }
       })
@@ -524,10 +524,10 @@ export default {
             this.jsonDataKota[index].positif_aktif_h1 = this.temporary[i].positif
             this.jsonDataKota[index].positif_sembuh_h1 = this.temporary[i].sembuh
             this.jsonDataKota[index].positif_meninggal_h1 = this.temporary[i].meninggal
-            this.jsonDataKota[index].odp_proses_h1 = this.temporary[i].odp
-            this.jsonDataKota[index].odp_selesai_h1 = this.temporary[i].odp
-            this.jsonDataKota[index].pdp_proses_h1 = this.temporary[i].pdp
-            this.jsonDataKota[index].pdp_selesai_h1 = this.temporary[i].pdp
+            this.jsonDataKota[index].odp_proses_h1 = this.temporary[i].odp_proses
+            this.jsonDataKota[index].odp_selesai_h1 = this.temporary[i].odp_selesai
+            this.jsonDataKota[index].pdp_proses_h1 = this.temporary[i].pdp_proses
+            this.jsonDataKota[index].pdp_selesai_h1 = this.temporary[i].pdp_selesai
           }
         }
       })
@@ -537,10 +537,10 @@ export default {
             this.jsonDataKota[index].positif_aktif_h7 = this.temporary[i].positif
             this.jsonDataKota[index].positif_sembuh_h7 = this.temporary[i].sembuh
             this.jsonDataKota[index].positif_meninggal_h7 = this.temporary[i].meninggal
-            this.jsonDataKota[index].odp_proses_h7 = this.temporary[i].odp
-            this.jsonDataKota[index].odp_selesai_h7 = this.temporary[i].odp
-            this.jsonDataKota[index].pdp_proses_h7 = this.temporary[i].pdp
-            this.jsonDataKota[index].pdp_selesai_h7 = this.temporary[i].pdp
+            this.jsonDataKota[index].odp_proses_h7 = this.temporary[i].odp_proses
+            this.jsonDataKota[index].odp_selesai_h7 = this.temporary[i].odp_selesai
+            this.jsonDataKota[index].pdp_proses_h7 = this.temporary[i].pdp_proses
+            this.jsonDataKota[index].pdp_selesai_h7 = this.temporary[i].pdp_selesai
           }
         }
       })
