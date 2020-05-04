@@ -548,7 +548,7 @@ export default {
       this.jsonDataKota.sort(this.compareValues('positif_aktif_total', 'desc'))
 
       // datatable
-      this.dataV2.rows = this.jsonDataKota.slice(1)
+      this.dataV2.rows = this.jsonDataKota
     }
   }
 }
