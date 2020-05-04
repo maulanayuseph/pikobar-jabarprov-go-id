@@ -28,25 +28,34 @@
         </div>
         <div
           v-if="isShowFilter"
-          class="filter-data">
+          class="filter-data"
+        >
           <li
             :class="filter.lini1_rujukan?'filter-active':''"
-            @click="setFilter('lini1_rujukan')">
+            @click="setFilter('lini1_rujukan')"
+          >
+            <!-- eslint-disable-next-line vue/no-v-html -->
             <div class="legend-color" style="margin-right: 0.5em;" v-html="sgvMarker.lini1_rujukan" />Rumah Sakit Rujukan Lini 1
           </li>
           <li
             :class="filter.lini2_rujukan?'filter-active':''"
-            @click="setFilter('lini2_rujukan')">
+            @click="setFilter('lini2_rujukan')"
+          >
+            <!-- eslint-disable-next-line vue/no-v-html -->
             <div class="legend-color" style="margin-right: 0.5em;" v-html="sgvMarker.lini2_rujukan" />Rumah Sakit Rujukan Lini 2
           </li>
           <li
             :class="filter.lini1_non?'filter-active':''"
-            @click="setFilter('lini1_non')">
+            @click="setFilter('lini1_non')"
+          >
+            <!-- eslint-disable-next-line vue/no-v-html -->
             <div class="legend-color" style="margin-right: 0.5em;" v-html="sgvMarker.lini1_non" />Rumah Sakit Non Rujukan
           </li>
           <li
             :class="filter.lini2_non?'filter-active':''"
-            @click="setFilter('lini2_non')">
+            @click="setFilter('lini2_non')"
+          >
+            <!-- eslint-disable-next-line vue/no-v-html -->
             <div class="legend-color" style="margin-right: 0.5em;" v-html="sgvMarker.lini2_non" />Puskesmas
           </li>
         </div>
@@ -55,15 +64,19 @@
         <b>Keterangan: </b>
         <div class="flex mb-1">
           <div class="w-1/4 h-auto">
+            <!-- eslint-disable-next-line vue/no-v-html -->
             <div class="legend-color" style="margin-right: 0.5em;" v-html="sgvMarker.lini1_rujukan" />Rumah Sakit Rujukan Lini 1
           </div>
           <div class="w-1/4 h-auto">
+            <!-- eslint-disable-next-line vue/no-v-html -->
             <div class="legend-color" style="margin-right: 0.5em;" v-html="sgvMarker.lini2_rujukan" />Rumah Sakit Rujukan Lini 2
           </div>
           <div class="w-1/4 h-auto">
+            <!-- eslint-disable-next-line vue/no-v-html -->
             <div class="legend-color" style="margin-right: 0.5em;" v-html="sgvMarker.lini1_non" />Rumah Sakit Non Rujukan
           </div>
           <div class="w-1/4 h-auto">
+            <!-- eslint-disable-next-line vue/no-v-html -->
             <div class="legend-color" style="margin-right: 0.5em;" v-html="sgvMarker.lini2_non" />Puskesmas
           </div>
         </div>
