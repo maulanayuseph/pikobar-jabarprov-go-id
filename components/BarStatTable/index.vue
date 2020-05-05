@@ -210,16 +210,16 @@ export default {
             category: 'kota'
           },
           {
-            label: 'H-7',
-            field: 'positif_aktif_h7',
+            label: 'H-1',
+            field: 'positif_aktif_h1',
             sort: 'desc',
             backgroundColor: '#D93F40',
             textColor: 'white',
             category: 'Terkonfirmasi'
           },
           {
-            label: 'H-1',
-            field: 'positif_aktif_h1',
+            label: 'H-7',
+            field: 'positif_aktif_h7',
             sort: 'desc',
             backgroundColor: '#D93F40',
             textColor: 'white',
@@ -234,16 +234,16 @@ export default {
             category: 'Terkonfirmasi'
           },
           {
-            label: 'H-7',
-            field: 'positif_sembuh_h7',
+            label: 'H-1',
+            field: 'positif_sembuh_h1',
             sort: 'desc',
             backgroundColor: '#039658',
             textColor: 'white',
             category: 'Terkonfirmasi'
           },
           {
-            label: 'H-1',
-            field: 'positif_sembuh_h1',
+            label: 'H-7',
+            field: 'positif_sembuh_h7',
             sort: 'desc',
             backgroundColor: '#039658',
             textColor: 'white',
@@ -258,16 +258,16 @@ export default {
             category: 'Terkonfirmasi'
           },
           {
-            label: 'H-7',
-            field: 'positif_meninggal_h7',
+            label: 'H-1',
+            field: 'positif_meninggal_h1',
             sort: 'desc',
             backgroundColor: '#9C0000',
             textColor: 'white',
             category: 'Terkonfirmasi'
           },
           {
-            label: 'H-1',
-            field: 'positif_meninggal_h1',
+            label: 'H-7',
+            field: 'positif_meninggal_h7',
             sort: 'desc',
             backgroundColor: '#9C0000',
             textColor: 'white',
@@ -282,16 +282,16 @@ export default {
             category: 'Terkonfirmasi'
           },
           {
-            label: 'H-7',
-            field: 'odp_proses_h7',
+            label: 'H-1',
+            field: 'odp_proses_h1',
             sort: 'desc',
             backgroundColor: '#008ec6',
             textColor: 'white',
             category: 'ODP'
           },
           {
-            label: 'H-1',
-            field: 'odp_proses_h1',
+            label: 'H-7',
+            field: 'odp_proses_h7',
             sort: 'desc',
             backgroundColor: '#008ec6',
             textColor: 'white',
@@ -306,16 +306,16 @@ export default {
             category: 'ODP'
           },
           {
-            label: 'H-7',
-            field: 'odp_selesai_h7',
+            label: 'H-1',
+            field: 'odp_selesai_h1',
             sort: 'desc',
             backgroundColor: '#19a7df',
             textColor: 'white',
             category: 'ODP'
           },
           {
-            label: 'H-1',
-            field: 'odp_selesai_h1',
+            label: 'H-7',
+            field: 'odp_selesai_h7',
             sort: 'desc',
             backgroundColor: '#19a7df',
             textColor: 'white',
@@ -330,16 +330,16 @@ export default {
             category: 'ODP'
           },
           {
-            label: 'H-7',
-            field: 'pdp_proses_h7',
+            label: 'H-1',
+            field: 'pdp_proses_h1',
             sort: 'desc',
             backgroundColor: '#e3b342',
             textColor: 'white',
             category: 'PDP'
           },
           {
-            label: 'H-1',
-            field: 'pdp_proses_h1',
+            label: 'H-7',
+            field: 'pdp_proses_h7',
             sort: 'desc',
             backgroundColor: '#e3b342',
             textColor: 'white',
@@ -354,16 +354,16 @@ export default {
             category: 'PDP'
           },
           {
-            label: 'H-7',
-            field: 'pdp_selesai_h7',
+            label: 'H-1',
+            field: 'pdp_selesai_h1',
             sort: 'desc',
             backgroundColor: '#fdcc5c',
             textColor: 'white',
             category: 'PDP'
           },
           {
-            label: 'H-1',
-            field: 'pdp_selesai_h1',
+            label: 'H-7',
+            field: 'pdp_selesai_h7',
             sort: 'desc',
             backgroundColor: '#fdcc5c',
             textColor: 'white',
@@ -481,26 +481,26 @@ export default {
       // temporary data
       this.jsonDataKota.forEach((element, index) => {
         const tempMerge = {
-          positif_aktif_h7: 0,
           positif_aktif_h1: 0,
+          positif_aktif_h7: 0,
           positif_aktif_total: 0,
-          positif_sembuh_h7: 0,
           positif_sembuh_h1: 0,
+          positif_sembuh_h7: 0,
           positif_sembuh_total: 0,
-          positif_meninggal_h7: 0,
           positif_meninggal_h1: 0,
+          positif_meninggal_h7: 0,
           positif_meninggal_total: 0,
-          odp_proses_h7: 0,
           odp_proses_h1: 0,
+          odp_proses_h7: 0,
           odp_proses_total: 0,
-          odp_selesai_h7: 0,
           odp_selesai_h1: 0,
+          odp_selesai_h7: 0,
           odp_selesai_total: 0,
-          pdp_proses_h7: 0,
           pdp_proses_h1: 0,
+          pdp_proses_h7: 0,
           pdp_proses_total: 0,
-          pdp_selesai_h7: 0,
           pdp_selesai_h1: 0,
+          pdp_selesai_h7: 0,
           pdp_selesai_total: 0
         }
         this.jsonDataKota[index] = { ...element, ...tempMerge }
