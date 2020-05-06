@@ -90,18 +90,19 @@
 
 <script>
 import { ContentLoader } from 'vue-content-loader'
+import { getLogistics } from '../../../api/donation'
 
-const NAMES = [
-  'Masker N95',
-  'Masker Bedah',
-  'Cap',
-  'Pelindung Sepatu',
-  'Sarung Tangan non-Steril',
-  'Boots',
-  'Kantong Jenazah',
-  'Apron'
-]
-const getRandomName = () => NAMES[Math.floor(Math.random() * NAMES.length)]
+// const NAMES = [
+//   'Masker N95',
+//   'Masker Bedah',
+//   'Cap',
+//   'Pelindung Sepatu',
+//   'Sarung Tangan non-Steril',
+//   'Boots',
+//   'Kantong Jenazah',
+//   'Apron'
+// ]
+// const getRandomName = () => NAMES[Math.floor(Math.random() * NAMES.length)]
 export default {
   components: {
     ContentLoader
@@ -134,17 +135,8 @@ export default {
     },
     getTableData () {
       this.tableData = null
-      return new Promise((resolve) => {
-        setTimeout(() => {
-          this.tableData = new Array(20).fill(null).map((_, index) => {
-            return {
-              name: getRandomName(),
-              needed: Math.round(Math.random() * 2000),
-              fulfilled: Math.round(Math.random() * 1500)
-            }
-          })
-          resolve()
-        }, 2000)
+      return getLogistics().then(({ data }) => {
+        console.log(data)
       })
     }
   }

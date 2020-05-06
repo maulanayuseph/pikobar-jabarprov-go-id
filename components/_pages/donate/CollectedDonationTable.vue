@@ -4,93 +4,76 @@
       <b>Logistik yang Terkumpul</b>
     </h4>
     <div class="overflow-x-auto">
-      <table class="mt-12 w-full text-left">
-        <thead>
-          <tr>
-            <th
-              v-for="col in columns"
-              :key="col.prop"
-              class="bg-gray-300 uppercase text-gray-600 text-sm px-4 py-2 border-t-2 border-b-2 border-solid border-gray-400"
-            >
-              <b>
-                {{ col.label }}
-              </b>
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <template v-if="tableData && tableData.length">
-            <tr v-for="(row, rowIndex) in tableData" :key="rowIndex">
-              <td
-                v-for="(col, colIndex) in columns"
-                :key="col.prop"
-                class="px-4 py-2 text-gray-800 border-b-2 border-solid border-gray-300"
-              >
-                {{ getCellValue(col, row, colIndex, rowIndex) }}
-              </td>
-            </tr>
-          </template>
-          <template v-else>
+      <div class="mt-12">
+        <client-only>
+          <Pagination :page-range="3" :page-count="totalPages" :initial-page="currentPage" :click-handler="onPaginationClick" />
+        </client-only>
+        <table class="mt-4 w-full text-left">
+          <thead>
             <tr>
-              <td
-                :colspan="columns.length"
+              <th
+                v-for="col in columns"
+                :key="col.prop"
+                class="bg-gray-300 uppercase text-gray-600 text-sm px-4 py-2 border-t-2 border-b-2 border-solid border-gray-400"
               >
-                <div
-                  class="w-full p-5"
-                  style="min-height: 300px;"
+                <b>
+                  {{ col.label }}
+                </b>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <template v-if="isLoading">
+              <tr v-for="j in perPage" :key="j">
+                <th
+                  v-for="i in columns.length"
+                  :key="i"
+                  class="bg-white uppercase text-gray-600 text-sm px-4 py-2 border-t-2 border-b-2 border-solid border-gray-400"
                 >
                   <ContentLoader
-                    class="w-full lg:hidden"
-                    :speed="3"
-                    :width="400"
-                    :height="200"
+                    style="height: 1rem;"
                     primary-color="#eee"
-                    secondary-color="#fff"
-                  >
-                    <rect
-                      v-for="i in 6"
-                      :key="i"
-                      x="0"
-                      :y="((i - 1) * 36)"
-                      width="100%"
-                      height="18"
-                      rx="3"
-                      ry="3"
-                    />
-                  </ContentLoader>
-                  <ContentLoader
-                    class="w-full hidden lg:block"
-                    :speed="3"
-                    :width="400"
-                    :height="100"
-                    primary-color="#eee"
-                    secondary-color="#fff"
-                  >
-                    <rect
-                      v-for="i in 6"
-                      :key="i"
-                      x="0"
-                      :y="((i - 1) * 16)"
-                      width="100%"
-                      height="8"
-                      rx="3"
-                      ry="3"
-                    />
-                  </ContentLoader>
-                </div>
-              </td>
-            </tr>
-          </template>
-        </tbody>
-      </table>
+                    secondary-color="#fafafa"
+                    :width="240"
+                    :height="32"
+                  />
+                </th>
+              </tr>
+            </template>
+            <template v-else-if="data && !data.length">
+              <tr>
+                <td :colspan="columns.length">
+                  <div class="p-4">
+                    Data Tidak Tersedia
+                  </div>
+                </td>
+              </tr>
+            </template>
+            <template v-else-if="data && data.length">
+              <tr v-for="(row, rowIndex) in data" :key="rowIndex">
+                <td
+                  v-for="(col, colIndex) in columns"
+                  :key="col.prop"
+                  class="px-4 py-2 text-gray-800 border-b-2 border-solid border-gray-300"
+                >
+                  {{ getCellValue(col, row, colIndex, rowIndex) }}
+                </td>
+              </tr>
+            </template>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+
 import { ContentLoader } from 'vue-content-loader'
+import { getCollectedDonations } from '../../../api/donation'
 export default {
   components: {
+    Pagination: () => import('../../Pagination'),
     ContentLoader
   },
   data () {
@@ -113,31 +96,53 @@ export default {
           label: 'Satuan'
         }
       ],
-      tableData: null
+      isLoading: true,
+      data: null,
+      perPage: 16,
+      currentPage: 1,
+      totalItems: 0,
+      totalPages: 0
+    }
+  },
+  computed: {
+    skipCount () {
+      return (this.currentPage - 1) * this.perPage
     }
   },
   mounted () {
     this.getTableData()
+    this.$watch(
+      'currentPage',
+      function handler (newVal, oldVal) {
+        if (newVal !== oldVal) {
+          this.getTableData()
+        }
+      },
+      { immediate: false }
+    )
   },
   methods: {
     getCellValue (column, row, columnIndex, rowIndex) {
       return row[column.prop]
     },
     getTableData () {
-      this.tableData = null
-      return new Promise((resolve) => {
-        setTimeout(() => {
-          this.tableData = new Array(20).fill(null).map((_, index) => {
-            return {
-              matg_id: 'Sarung Tangan Bedah',
-              donatur_name: 'PT Kimia Farma',
-              material_desc: 1340,
-              uom: '50 pasang/box'
-            }
-          })
-          resolve()
-        }, 2000)
+      this.isLoading = true
+      return getCollectedDonations({
+        params: {
+          limit: this.perPage,
+          skip: this.skipCount,
+          sort: 'matg_id:asc'
+        }
+      }).then(({ total, data }) => {
+        this.data = data
+        this.totalItems = total
+        this.totalPages = Math.ceil(total / this.perPage)
+      }).finally(() => {
+        this.isLoading = false
       })
+    },
+    onPaginationClick (page) {
+      this.currentPage = page
     }
   }
 }

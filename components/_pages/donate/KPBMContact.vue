@@ -1,10 +1,10 @@
 <template>
   <div class="p-5 lg:p-8 md:-mx-4 flex flex-col md:flex-row md:items-center">
-    <div class="mb-4 md:mb-0 md:mx-4 md:w-1/2">
-      <img src="~/assets/banner-placeholder.jpg" class="w-full h-48 object-cover">
+    <div class="mb-12 md:mb-0 md:mx-4 md:w-1/2">
+      <img src="/donation-contact.svg" class="w-full h-56 object-contain object-center">
     </div>
     <div class="md:w-1/2 md:mx-4">
-      <h5 class="text-left text-xl md:text-2xl mb-8">
+      <h5 class="text-left text-xl md:text-2xl mb-4 md:mb-8">
         <b>Kontak informasi terkait donasi</b>
       </h5>
       <div class="flex flex-row items-start">
