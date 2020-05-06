@@ -1302,7 +1302,7 @@ export default {
       ],
       barChartNasionalOptions: {
         height: 200,
-        width: 300,
+        width: 350,
         orientation: 'horizontal',
         colors: ['#FF4A4B', '#03B167', '#9C0000'],
         legend: {
@@ -1322,7 +1322,7 @@ export default {
       },
       lineChartNasionalOptions: {
         height: 200,
-        width: 300,
+        width: 350,
         orientation: 'horizontal',
         colors: ['#FF4A4B', '#03B167', '#9C0000'],
         legend: {
@@ -1348,7 +1348,7 @@ export default {
       },
       barChartKotaOptions: {
         height: 200,
-        width: 300,
+        width: 350,
         orientation: 'horizontal',
         colors: ['#FF4A4B', '#03B167', '#9C0000'],
         legend: {
@@ -1373,7 +1373,7 @@ export default {
       },
       lineChartKotaOptions: {
         height: 200,
-        width: 300,
+        width: 350,
         orientation: 'horizontal',
         colors: ['#FF4A4B', '#03B167', '#9C0000'],
         legend: {
