@@ -50,10 +50,10 @@
       </div>
     </header>
     <div class="my-custom-scrollbar">
-      <table class="table w-full border-t border-solid border-gray-300">
+      <table class="table w-full border-t border-solid border-gray-300 tableFixHead">
         <thead class="select-none">
           <tr>
-            <th rowspan="2" class="px-2 py-1 hover:opacity-75" style="background-color: #EBEBEB; color: #5F5F5F; text-align: left; padding-left:20px;">
+            <th rowspan="1" class="px-2 py-1 hover:opacity-75" style="background-color: #EBEBEB; color: #5F5F5F; text-align: left; padding-left:20px;">
               Nama Kota / Kabupaten
             </th>
             <th v-if="statCategory === 'Terkonfirmasi'" colspan="3" class="px-2 py-1 hover:opacity-75" style="background-color: #FF4A4B; color: #ffffff;">
@@ -88,10 +88,10 @@
                 style="padding-left: 1.5em !important;"
                 :style="{backgroundColor: col.backgroundColor || '', color: col.textColor || ''}"
               >
-                <p class="pointer-events-none flex justify-between items-center">
+                <p class="pointer-events-none flex justify-between items-center" style="float: right;">
                   <span
-                    class="textcenter"
-                    :class="{ textleft: index==0 }"
+                    v-if="index >= 1"
+                    class="textright"
                   >
                     {{ col.label }}
                   </span>
@@ -294,7 +294,7 @@ export default {
       deep: true,
       handler (arr) {
         this.data2.columns = this.data.columns
-        this.data2.columns = this.data2.columns.slice(1)
+        // this.data2.columns = this.data2.columns.slice(1)
       }
     },
     category: {
@@ -498,6 +498,12 @@ select option {
   color: #2DAC55;
   background-color: #FFFFFF;
 }
+
+// .tableFixHead          { overflow-y: auto; height: 100px; }
+// .tableFixHead thead th { position: sticky; top: 0; }
+
+thead tr:nth-child(1) th { position: sticky; top: 0; }
+thead tr:nth-child(2) th { position: sticky; top: 29px; }
 
 </style>
 
