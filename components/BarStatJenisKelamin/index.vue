@@ -191,9 +191,9 @@ export default {
           tempJenisKelaminNull = 0
         }
       } else if (stat === 'Positif - Aktif') {
-        tempJenisKelaminPria = parseInt(this.jsonDataRekapitulasiJabar.positif_per_gender.laki_laki)
-        tempJenisKelaminWanita = parseInt(this.jsonDataRekapitulasiJabar.positif_per_gender.perempuan)
-        tempJenisKelaminNull = parseInt(this.jsonDataRekapitulasiJabar.positif) - parseInt(tempJenisKelaminPria + tempJenisKelaminWanita)
+        tempJenisKelaminPria = parseInt(this.jsonDataRekapitulasiJabar.positif_per_gender.laki_laki) - parseInt(this.jsonDataRekapitulasiJabar.sembuh_per_gender.laki_laki) - parseInt(this.jsonDataRekapitulasiJabar.meninggal_per_gender.laki_laki)
+        tempJenisKelaminWanita = parseInt(this.jsonDataRekapitulasiJabar.positif_per_gender.perempuan) - parseInt(this.jsonDataRekapitulasiJabar.sembuh_per_gender.perempuan) - parseInt(this.jsonDataRekapitulasiJabar.meninggal_per_gender.perempuan)
+        tempJenisKelaminNull = parseInt(tempJenisKelaminPria) - parseInt(tempJenisKelaminPria + tempJenisKelaminWanita)
         if (tempJenisKelaminNull < 0) {
           tempJenisKelaminNull = 0
         }
