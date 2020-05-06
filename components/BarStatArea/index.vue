@@ -1621,7 +1621,7 @@ export default {
           }
         }
       }
-      self.jsonDataKota.sort(self.compareValues('positif', 'asc'))
+      self.jsonDataKota.sort(self.compareValues('positif', 'desc'))
     },
     fetchDataKabupatenHarian () {
       const self = this
