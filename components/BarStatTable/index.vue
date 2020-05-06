@@ -394,6 +394,9 @@ export default {
       this.groupingKota()
     }
   },
+  created () {
+    this.defineColumnName()
+  },
   methods: {
     ifNullReturnZero (str) {
       if (str === null) {
@@ -406,16 +409,22 @@ export default {
     },
     formatDate (date) {
       const d = new Date(date)
-      const year = d.getFullYear()
-      let month = '' + (d.getMonth() + 1)
-      let day = '' + d.getDate()
-      if (month.length < 2) {
-        month = '0' + month
+      // const year = d.getFullYear()
+      // let month = '' + (d.getMonth() + 1)
+      // let day = '' + d.getDate()
+      // if (month.length < 2) {
+      //   month = '0' + month
+      // }
+      // if (day.length < 2) {
+      //   day = '0' + day
+      // }
+      // return [day, month, year].join('-')
+      const options = {
+        day: 'numeric',
+        month: 'short',
+        year: 'numeric'
       }
-      if (day.length < 2) {
-        day = '0' + day
-      }
-      return [day, month, year].join('-')
+      return d.toLocaleString('id-ID', options)
     },
     compareValues (key, order = 'asc') {
       return function innerSort (a, b) {
@@ -439,6 +448,18 @@ export default {
           (order === 'desc') ? (comparison * -1) : comparison
         )
       }
+    },
+    defineColumnName () {
+      const now = new Date()
+      const yesterday = new Date()
+      yesterday.setDate(now.getDate() - 1)
+      this.dataV2.columns[1].label = this.formatDate(yesterday)
+      this.dataV2.columns[4].label = this.formatDate(yesterday)
+      this.dataV2.columns[7].label = this.formatDate(yesterday)
+      this.dataV2.columns[10].label = this.formatDate(yesterday)
+      this.dataV2.columns[13].label = this.formatDate(yesterday)
+      this.dataV2.columns[16].label = this.formatDate(yesterday)
+      this.dataV2.columns[19].label = this.formatDate(yesterday)
     },
     fetchDataKabupaten () {
       const self = this
@@ -548,6 +569,13 @@ export default {
       this.jsonDataKota.sort(this.compareValues('positif_aktif_total', 'desc'))
 
       // datatable
+      this.dataV2.columns[1].label = this.formatDate(this.temporary[rangeH1Dari].tanggal)
+      this.dataV2.columns[4].label = this.formatDate(this.temporary[rangeH1Dari].tanggal)
+      this.dataV2.columns[7].label = this.formatDate(this.temporary[rangeH1Dari].tanggal)
+      this.dataV2.columns[10].label = this.formatDate(this.temporary[rangeH1Dari].tanggal)
+      this.dataV2.columns[13].label = this.formatDate(this.temporary[rangeH1Dari].tanggal)
+      this.dataV2.columns[16].label = this.formatDate(this.temporary[rangeH1Dari].tanggal)
+      this.dataV2.columns[19].label = this.formatDate(this.temporary[rangeH1Dari].tanggal)
       this.dataV2.rows = this.jsonDataKota
     }
   }
