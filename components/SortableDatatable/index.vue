@@ -4,97 +4,100 @@
       <div
         class="my-4 flex flex-row items-stretch flex-wrap"
       >
-        <label class="inline-block font-bold text-gray-800 mr-4">
-          {{ multipleSort ? 'Sorting Order' : 'Urutkan' }} :
-        </label>
-        <select
-          v-model="optionSelected"
-          class="select-option-selector w-1/2"
-          :style="{backgroundColor: getColumnBackgroundColor(optionSelected), color: getColumnTextColor(optionSelected)}"
-          @change="onClickTableHeader($event.target.value)"
-        >
-          <option
-            v-for="list in optionList"
-            :key="list.id"
-            :selected="optionSelected == list.col"
-            :value="list.col"
+        <div class="w-1/2">
+          <button
+            class="button-selector mr-1"
+            :active="statCategory === 'Terkonfirmasi'"
+            @click="enableTerkonfirmasi"
           >
-            {{ list.text }}
-          </option>
-        </select>
-
-        <!-- <template v-if="!sortingOrder.length">
-          <b>
-            -
-          </b>
-        </template>
-        <template v-if="sortingOrder.length">
-          <p
-            v-for="(sort, index) in sortingOrder"
-            :key="index"
-            class="cursor-pointer select-none mb-3"
+            Terkonfirmasi
+          </button>
+          <button
+            class="button-selector mr-1"
+            :active="statCategory === 'ODP'"
+            @click="enableODP"
           >
-            <span
-              class="px-3 py-2 rounded-lg opacity-75 hover:opacity-100"
-              :style="{backgroundColor: getColumnBackgroundColor(sort[0]), color: getColumnTextColor(sort[0])}"
+            ODP
+          </button>
+          <button
+            class="button-selector mr-1"
+            :active="statCategory === 'PDP'"
+            @click="enablePDP"
+          >
+            PDP
+          </button>
+        </div>
+        <div class="w-1/2 text-right">
+          <label class="inline-block font-bold text-gray-800 mr-4">
+            {{ multipleSort ? 'Sorting Order' : 'Urutkan' }} :
+          </label>
+          <select
+            v-model="optionSelected"
+            class="select-option-selector w-1/2"
+            :style="{backgroundColor: getColumnBackgroundColor(optionSelected), color: getColumnTextColor(optionSelected)}"
+            @change="onClickTableHeader($event.target.value)"
+          >
+            <option
+              v-for="list in optionList"
+              :key="list.id"
+              :selected="optionSelected == list.col"
+              :value="list.col"
             >
-              <span @click="onClickTableHeader(sort[0])">
-                {{ getColumnLabel(sort[0]) }}
-              </span>
-              <FontAwesomeIcon
-                :icon="getSortIcon(sort[0])"
-                class="ml-1"
-                @click="onClickTableHeader(sort[0])"
-              />
-              <FontAwesomeIcon
-                :icon="icon.faTimesCircle"
-                class="cursor-pointer ml-3 mr-1 opacity-50 hover:opacity-100"
-                @click="onRemoveSorting(sort[0])"
-              />
-            </span>
-            <FontAwesomeIcon
-              v-if="index < sortingOrder.length - 1"
-              class="mx-2 text-sm text-gray-600"
-              :icon="icon.faArrowRight"
-            />
-          </p>
-        </template> -->
+              {{ list.text }}
+            </option>
+          </select>
+        </div>
       </div>
     </header>
     <div class="my-custom-scrollbar">
-      <table class="table w-full border-t border-solid border-gray-300">
+      <table class="table w-full border-t border-solid border-gray-300 tableFixHead">
         <thead class="select-none">
           <tr>
-            <!-- <th
-              v-for="(col, index) in data.columns"
-              :key="index"
-              ref="tableHeaders"
-              class="cursor-pointer px-2 py-1 hover:opacity-75"
-              style="padding-left: 1.5em !important;"
-              :style="{backgroundColor: col.backgroundColor || '', color: col.textColor || ''}"
-              @click.capture="onClickTableHeader(col.field)"
-            > -->
-            <th
-              v-for="(col, index) in data.columns"
-              :key="index"
-              ref="tableHeaders"
-              class="px-2 py-1 hover:opacity-75"
-              style="padding-left: 1.5em !important;"
-              :style="{backgroundColor: col.backgroundColor || '', color: col.textColor || ''}"
-            >
-              <p class="pointer-events-none flex justify-between items-center">
-                <span
-                  class="textcenter"
-                  :class="{ textleft: index==0 }"
-                >
-                  {{ col.label }}
-                </span>
-                <!-- <FontAwesomeIcon
-                  v-if="index > 0"
-                  :icon="getSortIcon(col.field)"
-                /> -->
-              </p>
+            <th rowspan="1" class="px-2 py-1 hover:opacity-75" style="background-color: #EBEBEB; color: #5F5F5F; text-align: left; padding-left:20px;">
+              Nama Kota / Kabupaten
             </th>
+            <th v-if="statCategory === 'Terkonfirmasi'" colspan="3" class="px-2 py-1 hover:opacity-75" style="background-color: #FF4A4B; color: #ffffff;">
+              Positif Aktif
+            </th>
+            <th v-if="statCategory === 'Terkonfirmasi'" colspan="3" class="px-2 py-1 hover:opacity-75" style="background-color: #03B167; color: #ffffff;">
+              Sembuh
+            </th>
+            <th v-if="statCategory === 'Terkonfirmasi'" colspan="3" class="px-2 py-1 hover:opacity-75" style="background-color: #B80000; color: #ffffff;">
+              Meninggal
+            </th>
+            <th v-if="statCategory === 'ODP'" colspan="3" class="px-2 py-1 hover:opacity-75" style="background-color: #009edc; color: #ffffff;">
+              ODP Proses
+            </th>
+            <th v-if="statCategory === 'ODP'" colspan="3" class="px-2 py-1 hover:opacity-75" style="background-color: #4cbbe6; color: #ffffff;">
+              ODP Selesai
+            </th>
+            <th v-if="statCategory === 'PDP'" colspan="3" class="px-2 py-1 hover:opacity-75" style="background-color: #fdc74a; color: #ffffff;">
+              PDP Proses
+            </th>
+            <th v-if="statCategory === 'PDP'" colspan="3" class="px-2 py-1 hover:opacity-75" style="background-color: #fdd780; color: #ffffff;">
+              PDP Selesai
+            </th>
+          </tr>
+          <tr>
+            <template v-for="(col, index) in data2.columns">
+              <th
+                v-if="statCategory === col.category || 'kota' === col.category"
+                :key="index"
+                ref="tableHeaders"
+                class="px-2 py-1 hover:opacity-75"
+                style="padding-left: 1.5em !important;"
+                :style="{backgroundColor: col.backgroundColor || '', color: col.textColor || ''}"
+              >
+                <p class="pointer-events-none flex justify-between items-center" style="float: right;">
+                  <span
+                    v-if="index >= 1"
+                    class="textright"
+                  >
+                    {{ col.label }}
+                  </span>
+                </p>
+              </th>
+            </template>
           </tr>
         </thead>
         <tbody>
@@ -151,15 +154,48 @@
           </template>
           <template v-else-if="sortedRows && sortedRows.length">
             <tr v-for="(row, rowIndex) in sortedRows" :key="rowIndex">
-              <td
-                v-for="(col, colIndex) in data.columns"
-                :key="colIndex"
-                :class="{ textleft: colIndex==0 }"
-                class="border-b border-solid px-2 py-1 textright"
-                style="border-color: rgba(0,0,0,0.1); padding-left: 1.5em !important;"
-              >
-                {{ getCellValue({row, column: col, rowIndex, columnIndex: colIndex}) }}
-              </td>
+              <template v-for="(col, colIndex) in data.columns">
+                <template v-if="colIndex == 0">
+                  <td
+                    :key="colIndex"
+                    :class="{ textleft: colIndex==0 }"
+                    class="border-b border-solid px-2 py-1 textright"
+                    style="border-color: rgba(0,0,0,0.1); padding-left: 1.5em !important;"
+                  >
+                    {{ getCellValue({row, column: col, rowIndex, columnIndex: colIndex}) }}
+                  </td>
+                </template>
+                <template v-if="statCategory === 'Terkonfirmasi' && colIndex >= 1 && colIndex <=9">
+                  <td
+                    :key="colIndex"
+                    :class="{ textleft: colIndex==0 }"
+                    class="border-b border-solid px-2 py-1 textright"
+                    style="border-color: rgba(0,0,0,0.1); padding-left: 1.5em !important;"
+                  >
+                    {{ getCellValue({row, column: col, rowIndex, columnIndex: colIndex}) }}
+                  </td>
+                </template>
+                <template v-if="statCategory === 'ODP' && colIndex >= 10 && colIndex <=15">
+                  <td
+                    :key="colIndex"
+                    :class="{ textleft: colIndex==0 }"
+                    class="border-b border-solid px-2 py-1 textright"
+                    style="border-color: rgba(0,0,0,0.1); padding-left: 1.5em !important;"
+                  >
+                    {{ getCellValue({row, column: col, rowIndex, columnIndex: colIndex}) }}
+                  </td>
+                </template>
+                <template v-if="statCategory === 'PDP' && colIndex >= 16 && colIndex <=21">
+                  <td
+                    :key="colIndex"
+                    :class="{ textleft: colIndex==0 }"
+                    class="border-b border-solid px-2 py-1 textright"
+                    style="border-color: rgba(0,0,0,0.1); padding-left: 1.5em !important;"
+                  >
+                    {{ getCellValue({row, column: col, rowIndex, columnIndex: colIndex}) }}
+                  </td>
+                </template>
+              </template>
             </tr>
           </template>
         </tbody>
@@ -206,6 +242,10 @@ export default {
         rows: []
       })
     },
+    category: {
+      type: String,
+      default: 'Terkonfirmasi'
+    },
     multipleSort: {
       type: Boolean,
       default: false
@@ -226,14 +266,16 @@ export default {
       sortedRows: [],
       optionList: [
         // { id: 1, col: 'no', text: 'No' },
-        { id: 2, col: 'nama_kab', text: 'Nama Kota / Kabupaten' },
-        { id: 3, col: 'odp_proses', text: 'ODP Proses' },
-        { id: 4, col: 'pdp_proses', text: 'PDP Proses' },
-        { id: 5, col: 'positif_aktif', text: 'Positif - Aktif' },
-        { id: 6, col: 'positif_sembuh', text: 'Positif - Sembuh' },
-        { id: 7, col: 'positif_meninggal', text: 'Positif - Meninggal' }
+        { id: 2, col: 'nama', text: 'Nama Kota / Kabupaten' },
+        { id: 5, col: 'positif_aktif_total', text: 'Total Positif Aktif' },
+        { id: 6, col: 'positif_sembuh_total', text: 'Total Positif Sembuh' },
+        { id: 7, col: 'positif_meninggal_total', text: 'Total Positif Meninggal' }
       ],
-      optionSelected: 'positif_aktif'
+      optionSelected: 'positif_aktif_total',
+      statCategory: '',
+      data2: {
+        columns: []
+      }
     }
   },
   watch: {
@@ -245,6 +287,21 @@ export default {
           this.sortedRows = JSON.parse(JSON.stringify(arr))
           _orderBy()
         }
+      }
+    },
+    'data.colomns': {
+      immediate: true,
+      deep: true,
+      handler (arr) {
+        this.data2.columns = this.data.columns
+        // this.data2.columns = this.data2.columns.slice(1)
+      }
+    },
+    category: {
+      immediate: true,
+      deep: true,
+      handler (arr) {
+        this.statCategory = this.category
       }
     },
     sortingOrder: {
@@ -346,12 +403,46 @@ export default {
     onClickTableHeader (field) {
       // const newSorting = this.updateColumnSorting(field)
       let newSorting = 'down'
-      if (field === 'nama_kab') {
+      if (field === 'nama') {
         newSorting = 'up'
       } else {
         newSorting = 'down'
       }
       this.upsertSorting(field, newSorting)
+    },
+    enableTerkonfirmasi () {
+      this.statCategory = 'Terkonfirmasi'
+      this.optionList = [
+        // { id: 1, col: 'no', text: 'No' },
+        { id: 2, col: 'nama', text: 'Nama Kota / Kabupaten' },
+        { id: 5, col: 'positif_aktif_total', text: 'Total Positif Aktif' },
+        { id: 6, col: 'positif_sembuh_total', text: 'Total Positif Sembuh' },
+        { id: 7, col: 'positif_meninggal_total', text: 'Total Positif Meninggal' }
+      ]
+      this.optionSelected = 'positif_aktif_total'
+      this.onClickTableHeader('positif_aktif_total')
+    },
+    enableODP () {
+      this.statCategory = 'ODP'
+      this.optionList = [
+        // { id: 1, col: 'no', text: 'No' },
+        { id: 2, col: 'nama', text: 'Nama Kota / Kabupaten' },
+        { id: 5, col: 'odp_proses_total', text: 'Total ODP Proses' },
+        { id: 6, col: 'odp_selesai_total', text: 'Total ODP Selesai' }
+      ]
+      this.optionSelected = 'odp_proses_total'
+      this.onClickTableHeader('odp_proses_total')
+    },
+    enablePDP () {
+      this.statCategory = 'PDP'
+      this.optionList = [
+        // { id: 1, col: 'no', text: 'No' },
+        { id: 2, col: 'nama', text: 'Nama Kota / Kabupaten' },
+        { id: 5, col: 'pdp_proses_total', text: 'Total PDP Proses' },
+        { id: 6, col: 'pdp_selesai_total', text: 'Total PDP Selesai' }
+      ]
+      this.optionSelected = 'pdp_proses_total'
+      this.onClickTableHeader('pdp_proses_total')
     }
   }
 }
@@ -399,4 +490,31 @@ select option {
   color: #555;
 }
 
+.btnActive {
+  color: #ffffff;
+  background-color: #2DAC55;
+}
+.btnNonActive {
+  color: #2DAC55;
+  background-color: #FFFFFF;
+}
+
+// .tableFixHead          { overflow-y: auto; height: 100px; }
+// .tableFixHead thead th { position: sticky; top: 0; }
+
+thead tr:nth-child(1) th { position: sticky; top: 0; }
+thead tr:nth-child(2) th { position: sticky; top: 29px; }
+
+</style>
+
+<style lang="scss" scoped>
+.button-selector {
+  min-width: 100px !important;
+  @apply px-3 py-1 rounded-md border border-solid border-brand-green
+  text-brand-green bg-white;
+
+  &[active] {
+    @apply text-white bg-brand-green;
+  }
+}
 </style>

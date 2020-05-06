@@ -24,7 +24,7 @@
                 class="top-grid__call-card"
                 title="Hotline Pikobar"
                 subtitle="Chat WA seputar COVID-19"
-                number="0811 1310 3515"
+                number="Klik untuk chat"
                 href="https://s.id/ChatbotPikobar"
                 :icon="require('@fortawesome/free-brands-svg-icons').faWhatsapp"
                 icon-class="text-4xl"
