@@ -210,16 +210,16 @@ export default {
             category: 'kota'
           },
           {
-            label: 'H-7',
-            field: 'positif_aktif_h7',
+            label: 'H-1',
+            field: 'positif_aktif_h1',
             sort: 'desc',
             backgroundColor: '#D93F40',
             textColor: 'white',
             category: 'Terkonfirmasi'
           },
           {
-            label: 'H-1',
-            field: 'positif_aktif_h1',
+            label: 'H-7',
+            field: 'positif_aktif_h7',
             sort: 'desc',
             backgroundColor: '#D93F40',
             textColor: 'white',
@@ -234,16 +234,16 @@ export default {
             category: 'Terkonfirmasi'
           },
           {
-            label: 'H-7',
-            field: 'positif_sembuh_h7',
+            label: 'H-1',
+            field: 'positif_sembuh_h1',
             sort: 'desc',
             backgroundColor: '#039658',
             textColor: 'white',
             category: 'Terkonfirmasi'
           },
           {
-            label: 'H-1',
-            field: 'positif_sembuh_h1',
+            label: 'H-7',
+            field: 'positif_sembuh_h7',
             sort: 'desc',
             backgroundColor: '#039658',
             textColor: 'white',
@@ -258,16 +258,16 @@ export default {
             category: 'Terkonfirmasi'
           },
           {
-            label: 'H-7',
-            field: 'positif_meninggal_h7',
+            label: 'H-1',
+            field: 'positif_meninggal_h1',
             sort: 'desc',
             backgroundColor: '#9C0000',
             textColor: 'white',
             category: 'Terkonfirmasi'
           },
           {
-            label: 'H-1',
-            field: 'positif_meninggal_h1',
+            label: 'H-7',
+            field: 'positif_meninggal_h7',
             sort: 'desc',
             backgroundColor: '#9C0000',
             textColor: 'white',
@@ -282,16 +282,16 @@ export default {
             category: 'Terkonfirmasi'
           },
           {
-            label: 'H-7',
-            field: 'odp_proses_h7',
+            label: 'H-1',
+            field: 'odp_proses_h1',
             sort: 'desc',
             backgroundColor: '#008ec6',
             textColor: 'white',
             category: 'ODP'
           },
           {
-            label: 'H-1',
-            field: 'odp_proses_h1',
+            label: 'H-7',
+            field: 'odp_proses_h7',
             sort: 'desc',
             backgroundColor: '#008ec6',
             textColor: 'white',
@@ -306,16 +306,16 @@ export default {
             category: 'ODP'
           },
           {
-            label: 'H-7',
-            field: 'odp_selesai_h7',
+            label: 'H-1',
+            field: 'odp_selesai_h1',
             sort: 'desc',
             backgroundColor: '#19a7df',
             textColor: 'white',
             category: 'ODP'
           },
           {
-            label: 'H-1',
-            field: 'odp_selesai_h1',
+            label: 'H-7',
+            field: 'odp_selesai_h7',
             sort: 'desc',
             backgroundColor: '#19a7df',
             textColor: 'white',
@@ -330,16 +330,16 @@ export default {
             category: 'ODP'
           },
           {
-            label: 'H-7',
-            field: 'pdp_proses_h7',
+            label: 'H-1',
+            field: 'pdp_proses_h1',
             sort: 'desc',
             backgroundColor: '#e3b342',
             textColor: 'white',
             category: 'PDP'
           },
           {
-            label: 'H-1',
-            field: 'pdp_proses_h1',
+            label: 'H-7',
+            field: 'pdp_proses_h7',
             sort: 'desc',
             backgroundColor: '#e3b342',
             textColor: 'white',
@@ -354,16 +354,16 @@ export default {
             category: 'PDP'
           },
           {
-            label: 'H-7',
-            field: 'pdp_selesai_h7',
+            label: 'H-1',
+            field: 'pdp_selesai_h1',
             sort: 'desc',
             backgroundColor: '#fdcc5c',
             textColor: 'white',
             category: 'PDP'
           },
           {
-            label: 'H-1',
-            field: 'pdp_selesai_h1',
+            label: 'H-7',
+            field: 'pdp_selesai_h7',
             sort: 'desc',
             backgroundColor: '#fdcc5c',
             textColor: 'white',
@@ -394,6 +394,9 @@ export default {
       this.groupingKota()
     }
   },
+  created () {
+    this.defineColumnName()
+  },
   methods: {
     ifNullReturnZero (str) {
       if (str === null) {
@@ -406,16 +409,22 @@ export default {
     },
     formatDate (date) {
       const d = new Date(date)
-      const year = d.getFullYear()
-      let month = '' + (d.getMonth() + 1)
-      let day = '' + d.getDate()
-      if (month.length < 2) {
-        month = '0' + month
+      // const year = d.getFullYear()
+      // let month = '' + (d.getMonth() + 1)
+      // let day = '' + d.getDate()
+      // if (month.length < 2) {
+      //   month = '0' + month
+      // }
+      // if (day.length < 2) {
+      //   day = '0' + day
+      // }
+      // return [day, month, year].join('-')
+      const options = {
+        day: 'numeric',
+        month: 'short',
+        year: 'numeric'
       }
-      if (day.length < 2) {
-        day = '0' + day
-      }
-      return [day, month, year].join('-')
+      return d.toLocaleString('id-ID', options)
     },
     compareValues (key, order = 'asc') {
       return function innerSort (a, b) {
@@ -439,6 +448,18 @@ export default {
           (order === 'desc') ? (comparison * -1) : comparison
         )
       }
+    },
+    defineColumnName () {
+      const now = new Date()
+      const yesterday = new Date()
+      yesterday.setDate(now.getDate() - 1)
+      this.dataV2.columns[1].label = this.formatDate(yesterday)
+      this.dataV2.columns[4].label = this.formatDate(yesterday)
+      this.dataV2.columns[7].label = this.formatDate(yesterday)
+      this.dataV2.columns[10].label = this.formatDate(yesterday)
+      this.dataV2.columns[13].label = this.formatDate(yesterday)
+      this.dataV2.columns[16].label = this.formatDate(yesterday)
+      this.dataV2.columns[19].label = this.formatDate(yesterday)
     },
     fetchDataKabupaten () {
       const self = this
@@ -481,26 +502,26 @@ export default {
       // temporary data
       this.jsonDataKota.forEach((element, index) => {
         const tempMerge = {
-          positif_aktif_h7: 0,
           positif_aktif_h1: 0,
+          positif_aktif_h7: 0,
           positif_aktif_total: 0,
-          positif_sembuh_h7: 0,
           positif_sembuh_h1: 0,
+          positif_sembuh_h7: 0,
           positif_sembuh_total: 0,
-          positif_meninggal_h7: 0,
           positif_meninggal_h1: 0,
+          positif_meninggal_h7: 0,
           positif_meninggal_total: 0,
-          odp_proses_h7: 0,
           odp_proses_h1: 0,
+          odp_proses_h7: 0,
           odp_proses_total: 0,
-          odp_selesai_h7: 0,
           odp_selesai_h1: 0,
+          odp_selesai_h7: 0,
           odp_selesai_total: 0,
-          pdp_proses_h7: 0,
           pdp_proses_h1: 0,
+          pdp_proses_h7: 0,
           pdp_proses_total: 0,
-          pdp_selesai_h7: 0,
           pdp_selesai_h1: 0,
+          pdp_selesai_h7: 0,
           pdp_selesai_total: 0
         }
         this.jsonDataKota[index] = { ...element, ...tempMerge }
@@ -508,7 +529,7 @@ export default {
       this.jsonDataKota.forEach((element, index) => {
         for (let i = rangeTotalDari; i <= rangeTotalSampai; i++) {
           if (element.kode.toString() === this.temporary[i].kode_kab) {
-            this.jsonDataKota[index].positif_aktif_total = this.temporary[i].positif
+            this.jsonDataKota[index].positif_aktif_total = this.temporary[i].positif - this.temporary[i].sembuh - this.temporary[i].meninggal
             this.jsonDataKota[index].positif_sembuh_total = this.temporary[i].sembuh
             this.jsonDataKota[index].positif_meninggal_total = this.temporary[i].meninggal
             this.jsonDataKota[index].odp_proses_total = this.temporary[i].odp_proses
@@ -521,7 +542,7 @@ export default {
       this.jsonDataKota.forEach((element, index) => {
         for (let i = rangeH1Dari; i <= rangeH1Sampai; i++) {
           if (element.kode.toString() === this.temporary[i].kode_kab) {
-            this.jsonDataKota[index].positif_aktif_h1 = this.temporary[i].positif
+            this.jsonDataKota[index].positif_aktif_h1 = this.temporary[i].positif - this.temporary[i].sembuh - this.temporary[i].meninggal
             this.jsonDataKota[index].positif_sembuh_h1 = this.temporary[i].sembuh
             this.jsonDataKota[index].positif_meninggal_h1 = this.temporary[i].meninggal
             this.jsonDataKota[index].odp_proses_h1 = this.temporary[i].odp_proses
@@ -534,7 +555,7 @@ export default {
       this.jsonDataKota.forEach((element, index) => {
         for (let i = rangeH7Dari; i <= rangeH7Sampai; i++) {
           if (element.kode.toString() === this.temporary[i].kode_kab) {
-            this.jsonDataKota[index].positif_aktif_h7 = this.temporary[i].positif
+            this.jsonDataKota[index].positif_aktif_h7 = this.temporary[i].positif - this.temporary[i].sembuh - this.temporary[i].meninggal
             this.jsonDataKota[index].positif_sembuh_h7 = this.temporary[i].sembuh
             this.jsonDataKota[index].positif_meninggal_h7 = this.temporary[i].meninggal
             this.jsonDataKota[index].odp_proses_h7 = this.temporary[i].odp_proses
@@ -548,6 +569,13 @@ export default {
       this.jsonDataKota.sort(this.compareValues('positif_aktif_total', 'desc'))
 
       // datatable
+      this.dataV2.columns[1].label = this.formatDate(this.temporary[rangeH1Dari].tanggal)
+      this.dataV2.columns[4].label = this.formatDate(this.temporary[rangeH1Dari].tanggal)
+      this.dataV2.columns[7].label = this.formatDate(this.temporary[rangeH1Dari].tanggal)
+      this.dataV2.columns[10].label = this.formatDate(this.temporary[rangeH1Dari].tanggal)
+      this.dataV2.columns[13].label = this.formatDate(this.temporary[rangeH1Dari].tanggal)
+      this.dataV2.columns[16].label = this.formatDate(this.temporary[rangeH1Dari].tanggal)
+      this.dataV2.columns[19].label = this.formatDate(this.temporary[rangeH1Dari].tanggal)
       this.dataV2.rows = this.jsonDataKota
     }
   }
