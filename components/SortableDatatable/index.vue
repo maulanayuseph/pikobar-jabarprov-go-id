@@ -14,18 +14,18 @@
           </button>
           <button
             class="button-selector mr-1"
-            :active="statCategory === 'ODP'"
-            @click="enableODP"
+            :active="statCategory === 'ODP_PDP'"
+            @click="enableODPPDP"
           >
-            ODP
+            ODP dan PDP
           </button>
-          <button
+          <!-- <button
             class="button-selector mr-1"
             :active="statCategory === 'PDP'"
             @click="enablePDP"
           >
             PDP
-          </button>
+          </button> -->
         </div>
         <div class="w-1/2 text-right">
           <label class="inline-block font-bold text-gray-800 mr-4">
@@ -65,38 +65,78 @@
             <th v-if="statCategory === 'Terkonfirmasi'" colspan="3" class="px-2 py-1 hover:opacity-75" style="background-color: #B80000; color: #ffffff;">
               Meninggal
             </th>
-            <th v-if="statCategory === 'ODP'" colspan="3" class="px-2 py-1 hover:opacity-75" style="background-color: #009edc; color: #ffffff;">
-              ODP Proses
+            <th v-if="statCategory === 'ODP_PDP'" colspan="3" class="px-2 py-1 hover:opacity-75" style="background-color: #009edc; color: #ffffff;">
+              ODP
             </th>
-            <th v-if="statCategory === 'ODP'" colspan="3" class="px-2 py-1 hover:opacity-75" style="background-color: #4cbbe6; color: #ffffff;">
+            <!-- <th v-if="statCategory === 'ODP'" colspan="3" class="px-2 py-1 hover:opacity-75" style="background-color: #4cbbe6; color: #ffffff;">
               ODP Selesai
+            </th> -->
+            <th v-if="statCategory === 'ODP_PDP'" colspan="3" class="px-2 py-1 hover:opacity-75" style="background-color: #fdc74a; color: #ffffff;">
+              PDP
             </th>
-            <th v-if="statCategory === 'PDP'" colspan="3" class="px-2 py-1 hover:opacity-75" style="background-color: #fdc74a; color: #ffffff;">
-              PDP Proses
-            </th>
-            <th v-if="statCategory === 'PDP'" colspan="3" class="px-2 py-1 hover:opacity-75" style="background-color: #fdd780; color: #ffffff;">
+            <!-- <th v-if="statCategory === 'PDP'" colspan="3" class="px-2 py-1 hover:opacity-75" style="background-color: #fdd780; color: #ffffff;">
               PDP Selesai
-            </th>
+            </th> -->
           </tr>
           <tr>
             <template v-for="(col, index) in data2.columns">
-              <th
-                v-if="statCategory === col.category || 'kota' === col.category"
-                :key="index"
-                ref="tableHeaders"
-                class="px-2 py-1 hover:opacity-75"
-                style="padding-left: 1.5em !important;"
-                :style="{backgroundColor: col.backgroundColor || '', color: col.textColor || ''}"
-              >
-                <p class="pointer-events-none flex justify-between items-center" style="float: right;">
-                  <span
-                    v-if="index >= 1"
-                    class="textright"
+              <template v-if="index === 0">
+                <th
+                  v-if="statCategory === col.category || 'kota' === col.category"
+                  :key="index"
+                  ref="tableHeaders"
+                  class="px-2 py-1 hover:opacity-75"
+                  style="padding-left: 1.5em !important; width: 19%;"
+                  :style="{backgroundColor: col.backgroundColor || '', color: col.textColor || ''}"
+                >
+                  <p class="pointer-events-none flex justify-between items-center" style="float: right;">
+                    <span
+                      v-if="index >= 1"
+                      class="textright"
+                    >
+                      {{ col.label }}
+                    </span>
+                  </p>
+                </th>
+              </template>
+              <template v-else>
+                <template v-if="statCategory === col.category ">
+                  <th
+                    :key="index"
+                    ref="tableHeaders"
+                    class="px-2 py-1 hover:opacity-75"
+                    style="padding-left: 1.5em !important; width: 9%;"
+                    :style="{backgroundColor: col.backgroundColor || '', color: col.textColor || ''}"
                   >
-                    {{ col.label }}
-                  </span>
-                </p>
-              </th>
+                    <p class="pointer-events-none flex justify-between items-center" style="float: right;">
+                      <span
+                        v-if="index >= 1"
+                        class="textright"
+                      >
+                        {{ col.label }}
+                      </span>
+                    </p>
+                  </th>
+                </template>
+                <template v-else-if="statCategory === col.category ">
+                  <th
+                    :key="index"
+                    ref="tableHeaders"
+                    class="px-2 py-1 hover:opacity-75"
+                    style="padding-left: 1.5em !important; width: 13.5%;"
+                    :style="{backgroundColor: col.backgroundColor || '', color: col.textColor || ''}"
+                  >
+                    <p class="pointer-events-none flex justify-between items-center" style="float: right;">
+                      <span
+                        v-if="index >= 1"
+                        class="textright"
+                      >
+                        {{ col.label }}
+                      </span>
+                    </p>
+                  </th>
+                </template>
+              </template>
             </template>
           </tr>
         </thead>
@@ -175,7 +215,7 @@
                     {{ getCellValue({row, column: col, rowIndex, columnIndex: colIndex}) }}
                   </td>
                 </template>
-                <template v-if="statCategory === 'ODP' && colIndex >= 10 && colIndex <=15">
+                <template v-if="statCategory === 'ODP_PDP' && colIndex >= 10 && colIndex <=15">
                   <td
                     :key="colIndex"
                     :class="{ textleft: colIndex==0 }"
@@ -185,7 +225,7 @@
                     {{ getCellValue({row, column: col, rowIndex, columnIndex: colIndex}) }}
                   </td>
                 </template>
-                <template v-if="statCategory === 'PDP' && colIndex >= 16 && colIndex <=21">
+                <!-- <template v-if="statCategory === 'PDP' && colIndex >= 16 && colIndex <=21">
                   <td
                     :key="colIndex"
                     :class="{ textleft: colIndex==0 }"
@@ -194,7 +234,7 @@
                   >
                     {{ getCellValue({row, column: col, rowIndex, columnIndex: colIndex}) }}
                   </td>
-                </template>
+                </template> -->
               </template>
             </tr>
           </template>
@@ -294,6 +334,7 @@ export default {
       deep: true,
       handler (arr) {
         this.data2.columns = this.data.columns
+        // console.log(this.data2)
         // this.data2.columns = this.data2.columns.slice(1)
       }
     },
@@ -422,28 +463,28 @@ export default {
       this.optionSelected = 'positif_aktif_total'
       this.onClickTableHeader('positif_aktif_total')
     },
-    enableODP () {
-      this.statCategory = 'ODP'
+    enableODPPDP () {
+      this.statCategory = 'ODP_PDP'
       this.optionList = [
         // { id: 1, col: 'no', text: 'No' },
         { id: 2, col: 'nama', text: 'Nama Kota / Kabupaten' },
-        { id: 5, col: 'odp_proses_total', text: 'Total ODP Proses' },
-        { id: 6, col: 'odp_selesai_total', text: 'Total ODP Selesai' }
+        { id: 5, col: 'odp_total_total', text: 'Total ODP' },
+        { id: 6, col: 'pdp_total_total', text: 'Total PDP' }
       ]
-      this.optionSelected = 'odp_proses_total'
-      this.onClickTableHeader('odp_proses_total')
-    },
-    enablePDP () {
-      this.statCategory = 'PDP'
-      this.optionList = [
-        // { id: 1, col: 'no', text: 'No' },
-        { id: 2, col: 'nama', text: 'Nama Kota / Kabupaten' },
-        { id: 5, col: 'pdp_proses_total', text: 'Total PDP Proses' },
-        { id: 6, col: 'pdp_selesai_total', text: 'Total PDP Selesai' }
-      ]
-      this.optionSelected = 'pdp_proses_total'
-      this.onClickTableHeader('pdp_proses_total')
+      this.optionSelected = 'odp_total_total'
+      this.onClickTableHeader('odp_total_total')
     }
+    // enablePDP () {
+    //   this.statCategory = 'PDP'
+    //   this.optionList = [
+    //     // { id: 1, col: 'no', text: 'No' },
+    //     { id: 2, col: 'nama', text: 'Nama Kota / Kabupaten' },
+    //     { id: 5, col: 'pdp_proses_total', text: 'Proses PDP' },
+    //     { id: 6, col: 'pdp_selesai_total', text: 'Selesai PDP' }
+    //   ]
+    //   this.optionSelected = 'pdp_total_total'
+    //   this.onClickTableHeader('pdp_total_total')
+    // }
   }
 }
 
