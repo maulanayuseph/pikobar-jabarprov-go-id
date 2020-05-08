@@ -604,11 +604,11 @@ export default {
       this.jsonDataKota.sort(this.compareValues('positif_aktif_total', 'desc'))
 
       // datatable
-      this.dataV2.columns[1].label = this.formatDate(this.temporary[rangeH1Sampai].tanggal)
-      this.dataV2.columns[4].label = this.formatDate(this.temporary[rangeH1Sampai].tanggal)
-      this.dataV2.columns[7].label = this.formatDate(this.temporary[rangeH1Sampai].tanggal)
-      this.dataV2.columns[10].label = this.formatDate(this.temporary[rangeH1Sampai].tanggal)
-      this.dataV2.columns[13].label = this.formatDate(this.temporary[rangeH1Sampai].tanggal)
+      this.dataV2.columns[1].label = this.formatDate(this.temporary[rangeTotalSampai].tanggal)
+      this.dataV2.columns[4].label = this.formatDate(this.temporary[rangeTotalSampai].tanggal)
+      this.dataV2.columns[7].label = this.formatDate(this.temporary[rangeTotalSampai].tanggal)
+      this.dataV2.columns[10].label = this.formatDate(this.temporary[rangeTotalSampai].tanggal)
+      this.dataV2.columns[13].label = this.formatDate(this.temporary[rangeTotalSampai].tanggal)
       // this.dataV2.columns[16].label = this.formatDate(this.temporary[rangeH1Dari].tanggal)
       // this.dataV2.columns[19].label = this.formatDate(this.temporary[rangeH1Dari].tanggal)
       this.dataV2.rows = this.jsonDataKota
