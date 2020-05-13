@@ -5,7 +5,7 @@
     <div class="container-map">
       <div
         id="map-wrap-cluster"
-        style="height: 450px; z-index:0; position: relative;"
+        style="height: 500px; z-index:0; position: relative;"
       />
       <div class="filter-layer">
         <div class="text-right">
@@ -216,7 +216,7 @@ export default {
   data () {
     return {
       map: '',
-      zoom: 8,
+      zoom: 9,
       isHidden: false,
       layerGroup: '',
 
@@ -351,7 +351,7 @@ export default {
       // eslint-disable-next-line new-cap
       this.map = new this.$L.map('map-wrap-cluster', {
         zoomControl: false
-      }).setView([-6.932694, 107.627449], 8)
+      }).setView([-6.932694, 107.627449], 9)
 
       this.$L.tileLayer(
         'https://cartodb-basemaps-d.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png',
@@ -713,7 +713,7 @@ export default {
     },
 
     backToHome () {
-      this.map.flyTo([-6.932694, 107.627449], 8)
+      this.map.flyTo([-6.932694, 107.627449], 9)
     },
 
     titleize (sentence) {
