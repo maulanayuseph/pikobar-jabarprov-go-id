@@ -80,10 +80,10 @@ import { faDownload } from '@fortawesome/free-solid-svg-icons'
 import { formatDateTimeShort } from '~/lib/date'
 import { analytics } from '~/lib/firebase'
 import { DataTable, ItemsPerPageDropdown, Pagination  } from 'v-datatable-light'
-import { orderBy } from "lodash.orderby";
+import _ from 'lodash'
 import XLSX from 'xlsx'
 
-const addZero = value => ("0" + value).slice(-2);
+const addZero = value => ("0" + value).slice(-2)
 const formatDate = value => {
   if (value) {
     const d = new Date(value)
@@ -94,8 +94,14 @@ const formatDate = value => {
       }
     return d.toLocaleString('id-ID', options)
   }
-  return "";
-};
+  return ""
+}
+const formatThousand = value => {
+  if (value) {
+    return value.toLocaleString('id-ID')
+  }
+  return "0"
+}
 
 export default {
   components: {
@@ -113,59 +119,69 @@ export default {
           name: "tanggal",
           label: "Tanggal",
           sortable: true,
-          format: formatDate,
-          // width: '80'
+          format: formatDate
         },
         {
           name: "nama_kab",
           label: "Nama Kabupaten/Kota",
-          sortable: true,
-          // width: '200'
+          sortable: true
         },
         {
           name: "odp",
           label: "Jumlah Pemantauan (ODP)",
-          sortable: true
+          sortable: true,
+          format: formatThousand,
+          css: {
+            'align': 'right'
+          }
         },
         {
           name: "odp_selesai",
           label: "Selesai Pemantauan",
-          sortable: true
+          sortable: true,
+          format: formatThousand
         },
         {
           name: "odp_proses",
           label: "Proses Pemantauan",
-          sortable: true
+          sortable: true,
+          format: formatThousand
         },
         {
           name: "pdp",
           label: "Jumlah Pengawasan (PDP)",
-          sortable: true
+          sortable: true,
+          format: formatThousand
         },
         {
           name: "pdp_selesai",
           label: "Selesai Pengawasan",
-          sortable: true
+          sortable: true,
+          format: formatThousand
         },
         {
           name: "pdp_proses",
           label: "Proses Pengawasan",
-          sortable: true
+          sortable: true,
+          format: formatThousand
         },
         {
           name: "positif",
           label: "Positif",
-          sortable: true
+          sortable: true,
+          format: formatThousand
         },
         {
           name: "sembuh",
           label: "Sembuh",
-          sortable: true
+          sortable: true,
+          format: formatThousand
         },
         {
           name: "meninggal",
           label: "Meninggal",
-          sortable: true
+          sortable: true,
+          format: formatThousand
         },
       ],
       data: [],
@@ -192,7 +208,7 @@ export default {
       },
       sort: "asc",
       sortField: "tanggal",
-      listItemsPerPage: [5, 10, 20, 50, 100],
+      listItemsPerPage: [10, 20, 50, 100],
       itemsPerPage: 50,
       currentPage: 1,
       totalItems: 0,
@@ -222,40 +238,40 @@ export default {
     dtEditClick: props => alert("Click props:" + JSON.stringify(props)),
 
     dtUpdateSort: function({ sortField, sort }) {
-      const sortedData = orderBy(this.jsonDataRekapitulasiJabarKumulatifKab, [sortField], [sort]);
-      const start = (this.currentPage - 1) * this.itemsPerPage;
-      const end = this.currentPage * this.itemsPerPage;
-      this.data = sortedData.slice(start, end);
+      const sortedData = _.orderBy(this.jsonDataRekapitulasiJabarKumulatifKab, [sortField], [sort])
+      const start = (this.currentPage - 1) * this.itemsPerPage
+      const end = this.currentPage * this.itemsPerPage
+      this.data = sortedData.slice(start, end)
     },
 
     updateItemsPerPage: function(itemsPerPage) {
-      this.itemsPerPage = parseInt(itemsPerPage);
+      this.itemsPerPage = parseInt(itemsPerPage)
       if (itemsPerPage >= this.jsonDataRekapitulasiJabarKumulatifKab.length) {
-        this.data = this.jsonDataRekapitulasiJabarKumulatifKab;
+        this.data = this.jsonDataRekapitulasiJabarKumulatifKab
       } else {
-        this.data = this.jsonDataRekapitulasiJabarKumulatifKab.slice(0, itemsPerPage);
+        this.data = this.jsonDataRekapitulasiJabarKumulatifKab.slice(0, itemsPerPage)
       }
     },
 
     changePage: function(currentPage) {
-      this.currentPage = currentPage;
-      const start = (currentPage - 1) * this.itemsPerPage;
-      const end = currentPage * this.itemsPerPage;
-      this.data = this.jsonDataRekapitulasiJabarKumulatifKab.slice(start, end);
+      this.currentPage = currentPage
+      const start = (currentPage - 1) * this.itemsPerPage
+      const end = currentPage * this.itemsPerPage
+      this.data = this.jsonDataRekapitulasiJabarKumulatifKab.slice(start, end)
     },
 
     updateCurrentPage: function(currentPage) {
-      this.currentPage = currentPage;
+      this.currentPage = currentPage
     },
 
     changeHometown: function(event, id) {
       this.data = this.data.map(item =>
         item.id === id ? { ...item, hometown: event.target.value } : item
-      );
+      )
     },
 
     actionFirstClick: params => {
-      alert(JSON.stringify(params));
+      alert(JSON.stringify(params))
     },
 
     formatDate (date) {
@@ -269,7 +285,7 @@ export default {
     },
     downloadCSV () {
       const col = ['tanggal','kode_prov','nama_prov','kode_kab','nama_kab','odp','odp_proses','odp_selesai','pdp','pdp_proses','pdp_selesai','positif','sembuh','meninggal']
-      let csvString = '';
+      let csvString = ''
       col.forEach((row) => {
         csvString += row + ','
       })
@@ -278,14 +294,14 @@ export default {
         Object.keys(obj).forEach((key) => {
           csvString += obj[key] + ','
         })
-        csvString += '\n';
+        csvString += '\n'
       })
 
-      let anchor = document.createElement('a');
-      anchor.href = 'data:text/csv;charset=utf-8,' + encodeURI(csvString);
-      anchor.target = '_blank';
-      anchor.download = 'Data COVID-19 Jawa Barat.csv';
-      anchor.click();
+      let anchor = document.createElement('a')
+      anchor.href = 'data:text/csv;charset=utf-8,' + encodeURI(csvString)
+      anchor.target = '_blank'
+      anchor.download = 'Data COVID-19 Jawa Barat.csv'
+      anchor.click()
     },
     downloadExcel () {
       var kumulatif = XLSX.utils.json_to_sheet(this.jsonDataRekapitulasiJabarKumulatifKab)
@@ -492,9 +508,7 @@ export default {
     height: 500px;
     overflow-y: scroll;
   }
-.table {
-  table-layout: auto;
-}
+
 /* thead tr:nth-child(1) th { position: sticky; top: 0; background-color: white;}
 tbody td:nth-child(1) { position: sticky; left: 0; background-color: white; }
 head th:nth-child(1) { position: sticky; left: 0; top:0; background-color: white; } */
@@ -506,12 +520,24 @@ thead th {
   background-color: white;
 }
 
+tbody td {
+  text-align: right;
+}
+
 tbody td:first-child {
   position: -webkit-sticky;
   position: sticky;
   left: 0;
   background-color: white;
-  width: 100px;
+  text-align: left;
+}
+
+tbody td:nth-child(2) {
+  position: -webkit-sticky;
+  position: sticky;
+  left: 80px;
+  background-color: white;
+  text-align: left;
 }
 
 /* To have the header in the first column stick to the left: */
@@ -519,6 +545,34 @@ thead th:first-child {
   left: 0;
   z-index: 1;
   background-color: white;
+}
+thead th:nth-child(2){
+  left: 80px;
+  z-index: 1;
+  background-color: white;
+}
+
+.column-0 {
+  width: 100px !important;
+}
+
+.column-1 {
+  width: 200px !important;
+}
+
+.header-column-0 {
+  width: 100px !important;
+}
+
+.header-column-1 {
+  width: 200px !important;
+}
+
+.header-column-2 {
+  width: 140px !important;
+}
+.header-column-5 {
+  width: 140px !important;
 }
 
 /* Datatable CSS */
