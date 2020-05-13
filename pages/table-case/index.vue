@@ -33,7 +33,7 @@
     <section class="m-4 mb-8 md:m-8">
       <div class="table-wrapper-scroll-y table-wrapper-scroll-x my-custom-scrollbar">
         <data-table
-          v-if="jsonDataRekapitulasiJabarHarianKab"
+          v-if="jsonDataRekapitulasiJabarKumulatifKab"
           :header-fields="headerFields"
           :sort-field="sortField"
           :sort="sort"
@@ -107,7 +107,7 @@ export default {
     return {
       faDownload,
       isLoading: true,
-      jsonDataRekapitulasiJabarHarianKab: [],
+      jsonDataRekapitulasiJabarKumulatifKab: [],
       headerFields: [
         {
           name: "tanggal",
@@ -201,18 +201,18 @@ export default {
     }
   },
   created () {
-    this.fetchDataRekapitulasiJabarHarianKab()
+    this.fetchDataRekapitulasiJabarKumulatifKab()
   },
   methods: {
     formatDateTimeShort,
-    fetchDataRekapitulasiJabarHarianKab () {
+    fetchDataRekapitulasiJabarKumulatifKab () {
       const self = this
       axios
-        .get('https://covid19-public.digitalservice.id/api/v1/rekapitulasi/jabar/harian?level=kab')
+        .get('https://covid19-public.digitalservice.id/api/v1/rekapitulasi/jabar/kumulatif?level=kab')
         .then(function (response) {
-          self.jsonDataRekapitulasiJabarHarianKab = response.data.data.content
-          self.data = self.jsonDataRekapitulasiJabarHarianKab.slice(0, self.itemsPerPage)
-          self.totalItems = self.jsonDataRekapitulasiJabarHarianKab.length
+          self.jsonDataRekapitulasiJabarKumulatifKab = response.data.data.content
+          self.data = self.jsonDataRekapitulasiJabarKumulatifKab.slice(0, self.itemsPerPage)
+          self.totalItems = self.jsonDataRekapitulasiJabarKumulatifKab.length
           self.isLoading = false
         })
         .catch(function (error) {
@@ -222,7 +222,7 @@ export default {
     dtEditClick: props => alert("Click props:" + JSON.stringify(props)),
 
     dtUpdateSort: function({ sortField, sort }) {
-      const sortedData = orderBy(this.jsonDataRekapitulasiJabarHarianKab, [sortField], [sort]);
+      const sortedData = orderBy(this.jsonDataRekapitulasiJabarKumulatifKab, [sortField], [sort]);
       const start = (this.currentPage - 1) * this.itemsPerPage;
       const end = this.currentPage * this.itemsPerPage;
       this.data = sortedData.slice(start, end);
@@ -230,10 +230,10 @@ export default {
 
     updateItemsPerPage: function(itemsPerPage) {
       this.itemsPerPage = parseInt(itemsPerPage);
-      if (itemsPerPage >= this.jsonDataRekapitulasiJabarHarianKab.length) {
-        this.data = this.jsonDataRekapitulasiJabarHarianKab;
+      if (itemsPerPage >= this.jsonDataRekapitulasiJabarKumulatifKab.length) {
+        this.data = this.jsonDataRekapitulasiJabarKumulatifKab;
       } else {
-        this.data = this.jsonDataRekapitulasiJabarHarianKab.slice(0, itemsPerPage);
+        this.data = this.jsonDataRekapitulasiJabarKumulatifKab.slice(0, itemsPerPage);
       }
     },
 
@@ -241,7 +241,7 @@ export default {
       this.currentPage = currentPage;
       const start = (currentPage - 1) * this.itemsPerPage;
       const end = currentPage * this.itemsPerPage;
-      this.data = this.jsonDataRekapitulasiJabarHarianKab.slice(start, end);
+      this.data = this.jsonDataRekapitulasiJabarKumulatifKab.slice(start, end);
     },
 
     updateCurrentPage: function(currentPage) {
@@ -274,7 +274,7 @@ export default {
         csvString += row + ','
       })
       csvString += '\n'
-      this.jsonDataRekapitulasiJabarHarianKab.forEach((obj) => {
+      this.jsonDataRekapitulasiJabarKumulatifKab.forEach((obj) => {
         Object.keys(obj).forEach((key) => {
           csvString += obj[key] + ','
         })
@@ -288,9 +288,9 @@ export default {
       anchor.click();
     },
     downloadExcel () {
-      var harian = XLSX.utils.json_to_sheet(this.jsonDataRekapitulasiJabarHarianKab)
+      var kumulatif = XLSX.utils.json_to_sheet(this.jsonDataRekapitulasiJabarKumulatifKab)
       var wb = XLSX.utils.book_new()
-      XLSX.utils.book_append_sheet(wb, harian, 'Data Harian')
+      XLSX.utils.book_append_sheet(wb, kumulatif, 'Data Kumulatif')
       XLSX.writeFile(wb, 'Data COVID-19 Jawa Barat.xlsx')
     }
   }
