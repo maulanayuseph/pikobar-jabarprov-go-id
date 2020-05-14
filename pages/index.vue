@@ -233,7 +233,7 @@
                 Physical Distancing! Minimalisir kontak fisik dengan sesama
               </li>
               <li class="li-check-mark">
-                Jaga jarak 1-3 meter dengan orang yang sakit
+                Jaga jarak 1-3 meter dengan sesama
               </li>
               <li class="li-check-mark">
                 Tetap tinggal di rumah, hindari bepergian ke tempat umum bila tidak perlu
