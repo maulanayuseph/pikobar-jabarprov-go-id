@@ -241,17 +241,6 @@
               <li class="li-check-mark">
                 Selalu gunakan masker jika harus keluar rumah dan berinteraksi langsung dengan orang lain
               </li>
-              <li class="li-check-mark">
-                Jika sakit, maka:
-                <ol style="list-style-type: decimal; list-style-position: inside;">
-                  <li class="ml-0">
-                    Tinggal di rumah
-                  </li>
-                  <li class="ml-0">
-                    Gunakan masker
-                  </li>
-                </ol>
-              </li>
             </ul>
           </article>
           <nuxt-link
