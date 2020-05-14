@@ -2,7 +2,7 @@
   <div class="container-map">
     <div class="bg-white col-md-12 shadow-md">
       <div
-        style="height: 450px;  position: relative;"
+        style="height: 500px;  position: relative;"
       >
         <div id="map-wrap" />
         <div class="control-bottom-left">
@@ -235,7 +235,7 @@ export default {
       faPause,
       faStop,
       // map: '',
-      zoom: 8,
+      zoom: 9,
       isHidden: false,
       activeLayer: 'ODP',
       styleBatasWilayah: {
@@ -299,7 +299,7 @@ export default {
       this.isShowFilter = !this.isShowFilter
     },
     backToHome () {
-      mapView.flyTo([-6.932694, 107.627449], 8)
+      mapView.flyTo([-6.932694, 107.627449], 9)
     },
     fetchData () {
       const self = this
@@ -319,7 +319,7 @@ export default {
     createBasemap () {
       mapView = new L.Map('map-wrap', {
         zoomControl: false
-      }).setView([-6.932694, 107.627449], 8)
+      }).setView([-6.932694, 107.627449], 9)
 
       tileLayer = new L.TileLayer('https://cartodb-basemaps-d.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {
         attribution: '© OpenStreetMap contributors',

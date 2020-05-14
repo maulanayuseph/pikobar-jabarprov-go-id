@@ -5,7 +5,7 @@
     <div class="container-map">
       <div
         id="map-wrap-polygon"
-        style="height: 450px; z-index:0; position: relative;"
+        style="height: 500px; z-index:0; position: relative;"
       />
       <div class="filter-layer">
         <div class="text-right">
@@ -140,7 +140,7 @@ export default {
   data () {
     return {
       map: '',
-      zoom: 8,
+      zoom: 9,
 
       faFilter,
       faHome,
@@ -191,6 +191,18 @@ export default {
         odp_meninggal: false
       },
       filterActive: 'positif_proses',
+
+      rangeColor: {
+        positif_proses: ['#DB4A81', '#DA1861', '#980043', '#CE0C55', '#B70142'],
+        positif_meninggal: ['#FC8D59', '#EE6547', '#D7301F', '#B30000', '#7F0000'],
+        positif_sembuh: ['#66C2A4', '#42AE76', '#238B44', '#006C2C', '#00441B'],
+        pdp_proses: ['#FEEA9F', '#FFE277', '#FFD648', '#FAC203', '#F3BD04'],
+        pdp_selesai: ['#FCDB83', '#FFD157', '#FEB72B', '#FBAD02', '#F0A500'],
+        pdp_meninggal: ['#ECCE6D', '#FBCE56', '#F5C440', '#F0B20F', '#C99307'],
+        odp_proses: ['#88B8FE', '#73A5EF', '#5990E2', '#4079CF', '#2964BC'],
+        odp_selesai: ['#68C9E9', '#4FB3D3', '#2C8CBE', '#0667AC', '#023857'],
+        odp_meninggal: ['#6AAED6', '#4292C6', '#2270B5', '#07519C', '#06285A']
+      },
 
       range: [],
       infolegend: ''
@@ -263,7 +275,7 @@ export default {
     initMap () {
       this.map = this.$L.map('map-wrap-polygon', {
         zoomControl: false
-      }).setView([-6.932694, 107.627449], 8)
+      }).setView([-6.932694, 107.627449], 9)
 
       this.$L.tileLayer(
         'https://cartodb-basemaps-d.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png',
@@ -288,12 +300,26 @@ export default {
       const searchControl = new GeoSearchControl({
         provider: searchProvider,
         position: 'topleft',
-        showMarker: false,
-        autoClose: true
+        showMarker: true,
+        autoClose: true,
+        marker: {
+          icon: new this.$L.Icon.Default(),
+          draggable: false
+        },
+        maxMarkers: 1
       }).addTo(this.map)
 
       this.map.on('geosearch/showlocation', (e) => {
+        this.removeMarker()
         this.zoom = this.map.getZoom()
+
+        const layerList = this.$L.marker([e.location.y, e.location.x], {
+          icon: new this.$L.Icon.Default()
+        })
+        layerList.bindPopup(e.location.label)
+        layerList.addTo(this.map)
+        layerList.openPopup()
+        this.dataMarker.push(layerList)
       })
 
       // create layer group
@@ -340,11 +366,13 @@ export default {
         onEachFeature: (feature, layer, element) => {
           // create style color gradien
           const styleBatasWilayah = {
-            fillColor: '#' + self.styleColorPolygon[category],
-            fillOpacity: self.getColor(this.range, feature.properties.jumlah_kasus),
-            weight: 0.5,
-            opacity: 0.5,
-            color: '#333333'
+            // fillColor: '#' + self.styleColorPolygon[category],
+            // fillOpacity: self.getColor(this.range, feature.properties.jumlah_kasus),
+            fillOpacity: self.getTransparant(this.range, feature.properties.jumlah_kasus),
+            fillColor: self.getColor(this.range, feature.properties.jumlah_kasus, category),
+            weight: 0.7,
+            opacity: 0.7,
+            color: '#000000'
           }
           // add layer to map
           layer.setStyle(styleBatasWilayah)
@@ -369,11 +397,13 @@ export default {
         onEachFeature: (feature, layer, element) => {
           // create style color gradien
           const styleBatasWilayah = {
-            fillColor: '#' + self.styleColorPolygon[category],
-            fillOpacity: self.getColor(this.range, feature.properties.jumlah_kasus),
-            weight: 0.5,
-            opacity: 0.5,
-            color: '#333333'
+            // fillColor: '#' + self.styleColorPolygon[category],
+            // fillOpacity: self.getColor(this.range, feature.properties.jumlah_kasus),
+            fillOpacity: self.getTransparant(this.range, feature.properties.jumlah_kasus),
+            fillColor: self.getColor(this.range, feature.properties.jumlah_kasus, category),
+            weight: 0.7,
+            opacity: 0.7,
+            color: '#000000'
           }
           // add layer to map
           layer.setStyle(styleBatasWilayah)
@@ -399,11 +429,13 @@ export default {
         onEachFeature: (feature, layer, element) => {
           // create style color gradien
           const styleBatasWilayah = {
-            fillColor: '#' + self.styleColorPolygon[category],
-            fillOpacity: self.getColor(this.range, feature.properties.jumlah_kasus),
-            weight: 0.5,
-            opacity: 0.5,
-            color: '#333333'
+            // fillColor: '#' + self.styleColorPolygon[category],
+            // fillOpacity: self.getColor(this.range, feature.properties.jumlah_kasus),
+            fillOpacity: self.getTransparant(this.range, feature.properties.jumlah_kasus),
+            fillColor: self.getColor(this.range, feature.properties.jumlah_kasus, category),
+            weight: 0.7,
+            opacity: 0.7,
+            color: '#000000'
           }
           // add layer to map
           layer.setStyle(styleBatasWilayah)
@@ -477,18 +509,16 @@ export default {
         }
         range.push({
           from: numFrom + ((i - 1) * div),
-          to: numFrom + (i * div),
-          // color: this.shadeColor(hex, ((i * -20) + 60)),
-          transparant: 0.1 + (i * (1 / 5))
+          to: numFrom + (i * div)
         })
       }
 
       // create legend
       const labels = ['<b>Jumlah Kasus: </b>', '<br>', '<ul style="display: flex; margin-top: 10px;">']
-      range.forEach((element) => {
+      range.forEach((element, index) => {
         labels.push(
-          '<li style="margin-right: 20px;"><i style="background:#' + self.styleColorPolygon[self.filterActive] + '; ' +
-          'opacity: ' + element.transparant + ';"></i>' +
+          '<li style="margin-right: 20px;"><i style="background:' + self.rangeColor[self.filterActive][index] + '; ' +
+          'opacity: 1;"></i>' +
           element.from + ' - ' + element.to + '</li>'
         )
       })
@@ -497,23 +527,25 @@ export default {
       return [range, geojson]
     },
 
-    shadeColor (color, percent) {
-      return '#' + color
-        .replace(/^#/, '')
-        .replace(
-          /../g, color => (
-            '0' + Math.min(255, Math.max(0, parseInt(color, 16) + percent)).toString(16)
-          ).substr(-2)
-        )
-    },
-
-    getColor (range, angka) {
-      let color = ''
+    getTransparant (range, angka) {
+      let transparant = ''
       range.forEach((element) => {
         if (angka === 0) {
-          color = '0'
+          transparant = '0'
+        } else {
+          transparant = '1'
+        }
+      })
+      return transparant
+    },
+
+    getColor (range, angka, category) {
+      let color = ''
+      range.forEach((element, index) => {
+        if (angka === 0) {
+          color = '#000000'
         } else if (angka >= element.from && angka < element.to) {
-          color = element.transparant
+          color = this.rangeColor[category][index]
         }
       })
       return color
@@ -544,7 +576,7 @@ export default {
     },
 
     backToHome () {
-      this.map.flyTo([-6.932694, 107.627449], 8)
+      this.map.flyTo([-6.932694, 107.627449], 9)
     },
 
     titleize (sentence) {
