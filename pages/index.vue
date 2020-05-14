@@ -230,7 +230,7 @@
                 Bersihkan permukaan benda yang disentuh banyak orang
               </li>
               <li class="li-check-mark">
-                Social Distancing! Minimalisir kontak fisik dengan sesama
+                Physical Distancing! Minimalisir kontak fisik dengan sesama
               </li>
               <li class="li-check-mark">
                 Jaga jarak 1-3 meter dengan orang yang sakit
@@ -262,7 +262,7 @@
     </section>
     <section class="mt-2 m-4 md:mt-4 md:m-8 rounded-lg bg-white shadow-md p-5 md:p-8">
       <h2 class="mb-4 md:mb-8 text-left text-xl md:text-2xl">
-        <b>Kenapa harus Social Distancing (Jaga Jarak Sesama)?</b>
+        <b>Kenapa harus Physical Distancing (Jaga Jarak Sesama)?</b>
       </h2>
       <article class="flex flex-col lg:flex-row">
         <img
@@ -277,7 +277,7 @@
             jumlah orang terinfeksi akan meledak dan fasilitas layanan kesehatan akan kewalahan sehingga banyak kasus akan tidak tertangani.
           </p>
           <p class="font-bold text-lg">
-            Social distancing akan mengurangi laju penularan dan memungkinkan pasien terinfeksi untuk ditangani hingga sembuh, seperti di grafik terlampir.
+            Physical distancing akan mengurangi laju penularan dan memungkinkan pasien terinfeksi untuk ditangani hingga sembuh, seperti di grafik terlampir.
           </p>
         </div>
       </article>
