@@ -116,7 +116,7 @@
     </section>
 
     <section class="m-4 md:m-8 flex">
-      <a class="link-hover bg-white rounded-lg overflow-hidden shadow-md w-1/2 mr-2" href="/table-case">
+      <a class="link-hover bg-white rounded-lg overflow-hidden shadow-md w-1/2 mr-2" href="/table-case" target="_blank">
         <div class="flex" style="padding: 40px;">
           <div class="w-5/6 text-xl">
             <b>Akses Data Kasus COVID-19 - <br>di sini</b>
@@ -143,6 +143,7 @@
 <style>
 .link-hover:hover {
   box-shadow: 0 0 20px #6DD174;
+  color: #6DD174;
 }
 </style>
 <script>
