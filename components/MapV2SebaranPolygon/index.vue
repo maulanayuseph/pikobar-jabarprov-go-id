@@ -310,7 +310,16 @@ export default {
       }).addTo(this.map)
 
       this.map.on('geosearch/showlocation', (e) => {
+        this.removeMarker()
         this.zoom = this.map.getZoom()
+
+        const layerList = this.$L.marker([e.location.y, e.location.x], {
+          icon: new this.$L.Icon.Default()
+        })
+        layerList.bindPopup(e.location.label)
+        layerList.addTo(this.map)
+        layerList.openPopup()
+        this.dataMarker.push(layerList)
       })
 
       // create layer group
