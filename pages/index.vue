@@ -236,6 +236,12 @@
                 Jaga jarak 1-3 meter dengan orang yang sakit
               </li>
               <li class="li-check-mark">
+                Tetap tinggal di rumah, hindari bepergian ke tempat umum bila tidak perlu
+              </li>
+              <li class="li-check-mark">
+                Selalu gunakan masker jika harus keluar rumah dan berinteraksi langsung dengan orang lain
+              </li>
+              <li class="li-check-mark">
                 Jika sakit, maka:
                 <ol style="list-style-type: decimal; list-style-position: inside;">
                   <li class="ml-0">
