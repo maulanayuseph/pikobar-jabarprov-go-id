@@ -38,11 +38,6 @@ export default {
           url: 'https://netlify.com'
         },
         {
-          logo: '/img/logo-humas-jabar.png',
-          alt: 'Humas Jabar',
-          url: 'http://humas.jabarprov.go.id/'
-        },
-        {
           logo: '/img/logo-prixa.png',
           alt: 'Prixa',
           url: 'https://www.prixa.ai/?lang=en'
@@ -96,6 +91,26 @@ export default {
           logo: '/img/logo-ivosights.jpeg',
           alt: 'Ivosights',
           url: 'https://www.ivosights.com/'
+        },
+        {
+          logo: 'https://firebasestorage.googleapis.com/v0/b/jabarprov-covid19.appspot.com/o/public%2Fkitabisa-logo.png?alt=media&token=944f9481-8a40-4bdc-9206-1b7c386d3110',
+          alt: 'Kitabisa',
+          url: 'https://www.kitabisa.com/'
+        },
+        {
+          logo: 'https://firebasestorage.googleapis.com/v0/b/jabarprov-covid19.appspot.com/o/public%2Findorelawan_logo%20polos_png.png?alt=media&token=410794f8-a71a-4026-9ba0-5176fc828e1b',
+          alt: 'Indorelawan',
+          url: 'https://www.indorelawan.org/'
+        },
+        {
+          logo: 'https://firebasestorage.googleapis.com/v0/b/jabarprov-covid19.appspot.com/o/public%2FAmazon_Web_Services_Logo.png?alt=media&token=f03f455b-e5a1-4c26-98fb-993dd3151698',
+          alt: 'AWS',
+          url: 'https://aws.amazon.com/id/'
+        },
+        {
+          logo: 'https://firebasestorage.googleapis.com/v0/b/jabarprov-covid19.appspot.com/o/public%2FIPSPI.jpg?alt=media&token=b6c0f025-8586-42f8-b2ca-5cdf6646b394',
+          alt: 'IPSPI',
+          url: 'http://ipspi-indonesia.com/dpd/wilayah/32'
         }
       ]
     }

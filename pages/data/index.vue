@@ -115,18 +115,43 @@
       />
     </section>
 
-    <section class="m-4 md:m-8 text-center">
-      <b>Dapatkan akses API Publik - Data Pikobar di sini <a class="text-base bg-green-100 py-3 px-3 rounded text-white align-middle" href="https://covid19-public.digitalservice.id/api/v1/">Akses API</a></b>
+    <section class="m-4 md:m-8 flex">
+      <a class="link-hover bg-white rounded-lg overflow-hidden shadow-md w-1/2 mr-2" href="/table-case" target="_blank">
+        <div class="flex" style="padding: 40px;">
+          <div class="w-5/6 text-xl">
+            <b>Akses Data Kasus COVID-19 - <br>di sini</b>
+          </div>
+          <div class="w-1/6">
+            <FontAwesomeIcon :icon="faArrowRight" size="2x" style="margin-top: 10px;" />
+          </div>
+        </div>
+      </a>
+      <a class="link-hover bg-white rounded-lg overflow-hidden shadow-md w-1/2 ml-2" href="https://covid19-public.digitalservice.id/api/v1/">
+        <div class="flex" style="padding: 40px;">
+          <div class="w-5/6 text-xl">
+            <b>Dapatkan akses API Publik - <br>Data Pikobar di sini</b>
+          </div>
+          <div class="w-1/6">
+            <FontAwesomeIcon :icon="faArrowRight" size="2x" style="margin-top: 10px;" />
+          </div>
+        </div>
+      </a>
     </section>
   </div>
 </template>
 
+<style>
+.link-hover:hover {
+  box-shadow: 0 0 20px #6DD174;
+  color: #6DD174;
+}
+</style>
 <script>
 /* eslint-disable */
 import axios from 'axios'
 import { mapState } from 'vuex'
 import DataSummary from '~/components/_pages/index/DataSummary'
-import { faFirstAid, faBug, faMap, faCalendarMinus } from '@fortawesome/free-solid-svg-icons'
+import { faFirstAid, faBug, faMap, faCalendarMinus, faArrowRight } from '@fortawesome/free-solid-svg-icons'
 import { formatDateTimeShort } from '~/lib/date'
 import { analytics } from '~/lib/firebase'
 
@@ -163,6 +188,7 @@ export default {
       faBug,
       faMap,
       faCalendarMinus,
+      faArrowRight,
       jsonDataRekapitulasiJabarProv: {},
       jsonDataRekapitulasiJabarKab: [],
       jsonDataRekapitulasiJabarHarianProv: [],
