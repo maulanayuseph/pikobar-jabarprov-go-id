@@ -128,58 +128,109 @@ export default {
         },
         {
           name: "odp",
-          label: "Jumlah Pemantauan (ODP)",
+          label: "Kumulatif -- Jumlah Pemantauan (ODP)",
           sortable: true,
-          format: formatThousand,
-          css: {
-            'align': 'right'
-          }
+          format: formatThousand
         },
         {
           name: "odp_selesai",
-          label: "Selesai Pemantauan",
+          label: "Kumulatif -- Selesai Pemantauan",
           sortable: true,
           format: formatThousand
         },
         {
           name: "odp_proses",
-          label: "Proses Pemantauan",
+          label: "Kumulatif -- Proses Pemantauan",
           sortable: true,
           format: formatThousand
         },
         {
           name: "pdp",
-          label: "Jumlah Pengawasan (PDP)",
+          label: "Kumulatif -- Jumlah Pengawasan (PDP)",
           sortable: true,
           format: formatThousand
         },
         {
           name: "pdp_selesai",
-          label: "Selesai Pengawasan",
+          label: "Kumulatif -- Selesai Pengawasan",
           sortable: true,
           format: formatThousand
         },
         {
           name: "pdp_proses",
-          label: "Proses Pengawasan",
+          label: "Kumulatif -- Proses Pengawasan",
           sortable: true,
           format: formatThousand
         },
         {
           name: "positif",
-          label: "Positif",
+          label: "Kumulatif -- Positif",
           sortable: true,
           format: formatThousand
         },
         {
           name: "sembuh",
-          label: "Sembuh",
+          label: "Kumulatif -- Sembuh",
           sortable: true,
           format: formatThousand
         },
         {
           name: "meninggal",
-          label: "Meninggal",
+          label: "Kumulatif -- Meninggal",
+          sortable: true,
+          format: formatThousand
+        },
+        {
+          name: "pertumbuhan_odp",
+          label: "Pertumbuhan -- Jumlah Pemantauan (ODP)",
+          sortable: true,
+          format: formatThousand
+        },
+        {
+          name: "pertumbuhan_odp_selesai",
+          label: "Pertumbuhan -- Selesai Pemantauan",
+          sortable: true,
+          format: formatThousand
+        },
+        {
+          name: "pertumbuhan_odp_proses",
+          label: "Pertumbuhan -- Proses Pemantauan",
+          sortable: true,
+          format: formatThousand
+        },
+        {
+          name: "pertumbuhan_pdp",
+          label: "Pertumbuhan -- Jumlah Pengawasan (PDP)",
+          sortable: true,
+          format: formatThousand
+        },
+        {
+          name: "pertumbuhan_pdp_selesai",
+          label: "Pertumbuhan -- Selesai Pengawasan",
+          sortable: true,
+          format: formatThousand
+        },
+        {
+          name: "pertumbuhan_pdp_proses",
+          label: "Pertumbuhan -- Proses Pengawasan",
+          sortable: true,
+          format: formatThousand
+        },
+        {
+          name: "pertumbuhan_positif",
+          label: "Pertumbuhan -- Positif",
+          sortable: true,
+          format: formatThousand
+        },
+        {
+          name: "pertumbuhan_sembuh",
+          label: "Pertumbuhan -- Sembuh",
+          sortable: true,
+          format: formatThousand
+        },
+        {
+          name: "pertumbuhan_meninggal",
+          label: "Pertumbuhan -- Meninggal",
           sortable: true,
           format: formatThousand
         },
@@ -226,7 +277,42 @@ export default {
       axios
         .get('https://covid19-public.digitalservice.id/api/v1/rekapitulasi/jabar/kumulatif?level=kab')
         .then(function (response) {
-          self.jsonDataRekapitulasiJabarKumulatifKab = response.data.data.content
+          let temp = response.data.data.content
+          let temp2 = {
+            pertumbuhan_odp: 0,
+            pertumbuhan_odp_selesai: 0,
+            pertumbuhan_odp_proses: 0,
+            pertumbuhan_pdp: 0,
+            pertumbuhan_pdp_selesai: 0,
+            pertumbuhan_pdp_proses: 0,
+            pertumbuhan_positif: 0,
+            pertumbuhan_sembuh: 0,
+            pertumbuhan_meninggal: 0,
+          }
+          for (let i=0; i<temp.length; i++){
+            if (i === 0) {
+              temp2.pertumbuhan_odp = temp[i].odp
+              temp2.pertumbuhan_odp_selesai = temp[i].odp_selesai
+              temp2.pertumbuhan_odp_proses = temp[i].odp_proses
+              temp2.pertumbuhan_pdp = temp[i].pdp
+              temp2.pertumbuhan_pdp_selesai = temp[i].pdp_selesai
+              temp2.pertumbuhan_pdp_proses = temp[i].pdp_proses
+              temp2.pertumbuhan_positif = temp[i].positif
+              temp2.pertumbuhan_sembuh = temp[i].sembuh
+              temp2.pertumbuhan_meninggal = temp[i].meninggal
+            } else {
+              temp2.pertumbuhan_odp = temp[i].odp - temp[i-1].odp
+              temp2.pertumbuhan_odp_selesai = temp[i].odp_selesai - temp[i-1].odp_selesai
+              temp2.pertumbuhan_odp_proses = temp[i].odp_proses - temp[i-1].odp_proses
+              temp2.pertumbuhan_pdp = temp[i].pdp - temp[i-1].pdp
+              temp2.pertumbuhan_pdp_selesai = temp[i].pdp_selesai - temp[i-1].pdp_selesai
+              temp2.pertumbuhan_pdp_proses = temp[i].pdp_proses - temp[i-1].pdp_proses
+              temp2.pertumbuhan_positif = temp[i].positif - temp[i-1].positif
+              temp2.pertumbuhan_sembuh = temp[i].sembuh - temp[i-1].sembuh
+              temp2.pertumbuhan_meninggal = temp[i].meninggal - temp[i-1].meninggal
+            }
+            self.jsonDataRekapitulasiJabarKumulatifKab.push({...temp[i], ...temp2})
+          }
           self.data = self.jsonDataRekapitulasiJabarKumulatifKab.slice(0, self.itemsPerPage)
           self.totalItems = self.jsonDataRekapitulasiJabarKumulatifKab.length
           self.isLoading = false
@@ -560,6 +646,9 @@ thead th:nth-child(2){
   width: 200px !important;
 }
 
+.th-wrapper {
+  width: 120px !important;;
+}
 .header-column-0 {
   width: 100px !important;
 }
@@ -574,6 +663,14 @@ thead th:nth-child(2){
 .header-column-5 {
   width: 140px !important;
 }
+
+.header-column-11 {
+  width: 140px !important;
+}
+.header-column-14 {
+  width: 140px !important;
+}
+
 
 /* Datatable CSS */
 .v-datatable-light .header-item {
