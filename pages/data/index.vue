@@ -83,7 +83,14 @@
     </section>
 
     <section class="m-4 mb-8 md:m-8">
-      <BarStatArea
+      <BarStatTable
+        :props-data-rekapitulasi-jabar-kab.sync="jsonDataRekapitulasiJabarKab"
+        :props-data-rekapitulasi-jabar-kumulatif-kab.sync="jsonDataRekapitulasiJabarKumulatifKab"
+      />
+    </section>
+
+    <section class="m-4 mb-8 md:m-8">
+      <!-- <BarStatArea
         :props-data-rekapitulasi-jabar-prov.sync="jsonDataRekapitulasiJabarProv"
         :props-data-rekapitulasi-jabar-kab.sync="jsonDataRekapitulasiJabarKab"
         :props-data-rekapitulasi-jabar-harian-prov.sync="jsonDataRekapitulasiJabarHarianProv"
@@ -91,13 +98,15 @@
         :props-data-rekapitulasi-jabar-kumulatif-prov.sync="jsonDataRekapitulasiJabarKumulatifProv"
         :props-data-rekapitulasi-jabar-kumulatif-kab.sync="jsonDataRekapitulasiJabarKumulatifKab"
         :props-data-nasional-harian-kumulatif.sync="jsonDataNasionalHarianKumulatif"
-      />
-    </section>
-
-    <section class="m-4 mb-8 md:m-8">
-      <BarStatTable
+      /> -->
+      <BarStatAreaSingle
+        :props-data-rekapitulasi-jabar-prov.sync="jsonDataRekapitulasiJabarProv"
         :props-data-rekapitulasi-jabar-kab.sync="jsonDataRekapitulasiJabarKab"
+        :props-data-rekapitulasi-jabar-harian-prov.sync="jsonDataRekapitulasiJabarHarianProv"
+        :props-data-rekapitulasi-jabar-harian-kab.sync="jsonDataRekapitulasiJabarHarianKab"
+        :props-data-rekapitulasi-jabar-kumulatif-prov.sync="jsonDataRekapitulasiJabarKumulatifProv"
         :props-data-rekapitulasi-jabar-kumulatif-kab.sync="jsonDataRekapitulasiJabarKumulatifKab"
+        :props-data-nasional-harian-kumulatif.sync="jsonDataNasionalHarianKumulatif"
       />
     </section>
 
@@ -165,7 +174,8 @@ export default {
     // MapFaskes: () => import('~/components/MapFaskes'),
     BarStat: () => import('~/components/BarStat'),
     BarStatDetail: () => import('~/components/BarStatDetail'),
-    BarStatArea: () => import('~/components/BarStatArea'),
+    // BarStatArea: () => import('~/components/BarStatArea'),
+    BarStatAreaSingle: () => import('~/components/BarStatAreaSingle'),
     BarStatJenisKelamin: () => import('~/components/BarStatJenisKelamin'),
     BarStatUsia: () => import('~/components/BarStatUsia'),
     BarStatHarianAkumulatif: () => import('~/components/BarStatHarianAkumulatif'),

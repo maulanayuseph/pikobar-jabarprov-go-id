@@ -278,19 +278,19 @@ export default {
         .get('https://covid19-public.digitalservice.id/api/v1/rekapitulasi/jabar/kumulatif?level=kab')
         .then(function (response) {
           let temp = response.data.data.content
-          let temp2 = {
-            pertumbuhan_odp: 0,
-            pertumbuhan_odp_selesai: 0,
-            pertumbuhan_odp_proses: 0,
-            pertumbuhan_pdp: 0,
-            pertumbuhan_pdp_selesai: 0,
-            pertumbuhan_pdp_proses: 0,
-            pertumbuhan_positif: 0,
-            pertumbuhan_sembuh: 0,
-            pertumbuhan_meninggal: 0,
-          }
           for (let i=0; i<temp.length; i++){
-            if (i === 0) {
+            let temp2 = {
+              pertumbuhan_odp: 0,
+              pertumbuhan_odp_selesai: 0,
+              pertumbuhan_odp_proses: 0,
+              pertumbuhan_pdp: 0,
+              pertumbuhan_pdp_selesai: 0,
+              pertumbuhan_pdp_proses: 0,
+              pertumbuhan_positif: 0,
+              pertumbuhan_sembuh: 0,
+              pertumbuhan_meninggal: 0,
+            }
+            if (i < 27) {
               temp2.pertumbuhan_odp = temp[i].odp
               temp2.pertumbuhan_odp_selesai = temp[i].odp_selesai
               temp2.pertumbuhan_odp_proses = temp[i].odp_proses
@@ -301,15 +301,15 @@ export default {
               temp2.pertumbuhan_sembuh = temp[i].sembuh
               temp2.pertumbuhan_meninggal = temp[i].meninggal
             } else {
-              temp2.pertumbuhan_odp = temp[i].odp - temp[i-1].odp
-              temp2.pertumbuhan_odp_selesai = temp[i].odp_selesai - temp[i-1].odp_selesai
-              temp2.pertumbuhan_odp_proses = temp[i].odp_proses - temp[i-1].odp_proses
-              temp2.pertumbuhan_pdp = temp[i].pdp - temp[i-1].pdp
-              temp2.pertumbuhan_pdp_selesai = temp[i].pdp_selesai - temp[i-1].pdp_selesai
-              temp2.pertumbuhan_pdp_proses = temp[i].pdp_proses - temp[i-1].pdp_proses
-              temp2.pertumbuhan_positif = temp[i].positif - temp[i-1].positif
-              temp2.pertumbuhan_sembuh = temp[i].sembuh - temp[i-1].sembuh
-              temp2.pertumbuhan_meninggal = temp[i].meninggal - temp[i-1].meninggal
+              temp2.pertumbuhan_odp = temp[i].odp - temp[i-27].odp
+              temp2.pertumbuhan_odp_selesai = temp[i].odp_selesai - temp[i-27].odp_selesai
+              temp2.pertumbuhan_odp_proses = temp[i].odp_proses - temp[i-27].odp_proses
+              temp2.pertumbuhan_pdp = temp[i].pdp - temp[i-27].pdp
+              temp2.pertumbuhan_pdp_selesai = temp[i].pdp_selesai - temp[i-27].pdp_selesai
+              temp2.pertumbuhan_pdp_proses = temp[i].pdp_proses - temp[i-27].pdp_proses
+              temp2.pertumbuhan_positif = temp[i].positif - temp[i-27].positif
+              temp2.pertumbuhan_sembuh = temp[i].sembuh - temp[i-27].sembuh
+              temp2.pertumbuhan_meninggal = temp[i].meninggal - temp[i-27].meninggal
             }
             self.jsonDataRekapitulasiJabarKumulatifKab.push({...temp[i], ...temp2})
           }
