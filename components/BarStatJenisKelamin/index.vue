@@ -2,13 +2,13 @@
   <div
     class="bg-white overflow-hidden rounded-lg shadow-md"
   >
-    <div class="flex">
-      <h4 class="p-5 text-xl w-1/2">
+    <div class="flex flex-wrap">
+      <h4 class="p-5 text-xl md:w-1/2">
         <b>Jenis Kelamin</b>
       </h4>
       <select
         v-model="optionSelected"
-        class="select-option-selector w-1/2"
+        class="select-option-selector md:w-1/2"
         @change="changeGroupJenisKelamin($event.target.value)"
       >
         <option

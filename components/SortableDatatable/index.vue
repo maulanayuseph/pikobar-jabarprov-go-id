@@ -2,9 +2,9 @@
   <div>
     <header class="px-5 py-2">
       <div
-        class="my-4 flex flex-row items-stretch flex-wrap"
+        class="my-2 flex flex-row items-stretch flex-wrap"
       >
-        <div class="w-1/2">
+        <div class="md:w-1/2  mt-2">
           <button
             class="button-selector mr-1"
             :active="statCategory === 'Terkonfirmasi'"
@@ -27,7 +27,7 @@
             PDP
           </button> -->
         </div>
-        <div class="w-1/2 text-right">
+        <div class="md:w-1/2 text-right mt-2">
           <label class="inline-block font-bold text-gray-800 mr-4">
             {{ multipleSort ? 'Sorting Order' : 'Urutkan' }} :
           </label>
