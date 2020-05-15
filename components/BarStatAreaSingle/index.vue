@@ -21,11 +21,11 @@
       <div
         class="bg-white overflow-hidden rounded-lg shadow-md"
       >
-        <div class="flex">
-          <h4 class="p-5 text-xl w-2/3">
+        <div class="md:flex">
+          <h4 class="p-5 text-xl md:w-2/3">
             <b>Angka Harian Penambahan Kasus COVID-19</b>
           </h4>
-          <div class="flex flex-row items-stretch mb-4 w-1/3 pr-2" style="margin: auto;">
+          <div class="flex flex-wrap items-stretch pt-2 pb-2 pr-2 md:w-1/2 mt-2" style="margin: auto;">
             <select
               v-model="selectedListWilayah"
               class="select-option-selector"
@@ -40,15 +40,7 @@
                 {{ list }}
               </option>
             </select>
-            <div>&nbsp;</div>
-            <!-- <div class="card-content">
-              <div class="daterange-wrapper">
-                <vue-rangedate-picker
-                  righttoleft="true"
-                />
-              </div>
-            </div> -->
-            <select
+            <!-- <select
               v-model="selectedListWaktu"
               class="select-option-selector"
               style="margin:auto; "
@@ -61,7 +53,19 @@
               >
                 {{ list }}
               </option>
-            </select>
+            </select> -->
+            <div class="card-content pt-2 pb-2" style="margin: auto;">
+              <div class="daterange-wrapper">
+                <client-only>
+                  <vue-rangedate-picker
+                    righttoleft="true"
+                    :captions="rangedate.captions"
+                    :preset-ranges="rangedate.presetRanges"
+                    @selected="onDateSelected"
+                  />
+                </client-only>
+              </div>
+            </div>
           </div>
         </div>
         <hr>
@@ -78,11 +82,11 @@
       <div
         class="bg-white overflow-hidden rounded-lg shadow-md"
       >
-        <div class="flex">
-          <h4 class="p-5 text-xl w-1/2">
+        <div class="md:flex">
+          <h4 class="p-5 text-xl md:w-2/3">
             <b>Angka Kumulatif Penambahan Kasus COVID-19</b>
           </h4>
-          <div class="flex flex-row items-stretch mb-4 w-1/3 pr-2" style="margin: auto;">
+          <div class="flex flex-wrap items-stretch pt-2 pb-2 pr-2 md:w-1/2 mt-2" style="margin: auto;">
             <select
               v-model="selectedListWilayah"
               class="select-option-selector"
@@ -97,15 +101,7 @@
                 {{ list }}
               </option>
             </select>
-            <div>&nbsp;</div>
-            <!-- <div class="card-content">
-              <div class="daterange-wrapper">
-                <vue-rangedate-picker
-                  righttoleft="true"
-                />
-              </div>
-            </div> -->
-            <select
+            <!-- <select
               v-model="selectedListWaktu"
               class="select-option-selector"
               style="margin:auto; "
@@ -118,7 +114,19 @@
               >
                 {{ list }}
               </option>
-            </select>
+            </select> -->
+            <div class="card-content pt-2 pb-2" style="margin: auto;">
+              <div class="daterange-wrapper">
+                <client-only>
+                  <vue-rangedate-picker
+                    righttoleft="true"
+                    :captions="rangedate.captions"
+                    :preset-ranges="rangedate.presetRanges"
+                    @selected="onDateSelected"
+                  />
+                </client-only>
+              </div>
+            </div>
           </div>
         </div>
         <hr>
@@ -137,15 +145,13 @@
 import { GChart } from 'vue-google-charts'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faChartBar, faChartLine } from '@fortawesome/free-solid-svg-icons'
-// import VueRangedatePicker from 'vue-rangedate-picker'
-// import moment from 'moment'
 
 export default {
   name: 'BarStatAreaSingle',
   components: {
     GChart,
     FontAwesomeIcon
-    // VueRangedatePicker
+    // DateRangePicker
   },
   props: {
     propsDataNasionalHarianKumulatif: {
@@ -1234,7 +1240,7 @@ export default {
           slantedTextAngle: -45
         },
         chartArea: {
-          width: '90%',
+          width: '85%',
           bottom: 100
         },
         tooltip: { isHtml: true }
@@ -1258,7 +1264,7 @@ export default {
           }
         },
         chartArea: {
-          width: '90%',
+          width: '85%',
           bottom: 100
         },
         tooltip: { isHtml: true }
@@ -1302,24 +1308,55 @@ export default {
       ],
       selectedListWilayah: 'Jawa Barat',
       selectedListWaktu: 'Seluruh Waktu',
-      startDate: new Date(),
-      endDate: new Date()
-      // daterange: {
-      //   startDate: '2017-09-05',
-      //   endDate: '2017-09-15',
-      //   locale: {
-      //     direction: 'ltr',
-      //     format: 'DD-MM-YYYY',
-      //     separator: ' - ',
-      //     applyLabel: 'Apply',
-      //     cancelLabel: 'Cancel',
-      //     weekLabel: 'W',
-      //     customRangeLabel: 'Custom Range',
-      //     daysOfWeek: moment.weekdaysMin(),
-      //     monthNames: moment.monthsShort(),
-      //     firstDay: 1
-      //   }
-      // }
+      selectedDate: {
+        start: '',
+        end: ''
+      },
+      rangedate: {
+        captions: {
+          title: 'Pilih Tanggal',
+          ok_button: 'Terapkan'
+        },
+        presetRanges: {
+          all () {
+            return {
+              label: 'Semua Waktu',
+              active: true,
+              dateRange: {
+                start: new Date('2020-03-01'),
+                end: new Date()
+              }
+            }
+          },
+          seminggu () {
+            const n = new Date()
+            const tanggalmulai = new Date(n.getFullYear(), n.getMonth(), n.getDate() - 8, 0, 0)
+            const tanggalselesai = new Date(n.getFullYear(), n.getMonth(), n.getDate(), 23, 59)
+            return {
+              label: '1 Minggu Terakhir',
+              active: false,
+              dateRange: {
+                start: tanggalmulai,
+                end: tanggalselesai
+              }
+            }
+          },
+          sebulan () {
+            const n = new Date()
+            const tanggalmulai = new Date(n.getFullYear(), n.getMonth(), n.getDate() - 31, 0, 0)
+            const tanggalselesai = new Date(n.getFullYear(), n.getMonth(), n.getDate(), 23, 59)
+            return {
+              label: '1 Bulan Terakhir',
+              active: false,
+              dateRange: {
+                start: tanggalmulai,
+                end: tanggalselesai
+              }
+            }
+          }
+        }
+      },
+      isMobile: false
     }
   },
   watch: {
@@ -1343,8 +1380,9 @@ export default {
     }
   },
   mounted () {
-    this.startDate = this.startDate.setDate(this.endDate.getDate() - 14)
-    this.endDate = this.endDate.setDate(this.endDate.getDate() - 0)
+    this.selectedDate.start = new Date('2020-03-01')
+    this.selectedDate.end = new Date()
+    this.checkIsMobile()
   },
   methods: {
     ifNullReturnZero (str) {
@@ -1415,10 +1453,10 @@ export default {
       this.selectedListWilayah = stat
       this.changeData()
     },
-    changeFilterWaktu (stat) {
-      this.selectedListWaktu = stat
-      this.changeData()
-    },
+    // changeFilterWaktu (stat) {
+    //   this.selectedListWaktu = stat
+    //   this.changeData()
+    // },
     changeData () {
       this.ChartHarianData = [
         [
@@ -1504,27 +1542,16 @@ export default {
       let endNum = 0
 
       // filter date
-      if (this.selectedListWaktu === 'Seluruh Waktu') {
-        startNum = 0
-        endNum = self.jsonDataNasionalHarianKumulatif.length
-      } else if (this.selectedListWaktu === '1 Minggu Terakhir') {
-        startNum = self.jsonDataNasionalHarianKumulatif.length - 8
-        endNum = self.jsonDataNasionalHarianKumulatif.length
-      } else if (this.selectedListWaktu === '1 Bulan Terakhir') {
-        startNum = self.jsonDataNasionalHarianKumulatif.length - 31
-        endNum = self.jsonDataNasionalHarianKumulatif.length
-      } else if (this.selectedListWaktu === 'Pilih Rentan Waktu') {
-        this.jsonDataNasionalHarianKumulatif.forEach((element, index) => {
-          if (this.formatDateYMD(element.tanggal) === this.formatDateYMD(this.startDate)) {
-            startNum = index
-          }
-          if (this.formatDateYMD(element.tanggal) === this.formatDateYMD(this.endDate)) {
-            endNum = index
-          }
-        })
-        if (endNum === 0) {
-          endNum = this.jsonDataNasionalHarianKumulatif.length - 1
+      this.jsonDataNasionalHarianKumulatif.forEach((element, index) => {
+        if (this.formatDateYMD(element.tanggal) === this.formatDateYMD(this.selectedDate.start)) {
+          startNum = index
         }
+        if (this.formatDateYMD(element.tanggal) === this.formatDateYMD(this.selectedDate.end)) {
+          endNum = index
+        }
+      })
+      if (endNum === 0) {
+        endNum = this.jsonDataNasionalHarianKumulatif.length - 1
       }
 
       // get data
@@ -1552,27 +1579,16 @@ export default {
       let endNum = 0
 
       // filter date
-      if (this.selectedListWaktu === 'Seluruh Waktu') {
-        startNum = 0
-        endNum = self.jsonDataNasionalHarianKumulatif.length
-      } else if (this.selectedListWaktu === '1 Minggu Terakhir') {
-        startNum = self.jsonDataNasionalHarianKumulatif.length - 8
-        endNum = self.jsonDataNasionalHarianKumulatif.length
-      } else if (this.selectedListWaktu === '1 Bulan Terakhir') {
-        startNum = self.jsonDataNasionalHarianKumulatif.length - 31
-        endNum = self.jsonDataNasionalHarianKumulatif.length
-      } else if (this.selectedListWaktu === 'Pilih Rentan Waktu') {
-        this.jsonDataNasionalHarianKumulatif.forEach((element, index) => {
-          if (this.formatDateYMD(element.tanggal) === this.formatDateYMD(this.startDate)) {
-            startNum = index
-          }
-          if (this.formatDateYMD(element.tanggal) === this.formatDateYMD(this.endDate)) {
-            endNum = index
-          }
-        })
-        if (endNum === 0) {
-          endNum = this.jsonDataNasionalHarianKumulatif.length - 1
+      this.jsonDataNasionalHarianKumulatif.forEach((element, index) => {
+        if (this.formatDateYMD(element.tanggal) === this.formatDateYMD(this.selectedDate.start)) {
+          startNum = index
         }
+        if (this.formatDateYMD(element.tanggal) === this.formatDateYMD(this.selectedDate.end)) {
+          endNum = index
+        }
+      })
+      if (endNum === 0) {
+        endNum = this.jsonDataNasionalHarianKumulatif.length - 1
       }
 
       // get data
@@ -1602,27 +1618,16 @@ export default {
       let endNum = 0
 
       // filter date
-      if (this.selectedListWaktu === 'Seluruh Waktu') {
-        startNum = 0
-        endNum = self.jsonDataProvinsiHarian.length
-      } else if (this.selectedListWaktu === '1 Minggu Terakhir') {
-        startNum = self.jsonDataProvinsiHarian.length - 8
-        endNum = self.jsonDataProvinsiHarian.length
-      } else if (this.selectedListWaktu === '1 Bulan Terakhir') {
-        startNum = self.jsonDataProvinsiHarian.length - 31
-        endNum = self.jsonDataProvinsiHarian.length
-      } else if (this.selectedListWaktu === 'Pilih Rentan Waktu') {
-        this.jsonDataProvinsiHarian.forEach((element, index) => {
-          if (element.tanggal === this.formatDateYMD(this.startDate)) {
-            startNum = index
-          }
-          if (element.tanggal === this.formatDateYMD(this.endDate)) {
-            endNum = index
-          }
-        })
-        if (endNum === 0) {
-          endNum = this.jsonDataProvinsiHarian.length - 1
+      this.jsonDataProvinsiHarian.forEach((element, index) => {
+        if (element.tanggal === this.formatDateYMD(this.selectedDate.start)) {
+          startNum = index
         }
+        if (element.tanggal === this.formatDateYMD(this.selectedDate.end)) {
+          endNum = index
+        }
+      })
+      if (endNum === 0) {
+        endNum = this.jsonDataProvinsiHarian.length - 1
       }
 
       // get data
@@ -1657,27 +1662,16 @@ export default {
       let endNum = 0
 
       // filter date
-      if (this.selectedListWaktu === 'Seluruh Waktu') {
-        startNum = 0
-        endNum = self.jsonDataProvinsiKumulatif.length
-      } else if (this.selectedListWaktu === '1 Minggu Terakhir') {
-        startNum = self.jsonDataProvinsiKumulatif.length - 8
-        endNum = self.jsonDataProvinsiKumulatif.length
-      } else if (this.selectedListWaktu === '1 Bulan Terakhir') {
-        startNum = self.jsonDataProvinsiKumulatif.length - 31
-        endNum = self.jsonDataProvinsiKumulatif.length
-      } else if (this.selectedListWaktu === 'Pilih Rentan Waktu') {
-        this.jsonDataProvinsiKumulatif.forEach((element, index) => {
-          if (element.tanggal === this.formatDateYMD(this.startDate)) {
-            startNum = index
-          }
-          if (element.tanggal === this.formatDateYMD(this.endDate)) {
-            endNum = index
-          }
-        })
-        if (endNum === 0) {
-          endNum = this.jsonDataProvinsiKumulatif.length - 1
+      this.jsonDataProvinsiKumulatif.forEach((element, index) => {
+        if (element.tanggal === this.formatDateYMD(this.selectedDate.start)) {
+          startNum = index
         }
+        if (element.tanggal === this.formatDateYMD(this.selectedDate.end)) {
+          endNum = index
+        }
+      })
+      if (endNum === 0) {
+        endNum = this.jsonDataProvinsiKumulatif.length - 1
       }
 
       // get data
@@ -1713,27 +1707,16 @@ export default {
       let indexKota = 0
 
       // filter date
-      if (this.selectedListWaktu === 'Seluruh Waktu') {
-        startNum = 0
-        endNum = self.jsonDataKota[0].dataHarian.length
-      } else if (this.selectedListWaktu === '1 Minggu Terakhir') {
-        startNum = self.jsonDataKota[0].dataHarian.length - 8
-        endNum = self.jsonDataKota[0].dataHarian.length
-      } else if (this.selectedListWaktu === '1 Bulan Terakhir') {
-        startNum = self.jsonDataKota[0].dataHarian.length - 31
-        endNum = self.jsonDataKota[0].dataHarian.length
-      } else if (this.selectedListWaktu === 'Pilih Rentan Waktu') {
-        self.jsonDataKota[0].dataHarian.forEach((element, index) => {
-          if (element.tanggal === this.formatDateYMD(this.startDate)) {
-            startNum = index
-          }
-          if (element.tanggal === this.formatDateYMD(this.endDate)) {
-            endNum = index
-          }
-        })
-        if (endNum === 0) {
-          endNum = self.jsonDataKota[0].dataHarian.length - 1
+      self.jsonDataKota[0].dataHarian.forEach((element, index) => {
+        if (element.tanggal === this.formatDateYMD(this.selectedDate.start)) {
+          startNum = index
         }
+        if (element.tanggal === this.formatDateYMD(this.selectedDate.end)) {
+          endNum = index
+        }
+      })
+      if (endNum === 0) {
+        endNum = self.jsonDataKota[0].dataHarian.length - 1
       }
 
       // find kota
@@ -1775,27 +1758,16 @@ export default {
       let indexKota = 0
 
       // filter date
-      if (this.selectedListWaktu === 'Seluruh Waktu') {
-        startNum = 0
-        endNum = self.jsonDataKota[0].dataAkumulatif.length
-      } else if (this.selectedListWaktu === '1 Minggu Terakhir') {
-        startNum = self.jsonDataKota[0].dataAkumulatif.length - 8
-        endNum = self.jsonDataKota[0].dataAkumulatif.length
-      } else if (this.selectedListWaktu === '1 Bulan Terakhir') {
-        startNum = self.jsonDataKota[0].dataAkumulatif.length - 31
-        endNum = self.jsonDataKota[0].dataAkumulatif.length
-      } else if (this.selectedListWaktu === 'Pilih Rentan Waktu') {
-        self.jsonDataKota[0].dataAkumulatif.forEach((element, index) => {
-          if (element.tanggal === this.formatDateYMD(this.startDate)) {
-            startNum = index
-          }
-          if (element.tanggal === this.formatDateYMD(this.endDate)) {
-            endNum = index
-          }
-        })
-        if (endNum === 0) {
-          endNum = self.jsonDataKota[0].dataAkumulatif.length - 1
+      self.jsonDataKota[0].dataAkumulatif.forEach((element, index) => {
+        if (element.tanggal === this.formatDateYMD(this.selectedDate.start)) {
+          startNum = index
         }
+        if (element.tanggal === this.formatDateYMD(this.selectedDate.end)) {
+          endNum = index
+        }
+      })
+      if (endNum === 0) {
+        endNum = self.jsonDataKota[0].dataAkumulatif.length - 1
       }
 
       // find kota
@@ -1828,8 +1800,16 @@ export default {
       }
       self.ChartHarianData.splice(1, 1)
     },
-    onDateSelected () {
-      console.log('on selected')
+    onDateSelected (daterange) {
+      this.selectedDate = daterange
+      this.changeData()
+    },
+    checkIsMobile () {
+      if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+        this.isMobile = true
+      } else {
+        this.isMobile = false
+      }
     }
   }
 }
@@ -1839,16 +1819,6 @@ export default {
 <style lang="scss" scoped>
 
 .select-option-selector {
-  // border-radius: 0.2rem;
-  // border-width: 1px;
-  // border-style: solid;
-  // border-color: #555;
-  // color: #555;
-  // background-color: #fff;
-  // height: 30px;
-  // width: 160px;
-  // margin: auto;
-  // padding: 0px;
   display: block;
   border: 1px solid #ccc;
   padding: 6.4px;
