@@ -83,6 +83,13 @@
     </section>
 
     <section class="m-4 mb-8 md:m-8">
+      <BarStatTable
+        :props-data-rekapitulasi-jabar-kab.sync="jsonDataRekapitulasiJabarKab"
+        :props-data-rekapitulasi-jabar-kumulatif-kab.sync="jsonDataRekapitulasiJabarKumulatifKab"
+      />
+    </section>
+
+    <section class="m-4 mb-8 md:m-8">
       <!-- <BarStatArea
         :props-data-rekapitulasi-jabar-prov.sync="jsonDataRekapitulasiJabarProv"
         :props-data-rekapitulasi-jabar-kab.sync="jsonDataRekapitulasiJabarKab"
@@ -100,13 +107,6 @@
         :props-data-rekapitulasi-jabar-kumulatif-prov.sync="jsonDataRekapitulasiJabarKumulatifProv"
         :props-data-rekapitulasi-jabar-kumulatif-kab.sync="jsonDataRekapitulasiJabarKumulatifKab"
         :props-data-nasional-harian-kumulatif.sync="jsonDataNasionalHarianKumulatif"
-      />
-    </section>
-
-    <section class="m-4 mb-8 md:m-8">
-      <BarStatTable
-        :props-data-rekapitulasi-jabar-kab.sync="jsonDataRekapitulasiJabarKab"
-        :props-data-rekapitulasi-jabar-kumulatif-kab.sync="jsonDataRekapitulasiJabarKumulatifKab"
       />
     </section>
 
