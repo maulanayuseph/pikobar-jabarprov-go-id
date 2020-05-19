@@ -1754,7 +1754,9 @@ export default {
           self.jsonDataNasionalHarianKumulatif[i].jumlahKasusBaruperHari_ratarata, tooltipHarian
         ])
       }
-      self.ChartHarianData.splice(1, 1)
+      if (self.jsonDataNasionalHarianKumulatif.length > 0) {
+        self.ChartHarianData.splice(1, 1)
+      }
     },
     fetchDataNasionalKumulatif () {
       const self = this
@@ -1792,7 +1794,9 @@ export default {
           self.jsonDataNasionalHarianKumulatif[i].jumlahPasienMeninggal, tooltipKumulatif
         ])
       }
-      self.ChartKumulatifData.splice(1, 1)
+      if (self.jsonDataNasionalHarianKumulatif.length > 0) {
+        self.ChartKumulatifData.splice(1, 1)
+      }
     },
     fetchDataProvinsiHarian () {
       const self = this
@@ -1834,7 +1838,9 @@ export default {
           stop = true
         }
       }
-      self.ChartHarianData.splice(1, 1)
+      if (self.jsonDataProvinsiHarian.length > 0) {
+        self.ChartHarianData.splice(1, 1)
+      }
     },
     fetchDataProvinsiKumulatif () {
       const self = this
@@ -1880,7 +1886,9 @@ export default {
           stop = true
         }
       }
-      self.ChartKumulatifData.splice(1, 1)
+      if (self.jsonDataProvinsiKumulatif.length > 0) {
+        self.ChartKumulatifData.splice(1, 1)
+      }
     },
     fetchDataKabupatenHarian () {
       const self = this
@@ -1929,8 +1937,10 @@ export default {
           stop = true
         }
       }
-      self.ChartHarianData.splice(1, 1)
-      self.ChartHarianData.splice(1, 1)
+      if (self.jsonDataKota[indexKota].dataHarian.length > 0) {
+        self.ChartHarianData.splice(1, 1)
+        self.ChartHarianData.splice(1, 1)
+      }
     },
     fetchDataKabupatenKumulatif () {
       const self = this
@@ -1983,8 +1993,10 @@ export default {
           stop = true
         }
       }
-      self.ChartHarianData.splice(1, 1)
-      self.ChartHarianData.splice(1, 1)
+      if (self.jsonDataKota[indexKota].dataAkumulatif.length > 0) {
+        self.ChartKumulatifData.splice(1, 1)
+        self.ChartKumulatifData.splice(1, 1)
+      }
     },
     onDateSelected (daterange) {
       this.selectedDate = daterange
