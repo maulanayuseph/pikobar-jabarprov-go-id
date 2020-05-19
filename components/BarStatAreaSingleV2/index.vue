@@ -794,61 +794,61 @@ export default {
       for (let i = 0; i < this.propsDataNasionalHarianKumulatif.length; i++) {
         const temp1 = this.propsDataNasionalHarianKumulatif[i]
         let jmlHarian = 0
-        let jmlKumulatif = 0
         let ratarataHarian = 0
-        let ratarataKumulatif = 0
+        // let jmlKumulatif = 0
+        // let ratarataKumulatif = 0
         if (i === 0) {
           jmlHarian = this.propsDataNasionalHarianKumulatif[i].jumlahKasusBaruperHari
-          jmlKumulatif = this.propsDataNasionalHarianKumulatif[i].jumlahKasusKumulatif
           ratarataHarian = jmlHarian / 1
-          ratarataKumulatif = jmlKumulatif / 1
+          // jmlKumulatif = this.propsDataNasionalHarianKumulatif[i].jumlahKasusKumulatif
+          // ratarataKumulatif = jmlKumulatif / 1
         } else if (i === 1) {
           jmlHarian = this.propsDataNasionalHarianKumulatif[i].jumlahKasusBaruperHari + this.propsDataNasionalHarianKumulatif[i - 1].jumlahKasusBaruperHari
-          jmlKumulatif = this.propsDataNasionalHarianKumulatif[i].jumlahKasusKumulatif + this.propsDataNasionalHarianKumulatif[i - 1].jumlahKasusKumulatif
           ratarataHarian = jmlHarian / 2
-          ratarataKumulatif = jmlKumulatif / 2
+          // jmlKumulatif = this.propsDataNasionalHarianKumulatif[i].jumlahKasusKumulatif + this.propsDataNasionalHarianKumulatif[i - 1].jumlahKasusKumulatif
+          // ratarataKumulatif = jmlKumulatif / 2
         } else if (i === 2) {
           jmlHarian = this.propsDataNasionalHarianKumulatif[i].jumlahKasusBaruperHari + this.propsDataNasionalHarianKumulatif[i - 1].jumlahKasusBaruperHari + this.propsDataNasionalHarianKumulatif[i - 2].jumlahKasusBaruperHari
-          jmlKumulatif = this.propsDataNasionalHarianKumulatif[i].jumlahKasusKumulatif + this.propsDataNasionalHarianKumulatif[i - 1].jumlahKasusKumulatif + this.propsDataNasionalHarianKumulatif[i - 2].jumlahKasusKumulatif
           ratarataHarian = jmlHarian / 3
-          ratarataKumulatif = jmlKumulatif / 3
+          // jmlKumulatif = this.propsDataNasionalHarianKumulatif[i].jumlahKasusKumulatif + this.propsDataNasionalHarianKumulatif[i - 1].jumlahKasusKumulatif + this.propsDataNasionalHarianKumulatif[i - 2].jumlahKasusKumulatif
+          // ratarataKumulatif = jmlKumulatif / 3
         } else if (i === 3) {
           jmlHarian = this.propsDataNasionalHarianKumulatif[i].jumlahKasusBaruperHari + this.propsDataNasionalHarianKumulatif[i - 1].jumlahKasusBaruperHari + this.propsDataNasionalHarianKumulatif[i - 2].jumlahKasusBaruperHari +
             this.propsDataNasionalHarianKumulatif[i - 3].jumlahKasusBaruperHari
-          jmlKumulatif = this.propsDataNasionalHarianKumulatif[i].jumlahKasusKumulatif + this.propsDataNasionalHarianKumulatif[i - 1].jumlahKasusKumulatif + this.propsDataNasionalHarianKumulatif[i - 2].jumlahKasusKumulatif +
-            this.propsDataNasionalHarianKumulatif[i - 3].jumlahKasusKumulatif
           ratarataHarian = jmlHarian / 4
-          ratarataKumulatif = jmlKumulatif / 4
+          // jmlKumulatif = this.propsDataNasionalHarianKumulatif[i].jumlahKasusKumulatif + this.propsDataNasionalHarianKumulatif[i - 1].jumlahKasusKumulatif + this.propsDataNasionalHarianKumulatif[i - 2].jumlahKasusKumulatif +
+          //   this.propsDataNasionalHarianKumulatif[i - 3].jumlahKasusKumulatif
+          // ratarataKumulatif = jmlKumulatif / 4
         } else if (i === 4) {
           jmlHarian = this.propsDataNasionalHarianKumulatif[i].jumlahKasusBaruperHari + this.propsDataNasionalHarianKumulatif[i - 1].jumlahKasusBaruperHari + this.propsDataNasionalHarianKumulatif[i - 2].jumlahKasusBaruperHari +
             this.propsDataNasionalHarianKumulatif[i - 3].jumlahKasusBaruperHari + this.propsDataNasionalHarianKumulatif[i - 4].jumlahKasusBaruperHari
-          jmlKumulatif = this.propsDataNasionalHarianKumulatif[i].jumlahKasusKumulatif + this.propsDataNasionalHarianKumulatif[i - 1].jumlahKasusKumulatif + this.propsDataNasionalHarianKumulatif[i - 2].jumlahKasusKumulatif +
-            this.propsDataNasionalHarianKumulatif[i - 3].jumlahKasusKumulatif + this.propsDataNasionalHarianKumulatif[i - 4].jumlahKasusKumulatif
           ratarataHarian = jmlHarian / 5
-          ratarataKumulatif = jmlKumulatif / 5
+          // jmlKumulatif = this.propsDataNasionalHarianKumulatif[i].jumlahKasusKumulatif + this.propsDataNasionalHarianKumulatif[i - 1].jumlahKasusKumulatif + this.propsDataNasionalHarianKumulatif[i - 2].jumlahKasusKumulatif +
+          //   this.propsDataNasionalHarianKumulatif[i - 3].jumlahKasusKumulatif + this.propsDataNasionalHarianKumulatif[i - 4].jumlahKasusKumulatif
+          // ratarataKumulatif = jmlKumulatif / 5
         } else if (i === 5) {
           jmlHarian = this.propsDataNasionalHarianKumulatif[i].jumlahKasusBaruperHari + this.propsDataNasionalHarianKumulatif[i - 1].jumlahKasusBaruperHari + this.propsDataNasionalHarianKumulatif[i - 2].jumlahKasusBaruperHari +
             this.propsDataNasionalHarianKumulatif[i - 3].jumlahKasusBaruperHari + this.propsDataNasionalHarianKumulatif[i - 4].jumlahKasusBaruperHari + this.propsDataNasionalHarianKumulatif[i - 5].jumlahKasusBaruperHari
-          jmlKumulatif = this.propsDataNasionalHarianKumulatif[i].jumlahKasusKumulatif + this.propsDataNasionalHarianKumulatif[i - 1].jumlahKasusKumulatif + this.propsDataNasionalHarianKumulatif[i - 2].jumlahKasusKumulatif +
-            this.propsDataNasionalHarianKumulatif[i - 3].jumlahKasusKumulatif + this.propsDataNasionalHarianKumulatif[i - 4].jumlahKasusKumulatif + this.propsDataNasionalHarianKumulatif[i - 5].jumlahKasusKumulatif
           ratarataHarian = jmlHarian / 6
-          ratarataKumulatif = jmlKumulatif / 6
+          // jmlKumulatif = this.propsDataNasionalHarianKumulatif[i].jumlahKasusKumulatif + this.propsDataNasionalHarianKumulatif[i - 1].jumlahKasusKumulatif + this.propsDataNasionalHarianKumulatif[i - 2].jumlahKasusKumulatif +
+          //   this.propsDataNasionalHarianKumulatif[i - 3].jumlahKasusKumulatif + this.propsDataNasionalHarianKumulatif[i - 4].jumlahKasusKumulatif + this.propsDataNasionalHarianKumulatif[i - 5].jumlahKasusKumulatif
+          // ratarataKumulatif = jmlKumulatif / 6
         } else if (i > 6) {
           jmlHarian = this.propsDataNasionalHarianKumulatif[i].jumlahKasusBaruperHari + this.propsDataNasionalHarianKumulatif[i - 1].jumlahKasusBaruperHari + this.propsDataNasionalHarianKumulatif[i - 2].jumlahKasusBaruperHari +
             this.propsDataNasionalHarianKumulatif[i - 3].jumlahKasusBaruperHari + this.propsDataNasionalHarianKumulatif[i - 4].jumlahKasusBaruperHari + this.propsDataNasionalHarianKumulatif[i - 5].jumlahKasusBaruperHari +
             this.propsDataNasionalHarianKumulatif[i - 6].jumlahKasusBaruperHari
-          jmlKumulatif = this.propsDataNasionalHarianKumulatif[i].jumlahKasusKumulatif + this.propsDataNasionalHarianKumulatif[i - 1].jumlahKasusKumulatif + this.propsDataNasionalHarianKumulatif[i - 2].jumlahKasusKumulatif +
-            this.propsDataNasionalHarianKumulatif[i - 3].jumlahKasusKumulatif + this.propsDataNasionalHarianKumulatif[i - 4].jumlahKasusKumulatif + this.propsDataNasionalHarianKumulatif[i - 5].jumlahKasusKumulatif +
-            this.propsDataNasionalHarianKumulatif[i - 6].jumlahKasusKumulatif
           ratarataHarian = jmlHarian / 7
-          ratarataKumulatif = jmlKumulatif / 7
+          // jmlKumulatif = this.propsDataNasionalHarianKumulatif[i].jumlahKasusKumulatif + this.propsDataNasionalHarianKumulatif[i - 1].jumlahKasusKumulatif + this.propsDataNasionalHarianKumulatif[i - 2].jumlahKasusKumulatif +
+          //   this.propsDataNasionalHarianKumulatif[i - 3].jumlahKasusKumulatif + this.propsDataNasionalHarianKumulatif[i - 4].jumlahKasusKumulatif + this.propsDataNasionalHarianKumulatif[i - 5].jumlahKasusKumulatif +
+          //   this.propsDataNasionalHarianKumulatif[i - 6].jumlahKasusKumulatif
+          // ratarataKumulatif = jmlKumulatif / 7
         } else {
           jmlHarian = 0
-          jmlKumulatif = 0
           ratarataHarian = 0
-          ratarataKumulatif = 0
+          // jmlKumulatif = 0
+          // ratarataKumulatif = 0
         }
-        const temp2 = { jumlahKasusBaruperHari_ratarata: parseInt(ratarataHarian.toFixed(2)), jumlahKasusKumulatif_ratarata: parseInt(ratarataKumulatif.toFixed(2)) }
+        const temp2 = { jumlahKasusBaruperHari_ratarata: parseInt(ratarataHarian.toFixed(2)) }
         const temp3 = { ...temp1, ...temp2 }
         this.jsonDataNasionalHarianKumulatif.push(temp3)
       }
@@ -896,45 +896,45 @@ export default {
       this.changeData()
     },
     propsDataRekapitulasiJabarKumulatifProv () {
-      // this.jsonDataProvinsiKumulatif = this.propsDataRekapitulasiJabarKumulatifProv
-      for (let i = 0; i < this.propsDataRekapitulasiJabarKumulatifProv.length; i++) {
-        const temp1 = this.propsDataRekapitulasiJabarKumulatifProv[i]
-        let jml = 0
-        let ratarata = 0
-        if (i === 0) {
-          jml = this.propsDataRekapitulasiJabarKumulatifProv[i].positif
-          ratarata = jml / 1
-        } else if (i === 1) {
-          jml = this.propsDataRekapitulasiJabarKumulatifProv[i].positif + this.propsDataRekapitulasiJabarKumulatifProv[i - 1].positif
-          ratarata = jml / 2
-        } else if (i === 2) {
-          jml = this.propsDataRekapitulasiJabarKumulatifProv[i].positif + this.propsDataRekapitulasiJabarKumulatifProv[i - 1].positif + this.propsDataRekapitulasiJabarKumulatifProv[i - 2].positif
-          ratarata = jml / 3
-        } else if (i === 3) {
-          jml = this.propsDataRekapitulasiJabarKumulatifProv[i].positif + this.propsDataRekapitulasiJabarKumulatifProv[i - 1].positif + this.propsDataRekapitulasiJabarKumulatifProv[i - 2].positif +
-            this.propsDataRekapitulasiJabarKumulatifProv[i - 3].positif
-          ratarata = jml / 4
-        } else if (i === 4) {
-          jml = this.propsDataRekapitulasiJabarKumulatifProv[i].positif + this.propsDataRekapitulasiJabarKumulatifProv[i - 1].positif + this.propsDataRekapitulasiJabarKumulatifProv[i - 2].positif +
-            this.propsDataRekapitulasiJabarKumulatifProv[i - 3].positif + this.propsDataRekapitulasiJabarKumulatifProv[i - 4].positif
-          ratarata = jml / 5
-        } else if (i === 5) {
-          jml = this.propsDataRekapitulasiJabarKumulatifProv[i].positif + this.propsDataRekapitulasiJabarKumulatifProv[i - 1].positif + this.propsDataRekapitulasiJabarKumulatifProv[i - 2].positif +
-          this.propsDataRekapitulasiJabarKumulatifProv[i - 3].positif + this.propsDataRekapitulasiJabarKumulatifProv[i - 4].positif + this.propsDataRekapitulasiJabarKumulatifProv[i - 5].positif
-          ratarata = jml / 6
-        } else if (i > 6) {
-          jml = this.propsDataRekapitulasiJabarKumulatifProv[i].positif + this.propsDataRekapitulasiJabarKumulatifProv[i - 1].positif + this.propsDataRekapitulasiJabarKumulatifProv[i - 2].positif +
-            this.propsDataRekapitulasiJabarKumulatifProv[i - 3].positif + this.propsDataRekapitulasiJabarKumulatifProv[i - 4].positif + this.propsDataRekapitulasiJabarKumulatifProv[i - 5].positif +
-            this.propsDataRekapitulasiJabarKumulatifProv[i - 6].positif
-          ratarata = jml / 7
-        } else {
-          jml = 0
-          ratarata = 0
-        }
-        const temp2 = { positif_ratarata: parseInt(ratarata.toFixed(2)) }
-        const temp3 = { ...temp1, ...temp2 }
-        this.jsonDataProvinsiKumulatif.push(temp3)
-      }
+      this.jsonDataProvinsiKumulatif = this.propsDataRekapitulasiJabarKumulatifProv
+      // for (let i = 0; i < this.propsDataRekapitulasiJabarKumulatifProv.length; i++) {
+      //   const temp1 = this.propsDataRekapitulasiJabarKumulatifProv[i]
+      //   let jml = 0
+      //   let ratarata = 0
+      //   if (i === 0) {
+      //     jml = this.propsDataRekapitulasiJabarKumulatifProv[i].positif
+      //     ratarata = jml / 1
+      //   } else if (i === 1) {
+      //     jml = this.propsDataRekapitulasiJabarKumulatifProv[i].positif + this.propsDataRekapitulasiJabarKumulatifProv[i - 1].positif
+      //     ratarata = jml / 2
+      //   } else if (i === 2) {
+      //     jml = this.propsDataRekapitulasiJabarKumulatifProv[i].positif + this.propsDataRekapitulasiJabarKumulatifProv[i - 1].positif + this.propsDataRekapitulasiJabarKumulatifProv[i - 2].positif
+      //     ratarata = jml / 3
+      //   } else if (i === 3) {
+      //     jml = this.propsDataRekapitulasiJabarKumulatifProv[i].positif + this.propsDataRekapitulasiJabarKumulatifProv[i - 1].positif + this.propsDataRekapitulasiJabarKumulatifProv[i - 2].positif +
+      //       this.propsDataRekapitulasiJabarKumulatifProv[i - 3].positif
+      //     ratarata = jml / 4
+      //   } else if (i === 4) {
+      //     jml = this.propsDataRekapitulasiJabarKumulatifProv[i].positif + this.propsDataRekapitulasiJabarKumulatifProv[i - 1].positif + this.propsDataRekapitulasiJabarKumulatifProv[i - 2].positif +
+      //       this.propsDataRekapitulasiJabarKumulatifProv[i - 3].positif + this.propsDataRekapitulasiJabarKumulatifProv[i - 4].positif
+      //     ratarata = jml / 5
+      //   } else if (i === 5) {
+      //     jml = this.propsDataRekapitulasiJabarKumulatifProv[i].positif + this.propsDataRekapitulasiJabarKumulatifProv[i - 1].positif + this.propsDataRekapitulasiJabarKumulatifProv[i - 2].positif +
+      //     this.propsDataRekapitulasiJabarKumulatifProv[i - 3].positif + this.propsDataRekapitulasiJabarKumulatifProv[i - 4].positif + this.propsDataRekapitulasiJabarKumulatifProv[i - 5].positif
+      //     ratarata = jml / 6
+      //   } else if (i > 6) {
+      //     jml = this.propsDataRekapitulasiJabarKumulatifProv[i].positif + this.propsDataRekapitulasiJabarKumulatifProv[i - 1].positif + this.propsDataRekapitulasiJabarKumulatifProv[i - 2].positif +
+      //       this.propsDataRekapitulasiJabarKumulatifProv[i - 3].positif + this.propsDataRekapitulasiJabarKumulatifProv[i - 4].positif + this.propsDataRekapitulasiJabarKumulatifProv[i - 5].positif +
+      //       this.propsDataRekapitulasiJabarKumulatifProv[i - 6].positif
+      //     ratarata = jml / 7
+      //   } else {
+      //     jml = 0
+      //     ratarata = 0
+      //   }
+      //   const temp2 = { positif_ratarata: parseInt(ratarata.toFixed(2)) }
+      //   const temp3 = { ...temp1, ...temp2 }
+      //   this.jsonDataProvinsiKumulatif.push(temp3)
+      // }
     },
     propsDataRekapitulasiJabarHarianKab () {
       this.jsonDataKabupatenHarian = this.propsDataRekapitulasiJabarHarianKab
@@ -1133,43 +1133,43 @@ export default {
       for (let j = 0; j < self.jsonDataKota.length; j++) {
         for (let i = 0; i < self.jsonDataKabupatenKumulatif.length; i++) {
           if (self.jsonDataKabupatenKumulatif[i].kode_kab === self.jsonDataKota[j].kode) {
-            // self.jsonDataKota[j].dataAkumulatif.push(self.jsonDataKabupatenKumulatif[i])
-            const temp1 = self.jsonDataKabupatenKumulatif[i]
-            let jml = 0
-            let ratarata = 0
-            if (i === 0 * 27) {
-              jml = this.jsonDataKabupatenKumulatif[i].positif
-              ratarata = jml / 1
-            } else if (i === 1 * 27) {
-              jml = this.jsonDataKabupatenKumulatif[i].positif + this.jsonDataKabupatenKumulatif[i - (1 * 27)].positif
-              ratarata = jml / 2
-            } else if (i === 2 * 27) {
-              jml = this.jsonDataKabupatenKumulatif[i].positif + this.jsonDataKabupatenKumulatif[i - (1 * 27)].positif + this.jsonDataKabupatenKumulatif[i - (2 * 27)].positif
-              ratarata = jml / 3
-            } else if (i === 3 * 27) {
-              jml = this.jsonDataKabupatenKumulatif[i].positif + this.jsonDataKabupatenKumulatif[i - (1 * 27)].positif + this.jsonDataKabupatenKumulatif[i - (2 * 27)].positif +
-                this.jsonDataKabupatenKumulatif[i - (3 * 27)].positif
-              ratarata = jml / 4
-            } else if (i === 4 * 27) {
-              jml = this.jsonDataKabupatenKumulatif[i].positif + this.jsonDataKabupatenKumulatif[i - (1 * 27)].positif + this.jsonDataKabupatenKumulatif[i - (2 * 27)].positif +
-                this.jsonDataKabupatenKumulatif[i - (3 * 27)].positif + this.jsonDataKabupatenKumulatif[i - (4 * 27)].positif
-              ratarata = jml / 5
-            } else if (i === 5 * 27) {
-              jml = this.jsonDataKabupatenKumulatif[i].positif + this.jsonDataKabupatenKumulatif[i - (1 * 27)].positif + this.jsonDataKabupatenKumulatif[i - (2 * 27)].positif +
-              this.jsonDataKabupatenKumulatif[i - (3 * 27)].positif + this.jsonDataKabupatenKumulatif[i - (4 * 27)].positif + this.jsonDataKabupatenKumulatif[i - (5 * 27)].positif
-              ratarata = jml / 6
-            } else if (i > 6 * 27) {
-              jml = this.jsonDataKabupatenKumulatif[i].positif + this.jsonDataKabupatenKumulatif[i - (1 * 27)].positif + this.jsonDataKabupatenKumulatif[i - (2 * 27)].positif +
-                this.jsonDataKabupatenKumulatif[i - (3 * 27)].positif + this.jsonDataKabupatenKumulatif[i - (4 * 27)].positif + this.jsonDataKabupatenKumulatif[i - (5 * 27)].positif +
-                this.jsonDataKabupatenKumulatif[i - (6 * 27)].positif
-              ratarata = jml / 7
-            } else {
-              jml = 0
-              ratarata = 0
-            }
-            const temp2 = { positif_ratarata: parseInt(ratarata.toFixed(2)) }
-            const temp3 = { ...temp1, ...temp2 }
-            self.jsonDataKota[j].dataAkumulatif.push(temp3)
+            self.jsonDataKota[j].dataAkumulatif.push(self.jsonDataKabupatenKumulatif[i])
+            // const temp1 = self.jsonDataKabupatenKumulatif[i]
+            // let jml = 0
+            // let ratarata = 0
+            // if (i === 0 * 27) {
+            //   jml = this.jsonDataKabupatenKumulatif[i].positif
+            //   ratarata = jml / 1
+            // } else if (i === 1 * 27) {
+            //   jml = this.jsonDataKabupatenKumulatif[i].positif + this.jsonDataKabupatenKumulatif[i - (1 * 27)].positif
+            //   ratarata = jml / 2
+            // } else if (i === 2 * 27) {
+            //   jml = this.jsonDataKabupatenKumulatif[i].positif + this.jsonDataKabupatenKumulatif[i - (1 * 27)].positif + this.jsonDataKabupatenKumulatif[i - (2 * 27)].positif
+            //   ratarata = jml / 3
+            // } else if (i === 3 * 27) {
+            //   jml = this.jsonDataKabupatenKumulatif[i].positif + this.jsonDataKabupatenKumulatif[i - (1 * 27)].positif + this.jsonDataKabupatenKumulatif[i - (2 * 27)].positif +
+            //     this.jsonDataKabupatenKumulatif[i - (3 * 27)].positif
+            //   ratarata = jml / 4
+            // } else if (i === 4 * 27) {
+            //   jml = this.jsonDataKabupatenKumulatif[i].positif + this.jsonDataKabupatenKumulatif[i - (1 * 27)].positif + this.jsonDataKabupatenKumulatif[i - (2 * 27)].positif +
+            //     this.jsonDataKabupatenKumulatif[i - (3 * 27)].positif + this.jsonDataKabupatenKumulatif[i - (4 * 27)].positif
+            //   ratarata = jml / 5
+            // } else if (i === 5 * 27) {
+            //   jml = this.jsonDataKabupatenKumulatif[i].positif + this.jsonDataKabupatenKumulatif[i - (1 * 27)].positif + this.jsonDataKabupatenKumulatif[i - (2 * 27)].positif +
+            //   this.jsonDataKabupatenKumulatif[i - (3 * 27)].positif + this.jsonDataKabupatenKumulatif[i - (4 * 27)].positif + this.jsonDataKabupatenKumulatif[i - (5 * 27)].positif
+            //   ratarata = jml / 6
+            // } else if (i > 6 * 27) {
+            //   jml = this.jsonDataKabupatenKumulatif[i].positif + this.jsonDataKabupatenKumulatif[i - (1 * 27)].positif + this.jsonDataKabupatenKumulatif[i - (2 * 27)].positif +
+            //     this.jsonDataKabupatenKumulatif[i - (3 * 27)].positif + this.jsonDataKabupatenKumulatif[i - (4 * 27)].positif + this.jsonDataKabupatenKumulatif[i - (5 * 27)].positif +
+            //     this.jsonDataKabupatenKumulatif[i - (6 * 27)].positif
+            //   ratarata = jml / 7
+            // } else {
+            //   jml = 0
+            //   ratarata = 0
+            // }
+            // const temp2 = { positif_ratarata: parseInt(ratarata.toFixed(2)) }
+            // const temp3 = { ...temp1, ...temp2 }
+            // self.jsonDataKota[j].dataAkumulatif.push(temp3)
           }
           if (i === self.jsonDataKabupatenKumulatif.length - 1) {
             self.jsonDataKota[j].dataAkumulatif.splice(1, 1)
