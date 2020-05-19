@@ -24,7 +24,44 @@
           >
             <font-awesome-icon :icon="faFilter" />
             <i class="fas fa-filter cc-primary" style="color: black !important;" />
+          </button><br>
+          <button
+            class="btn btn-light mt-2"
+            style="background-color: white"
+            @click="showLayer()"
+          >
+            <font-awesome-icon :icon="faLayerGroup" />
+            <i class="fas fa-filter cc-primary" style="color: black !important;" />
           </button>
+        </div>
+        <div
+          v-if="isShowLayer"
+          class="filter-data"
+        >
+          <li
+            :class="layer.custom?'filter-active':''"
+            @click="setLayer('custom')"
+          >
+            Otomatis
+          </li>
+          <li
+            :class="layer.kota?'filter-active':''"
+            @click="setLayer('kota')"
+          >
+            Kota/Kabupaten
+          </li>
+          <li
+            :class="layer.kecamatan?'filter-active':''"
+            @click="setLayer('kecamatan')"
+          >
+            Kecamatan
+          </li>
+          <li
+            :class="layer.kelurahan?'filter-active':''"
+            @click="setLayer('kelurahan')"
+          >
+            Kelurahan/Desa
+          </li>
         </div>
         <div
           v-if="isShowFilter"
@@ -87,7 +124,7 @@
 
 <script>
 
-import { faFilter, faHome } from '@fortawesome/free-solid-svg-icons'
+import { faFilter, faHome, faLayerGroup } from '@fortawesome/free-solid-svg-icons'
 import { GeoSearchControl, OpenStreetMapProvider } from 'leaflet-geosearch'
 import jsonKota from '@/assets/kotaV2.json'
 import jsonKecamatan from '@/assets/kecamatanV2.json'
@@ -107,6 +144,7 @@ export default {
       zoom: 9,
       faFilter,
       faHome,
+      faLayerGroup,
 
       distributionProvinceData: [],
 
@@ -139,6 +177,16 @@ export default {
         lini1_non: false,
         lini2_non: false
       },
+
+      isShowLayer: false,
+      layer: {
+        custom: false,
+        kota: true,
+        kecamatan: false,
+        kelurahan: false
+      },
+      layerActive: 'kota',
+
       sgvMarker: {
         lini1_rujukan: `<svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
           <rect x="1" y="1" width="16" height="16" rx="4" stroke="#5AAA4E"/>
@@ -246,7 +294,16 @@ export default {
       }).addTo(this.map)
 
       this.map.on('geosearch/showlocation', (e) => {
+        this.removeMarker()
         this.zoom = this.map.getZoom()
+
+        const layerList = this.$L.marker([e.location.y, e.location.x], {
+          icon: new this.$L.Icon.Default()
+        })
+        layerList.bindPopup(e.location.label)
+        layerList.addTo(this.map)
+        layerList.openPopup()
+        this.dataMarker.push(layerList)
       })
 
       // create layer group
@@ -256,17 +313,17 @@ export default {
     setZoomLevel () {
       // listening zoomed level
       this.map.on('zoomend', () => {
-        if (this.map.getZoom() <= 10) {
+        if (this.map.getZoom() <= 10 && this.layerActive === 'custom') {
           this.removeLayer()
           this.createLayerKota()
-        } else if (this.map.getZoom() > 10 && this.map.getZoom() <= 13) {
+        } else if (this.map.getZoom() > 10 && this.map.getZoom() <= 13 && this.layerActive === 'custom') {
           this.removeLayer()
-          this.createLayerKota()
+          // this.createLayerKota()
           this.createLayerKecamatan()
-        } else if (this.map.getZoom() > 13) {
+        } else if (this.map.getZoom() > 13 && this.layerActive === 'custom') {
           this.removeLayer()
-          this.createLayerKota()
-          this.createLayerKecamatan()
+          // this.createLayerKota()
+          // this.createLayerKecamatan()
           this.createLayerKelurahan()
         }
       })
@@ -432,6 +489,61 @@ export default {
         if (this.filter[cat]) {
           this.createMarker(cat)
         }
+      }
+
+      if (this.layerActive === 'custom') {
+        if (this.map.getZoom() <= 10) {
+          this.removeLayer()
+          this.createLayerKota(this.filterActive)
+        } else if (this.map.getZoom() > 10 && this.map.getZoom() <= 13) {
+          this.removeLayer()
+          this.createLayerKecamatan(this.filterActive)
+        } else if (this.map.getZoom() > 13) {
+          this.removeLayer()
+          this.createLayerKelurahan(this.filterActive)
+        }
+      } else if (this.layerActive === 'kota') {
+        this.removeLayer()
+        this.createLayerKota(this.filterActive)
+      } else if (this.layerActive === 'kecamatan') {
+        this.removeLayer()
+        this.createLayerKecamatan(this.filterActive)
+      } else if (this.layerActive === 'kelurahan') {
+        this.removeLayer()
+        this.createLayerKelurahan(this.filterActive)
+      }
+    },
+
+    showLayer () {
+      this.isShowLayer = !this.isShowLayer
+    },
+    setLayer (category) {
+      for (const cat of Object.keys(this.layer)) {
+        this.layer[cat] = false
+      }
+      this.layer[category] = !this.layer[category]
+      this.layerActive = category
+
+      if (this.layerActive === 'custom') {
+        if (this.map.getZoom() <= 10) {
+          this.removeLayer()
+          this.createLayerKota(this.filterActive)
+        } else if (this.map.getZoom() > 10 && this.map.getZoom() <= 13) {
+          this.removeLayer()
+          this.createLayerKecamatan(this.filterActive)
+        } else if (this.map.getZoom() > 13) {
+          this.removeLayer()
+          this.createLayerKelurahan(this.filterActive)
+        }
+      } else if (this.layerActive === 'kota') {
+        this.removeLayer()
+        this.createLayerKota(this.filterActive)
+      } else if (this.layerActive === 'kecamatan') {
+        this.removeLayer()
+        this.createLayerKecamatan(this.filterActive)
+      } else if (this.layerActive === 'kelurahan') {
+        this.removeLayer()
+        this.createLayerKelurahan(this.filterActive)
       }
     },
 
