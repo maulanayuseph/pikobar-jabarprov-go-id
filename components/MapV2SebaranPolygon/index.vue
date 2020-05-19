@@ -24,7 +24,44 @@
           >
             <font-awesome-icon :icon="faFilter" />
             <i class="fas fa-filter cc-primary" style="color: black !important;" />
+          </button><br>
+          <button
+            class="btn btn-light mt-2"
+            style="background-color: white"
+            @click="showLayer()"
+          >
+            <font-awesome-icon :icon="faLayerGroup" />
+            <i class="fas fa-filter cc-primary" style="color: black !important;" />
           </button>
+        </div>
+        <div
+          v-if="isShowLayer"
+          class="filter-data"
+        >
+          <li
+            :class="layer.custom?'filter-active':''"
+            @click="setLayer('custom')"
+          >
+            Otomatis
+          </li>
+          <li
+            :class="layer.kota?'filter-active':''"
+            @click="setLayer('kota')"
+          >
+            Kota/Kabupaten
+          </li>
+          <li
+            :class="layer.kecamatan?'filter-active':''"
+            @click="setLayer('kecamatan')"
+          >
+            Kecamatan
+          </li>
+          <li
+            :class="layer.kelurahan?'filter-active':''"
+            @click="setLayer('kelurahan')"
+          >
+            Kelurahan/Desa
+          </li>
         </div>
         <div
           v-if="isShowFilter"
@@ -123,7 +160,7 @@
 
 <script>
 
-import { faFilter, faHome } from '@fortawesome/free-solid-svg-icons'
+import { faFilter, faHome, faLayerGroup } from '@fortawesome/free-solid-svg-icons'
 import { GeoSearchControl, OpenStreetMapProvider } from 'leaflet-geosearch'
 import jsonKota from '@/assets/kotaV2.json'
 import jsonKecamatan from '@/assets/kecamatanV2.json'
@@ -144,6 +181,7 @@ export default {
 
       faFilter,
       faHome,
+      faLayerGroup,
 
       distributionProvinceData: [],
 
@@ -191,6 +229,14 @@ export default {
         odp_meninggal: false
       },
       filterActive: 'positif_proses',
+      isShowLayer: false,
+      layer: {
+        custom: false,
+        kota: true,
+        kecamatan: false,
+        kelurahan: false
+      },
+      layerActive: 'kota',
 
       rangeColor: {
         positif_proses: ['#DB4A81', '#DA1861', '#980043', '#CE0C55', '#B70142'],
@@ -233,7 +279,6 @@ export default {
 
     onChanges () {
       console.log('polygon on changes')
-
       this.dataJson.positif_proses = []
       this.dataJson.positif_meninggal = []
       this.dataJson.positif_sembuh = []
@@ -329,13 +374,13 @@ export default {
     setZoomLevel () {
       // listening zoomed level
       this.map.on('zoomend', () => {
-        if (this.map.getZoom() <= 10) {
+        if (this.map.getZoom() <= 10 && this.layerActive === 'custom') {
           this.removeLayer()
           this.createLayerKota(this.filterActive)
-        } else if (this.map.getZoom() > 10 && this.map.getZoom() <= 12) {
+        } else if (this.map.getZoom() > 10 && this.map.getZoom() <= 12 && this.layerActive === 'custom') {
           this.removeLayer()
           this.createLayerKecamatan(this.filterActive)
-        } else if (this.map.getZoom() > 12) {
+        } else if (this.map.getZoom() > 12 && this.layerActive === 'custom') {
           this.removeLayer()
           this.createLayerKelurahan(this.filterActive)
         }
@@ -554,7 +599,6 @@ export default {
     showFilter () {
       this.isShowFilter = !this.isShowFilter
     },
-
     setFilter (category) {
       this.removeMarker()
       for (const cat of Object.keys(this.filter)) {
@@ -563,13 +607,57 @@ export default {
       this.filter[category] = !this.filter[category]
       this.filterActive = category
 
-      if (this.map.getZoom() <= 10) {
+      if (this.layerActive === 'custom') {
+        if (this.map.getZoom() <= 10) {
+          this.removeLayer()
+          this.createLayerKota(this.filterActive)
+        } else if (this.map.getZoom() > 10 && this.map.getZoom() <= 13) {
+          this.removeLayer()
+          this.createLayerKecamatan(this.filterActive)
+        } else if (this.map.getZoom() > 13) {
+          this.removeLayer()
+          this.createLayerKelurahan(this.filterActive)
+        }
+      } else if (this.layerActive === 'kota') {
         this.removeLayer()
         this.createLayerKota(this.filterActive)
-      } else if (this.map.getZoom() > 10 && this.map.getZoom() <= 13) {
+      } else if (this.layerActive === 'kecamatan') {
         this.removeLayer()
         this.createLayerKecamatan(this.filterActive)
-      } else if (this.map.getZoom() > 13) {
+      } else if (this.layerActive === 'kelurahan') {
+        this.removeLayer()
+        this.createLayerKelurahan(this.filterActive)
+      }
+    },
+
+    showLayer () {
+      this.isShowLayer = !this.isShowLayer
+    },
+    setLayer (category) {
+      for (const cat of Object.keys(this.layer)) {
+        this.layer[cat] = false
+      }
+      this.layer[category] = !this.layer[category]
+      this.layerActive = category
+
+      if (this.layerActive === 'custom') {
+        if (this.map.getZoom() <= 10) {
+          this.removeLayer()
+          this.createLayerKota(this.filterActive)
+        } else if (this.map.getZoom() > 10 && this.map.getZoom() <= 13) {
+          this.removeLayer()
+          this.createLayerKecamatan(this.filterActive)
+        } else if (this.map.getZoom() > 13) {
+          this.removeLayer()
+          this.createLayerKelurahan(this.filterActive)
+        }
+      } else if (this.layerActive === 'kota') {
+        this.removeLayer()
+        this.createLayerKota(this.filterActive)
+      } else if (this.layerActive === 'kecamatan') {
+        this.removeLayer()
+        this.createLayerKecamatan(this.filterActive)
+      } else if (this.layerActive === 'kelurahan') {
         this.removeLayer()
         this.createLayerKelurahan(this.filterActive)
       }
