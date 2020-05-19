@@ -30,6 +30,7 @@
     "numbro": "^2.2.0",
     "nuxt": "^2.12.2",
     "nuxt-leaflet": "0.0.21",
+    "percentile": "^1.3.0",
     "register-service-worker": "^1.7.0",
     "sass-loader": "^8.0.2",
     "sweetalert2": "^9.10.0",
