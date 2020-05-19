@@ -118,7 +118,11 @@
     </section>
 
     <section class="m-4 md:m-8">
-      <BarStatHarianAkumulatif
+      <!-- <BarStatHarianAkumulatif
+        :props-data-rekapitulasi-jabar-harian-prov.sync="jsonDataRekapitulasiJabarHarianProv"
+        :props-data-rekapitulasi-jabar-kumulatif-prov.sync="jsonDataRekapitulasiJabarKumulatifProv"
+      /> -->
+      <BarStatHarianAkumulatifV2
         :props-data-rekapitulasi-jabar-harian-prov.sync="jsonDataRekapitulasiJabarHarianProv"
         :props-data-rekapitulasi-jabar-kumulatif-prov.sync="jsonDataRekapitulasiJabarKumulatifProv"
       />
@@ -179,7 +183,8 @@ export default {
     BarStatAreaSingleV2: () => import('~/components/BarStatAreaSingleV2'),
     BarStatJenisKelamin: () => import('~/components/BarStatJenisKelamin'),
     BarStatUsia: () => import('~/components/BarStatUsia'),
-    BarStatHarianAkumulatif: () => import('~/components/BarStatHarianAkumulatif'),
+    // BarStatHarianAkumulatif: () => import('~/components/BarStatHarianAkumulatif'),
+    BarStatHarianAkumulatifV2: () => import('~/components/BarStatHarianAkumulatifV2'),
     BarStatTable: () => import('~/components/BarStatTable'),
     MapV2SebaranCluster: () => import('~/components/MapV2SebaranCluster'),
     MapV2SebaranPolygon: () => import('~/components/MapV2SebaranPolygon'),
