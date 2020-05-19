@@ -210,28 +210,8 @@ export default {
           positif_persentase: 0,
           sembuh: 0,
           meninggal: 0,
-          dataHarian: [
-            [
-              'Tanggal',
-              'Harian',
-              { type: 'string', role: 'tooltip', p: { html: true } },
-              'Rata-rata 7 Hari',
-              { type: 'string', role: 'tooltip', p: { html: true } }
-            ],
-            ['0', 0, '', 0, '']
-          ],
-          dataAkumulatif: [
-            [
-              'Tanggal',
-              'Positif Aktif',
-              { type: 'string', role: 'tooltip', p: { html: true } },
-              'Sembuh',
-              { type: 'string', role: 'tooltip', p: { html: true } },
-              'Meninggal',
-              { type: 'string', role: 'tooltip', p: { html: true } }
-            ],
-            ['0', 0, '', 0, '', 0, '']
-          ]
+          dataHarian: [],
+          dataAkumulatif: []
         },
         {
           kode: '3217',
@@ -246,28 +226,8 @@ export default {
           positif_persentase: 0,
           sembuh: 0,
           meninggal: 0,
-          dataHarian: [
-            [
-              'Tanggal',
-              'Harian',
-              { type: 'string', role: 'tooltip', p: { html: true } },
-              'Rata-rata 7 Hari',
-              { type: 'string', role: 'tooltip', p: { html: true } }
-            ],
-            ['0', 0, '', 0, '']
-          ],
-          dataAkumulatif: [
-            [
-              'Tanggal',
-              'Positif Aktif',
-              { type: 'string', role: 'tooltip', p: { html: true } },
-              'Sembuh',
-              { type: 'string', role: 'tooltip', p: { html: true } },
-              'Meninggal',
-              { type: 'string', role: 'tooltip', p: { html: true } }
-            ],
-            ['0', 0, '', 0, '', 0, '']
-          ]
+          dataHarian: [],
+          dataAkumulatif: []
         },
         {
           kode: '3216',
@@ -282,28 +242,8 @@ export default {
           positif_persentase: 0,
           sembuh: 0,
           meninggal: 0,
-          dataHarian: [
-            [
-              'Tanggal',
-              'Harian',
-              { type: 'string', role: 'tooltip', p: { html: true } },
-              'Rata-rata 7 Hari',
-              { type: 'string', role: 'tooltip', p: { html: true } }
-            ],
-            ['0', 0, '', 0, '']
-          ],
-          dataAkumulatif: [
-            [
-              'Tanggal',
-              'Positif Aktif',
-              { type: 'string', role: 'tooltip', p: { html: true } },
-              'Sembuh',
-              { type: 'string', role: 'tooltip', p: { html: true } },
-              'Meninggal',
-              { type: 'string', role: 'tooltip', p: { html: true } }
-            ],
-            ['0', 0, '', 0, '', 0, '']
-          ]
+          dataHarian: [],
+          dataAkumulatif: []
         },
         {
           kode: '3201',
@@ -318,28 +258,8 @@ export default {
           positif_persentase: 0,
           sembuh: 0,
           meninggal: 0,
-          dataHarian: [
-            [
-              'Tanggal',
-              'Harian',
-              { type: 'string', role: 'tooltip', p: { html: true } },
-              'Rata-rata 7 Hari',
-              { type: 'string', role: 'tooltip', p: { html: true } }
-            ],
-            ['0', 0, '', 0, '']
-          ],
-          dataAkumulatif: [
-            [
-              'Tanggal',
-              'Positif Aktif',
-              { type: 'string', role: 'tooltip', p: { html: true } },
-              'Sembuh',
-              { type: 'string', role: 'tooltip', p: { html: true } },
-              'Meninggal',
-              { type: 'string', role: 'tooltip', p: { html: true } }
-            ],
-            ['0', 0, '', 0, '', 0, '']
-          ]
+          dataHarian: [],
+          dataAkumulatif: []
         },
         {
           kode: '3207',
@@ -354,28 +274,8 @@ export default {
           positif_persentase: 0,
           sembuh: 0,
           meninggal: 0,
-          dataHarian: [
-            [
-              'Tanggal',
-              'Harian',
-              { type: 'string', role: 'tooltip', p: { html: true } },
-              'Rata-rata 7 Hari',
-              { type: 'string', role: 'tooltip', p: { html: true } }
-            ],
-            ['0', 0, '', 0, '']
-          ],
-          dataAkumulatif: [
-            [
-              'Tanggal',
-              'Positif Aktif',
-              { type: 'string', role: 'tooltip', p: { html: true } },
-              'Sembuh',
-              { type: 'string', role: 'tooltip', p: { html: true } },
-              'Meninggal',
-              { type: 'string', role: 'tooltip', p: { html: true } }
-            ],
-            ['0', 0, '', 0, '', 0, '']
-          ]
+          dataHarian: [],
+          dataAkumulatif: []
         },
         {
           kode: '3203',
@@ -390,28 +290,8 @@ export default {
           positif_persentase: 0,
           sembuh: 0,
           meninggal: 0,
-          dataHarian: [
-            [
-              'Tanggal',
-              'Harian',
-              { type: 'string', role: 'tooltip', p: { html: true } },
-              'Rata-rata 7 Hari',
-              { type: 'string', role: 'tooltip', p: { html: true } }
-            ],
-            ['0', 0, '', 0, '']
-          ],
-          dataAkumulatif: [
-            [
-              'Tanggal',
-              'Positif Aktif',
-              { type: 'string', role: 'tooltip', p: { html: true } },
-              'Sembuh',
-              { type: 'string', role: 'tooltip', p: { html: true } },
-              'Meninggal',
-              { type: 'string', role: 'tooltip', p: { html: true } }
-            ],
-            ['0', 0, '', 0, '', 0, '']
-          ]
+          dataHarian: [],
+          dataAkumulatif: []
         },
         {
           kode: '3209',
@@ -426,28 +306,8 @@ export default {
           positif_persentase: 0,
           sembuh: 0,
           meninggal: 0,
-          dataHarian: [
-            [
-              'Tanggal',
-              'Harian',
-              { type: 'string', role: 'tooltip', p: { html: true } },
-              'Rata-rata 7 Hari',
-              { type: 'string', role: 'tooltip', p: { html: true } }
-            ],
-            ['0', 0, '', 0, '']
-          ],
-          dataAkumulatif: [
-            [
-              'Tanggal',
-              'Positif Aktif',
-              { type: 'string', role: 'tooltip', p: { html: true } },
-              'Sembuh',
-              { type: 'string', role: 'tooltip', p: { html: true } },
-              'Meninggal',
-              { type: 'string', role: 'tooltip', p: { html: true } }
-            ],
-            ['0', 0, '', 0, '', 0, '']
-          ]
+          dataHarian: [],
+          dataAkumulatif: []
         },
         {
           kode: '3205',
@@ -462,28 +322,8 @@ export default {
           positif_persentase: 0,
           sembuh: 0,
           meninggal: 0,
-          dataHarian: [
-            [
-              'Tanggal',
-              'Harian',
-              { type: 'string', role: 'tooltip', p: { html: true } },
-              'Rata-rata 7 Hari',
-              { type: 'string', role: 'tooltip', p: { html: true } }
-            ],
-            ['0', 0, '', 0, '']
-          ],
-          dataAkumulatif: [
-            [
-              'Tanggal',
-              'Positif Aktif',
-              { type: 'string', role: 'tooltip', p: { html: true } },
-              'Sembuh',
-              { type: 'string', role: 'tooltip', p: { html: true } },
-              'Meninggal',
-              { type: 'string', role: 'tooltip', p: { html: true } }
-            ],
-            ['0', 0, '', 0, '', 0, '']
-          ]
+          dataHarian: [],
+          dataAkumulatif: []
         },
         {
           kode: '3212',
@@ -498,28 +338,8 @@ export default {
           positif_persentase: 0,
           sembuh: 0,
           meninggal: 0,
-          dataHarian: [
-            [
-              'Tanggal',
-              'Harian',
-              { type: 'string', role: 'tooltip', p: { html: true } },
-              'Rata-rata 7 Hari',
-              { type: 'string', role: 'tooltip', p: { html: true } }
-            ],
-            ['0', 0, '', 0, '']
-          ],
-          dataAkumulatif: [
-            [
-              'Tanggal',
-              'Positif Aktif',
-              { type: 'string', role: 'tooltip', p: { html: true } },
-              'Sembuh',
-              { type: 'string', role: 'tooltip', p: { html: true } },
-              'Meninggal',
-              { type: 'string', role: 'tooltip', p: { html: true } }
-            ],
-            ['0', 0, '', 0, '', 0, '']
-          ]
+          dataHarian: [],
+          dataAkumulatif: []
         },
         {
           kode: '3215',
@@ -534,28 +354,8 @@ export default {
           positif_persentase: 0,
           sembuh: 0,
           meninggal: 0,
-          dataHarian: [
-            [
-              'Tanggal',
-              'Harian',
-              { type: 'string', role: 'tooltip', p: { html: true } },
-              'Rata-rata 7 Hari',
-              { type: 'string', role: 'tooltip', p: { html: true } }
-            ],
-            ['0', 0, '', 0, '']
-          ],
-          dataAkumulatif: [
-            [
-              'Tanggal',
-              'Positif Aktif',
-              { type: 'string', role: 'tooltip', p: { html: true } },
-              'Sembuh',
-              { type: 'string', role: 'tooltip', p: { html: true } },
-              'Meninggal',
-              { type: 'string', role: 'tooltip', p: { html: true } }
-            ],
-            ['0', 0, '', 0, '', 0, '']
-          ]
+          dataHarian: [],
+          dataAkumulatif: []
         },
         {
           kode: '3208',
@@ -570,28 +370,8 @@ export default {
           positif_persentase: 0,
           sembuh: 0,
           meninggal: 0,
-          dataHarian: [
-            [
-              'Tanggal',
-              'Harian',
-              { type: 'string', role: 'tooltip', p: { html: true } },
-              'Rata-rata 7 Hari',
-              { type: 'string', role: 'tooltip', p: { html: true } }
-            ],
-            ['0', 0, '', 0, '']
-          ],
-          dataAkumulatif: [
-            [
-              'Tanggal',
-              'Positif Aktif',
-              { type: 'string', role: 'tooltip', p: { html: true } },
-              'Sembuh',
-              { type: 'string', role: 'tooltip', p: { html: true } },
-              'Meninggal',
-              { type: 'string', role: 'tooltip', p: { html: true } }
-            ],
-            ['0', 0, '', 0, '', 0, '']
-          ]
+          dataHarian: [],
+          dataAkumulatif: []
         },
         {
           kode: '3210',
@@ -606,28 +386,8 @@ export default {
           positif_persentase: 0,
           sembuh: 0,
           meninggal: 0,
-          dataHarian: [
-            [
-              'Tanggal',
-              'Harian',
-              { type: 'string', role: 'tooltip', p: { html: true } },
-              'Rata-rata 7 Hari',
-              { type: 'string', role: 'tooltip', p: { html: true } }
-            ],
-            ['0', 0, '', 0, '']
-          ],
-          dataAkumulatif: [
-            [
-              'Tanggal',
-              'Positif Aktif',
-              { type: 'string', role: 'tooltip', p: { html: true } },
-              'Sembuh',
-              { type: 'string', role: 'tooltip', p: { html: true } },
-              'Meninggal',
-              { type: 'string', role: 'tooltip', p: { html: true } }
-            ],
-            ['0', 0, '', 0, '', 0, '']
-          ]
+          dataHarian: [],
+          dataAkumulatif: []
         },
         {
           kode: '3218',
@@ -642,28 +402,8 @@ export default {
           positif_persentase: 0,
           sembuh: 0,
           meninggal: 0,
-          dataHarian: [
-            [
-              'Tanggal',
-              'Harian',
-              { type: 'string', role: 'tooltip', p: { html: true } },
-              'Rata-rata 7 Hari',
-              { type: 'string', role: 'tooltip', p: { html: true } }
-            ],
-            ['0', 0, '', 0, '']
-          ],
-          dataAkumulatif: [
-            [
-              'Tanggal',
-              'Positif Aktif',
-              { type: 'string', role: 'tooltip', p: { html: true } },
-              'Sembuh',
-              { type: 'string', role: 'tooltip', p: { html: true } },
-              'Meninggal',
-              { type: 'string', role: 'tooltip', p: { html: true } }
-            ],
-            ['0', 0, '', 0, '', 0, '']
-          ]
+          dataHarian: [],
+          dataAkumulatif: []
         },
         {
           kode: '3214',
@@ -678,28 +418,8 @@ export default {
           positif_persentase: 0,
           sembuh: 0,
           meninggal: 0,
-          dataHarian: [
-            [
-              'Tanggal',
-              'Harian',
-              { type: 'string', role: 'tooltip', p: { html: true } },
-              'Rata-rata 7 Hari',
-              { type: 'string', role: 'tooltip', p: { html: true } }
-            ],
-            ['0', 0, '', 0, '']
-          ],
-          dataAkumulatif: [
-            [
-              'Tanggal',
-              'Positif Aktif',
-              { type: 'string', role: 'tooltip', p: { html: true } },
-              'Sembuh',
-              { type: 'string', role: 'tooltip', p: { html: true } },
-              'Meninggal',
-              { type: 'string', role: 'tooltip', p: { html: true } }
-            ],
-            ['0', 0, '', 0, '', 0, '']
-          ]
+          dataHarian: [],
+          dataAkumulatif: []
         },
         {
           kode: '3213',
@@ -714,28 +434,8 @@ export default {
           positif_persentase: 0,
           sembuh: 0,
           meninggal: 0,
-          dataHarian: [
-            [
-              'Tanggal',
-              'Harian',
-              { type: 'string', role: 'tooltip', p: { html: true } },
-              'Rata-rata 7 Hari',
-              { type: 'string', role: 'tooltip', p: { html: true } }
-            ],
-            ['0', 0, '', 0, '']
-          ],
-          dataAkumulatif: [
-            [
-              'Tanggal',
-              'Positif Aktif',
-              { type: 'string', role: 'tooltip', p: { html: true } },
-              'Sembuh',
-              { type: 'string', role: 'tooltip', p: { html: true } },
-              'Meninggal',
-              { type: 'string', role: 'tooltip', p: { html: true } }
-            ],
-            ['0', 0, '', 0, '', 0, '']
-          ]
+          dataHarian: [],
+          dataAkumulatif: []
         },
         {
           kode: '3202',
@@ -750,28 +450,8 @@ export default {
           positif_persentase: 0,
           sembuh: 0,
           meninggal: 0,
-          dataHarian: [
-            [
-              'Tanggal',
-              'Harian',
-              { type: 'string', role: 'tooltip', p: { html: true } },
-              'Rata-rata 7 Hari',
-              { type: 'string', role: 'tooltip', p: { html: true } }
-            ],
-            ['0', 0, '', 0, '']
-          ],
-          dataAkumulatif: [
-            [
-              'Tanggal',
-              'Positif Aktif',
-              { type: 'string', role: 'tooltip', p: { html: true } },
-              'Sembuh',
-              { type: 'string', role: 'tooltip', p: { html: true } },
-              'Meninggal',
-              { type: 'string', role: 'tooltip', p: { html: true } }
-            ],
-            ['0', 0, '', 0, '', 0, '']
-          ]
+          dataHarian: [],
+          dataAkumulatif: []
         },
         {
           kode: '3211',
@@ -786,28 +466,8 @@ export default {
           positif_persentase: 0,
           sembuh: 0,
           meninggal: 0,
-          dataHarian: [
-            [
-              'Tanggal',
-              'Harian',
-              { type: 'string', role: 'tooltip', p: { html: true } },
-              'Rata-rata 7 Hari',
-              { type: 'string', role: 'tooltip', p: { html: true } }
-            ],
-            ['0', 0, '', 0, '']
-          ],
-          dataAkumulatif: [
-            [
-              'Tanggal',
-              'Positif Aktif',
-              { type: 'string', role: 'tooltip', p: { html: true } },
-              'Sembuh',
-              { type: 'string', role: 'tooltip', p: { html: true } },
-              'Meninggal',
-              { type: 'string', role: 'tooltip', p: { html: true } }
-            ],
-            ['0', 0, '', 0, '', 0, '']
-          ]
+          dataHarian: [],
+          dataAkumulatif: []
         },
         {
           kode: '3206',
@@ -822,28 +482,8 @@ export default {
           positif_persentase: 0,
           sembuh: 0,
           meninggal: 0,
-          dataHarian: [
-            [
-              'Tanggal',
-              'Harian',
-              { type: 'string', role: 'tooltip', p: { html: true } },
-              'Rata-rata 7 Hari',
-              { type: 'string', role: 'tooltip', p: { html: true } }
-            ],
-            ['0', 0, '', 0, '']
-          ],
-          dataAkumulatif: [
-            [
-              'Tanggal',
-              'Positif Aktif',
-              { type: 'string', role: 'tooltip', p: { html: true } },
-              'Sembuh',
-              { type: 'string', role: 'tooltip', p: { html: true } },
-              'Meninggal',
-              { type: 'string', role: 'tooltip', p: { html: true } }
-            ],
-            ['0', 0, '', 0, '', 0, '']
-          ]
+          dataHarian: [],
+          dataAkumulatif: []
         },
         {
           kode: '3273',
@@ -858,28 +498,8 @@ export default {
           positif_persentase: 0,
           sembuh: 0,
           meninggal: 0,
-          dataHarian: [
-            [
-              'Tanggal',
-              'Harian',
-              { type: 'string', role: 'tooltip', p: { html: true } },
-              'Rata-rata 7 Hari',
-              { type: 'string', role: 'tooltip', p: { html: true } }
-            ],
-            ['0', 0, '', 0, '']
-          ],
-          dataAkumulatif: [
-            [
-              'Tanggal',
-              'Positif Aktif',
-              { type: 'string', role: 'tooltip', p: { html: true } },
-              'Sembuh',
-              { type: 'string', role: 'tooltip', p: { html: true } },
-              'Meninggal',
-              { type: 'string', role: 'tooltip', p: { html: true } }
-            ],
-            ['0', 0, '', 0, '', 0, '']
-          ]
+          dataHarian: [],
+          dataAkumulatif: []
         },
         {
           kode: '3279',
@@ -894,28 +514,8 @@ export default {
           positif_persentase: 0,
           sembuh: 0,
           meninggal: 0,
-          dataHarian: [
-            [
-              'Tanggal',
-              'Harian',
-              { type: 'string', role: 'tooltip', p: { html: true } },
-              'Rata-rata 7 Hari',
-              { type: 'string', role: 'tooltip', p: { html: true } }
-            ],
-            ['0', 0, '', 0, '']
-          ],
-          dataAkumulatif: [
-            [
-              'Tanggal',
-              'Positif Aktif',
-              { type: 'string', role: 'tooltip', p: { html: true } },
-              'Sembuh',
-              { type: 'string', role: 'tooltip', p: { html: true } },
-              'Meninggal',
-              { type: 'string', role: 'tooltip', p: { html: true } }
-            ],
-            ['0', 0, '', 0, '', 0, '']
-          ]
+          dataHarian: [],
+          dataAkumulatif: []
         },
         {
           kode: '3275',
@@ -930,28 +530,8 @@ export default {
           positif_persentase: 0,
           sembuh: 0,
           meninggal: 0,
-          dataHarian: [
-            [
-              'Tanggal',
-              'Harian',
-              { type: 'string', role: 'tooltip', p: { html: true } },
-              'Rata-rata 7 Hari',
-              { type: 'string', role: 'tooltip', p: { html: true } }
-            ],
-            ['0', 0, '', 0, '']
-          ],
-          dataAkumulatif: [
-            [
-              'Tanggal',
-              'Positif Aktif',
-              { type: 'string', role: 'tooltip', p: { html: true } },
-              'Sembuh',
-              { type: 'string', role: 'tooltip', p: { html: true } },
-              'Meninggal',
-              { type: 'string', role: 'tooltip', p: { html: true } }
-            ],
-            ['0', 0, '', 0, '', 0, '']
-          ]
+          dataHarian: [],
+          dataAkumulatif: []
         },
         {
           kode: '3271',
@@ -966,28 +546,8 @@ export default {
           positif_persentase: 0,
           sembuh: 0,
           meninggal: 0,
-          dataHarian: [
-            [
-              'Tanggal',
-              'Harian',
-              { type: 'string', role: 'tooltip', p: { html: true } },
-              'Rata-rata 7 Hari',
-              { type: 'string', role: 'tooltip', p: { html: true } }
-            ],
-            ['0', 0, '', 0, '']
-          ],
-          dataAkumulatif: [
-            [
-              'Tanggal',
-              'Positif Aktif',
-              { type: 'string', role: 'tooltip', p: { html: true } },
-              'Sembuh',
-              { type: 'string', role: 'tooltip', p: { html: true } },
-              'Meninggal',
-              { type: 'string', role: 'tooltip', p: { html: true } }
-            ],
-            ['0', 0, '', 0, '', 0, '']
-          ]
+          dataHarian: [],
+          dataAkumulatif: []
         },
         {
           kode: '3277',
@@ -1002,28 +562,8 @@ export default {
           positif_persentase: 0,
           sembuh: 0,
           meninggal: 0,
-          dataHarian: [
-            [
-              'Tanggal',
-              'Harian',
-              { type: 'string', role: 'tooltip', p: { html: true } },
-              'Rata-rata 7 Hari',
-              { type: 'string', role: 'tooltip', p: { html: true } }
-            ],
-            ['0', 0, '', 0, '']
-          ],
-          dataAkumulatif: [
-            [
-              'Tanggal',
-              'Positif Aktif',
-              { type: 'string', role: 'tooltip', p: { html: true } },
-              'Sembuh',
-              { type: 'string', role: 'tooltip', p: { html: true } },
-              'Meninggal',
-              { type: 'string', role: 'tooltip', p: { html: true } }
-            ],
-            ['0', 0, '', 0, '', 0, '']
-          ]
+          dataHarian: [],
+          dataAkumulatif: []
         },
         {
           kode: '3274',
@@ -1038,28 +578,8 @@ export default {
           positif_persentase: 0,
           sembuh: 0,
           meninggal: 0,
-          dataHarian: [
-            [
-              'Tanggal',
-              'Harian',
-              { type: 'string', role: 'tooltip', p: { html: true } },
-              'Rata-rata 7 Hari',
-              { type: 'string', role: 'tooltip', p: { html: true } }
-            ],
-            ['0', 0, '', 0, '']
-          ],
-          dataAkumulatif: [
-            [
-              'Tanggal',
-              'Positif Aktif',
-              { type: 'string', role: 'tooltip', p: { html: true } },
-              'Sembuh',
-              { type: 'string', role: 'tooltip', p: { html: true } },
-              'Meninggal',
-              { type: 'string', role: 'tooltip', p: { html: true } }
-            ],
-            ['0', 0, '', 0, '', 0, '']
-          ]
+          dataHarian: [],
+          dataAkumulatif: []
         },
         {
           kode: '3276',
@@ -1074,28 +594,8 @@ export default {
           positif_persentase: 0,
           sembuh: 0,
           meninggal: 0,
-          dataHarian: [
-            [
-              'Tanggal',
-              'Harian',
-              { type: 'string', role: 'tooltip', p: { html: true } },
-              'Rata-rata 7 Hari',
-              { type: 'string', role: 'tooltip', p: { html: true } }
-            ],
-            ['0', 0, '', 0, '']
-          ],
-          dataAkumulatif: [
-            [
-              'Tanggal',
-              'Positif Aktif',
-              { type: 'string', role: 'tooltip', p: { html: true } },
-              'Sembuh',
-              { type: 'string', role: 'tooltip', p: { html: true } },
-              'Meninggal',
-              { type: 'string', role: 'tooltip', p: { html: true } }
-            ],
-            ['0', 0, '', 0, '', 0, '']
-          ]
+          dataHarian: [],
+          dataAkumulatif: []
         },
         {
           kode: '3272',
@@ -1110,28 +610,8 @@ export default {
           positif_persentase: 0,
           sembuh: 0,
           meninggal: 0,
-          dataHarian: [
-            [
-              'Tanggal',
-              'Harian',
-              { type: 'string', role: 'tooltip', p: { html: true } },
-              'Rata-rata 7 Hari',
-              { type: 'string', role: 'tooltip', p: { html: true } }
-            ],
-            ['0', 0, '', 0, '']
-          ],
-          dataAkumulatif: [
-            [
-              'Tanggal',
-              'Positif Aktif',
-              { type: 'string', role: 'tooltip', p: { html: true } },
-              'Sembuh',
-              { type: 'string', role: 'tooltip', p: { html: true } },
-              'Meninggal',
-              { type: 'string', role: 'tooltip', p: { html: true } }
-            ],
-            ['0', 0, '', 0, '', 0, '']
-          ]
+          dataHarian: [],
+          dataAkumulatif: []
         },
         {
           kode: '3278',
@@ -1146,28 +626,8 @@ export default {
           positif_persentase: 0,
           sembuh: 0,
           meninggal: 0,
-          dataHarian: [
-            [
-              'Tanggal',
-              'Harian',
-              { type: 'string', role: 'tooltip', p: { html: true } },
-              'Rata-rata 7 Hari',
-              { type: 'string', role: 'tooltip', p: { html: true } }
-            ],
-            ['0', 0, '', 0, '']
-          ],
-          dataAkumulatif: [
-            [
-              'Tanggal',
-              'Positif Aktif',
-              { type: 'string', role: 'tooltip', p: { html: true } },
-              'Sembuh',
-              { type: 'string', role: 'tooltip', p: { html: true } },
-              'Meninggal',
-              { type: 'string', role: 'tooltip', p: { html: true } }
-            ],
-            ['0', 0, '', 0, '', 0, '']
-          ]
+          dataHarian: [],
+          dataAkumulatif: []
         }
       ],
       ChartHarianData: [
@@ -1624,31 +1084,31 @@ export default {
             const temp1 = self.jsonDataKabupatenHarian[i]
             let jml = 0
             let ratarata = 0
-            if (i === 0) {
+            if (i === 0 * 27) {
               jml = this.jsonDataKabupatenHarian[i].positif
               ratarata = jml / 1
-            } else if (i === 1) {
-              jml = this.jsonDataKabupatenHarian[i].positif + this.jsonDataKabupatenHarian[i - 1].positif
+            } else if (i === 1 * 27) {
+              jml = this.jsonDataKabupatenHarian[i].positif + this.jsonDataKabupatenHarian[i - (1 * 27)].positif
               ratarata = jml / 2
-            } else if (i === 2) {
-              jml = this.jsonDataKabupatenHarian[i].positif + this.jsonDataKabupatenHarian[i - 1].positif + this.jsonDataKabupatenHarian[i - 2].positif
+            } else if (i === 2 * 27) {
+              jml = this.jsonDataKabupatenHarian[i].positif + this.jsonDataKabupatenHarian[i - (1 * 27)].positif + this.jsonDataKabupatenHarian[i - (2 * 27)].positif
               ratarata = jml / 3
-            } else if (i === 3) {
-              jml = this.jsonDataKabupatenHarian[i].positif + this.jsonDataKabupatenHarian[i - 1].positif + this.jsonDataKabupatenHarian[i - 2].positif +
-                this.jsonDataKabupatenHarian[i - 3].positif
+            } else if (i === 3 * 27) {
+              jml = this.jsonDataKabupatenHarian[i].positif + this.jsonDataKabupatenHarian[i - (1 * 27)].positif + this.jsonDataKabupatenHarian[i - (2 * 27)].positif +
+                this.jsonDataKabupatenHarian[i - (3 * 27)].positif
               ratarata = jml / 4
-            } else if (i === 4) {
-              jml = this.jsonDataKabupatenHarian[i].positif + this.jsonDataKabupatenHarian[i - 1].positif + this.jsonDataKabupatenHarian[i - 2].positif +
-                this.jsonDataKabupatenHarian[i - 3].positif + this.jsonDataKabupatenHarian[i - 4].positif
+            } else if (i === 4 * 27) {
+              jml = this.jsonDataKabupatenHarian[i].positif + this.jsonDataKabupatenHarian[i - (1 * 27)].positif + this.jsonDataKabupatenHarian[i - (2 * 27)].positif +
+                this.jsonDataKabupatenHarian[i - (3 * 27)].positif + this.jsonDataKabupatenHarian[i - (4 * 27)].positif
               ratarata = jml / 5
-            } else if (i === 5) {
-              jml = this.jsonDataKabupatenHarian[i].positif + this.jsonDataKabupatenHarian[i - 1].positif + this.jsonDataKabupatenHarian[i - 2].positif +
-              this.jsonDataKabupatenHarian[i - 3].positif + this.jsonDataKabupatenHarian[i - 4].positif + this.jsonDataKabupatenHarian[i - 5].positif
+            } else if (i === 5 * 27) {
+              jml = this.jsonDataKabupatenHarian[i].positif + this.jsonDataKabupatenHarian[i - (1 * 27)].positif + this.jsonDataKabupatenHarian[i - (2 * 27)].positif +
+              this.jsonDataKabupatenHarian[i - (3 * 27)].positif + this.jsonDataKabupatenHarian[i - (4 * 27)].positif + this.jsonDataKabupatenHarian[i - (5 * 27)].positif
               ratarata = jml / 6
-            } else if (i > 6) {
-              jml = this.jsonDataKabupatenHarian[i].positif + this.jsonDataKabupatenHarian[i - 1].positif + this.jsonDataKabupatenHarian[i - 2].positif +
-                this.jsonDataKabupatenHarian[i - 3].positif + this.jsonDataKabupatenHarian[i - 4].positif + this.jsonDataKabupatenHarian[i - 5].positif +
-                this.jsonDataKabupatenHarian[i - 6].positif
+            } else if (i > 6 * 27) {
+              jml = this.jsonDataKabupatenHarian[i].positif + this.jsonDataKabupatenHarian[i - (1 * 27)].positif + this.jsonDataKabupatenHarian[i - (2 * 27)].positif +
+                this.jsonDataKabupatenHarian[i - (3 * 27)].positif + this.jsonDataKabupatenHarian[i - (4 * 27)].positif + this.jsonDataKabupatenHarian[i - (5 * 27)].positif +
+                this.jsonDataKabupatenHarian[i - (6 * 27)].positif
               ratarata = jml / 7
             } else {
               jml = 0
@@ -1677,31 +1137,31 @@ export default {
             const temp1 = self.jsonDataKabupatenKumulatif[i]
             let jml = 0
             let ratarata = 0
-            if (i === 0) {
+            if (i === 0 * 27) {
               jml = this.jsonDataKabupatenKumulatif[i].positif
               ratarata = jml / 1
-            } else if (i === 1) {
-              jml = this.jsonDataKabupatenKumulatif[i].positif + this.jsonDataKabupatenKumulatif[i - 1].positif
+            } else if (i === 1 * 27) {
+              jml = this.jsonDataKabupatenKumulatif[i].positif + this.jsonDataKabupatenKumulatif[i - (1 * 27)].positif
               ratarata = jml / 2
-            } else if (i === 2) {
-              jml = this.jsonDataKabupatenKumulatif[i].positif + this.jsonDataKabupatenKumulatif[i - 1].positif + this.jsonDataKabupatenKumulatif[i - 2].positif
+            } else if (i === 2 * 27) {
+              jml = this.jsonDataKabupatenKumulatif[i].positif + this.jsonDataKabupatenKumulatif[i - (1 * 27)].positif + this.jsonDataKabupatenKumulatif[i - (2 * 27)].positif
               ratarata = jml / 3
-            } else if (i === 3) {
-              jml = this.jsonDataKabupatenKumulatif[i].positif + this.jsonDataKabupatenKumulatif[i - 1].positif + this.jsonDataKabupatenKumulatif[i - 2].positif +
-                this.jsonDataKabupatenKumulatif[i - 3].positif
+            } else if (i === 3 * 27) {
+              jml = this.jsonDataKabupatenKumulatif[i].positif + this.jsonDataKabupatenKumulatif[i - (1 * 27)].positif + this.jsonDataKabupatenKumulatif[i - (2 * 27)].positif +
+                this.jsonDataKabupatenKumulatif[i - (3 * 27)].positif
               ratarata = jml / 4
-            } else if (i === 4) {
-              jml = this.jsonDataKabupatenKumulatif[i].positif + this.jsonDataKabupatenKumulatif[i - 1].positif + this.jsonDataKabupatenKumulatif[i - 2].positif +
-                this.jsonDataKabupatenKumulatif[i - 3].positif + this.jsonDataKabupatenKumulatif[i - 4].positif
+            } else if (i === 4 * 27) {
+              jml = this.jsonDataKabupatenKumulatif[i].positif + this.jsonDataKabupatenKumulatif[i - (1 * 27)].positif + this.jsonDataKabupatenKumulatif[i - (2 * 27)].positif +
+                this.jsonDataKabupatenKumulatif[i - (3 * 27)].positif + this.jsonDataKabupatenKumulatif[i - (4 * 27)].positif
               ratarata = jml / 5
-            } else if (i === 5) {
-              jml = this.jsonDataKabupatenKumulatif[i].positif + this.jsonDataKabupatenKumulatif[i - 1].positif + this.jsonDataKabupatenKumulatif[i - 2].positif +
-              this.jsonDataKabupatenKumulatif[i - 3].positif + this.jsonDataKabupatenKumulatif[i - 4].positif + this.jsonDataKabupatenKumulatif[i - 5].positif
+            } else if (i === 5 * 27) {
+              jml = this.jsonDataKabupatenKumulatif[i].positif + this.jsonDataKabupatenKumulatif[i - (1 * 27)].positif + this.jsonDataKabupatenKumulatif[i - (2 * 27)].positif +
+              this.jsonDataKabupatenKumulatif[i - (3 * 27)].positif + this.jsonDataKabupatenKumulatif[i - (4 * 27)].positif + this.jsonDataKabupatenKumulatif[i - (5 * 27)].positif
               ratarata = jml / 6
-            } else if (i > 6) {
-              jml = this.jsonDataKabupatenKumulatif[i].positif + this.jsonDataKabupatenKumulatif[i - 1].positif + this.jsonDataKabupatenKumulatif[i - 2].positif +
-                this.jsonDataKabupatenKumulatif[i - 3].positif + this.jsonDataKabupatenKumulatif[i - 4].positif + this.jsonDataKabupatenKumulatif[i - 5].positif +
-                this.jsonDataKabupatenKumulatif[i - 6].positif
+            } else if (i > 6 * 27) {
+              jml = this.jsonDataKabupatenKumulatif[i].positif + this.jsonDataKabupatenKumulatif[i - (1 * 27)].positif + this.jsonDataKabupatenKumulatif[i - (2 * 27)].positif +
+                this.jsonDataKabupatenKumulatif[i - (3 * 27)].positif + this.jsonDataKabupatenKumulatif[i - (4 * 27)].positif + this.jsonDataKabupatenKumulatif[i - (5 * 27)].positif +
+                this.jsonDataKabupatenKumulatif[i - (6 * 27)].positif
               ratarata = jml / 7
             } else {
               jml = 0
@@ -1939,7 +1399,6 @@ export default {
       }
       if (self.jsonDataKota[indexKota].dataHarian.length > 0) {
         self.ChartHarianData.splice(1, 1)
-        self.ChartHarianData.splice(1, 1)
       }
     },
     fetchDataKabupatenKumulatif () {
@@ -1994,7 +1453,6 @@ export default {
         }
       }
       if (self.jsonDataKota[indexKota].dataAkumulatif.length > 0) {
-        self.ChartKumulatifData.splice(1, 1)
         self.ChartKumulatifData.splice(1, 1)
       }
     },
