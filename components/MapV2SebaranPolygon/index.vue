@@ -165,6 +165,7 @@ import { GeoSearchControl, OpenStreetMapProvider } from 'leaflet-geosearch'
 import jsonKota from '@/assets/kotaV2.json'
 import jsonKecamatan from '@/assets/kecamatanV2.json'
 import jsonKelurahan from '@/assets/kelurahanV2.json'
+const percentile = require('percentile')
 
 export default {
   name: 'MapV2SebaranPolygon',
@@ -239,15 +240,15 @@ export default {
       layerActive: 'kota',
 
       rangeColor: {
-        positif_proses: ['#DB4A81', '#DA1861', '#980043', '#CE0C55', '#B70142'],
-        positif_meninggal: ['#FC8D59', '#EE6547', '#D7301F', '#B30000', '#7F0000'],
-        positif_sembuh: ['#66C2A4', '#42AE76', '#238B44', '#006C2C', '#00441B'],
-        pdp_proses: ['#FEEA9F', '#FFE277', '#FFD648', '#FAC203', '#F3BD04'],
-        pdp_selesai: ['#FCDB83', '#FFD157', '#FEB72B', '#FBAD02', '#F0A500'],
-        pdp_meninggal: ['#ECCE6D', '#FBCE56', '#F5C440', '#F0B20F', '#C99307'],
-        odp_proses: ['#88B8FE', '#73A5EF', '#5990E2', '#4079CF', '#2964BC'],
-        odp_selesai: ['#68C9E9', '#4FB3D3', '#2C8CBE', '#0667AC', '#023857'],
-        odp_meninggal: ['#6AAED6', '#4292C6', '#2270B5', '#07519C', '#06285A']
+        positif_proses: ['#E54C95', '#E40769', '#CE005E', '#B30253', '#940047'],
+        positif_meninggal: ['#F78C5B', '#EE654C', '#CF331D', '#B60008', '#7D0005'],
+        positif_sembuh: ['#63C4A5', '#3EAE7A', '#228945', '#036A2B', '#00441F'],
+        pdp_proses: ['#F9EAA0', '#FDE175', '#FCD648', '#F6C304', '#F0BE06'],
+        pdp_selesai: ['#F9DC7F', '#FDD153', '#FEB728', '#F7AE03', '#EFA400'],
+        pdp_meninggal: ['#E7D068', '#FACD58', '#F3C448', '#EFB211', '#C79403'],
+        odp_proses: ['#86B8FC', '#72A5ED', '#588DE8', '#3E78D0', '#2962BD'],
+        odp_selesai: ['#66C9E6', '#49B5D2', '#298CC2', '#0267AD', '#053755'],
+        odp_meninggal: ['#68AED5', '#3F91C8', '#2171B6', '#094E9F', '#02275D']
       },
 
       range: [],
@@ -502,6 +503,8 @@ export default {
       let max = 0
       let min = 0
       let z = 0
+      const arrTobePercentile = []
+
       geojson.forEach((feature) => {
         // count kasus by wilayah & category kasus
         let sum = 0
@@ -525,6 +528,7 @@ export default {
           })
         }
         // add to element
+        arrTobePercentile.push(sum)
         const temp = { jumlah_kasus: sum }
         feature.properties = { ...feature.properties, ...temp }
         // get max kasus
@@ -543,20 +547,17 @@ export default {
 
       // count range per list
       const range = []
-      const div = Math.ceil((max - min) / 5)
-      let numFrom = 0
-      // create list
-      for (let i = 1; i <= 5; i++) {
-        if (min === 0) {
-          numFrom = 0
-        } else {
-          numFrom = min
-        }
-        range.push({
-          from: numFrom + ((i - 1) * div),
-          to: numFrom + (i * div)
-        })
-      }
+      const q1 = percentile(0, arrTobePercentile)
+      const q2 = percentile(20, arrTobePercentile)
+      const q3 = percentile(40, arrTobePercentile)
+      const q4 = percentile(60, arrTobePercentile)
+      const q5 = percentile(80, arrTobePercentile)
+      const q6 = percentile(100, arrTobePercentile)
+      range.push({ from: q1, to: q2 })
+      range.push({ from: q2, to: q3 })
+      range.push({ from: q3, to: q4 })
+      range.push({ from: q4, to: q5 })
+      range.push({ from: q5, to: q6 })
 
       // create legend
       const labels = ['<b>Jumlah Kasus: </b>', '<br>', '<ul style="display: flex; margin-top: 10px;">']
@@ -575,11 +576,7 @@ export default {
     getTransparant (range, angka) {
       let transparant = ''
       range.forEach((element) => {
-        if (angka === 0) {
-          transparant = '0'
-        } else {
-          transparant = '1'
-        }
+        transparant = '1'
       })
       return transparant
     },
@@ -587,9 +584,7 @@ export default {
     getColor (range, angka, category) {
       let color = ''
       range.forEach((element, index) => {
-        if (angka === 0) {
-          color = '#000000'
-        } else if (angka >= element.from && angka < element.to) {
+        if (angka >= element.from && angka < element.to + 1) {
           color = this.rangeColor[category][index]
         }
       })
