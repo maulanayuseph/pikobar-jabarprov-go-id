@@ -574,20 +574,23 @@ export default {
     },
 
     getTransparant (range, angka) {
-      let transparant = ''
-      range.forEach((element) => {
-        transparant = '1'
-      })
+      const transparant = '1'
       return transparant
     },
 
     getColor (range, angka, category) {
       let color = ''
-      range.forEach((element, index) => {
-        if (angka >= element.from && angka < element.to + 1) {
-          color = this.rangeColor[category][index]
-        }
-      })
+      if (angka >= range[0].from && angka < range[0].to + 1) {
+        color = this.rangeColor[category][0]
+      } else if (angka >= range[1].from && angka < range[1].to + 1) {
+        color = this.rangeColor[category][1]
+      } else if (angka >= range[2].from && angka < range[2].to + 1) {
+        color = this.rangeColor[category][2]
+      } else if (angka >= range[3].from && angka < range[3].to + 1) {
+        color = this.rangeColor[category][3]
+      } else if (angka >= range[4].from && angka < range[4].to + 1) {
+        color = this.rangeColor[category][4]
+      }
       return color
     },
 
