@@ -13,7 +13,9 @@ export default {
     FIREBASE_MEASUREMENT_ID: process.env.FIREBASE_MEASUREMENT_ID,
     FIREBASE_PUBLIC_VAPID_KEY: process.env.FIREBASE_PUBLIC_VAPID_KEY,
     APP_TITLE,
-    URL: process.env.URL
+    URL: process.env.URL,
+    WMS_API_KEY: process.env.WMS_API_KEY,
+    WMS_BASE_URL: process.env.WMS_BASE_URL
   },
   router: {
     prefetchLinks: false

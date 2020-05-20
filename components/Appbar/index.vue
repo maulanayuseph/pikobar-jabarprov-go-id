@@ -143,8 +143,9 @@ export default {
         { to: '/', label: 'Home', exact: true },
         { to: '/data', label: 'Data' },
         { to: '/articles?tab=jabar', label: 'Berita' },
+        { to: '/faq', label: 'FAQ' },
         { to: '/contact', label: 'Kontak' },
-        { to: '/faq', label: 'FAQ' }
+        { to: '/donate', label: 'Donasi' }
       ]
     }
   },
@@ -236,7 +237,10 @@ export default {
 }
 
 .appbar-menu-item.nuxt-link-active {
-  @apply text-green-700;
+  &,
+  > * {
+    @apply text-brand-green font-bold;
+  }
 }
 
 .button-allow-notif {
