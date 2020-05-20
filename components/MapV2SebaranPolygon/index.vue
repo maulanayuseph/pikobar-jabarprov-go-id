@@ -5,7 +5,7 @@
     <div class="container-map">
       <div
         id="map-wrap-polygon"
-        style="height: 450px; z-index:0; position: relative;"
+        style="height: 500px; z-index:0; position: relative;"
       />
       <div class="filter-layer">
         <div class="text-right">
@@ -24,77 +24,134 @@
           >
             <font-awesome-icon :icon="faFilter" />
             <i class="fas fa-filter cc-primary" style="color: black !important;" />
+          </button><br>
+          <button
+            class="btn btn-light mt-2"
+            style="background-color: white"
+            @click="showLayer()"
+          >
+            <font-awesome-icon :icon="faLayerGroup" />
+            <i class="fas fa-filter cc-primary" style="color: black !important;" />
           </button>
         </div>
         <div
+          v-if="isShowLayer"
+          class="filter-data"
+        >
+          <li
+            :class="layer.custom?'filter-active':''"
+            @click="setLayer('custom')"
+          >
+            Otomatis
+          </li>
+          <li
+            :class="layer.kota?'filter-active':''"
+            @click="setLayer('kota')"
+          >
+            Kota/Kabupaten
+          </li>
+          <li
+            :class="layer.kecamatan?'filter-active':''"
+            @click="setLayer('kecamatan')"
+          >
+            Kecamatan
+          </li>
+          <li
+            :class="layer.kelurahan?'filter-active':''"
+            @click="setLayer('kelurahan')"
+          >
+            Kelurahan/Desa
+          </li>
+        </div>
+        <div
           v-if="isShowFilter"
-          class="filter-data">
+          class="filter-data"
+        >
           <li
             :class="filter.positif_proses?'filter-active':''"
-            @click="setFilter('positif_proses')">
+            @click="setFilter('positif_proses')"
+          >
             <div
               class="legend-color cluster-positif-proses"
-              style="margin-right: 0.5em;" />Positif - Aktif
+              style="margin-right: 0.5em;"
+            />Positif - Aktif
           </li>
           <li
             :class="filter.positif_sembuh?'filter-active':''"
-            @click="setFilter('positif_sembuh')">
+            @click="setFilter('positif_sembuh')"
+          >
             <div
               class="legend-color cluster-positif-sembuh"
-              style="margin-right: 0.5em;" />Positif - Sembuh
+              style="margin-right: 0.5em;"
+            />Positif - Sembuh
           </li>
           <li
             :class="filter.positif_meninggal?'filter-active':''"
-            @click="setFilter('positif_meninggal')">
+            @click="setFilter('positif_meninggal')"
+          >
             <div
               class="legend-color cluster-positif-meninggal"
-              style="margin-right: 0.5em;" />Positif - Meninggal
+              style="margin-right: 0.5em;"
+            />Positif - Meninggal
           </li>
           <li
             :class="filter.pdp_proses?'filter-active':''"
-            @click="setFilter('pdp_proses')">
+            @click="setFilter('pdp_proses')"
+          >
             <div
               class="legend-color cluster-pdp-proses"
-              style="margin-right: 0.5em;" />PDP - Proses
+              style="margin-right: 0.5em;"
+            />PDP - Proses
           </li>
           <li
             :class="filter.pdp_selesai?'filter-active':''"
-            @click="setFilter('pdp_selesai')">
+            @click="setFilter('pdp_selesai')"
+          >
             <div
               class="legend-color cluster-pdp-selesai"
-              style="margin-right: 0.5em;" />PDP - Selesai
+              style="margin-right: 0.5em;"
+            />PDP - Selesai
           </li>
           <li
             :class="filter.pdp_meninggal?'filter-active':''"
-            @click="setFilter('pdp_meninggal')">
+            @click="setFilter('pdp_meninggal')"
+          >
             <div
               class="legend-color cluster-pdp-meninggal"
-              style="margin-right: 0.5em;" />PDP - Meninggal
+              style="margin-right: 0.5em;"
+            />PDP - Meninggal
           </li>
           <li
             :class="filter.odp_proses?'filter-active':''"
-            @click="setFilter('odp_proses')">
+            @click="setFilter('odp_proses')"
+          >
             <div
               class="legend-color cluster-odp-proses"
-              style="margin-right: 0.5em;" />ODP - Proses
+              style="margin-right: 0.5em;"
+            />ODP - Proses
           </li>
           <li
             :class="filter.odp_selesai?'filter-active':''"
-            @click="setFilter('odp_selesai')">
+            @click="setFilter('odp_selesai')"
+          >
             <div
               class="legend-color cluster-odp-selesai"
-              style="margin-right: 0.5em;" />ODP - Selesai
+              style="margin-right: 0.5em;"
+            />ODP - Selesai
           </li>
           <li
             :class="filter.odp_meninggal?'filter-active':''"
-            @click="setFilter('odp_meninggal')">
+            @click="setFilter('odp_meninggal')"
+          >
             <div
               class="legend-color cluster-odp-meninggal"
-              style="margin-right: 0.5em;" />ODP - Meninggal
+              style="margin-right: 0.5em;"
+            />ODP - Meninggal
           </li>
         </div>
       </div>
       <div class="legend-data info-legend p-3">
+        <!-- eslint-disable-next-line vue/no-v-html -->
         <div class="mb-1" v-html="infolegend" />
       </div>
     </div>
@@ -103,11 +160,12 @@
 
 <script>
 
-import { faFilter, faHome } from '@fortawesome/free-solid-svg-icons'
+import { faFilter, faHome, faLayerGroup } from '@fortawesome/free-solid-svg-icons'
 import { GeoSearchControl, OpenStreetMapProvider } from 'leaflet-geosearch'
 import jsonKota from '@/assets/kotaV2.json'
 import jsonKecamatan from '@/assets/kecamatanV2.json'
 import jsonKelurahan from '@/assets/kelurahanV2.json'
+const percentile = require('percentile')
 
 export default {
   name: 'MapV2SebaranPolygon',
@@ -120,10 +178,11 @@ export default {
   data () {
     return {
       map: '',
-      zoom: 8,
+      zoom: 9,
 
       faFilter,
       faHome,
+      faLayerGroup,
 
       distributionProvinceData: [],
 
@@ -171,6 +230,26 @@ export default {
         odp_meninggal: false
       },
       filterActive: 'positif_proses',
+      isShowLayer: false,
+      layer: {
+        custom: false,
+        kota: true,
+        kecamatan: false,
+        kelurahan: false
+      },
+      layerActive: 'kota',
+
+      rangeColor: {
+        positif_proses: ['#E54C95', '#E40769', '#CE005E', '#B30253', '#940047'],
+        positif_meninggal: ['#F78C5B', '#EE654C', '#CF331D', '#B60008', '#7D0005'],
+        positif_sembuh: ['#63C4A5', '#3EAE7A', '#228945', '#036A2B', '#00441F'],
+        pdp_proses: ['#F9EAA0', '#FDE175', '#FCD648', '#F6C304', '#F0BE06'],
+        pdp_selesai: ['#F9DC7F', '#FDD153', '#FEB728', '#F7AE03', '#EFA400'],
+        pdp_meninggal: ['#E7D068', '#FACD58', '#F3C448', '#EFB211', '#C79403'],
+        odp_proses: ['#86B8FC', '#72A5ED', '#588DE8', '#3E78D0', '#2962BD'],
+        odp_selesai: ['#66C9E6', '#49B5D2', '#298CC2', '#0267AD', '#053755'],
+        odp_meninggal: ['#68AED5', '#3F91C8', '#2171B6', '#094E9F', '#02275D']
+      },
 
       range: [],
       infolegend: ''
@@ -201,7 +280,6 @@ export default {
 
     onChanges () {
       console.log('polygon on changes')
-
       this.dataJson.positif_proses = []
       this.dataJson.positif_meninggal = []
       this.dataJson.positif_sembuh = []
@@ -243,7 +321,7 @@ export default {
     initMap () {
       this.map = this.$L.map('map-wrap-polygon', {
         zoomControl: false
-      }).setView([-6.932694, 107.627449], 8)
+      }).setView([-6.932694, 107.627449], 9)
 
       this.$L.tileLayer(
         'https://cartodb-basemaps-d.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png',
@@ -268,12 +346,26 @@ export default {
       const searchControl = new GeoSearchControl({
         provider: searchProvider,
         position: 'topleft',
-        showMarker: false,
-        autoClose: true
+        showMarker: true,
+        autoClose: true,
+        marker: {
+          icon: new this.$L.Icon.Default(),
+          draggable: false
+        },
+        maxMarkers: 1
       }).addTo(this.map)
 
       this.map.on('geosearch/showlocation', (e) => {
+        this.removeMarker()
         this.zoom = this.map.getZoom()
+
+        const layerList = this.$L.marker([e.location.y, e.location.x], {
+          icon: new this.$L.Icon.Default()
+        })
+        layerList.bindPopup(e.location.label)
+        layerList.addTo(this.map)
+        layerList.openPopup()
+        this.dataMarker.push(layerList)
       })
 
       // create layer group
@@ -283,13 +375,13 @@ export default {
     setZoomLevel () {
       // listening zoomed level
       this.map.on('zoomend', () => {
-        if (this.map.getZoom() <= 10) {
+        if (this.map.getZoom() <= 10 && this.layerActive === 'custom') {
           this.removeLayer()
           this.createLayerKota(this.filterActive)
-        } else if (this.map.getZoom() > 10 && this.map.getZoom() <= 12) {
+        } else if (this.map.getZoom() > 10 && this.map.getZoom() <= 12 && this.layerActive === 'custom') {
           this.removeLayer()
           this.createLayerKecamatan(this.filterActive)
-        } else if (this.map.getZoom() > 12) {
+        } else if (this.map.getZoom() > 12 && this.layerActive === 'custom') {
           this.removeLayer()
           this.createLayerKelurahan(this.filterActive)
         }
@@ -320,11 +412,13 @@ export default {
         onEachFeature: (feature, layer, element) => {
           // create style color gradien
           const styleBatasWilayah = {
-            fillColor: '#' + self.styleColorPolygon[category],
-            fillOpacity: self.getColor(this.range, feature.properties.jumlah_kasus),
-            weight: 0.5,
-            opacity: 0.5,
-            color: '#333333'
+            // fillColor: '#' + self.styleColorPolygon[category],
+            // fillOpacity: self.getColor(this.range, feature.properties.jumlah_kasus),
+            fillOpacity: self.getTransparant(this.range, feature.properties.jumlah_kasus),
+            fillColor: self.getColor(this.range, feature.properties.jumlah_kasus, category),
+            weight: 0.7,
+            opacity: 0.7,
+            color: '#000000'
           }
           // add layer to map
           layer.setStyle(styleBatasWilayah)
@@ -349,11 +443,13 @@ export default {
         onEachFeature: (feature, layer, element) => {
           // create style color gradien
           const styleBatasWilayah = {
-            fillColor: '#' + self.styleColorPolygon[category],
-            fillOpacity: self.getColor(this.range, feature.properties.jumlah_kasus),
-            weight: 0.5,
-            opacity: 0.5,
-            color: '#333333'
+            // fillColor: '#' + self.styleColorPolygon[category],
+            // fillOpacity: self.getColor(this.range, feature.properties.jumlah_kasus),
+            fillOpacity: self.getTransparant(this.range, feature.properties.jumlah_kasus),
+            fillColor: self.getColor(this.range, feature.properties.jumlah_kasus, category),
+            weight: 0.7,
+            opacity: 0.7,
+            color: '#000000'
           }
           // add layer to map
           layer.setStyle(styleBatasWilayah)
@@ -379,11 +475,13 @@ export default {
         onEachFeature: (feature, layer, element) => {
           // create style color gradien
           const styleBatasWilayah = {
-            fillColor: '#' + self.styleColorPolygon[category],
-            fillOpacity: self.getColor(this.range, feature.properties.jumlah_kasus),
-            weight: 0.5,
-            opacity: 0.5,
-            color: '#333333'
+            // fillColor: '#' + self.styleColorPolygon[category],
+            // fillOpacity: self.getColor(this.range, feature.properties.jumlah_kasus),
+            fillOpacity: self.getTransparant(this.range, feature.properties.jumlah_kasus),
+            fillColor: self.getColor(this.range, feature.properties.jumlah_kasus, category),
+            weight: 0.7,
+            opacity: 0.7,
+            color: '#000000'
           }
           // add layer to map
           layer.setStyle(styleBatasWilayah)
@@ -405,6 +503,8 @@ export default {
       let max = 0
       let min = 0
       let z = 0
+      const arrTobePercentile = []
+
       geojson.forEach((feature) => {
         // count kasus by wilayah & category kasus
         let sum = 0
@@ -428,6 +528,7 @@ export default {
           })
         }
         // add to element
+        arrTobePercentile.push(sum)
         const temp = { jumlah_kasus: sum }
         feature.properties = { ...feature.properties, ...temp }
         // get max kasus
@@ -446,29 +547,24 @@ export default {
 
       // count range per list
       const range = []
-      const div = Math.ceil((max - min) / 5)
-      let numFrom = 0
-      // create list
-      for (let i = 1; i <= 5; i++) {
-        if (min === 0) {
-          numFrom = 0
-        } else {
-          numFrom = min
-        }
-        range.push({
-          from: numFrom + ((i - 1) * div),
-          to: numFrom + (i * div),
-          // color: this.shadeColor(hex, ((i * -20) + 60)),
-          transparant: 0.1 + (i * (1 / 5))
-        })
-      }
+      const q1 = percentile(0, arrTobePercentile)
+      const q2 = percentile(20, arrTobePercentile)
+      const q3 = percentile(40, arrTobePercentile)
+      const q4 = percentile(60, arrTobePercentile)
+      const q5 = percentile(80, arrTobePercentile)
+      const q6 = percentile(100, arrTobePercentile)
+      range.push({ from: q1, to: q2 })
+      range.push({ from: q2, to: q3 })
+      range.push({ from: q3, to: q4 })
+      range.push({ from: q4, to: q5 })
+      range.push({ from: q5, to: q6 })
 
       // create legend
       const labels = ['<b>Jumlah Kasus: </b>', '<br>', '<ul style="display: flex; margin-top: 10px;">']
-      range.forEach((element) => {
+      range.forEach((element, index) => {
         labels.push(
-          '<li style="margin-right: 20px;"><i style="background:#' + self.styleColorPolygon[self.filterActive] + '; ' +
-          'opacity: ' + element.transparant + ';"></i>' +
+          '<li style="margin-right: 20px;"><i style="background:' + self.rangeColor[self.filterActive][index] + '; ' +
+          'opacity: 1;"></i>' +
           element.from + ' - ' + element.to + '</li>'
         )
       })
@@ -477,32 +573,30 @@ export default {
       return [range, geojson]
     },
 
-    shadeColor (color, percent) {
-      return '#' + color
-        .replace(/^#/, '')
-        .replace(
-          /../g, color => (
-            '0' + Math.min(255, Math.max(0, parseInt(color, 16) + percent)).toString(16)
-          ).substr(-2)
-        )
+    getTransparant (range, angka) {
+      const transparant = '1'
+      return transparant
     },
 
-    getColor (range, angka) {
+    getColor (range, angka, category) {
       let color = ''
-      range.forEach((element) => {
-        if (angka === 0) {
-          color = '0'
-        } else if (angka >= element.from && angka < element.to) {
-          color = element.transparant
-        }
-      })
+      if (angka >= range[0].from && angka < range[0].to + 1) {
+        color = this.rangeColor[category][0]
+      } else if (angka >= range[1].from && angka < range[1].to + 1) {
+        color = this.rangeColor[category][1]
+      } else if (angka >= range[2].from && angka < range[2].to + 1) {
+        color = this.rangeColor[category][2]
+      } else if (angka >= range[3].from && angka < range[3].to + 1) {
+        color = this.rangeColor[category][3]
+      } else if (angka >= range[4].from && angka < range[4].to + 1) {
+        color = this.rangeColor[category][4]
+      }
       return color
     },
 
     showFilter () {
       this.isShowFilter = !this.isShowFilter
     },
-
     setFilter (category) {
       this.removeMarker()
       for (const cat of Object.keys(this.filter)) {
@@ -511,20 +605,64 @@ export default {
       this.filter[category] = !this.filter[category]
       this.filterActive = category
 
-      if (this.map.getZoom() <= 10) {
+      if (this.layerActive === 'custom') {
+        if (this.map.getZoom() <= 10) {
+          this.removeLayer()
+          this.createLayerKota(this.filterActive)
+        } else if (this.map.getZoom() > 10 && this.map.getZoom() <= 13) {
+          this.removeLayer()
+          this.createLayerKecamatan(this.filterActive)
+        } else if (this.map.getZoom() > 13) {
+          this.removeLayer()
+          this.createLayerKelurahan(this.filterActive)
+        }
+      } else if (this.layerActive === 'kota') {
         this.removeLayer()
         this.createLayerKota(this.filterActive)
-      } else if (this.map.getZoom() > 10 && this.map.getZoom() <= 13) {
+      } else if (this.layerActive === 'kecamatan') {
         this.removeLayer()
         this.createLayerKecamatan(this.filterActive)
-      } else if (this.map.getZoom() > 13) {
+      } else if (this.layerActive === 'kelurahan') {
+        this.removeLayer()
+        this.createLayerKelurahan(this.filterActive)
+      }
+    },
+
+    showLayer () {
+      this.isShowLayer = !this.isShowLayer
+    },
+    setLayer (category) {
+      for (const cat of Object.keys(this.layer)) {
+        this.layer[cat] = false
+      }
+      this.layer[category] = !this.layer[category]
+      this.layerActive = category
+
+      if (this.layerActive === 'custom') {
+        if (this.map.getZoom() <= 10) {
+          this.removeLayer()
+          this.createLayerKota(this.filterActive)
+        } else if (this.map.getZoom() > 10 && this.map.getZoom() <= 13) {
+          this.removeLayer()
+          this.createLayerKecamatan(this.filterActive)
+        } else if (this.map.getZoom() > 13) {
+          this.removeLayer()
+          this.createLayerKelurahan(this.filterActive)
+        }
+      } else if (this.layerActive === 'kota') {
+        this.removeLayer()
+        this.createLayerKota(this.filterActive)
+      } else if (this.layerActive === 'kecamatan') {
+        this.removeLayer()
+        this.createLayerKecamatan(this.filterActive)
+      } else if (this.layerActive === 'kelurahan') {
         this.removeLayer()
         this.createLayerKelurahan(this.filterActive)
       }
     },
 
     backToHome () {
-      this.map.flyTo([-6.932694, 107.627449], 8)
+      this.map.flyTo([-6.932694, 107.627449], 9)
     },
 
     titleize (sentence) {

@@ -2,21 +2,21 @@
   <div
     class="bg-white overflow-hidden rounded-lg shadow-md"
   >
-    <div class="flex">
-      <h4 class="p-5 text-xl w-1/3">
+    <div class="flex flex-wrap">
+      <h4 class="p-5 text-xl md:w-1/3">
         <b>Umur dan Jenis Kelamin</b>
       </h4>
-      <div class="flex flex-row items-stretch mb-4 w-2/3" style="margin: auto;">
+      <div class="flex flex-wrap items-stretch pb-2 mb-4 md:w-2/3" style="margin: auto;">
         <button
-          class="button-selector"
-          style="margin:auto; margin-right: 0px; border-top-left-radius: 0.375rem; border-bottom-left-radius: 0.375rem;"
+          class="button-selector ml-4 mt-2"
+          style="margin-right: 0px; border-top-left-radius: 0.375rem; border-bottom-left-radius: 0.375rem;"
           :active="stat.isActiveSemua"
           @click="enableSemua"
         >
           Semua Umur
         </button>
         <button
-          class="button-selector"
+          class="button-selector mt-2"
           style="border-top-right-radius: 0.375rem; border-bottom-right-radius: 0.375rem;"
           :active="stat.isActiveAnak"
           @click="enableAnak"
@@ -25,7 +25,7 @@
         </button>
         <select
           v-model="optionSelected"
-          class="select-option-selector"
+          class="select-option-selector ml-4 mt-2"
           @change="changeGroupUsia($event.target.value)"
         >
           <option
@@ -547,6 +547,37 @@ export default {
   watch: {
     propsDataRekapitulasiJabar () {
       this.jsonDataRekapitulasiJabar = this.propsDataRekapitulasiJabar
+
+      this.jsonDataRekapitulasiJabar.positif_per_usia.anak.laki_laki.bawah_1 = this.jsonDataRekapitulasiJabar.positif_per_usia.anak.laki_laki.bawah_1 - this.jsonDataRekapitulasiJabar.sembuh_per_usia.anak.laki_laki.bawah_1 - this.jsonDataRekapitulasiJabar.meninggal_per_usia.anak.laki_laki.bawah_1
+      this.jsonDataRekapitulasiJabar.positif_per_usia.anak.laki_laki['1_5'] = this.jsonDataRekapitulasiJabar.positif_per_usia.anak.laki_laki['1_5'] - this.jsonDataRekapitulasiJabar.sembuh_per_usia.anak.laki_laki['1_5'] - this.jsonDataRekapitulasiJabar.meninggal_per_usia.anak.laki_laki['1_5']
+      this.jsonDataRekapitulasiJabar.positif_per_usia.anak.laki_laki['5_6'] = this.jsonDataRekapitulasiJabar.positif_per_usia.anak.laki_laki['5_6'] - this.jsonDataRekapitulasiJabar.sembuh_per_usia.anak.laki_laki['5_6'] - this.jsonDataRekapitulasiJabar.meninggal_per_usia.anak.laki_laki['5_6']
+      this.jsonDataRekapitulasiJabar.positif_per_usia.anak.laki_laki['6_18'] = this.jsonDataRekapitulasiJabar.positif_per_usia.anak.laki_laki['6_18'] - this.jsonDataRekapitulasiJabar.sembuh_per_usia.anak.laki_laki['6_18'] - this.jsonDataRekapitulasiJabar.meninggal_per_usia.anak.laki_laki['6_18']
+
+      this.jsonDataRekapitulasiJabar.positif_per_usia.anak.perempuan.bawah_1 = this.jsonDataRekapitulasiJabar.positif_per_usia.anak.perempuan.bawah_1 - this.jsonDataRekapitulasiJabar.sembuh_per_usia.anak.perempuan.bawah_1 - this.jsonDataRekapitulasiJabar.meninggal_per_usia.anak.perempuan.bawah_1
+      this.jsonDataRekapitulasiJabar.positif_per_usia.anak.perempuan['1_5'] = this.jsonDataRekapitulasiJabar.positif_per_usia.anak.perempuan['1_5'] - this.jsonDataRekapitulasiJabar.sembuh_per_usia.anak.perempuan['1_5'] - this.jsonDataRekapitulasiJabar.meninggal_per_usia.anak.perempuan['1_5']
+      this.jsonDataRekapitulasiJabar.positif_per_usia.anak.perempuan['5_6'] = this.jsonDataRekapitulasiJabar.positif_per_usia.anak.perempuan['5_6'] - this.jsonDataRekapitulasiJabar.sembuh_per_usia.anak.perempuan['5_6'] - this.jsonDataRekapitulasiJabar.meninggal_per_usia.anak.perempuan['5_6']
+      this.jsonDataRekapitulasiJabar.positif_per_usia.anak.perempuan['6_18'] = this.jsonDataRekapitulasiJabar.positif_per_usia.anak.perempuan['6_18'] - this.jsonDataRekapitulasiJabar.sembuh_per_usia.anak.perempuan['6_18'] - this.jsonDataRekapitulasiJabar.meninggal_per_usia.anak.perempuan['6_18']
+
+      this.jsonDataRekapitulasiJabar.positif_per_usia.semua.laki_laki.bawah_5 = this.jsonDataRekapitulasiJabar.positif_per_usia.semua.laki_laki.bawah_5 - this.jsonDataRekapitulasiJabar.sembuh_per_usia.semua.laki_laki.bawah_5 - this.jsonDataRekapitulasiJabar.meninggal_per_usia.semua.laki_laki.bawah_5
+      this.jsonDataRekapitulasiJabar.positif_per_usia.semua.laki_laki['6_19'] = this.jsonDataRekapitulasiJabar.positif_per_usia.semua.laki_laki['6_19'] - this.jsonDataRekapitulasiJabar.sembuh_per_usia.semua.laki_laki['6_19'] - this.jsonDataRekapitulasiJabar.meninggal_per_usia.semua.laki_laki['6_19']
+      this.jsonDataRekapitulasiJabar.positif_per_usia.semua.laki_laki['20_29'] = this.jsonDataRekapitulasiJabar.positif_per_usia.semua.laki_laki['20_29'] - this.jsonDataRekapitulasiJabar.sembuh_per_usia.semua.laki_laki['20_29'] - this.jsonDataRekapitulasiJabar.meninggal_per_usia.semua.laki_laki['20_29']
+      this.jsonDataRekapitulasiJabar.positif_per_usia.semua.laki_laki['30_39'] = this.jsonDataRekapitulasiJabar.positif_per_usia.semua.laki_laki['30_39'] - this.jsonDataRekapitulasiJabar.sembuh_per_usia.semua.laki_laki['30_39'] - this.jsonDataRekapitulasiJabar.meninggal_per_usia.semua.laki_laki['30_39']
+      this.jsonDataRekapitulasiJabar.positif_per_usia.semua.laki_laki['40_49'] = this.jsonDataRekapitulasiJabar.positif_per_usia.semua.laki_laki['40_49'] - this.jsonDataRekapitulasiJabar.sembuh_per_usia.semua.laki_laki['40_49'] - this.jsonDataRekapitulasiJabar.meninggal_per_usia.semua.laki_laki['40_49']
+      this.jsonDataRekapitulasiJabar.positif_per_usia.semua.laki_laki['50_59'] = this.jsonDataRekapitulasiJabar.positif_per_usia.semua.laki_laki['50_59'] - this.jsonDataRekapitulasiJabar.sembuh_per_usia.semua.laki_laki['50_59'] - this.jsonDataRekapitulasiJabar.meninggal_per_usia.semua.laki_laki['50_59']
+      this.jsonDataRekapitulasiJabar.positif_per_usia.semua.laki_laki['60_69'] = this.jsonDataRekapitulasiJabar.positif_per_usia.semua.laki_laki['60_69'] - this.jsonDataRekapitulasiJabar.sembuh_per_usia.semua.laki_laki['60_69'] - this.jsonDataRekapitulasiJabar.meninggal_per_usia.semua.laki_laki['60_69']
+      this.jsonDataRekapitulasiJabar.positif_per_usia.semua.laki_laki['70_79'] = this.jsonDataRekapitulasiJabar.positif_per_usia.semua.laki_laki['70_79'] - this.jsonDataRekapitulasiJabar.sembuh_per_usia.semua.laki_laki['70_79'] - this.jsonDataRekapitulasiJabar.meninggal_per_usia.semua.laki_laki['70_79']
+      this.jsonDataRekapitulasiJabar.positif_per_usia.semua.laki_laki.atas_80 = this.jsonDataRekapitulasiJabar.positif_per_usia.semua.laki_laki.atas_80 - this.jsonDataRekapitulasiJabar.sembuh_per_usia.semua.laki_laki.atas_80 - this.jsonDataRekapitulasiJabar.meninggal_per_usia.semua.laki_laki.atas_80
+
+      this.jsonDataRekapitulasiJabar.positif_per_usia.semua.perempuan.bawah_5 = this.jsonDataRekapitulasiJabar.positif_per_usia.semua.perempuan.bawah_5 - this.jsonDataRekapitulasiJabar.sembuh_per_usia.semua.perempuan.bawah_5 - this.jsonDataRekapitulasiJabar.meninggal_per_usia.semua.perempuan.bawah_5
+      this.jsonDataRekapitulasiJabar.positif_per_usia.semua.perempuan['6_19'] = this.jsonDataRekapitulasiJabar.positif_per_usia.semua.perempuan['6_19'] - this.jsonDataRekapitulasiJabar.sembuh_per_usia.semua.perempuan['6_19'] - this.jsonDataRekapitulasiJabar.meninggal_per_usia.semua.perempuan['6_19']
+      this.jsonDataRekapitulasiJabar.positif_per_usia.semua.perempuan['20_29'] = this.jsonDataRekapitulasiJabar.positif_per_usia.semua.perempuan['20_29'] - this.jsonDataRekapitulasiJabar.sembuh_per_usia.semua.perempuan['20_29'] - this.jsonDataRekapitulasiJabar.meninggal_per_usia.semua.perempuan['20_29']
+      this.jsonDataRekapitulasiJabar.positif_per_usia.semua.perempuan['30_39'] = this.jsonDataRekapitulasiJabar.positif_per_usia.semua.perempuan['30_39'] - this.jsonDataRekapitulasiJabar.sembuh_per_usia.semua.perempuan['30_39'] - this.jsonDataRekapitulasiJabar.meninggal_per_usia.semua.perempuan['30_39']
+      this.jsonDataRekapitulasiJabar.positif_per_usia.semua.perempuan['40_49'] = this.jsonDataRekapitulasiJabar.positif_per_usia.semua.perempuan['40_49'] - this.jsonDataRekapitulasiJabar.sembuh_per_usia.semua.perempuan['40_49'] - this.jsonDataRekapitulasiJabar.meninggal_per_usia.semua.perempuan['40_49']
+      this.jsonDataRekapitulasiJabar.positif_per_usia.semua.perempuan['50_59'] = this.jsonDataRekapitulasiJabar.positif_per_usia.semua.perempuan['50_59'] - this.jsonDataRekapitulasiJabar.sembuh_per_usia.semua.perempuan['50_59'] - this.jsonDataRekapitulasiJabar.meninggal_per_usia.semua.perempuan['50_59']
+      this.jsonDataRekapitulasiJabar.positif_per_usia.semua.perempuan['60_69'] = this.jsonDataRekapitulasiJabar.positif_per_usia.semua.perempuan['60_69'] - this.jsonDataRekapitulasiJabar.sembuh_per_usia.semua.perempuan['60_69'] - this.jsonDataRekapitulasiJabar.meninggal_per_usia.semua.perempuan['60_69']
+      this.jsonDataRekapitulasiJabar.positif_per_usia.semua.perempuan['70_79'] = this.jsonDataRekapitulasiJabar.positif_per_usia.semua.perempuan['70_79'] - this.jsonDataRekapitulasiJabar.sembuh_per_usia.semua.perempuan['70_79'] - this.jsonDataRekapitulasiJabar.meninggal_per_usia.semua.perempuan['70_79']
+      this.jsonDataRekapitulasiJabar.positif_per_usia.semua.perempuan.atas_80 = this.jsonDataRekapitulasiJabar.positif_per_usia.semua.perempuan.atas_80 - this.jsonDataRekapitulasiJabar.sembuh_per_usia.semua.perempuan.atas_80 - this.jsonDataRekapitulasiJabar.meninggal_per_usia.semua.perempuan.atas_80
+
       this.changeGroupUsia('Positif - Aktif')
     }
   },

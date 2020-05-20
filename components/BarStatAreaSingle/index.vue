@@ -18,130 +18,124 @@
     </div>
 
     <section v-if="stat.isActiveHarian">
-      <div style="overflow-x: auto; width: 100%; height: 100%; display: flex;">
-        <div class="bg-white p-3 mr-4 mb-4 rounded-lg shadow-md">
-          <div class="flex flex-row justify-between items-center">
-            <h4 style="color: #828282; font-weight: bolder;">
-              Indonesia
-            </h4>
-            <span style="width: 40%">
-              <h4 style="color: #000000; font-weight: bolder; text-align: right; margin-right: 20px;">
-                [{{ dataTotalPositifAll[0] }}]
-              </h4>
-            </span>
-          </div>
-          <GChart
-            type="LineChart"
-            :data="ChartNasionalDataHarian"
-            :options="barChartNasionalOptions"
-          />
-        </div>
-        <div class="bg-white p-3 mr-4 mb-4 rounded-lg shadow-md">
-          <div class="flex flex-row justify-between items-center">
-            <h4 style="color: #828282; font-weight: bolder;">
-              Jawa Barat
-            </h4>
-            <span style="width: 40%">
-              <h4 style="color: #000000; font-weight: bolder; text-align: right; margin-right: 20px;">
-                [{{ dataTotalPositifAll[1] }}]
-              </h4>
-            </span>
-          </div>
-          <GChart
-            type="LineChart"
-            :data="ChartJawaBaratDataHarian"
-            :options="barChartNasionalOptions"
-          />
-        </div>
-        <div
-          v-for="(item, index) in jsonDataKota"
-          :key="item.kode"
-          class="bg-white p-3 mr-4 mb-4 rounded-lg shadow-md"
-        >
-          <div class="flex flex-row justify-between items-center">
-            <div style="width: 50%">
-              <h4 style="color: #828282; font-weight: bolder;">
-                {{ item.nama }}
-              </h4>
-            </div>
-            <div style="width: 50%">
-              <h4 style="text-align: right; margin-right: 20px;">
-                <span style="color: #4FB769; font-weight: bolder;">{{ item.positif_persentase }} %</span>
-                <span style="color: #000000; font-weight: bolder;">[{{ item.positif }}]</span>
-              </h4>
+      <div
+        class="bg-white overflow-hidden rounded-lg shadow-md"
+      >
+        <div class="md:flex">
+          <h4 class="p-5 text-xl md:w-2/3">
+            <b>Angka Harian Penambahan Kasus COVID-19</b>
+          </h4>
+          <div class="flex flex-wrap items-stretch pt-2 pb-2 pr-2 md:w-1/2 mt-2" style="margin: auto;">
+            <select
+              v-model="selectedListWilayah"
+              class="select-option-selector"
+              style="margin:auto; "
+              @change="changeFilterWilayah($event.target.value)"
+            >
+              <option
+                v-for="list in optionListWilayah"
+                :key="list"
+                :value="list"
+              >
+                {{ list }}
+              </option>
+            </select>
+            <!-- <select
+              v-model="selectedListWaktu"
+              class="select-option-selector"
+              style="margin:auto; "
+              @change="changeFilterWaktu($event.target.value)"
+            >
+              <option
+                v-for="list in optionListWaktu"
+                :key="list"
+                :value="list"
+              >
+                {{ list }}
+              </option>
+            </select> -->
+            <div class="card-content pt-2 pb-2" style="margin: auto;">
+              <div class="daterange-wrapper">
+                <client-only>
+                  <vue-rangedate-picker
+                    righttoleft="true"
+                    :captions="rangedate.captions"
+                    :preset-ranges="rangedate.presetRanges"
+                    @selected="onDateSelected"
+                  />
+                </client-only>
+              </div>
             </div>
           </div>
-          <GChart
-            type="LineChart"
-            :data="jsonDataKota[index].dataHarian"
-            :options="barChartKotaOptions"
-          />
         </div>
+        <hr>
+        <GChart
+          type="LineChart"
+          class="mb-4"
+          :data="ChartHarianData"
+          :options="ChartHarianOptions"
+        />
       </div>
     </section>
 
-    <section
-      v-if="stat.isActiveAkumulatif"
-    >
-      <div style="overflow-x: auto; width: 100%; height: 100%; display: flex;">
-        <div class="bg-white p-3 mr-4 mb-4 rounded-lg shadow-md">
-          <div class="flex flex-row justify-between items-center">
-            <h4 style="color: #828282; font-weight: bolder;">
-              Indonesia
-            </h4>
-            <span style="width: 40%">
-              <h4 style="color: #000000; font-weight: bolder; text-align: right; margin-right: 20px;">
-                [{{ dataTotalPositifAll[0] }}]
-              </h4>
-            </span>
-          </div>
-          <GChart
-            type="LineChart"
-            :data="ChartNasionalDataAkumulatif"
-            :options="lineChartNasionalOptions"
-          />
-        </div>
-        <div class="bg-white p-3 mr-4 mb-4 rounded-lg shadow-md">
-          <div class="flex flex-row justify-between items-center">
-            <h4 style="color: #828282; font-weight: bolder;">
-              Jawa Barat
-            </h4>
-            <span style="width: 40%">
-              <h4 style="color: #000000; font-weight: bolder; text-align: right; margin-right: 20px;">
-                [{{ dataTotalPositifAll[1] }}]
-              </h4>
-            </span>
-          </div>
-          <GChart
-            type="LineChart"
-            :data="ChartJawaBaratDataAkumulatif"
-            :options="lineChartNasionalOptions"
-          />
-        </div>
-        <div
-          v-for="(item, index) in jsonDataKota"
-          :key="item.kode"
-          class="bg-white p-3 mr-4 mb-4 rounded-lg shadow-md"
-        >
-          <div class="flex flex-row justify-between items-center">
-            <div style="width: 60%">
-              <h4 style="color: #828282; font-weight: bolder;">
-                {{ item.nama }}
-              </h4>
-            </div>
-            <div style="width: 40%">
-              <h4 style="text-align: right; margin-right: 20px;">
-                <span style="color: #4FB769; font-weight: bolder;">{{ item.positif_persentase }} %</span>
-                <span style="color: #000000; font-weight: bolder;">[{{ item.positif }}]</span>
-              </h4>
+    <section v-if="stat.isActiveAkumulatif">
+      <div
+        class="bg-white overflow-hidden rounded-lg shadow-md"
+      >
+        <div class="md:flex">
+          <h4 class="p-5 text-xl md:w-2/3">
+            <b>Angka Kumulatif Penambahan Kasus COVID-19</b>
+          </h4>
+          <div class="flex flex-wrap items-stretch pt-2 pb-2 pr-2 md:w-1/2 mt-2" style="margin: auto;">
+            <select
+              v-model="selectedListWilayah"
+              class="select-option-selector"
+              style="margin:auto; "
+              @change="changeFilterWilayah($event.target.value)"
+            >
+              <option
+                v-for="list in optionListWilayah"
+                :key="list"
+                :value="list"
+              >
+                {{ list }}
+              </option>
+            </select>
+            <!-- <select
+              v-model="selectedListWaktu"
+              class="select-option-selector"
+              style="margin:auto; "
+              @change="changeFilterWaktu($event.target.value)"
+            >
+              <option
+                v-for="list in optionListWaktu"
+                :key="list"
+                :value="list"
+              >
+                {{ list }}
+              </option>
+            </select> -->
+            <div class="card-content pt-2 pb-2" style="margin: auto;">
+              <div class="daterange-wrapper">
+                <client-only>
+                  <vue-rangedate-picker
+                    righttoleft="true"
+                    :captions="rangedate.captions"
+                    :preset-ranges="rangedate.presetRanges"
+                    @selected="onDateSelected"
+                  />
+                </client-only>
+              </div>
             </div>
           </div>
-          <GChart
-            type="LineChart"
-            :data="jsonDataKota[index].dataAkumulatif"
-            :options="lineChartKotaOptions"
-          />
         </div>
+        <hr>
+        <GChart
+          type="LineChart"
+          class="mb-4"
+          :data="ChartKumulatifData"
+          :options="ChartKumulatifOptions"
+        />
       </div>
     </section>
   </div>
@@ -153,10 +147,11 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faChartBar, faChartLine } from '@fortawesome/free-solid-svg-icons'
 
 export default {
-  name: 'BarStatArea',
+  name: 'BarStatAreaSingle',
   components: {
     GChart,
     FontAwesomeIcon
+    // DateRangePicker
   },
   props: {
     propsDataNasionalHarianKumulatif: {
@@ -197,30 +192,10 @@ export default {
       fontChartBar: faChartBar,
       fontChartLine: faChartLine,
       jsonDataNasionalHarianKumulatif: [],
-      jsonDataProvinsi: [],
       jsonDataProvinsiHarian: [],
       jsonDataProvinsiKumulatif: [],
-      jsonDataKabupaten: [],
       jsonDataKabupatenHarian: [],
       jsonDataKabupatenKumulatif: [],
-      jsonDataResult: {
-        odp_total: 0,
-        odp_proses: 0,
-        odp_proses_persen: 0,
-        odp_selesai: 0,
-        odp_selesai_persen: 0,
-        pdp_total: 0,
-        pdp_proses: 0,
-        pdp_proses_persen: 0,
-        pdp_selesai: 0,
-        pdp_selesai_persen: 0,
-        positif: 0,
-        sembuh: 0,
-        meninggal: 0,
-        last_update: '',
-        umur_max: 0,
-        count_kota: 0
-      },
       jsonDataKota: [
         {
           kode: '3204',
@@ -235,30 +210,8 @@ export default {
           positif_persentase: 0,
           sembuh: 0,
           meninggal: 0,
-          dataHarian: [
-            [
-              'Tanggal',
-              'Kasus Positif',
-              { type: 'string', role: 'tooltip', p: { html: true } },
-              'Sembuh',
-              { type: 'string', role: 'tooltip', p: { html: true } },
-              'Meninggal',
-              { type: 'string', role: 'tooltip', p: { html: true } }
-            ],
-            ['0', 0, '', 0, '', 0, '']
-          ],
-          dataAkumulatif: [
-            [
-              'Tanggal',
-              'Kasus Positif',
-              { type: 'string', role: 'tooltip', p: { html: true } },
-              'Sembuh',
-              { type: 'string', role: 'tooltip', p: { html: true } },
-              'Meninggal',
-              { type: 'string', role: 'tooltip', p: { html: true } }
-            ],
-            ['0', 0, '', 0, '', 0, '']
-          ]
+          dataHarian: [],
+          dataAkumulatif: []
         },
         {
           kode: '3217',
@@ -1249,10 +1202,7 @@ export default {
           ]
         }
       ],
-      dataTotalPositifAll: [
-        0, 0
-      ],
-      ChartNasionalDataHarian: [
+      ChartHarianData: [
         [
           'Tanggal',
           'Kasus Positif',
@@ -1264,7 +1214,7 @@ export default {
         ],
         ['0', 0, '', 0, '', 0, '']
       ],
-      ChartNasionalDataAkumulatif: [
+      ChartKumulatifData: [
         [
           'Tanggal',
           'Kasus Positif',
@@ -1276,33 +1226,8 @@ export default {
         ],
         ['0', 0, '', 0, '', 0, '']
       ],
-      ChartJawaBaratDataHarian: [
-        [
-          'Tanggal',
-          'Kasus Positif',
-          { type: 'string', role: 'tooltip', p: { html: true } },
-          'Sembuh',
-          { type: 'string', role: 'tooltip', p: { html: true } },
-          'Meninggal',
-          { type: 'string', role: 'tooltip', p: { html: true } }
-        ],
-        ['0', 0, '', 0, '', 0, '']
-      ],
-      ChartJawaBaratDataAkumulatif: [
-        [
-          'Tanggal',
-          'Kasus Positif',
-          { type: 'string', role: 'tooltip', p: { html: true } },
-          'Sembuh',
-          { type: 'string', role: 'tooltip', p: { html: true } },
-          'Meninggal',
-          { type: 'string', role: 'tooltip', p: { html: true } }
-        ],
-        ['0', 0, '', 0, '', 0, '']
-      ],
-      barChartNasionalOptions: {
-        height: 200,
-        width: 350,
+      ChartHarianOptions: {
+        height: 450,
         orientation: 'horizontal',
         colors: ['#FF4A4B', '#03B167', '#9C0000'],
         legend: {
@@ -1315,40 +1240,13 @@ export default {
           slantedTextAngle: -45
         },
         chartArea: {
-          width: '80%',
-          bottom: 50
+          width: '85%',
+          bottom: 100
         },
         tooltip: { isHtml: true }
       },
-      lineChartNasionalOptions: {
-        height: 200,
-        width: 350,
-        orientation: 'horizontal',
-        colors: ['#FF4A4B', '#03B167', '#9C0000'],
-        legend: {
-          position: 'none',
-          alignment: 'center',
-          maxLines: 5
-        },
-        // curveType: 'function',
-        hAxis: {
-          slantedText: true,
-          slantedTextAngle: -45
-        },
-        vAxis: {
-          viewWindow: {
-            min: 0
-          }
-        },
-        chartArea: {
-          width: '80%',
-          bottom: 50
-        },
-        tooltip: { isHtml: true }
-      },
-      barChartKotaOptions: {
-        height: 200,
-        width: 350,
+      ChartKumulatifOptions: {
+        height: 450,
         orientation: 'horizontal',
         colors: ['#FF4A4B', '#03B167', '#9C0000'],
         legend: {
@@ -1366,69 +1264,125 @@ export default {
           }
         },
         chartArea: {
-          width: '80%',
-          bottom: 50
+          width: '85%',
+          bottom: 100
         },
         tooltip: { isHtml: true }
       },
-      lineChartKotaOptions: {
-        height: 200,
-        width: 350,
-        orientation: 'horizontal',
-        colors: ['#FF4A4B', '#03B167', '#9C0000'],
-        legend: {
-          position: 'none',
-          alignment: 'center'
+      optionListWilayah: [
+        'Indonesia',
+        'Jawa Barat',
+        'Kab. Bandung',
+        'Kab. Bandung Barat',
+        'Kab. Bekasi',
+        'Kab. Bogor',
+        'Kab. Ciamis',
+        'Kab. Cianjur',
+        'Kab. Cirebon',
+        'Kab. Garut',
+        'Kab. Indramayu',
+        'Kab. Karawang',
+        'Kab. Kuningan',
+        'Kab. Majalengka',
+        'Kab. Pangandaran',
+        'Kab. Purwakarta',
+        'Kab. Subang',
+        'Kab. Sukabumi',
+        'Kab. Sumedang',
+        'Kab. Tasikmalaya',
+        'Kota Bandung',
+        'Kota Banjar',
+        'Kota Bekasi',
+        'Kota Bogor',
+        'Kota Cimahi',
+        'Kota Cirebon',
+        'Kota Depok',
+        'Kota Sukabumi',
+        'Kota Tasikmalaya'
+      ],
+      optionListWaktu: [
+        '1 Minggu Terakhir',
+        '1 Bulan Terakhir',
+        'Seluruh Waktu'
+        // 'Pilih Rentan Waktu'
+      ],
+      selectedListWilayah: 'Jawa Barat',
+      selectedListWaktu: 'Seluruh Waktu',
+      selectedDate: {
+        start: '',
+        end: ''
+      },
+      rangedate: {
+        captions: {
+          title: 'Pilih Tanggal',
+          ok_button: 'Terapkan'
         },
-        vAxis: {
-          viewWindow: {
-            min: 0
+        presetRanges: {
+          all () {
+            return {
+              label: 'Semua Waktu',
+              active: true,
+              dateRange: {
+                start: new Date('2020-03-01'),
+                end: new Date()
+              }
+            }
+          },
+          seminggu () {
+            const n = new Date()
+            const tanggalmulai = new Date(n.getFullYear(), n.getMonth(), n.getDate() - 8, 0, 0)
+            const tanggalselesai = new Date(n.getFullYear(), n.getMonth(), n.getDate(), 23, 59)
+            return {
+              label: '1 Minggu Terakhir',
+              active: false,
+              dateRange: {
+                start: tanggalmulai,
+                end: tanggalselesai
+              }
+            }
+          },
+          sebulan () {
+            const n = new Date()
+            const tanggalmulai = new Date(n.getFullYear(), n.getMonth(), n.getDate() - 31, 0, 0)
+            const tanggalselesai = new Date(n.getFullYear(), n.getMonth(), n.getDate(), 23, 59)
+            return {
+              label: '1 Bulan Terakhir',
+              active: false,
+              dateRange: {
+                start: tanggalmulai,
+                end: tanggalselesai
+              }
+            }
           }
-        },
-        // curveType: 'function',
-        hAxis: {
-          slantedText: true,
-          slantedTextAngle: -45
-        },
-        chartArea: {
-          width: '80%',
-          bottom: 50
-        },
-        tooltip: { isHtml: true }
-      }
+        }
+      },
+      isMobile: false
     }
   },
   watch: {
     propsDataNasionalHarianKumulatif () {
       this.jsonDataNasionalHarianKumulatif = this.propsDataNasionalHarianKumulatif
-      this.fetchDataNasionalHarianKumulatif()
-    },
-    propsDataRekapitulasiJabarProv () {
-      this.jsonDataProvinsi = this.propsDataRekapitulasiJabarProv
-      this.fetchDataProvinsi()
-    },
-    propsDataRekapitulasiJabarKab () {
-      this.jsonDataKabupaten = this.propsDataRekapitulasiJabarKab
-      setTimeout(() => {
-        this.fetchDataKabupaten()
-      }, 2000)
     },
     propsDataRekapitulasiJabarHarianProv () {
       this.jsonDataProvinsiHarian = this.propsDataRekapitulasiJabarHarianProv
-      this.fetchDataProvinsiHarian()
+      this.changeData()
     },
     propsDataRekapitulasiJabarKumulatifProv () {
       this.jsonDataProvinsiKumulatif = this.propsDataRekapitulasiJabarKumulatifProv
-      this.fetchDataProvinsiKumulatif()
     },
     propsDataRekapitulasiJabarHarianKab () {
       this.jsonDataKabupatenHarian = this.propsDataRekapitulasiJabarHarianKab
-      this.fetchDataKabupatenHarian()
+      this.groupDataKabupatenHarian()
     },
     propsDataRekapitulasiJabarKumulatifKab () {
       this.jsonDataKabupatenKumulatif = this.propsDataRekapitulasiJabarKumulatifKab
-      this.fetchDataKabupatenKumulatif()
+      this.groupDataKabupatenKumulatif()
     }
+  },
+  mounted () {
+    this.selectedDate.start = new Date('2020-03-01')
+    this.selectedDate.end = new Date()
+    this.checkIsMobile()
   },
   methods: {
     ifNullReturnZero (str) {
@@ -1442,22 +1396,25 @@ export default {
     },
     formatDate (date) {
       const d = new Date(date)
-      // const year = d.getFullYear()
-      // let month = '' + (d.getMonth() + 1)
-      // let day = '' + d.getDate()
-      // if (month.length < 2) {
-      //   month = '0' + month
-      // }
-      // if (day.length < 2) {
-      //   day = '0' + day
-      // }
-      // return [day, month, year].join('-')
       const options = {
         day: 'numeric',
         month: 'short',
         year: 'numeric'
       }
       return d.toLocaleString('id-ID', options)
+    },
+    formatDateYMD (date) {
+      const d = new Date(date)
+      let currDate = d.getDate()
+      let currMonth = d.getMonth() + 1
+      const currYear = d.getFullYear()
+      if (currMonth < 10) {
+        currMonth = '0' + currMonth
+      }
+      if (currDate < 10) {
+        currDate = '0' + currDate
+      }
+      return currYear + '-' + currMonth + '-' + currDate
     },
     compareValues (key, order = 'asc') {
       return function innerSort (a, b) {
@@ -1485,163 +1442,71 @@ export default {
     enableHarian () {
       this.stat.isActiveHarian = true
       this.stat.isActiveAkumulatif = false
+      this.changeData()
     },
     enableAkumulatif () {
       this.stat.isActiveHarian = false
       this.stat.isActiveAkumulatif = true
+      this.changeData()
     },
-    fetchDataNasionalHarianKumulatif () {
-      const self = this
-      for (let i = 0; i < self.jsonDataNasionalHarianKumulatif.length; i++) {
-        const date = new Date(self.jsonDataNasionalHarianKumulatif[i].tanggal)
-        // by Harian
-        let tooltipHarian = '<table style="white-space: nowrap; margin: 10px;">'
-        tooltipHarian += '<tr><td style="font-size: larger;">' + self.formatDate(date) + '</td><td></td></tr>'
-        tooltipHarian += '<tr><td>Positif </td><td><b style="margin-left: 10px;">' + self.jsonDataNasionalHarianKumulatif[i].jumlahKasusBaruperHari + '</b></td></tr>'
-        tooltipHarian += '<tr><td>Sembuh </td><td><b style="margin-left: 10px;">' + self.jsonDataNasionalHarianKumulatif[i].jumlahKasusSembuhperHari + '</b></td></tr>'
-        tooltipHarian += '<tr><td>Meninggal </td><td><b style="margin-left: 10px;">' + self.jsonDataNasionalHarianKumulatif[i].jumlahKasusMeninggalperHari + '</b></td></tr>'
-        tooltipHarian += '</table>'
-        self.ChartNasionalDataHarian.push([
-          self.formatDate(date),
-          self.jsonDataNasionalHarianKumulatif[i].jumlahKasusBaruperHari, tooltipHarian,
-          self.jsonDataNasionalHarianKumulatif[i].jumlahKasusSembuhperHari, tooltipHarian,
-          self.jsonDataNasionalHarianKumulatif[i].jumlahKasusMeninggalperHari, tooltipHarian
-        ])
-        // by Akumulatif
-        let tooltipKumulatif = '<table style="white-space: nowrap; margin: 10px;">'
-        tooltipKumulatif += '<tr><td style="font-size: larger;">' + self.formatDate(date) + '</td><td></td></tr>'
-        tooltipKumulatif += '<tr><td>Positif </td><td><b style="margin-left: 10px;">' + self.jsonDataNasionalHarianKumulatif[i].jumlahKasusBaruperHari + '</b></td></tr>'
-        tooltipKumulatif += '<tr><td>Sembuh </td><td><b style="margin-left: 10px;">' + self.jsonDataNasionalHarianKumulatif[i].jumlahKasusSembuhperHari + '</b></td></tr>'
-        tooltipKumulatif += '<tr><td>Meninggal </td><td><b style="margin-left: 10px;">' + self.jsonDataNasionalHarianKumulatif[i].jumlahKasusMeninggalperHari + '</b></td></tr>'
-        tooltipKumulatif += '</table>'
-        self.ChartNasionalDataAkumulatif.push([
-          self.formatDate(date),
-          self.jsonDataNasionalHarianKumulatif[i].jumlahKasusKumulatif, tooltipKumulatif,
-          self.jsonDataNasionalHarianKumulatif[i].jumlahPasienSembuh, tooltipKumulatif,
-          self.jsonDataNasionalHarianKumulatif[i].jumlahPasienMeninggal, tooltipKumulatif
-        ])
-      }
-      if (self.jsonDataNasionalHarianKumulatif[self.jsonDataNasionalHarianKumulatif.length - 1].jumlahKasusKumulatif === null) {
-        self.dataTotalPositifAll[0] = self.jsonDataNasionalHarianKumulatif[self.jsonDataNasionalHarianKumulatif.length - 2].jumlahKasusKumulatif
-      } else {
-        self.dataTotalPositifAll[0] = self.jsonDataNasionalHarianKumulatif[self.jsonDataNasionalHarianKumulatif.length - 1].jumlahKasusKumulatif
-      }
-      self.ChartNasionalDataHarian.splice(1, 1)
-      self.ChartNasionalDataAkumulatif.splice(1, 1)
+    changeFilterWilayah (stat) {
+      this.selectedListWilayah = stat
+      this.changeData()
     },
-    fetchDataProvinsi () {
-      const self = this
-      self.jsonDataResult.odp_total = self.jsonDataProvinsi.odp_total
-      self.jsonDataResult.odp_proses = self.jsonDataProvinsi.odp_proses
-      self.jsonDataResult.odp_proses_persen = ((self.jsonDataResult.odp_proses / self.jsonDataResult.odp_total) * 100).toFixed(2)
-      self.jsonDataResult.odp_selesai = self.jsonDataProvinsi.odp_selesai
-      self.jsonDataResult.odp_selesai_persen = ((self.jsonDataResult.odp_selesai / self.jsonDataResult.odp_total) * 100).toFixed(2)
-      self.jsonDataResult.pdp_total = self.jsonDataProvinsi.pdp_total
-      self.jsonDataResult.pdp_proses = self.jsonDataProvinsi.pdp_proses
-      self.jsonDataResult.pdp_proses_persen = ((self.jsonDataResult.pdp_proses / self.jsonDataResult.pdp_total) * 100).toFixed(2)
-      self.jsonDataResult.pdp_selesai = self.jsonDataProvinsi.pdp_selesai
-      self.jsonDataResult.pdp_selesai_persen = ((self.jsonDataResult.pdp_selesai / self.jsonDataResult.pdp_total) * 100).toFixed(2)
-      self.jsonDataResult.positif = self.jsonDataProvinsi.positif
-      self.jsonDataResult.sembuh = self.jsonDataProvinsi.sembuh
-      self.jsonDataResult.meninggal = self.jsonDataProvinsi.meninggal
-      self.dataTotalPositifAll[1] = self.jsonDataProvinsi.positif
-    },
-    fetchDataProvinsiHarian () {
-      const self = this
-      const today = new Date()
-      const strToday = self.formatDate(today)
-      let stop = false
-      for (let i = 0; i < self.jsonDataProvinsiHarian.length; i++) {
-        const date = new Date(self.jsonDataProvinsiHarian[i].tanggal)
-        if (stop === false) {
-          let tooltipHarian = '<table style="white-space: nowrap; margin: 10px;">'
-          tooltipHarian += '<tr><td style="font-size: larger;">' + self.formatDate(date) + '</td><td></td></tr>'
-          tooltipHarian += '<tr><td>Positif </td><td><b style="margin-left: 10px;">' + self.jsonDataProvinsiHarian[i].positif + '</b></td></tr>'
-          tooltipHarian += '<tr><td>Sembuh </td><td><b style="margin-left: 10px;">' + self.jsonDataProvinsiHarian[i].sembuh + '</b></td></tr>'
-          tooltipHarian += '<tr><td>Meninggal </td><td><b style="margin-left: 10px;">' + self.jsonDataProvinsiHarian[i].meninggal + '</b></td></tr>'
-          tooltipHarian += '</table>'
-          self.ChartJawaBaratDataHarian.push([
-            self.formatDate(date),
-            self.jsonDataProvinsiHarian[i].positif, tooltipHarian,
-            self.jsonDataProvinsiHarian[i].sembuh, tooltipHarian,
-            self.jsonDataProvinsiHarian[i].meninggal, tooltipHarian
-          ])
+    // changeFilterWaktu (stat) {
+    //   this.selectedListWaktu = stat
+    //   this.changeData()
+    // },
+    changeData () {
+      this.ChartHarianData = [
+        [
+          'Tanggal',
+          'Kasus Positif',
+          { type: 'string', role: 'tooltip', p: { html: true } },
+          'Sembuh',
+          { type: 'string', role: 'tooltip', p: { html: true } },
+          'Meninggal',
+          { type: 'string', role: 'tooltip', p: { html: true } }
+        ],
+        ['0', 0, '', 0, '', 0, '']
+      ]
+      this.ChartKumulatifData = [
+        [
+          'Tanggal',
+          'Kasus Positif',
+          { type: 'string', role: 'tooltip', p: { html: true } },
+          'Sembuh',
+          { type: 'string', role: 'tooltip', p: { html: true } },
+          'Meninggal',
+          { type: 'string', role: 'tooltip', p: { html: true } }
+        ],
+        ['0', 0, '', 0, '', 0, '']
+      ]
+      if (this.stat.isActiveHarian === true) {
+        if (this.selectedListWilayah === 'Jawa Barat') {
+          this.fetchDataProvinsiHarian()
+        } else if (this.selectedListWilayah === 'Indonesia') {
+          this.fetchDataNasionalHarian()
+        } else {
+          this.fetchDataKabupatenHarian()
         }
-        if (self.formatDate(date) === strToday) {
-          stop = true
+      } else if (this.stat.isActiveAkumulatif === true) {
+        if (this.selectedListWilayah === 'Jawa Barat') {
+          this.fetchDataProvinsiKumulatif()
+        } else if (this.selectedListWilayah === 'Indonesia') {
+          this.fetchDataNasionalKumulatif()
+        } else {
+          this.fetchDataKabupatenKumulatif()
         }
       }
-      self.ChartJawaBaratDataHarian.splice(1, 1)
     },
-    fetchDataProvinsiKumulatif () {
-      const self = this
-      const today = new Date()
-      const strToday = self.formatDate(today)
-      let stop = false
-      for (let i = 0; i < self.jsonDataProvinsiKumulatif.length; i++) {
-        const date = new Date(self.jsonDataProvinsiKumulatif[i].tanggal)
-        if (stop === false) {
-          let tooltipKumulatif = '<table style="white-space: nowrap; margin: 10px;">'
-          tooltipKumulatif += '<tr><td style="font-size: larger;">' + self.formatDate(date) + '</td><td></td></tr>'
-          tooltipKumulatif += '<tr><td>Positif </td><td><b style="margin-left: 10px;">' + self.jsonDataProvinsiKumulatif[i].positif + '</b></td></tr>'
-          tooltipKumulatif += '<tr><td>Sembuh </td><td><b style="margin-left: 10px;">' + self.jsonDataProvinsiKumulatif[i].sembuh + '</b></td></tr>'
-          tooltipKumulatif += '<tr><td>Meninggal </td><td><b style="margin-left: 10px;">' + self.jsonDataProvinsiKumulatif[i].meninggal + '</b></td></tr>'
-          tooltipKumulatif += '</table>'
-          self.ChartJawaBaratDataAkumulatif.push([
-            self.formatDate(date),
-            self.jsonDataProvinsiKumulatif[i].positif, tooltipKumulatif,
-            self.jsonDataProvinsiKumulatif[i].sembuh, tooltipKumulatif,
-            self.jsonDataProvinsiKumulatif[i].meninggal, tooltipKumulatif
-          ])
-        }
-        if (self.jsonDataProvinsiKumulatif[self.jsonDataProvinsiKumulatif.length - 1].positif === null) {
-          self.dataTotalPositifAll[1] = self.jsonDataProvinsiKumulatif[self.jsonDataProvinsiKumulatif.length - 2].positif
-        }
-        if (self.formatDate(date) === strToday) {
-          stop = true
-        }
-      }
-      self.ChartJawaBaratDataAkumulatif.splice(1, 1)
-    },
-    fetchDataKabupaten () {
-      const self = this
-      for (let j = 0; j < self.jsonDataKota.length; j++) {
-        for (let i = 0; i < self.jsonDataKabupaten.length; i++) {
-          if (self.jsonDataKabupaten[i].kode_kab === self.jsonDataKota[j].kode) {
-            self.jsonDataKota[j].odp_proses = self.jsonDataKabupaten[i].odp_proses
-            self.jsonDataKota[j].odp_selesai = self.jsonDataKabupaten[i].odp_selesai
-            self.jsonDataKota[j].odp_total = self.jsonDataKabupaten[i].odp_total
-            self.jsonDataKota[j].pdp_proses = self.jsonDataKabupaten[i].pdp_proses
-            self.jsonDataKota[j].pdp_selesai = self.jsonDataKabupaten[i].pdp_selesai
-            self.jsonDataKota[j].pdp_total = self.jsonDataKabupaten[i].pdp_total
-            self.jsonDataKota[j].positif = self.jsonDataKabupaten[i].positif
-            self.jsonDataKota[j].positif_persentase = ((parseInt(self.jsonDataKota[j].positif) / parseInt(self.jsonDataResult.positif)) * 100).toFixed(2)
-            self.jsonDataKota[j].sembuh = self.jsonDataKabupaten[i].sembuh
-            self.jsonDataKota[j].meninggal = self.jsonDataKabupaten[i].meninggal
-          }
-        }
-      }
-      self.jsonDataKota.sort(self.compareValues('positif', 'desc'))
-    },
-    fetchDataKabupatenHarian () {
+    groupDataKabupatenHarian () {
       const self = this
       let max = 0
       for (let j = 0; j < self.jsonDataKota.length; j++) {
         for (let i = 0; i < self.jsonDataKabupatenHarian.length; i++) {
           if (self.jsonDataKabupatenHarian[i].kode_kab === self.jsonDataKota[j].kode) {
-            const date = new Date(self.jsonDataKabupatenHarian[i].tanggal)
-            let tooltipHarian = '<table style="white-space: nowrap; margin: 10px;">'
-            tooltipHarian += '<tr><td style="font-size: larger;">' + self.formatDate(date) + '</td><td></td></tr>'
-            tooltipHarian += '<tr><td>Positif </td><td><b style="margin-left: 10px;">' + self.jsonDataKabupatenHarian[i].positif + '</b></td></tr>'
-            tooltipHarian += '<tr><td>Sembuh </td><td><b style="margin-left: 10px;">' + self.jsonDataKabupatenHarian[i].sembuh + '</b></td></tr>'
-            tooltipHarian += '<tr><td>Meninggal </td><td><b style="margin-left: 10px;">' + self.jsonDataKabupatenHarian[i].meninggal + '</b></td></tr>'
-            tooltipHarian += '</table>'
-            self.jsonDataKota[j].dataHarian.push([
-              self.formatDate(date),
-              self.jsonDataKabupatenHarian[i].positif, tooltipHarian,
-              self.jsonDataKabupatenHarian[i].sembuh, tooltipHarian,
-              self.jsonDataKabupatenHarian[i].meninggal, tooltipHarian
-            ])
+            self.jsonDataKota[j].dataHarian.push(self.jsonDataKabupatenHarian[i])
           }
           if (i === self.jsonDataKabupatenHarian.length - 1) {
             self.jsonDataKota[j].dataHarian.splice(1, 1)
@@ -1653,25 +1518,13 @@ export default {
       }
       // self.barChartKotaOptions.vAxis.viewWindow.max = max + (Math.ceil(max / 5))
     },
-    fetchDataKabupatenKumulatif () {
+    groupDataKabupatenKumulatif () {
       const self = this
       let max = 0
       for (let j = 0; j < self.jsonDataKota.length; j++) {
         for (let i = 0; i < self.jsonDataKabupatenKumulatif.length; i++) {
           if (self.jsonDataKabupatenKumulatif[i].kode_kab === self.jsonDataKota[j].kode) {
-            const date = new Date(self.jsonDataKabupatenKumulatif[i].tanggal)
-            let tooltipKumulatif = '<table style="white-space: nowrap; margin: 10px;">'
-            tooltipKumulatif += '<tr><td style="font-size: larger;">' + self.formatDate(date) + '</td><td></td></tr>'
-            tooltipKumulatif += '<tr><td>Positif </td><td><b style="margin-left: 10px;">' + self.jsonDataKabupatenKumulatif[i].positif + '</b></td></tr>'
-            tooltipKumulatif += '<tr><td>Sembuh </td><td><b style="margin-left: 10px;">' + self.jsonDataKabupatenKumulatif[i].sembuh + '</b></td></tr>'
-            tooltipKumulatif += '<tr><td>Meninggal </td><td><b style="margin-left: 10px;">' + self.jsonDataKabupatenKumulatif[i].meninggal + '</b></td></tr>'
-            tooltipKumulatif += '</table>'
-            self.jsonDataKota[j].dataAkumulatif.push([
-              self.formatDate(date),
-              self.jsonDataKabupatenKumulatif[i].positif, tooltipKumulatif,
-              self.jsonDataKabupatenKumulatif[i].sembuh, tooltipKumulatif,
-              self.jsonDataKabupatenKumulatif[i].meninggal, tooltipKumulatif
-            ])
+            self.jsonDataKota[j].dataAkumulatif.push(self.jsonDataKabupatenKumulatif[i])
           }
           if (i === self.jsonDataKabupatenKumulatif.length - 1) {
             self.jsonDataKota[j].dataAkumulatif.splice(1, 1)
@@ -1682,6 +1535,281 @@ export default {
         }
       }
       // self.lineChartKotaOptions.vAxis.viewWindow.max = max + (Math.ceil(max / 5))
+    },
+    fetchDataNasionalHarian () {
+      const self = this
+      let startNum = 0
+      let endNum = 0
+
+      // filter date
+      this.jsonDataNasionalHarianKumulatif.forEach((element, index) => {
+        if (this.formatDateYMD(element.tanggal) === this.formatDateYMD(this.selectedDate.start)) {
+          startNum = index
+        }
+        if (this.formatDateYMD(element.tanggal) === this.formatDateYMD(this.selectedDate.end)) {
+          endNum = index
+        }
+      })
+      if (endNum === 0) {
+        endNum = this.jsonDataNasionalHarianKumulatif.length - 1
+      }
+
+      // get data
+      for (let i = startNum; i < endNum; i++) {
+        const date = new Date(self.jsonDataNasionalHarianKumulatif[i].tanggal)
+        // by Harian
+        let tooltipHarian = '<table style="white-space: nowrap; margin: 10px;">'
+        tooltipHarian += '<tr><td style="font-size: larger;">' + self.formatDate(date) + '</td><td></td></tr>'
+        tooltipHarian += '<tr><td>Positif </td><td><b style="margin-left: 10px;">' + self.jsonDataNasionalHarianKumulatif[i].jumlahKasusBaruperHari + '</b></td></tr>'
+        tooltipHarian += '<tr><td>Sembuh </td><td><b style="margin-left: 10px;">' + self.jsonDataNasionalHarianKumulatif[i].jumlahKasusSembuhperHari + '</b></td></tr>'
+        tooltipHarian += '<tr><td>Meninggal </td><td><b style="margin-left: 10px;">' + self.jsonDataNasionalHarianKumulatif[i].jumlahKasusMeninggalperHari + '</b></td></tr>'
+        tooltipHarian += '</table>'
+        self.ChartHarianData.push([
+          self.formatDate(date),
+          self.jsonDataNasionalHarianKumulatif[i].jumlahKasusBaruperHari, tooltipHarian,
+          self.jsonDataNasionalHarianKumulatif[i].jumlahKasusSembuhperHari, tooltipHarian,
+          self.jsonDataNasionalHarianKumulatif[i].jumlahKasusMeninggalperHari, tooltipHarian
+        ])
+      }
+      self.ChartHarianData.splice(1, 1)
+    },
+    fetchDataNasionalKumulatif () {
+      const self = this
+      let startNum = 0
+      let endNum = 0
+
+      // filter date
+      this.jsonDataNasionalHarianKumulatif.forEach((element, index) => {
+        if (this.formatDateYMD(element.tanggal) === this.formatDateYMD(this.selectedDate.start)) {
+          startNum = index
+        }
+        if (this.formatDateYMD(element.tanggal) === this.formatDateYMD(this.selectedDate.end)) {
+          endNum = index
+        }
+      })
+      if (endNum === 0) {
+        endNum = this.jsonDataNasionalHarianKumulatif.length - 1
+      }
+
+      // get data
+      for (let i = startNum; i < endNum; i++) {
+        const date = new Date(self.jsonDataNasionalHarianKumulatif[i].tanggal)
+        // by Akumulatif
+        let tooltipKumulatif = '<table style="white-space: nowrap; margin: 10px;">'
+        tooltipKumulatif += '<tr><td style="font-size: larger;">' + self.formatDate(date) + '</td><td></td></tr>'
+        tooltipKumulatif += '<tr><td>Positif </td><td><b style="margin-left: 10px;">' + self.jsonDataNasionalHarianKumulatif[i].jumlahKasusBaruperHari + '</b></td></tr>'
+        tooltipKumulatif += '<tr><td>Sembuh </td><td><b style="margin-left: 10px;">' + self.jsonDataNasionalHarianKumulatif[i].jumlahKasusSembuhperHari + '</b></td></tr>'
+        tooltipKumulatif += '<tr><td>Meninggal </td><td><b style="margin-left: 10px;">' + self.jsonDataNasionalHarianKumulatif[i].jumlahKasusMeninggalperHari + '</b></td></tr>'
+        tooltipKumulatif += '</table>'
+        self.ChartKumulatifData.push([
+          self.formatDate(date),
+          self.jsonDataNasionalHarianKumulatif[i].jumlahKasusKumulatif, tooltipKumulatif,
+          self.jsonDataNasionalHarianKumulatif[i].jumlahPasienSembuh, tooltipKumulatif,
+          self.jsonDataNasionalHarianKumulatif[i].jumlahPasienMeninggal, tooltipKumulatif
+        ])
+      }
+      self.ChartKumulatifData.splice(1, 1)
+    },
+    fetchDataProvinsiHarian () {
+      const self = this
+      const today = new Date()
+      const strToday = self.formatDate(today)
+      let startNum = 0
+      let endNum = 0
+
+      // filter date
+      this.jsonDataProvinsiHarian.forEach((element, index) => {
+        if (element.tanggal === this.formatDateYMD(this.selectedDate.start)) {
+          startNum = index
+        }
+        if (element.tanggal === this.formatDateYMD(this.selectedDate.end)) {
+          endNum = index
+        }
+      })
+      if (endNum === 0) {
+        endNum = this.jsonDataProvinsiHarian.length - 1
+      }
+
+      // get data
+      let stop = false
+      for (let i = startNum; i < endNum; i++) {
+        const date = new Date(self.jsonDataProvinsiHarian[i].tanggal)
+        if (stop === false) {
+          let tooltipHarian = '<table style="white-space: nowrap; margin: 10px;">'
+          tooltipHarian += '<tr><td style="font-size: larger;">' + self.formatDate(date) + '</td><td></td></tr>'
+          tooltipHarian += '<tr><td>Positif </td><td><b style="margin-left: 10px;">' + self.jsonDataProvinsiHarian[i].positif + '</b></td></tr>'
+          tooltipHarian += '<tr><td>Sembuh </td><td><b style="margin-left: 10px;">' + self.jsonDataProvinsiHarian[i].sembuh + '</b></td></tr>'
+          tooltipHarian += '<tr><td>Meninggal </td><td><b style="margin-left: 10px;">' + self.jsonDataProvinsiHarian[i].meninggal + '</b></td></tr>'
+          tooltipHarian += '</table>'
+          self.ChartHarianData.push([
+            self.formatDate(date),
+            self.jsonDataProvinsiHarian[i].positif, tooltipHarian,
+            self.jsonDataProvinsiHarian[i].sembuh, tooltipHarian,
+            self.jsonDataProvinsiHarian[i].meninggal, tooltipHarian
+          ])
+        }
+        if (self.formatDate(date) === strToday) {
+          stop = true
+        }
+      }
+      self.ChartHarianData.splice(1, 1)
+    },
+    fetchDataProvinsiKumulatif () {
+      const self = this
+      const today = new Date()
+      const strToday = self.formatDate(today)
+      let startNum = 0
+      let endNum = 0
+
+      // filter date
+      this.jsonDataProvinsiKumulatif.forEach((element, index) => {
+        if (element.tanggal === this.formatDateYMD(this.selectedDate.start)) {
+          startNum = index
+        }
+        if (element.tanggal === this.formatDateYMD(this.selectedDate.end)) {
+          endNum = index
+        }
+      })
+      if (endNum === 0) {
+        endNum = this.jsonDataProvinsiKumulatif.length - 1
+      }
+
+      // get data
+      let stop = false
+      for (let i = startNum; i < endNum; i++) {
+        const date = new Date(self.jsonDataProvinsiKumulatif[i].tanggal)
+        if (stop === false) {
+          let tooltipKumulatif = '<table style="white-space: nowrap; margin: 10px;">'
+          tooltipKumulatif += '<tr><td style="font-size: larger;">' + self.formatDate(date) + '</td><td></td></tr>'
+          tooltipKumulatif += '<tr><td>Positif </td><td><b style="margin-left: 10px;">' + self.jsonDataProvinsiKumulatif[i].positif + '</b></td></tr>'
+          tooltipKumulatif += '<tr><td>Sembuh </td><td><b style="margin-left: 10px;">' + self.jsonDataProvinsiKumulatif[i].sembuh + '</b></td></tr>'
+          tooltipKumulatif += '<tr><td>Meninggal </td><td><b style="margin-left: 10px;">' + self.jsonDataProvinsiKumulatif[i].meninggal + '</b></td></tr>'
+          tooltipKumulatif += '</table>'
+          self.ChartKumulatifData.push([
+            self.formatDate(date),
+            self.jsonDataProvinsiKumulatif[i].positif, tooltipKumulatif,
+            self.jsonDataProvinsiKumulatif[i].sembuh, tooltipKumulatif,
+            self.jsonDataProvinsiKumulatif[i].meninggal, tooltipKumulatif
+          ])
+        }
+        if (self.formatDate(date) === strToday) {
+          stop = true
+        }
+      }
+      self.ChartKumulatifData.splice(1, 1)
+    },
+    fetchDataKabupatenHarian () {
+      const self = this
+      const today = new Date()
+      const strToday = self.formatDate(today)
+      let startNum = 0
+      let endNum = 0
+      let indexKota = 0
+
+      // filter date
+      self.jsonDataKota[0].dataHarian.forEach((element, index) => {
+        if (element.tanggal === this.formatDateYMD(this.selectedDate.start)) {
+          startNum = index
+        }
+        if (element.tanggal === this.formatDateYMD(this.selectedDate.end)) {
+          endNum = index
+        }
+      })
+      if (endNum === 0) {
+        endNum = self.jsonDataKota[0].dataHarian.length - 1
+      }
+
+      // find kota
+      this.jsonDataKota.forEach((element, index) => {
+        if (element.nama === this.selectedListWilayah) {
+          indexKota = index
+        }
+      })
+      // get data
+      let stop = false
+      for (let i = startNum; i < endNum; i++) {
+        const date = new Date(self.jsonDataKota[indexKota].dataHarian[i].tanggal)
+        if (stop === false) {
+          let tooltipHarian = '<table style="white-space: nowrap; margin: 10px;">'
+          tooltipHarian += '<tr><td style="font-size: larger;">' + self.formatDate(date) + '</td><td></td></tr>'
+          tooltipHarian += '<tr><td>Positif </td><td><b style="margin-left: 10px;">' + self.jsonDataKota[indexKota].dataHarian[i].positif + '</b></td></tr>'
+          tooltipHarian += '<tr><td>Sembuh </td><td><b style="margin-left: 10px;">' + self.jsonDataKota[indexKota].dataHarian[i].sembuh + '</b></td></tr>'
+          tooltipHarian += '<tr><td>Meninggal </td><td><b style="margin-left: 10px;">' + self.jsonDataKota[indexKota].dataHarian[i].meninggal + '</b></td></tr>'
+          tooltipHarian += '</table>'
+          self.ChartHarianData.push([
+            self.formatDate(date),
+            self.jsonDataKota[indexKota].dataHarian[i].positif, tooltipHarian,
+            self.jsonDataKota[indexKota].dataHarian[i].sembuh, tooltipHarian,
+            self.jsonDataKota[indexKota].dataHarian[i].meninggal, tooltipHarian
+          ])
+        }
+        if (self.formatDate(date) === strToday) {
+          stop = true
+        }
+      }
+      self.ChartHarianData.splice(1, 1)
+    },
+    fetchDataKabupatenKumulatif () {
+      const self = this
+      const today = new Date()
+      const strToday = self.formatDate(today)
+      let startNum = 0
+      let endNum = 0
+      let indexKota = 0
+
+      // filter date
+      self.jsonDataKota[0].dataAkumulatif.forEach((element, index) => {
+        if (element.tanggal === this.formatDateYMD(this.selectedDate.start)) {
+          startNum = index
+        }
+        if (element.tanggal === this.formatDateYMD(this.selectedDate.end)) {
+          endNum = index
+        }
+      })
+      if (endNum === 0) {
+        endNum = self.jsonDataKota[0].dataAkumulatif.length - 1
+      }
+
+      // find kota
+      this.jsonDataKota.forEach((element, index) => {
+        if (element.nama === this.selectedListWilayah) {
+          indexKota = index
+        }
+      })
+      // get data
+      let stop = false
+      for (let i = startNum; i < endNum; i++) {
+        const date = new Date(self.jsonDataKota[indexKota].dataAkumulatif[i].tanggal)
+        if (stop === false) {
+          let tooltipHarian = '<table style="white-space: nowrap; margin: 10px;">'
+          tooltipHarian += '<tr><td style="font-size: larger;">' + self.formatDate(date) + '</td><td></td></tr>'
+          tooltipHarian += '<tr><td>Positif </td><td><b style="margin-left: 10px;">' + self.jsonDataKota[indexKota].dataAkumulatif[i].positif + '</b></td></tr>'
+          tooltipHarian += '<tr><td>Sembuh </td><td><b style="margin-left: 10px;">' + self.jsonDataKota[indexKota].dataAkumulatif[i].sembuh + '</b></td></tr>'
+          tooltipHarian += '<tr><td>Meninggal </td><td><b style="margin-left: 10px;">' + self.jsonDataKota[indexKota].dataAkumulatif[i].meninggal + '</b></td></tr>'
+          tooltipHarian += '</table>'
+          self.ChartKumulatifData.push([
+            self.formatDate(date),
+            self.jsonDataKota[indexKota].dataAkumulatif[i].positif, tooltipHarian,
+            self.jsonDataKota[indexKota].dataAkumulatif[i].sembuh, tooltipHarian,
+            self.jsonDataKota[indexKota].dataAkumulatif[i].meninggal, tooltipHarian
+          ])
+        }
+        if (self.formatDate(date) === strToday) {
+          stop = true
+        }
+      }
+      self.ChartHarianData.splice(1, 1)
+    },
+    onDateSelected (daterange) {
+      this.selectedDate = daterange
+      this.changeData()
+    },
+    checkIsMobile () {
+      if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+        this.isMobile = true
+      } else {
+        this.isMobile = false
+      }
     }
   }
 }
@@ -1689,6 +1817,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
+.select-option-selector {
+  display: block;
+  border: 1px solid #ccc;
+  padding: 6.4px;
+  font-size: 14px;
+  width: 230px;
+  cursor: pointer;
+}
 
 .div-only-mobile {
     display: none !important;

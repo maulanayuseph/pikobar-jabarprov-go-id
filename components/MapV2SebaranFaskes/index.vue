@@ -5,7 +5,7 @@
     <div class="container-map">
       <div
         id="map-wrap-faskes"
-        style="height: 450px; z-index:0; position: relative;"
+        style="height: 500px; z-index:0; position: relative;"
       />
       <div class="filter-layer">
         <div class="text-right">
@@ -24,29 +24,75 @@
           >
             <font-awesome-icon :icon="faFilter" />
             <i class="fas fa-filter cc-primary" style="color: black !important;" />
+          </button><br>
+          <button
+            class="btn btn-light mt-2"
+            style="background-color: white"
+            @click="showLayer()"
+          >
+            <font-awesome-icon :icon="faLayerGroup" />
+            <i class="fas fa-filter cc-primary" style="color: black !important;" />
           </button>
         </div>
         <div
+          v-if="isShowLayer"
+          class="filter-data"
+        >
+          <li
+            :class="layer.custom?'filter-active':''"
+            @click="setLayer('custom')"
+          >
+            Otomatis
+          </li>
+          <li
+            :class="layer.kota?'filter-active':''"
+            @click="setLayer('kota')"
+          >
+            Kota/Kabupaten
+          </li>
+          <li
+            :class="layer.kecamatan?'filter-active':''"
+            @click="setLayer('kecamatan')"
+          >
+            Kecamatan
+          </li>
+          <li
+            :class="layer.kelurahan?'filter-active':''"
+            @click="setLayer('kelurahan')"
+          >
+            Kelurahan/Desa
+          </li>
+        </div>
+        <div
           v-if="isShowFilter"
-          class="filter-data">
+          class="filter-data"
+        >
           <li
             :class="filter.lini1_rujukan?'filter-active':''"
-            @click="setFilter('lini1_rujukan')">
+            @click="setFilter('lini1_rujukan')"
+          >
+            <!-- eslint-disable-next-line vue/no-v-html -->
             <div class="legend-color" style="margin-right: 0.5em;" v-html="sgvMarker.lini1_rujukan" />Rumah Sakit Rujukan Lini 1
           </li>
           <li
             :class="filter.lini2_rujukan?'filter-active':''"
-            @click="setFilter('lini2_rujukan')">
+            @click="setFilter('lini2_rujukan')"
+          >
+            <!-- eslint-disable-next-line vue/no-v-html -->
             <div class="legend-color" style="margin-right: 0.5em;" v-html="sgvMarker.lini2_rujukan" />Rumah Sakit Rujukan Lini 2
           </li>
           <li
             :class="filter.lini1_non?'filter-active':''"
-            @click="setFilter('lini1_non')">
+            @click="setFilter('lini1_non')"
+          >
+            <!-- eslint-disable-next-line vue/no-v-html -->
             <div class="legend-color" style="margin-right: 0.5em;" v-html="sgvMarker.lini1_non" />Rumah Sakit Non Rujukan
           </li>
           <li
             :class="filter.lini2_non?'filter-active':''"
-            @click="setFilter('lini2_non')">
+            @click="setFilter('lini2_non')"
+          >
+            <!-- eslint-disable-next-line vue/no-v-html -->
             <div class="legend-color" style="margin-right: 0.5em;" v-html="sgvMarker.lini2_non" />Puskesmas
           </li>
         </div>
@@ -55,15 +101,19 @@
         <b>Keterangan: </b>
         <div class="flex mb-1">
           <div class="w-1/4 h-auto">
+            <!-- eslint-disable-next-line vue/no-v-html -->
             <div class="legend-color" style="margin-right: 0.5em;" v-html="sgvMarker.lini1_rujukan" />Rumah Sakit Rujukan Lini 1
           </div>
           <div class="w-1/4 h-auto">
+            <!-- eslint-disable-next-line vue/no-v-html -->
             <div class="legend-color" style="margin-right: 0.5em;" v-html="sgvMarker.lini2_rujukan" />Rumah Sakit Rujukan Lini 2
           </div>
           <div class="w-1/4 h-auto">
+            <!-- eslint-disable-next-line vue/no-v-html -->
             <div class="legend-color" style="margin-right: 0.5em;" v-html="sgvMarker.lini1_non" />Rumah Sakit Non Rujukan
           </div>
           <div class="w-1/4 h-auto">
+            <!-- eslint-disable-next-line vue/no-v-html -->
             <div class="legend-color" style="margin-right: 0.5em;" v-html="sgvMarker.lini2_non" />Puskesmas
           </div>
         </div>
@@ -74,7 +124,7 @@
 
 <script>
 
-import { faFilter, faHome } from '@fortawesome/free-solid-svg-icons'
+import { faFilter, faHome, faLayerGroup } from '@fortawesome/free-solid-svg-icons'
 import { GeoSearchControl, OpenStreetMapProvider } from 'leaflet-geosearch'
 import jsonKota from '@/assets/kotaV2.json'
 import jsonKecamatan from '@/assets/kecamatanV2.json'
@@ -91,9 +141,10 @@ export default {
   data () {
     return {
       map: '',
-      zoom: 8,
+      zoom: 9,
       faFilter,
       faHome,
+      faLayerGroup,
 
       distributionProvinceData: [],
 
@@ -126,6 +177,16 @@ export default {
         lini1_non: false,
         lini2_non: false
       },
+
+      isShowLayer: false,
+      layer: {
+        custom: false,
+        kota: true,
+        kecamatan: false,
+        kelurahan: false
+      },
+      layerActive: 'kota',
+
       sgvMarker: {
         lini1_rujukan: `<svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
           <rect x="1" y="1" width="16" height="16" rx="4" stroke="#5AAA4E"/>
@@ -203,7 +264,7 @@ export default {
     initMap () {
       this.map = this.$L.map('map-wrap-faskes', {
         zoomControl: false
-      }).setView([-6.932694, 107.627449], 8)
+      }).setView([-6.932694, 107.627449], 9)
 
       this.$L.tileLayer(
         'https://cartodb-basemaps-d.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png',
@@ -233,7 +294,16 @@ export default {
       }).addTo(this.map)
 
       this.map.on('geosearch/showlocation', (e) => {
+        this.removeMarker()
         this.zoom = this.map.getZoom()
+
+        const layerList = this.$L.marker([e.location.y, e.location.x], {
+          icon: new this.$L.Icon.Default()
+        })
+        layerList.bindPopup(e.location.label)
+        layerList.addTo(this.map)
+        layerList.openPopup()
+        this.dataMarker.push(layerList)
       })
 
       // create layer group
@@ -243,17 +313,17 @@ export default {
     setZoomLevel () {
       // listening zoomed level
       this.map.on('zoomend', () => {
-        if (this.map.getZoom() <= 10) {
+        if (this.map.getZoom() <= 10 && this.layerActive === 'custom') {
           this.removeLayer()
           this.createLayerKota()
-        } else if (this.map.getZoom() > 10 && this.map.getZoom() <= 13) {
+        } else if (this.map.getZoom() > 10 && this.map.getZoom() <= 13 && this.layerActive === 'custom') {
           this.removeLayer()
-          this.createLayerKota()
+          // this.createLayerKota()
           this.createLayerKecamatan()
-        } else if (this.map.getZoom() > 13) {
+        } else if (this.map.getZoom() > 13 && this.layerActive === 'custom') {
           this.removeLayer()
-          this.createLayerKota()
-          this.createLayerKecamatan()
+          // this.createLayerKota()
+          // this.createLayerKecamatan()
           this.createLayerKelurahan()
         }
       })
@@ -420,10 +490,65 @@ export default {
           this.createMarker(cat)
         }
       }
+
+      if (this.layerActive === 'custom') {
+        if (this.map.getZoom() <= 10) {
+          this.removeLayer()
+          this.createLayerKota(this.filterActive)
+        } else if (this.map.getZoom() > 10 && this.map.getZoom() <= 13) {
+          this.removeLayer()
+          this.createLayerKecamatan(this.filterActive)
+        } else if (this.map.getZoom() > 13) {
+          this.removeLayer()
+          this.createLayerKelurahan(this.filterActive)
+        }
+      } else if (this.layerActive === 'kota') {
+        this.removeLayer()
+        this.createLayerKota(this.filterActive)
+      } else if (this.layerActive === 'kecamatan') {
+        this.removeLayer()
+        this.createLayerKecamatan(this.filterActive)
+      } else if (this.layerActive === 'kelurahan') {
+        this.removeLayer()
+        this.createLayerKelurahan(this.filterActive)
+      }
+    },
+
+    showLayer () {
+      this.isShowLayer = !this.isShowLayer
+    },
+    setLayer (category) {
+      for (const cat of Object.keys(this.layer)) {
+        this.layer[cat] = false
+      }
+      this.layer[category] = !this.layer[category]
+      this.layerActive = category
+
+      if (this.layerActive === 'custom') {
+        if (this.map.getZoom() <= 10) {
+          this.removeLayer()
+          this.createLayerKota(this.filterActive)
+        } else if (this.map.getZoom() > 10 && this.map.getZoom() <= 13) {
+          this.removeLayer()
+          this.createLayerKecamatan(this.filterActive)
+        } else if (this.map.getZoom() > 13) {
+          this.removeLayer()
+          this.createLayerKelurahan(this.filterActive)
+        }
+      } else if (this.layerActive === 'kota') {
+        this.removeLayer()
+        this.createLayerKota(this.filterActive)
+      } else if (this.layerActive === 'kecamatan') {
+        this.removeLayer()
+        this.createLayerKecamatan(this.filterActive)
+      } else if (this.layerActive === 'kelurahan') {
+        this.removeLayer()
+        this.createLayerKelurahan(this.filterActive)
+      }
     },
 
     backToHome () {
-      this.map.flyTo([-6.932694, 107.627449], 8)
+      this.map.flyTo([-6.932694, 107.627449], 9)
     },
 
     titleize (sentence) {

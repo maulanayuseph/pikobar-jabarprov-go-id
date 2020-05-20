@@ -5,7 +5,7 @@
     <div class="container-map">
       <div
         id="map-wrap-cluster"
-        style="height: 450px; z-index:0; position: relative;"
+        style="height: 500px; z-index:0; position: relative;"
       />
       <div class="filter-layer">
         <div class="text-right">
@@ -24,73 +24,129 @@
           >
             <font-awesome-icon :icon="faFilter" />
             <i class="fas fa-filter cc-primary" style="color: black !important;" />
+          </button><br>
+          <button
+            class="btn btn-light mt-2"
+            style="background-color: white"
+            @click="showLayer()"
+          >
+            <font-awesome-icon :icon="faLayerGroup" />
+            <i class="fas fa-filter cc-primary" style="color: black !important;" />
           </button>
         </div>
         <div
+          v-if="isShowLayer"
+          class="filter-data"
+        >
+          <li
+            :class="layer.custom?'filter-active':''"
+            @click="setLayer('custom')"
+          >
+            Otomatis
+          </li>
+          <li
+            :class="layer.kota?'filter-active':''"
+            @click="setLayer('kota')"
+          >
+            Kota/Kabupaten
+          </li>
+          <li
+            :class="layer.kecamatan?'filter-active':''"
+            @click="setLayer('kecamatan')"
+          >
+            Kecamatan
+          </li>
+          <li
+            :class="layer.kelurahan?'filter-active':''"
+            @click="setLayer('kelurahan')"
+          >
+            Kelurahan/Desa
+          </li>
+        </div>
+        <div
           v-if="isShowFilter"
-          class="filter-data">
+          class="filter-data"
+        >
           <li
             :class="filter.positif_proses?'filter-active':''"
-            @click="setFilter('positif_proses')">
+            @click="setFilter('positif_proses')"
+          >
             <div
               class="legend-color cluster-positif-proses"
-              style="margin-right: 0.5em;" />Positif - Aktif
+              style="margin-right: 0.5em;"
+            />Positif - Aktif
           </li>
           <li
             :class="filter.positif_sembuh?'filter-active':''"
-            @click="setFilter('positif_sembuh')">
+            @click="setFilter('positif_sembuh')"
+          >
             <div
               class="legend-color cluster-positif-sembuh"
-              style="margin-right: 0.5em;" />Positif - Sembuh
+              style="margin-right: 0.5em;"
+            />Positif - Sembuh
           </li>
           <li
             :class="filter.positif_meninggal?'filter-active':''"
-            @click="setFilter('positif_meninggal')">
+            @click="setFilter('positif_meninggal')"
+          >
             <div
               class="legend-color cluster-positif-meninggal"
-              style="margin-right: 0.5em;" />Positif - Meninggal
+              style="margin-right: 0.5em;"
+            />Positif - Meninggal
           </li>
           <li
             :class="filter.pdp_proses?'filter-active':''"
-            @click="setFilter('pdp_proses')">
+            @click="setFilter('pdp_proses')"
+          >
             <div
               class="legend-color cluster-pdp-proses"
-              style="margin-right: 0.5em;" />PDP - Proses
+              style="margin-right: 0.5em;"
+            />PDP - Proses
           </li>
           <li
             :class="filter.pdp_selesai?'filter-active':''"
-            @click="setFilter('pdp_selesai')">
+            @click="setFilter('pdp_selesai')"
+          >
             <div
               class="legend-color cluster-pdp-selesai"
-              style="margin-right: 0.5em;" />PDP - Selesai
+              style="margin-right: 0.5em;"
+            />PDP - Selesai
           </li>
           <li
             :class="filter.pdp_meninggal?'filter-active':''"
-            @click="setFilter('pdp_meninggal')">
+            @click="setFilter('pdp_meninggal')"
+          >
             <div
               class="legend-color cluster-pdp-meninggal"
-              style="margin-right: 0.5em;" />PDP - Meninggal
+              style="margin-right: 0.5em;"
+            />PDP - Meninggal
           </li>
           <li
             :class="filter.odp_proses?'filter-active':''"
-            @click="setFilter('odp_proses')">
+            @click="setFilter('odp_proses')"
+          >
             <div
               class="legend-color cluster-odp-proses"
-              style="margin-right: 0.5em;" />ODP - Proses
+              style="margin-right: 0.5em;"
+            />ODP - Proses
           </li>
           <li
             :class="filter.odp_selesai?'filter-active':''"
-            @click="setFilter('odp_selesai')">
+            @click="setFilter('odp_selesai')"
+          >
             <div
               class="legend-color cluster-odp-selesai"
-              style="margin-right: 0.5em;" />ODP - Selesai
+              style="margin-right: 0.5em;"
+            />ODP - Selesai
           </li>
           <li
             :class="filter.odp_meninggal?'filter-active':''"
-            @click="setFilter('odp_meninggal')">
+            @click="setFilter('odp_meninggal')"
+          >
             <div
               class="legend-color cluster-odp-meninggal"
-              style="margin-right: 0.5em;" />ODP - Meninggal
+              style="margin-right: 0.5em;"
+            />ODP - Meninggal
           </li>
         </div>
       </div>
@@ -100,35 +156,44 @@
           <div class="w-1/3 h-auto">
             <div
               class="legend-color cluster-positif-proses"
-              style="margin-right: 0.5em;" />Positif - Aktif <br>
+              style="margin-right: 0.5em;"
+            />Positif - Aktif <br>
             <div
               class="legend-color cluster-positif-sembuh"
-              style="margin-right: 0.5em;" />Positif - Sembuh <br>
+              style="margin-right: 0.5em;"
+            />Positif - Sembuh <br>
             <div
               class="legend-color cluster-positif-meninggal"
-              style="margin-right: 0.5em;" />Positif - Meninggal <br>
+              style="margin-right: 0.5em;"
+            />Positif - Meninggal <br>
           </div>
           <div class="w-1/3 h-auto">
             <div
               class="legend-color cluster-pdp-proses"
-              style="margin-right: 0.5em;" />PDP - Aktif <br>
+              style="margin-right: 0.5em;"
+            />PDP - Aktif <br>
             <div
               class="legend-color cluster-pdp-selesai"
-              style="margin-right: 0.5em;" />PDP - Selesai <br>
+              style="margin-right: 0.5em;"
+            />PDP - Selesai <br>
             <div
               class="legend-color cluster-pdp-meninggal"
-              style="margin-right: 0.5em;" />PDP - Meninggal <br>
+              style="margin-right: 0.5em;"
+            />PDP - Meninggal <br>
           </div>
           <div class="w-1/3 h-auto">
             <div
               class="legend-color cluster-odp-proses"
-              style="margin-right: 0.5em;" />ODP - Aktif <br>
+              style="margin-right: 0.5em;"
+            />ODP - Aktif <br>
             <div
               class="legend-color cluster-odp-selesai"
-              style="margin-right: 0.5em;" />ODP - Selesai <br>
+              style="margin-right: 0.5em;"
+            />ODP - Selesai <br>
             <div
               class="legend-color cluster-odp-meninggal"
-              style="margin-right: 0.5em;" />ODP - Meninggal <br>
+              style="margin-right: 0.5em;"
+            />ODP - Meninggal <br>
           </div>
         </div>
         <hr>
@@ -170,7 +235,7 @@
 </template>
 
 <script>
-import { faFilter, faHome } from '@fortawesome/free-solid-svg-icons'
+import { faFilter, faHome, faLayerGroup } from '@fortawesome/free-solid-svg-icons'
 import * as turf from '@turf/turf'
 import { GeoSearchControl, OpenStreetMapProvider } from 'leaflet-geosearch'
 import jsonKota from '@/assets/kotaV2.json'
@@ -188,12 +253,13 @@ export default {
   data () {
     return {
       map: '',
-      zoom: 8,
+      zoom: 9,
       isHidden: false,
       layerGroup: '',
 
       faFilter,
       faHome,
+      faLayerGroup,
 
       distributionProvinceData: [],
 
@@ -239,6 +305,15 @@ export default {
         odp_selesai: false,
         odp_meninggal: false
       },
+
+      isShowLayer: false,
+      layer: {
+        custom: false,
+        kota: true,
+        kecamatan: false,
+        kelurahan: false
+      },
+      layerActive: 'kota',
 
       statusStage: {
         positif_proses: 'Positif - Aktif',
@@ -323,7 +398,7 @@ export default {
       // eslint-disable-next-line new-cap
       this.map = new this.$L.map('map-wrap-cluster', {
         zoomControl: false
-      }).setView([-6.932694, 107.627449], 8)
+      }).setView([-6.932694, 107.627449], 9)
 
       this.$L.tileLayer(
         'https://cartodb-basemaps-d.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png',
@@ -353,18 +428,27 @@ export default {
       }).addTo(this.map)
 
       this.map.on('geosearch/showlocation', (e) => {
+        this.removeMarker()
         this.zoom = this.map.getZoom()
+
+        const layerList = this.$L.marker([e.location.y, e.location.x], {
+          icon: new this.$L.Icon.Default()
+        })
+        layerList.bindPopup(e.location.label)
+        layerList.addTo(this.map)
+        layerList.openPopup()
+        this.dataMarker.push(layerList)
       })
     },
 
     setZoomLevel () {
       // listening zoomed level
       this.map.on('zoomend', () => {
-        if (this.map.getZoom() <= 10) {
+        if (this.map.getZoom() <= 10 && this.layerActive === 'custom') {
           this.createLayerByKota()
-        } else if (this.map.getZoom() > 10 && this.map.getZoom() <= 13) {
+        } else if (this.map.getZoom() > 10 && this.map.getZoom() <= 13 && this.layerActive === 'custom') {
           this.createLayerByKecamatan()
-        } else if (this.map.getZoom() > 13) {
+        } else if (this.map.getZoom() > 13 && this.layerActive === 'custom') {
           this.createLayerByKelurahan()
         }
       })
@@ -675,17 +759,52 @@ export default {
         }
       }
 
-      if (this.statusOpenedMap === 'Kelurahan') {
-        this.createLayerByKelurahan()
-      } else if (this.statusOpenedMap === 'Kecamatan') {
-        this.createLayerByKecamatan()
-      } else {
-        this.createLayerByKota()
+      if (this.layerActive === 'custom') {
+        if (this.statusOpenedMap === 'Kelurahan') {
+          this.createLayerByKelurahan()
+        } else if (this.statusOpenedMap === 'Kecamatan') {
+          this.createLayerByKecamatan()
+        } else {
+          this.createLayerByKota()
+        }
+      } else if (this.layerActive === 'kota') {
+        this.createLayerByKota(this.filterActive)
+      } else if (this.layerActive === 'kecamatan') {
+        this.createLayerByKecamatan(this.filterActive)
+      } else if (this.layerActive === 'kelurahan') {
+        this.createLayerByKelurahan(this.filterActive)
+      }
+    },
+
+    showLayer () {
+      this.isShowLayer = !this.isShowLayer
+    },
+    setLayer (category) {
+      for (const cat of Object.keys(this.layer)) {
+        this.layer[cat] = false
+      }
+      this.layer[category] = !this.layer[category]
+      this.layerActive = category
+
+      if (this.layerActive === 'custom') {
+        if (this.statusOpenedMap === 'Kelurahan') {
+          this.createLayerByKelurahan()
+        } else if (this.statusOpenedMap === 'Kecamatan') {
+          this.createLayerByKecamatan()
+        } else {
+          this.createLayerByKota()
+        }
+      } else if (this.layerActive === 'kota') {
+        this.createLayerByKota(this.filterActive)
+      } else if (this.layerActive === 'kecamatan') {
+        this.createLayerByKecamatan(this.filterActive)
+      } else if (this.layerActive === 'kelurahan') {
+        this.createLayerByKelurahan(this.filterActive)
       }
     },
 
     backToHome () {
-      this.map.flyTo([-6.932694, 107.627449], 8)
+      this.map.flyTo([-6.932694, 107.627449], 9)
     },
 
     titleize (sentence) {

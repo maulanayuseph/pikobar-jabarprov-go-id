@@ -14,6 +14,9 @@
       <DataRDT :props-data-rekapitulasi-jabar.sync="jsonDataRekapitulasiJabarProv" />
     </section>
     <section class="m-4 mb-8 md:m-8">
+      <DataPCR :props-data-rekapitulasi-jabar.sync="jsonDataRekapitulasiJabarProv" />
+    </section>
+    <section class="m-4 mb-8 md:m-8">
       <div class="items-stretch flex flex-col xl:flex-row xl:flex-no-wrap">
         <button
           class="button-selector m-1 w-full xl:w-auto "
@@ -62,7 +65,7 @@
         <MapSebaranPolygon v-if="stat.isActivePolygon" /> -->
         <MapV2SebaranPolygon
           v-if="stat.isActivePolygon"
-          :props-data-sebaran-jawa-barat.sync="jsonDataSebaranJawaBarat"
+          :props-data-sebaran-jawa-barat.sync="jsonDataSebaranJabar"
         />
         <MapV2SebaranCluster
           v-if="stat.isActiveCluster"
@@ -80,7 +83,23 @@
     </section>
 
     <section class="m-4 mb-8 md:m-8">
-      <BarStatArea
+      <BarStatTable
+        :props-data-rekapitulasi-jabar-kab.sync="jsonDataRekapitulasiJabarKab"
+        :props-data-rekapitulasi-jabar-kumulatif-kab.sync="jsonDataRekapitulasiJabarKumulatifKab"
+      />
+    </section>
+
+    <section class="m-4 mb-8 md:m-8">
+      <!-- <BarStatArea
+        :props-data-rekapitulasi-jabar-prov.sync="jsonDataRekapitulasiJabarProv"
+        :props-data-rekapitulasi-jabar-kab.sync="jsonDataRekapitulasiJabarKab"
+        :props-data-rekapitulasi-jabar-harian-prov.sync="jsonDataRekapitulasiJabarHarianProv"
+        :props-data-rekapitulasi-jabar-harian-kab.sync="jsonDataRekapitulasiJabarHarianKab"
+        :props-data-rekapitulasi-jabar-kumulatif-prov.sync="jsonDataRekapitulasiJabarKumulatifProv"
+        :props-data-rekapitulasi-jabar-kumulatif-kab.sync="jsonDataRekapitulasiJabarKumulatifKab"
+        :props-data-nasional-harian-kumulatif.sync="jsonDataNasionalHarianKumulatif"
+      /> -->
+      <BarStatAreaSingleV2
         :props-data-rekapitulasi-jabar-prov.sync="jsonDataRekapitulasiJabarProv"
         :props-data-rekapitulasi-jabar-kab.sync="jsonDataRekapitulasiJabarKab"
         :props-data-rekapitulasi-jabar-harian-prov.sync="jsonDataRekapitulasiJabarHarianProv"
@@ -92,10 +111,6 @@
     </section>
 
     <section class="m-4 mb-8 md:m-8">
-      <BarStatTable :props-data-rekapitulasi-jabar-kab.sync="jsonDataRekapitulasiJabarKab" />
-    </section>
-
-    <section class="m-4 mb-8 md:m-8">
       <div class="chart-container w-full">
         <BarStatJenisKelamin :props-data-rekapitulasi-jabar.sync="jsonDataRekapitulasiJabarProv" />
         <BarStatUsia :props-data-rekapitulasi-jabar.sync="jsonDataRekapitulasiJabarProv" />
@@ -103,20 +118,53 @@
     </section>
 
     <section class="m-4 md:m-8">
-      <BarStatHarianAkumulatif
+      <!-- <BarStatHarianAkumulatif
+        :props-data-rekapitulasi-jabar-harian-prov.sync="jsonDataRekapitulasiJabarHarianProv"
+        :props-data-rekapitulasi-jabar-kumulatif-prov.sync="jsonDataRekapitulasiJabarKumulatifProv"
+      /> -->
+      <BarStatHarianAkumulatifV2
         :props-data-rekapitulasi-jabar-harian-prov.sync="jsonDataRekapitulasiJabarHarianProv"
         :props-data-rekapitulasi-jabar-kumulatif-prov.sync="jsonDataRekapitulasiJabarKumulatifProv"
       />
     </section>
+
+    <section class="m-4 md:m-8 flex">
+      <a class="link-hover bg-white rounded-lg overflow-hidden shadow-md w-1/2 mr-2" href="/table-case" target="_blank">
+        <div class="flex" style="padding: 40px;">
+          <div class="w-5/6 text-xl">
+            <b>Akses Data Kasus COVID-19 - <br>di sini</b>
+          </div>
+          <div class="w-1/6">
+            <FontAwesomeIcon :icon="faArrowRight" size="2x" style="margin-top: 10px;" />
+          </div>
+        </div>
+      </a>
+      <a class="link-hover bg-white rounded-lg overflow-hidden shadow-md w-1/2 ml-2" href="https://covid19-public.digitalservice.id/api/v1/">
+        <div class="flex" style="padding: 40px;">
+          <div class="w-5/6 text-xl">
+            <b>Dapatkan akses API Publik - <br>Data Pikobar di sini</b>
+          </div>
+          <div class="w-1/6">
+            <FontAwesomeIcon :icon="faArrowRight" size="2x" style="margin-top: 10px;" />
+          </div>
+        </div>
+      </a>
+    </section>
   </div>
 </template>
 
+<style>
+.link-hover:hover {
+  box-shadow: 0 0 20px #6DD174;
+  color: #6DD174;
+}
+</style>
 <script>
 /* eslint-disable */
 import axios from 'axios'
 import { mapState } from 'vuex'
 import DataSummary from '~/components/_pages/index/DataSummary'
-import { faFirstAid, faBug, faMap, faCalendarMinus } from '@fortawesome/free-solid-svg-icons'
+import { faFirstAid, faBug, faMap, faCalendarMinus, faArrowRight } from '@fortawesome/free-solid-svg-icons'
 import { formatDateTimeShort } from '~/lib/date'
 import { analytics } from '~/lib/firebase'
 
@@ -124,15 +172,19 @@ export default {
   components: {
     DataSummary,
     DataRDT: () => import('~/components/DataRDT'),
+    DataPCR: () => import('~/components/DataPCR'),
     // MapSebaranCovid: () => import('~/components/MapSebaranCovid'),
     // MapSebaranPolygon: () => import('~/components/MapSebaranPolygon'),
     // MapFaskes: () => import('~/components/MapFaskes'),
     BarStat: () => import('~/components/BarStat'),
     BarStatDetail: () => import('~/components/BarStatDetail'),
-    BarStatArea: () => import('~/components/BarStatArea'),
+    // BarStatArea: () => import('~/components/BarStatArea'),
+    // BarStatAreaSingle: () => import('~/components/BarStatAreaSingle'),
+    BarStatAreaSingleV2: () => import('~/components/BarStatAreaSingleV2'),
     BarStatJenisKelamin: () => import('~/components/BarStatJenisKelamin'),
     BarStatUsia: () => import('~/components/BarStatUsia'),
-    BarStatHarianAkumulatif: () => import('~/components/BarStatHarianAkumulatif'),
+    // BarStatHarianAkumulatif: () => import('~/components/BarStatHarianAkumulatif'),
+    BarStatHarianAkumulatifV2: () => import('~/components/BarStatHarianAkumulatifV2'),
     BarStatTable: () => import('~/components/BarStatTable'),
     MapV2SebaranCluster: () => import('~/components/MapV2SebaranCluster'),
     MapV2SebaranPolygon: () => import('~/components/MapV2SebaranPolygon'),
@@ -152,6 +204,7 @@ export default {
       faBug,
       faMap,
       faCalendarMinus,
+      faArrowRight,
       jsonDataRekapitulasiJabarProv: {},
       jsonDataRekapitulasiJabarKab: [],
       jsonDataRekapitulasiJabarHarianProv: [],
@@ -160,7 +213,6 @@ export default {
       jsonDataRekapitulasiJabarKumulatifKab: [],
       jsonDataNasionalHarianKumulatif: [],
       jsonDataSebaranJabar: [],
-      jsonDataSebaranJawaBarat: [],
       jsonDataSebaranJabarFaskes: []
     }
   },
@@ -183,8 +235,8 @@ export default {
     this.fetchDataRekapitulasiJabarKab()
     this.fetchDataRekapitulasiJabarHarianKab()
     this.fetchDataRekapitulasiJabarKumulatifKab()
-    this.fetchDataSebaranJabar()
     this.fetchDataSebaranJabarFaskes()
+    this.fetchDataSebaranJabar()
   },
   mounted () {
     this.$store.dispatch('statistics/getCases')
@@ -226,28 +278,6 @@ export default {
         .get('https://covid19-public.digitalservice.id/api/v1/rekapitulasi/jabar?level=prov')
         .then(function (response) {
           self.jsonDataRekapitulasiJabarProv = response.data.data.content
-          // self.jsonDataRekapitulasiJabarProv.positif_per_gender['laki_laki'] = self.jsonDataRekapitulasiJabarProv.positif_per_gender['laki-laki']
-          // try {
-          //   if (typeof self.jsonDataRekapitulasiJabarProv.sembuh_per_gender['laki-laki'] !== "undefined") {
-          //     self.jsonDataRekapitulasiJabarProv.sembuh_per_gender['laki_laki'] = self.jsonDataRekapitulasiJabarProv.sembuh_per_gender['laki-laki']
-          //   }
-          // } catch (error) {
-          //   Object.assign(self.jsonDataRekapitulasiJabarProv, {sembuh_per_gender: {laki_laki: 0, perempuan: 0}});
-          //   Object.assign(self.jsonDataRekapitulasiJabarProv, {sembuh_per_usia: {
-          //     bawah_5: 0, '6_19': 0, '20_29': 0, '30_39': 0, '40_49': 0, '50_59': 0, '60_69': 0, '70_79': 0, atas_80: 0
-          //   }})
-          // }
-
-          // try {
-          //   if (typeof self.jsonDataRekapitulasiJabarProv.meninggal_per_gender['laki-laki'] !== "undefined") {
-          //     self.jsonDataRekapitulasiJabarProv.meninggal_per_gender['laki_laki'] = self.jsonDataRekapitulasiJabarProv.meninggal_per_gender['laki-laki']
-          //   }
-          // } catch (error) {
-          //   Object.assign(self.jsonDataRekapitulasiJabarProv, {meninggal_per_gender: {laki_laki: 0, perempuan: 0}});
-          //   Object.assign(self.jsonDataRekapitulasiJabarProv, {meninggal_per_usia: {
-          //     bawah_5: 0, '6_19': 0, '20_29': 0, '30_39': 0, '40_49': 0, '50_59': 0, '60_69': 0, '70_79': 0, atas_80: 0
-          //   }})
-          // }
         })
         .catch(function (error) {
           console.log(error)
@@ -325,7 +355,6 @@ export default {
         .get('https://covid19-public.digitalservice.id/api/v1/sebaran/jabar')
         .then(function (response) {
           self.jsonDataSebaranJabar = response.data.data.content
-          self.jsonDataSebaranJawaBarat = response.data.data.content
         })
         .catch(function (error) {
           console.log(error)
@@ -372,7 +401,12 @@ export default {
 @import "leaflet-geosearch/assets/css/leaflet.css";
 @import "leaflet.markercluster/dist/MarkerCluster.css";
 @import "leaflet.markercluster/dist/MarkerCluster.Default.css";
-
+.bg-green-100 {
+  background-color: #5AAA4E;
+}
+.text-white {
+  color: white;
+}
 .btn {
   border-radius: 0.25rem;
 }

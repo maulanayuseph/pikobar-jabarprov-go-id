@@ -24,7 +24,7 @@
                 class="top-grid__call-card"
                 title="Hotline Pikobar"
                 subtitle="Chat WA seputar COVID-19"
-                number="0811 1310 3515"
+                number="Klik untuk chat"
                 href="https://s.id/ChatbotPikobar"
                 :icon="require('@fortawesome/free-brands-svg-icons').faWhatsapp"
                 icon-class="text-4xl"
@@ -230,21 +230,16 @@
                 Bersihkan permukaan benda yang disentuh banyak orang
               </li>
               <li class="li-check-mark">
-                Social Distancing! Minimalisir kontak fisik dengan sesama
+                Physical Distancing! Minimalisir kontak fisik dengan sesama
               </li>
               <li class="li-check-mark">
-                Jaga jarak 1-3 meter dengan orang yang sakit
+                Jaga jarak 1-3 meter dengan sesama
               </li>
               <li class="li-check-mark">
-                Jika sakit, maka:
-                <ol style="list-style-type: decimal; list-style-position: inside;">
-                  <li class="ml-0">
-                    Tinggal di rumah
-                  </li>
-                  <li class="ml-0">
-                    Gunakan masker
-                  </li>
-                </ol>
+                Tetap tinggal di rumah, hindari bepergian ke tempat umum bila tidak perlu
+              </li>
+              <li class="li-check-mark">
+                Selalu gunakan masker jika harus keluar rumah dan berinteraksi langsung dengan orang lain
               </li>
             </ul>
           </article>
@@ -267,7 +262,7 @@
     </section>
     <section class="mt-2 m-4 md:mt-4 md:m-8 rounded-lg bg-white shadow-md p-5 md:p-8">
       <h2 class="mb-4 md:mb-8 text-left text-xl md:text-2xl">
-        <b>Kenapa harus Social Distancing (Jaga Jarak Sesama)?</b>
+        <b>Kenapa harus Physical Distancing (Jaga Jarak Sesama)?</b>
       </h2>
       <article class="flex flex-col lg:flex-row">
         <img
@@ -282,7 +277,7 @@
             jumlah orang terinfeksi akan meledak dan fasilitas layanan kesehatan akan kewalahan sehingga banyak kasus akan tidak tertangani.
           </p>
           <p class="font-bold text-lg">
-            Social distancing akan mengurangi laju penularan dan memungkinkan pasien terinfeksi untuk ditangani hingga sembuh, seperti di grafik terlampir.
+            Physical distancing akan mengurangi laju penularan dan memungkinkan pasien terinfeksi untuk ditangani hingga sembuh, seperti di grafik terlampir.
           </p>
         </div>
       </article>

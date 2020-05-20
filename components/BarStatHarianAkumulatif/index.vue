@@ -306,16 +306,22 @@ export default {
     },
     formatDate (date) {
       const d = new Date(date)
-      const year = d.getFullYear()
-      let month = '' + (d.getMonth() + 1)
-      let day = '' + d.getDate()
-      if (month.length < 2) {
-        month = '0' + month
+      // const year = d.getFullYear()
+      // let month = '' + (d.getMonth() + 1)
+      // let day = '' + d.getDate()
+      // if (month.length < 2) {
+      //   month = '0' + month
+      // }
+      // if (day.length < 2) {
+      //   day = '0' + day
+      // }
+      // return [day, month, year].join('-')
+      const options = {
+        day: 'numeric',
+        month: 'short',
+        year: 'numeric'
       }
-      if (day.length < 2) {
-        day = '0' + day
-      }
-      return [day, month, year].join('-')
+      return d.toLocaleString('id-ID', options)
     },
     enableHarian () {
       this.stat.isActiveHarian = true
