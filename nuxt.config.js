@@ -24,7 +24,8 @@ export default {
     fallback: true,
     interval: 100,
     exclude: [
-      /^\/(\bdata\b).*$/
+      /^\/(\bdata\b).*$/,
+      /^\/(\bdonate\b).*$/
     ],
     async routes () {
       const genFn = await import('./routes-generator').then(m => m ? m.default || m : null)
