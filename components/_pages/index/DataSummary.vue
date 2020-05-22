@@ -17,8 +17,7 @@
                 {{ formatNumber(positifJabar) }}
               </b>
               <b>
-                <span v-if="pertumbuhan.jabarPositif > 0" class="text-xl tag-red-100 py-0 px-1 rounded text-white align-middle">{{ formatNumberPlusMinus(pertumbuhan.jabarPositif) }}</span>
-                <span v-if="pertumbuhan.jabarPositif === 0" class="text-xl tag-red-camouflage py-0 px-1 rounded align-middle">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                <span class="text-xl tag-red-100 py-0 px-1 rounded text-white align-middle">{{ formatNumberPlusMinus(pertumbuhan.jabarPositif) }}</span>
               </b>
             </span>
           </div>
@@ -31,8 +30,7 @@
                 {{ formatNumber(positifNasional) }}
               </b>
               <b>
-                <span v-if="pertumbuhan.nasionalPositif > 0" class="text-base tag-red-100 py-0 px-1 rounded text-white align-middle">{{ formatNumberPlusMinus(pertumbuhan.nasionalPositif) }}</span>
-                <span v-if="pertumbuhan.nasionalPositif === 0" class="text-xl tag-red-camouflage py-0 px-1 rounded align-middle">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                <span class="text-base tag-red-100 py-0 px-1 rounded text-white align-middle">{{ formatNumberPlusMinus(pertumbuhan.nasionalPositif) }}</span>
               </b>
             </span>
           </div>
@@ -52,8 +50,7 @@
                 {{ formatNumber(sembuhJabar) }}
               </b>
               <b>
-                <span v-if="pertumbuhan.jabarSembuh > 0" class="text-xl tag-green-100 py-0 px-1 rounded text-white align-middle">{{ formatNumberPlusMinus(pertumbuhan.jabarSembuh) }}</span>
-                <span v-if="pertumbuhan.jabarSembuh === 0" class="text-xl tag-green-camouflage py-0 px-1 rounded align-middle">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                <span class="text-xl tag-green-100 py-0 px-1 rounded text-white align-middle">{{ formatNumberPlusMinus(pertumbuhan.jabarSembuh) }}</span>
               </b>
             </span>
           </div>
@@ -66,8 +63,7 @@
                 {{ formatNumber(sembuhNasional) }}
               </b>
               <b>
-                <span v-if="pertumbuhan.nasionalSembuh > 0" class="text-base tag-green-100 py-0 px-1 rounded text-white align-middle">{{ formatNumberPlusMinus(pertumbuhan.nasionalSembuh) }}</span>
-                <span v-if="pertumbuhan.nasionalSembuh === 0" class="text-xl tag-green-camouflage py-0 px-1 rounded align-middle">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                <span class="text-base tag-green-100 py-0 px-1 rounded text-white align-middle">{{ formatNumberPlusMinus(pertumbuhan.nasionalSembuh) }}</span>
               </b>
             </span>
           </div>
@@ -87,8 +83,7 @@
                 {{ formatNumber(meninggalJabar) }}
               </b>
               <b>
-                <span v-if="pertumbuhan.jabarMeninggal > 0" class="text-xl tag-orange-100 py-0 px-1 rounded text-white align-middle">{{ formatNumberPlusMinus(pertumbuhan.jabarMeninggal) }}</span>
-                <span v-if="pertumbuhan.jabarMeninggal === 0" class="text-xl tag-orange-camouflage py-0 px-1 rounded align-middle">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                <span class="text-xl tag-orange-100 py-0 px-1 rounded text-white align-middle">{{ formatNumberPlusMinus(pertumbuhan.jabarMeninggal) }}</span>
               </b>
             </span>
           </div>
@@ -101,8 +96,7 @@
                 {{ formatNumber(meninggalNasional) }}
               </b>
               <b>
-                <span v-if="pertumbuhan.nasionalMeninggal > 0" class="text-base tag-orange-100 py-0 px-1 rounded text-white align-middle">{{ formatNumberPlusMinus(pertumbuhan.nasionalMeninggal) }}</span>
-                <span v-if="pertumbuhan.nasionalMeninggal === 0" class="text-xl tag-orange-camouflage py-0 px-1 rounded align-middle">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                <span class="text-base tag-orange-100 py-0 px-1 rounded text-white align-middle">{{ formatNumberPlusMinus(pertumbuhan.nasionalMeninggal) }}</span>
               </b>
             </span>
           </div>
