@@ -282,11 +282,23 @@ export default {
 .tag-red-100 {
   background-color: #EF6464;
 }
+.tag-red-camouflage {
+  background-color: #FCDFE0;
+  color: #FCDFE0;
+}
 .tag-green-100 {
   background-color: #3BB46E;
 }
+.tag-green-camouflage {
+  background-color: #D3EEE3;
+  color: #D3EEE3;
+}
 .tag-orange-100 {
   background-color: #EFA965;
+}
+.tag-orange-camouflage {
+  background-color: #FBEADF;
+  color: #FBEADF;
 }
 .btnActive {
   color: #ffffff;
