@@ -960,6 +960,9 @@ export default {
         return str
       }
     },
+    formatThousand (number) {
+      return parseInt(number).toLocaleString('id-ID')
+    },
     formatDate (date) {
       const d = new Date(date)
       const options = {
@@ -1205,8 +1208,8 @@ export default {
         // by Harian
         let tooltipHarian = '<table style="white-space: nowrap; margin: 10px;">'
         tooltipHarian += '<tr><td style="font-size: larger;">' + self.formatDate(date) + '</td><td></td></tr>'
-        tooltipHarian += '<tr><td>Terkonfirmasi </td><td><b style="margin-left: 10px;">' + self.jsonDataNasionalHarianKumulatif[i].jumlahKasusBaruperHari + '</b></td></tr>'
-        tooltipHarian += '<tr><td>Rata-rata 7 Hari </td><td><b style="margin-left: 10px;">' + self.jsonDataNasionalHarianKumulatif[i].jumlahKasusBaruperHari_ratarata + '</b></td></tr>'
+        tooltipHarian += '<tr><td>Terkonfirmasi </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataNasionalHarianKumulatif[i].jumlahKasusBaruperHari) + '</b></td></tr>'
+        tooltipHarian += '<tr><td>Rata-rata 7 Hari </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataNasionalHarianKumulatif[i].jumlahKasusBaruperHari_ratarata) + '</b></td></tr>'
         tooltipHarian += '</table>'
         self.ChartHarianData.push([
           self.formatDateNoYear(date),
@@ -1242,10 +1245,10 @@ export default {
         // by Akumulatif
         let tooltipKumulatif = '<table style="white-space: nowrap; margin: 10px;">'
         tooltipKumulatif += '<tr><td style="font-size: larger;">' + self.formatDate(date) + '</td><td></td></tr>'
-        tooltipKumulatif += '<tr><td>Terkonfirmasi </td><td><b style="margin-left: 10px;">' + self.jsonDataNasionalHarianKumulatif[i].jumlahKasusKumulatif + '</b></td></tr>'
-        tooltipKumulatif += '<tr><td>Positif Aktif </td><td><b style="margin-left: 10px;">' + self.jsonDataNasionalHarianKumulatif[i].jumlahpasiendalamperawatan + '</b></td></tr>'
-        tooltipKumulatif += '<tr><td>Sembuh </td><td><b style="margin-left: 10px;">' + self.jsonDataNasionalHarianKumulatif[i].jumlahPasienSembuh + '</b></td></tr>'
-        tooltipKumulatif += '<tr><td>Meninggal </td><td><b style="margin-left: 10px;">' + self.jsonDataNasionalHarianKumulatif[i].jumlahPasienMeninggal + '</b></td></tr>'
+        tooltipKumulatif += '<tr><td>Terkonfirmasi </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataNasionalHarianKumulatif[i].jumlahKasusKumulatif) + '</b></td></tr>'
+        tooltipKumulatif += '<tr><td>Positif Aktif </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataNasionalHarianKumulatif[i].jumlahpasiendalamperawatan) + '</b></td></tr>'
+        tooltipKumulatif += '<tr><td>Sembuh </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataNasionalHarianKumulatif[i].jumlahPasienSembuh) + '</b></td></tr>'
+        tooltipKumulatif += '<tr><td>Meninggal </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataNasionalHarianKumulatif[i].jumlahPasienMeninggal) + '</b></td></tr>'
         tooltipKumulatif += '</table>'
         self.ChartKumulatifData.push([
           self.formatDateNoYear(date),
@@ -1285,8 +1288,8 @@ export default {
         if (stop === false) {
           let tooltipHarian = '<table style="white-space: nowrap; margin: 10px;">'
           tooltipHarian += '<tr><td style="font-size: larger;">' + self.formatDate(date) + '</td><td></td></tr>'
-          tooltipHarian += '<tr><td>Terkonfirmasi </td><td><b style="margin-left: 10px;">: ' + self.jsonDataProvinsiHarian[i].positif + '</b></td></tr>'
-          tooltipHarian += '<tr><td>Rata-rata 7 Hari </td><td><b style="margin-left: 10px;">: ' + self.jsonDataProvinsiHarian[i].positif_ratarata + '</b></td></tr>'
+          tooltipHarian += '<tr><td>Terkonfirmasi </td><td style="text-align:right;"><b style="margin-left: 10px;">: ' + self.formatThousand(self.jsonDataProvinsiHarian[i].positif) + '</b></td></tr>'
+          tooltipHarian += '<tr><td>Rata-rata 7 Hari </td><td style="text-align:right;"><b style="margin-left: 10px;">: ' + self.formatThousand(self.jsonDataProvinsiHarian[i].positif_ratarata) + '</b></td></tr>'
           tooltipHarian += '</table>'
           self.ChartHarianData.push([
             self.formatDateNoYear(date),
@@ -1330,10 +1333,10 @@ export default {
         if (stop === false) {
           let tooltipKumulatif = '<table style="white-space: nowrap; margin: 10px;">'
           tooltipKumulatif += '<tr><td style="font-size: larger;">' + self.formatDate(date) + '</td><td></td></tr>'
-          tooltipKumulatif += '<tr><td>Terkonfirmasi </td><td><b style="margin-left: 10px;">' + self.jsonDataProvinsiKumulatif[i].positif + '</b></td></tr>'
-          tooltipKumulatif += '<tr><td>Positif Aktif </td><td><b style="margin-left: 10px;">' + positifAktif + '</b></td></tr>'
-          tooltipKumulatif += '<tr><td>Sembuh </td><td><b style="margin-left: 10px;">' + self.jsonDataProvinsiKumulatif[i].sembuh + '</b></td></tr>'
-          tooltipKumulatif += '<tr><td>Meninggal </td><td><b style="margin-left: 10px;">' + self.jsonDataProvinsiKumulatif[i].meninggal + '</b></td></tr>'
+          tooltipKumulatif += '<tr><td>Terkonfirmasi </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataProvinsiKumulatif[i].positif) + '</b></td></tr>'
+          tooltipKumulatif += '<tr><td>Positif Aktif </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(positifAktif) + '</b></td></tr>'
+          tooltipKumulatif += '<tr><td>Sembuh </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataProvinsiKumulatif[i].sembuh) + '</b></td></tr>'
+          tooltipKumulatif += '<tr><td>Meninggal </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataProvinsiKumulatif[i].meninggal) + '</b></td></tr>'
           tooltipKumulatif += '</table>'
           self.ChartKumulatifData.push([
             self.formatDateNoYear(date),
@@ -1384,8 +1387,8 @@ export default {
         if (stop === false) {
           let tooltipHarian = '<table style="white-space: nowrap; margin: 10px;">'
           tooltipHarian += '<tr><td style="font-size: larger;">' + self.formatDate(date) + '</td><td></td></tr>'
-          tooltipHarian += '<tr><td>Terkonfirmasi </td><td><b style="margin-left: 10px;">' + self.jsonDataKota[indexKota].dataHarian[i].positif + '</b></td></tr>'
-          tooltipHarian += '<tr><td>Rata-rata 7 Hari </td><td><b style="margin-left: 10px;">' + self.jsonDataKota[indexKota].dataHarian[i].positif_ratarata + '</b></td></tr>'
+          tooltipHarian += '<tr><td>Terkonfirmasi </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataKota[indexKota].dataHarian[i].positif) + '</b></td></tr>'
+          tooltipHarian += '<tr><td>Rata-rata 7 Hari </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataKota[indexKota].dataHarian[i].positif_ratarata) + '</b></td></tr>'
           tooltipHarian += '</table>'
           self.ChartHarianData.push([
             self.formatDateNoYear(date),
@@ -1436,10 +1439,10 @@ export default {
         if (stop === false) {
           let tooltipKumulatif = '<table style="white-space: nowrap; margin: 10px;">'
           tooltipKumulatif += '<tr><td style="font-size: larger;">' + self.formatDate(date) + '</td><td></td></tr>'
-          tooltipKumulatif += '<tr><td>Terkonfirmasi </td><td><b style="margin-left: 10px;">' + self.jsonDataKota[indexKota].dataAkumulatif[i].positif + '</b></td></tr>'
-          tooltipKumulatif += '<tr><td>Positif Aktif </td><td><b style="margin-left: 10px;">' + positifAktif + '</b></td></tr>'
-          tooltipKumulatif += '<tr><td>Sembuh </td><td><b style="margin-left: 10px;">' + self.jsonDataKota[indexKota].dataAkumulatif[i].sembuh + '</b></td></tr>'
-          tooltipKumulatif += '<tr><td>Meninggal </td><td><b style="margin-left: 10px;">' + self.jsonDataKota[indexKota].dataAkumulatif[i].meninggal + '</b></td></tr>'
+          tooltipKumulatif += '<tr><td>Terkonfirmasi </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataKota[indexKota].dataAkumulatif[i].positif) + '</b></td></tr>'
+          tooltipKumulatif += '<tr><td>Positif Aktif </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(positifAktif) + '</b></td></tr>'
+          tooltipKumulatif += '<tr><td>Sembuh </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataKota[indexKota].dataAkumulatif[i].sembuh) + '</b></td></tr>'
+          tooltipKumulatif += '<tr><td>Meninggal </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataKota[indexKota].dataAkumulatif[i].meninggal) + '</b></td></tr>'
           tooltipKumulatif += '</table>'
           self.ChartKumulatifData.push([
             self.formatDateNoYear(date),

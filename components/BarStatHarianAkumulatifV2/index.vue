@@ -284,7 +284,7 @@ export default {
       barChartAkumulatifODPOptions: {
         height: 450,
         orientation: 'horizontal',
-        colors: ['#2964BC', '#023857', '#0D0B18'],
+        colors: ['#73A5EF', '#0667AC', '#06285A'],
         legend: {
           position: 'bottom',
           alignment: 'center',

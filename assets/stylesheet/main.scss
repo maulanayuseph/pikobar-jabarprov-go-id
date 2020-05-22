@@ -4,18 +4,21 @@
   font-family: 'Product Sans';
   src: url('../fonts/product-sans-regular.ttf');
   font-weight: normal;
+  font-display: swap;
 }
 
 @font-face {
   font-family: 'Product Sans';
   src: url('../fonts/product-sans-bold.ttf');
   font-weight: bold;
+  font-display: swap;
 }
 
 html {
   font-family: 'Product Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI',
     Roboto, 'Helvetica Neue', Arial, sans-serif;
   font-size: 14px;
+  font-display: swap;
   word-spacing: 1px;
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
