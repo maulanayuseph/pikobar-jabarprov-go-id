@@ -25,7 +25,7 @@
     </div>
     <BackToTopButton />
     <AppFooter v-show="isTopLevelRoute" class="container mx-auto pb-32">
-      <SponsorList v-if="showSponsors" class="m-4 md:m-8 p-5 md:p-8 rounded-lg bg-white shadow-md" />
+      <SponsorList :titleSponsor="this.$route.path.startsWith('/donate') ? 'Thanks To :' : null" class="m-4 md:m-8 p-5 md:p-8 rounded-lg bg-white shadow-md" />
     </AppFooter>
     <Navbar class="lg:hidden" />
   </div>
@@ -57,9 +57,6 @@ export default {
   computed: {
     isTopLevelRoute () {
       return this.$route.path.split('/').length < 3
-    },
-    showSponsors () {
-      return !this.$route.path.startsWith('/donate')
     }
   },
   mounted () {
