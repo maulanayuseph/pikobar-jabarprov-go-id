@@ -144,8 +144,8 @@ export default {
         { to: '/data', label: 'Data' },
         { to: '/articles?tab=jabar', label: 'Berita' },
         { to: '/faq', label: 'FAQ' },
-        { to: '/contact', label: 'Kontak' },
-        { to: '/donate', label: 'Donasi' }
+        { to: '/contact', label: 'Kontak' }
+        // { to: '/donate', label: 'Donasi' }
       ]
     }
   },
