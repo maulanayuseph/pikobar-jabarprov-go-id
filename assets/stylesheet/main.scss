@@ -27,6 +27,7 @@ html {
   box-sizing: border-box;
   overflow-x: hidden;
   overflow-y: auto;
+  scroll-behavior: smooth;
 
   @screen sm {
     font-size: 16px;

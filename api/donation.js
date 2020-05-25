@@ -15,6 +15,8 @@ export async function getCollectedDonations (config = {}) {
   const data = await WMSApi.get('master/material', config)
     .then((r) => {
       return r.data.data
+    }).catch((e) => {
+      return []
     })
   const total = await WMSApi.get('master/material', {
     params: {
@@ -36,7 +38,18 @@ export async function getLogistics (config = {}) {
     }).catch((e) => {
       return []
     })
+
+  const total = await WMSApi.get('api/logistik', {
+    params: {
+      search: config.params.search,
+      where: config.params.where,
+      count: true
+    }
+  }).then((r) => {
+    return r.data.data.count
+  })
   return {
+    total,
     data
   }
 }
