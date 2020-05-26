@@ -13,7 +13,8 @@
     <br>
     <template #content>
       <div>
-        <ContactList :items="hospitals" />
+        <ContactList v-if="filteredHospitals && filteredHospitals.length" :items="filteredHospitals" />
+        <EmptyData v-else />
       </div>
     </template>
   </Accordion>
@@ -21,16 +22,56 @@
 
 <script>
 import { mapState } from 'vuex'
+import mixin from './mixin.js'
 import ContactList from '~/components/ContactList'
 export default {
   components: {
     Accordion: () => import('./Accordion'),
     ContactList
   },
+  mixins: [mixin],
+  data () {
+    return {
+      filteredHospitals: null,
+      mSearchString: ''
+    }
+  },
   computed: {
     ...mapState('hospitals', {
       hospitals: 'items'
     })
+  },
+  watch: {
+    hospitals: {
+      immediate: true,
+      deep: false,
+      handler (v) {
+        if (Array.isArray(v)) {
+          this.$watch(
+            'accordionProps$.searchString',
+            function handler (v) {
+              this.mSearchString = v
+              this.performFiltering(this.mSearchString)
+            },
+            { immediate: true }
+          )
+        }
+      }
+    }
+  },
+  methods: {
+    performFiltering (str) {
+      if (!this.hospitals) {
+        this.filteredHospitals = null
+      }
+      if (str) {
+        this.filteredHospitals = this.hospitals.filter((cc) => {
+          return cc.name.toLowerCase().includes(str.toLowerCase())
+        })
+      } else {
+        this.filteredHospitals = this.hospitals
+      }
+    }
   }
 }
 </script>

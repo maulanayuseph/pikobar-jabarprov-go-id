@@ -12,9 +12,7 @@
     </div>
     <br>
     <div class="container mx-auto">
-      <HospitalList />
-      <CallCenter />
-      <TaskForce />
+      <ContactsAccordion />
     </div>
   </div>
 </template>
@@ -23,9 +21,7 @@
 import { analytics } from '~/lib/firebase'
 export default {
   components: {
-    HospitalList: () => import('~/components/ContactsAccordion/Hospitals'),
-    CallCenter: () => import('~/components/ContactsAccordion/CallCenter'),
-    TaskForce: () => import('~/components/ContactsAccordion/TaskForce')
+    ContactsAccordion: () => import('~/components/ContactsAccordion')
   },
   mounted () {
     this.$store.dispatch('hospitals/getItems')

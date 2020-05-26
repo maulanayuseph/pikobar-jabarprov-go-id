@@ -6,19 +6,20 @@
       </h2>
     </template>
     <template #content>
-      <TaskForce />
+      <TaskForce :show-search-bar="false" :search-string="accordionProps$.searchString" />
     </template>
   </Accordion>
 </template>
 
 <script>
-
+import mixin from './mixin'
 import TaskForce from '~/components/TaskForce'
 export default {
   components: {
     Accordion: () => import('./Accordion'),
     TaskForce
-  }
+  },
+  mixins: [mixin]
 }
 </script>
 

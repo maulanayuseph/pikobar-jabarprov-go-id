@@ -45,9 +45,23 @@
 
 <script>
 export default {
+  inject: {
+    accordionProps$: {
+      from: 'accordionProps',
+      default: () => ({})
+    }
+  },
   data () {
     return {
       isCollapsed: false
+    }
+  },
+  watch: {
+    'accordionProps$.isCollapsed': {
+      immediate: true,
+      handler (v) {
+        this.isCollapsed = v
+      }
     }
   }
 }
