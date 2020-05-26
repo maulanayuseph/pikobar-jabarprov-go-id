@@ -66,7 +66,6 @@ export default {
     async loadIcons () {
       const lib = await import('@fortawesome/free-solid-svg-icons')
         .then(m => m ? m.default || m : null)
-      console.log(lib)
       if (!lib) {
         return
       }
