@@ -1,9 +1,11 @@
 <template>
   <section
     :class="['accordion', isCollapsed && 'is-collapsed']"
-    @click="isCollapsed = !isCollapsed"
   >
-    <header>
+    <header
+      class="cursor-pointer"
+      @click="isCollapsed = !isCollapsed"
+    >
       <div :class="['flex flex-row justify-between items-baseline']">
         <slot name="header" />
         <svg
@@ -56,8 +58,7 @@ export default {
   @apply m-4 p-4
   bg-white
   border-solid border border-gray-400
-  rounded-lg
-  cursor-pointer;
+  rounded-lg;
 
   @screen md {
     @apply m-8 p-8;
@@ -65,7 +66,9 @@ export default {
 }
 .accordion__trigger-icon {
   transition: transform 0.15s ease-out;
-  @apply flex-none w-4 h-4 ml-8;
+  @apply flex-none w-4 h-4 ml-8
+  text-green-500
+  fill-current;
 }
 
 .accordion:not(.is-collapsed) {
