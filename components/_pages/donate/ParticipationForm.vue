@@ -118,7 +118,7 @@
       </div>
       <div class="mb-4">
         <label class="input-label" for="name">
-          Atur Sebagai Anonim ?
+          Tampilkan Sebagai Donatur Anonim ?
         </label>
         <select
           v-model="payload.agreed_to_be_mentioned"
@@ -126,14 +126,24 @@
           class="input-text cursor-pointer bg-white"
         >
           <option :value="true">
-            Tidak (tampilkan saja)
+            Tidak
           </option>
           <option :value="false">
-            Ya (sembunyikan)
+            Ya
           </option>
         </select>
       </div>
       <hr class="mb-4" />
+      <client-only>
+        <vue-recaptcha
+          ref="invisibleRecaptcha"
+          :loadRecaptchaScript="true"
+          @verify="onVerify"
+          @expired="onExpired"
+          size="invisible"
+          sitekey="_SITEKEY_RECAPTCHA_HERE_">
+        </vue-recaptcha>
+      </client-only>
       <button
         :disabled="$store.state.donate.selectedLogistics.length ? false : true"
         type="submit"
@@ -148,7 +158,9 @@
 
 <script>
 import { faCheckCircle, faTrash, faFileDownload, faFileUpload } from '@fortawesome/free-solid-svg-icons'
+import VueRecaptcha from 'vue-recaptcha'
 export default {
+  components: { VueRecaptcha },
   data () {
     return {
       icons: {
@@ -210,6 +222,12 @@ export default {
         // No File Uploaded
         return
       }
+      this.onSubmit()
+    },
+    onSubmit () {
+      this.$refs.invisibleRecaptcha.execute()
+    },
+    onVerify (response) {
       this.$store.state.donate.selectedLogistics.find((result) => {
         this.payload.provisions.push({
           id: result.id,
@@ -217,7 +235,11 @@ export default {
           amount: result.quantity
         })
       })
+      console.log('Captcha Verified', response)
       console.log(this.payload)
+    },
+    onExpired () {
+      console.log('expired')
     },
     validate (field) {
       if (this.payload[field]) {
