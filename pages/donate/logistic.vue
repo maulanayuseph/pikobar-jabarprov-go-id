@@ -16,11 +16,10 @@
           Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
         </p>
         <TabLayout :tabs="tableTabs" :active-tab-id="activeTabId" @change="v => activeTabId = v" />
-        <LogisticTable v-if="activeTabId === 'medic'" key="medic" class="mt-4" />
-        <LogisticTable v-if="activeTabId === 'non-medic'" key="non-medic" class="mt-4" />
+        <LogisticTable :tab-selected="activeTabId" class="mt-4" />
       </div>
     </section>
-    <section class="m-4 mt-8 md:m-8 md:mt-16">
+    <section id="donate-now" class="m-4 mt-8 md:m-8 md:mt-16">
       <div class="p-5 md:p-8 rounded-lg border border-solid border-gray-300 bg-white">
         <ParticipationForm />
       </div>

@@ -70,41 +70,53 @@
         <label class="input-label" for="type">
           Kebutuhan Logistik
         </label>
-        <input
-          v-model="payload.type"
-          name="type"
-          autocomplete="off"
-          class="input-text"
-          placeholder="Masukkan jenis logistik"
-          v-on="inputListeners"
-        >
-        <p
-          v-if="hasError('type')"
-          class="mt-2 text-red-500"
-        >
-          {{ getErrorMessage('type') }}
-        </p>
+        <div v-for="(logistic) in $store.state.donate.selectedLogistics" :key="logistic.id" class="logistic-selected">
+          <div class="float-right">
+            <FontAwesomeIcon
+              class="text-red-400 hover:text-red-600 cursor-pointer mr-2"
+              :icon="icons.faTrash"
+              @click.prevent="$store.commit('donate/REMOVE_SELECTED_LOGISTIC', logistic)"
+            />
+            <input
+              :value="logistic.quantity || 1"
+              type="number"
+              min="1"
+              max="3"
+              class="quantity-logistic"
+              @keyup="updateQuantity($event, logistic)"
+              @blur="updateQuantity($event, logistic)"
+            >
+            <span class="inline-block text-xs">PCS</span>
+          </div>
+          <FontAwesomeIcon class="inline-block mr-2 text-green-600 cursor-pointer" :icon="icons.faCheckCircle" />
+          {{ logistic.matg_id }}
+        </div>
+        <div v-if="!$store.state.donate.selectedLogistics.length" class="logistic-selected text-center border-red-200">
+          Belum ada logistik yang dipilih
+        </div>
       </div>
-      <div class="mb-8">
-        <label class="input-label" for="amount">
-          Jumlah
+      <div class="mb-4">
+        <label class="input-label" for="type">
+          Dokumen Persetujuan
         </label>
-        <input
-          v-model="payload.amount"
-          name="amount"
-          autocomplete="off"
-          class="input-text"
-          placeholder="Contoh: 100 pcs"
-          v-on="inputListeners"
-        >
-        <p
-          v-if="hasError('amount')"
-          class="mt-2 text-red-500"
-        >
-          {{ getErrorMessage('amount') }}
-        </p>
+        <div class="relative">
+          <button
+            class="border border-gray-400 text-gray-600 rounded-lg px-4 text-sm py-1 mr-2"
+          >
+            <FontAwesomeIcon class="inline-block mr-2 text-gray-600" :icon="icons.faFileUpload" />
+            Upload Dokumen
+          </button>
+          <button
+            class="border border-green-400 text-green-600 rounded-lg px-4 text-sm py-1"
+          >
+            <FontAwesomeIcon class="inline-block mr-2 text-green-600" :icon="icons.faFileDownload" />
+            Download Contoh Dokumen
+          </button>
+        </div>
       </div>
+      <hr class="mb-4" />
       <button
+        :disabled="$store.state.donate.selectedLogistics.length || 'disabled'"
         type="submit"
         class="bg-brand-green text-white rounded-lg px-6 py-2"
       >
@@ -115,9 +127,16 @@
 </template>
 
 <script>
+import { faCheckCircle, faTrash, faFileDownload, faFileUpload } from '@fortawesome/free-solid-svg-icons'
 export default {
   data () {
     return {
+      icons: {
+        faCheckCircle,
+        faTrash,
+        faFileDownload,
+        faFileUpload
+      },
       payload: {
         name: null,
         email: null,
@@ -129,9 +148,7 @@ export default {
       messages: {
         name: 'Nama harus diisi',
         email: 'Email harus diisi',
-        phone: 'No handphone harus diisi',
-        type: 'Jenis kebutuhan logistik harus diisi',
-        amount: 'Jumlah harus diisi'
+        phone: 'No handphone harus diisi'
       }
     }
   },
@@ -153,6 +170,12 @@ export default {
     }
   },
   methods: {
+    updateQuantity (event, logistic) {
+      this.$store.commit('donate/UPDATE_QUANTITY_SELECTED_LOGISTIC', {
+        quantity: event.target.value,
+        logistic
+      })
+    },
     beforeSubmit () {
       this.clearAllErrorMessages()
       const keys = Object.keys(this.payload)
@@ -199,5 +222,15 @@ export default {
 .input-text {
   @apply w-full min-w-0 px-4 py-2 rounded
   border border-solid border-gray-300;
+}
+.logistic-selected {
+  @apply border border-green-200 rounded mb-2 pt-2 pb-2 px-4 text-sm;
+  &.border-red-200 {
+    @apply border border-red-200 rounded mb-2 pt-2 pb-2 px-4 text-sm text-red-400;
+  }
+}
+.quantity-logistic {
+  @apply outline-none bg-gray-200 px-2 text-center;
+  width: 75px;
 }
 </style>
