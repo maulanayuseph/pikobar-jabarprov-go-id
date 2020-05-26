@@ -29,7 +29,6 @@
     <AppFooter v-show="isTopLevelRoute" class="container mx-auto pb-32">
       <SponsorList :title-sponsor="this.$route.path.startsWith('/donate') ? 'Thanks To :' : null" class="m-4 md:m-8 p-5 md:p-8 rounded-lg bg-white shadow-md" />
     </AppFooter>
-    <Navbar class="lg:hidden" />
   </div>
 </template>
 
@@ -39,7 +38,6 @@ import Appbar from '~/components/Appbar'
 import AppDrawer from '~/components/AppDrawer'
 import AppFooter from '~/components/AppFooter'
 import SponsorList from '~/components/SponsorList'
-import Navbar from '~/components/Navbar'
 import BackToTopButton from '~/components/BackToTopButton'
 export default {
   components: {
@@ -47,8 +45,7 @@ export default {
     AppDrawer,
     BackToTopButton,
     AppFooter,
-    SponsorList,
-    Navbar
+    SponsorList
   },
   data () {
     return {

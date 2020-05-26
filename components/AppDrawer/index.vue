@@ -1,6 +1,10 @@
 <template>
   <aside :class="['app-drawer', mShow && 'is-active']">
-    <div ref="overlay" class="app-drawer__overlay" />
+    <div
+      ref="overlay"
+      class="app-drawer__overlay"
+      @click.self="animateHide"
+    />
     <nav ref="content" class="app-drawer__content">
       <ul>
         <li v-for="(m, index) in menus" :key="index">
@@ -89,10 +93,12 @@ export default {
       }
     },
     animateShow () {
+      this.$emit('update:show', true)
       this.updateOverlayOpacity(1)
       this.showContent(true)
     },
     animateHide () {
+      this.$emit('update:show', false)
       this.showContent(false)
       this.updateOverlayOpacity(0)
     },
@@ -118,7 +124,7 @@ export default {
       }
     },
     onClickMenuItem (menu) {
-      this.$emit('update:show', false)
+      this.animateHide()
       setTimeout(() => {
         if (this.isExternalLink(menu.to)) {
           window.open(menu.to, '_blank')
