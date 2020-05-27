@@ -15,11 +15,10 @@
       </div>
       <div class="w-full md:w-3/6 lg:w-3/6 h-auto text-sm mr-10 row">
         <div class="flex flex-col md:flex-row h-auto text-left">
-          <div class="w-full md:w-1/3 lg:w-1/3 h-auto text-left">
+          <div class="w-full md:w-1/3 lg:w-1/3 pl-2 h-auto text-left">
             <div class="text-4xl">
               {{ Number(data.pcr.total).toLocaleString('id-ID') }}
             </div>
-            <!-- <div class="text-sm"> Jumlah RDT <span class="text-xs tooltip">&#9432;<span class="tooltiptext">Tooltip text</span></span></div> -->
             <div class="text-sm">
               Jumlah PCR
               <div class="tooltip pl-1">
@@ -28,6 +27,8 @@
               </div>
             </div>
           </div>
+        </div>
+        <div class="flex flex-col md:flex-row h-auto text-left">
           <div class="w-full md:w-1/3 lg:w-1/3 pl-2 h-auto text-left">
             <div class="h-20 pt-3">
               <div class="mb-1">
@@ -47,6 +48,17 @@
               </div>
               <div class="text-sm">
                 Negatif
+              </div>
+            </div>
+          </div>
+          <div class="w-full md:w-1/3 lg:w-1/3 pl-2 h-auto text-left">
+            <div class="h-20 pt-3">
+              <div class="mb-1">
+                <span class="text-2xl">{{ Number(data.pcr.invalid).toLocaleString('id-ID') }}</span>
+                <span class="text-sm">({{ Number(data.pcr_persentase_by_total.invalid.toFixed(2)).toLocaleString('id-ID') }})%</span>
+              </div>
+              <div class="text-sm">
+                Invalid
               </div>
             </div>
           </div>
@@ -82,12 +94,14 @@ export default {
           total: 0,
           positif: 0,
           negatif: 0,
+          invalid: 0,
           jumlah_sampling: 0,
           tanggal: 0
         },
         pcr_persentase_by_total: {
           positif: 0,
-          negatif: 0
+          negatif: 0,
+          invalid: 0
         }
       },
       showMore: false
@@ -102,9 +116,10 @@ export default {
   methods: {
     countPersentage () {
       const self = this
-      self.data.pcr.total = self.data.pcr.positif + self.data.pcr.negatif
+      self.data.pcr.total = self.data.pcr.jumlah_sampling
       self.data.pcr_persentase_by_total.positif = self.data.pcr.positif / self.data.pcr.total * 100
       self.data.pcr_persentase_by_total.negatif = self.data.pcr.negatif / self.data.pcr.total * 100
+      self.data.pcr_persentase_by_total.invalid = self.data.pcr.invalid / self.data.pcr.total * 100
     },
     clickShowMore () {
       this.showMore = !this.showMore

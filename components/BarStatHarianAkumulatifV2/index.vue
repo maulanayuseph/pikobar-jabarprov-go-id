@@ -218,6 +218,7 @@ export default {
         isActiveHarian: true,
         isActiveAkumulatif: false
       },
+      isMobile: false,
       fontChartBar: faChartBar,
       fontChartLine: faChartLine,
       jsonDataProvinsiHarian: [],
