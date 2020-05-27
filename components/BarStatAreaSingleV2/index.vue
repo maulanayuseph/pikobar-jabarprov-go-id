@@ -25,7 +25,8 @@
           <h4 class="p-5 text-xl md:w-2/3">
             <b>{{ judul }}</b>
           </h4>
-          <div class="flex flex-wrap items-stretch pt-2 pb-2 pr-2 md:w-1/2 mt-2" style="margin: auto;">
+
+          <div v-if="!isMobile" class="flex flex-wrap items-stretch pt-2 pb-2 pr-2 md:w-1/2 mt-2" style="margin: auto;">
             <select
               v-model="selectedListWilayah"
               class="select-option-selector"
@@ -40,25 +41,39 @@
                 {{ list }}
               </option>
             </select>
-            <!-- <select
-              v-model="selectedListWaktu"
-              class="select-option-selector"
-              style="margin:auto; "
-              @change="changeFilterWaktu($event.target.value)"
-            >
-              <option
-                v-for="list in optionListWaktu"
-                :key="list"
-                :value="list"
-              >
-                {{ list }}
-              </option>
-            </select> -->
             <div class="card-content pt-2 pb-2" style="margin: auto;">
               <div class="daterange-wrapper">
                 <client-only>
                   <vue-rangedate-picker
                     righttoleft="true"
+                    :captions="rangedate.captions"
+                    :preset-ranges="rangedate.presetRanges"
+                    @selected="onDateSelected"
+                  />
+                </client-only>
+              </div>
+            </div>
+          </div>
+          <div v-if="isMobile" class="flex flex-wrap items-stretch pt-2 pb-2 pr-2 md:w-1/2 mt-2" style="margin: auto; padding-bottom: 300px;">
+            <select
+              v-model="selectedListWilayah"
+              class="select-option-selector"
+              style="margin:auto; "
+              @change="changeFilterWilayah($event.target.value)"
+            >
+              <option
+                v-for="list in optionListWilayah"
+                :key="list"
+                :value="list"
+              >
+                {{ list }}
+              </option>
+            </select>
+            <div v-if="isMobile" class="card-content pt-2 pb-2" style="margin: auto;">
+              <div class="daterange-wrapper">
+                <client-only>
+                  <vue-rangedate-picker
+                    compact="true"
                     :captions="rangedate.captions"
                     :preset-ranges="rangedate.presetRanges"
                     @selected="onDateSelected"
@@ -86,7 +101,7 @@
           <h4 class="p-5 text-xl md:w-2/3">
             <b>{{ judul }}</b>
           </h4>
-          <div class="flex flex-wrap items-stretch pt-2 pb-2 pr-2 md:w-1/2 mt-2" style="margin: auto;">
+          <div v-if="!isMobile" class="flex flex-wrap items-stretch pt-2 pb-2 pr-2 md:w-1/2 mt-2" style="margin: auto;">
             <select
               v-model="selectedListWilayah"
               class="select-option-selector"
@@ -101,25 +116,39 @@
                 {{ list }}
               </option>
             </select>
-            <!-- <select
-              v-model="selectedListWaktu"
-              class="select-option-selector"
-              style="margin:auto; "
-              @change="changeFilterWaktu($event.target.value)"
-            >
-              <option
-                v-for="list in optionListWaktu"
-                :key="list"
-                :value="list"
-              >
-                {{ list }}
-              </option>
-            </select> -->
             <div class="card-content pt-2 pb-2" style="margin: auto;">
               <div class="daterange-wrapper">
                 <client-only>
                   <vue-rangedate-picker
                     righttoleft="true"
+                    :captions="rangedate.captions"
+                    :preset-ranges="rangedate.presetRanges"
+                    @selected="onDateSelected"
+                  />
+                </client-only>
+              </div>
+            </div>
+          </div>
+          <div v-if="isMobile" class="flex flex-wrap items-stretch pt-2 pb-2 pr-2 md:w-1/2 mt-2" style="margin: auto; padding-bottom: 300px;">
+            <select
+              v-model="selectedListWilayah"
+              class="select-option-selector"
+              style="margin:auto; "
+              @change="changeFilterWilayah($event.target.value)"
+            >
+              <option
+                v-for="list in optionListWilayah"
+                :key="list"
+                :value="list"
+              >
+                {{ list }}
+              </option>
+            </select>
+            <div class="card-content pt-2 pb-2" style="margin: auto;">
+              <div class="daterange-wrapper">
+                <client-only>
+                  <vue-rangedate-picker
+                    compact="true"
                     :captions="rangedate.captions"
                     :preset-ranges="rangedate.presetRanges"
                     @selected="onDateSelected"
