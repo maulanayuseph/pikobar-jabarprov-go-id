@@ -672,14 +672,16 @@ export default {
       ChartKumulatifData: [
         [
           'Tanggal',
-          'Positif Aktif',
+          'Aktif',
           { type: 'string', role: 'tooltip', p: { html: true } },
           'Sembuh',
           { type: 'string', role: 'tooltip', p: { html: true } },
           'Meninggal',
+          { type: 'string', role: 'tooltip', p: { html: true } },
+          'Total Terkonfirmasi',
           { type: 'string', role: 'tooltip', p: { html: true } }
         ],
-        ['0', 0, '', 0, '', 0, '']
+        ['0', 0, '', 0, '', 0, '', 0, '']
       ],
       ChartHarianOptions: {
         height: 500,
@@ -705,7 +707,7 @@ export default {
       ChartKumulatifOptions: {
         height: 500,
         orientation: 'horizontal',
-        colors: ['#FF4A4B', '#03B167', '#9C0000'],
+        colors: ['#FF4A4B', '#03B167', '#9C0000', '#7E7E7E'],
         legend: {
           position: 'bottom'
         },
@@ -1077,14 +1079,16 @@ export default {
       this.ChartKumulatifData = [
         [
           'Tanggal',
-          'Positif Aktif',
+          'Aktif',
           { type: 'string', role: 'tooltip', p: { html: true } },
           'Sembuh',
           { type: 'string', role: 'tooltip', p: { html: true } },
           'Meninggal',
+          { type: 'string', role: 'tooltip', p: { html: true } },
+          'Total Terkonfirmasi',
           { type: 'string', role: 'tooltip', p: { html: true } }
         ],
-        ['0', 0, '', 0, '', 0, '']
+        ['0', 0, '', 0, '', 0, '', 0, '']
       ]
       if (this.stat.isActiveHarian === true) {
         this.judul = 'Chart Harian Terkonfirmasi ' + this.selectedListWilayah
@@ -1274,8 +1278,8 @@ export default {
         // by Akumulatif
         let tooltipKumulatif = '<table style="white-space: nowrap; margin: 10px;">'
         tooltipKumulatif += '<tr><td style="font-size: larger;">' + self.formatDate(date) + '</td><td></td></tr>'
-        tooltipKumulatif += '<tr><td>Terkonfirmasi </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataNasionalHarianKumulatif[i].jumlahKasusKumulatif) + '</b></td></tr>'
-        tooltipKumulatif += '<tr><td>Positif Aktif </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataNasionalHarianKumulatif[i].jumlahpasiendalamperawatan) + '</b></td></tr>'
+        tooltipKumulatif += '<tr><td>Total Terkonfirmasi </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataNasionalHarianKumulatif[i].jumlahKasusKumulatif) + '</b></td></tr>'
+        tooltipKumulatif += '<tr><td>Aktif </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataNasionalHarianKumulatif[i].jumlahpasiendalamperawatan) + '</b></td></tr>'
         tooltipKumulatif += '<tr><td>Sembuh </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataNasionalHarianKumulatif[i].jumlahPasienSembuh) + '</b></td></tr>'
         tooltipKumulatif += '<tr><td>Meninggal </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataNasionalHarianKumulatif[i].jumlahPasienMeninggal) + '</b></td></tr>'
         tooltipKumulatif += '</table>'
@@ -1283,7 +1287,8 @@ export default {
           self.formatDateNoYear(date),
           self.jsonDataNasionalHarianKumulatif[i].jumlahpasiendalamperawatan, tooltipKumulatif,
           self.jsonDataNasionalHarianKumulatif[i].jumlahPasienSembuh, tooltipKumulatif,
-          self.jsonDataNasionalHarianKumulatif[i].jumlahPasienMeninggal, tooltipKumulatif
+          self.jsonDataNasionalHarianKumulatif[i].jumlahPasienMeninggal, tooltipKumulatif,
+          self.jsonDataNasionalHarianKumulatif[i].jumlahKasusKumulatif, tooltipKumulatif
         ])
       }
       if (self.jsonDataNasionalHarianKumulatif.length > 0) {
@@ -1362,8 +1367,8 @@ export default {
         if (stop === false) {
           let tooltipKumulatif = '<table style="white-space: nowrap; margin: 10px;">'
           tooltipKumulatif += '<tr><td style="font-size: larger;">' + self.formatDate(date) + '</td><td></td></tr>'
-          tooltipKumulatif += '<tr><td>Terkonfirmasi </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataProvinsiKumulatif[i].positif) + '</b></td></tr>'
-          tooltipKumulatif += '<tr><td>Positif Aktif </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(positifAktif) + '</b></td></tr>'
+          tooltipKumulatif += '<tr><td>Total Terkonfirmasi </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataProvinsiKumulatif[i].positif) + '</b></td></tr>'
+          tooltipKumulatif += '<tr><td>Aktif </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(positifAktif) + '</b></td></tr>'
           tooltipKumulatif += '<tr><td>Sembuh </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataProvinsiKumulatif[i].sembuh) + '</b></td></tr>'
           tooltipKumulatif += '<tr><td>Meninggal </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataProvinsiKumulatif[i].meninggal) + '</b></td></tr>'
           tooltipKumulatif += '</table>'
@@ -1371,7 +1376,8 @@ export default {
             self.formatDateNoYear(date),
             positifAktif, tooltipKumulatif,
             self.jsonDataProvinsiKumulatif[i].sembuh, tooltipKumulatif,
-            self.jsonDataProvinsiKumulatif[i].meninggal, tooltipKumulatif
+            self.jsonDataProvinsiKumulatif[i].meninggal, tooltipKumulatif,
+            self.jsonDataProvinsiKumulatif[i].positif, tooltipKumulatif
           ])
         }
         if (self.formatDate(date) === strToday) {
@@ -1468,8 +1474,8 @@ export default {
         if (stop === false) {
           let tooltipKumulatif = '<table style="white-space: nowrap; margin: 10px;">'
           tooltipKumulatif += '<tr><td style="font-size: larger;">' + self.formatDate(date) + '</td><td></td></tr>'
-          tooltipKumulatif += '<tr><td>Terkonfirmasi </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataKota[indexKota].dataAkumulatif[i].positif) + '</b></td></tr>'
-          tooltipKumulatif += '<tr><td>Positif Aktif </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(positifAktif) + '</b></td></tr>'
+          tooltipKumulatif += '<tr><td>Total Terkonfirmasi </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataKota[indexKota].dataAkumulatif[i].positif) + '</b></td></tr>'
+          tooltipKumulatif += '<tr><td>Aktif </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(positifAktif) + '</b></td></tr>'
           tooltipKumulatif += '<tr><td>Sembuh </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataKota[indexKota].dataAkumulatif[i].sembuh) + '</b></td></tr>'
           tooltipKumulatif += '<tr><td>Meninggal </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataKota[indexKota].dataAkumulatif[i].meninggal) + '</b></td></tr>'
           tooltipKumulatif += '</table>'
@@ -1477,7 +1483,8 @@ export default {
             self.formatDateNoYear(date),
             positifAktif, tooltipKumulatif,
             self.jsonDataKota[indexKota].dataAkumulatif[i].sembuh, tooltipKumulatif,
-            self.jsonDataKota[indexKota].dataAkumulatif[i].meninggal, tooltipKumulatif
+            self.jsonDataKota[indexKota].dataAkumulatif[i].meninggal, tooltipKumulatif,
+            self.jsonDataKota[indexKota].dataAkumulatif[i].positif, tooltipKumulatif
           ])
         }
         if (self.formatDate(date) === strToday) {
