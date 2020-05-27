@@ -4,7 +4,7 @@
     <section class="m-4 md:m-8">
       <DonationBanners />
     </section>
-    <section class="m-4 mt-8 md:m-8 md:mt-16">
+    <section id="table-logistik" class="m-4 mt-8 md:m-8 md:mt-16">
       <div class="p-5 md:p-8 rounded-lg border border-solid border-gray-300 bg-white">
         <h4 class="p-4 text-center text-lg md:text-2xl">
           <b>Daftar Kebutuhan Non Tunai</b>
