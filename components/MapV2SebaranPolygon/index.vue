@@ -414,7 +414,7 @@ export default {
           const styleBatasWilayah = {
             // fillColor: '#' + self.styleColorPolygon[category],
             // fillOpacity: self.getColor(this.range, feature.properties.jumlah_kasus),
-            fillOpacity: self.getTransparant(this.range, feature.properties.jumlah_kasus),
+            fillOpacity: 1,
             fillColor: self.getColor(this.range, feature.properties.jumlah_kasus, category),
             weight: 0.7,
             opacity: 0.7,
@@ -445,10 +445,10 @@ export default {
           const styleBatasWilayah = {
             // fillColor: '#' + self.styleColorPolygon[category],
             // fillOpacity: self.getColor(this.range, feature.properties.jumlah_kasus),
-            fillOpacity: self.getTransparant(this.range, feature.properties.jumlah_kasus),
+            fillOpacity: 1,
             fillColor: self.getColor(this.range, feature.properties.jumlah_kasus, category),
-            weight: 0.7,
-            opacity: 0.7,
+            weight: 0.4,
+            opacity: 0.4,
             color: '#000000'
           }
           // add layer to map
@@ -477,9 +477,9 @@ export default {
           const styleBatasWilayah = {
             // fillColor: '#' + self.styleColorPolygon[category],
             // fillOpacity: self.getColor(this.range, feature.properties.jumlah_kasus),
-            fillOpacity: self.getTransparant(this.range, feature.properties.jumlah_kasus),
+            fillOpacity: 1,
             fillColor: self.getColor(this.range, feature.properties.jumlah_kasus, category),
-            weight: 0.7,
+            weight: 0.1,
             opacity: 0.7,
             color: '#000000'
           }
@@ -500,9 +500,9 @@ export default {
 
     createRange (hex, wilayah, data, geojson) {
       const self = this
-      let max = 0
-      let min = 0
-      let z = 0
+      // let max = 0
+      // let min = 0
+      // let z = 0
       const arrTobePercentile = []
 
       geojson.forEach((feature) => {
@@ -528,21 +528,23 @@ export default {
           })
         }
         // add to element
-        arrTobePercentile.push(sum)
+        if (sum > 0) {
+          arrTobePercentile.push(sum)
+        }
         const temp = { jumlah_kasus: sum }
         feature.properties = { ...feature.properties, ...temp }
         // get max kasus
-        if (feature.properties.jumlah_kasus > max) {
-          max = feature.properties.jumlah_kasus
-        }
+        // if (feature.properties.jumlah_kasus > max) {
+        //   max = feature.properties.jumlah_kasus
+        // }
         // get min kasus
-        if (z === 0) {
-          min = feature.properties.jumlah_kasus
-        }
-        if (feature.properties.jumlah_kasus < min) {
-          min = feature.properties.jumlah_kasus
-        }
-        z = z + 1
+        // if (z > 0) {
+        //   min = feature.properties.jumlah_kasus
+        // }
+        // if (feature.properties.jumlah_kasus < min) {
+        //   min = feature.properties.jumlah_kasus
+        // }
+        // z = z + 1
       })
 
       // count range per list
@@ -573,14 +575,11 @@ export default {
       return [range, geojson]
     },
 
-    getTransparant (range, angka) {
-      const transparant = '1'
-      return transparant
-    },
-
     getColor (range, angka, category) {
       let color = ''
-      if (angka >= range[0].from && angka < range[0].to + 1) {
+      if (angka === 0) {
+        color = '#00000000'
+      } else if (angka >= range[0].from && angka < range[0].to + 1) {
         color = this.rangeColor[category][0]
       } else if (angka >= range[1].from && angka < range[1].to + 1) {
         color = this.rangeColor[category][1]
