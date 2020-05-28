@@ -397,7 +397,8 @@ export default {
     initMap () {
       // eslint-disable-next-line new-cap
       this.map = new this.$L.map('map-wrap-cluster', {
-        zoomControl: false
+        zoomControl: false,
+        fullscreenControl: false
       }).setView([-6.932694, 107.627449], 9)
 
       this.$L.tileLayer(
@@ -414,6 +415,13 @@ export default {
       this.$L.control
         .zoom({
           position: 'bottomright'
+        })
+        .addTo(this.map)
+
+      // add full screen control with your options
+      this.$L.control
+        .fullscreen({
+          position: 'bottomleft'
         })
         .addTo(this.map)
 
