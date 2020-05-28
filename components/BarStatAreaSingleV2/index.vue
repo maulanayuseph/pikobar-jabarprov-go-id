@@ -664,10 +664,11 @@ export default {
           'Tanggal',
           'Harian',
           { type: 'string', role: 'tooltip', p: { html: true } },
+          { type: 'number', role: 'annotation' },
           'Rata-rata 7 Hari',
           { type: 'string', role: 'tooltip', p: { html: true } }
         ],
-        ['0', 0, '', 0, '']
+        ['0', 0, '', 0, 0, '']
       ],
       ChartKumulatifData: [
         [
@@ -690,12 +691,14 @@ export default {
         legend: {
           position: 'bottom'
         },
-        // isStacked: true,
-        // seriesType: 'bars',
+        annotations: {
+          alwaysOutside: 'true'
+        },
         hAxis: {
           slantedText: true,
           slantedTextAngle: -90
         },
+        isStacked: true,
         seriesType: 'bars',
         series: { 1: { type: 'line' } },
         chartArea: {
@@ -1071,10 +1074,11 @@ export default {
           'Tanggal',
           'Harian',
           { type: 'string', role: 'tooltip', p: { html: true } },
+          { type: 'number', role: 'annotation' },
           'Rata-rata 7 Hari',
           { type: 'string', role: 'tooltip', p: { html: true } }
         ],
-        ['0', 0, '', 0, '']
+        ['0', 0, '', 0, 0, '']
       ]
       this.ChartKumulatifData = [
         [
@@ -1247,6 +1251,7 @@ export default {
         self.ChartHarianData.push([
           self.formatDateNoYear(date),
           self.jsonDataNasionalHarianKumulatif[i].jumlahKasusBaruperHari, tooltipHarian,
+          self.jsonDataNasionalHarianKumulatif[i].jumlahKasusBaruperHari,
           self.jsonDataNasionalHarianKumulatif[i].jumlahKasusBaruperHari_ratarata, tooltipHarian
         ])
       }
@@ -1328,6 +1333,7 @@ export default {
           self.ChartHarianData.push([
             self.formatDateNoYear(date),
             self.jsonDataProvinsiHarian[i].positif, tooltipHarian,
+            self.jsonDataProvinsiHarian[i].positif,
             self.jsonDataProvinsiHarian[i].positif_ratarata, tooltipHarian
           ])
         }
@@ -1428,6 +1434,7 @@ export default {
           self.ChartHarianData.push([
             self.formatDateNoYear(date),
             self.jsonDataKota[indexKota].dataHarian[i].positif, tooltipHarian,
+            self.jsonDataKota[indexKota].dataHarian[i].positif,
             self.jsonDataKota[indexKota].dataHarian[i].positif_ratarata, tooltipHarian
           ])
         }
