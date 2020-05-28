@@ -692,7 +692,11 @@ export default {
           position: 'bottom'
         },
         annotations: {
-          alwaysOutside: 'true'
+          alwaysOutside: 'true',
+          textStyle: {
+            fontSize: 10,
+            color: 'black'
+          }
         },
         hAxis: {
           slantedText: true,
