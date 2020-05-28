@@ -25,7 +25,8 @@
           <h4 class="p-5 text-xl md:w-2/3">
             <b>{{ judul }}</b>
           </h4>
-          <div class="flex flex-wrap items-stretch pt-2 pb-2 pr-2 md:w-1/2 mt-2" style="margin: auto;">
+
+          <div v-if="!isMobile" class="flex flex-wrap items-stretch pt-2 pb-2 pr-2 md:w-1/2 mt-2" style="margin: auto;">
             <select
               v-model="selectedListWilayah"
               class="select-option-selector"
@@ -40,25 +41,39 @@
                 {{ list }}
               </option>
             </select>
-            <!-- <select
-              v-model="selectedListWaktu"
-              class="select-option-selector"
-              style="margin:auto; "
-              @change="changeFilterWaktu($event.target.value)"
-            >
-              <option
-                v-for="list in optionListWaktu"
-                :key="list"
-                :value="list"
-              >
-                {{ list }}
-              </option>
-            </select> -->
             <div class="card-content pt-2 pb-2" style="margin: auto;">
               <div class="daterange-wrapper">
                 <client-only>
                   <vue-rangedate-picker
                     righttoleft="true"
+                    :captions="rangedate.captions"
+                    :preset-ranges="rangedate.presetRanges"
+                    @selected="onDateSelected"
+                  />
+                </client-only>
+              </div>
+            </div>
+          </div>
+          <div v-if="isMobile" class="flex flex-wrap items-stretch pt-2 pb-2 pr-2 md:w-1/2 mt-2" style="margin: auto; padding-bottom: 300px;">
+            <select
+              v-model="selectedListWilayah"
+              class="select-option-selector"
+              style="margin:auto; "
+              @change="changeFilterWilayah($event.target.value)"
+            >
+              <option
+                v-for="list in optionListWilayah"
+                :key="list"
+                :value="list"
+              >
+                {{ list }}
+              </option>
+            </select>
+            <div v-if="isMobile" class="card-content pt-2 pb-2" style="margin: auto;">
+              <div class="daterange-wrapper">
+                <client-only>
+                  <vue-rangedate-picker
+                    compact="true"
                     :captions="rangedate.captions"
                     :preset-ranges="rangedate.presetRanges"
                     @selected="onDateSelected"
@@ -86,7 +101,7 @@
           <h4 class="p-5 text-xl md:w-2/3">
             <b>{{ judul }}</b>
           </h4>
-          <div class="flex flex-wrap items-stretch pt-2 pb-2 pr-2 md:w-1/2 mt-2" style="margin: auto;">
+          <div v-if="!isMobile" class="flex flex-wrap items-stretch pt-2 pb-2 pr-2 md:w-1/2 mt-2" style="margin: auto;">
             <select
               v-model="selectedListWilayah"
               class="select-option-selector"
@@ -101,25 +116,39 @@
                 {{ list }}
               </option>
             </select>
-            <!-- <select
-              v-model="selectedListWaktu"
-              class="select-option-selector"
-              style="margin:auto; "
-              @change="changeFilterWaktu($event.target.value)"
-            >
-              <option
-                v-for="list in optionListWaktu"
-                :key="list"
-                :value="list"
-              >
-                {{ list }}
-              </option>
-            </select> -->
             <div class="card-content pt-2 pb-2" style="margin: auto;">
               <div class="daterange-wrapper">
                 <client-only>
                   <vue-rangedate-picker
                     righttoleft="true"
+                    :captions="rangedate.captions"
+                    :preset-ranges="rangedate.presetRanges"
+                    @selected="onDateSelected"
+                  />
+                </client-only>
+              </div>
+            </div>
+          </div>
+          <div v-if="isMobile" class="flex flex-wrap items-stretch pt-2 pb-2 pr-2 md:w-1/2 mt-2" style="margin: auto; padding-bottom: 300px;">
+            <select
+              v-model="selectedListWilayah"
+              class="select-option-selector"
+              style="margin:auto; "
+              @change="changeFilterWilayah($event.target.value)"
+            >
+              <option
+                v-for="list in optionListWilayah"
+                :key="list"
+                :value="list"
+              >
+                {{ list }}
+              </option>
+            </select>
+            <div class="card-content pt-2 pb-2" style="margin: auto;">
+              <div class="daterange-wrapper">
+                <client-only>
+                  <vue-rangedate-picker
+                    compact="true"
                     :captions="rangedate.captions"
                     :preset-ranges="rangedate.presetRanges"
                     @selected="onDateSelected"
@@ -635,22 +664,25 @@ export default {
           'Tanggal',
           'Harian',
           { type: 'string', role: 'tooltip', p: { html: true } },
+          { type: 'number', role: 'annotation' },
           'Rata-rata 7 Hari',
           { type: 'string', role: 'tooltip', p: { html: true } }
         ],
-        ['0', 0, '', 0, '']
+        ['0', 0, '', 0, 0, '']
       ],
       ChartKumulatifData: [
         [
           'Tanggal',
-          'Positif Aktif',
+          'Aktif',
           { type: 'string', role: 'tooltip', p: { html: true } },
           'Sembuh',
           { type: 'string', role: 'tooltip', p: { html: true } },
           'Meninggal',
+          { type: 'string', role: 'tooltip', p: { html: true } },
+          'Total Terkonfirmasi',
           { type: 'string', role: 'tooltip', p: { html: true } }
         ],
-        ['0', 0, '', 0, '', 0, '']
+        ['0', 0, '', 0, '', 0, '', 0, '']
       ],
       ChartHarianOptions: {
         height: 500,
@@ -659,12 +691,18 @@ export default {
         legend: {
           position: 'bottom'
         },
-        // isStacked: true,
-        // seriesType: 'bars',
+        annotations: {
+          alwaysOutside: 'true',
+          textStyle: {
+            fontSize: 10,
+            color: 'black'
+          }
+        },
         hAxis: {
           slantedText: true,
           slantedTextAngle: -90
         },
+        isStacked: true,
         seriesType: 'bars',
         series: { 1: { type: 'line' } },
         chartArea: {
@@ -676,7 +714,7 @@ export default {
       ChartKumulatifOptions: {
         height: 500,
         orientation: 'horizontal',
-        colors: ['#FF4A4B', '#03B167', '#9C0000'],
+        colors: ['#FF4A4B', '#03B167', '#9C0000', '#7E7E7E'],
         legend: {
           position: 'bottom'
         },
@@ -1040,22 +1078,25 @@ export default {
           'Tanggal',
           'Harian',
           { type: 'string', role: 'tooltip', p: { html: true } },
+          { type: 'number', role: 'annotation' },
           'Rata-rata 7 Hari',
           { type: 'string', role: 'tooltip', p: { html: true } }
         ],
-        ['0', 0, '', 0, '']
+        ['0', 0, '', 0, 0, '']
       ]
       this.ChartKumulatifData = [
         [
           'Tanggal',
-          'Positif Aktif',
+          'Aktif',
           { type: 'string', role: 'tooltip', p: { html: true } },
           'Sembuh',
           { type: 'string', role: 'tooltip', p: { html: true } },
           'Meninggal',
+          { type: 'string', role: 'tooltip', p: { html: true } },
+          'Total Terkonfirmasi',
           { type: 'string', role: 'tooltip', p: { html: true } }
         ],
-        ['0', 0, '', 0, '', 0, '']
+        ['0', 0, '', 0, '', 0, '', 0, '']
       ]
       if (this.stat.isActiveHarian === true) {
         this.judul = 'Chart Harian Terkonfirmasi ' + this.selectedListWilayah
@@ -1214,6 +1255,7 @@ export default {
         self.ChartHarianData.push([
           self.formatDateNoYear(date),
           self.jsonDataNasionalHarianKumulatif[i].jumlahKasusBaruperHari, tooltipHarian,
+          self.jsonDataNasionalHarianKumulatif[i].jumlahKasusBaruperHari,
           self.jsonDataNasionalHarianKumulatif[i].jumlahKasusBaruperHari_ratarata, tooltipHarian
         ])
       }
@@ -1245,8 +1287,8 @@ export default {
         // by Akumulatif
         let tooltipKumulatif = '<table style="white-space: nowrap; margin: 10px;">'
         tooltipKumulatif += '<tr><td style="font-size: larger;">' + self.formatDate(date) + '</td><td></td></tr>'
-        tooltipKumulatif += '<tr><td>Terkonfirmasi </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataNasionalHarianKumulatif[i].jumlahKasusKumulatif) + '</b></td></tr>'
-        tooltipKumulatif += '<tr><td>Positif Aktif </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataNasionalHarianKumulatif[i].jumlahpasiendalamperawatan) + '</b></td></tr>'
+        tooltipKumulatif += '<tr><td>Total Terkonfirmasi </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataNasionalHarianKumulatif[i].jumlahKasusKumulatif) + '</b></td></tr>'
+        tooltipKumulatif += '<tr><td>Aktif </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataNasionalHarianKumulatif[i].jumlahpasiendalamperawatan) + '</b></td></tr>'
         tooltipKumulatif += '<tr><td>Sembuh </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataNasionalHarianKumulatif[i].jumlahPasienSembuh) + '</b></td></tr>'
         tooltipKumulatif += '<tr><td>Meninggal </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataNasionalHarianKumulatif[i].jumlahPasienMeninggal) + '</b></td></tr>'
         tooltipKumulatif += '</table>'
@@ -1254,7 +1296,8 @@ export default {
           self.formatDateNoYear(date),
           self.jsonDataNasionalHarianKumulatif[i].jumlahpasiendalamperawatan, tooltipKumulatif,
           self.jsonDataNasionalHarianKumulatif[i].jumlahPasienSembuh, tooltipKumulatif,
-          self.jsonDataNasionalHarianKumulatif[i].jumlahPasienMeninggal, tooltipKumulatif
+          self.jsonDataNasionalHarianKumulatif[i].jumlahPasienMeninggal, tooltipKumulatif,
+          self.jsonDataNasionalHarianKumulatif[i].jumlahKasusKumulatif, tooltipKumulatif
         ])
       }
       if (self.jsonDataNasionalHarianKumulatif.length > 0) {
@@ -1294,6 +1337,7 @@ export default {
           self.ChartHarianData.push([
             self.formatDateNoYear(date),
             self.jsonDataProvinsiHarian[i].positif, tooltipHarian,
+            self.jsonDataProvinsiHarian[i].positif,
             self.jsonDataProvinsiHarian[i].positif_ratarata, tooltipHarian
           ])
         }
@@ -1333,8 +1377,8 @@ export default {
         if (stop === false) {
           let tooltipKumulatif = '<table style="white-space: nowrap; margin: 10px;">'
           tooltipKumulatif += '<tr><td style="font-size: larger;">' + self.formatDate(date) + '</td><td></td></tr>'
-          tooltipKumulatif += '<tr><td>Terkonfirmasi </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataProvinsiKumulatif[i].positif) + '</b></td></tr>'
-          tooltipKumulatif += '<tr><td>Positif Aktif </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(positifAktif) + '</b></td></tr>'
+          tooltipKumulatif += '<tr><td>Total Terkonfirmasi </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataProvinsiKumulatif[i].positif) + '</b></td></tr>'
+          tooltipKumulatif += '<tr><td>Aktif </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(positifAktif) + '</b></td></tr>'
           tooltipKumulatif += '<tr><td>Sembuh </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataProvinsiKumulatif[i].sembuh) + '</b></td></tr>'
           tooltipKumulatif += '<tr><td>Meninggal </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataProvinsiKumulatif[i].meninggal) + '</b></td></tr>'
           tooltipKumulatif += '</table>'
@@ -1342,7 +1386,8 @@ export default {
             self.formatDateNoYear(date),
             positifAktif, tooltipKumulatif,
             self.jsonDataProvinsiKumulatif[i].sembuh, tooltipKumulatif,
-            self.jsonDataProvinsiKumulatif[i].meninggal, tooltipKumulatif
+            self.jsonDataProvinsiKumulatif[i].meninggal, tooltipKumulatif,
+            self.jsonDataProvinsiKumulatif[i].positif, tooltipKumulatif
           ])
         }
         if (self.formatDate(date) === strToday) {
@@ -1393,6 +1438,7 @@ export default {
           self.ChartHarianData.push([
             self.formatDateNoYear(date),
             self.jsonDataKota[indexKota].dataHarian[i].positif, tooltipHarian,
+            self.jsonDataKota[indexKota].dataHarian[i].positif,
             self.jsonDataKota[indexKota].dataHarian[i].positif_ratarata, tooltipHarian
           ])
         }
@@ -1439,8 +1485,8 @@ export default {
         if (stop === false) {
           let tooltipKumulatif = '<table style="white-space: nowrap; margin: 10px;">'
           tooltipKumulatif += '<tr><td style="font-size: larger;">' + self.formatDate(date) + '</td><td></td></tr>'
-          tooltipKumulatif += '<tr><td>Terkonfirmasi </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataKota[indexKota].dataAkumulatif[i].positif) + '</b></td></tr>'
-          tooltipKumulatif += '<tr><td>Positif Aktif </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(positifAktif) + '</b></td></tr>'
+          tooltipKumulatif += '<tr><td>Total Terkonfirmasi </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataKota[indexKota].dataAkumulatif[i].positif) + '</b></td></tr>'
+          tooltipKumulatif += '<tr><td>Aktif </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(positifAktif) + '</b></td></tr>'
           tooltipKumulatif += '<tr><td>Sembuh </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataKota[indexKota].dataAkumulatif[i].sembuh) + '</b></td></tr>'
           tooltipKumulatif += '<tr><td>Meninggal </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataKota[indexKota].dataAkumulatif[i].meninggal) + '</b></td></tr>'
           tooltipKumulatif += '</table>'
@@ -1448,7 +1494,8 @@ export default {
             self.formatDateNoYear(date),
             positifAktif, tooltipKumulatif,
             self.jsonDataKota[indexKota].dataAkumulatif[i].sembuh, tooltipKumulatif,
-            self.jsonDataKota[indexKota].dataAkumulatif[i].meninggal, tooltipKumulatif
+            self.jsonDataKota[indexKota].dataAkumulatif[i].meninggal, tooltipKumulatif,
+            self.jsonDataKota[indexKota].dataAkumulatif[i].positif, tooltipKumulatif
           ])
         }
         if (self.formatDate(date) === strToday) {
