@@ -274,6 +274,7 @@ export default {
             icon: 'success'
           })
           this.payload = JSON.parse(JSON.stringify(emptyPayload))
+          this.$store.commit('donate/SET_SELECTED_LOGISTICS', [])
         }).catch((e) => {
           Swal.fire({
             title: 'Terjadi kesalahan',
