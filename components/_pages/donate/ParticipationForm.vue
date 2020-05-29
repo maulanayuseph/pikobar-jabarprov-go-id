@@ -70,43 +70,89 @@
         <label class="input-label" for="type">
           Kebutuhan Logistik
         </label>
-        <input
-          v-model="payload.type"
-          name="type"
-          autocomplete="off"
-          class="input-text"
-          placeholder="Masukkan jenis logistik"
-          v-on="inputListeners"
-        >
-        <p
-          v-if="hasError('type')"
-          class="mt-2 text-red-500"
-        >
-          {{ getErrorMessage('type') }}
-        </p>
+        <div v-for="(logistic) in $store.state.donate.selectedLogistics" :key="logistic.id" class="logistic-selected">
+          <div class="float-right">
+            <FontAwesomeIcon
+              class="text-red-400 hover:text-red-600 cursor-pointer mr-2"
+              :icon="icons.faTrash"
+              @click.prevent="$store.commit('donate/REMOVE_SELECTED_LOGISTIC', logistic)"
+            />
+            <input
+              :value="logistic.quantity || 1"
+              type="number"
+              min="1"
+              class="quantity-logistic"
+              @keyup="updateQuantity($event, logistic)"
+              @blur="updateQuantity($event, logistic)"
+            >
+            <span class="inline-block text-xs">PCS</span>
+          </div>
+          <FontAwesomeIcon class="inline-block mr-2 text-green-600 cursor-pointer" :icon="icons.faCheckCircle" />
+          {{ logistic.matg_id }}
+        </div>
+        <div v-if="!$store.state.donate.selectedLogistics.length" class="logistic-selected text-center border-red-200">
+          Tidak ada data. <a href="#table-logistik" class="font-italic">Tambahkan sekarang</a>
+        </div>
       </div>
-      <div class="mb-8">
-        <label class="input-label" for="amount">
-          Jumlah
+      <div class="mb-4">
+        <label class="input-label" for="type">
+          Dokumen Persetujuan
         </label>
-        <input
-          v-model="payload.amount"
-          name="amount"
-          autocomplete="off"
-          class="input-text"
-          placeholder="Contoh: 100 pcs"
-          v-on="inputListeners"
-        >
-        <p
-          v-if="hasError('amount')"
-          class="mt-2 text-red-500"
-        >
-          {{ getErrorMessage('amount') }}
+        <div class="relative">
+          <button
+            class="border border-green-400 text-green-600 rounded-lg px-4 text-sm py-1 mr-2"
+            @click.prevent="uploadDocument()"
+          >
+            <FontAwesomeIcon v-if="payload.statement_letter_url.match(/http/gi)" class="inline-block mr-2 text-green-600" :icon="icons.faCheckCircle" />
+            <FontAwesomeIcon v-else class="inline-block mr-2 text-green-600" :icon="icons.faFileUpload" />
+            Upload Dokumen
+          </button>
+          <button
+            class="border border-gray-400 text-gray-600 rounded-lg px-4 text-sm py-1"
+            @click.prevent="downloadDocument()"
+          >
+            <FontAwesomeIcon class="inline-block mr-2 text-gray-600" :icon="icons.faFileDownload" />
+            Download Contoh Dokumen
+          </button>
+        </div>
+        <p v-if="showDocumentError" class="text-red-500">
+          Dokumen harus diunggah
         </p>
       </div>
+      <div class="mb-4">
+        <label class="input-label" for="name">
+          Tampilkan Sebagai Donatur Anonim ?
+        </label>
+        <select
+          v-model="payload.agreed_to_be_mentioned"
+          name="agreed_to_be_mentioned"
+          class="input-text cursor-pointer bg-white"
+        >
+          <option :value="true">
+            Tidak
+          </option>
+          <option :value="false">
+            Ya
+          </option>
+        </select>
+      </div>
+      <hr class="mb-4">
+      <client-only>
+        <vue-recaptcha
+          v-if="isMounted"
+          ref="invisibleRecaptcha"
+          :load-recaptcha-script="true"
+          size="invisible"
+          :sitekey="recaptchaKey"
+          @verify="onVerify"
+          @expired="onExpired"
+        />
+      </client-only>
       <button
+        :disabled="$store.state.donate.selectedLogistics.length ? false : true"
         type="submit"
-        class="bg-brand-green text-white rounded-lg px-6 py-2"
+        class="text-white rounded-lg px-6 py-2"
+        :class="[$store.state.donate.selectedLogistics.length ? 'bg-brand-green' : 'bg-gray-400 cursor-not-allowed']"
       >
         Kirim
       </button>
@@ -115,27 +161,55 @@
 </template>
 
 <script>
+import { faCheckCircle, faTrash, faFileDownload, faFileUpload } from '@fortawesome/free-solid-svg-icons'
+import VueRecaptcha from 'vue-recaptcha'
+import Swal from 'sweetalert2'
+import { storage, db } from '@/lib/firebase'
+
+const emptyPayload = {
+  entity_type: '', // 'personal' | 'organization' | 'company'
+  name: null,
+  email: null,
+  phone: null,
+  provisions: [],
+  statement_letter_url: '',
+  agreed_to_be_mentioned: true
+}
 export default {
+  components: { VueRecaptcha },
   data () {
     return {
+      showDocumentError: false,
+      isMounted: false,
+      icons: {
+        faCheckCircle,
+        faTrash,
+        faFileDownload,
+        faFileUpload
+      },
       payload: {
+        entity_type: '', // 'personal' | 'organization' | 'company'
         name: null,
         email: null,
         phone: null,
-        type: null,
-        amount: null
+        provisions: [],
+        statement_letter_url: '',
+        agreed_to_be_mentioned: true
       },
+      documentURL: null,
+      documentFile: null,
       errors: {},
       messages: {
         name: 'Nama harus diisi',
         email: 'Email harus diisi',
-        phone: 'No handphone harus diisi',
-        type: 'Jenis kebutuhan logistik harus diisi',
-        amount: 'Jumlah harus diisi'
+        phone: 'No handphone harus diisi'
       }
     }
   },
   computed: {
+    recaptchaKey () {
+      return process.env.RECAPTCHA_SITE_KEY
+    },
     hasAtLeastOneError () {
       return Object.keys(this.errors).some((key) => {
         return !!this.errors[key]
@@ -152,8 +226,22 @@ export default {
       }
     }
   },
+  mounted () {
+    this.$nextTick(() => {
+      this.isMounted = true
+    })
+  },
   methods: {
+    updateQuantity (event, logistic) {
+      this.$store.commit('donate/UPDATE_QUANTITY_SELECTED_LOGISTIC', {
+        quantity: event.target.value,
+        logistic
+      })
+    },
     beforeSubmit () {
+      if (!this.documentURL || !this.documentFile) {
+        this.showDocumentError = true
+      }
       this.clearAllErrorMessages()
       const keys = Object.keys(this.payload)
       for (const key of keys) {
@@ -162,9 +250,73 @@ export default {
       if (this.hasAtLeastOneError) {
         return
       }
-      alert('ON DEVELOPMENT')
+      this.onSubmit()
+    },
+    onSubmit () {
+      this.$refs.invisibleRecaptcha.execute()
+    },
+    onVerify (response) {
+      const selectedLogistics = this.$store.state.donate.selectedLogistics.map(x => ({
+        id: x.id,
+        type: x.matg_id,
+        quantity: x.quantity
+      }))
+      this.$set(this.payload, 'provisions', JSON.parse(JSON.stringify(selectedLogistics)))
+      Swal.fire({
+        title: 'Menyimpan data...',
+        onBeforeOpen: () => Swal.showLoading()
+      })
+      this.uploadFileToFirebaseStorage()
+        .then(() => {
+          this.postPayloadToFirestore()
+          Swal.fire({
+            title: 'Data berhasil disimpan',
+            icon: 'success'
+          })
+          this.payload = JSON.parse(JSON.stringify(emptyPayload))
+          this.$store.commit('donate/SET_SELECTED_LOGISTICS', [])
+        }).catch((e) => {
+          Swal.fire({
+            title: 'Terjadi kesalahan',
+            text: e ? e.message || e : '',
+            icon: 'error'
+          })
+        })
+    },
+    uploadFileToFirebaseStorage () {
+      console.log('uploading to storage')
+      return new Promise((resolve, reject) => {
+        const ref = storage.ref().child(`public/donation/${this.documentFile.name}-${new Date().getTime()}`)
+        const uploadTask = ref.put(this.documentFile)
+        uploadTask.on('state_changed', (snapshot) => {
+
+        }, (error) => {
+          reject(error)
+        }, () => {
+          uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+            console.log({ downloadURL })
+            this.payload.statement_letter_url = downloadURL
+            resolve()
+          })
+        })
+      })
+    },
+    postPayloadToFirestore () {
+      console.log('uploading to firestore')
+      return db.collection('donation').add(this.payload)
+        .then((docRef) => {
+          console.log(docRef.id)
+        }).catch((error) => {
+          console.error(error)
+        })
+    },
+    onExpired () {
+      console.log('expired')
     },
     validate (field) {
+      if (field === 'statement_letter_url') {
+        return
+      }
       if (this.payload[field]) {
         this.setErrorMessage(field, null)
       } else {
@@ -187,6 +339,28 @@ export default {
       Object.keys(this.errors).forEach((key) => {
         this.setErrorMessage(key, null)
       })
+    },
+    uploadDocument () {
+      this.showDocumentError = false
+      const fileInput = document.createElement('input')
+      fileInput.setAttribute('type', 'file')
+      fileInput.setAttribute('name', 'file')
+      fileInput.addEventListener('change', (e) => {
+        if (e.target.files && e.target.files.length) {
+          this.documentFile = e.target.files[0]
+          this.documentURL = window.URL.createObjectURL(e.target.files[0])
+        }
+      })
+      fileInput.click()
+    },
+    downloadDocument () {
+      // DOWNLOAD DOCUMENT
+      const link = document.createElement('a')
+      link.setAttribute('href', '/files/contoh-persetujuan-donasi-logistik.docx')
+      link.setAttribute('download', 'contoh-persetujuan-donasi-logistik.docx')
+      document.body.appendChild(link)
+      link.click()
+      link.parentNode.removeChild(link)
     }
   }
 }
@@ -199,5 +373,16 @@ export default {
 .input-text {
   @apply w-full min-w-0 px-4 py-2 rounded
   border border-solid border-gray-300;
+  appearance: none;
+}
+.logistic-selected {
+  @apply border border-green-200 rounded mb-2 pt-2 pb-2 px-4 text-sm;
+  &.border-red-200 {
+    @apply border border-red-200 rounded mb-2 pt-2 pb-2 px-4 text-sm text-red-400;
+  }
+}
+.quantity-logistic {
+  @apply outline-none bg-gray-200 px-2 text-center;
+  width: 75px;
 }
 </style>

@@ -318,7 +318,8 @@ export default {
     },
     createBasemap () {
       mapView = new L.Map('map-wrap', {
-        zoomControl: false
+        zoomControl: false,
+        fullscreenControl: true
       }).setView([-6.932694, 107.627449], 9)
 
       tileLayer = new L.TileLayer('https://cartodb-basemaps-d.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {

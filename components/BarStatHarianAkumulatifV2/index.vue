@@ -33,11 +33,23 @@
             <b>Angka Harian ODP</b><br>
             <small class="opacity-50">(Orang Dalam Pemantauan)</small>
           </h4>
-          <div class="card-content pt-2 pb-2" style="margin: auto; margin-right: 0px; padding-right: 20px;">
+          <div v-if="!isMobile" class="card-content pt-2 pb-2" style="margin: auto; margin-right: 0px; padding-right: 20px;">
             <div class="daterange-wrapper">
               <client-only>
                 <vue-rangedate-picker
-                  righttoleft="true"
+                  righttoleft="false"
+                  :captions="rangedateODP.captions"
+                  :preset-ranges="rangedateODP.presetRanges"
+                  @selected="onDateSelectedODP"
+                />
+              </client-only>
+            </div>
+          </div>
+          <div v-if="isMobile" class="card-content pt-2 pb-2" style="margin: auto; margin-left: auto; margin-right: auto; padding-bottom:300px;">
+            <div class="daterange-wrapper">
+              <client-only>
+                <vue-rangedate-picker
+                  compact="true"
                   :captions="rangedateODP.captions"
                   :preset-ranges="rangedateODP.presetRanges"
                   @selected="onDateSelectedODP"
@@ -60,11 +72,23 @@
             <b>Angka Harian PDP</b><br>
             <small class="opacity-50">(Pasien Dalam Pengawasan)</small>
           </h4>
-          <div class="card-content pt-2 pb-2" style="margin: auto; margin-right: 0px; padding-right: 20px;">
+          <div v-if="!isMobile" class="card-content pt-2 pb-2" style="margin: auto; margin-right: 0px; padding-right: 20px;">
             <div class="daterange-wrapper">
               <client-only>
                 <vue-rangedate-picker
                   righttoleft="true"
+                  :captions="rangedatePDP.captions"
+                  :preset-ranges="rangedatePDP.presetRanges"
+                  @selected="onDateSelectedPDP"
+                />
+              </client-only>
+            </div>
+          </div>
+          <div v-if="isMobile" class="card-content pt-2 pb-2" style="margin: auto; margin-left: auto; margin-right: auto; padding-bottom:300px;">
+            <div class="daterange-wrapper">
+              <client-only>
+                <vue-rangedate-picker
+                  compact="true"
                   :captions="rangedatePDP.captions"
                   :preset-ranges="rangedatePDP.presetRanges"
                   @selected="onDateSelectedPDP"
@@ -93,11 +117,23 @@
             <b>Kumulatif ODP</b><br>
             <small class="opacity-50">(Orang Dalam Pemantauan)</small>
           </h4>
-          <div class="card-content pt-2 pb-2" style="margin: auto; margin-right: 0px; padding-right: 20px;">
+          <div v-if="!isMobile" class="card-content pt-2 pb-2" style="margin: auto; margin-right: 0px; padding-right: 20px;">
             <div class="daterange-wrapper">
               <client-only>
                 <vue-rangedate-picker
-                  righttoleft="true"
+                  righttoleft="false"
+                  :captions="rangedateODP.captions"
+                  :preset-ranges="rangedateODP.presetRanges"
+                  @selected="onDateSelectedODP"
+                />
+              </client-only>
+            </div>
+          </div>
+          <div v-if="isMobile" class="card-content pt-2 pb-2" style="margin: auto; margin-left: auto; margin-right: auto; padding-bottom:300px;">
+            <div class="daterange-wrapper">
+              <client-only>
+                <vue-rangedate-picker
+                  compact="true"
                   :captions="rangedateODP.captions"
                   :preset-ranges="rangedateODP.presetRanges"
                   @selected="onDateSelectedODP"
@@ -119,11 +155,23 @@
             <b>Kumulatif PDP</b><br>
             <small class="opacity-50">(Pasien Dalam Pengawasan)</small>
           </h4>
-          <div class="card-content pt-2 pb-2" style="margin: auto; margin-right: 0px; padding-right: 20px;">
+          <div v-if="!isMobile" class="card-content pt-2 pb-2" style="margin: auto; margin-right: 0px; padding-right: 20px;">
             <div class="daterange-wrapper">
               <client-only>
                 <vue-rangedate-picker
                   righttoleft="true"
+                  :captions="rangedatePDP.captions"
+                  :preset-ranges="rangedatePDP.presetRanges"
+                  @selected="onDateSelectedPDP"
+                />
+              </client-only>
+            </div>
+          </div>
+          <div v-if="isMobile" class="card-content pt-2 pb-2" style="margin: auto; margin-left: auto; margin-right: auto; padding-bottom:300px;">
+            <div class="daterange-wrapper">
+              <client-only>
+                <vue-rangedate-picker
+                  compact="true"
                   :captions="rangedatePDP.captions"
                   :preset-ranges="rangedatePDP.presetRanges"
                   @selected="onDateSelectedPDP"
@@ -170,6 +218,7 @@ export default {
         isActiveHarian: true,
         isActiveAkumulatif: false
       },
+      isMobile: false,
       fontChartBar: faChartBar,
       fontChartLine: faChartLine,
       jsonDataProvinsiHarian: [],
