@@ -17,15 +17,16 @@
           </span>
           <FontAwesomeIcon class="flex-none ml-3 text-2xl lg:text-4xl" :icon="icon.faArrowCircleRight" />
         </nuxt-link>
-        <a
+        <nuxt-link
           class="action-button bg-brand-blue-light"
-          href="#"
+          to="/donate/fund"
+          tag="a"
         >
           <span class="action-button__text">
             Bantu kebutuhan Tunai
           </span>
           <FontAwesomeIcon class="flex-none ml-3 text-2xl lg:text-4xl" :icon="icon.faArrowCircleRight" />
-        </a>
+        </nuxt-link>
       </div>
     </section>
     <section class="m-4 mt-8 md:m-8 md:mt-16">
