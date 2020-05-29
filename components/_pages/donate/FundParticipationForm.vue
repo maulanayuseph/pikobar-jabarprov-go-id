@@ -287,7 +287,7 @@ export default {
         })
     },
     uploadFileToFirebaseStorage () {
-      console.log('uploading to storage')
+      // console.log('uploading to storage')
       return new Promise((resolve, reject) => {
         const ref = storage.ref().child(`public/donation-cash/${this.documentFile.name}-${new Date().getTime()}`)
         const uploadTask = ref.put(this.documentFile)
@@ -305,7 +305,7 @@ export default {
       })
     },
     postPayloadToFirestore () {
-      console.log('uploading to firestore')
+      // console.log('uploading to firestore')
       return db.collection('donation-cash').add(this.payload)
         .then((docRef) => {
           console.log(docRef.id)
