@@ -115,6 +115,9 @@
             Download Contoh Dokumen
           </button>
         </div>
+        <p v-if="showDocumentError" class="text-red-500">
+          Dokumen harus diunggah
+        </p>
       </div>
       <div class="mb-4">
         <label class="input-label" for="name">
@@ -136,6 +139,7 @@
       <hr class="mb-4">
       <client-only>
         <vue-recaptcha
+          v-if="isMounted"
           ref="invisibleRecaptcha"
           :load-recaptcha-script="true"
           size="invisible"
@@ -159,10 +163,24 @@
 <script>
 import { faCheckCircle, faTrash, faFileDownload, faFileUpload } from '@fortawesome/free-solid-svg-icons'
 import VueRecaptcha from 'vue-recaptcha'
+import Swal from 'sweetalert2'
+import { storage, db } from '@/lib/firebase'
+
+const emptyPayload = {
+  entity_type: '', // 'personal' | 'organization' | 'company'
+  name: null,
+  email: null,
+  phone: null,
+  provisions: [],
+  statement_letter_url: '',
+  agreed_to_be_mentioned: true
+}
 export default {
   components: { VueRecaptcha },
   data () {
     return {
+      showDocumentError: false,
+      isMounted: false,
       icons: {
         faCheckCircle,
         faTrash,
@@ -178,6 +196,8 @@ export default {
         statement_letter_url: '',
         agreed_to_be_mentioned: true
       },
+      documentURL: null,
+      documentFile: null,
       errors: {},
       messages: {
         name: 'Nama harus diisi',
@@ -206,6 +226,11 @@ export default {
       }
     }
   },
+  mounted () {
+    this.$nextTick(() => {
+      this.isMounted = true
+    })
+  },
   methods: {
     updateQuantity (event, logistic) {
       this.$store.commit('donate/UPDATE_QUANTITY_SELECTED_LOGISTIC', {
@@ -214,15 +239,15 @@ export default {
       })
     },
     beforeSubmit () {
+      if (!this.documentURL || !this.documentFile) {
+        this.showDocumentError = true
+      }
       this.clearAllErrorMessages()
       const keys = Object.keys(this.payload)
       for (const key of keys) {
         this.validate(key)
       }
       if (this.hasAtLeastOneError) {
-        return
-      } else if (!this.payload.statement_letter_url.match(/http/gi)) {
-        // No File Uploaded
         return
       }
       this.onSubmit()
@@ -231,20 +256,66 @@ export default {
       this.$refs.invisibleRecaptcha.execute()
     },
     onVerify (response) {
-      this.$store.state.donate.selectedLogistics.find((result) => {
-        this.payload.provisions.push({
-          id: result.id,
-          type: result.matg_id,
-          amount: result.quantity
+      const selectedLogistics = this.$store.state.donate.selectedLogistics.map(x => ({
+        id: x.id,
+        type: x.matg_id,
+        quantity: x.quantity
+      }))
+      this.$set(this.payload, 'provisions', JSON.parse(JSON.stringify(selectedLogistics)))
+      Swal.fire({
+        title: 'Menyimpan data...',
+        onBeforeOpen: () => Swal.showLoading()
+      })
+      this.uploadFileToFirebaseStorage()
+        .then(() => {
+          this.postPayloadToFirestore()
+          Swal.fire({
+            title: 'Data berhasil disimpan',
+            icon: 'success'
+          })
+          this.payload = JSON.parse(JSON.stringify(emptyPayload))
+        }).catch((e) => {
+          Swal.fire({
+            title: 'Terjadi kesalahan',
+            text: e ? e.message || e : '',
+            icon: 'error'
+          })
+        })
+    },
+    uploadFileToFirebaseStorage () {
+      console.log('uploading to storage')
+      return new Promise((resolve, reject) => {
+        const ref = storage.ref().child(`public/donation/${this.documentFile.name}-${new Date().getTime()}`)
+        const uploadTask = ref.put(this.documentFile)
+        uploadTask.on('state_changed', (snapshot) => {
+
+        }, (error) => {
+          reject(error)
+        }, () => {
+          uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+            console.log({ downloadURL })
+            this.payload.statement_letter_url = downloadURL
+            resolve()
+          })
         })
       })
-      console.log('Captcha Verified', response)
-      console.log(this.payload)
+    },
+    postPayloadToFirestore () {
+      console.log('uploading to firestore')
+      return db.collection('donation').add(this.payload)
+        .then((docRef) => {
+          console.log(docRef.id)
+        }).catch((error) => {
+          console.error(error)
+        })
     },
     onExpired () {
       console.log('expired')
     },
     validate (field) {
+      if (field === 'statement_letter_url') {
+        return
+      }
       if (this.payload[field]) {
         this.setErrorMessage(field, null)
       } else {
@@ -269,14 +340,15 @@ export default {
       })
     },
     uploadDocument () {
+      this.showDocumentError = false
       const fileInput = document.createElement('input')
       fileInput.setAttribute('type', 'file')
       fileInput.setAttribute('name', 'file')
       fileInput.addEventListener('change', (e) => {
-        const formData = new FormData()
-        formData.append('file', e.target.files[0])
-        // SEND REQUEST UPLOAD & GET RESPONSE FILE URL
-        this.payload.statement_letter_url = 'https://blablabla.com'
+        if (e.target.files && e.target.files.length) {
+          this.documentFile = e.target.files[0]
+          this.documentURL = window.URL.createObjectURL(e.target.files[0])
+        }
       })
       fileInput.click()
     },

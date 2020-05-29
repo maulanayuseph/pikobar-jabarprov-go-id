@@ -50,11 +50,11 @@ export default {
         {
           id: 'medic',
           title: 'Logistik Medis'
-        },
-        {
-          id: 'non-medic',
-          title: 'Logistik Non Medis'
         }
+        // {
+        //   id: 'non-medic',
+        //   title: 'Logistik Non Medis'
+        // }
       ],
       activeTabId: 'medic'
     }
