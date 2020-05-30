@@ -30,6 +30,7 @@
                 @keydown="triggerSearch()"
               >
               <b v-else>
+                <FontAwesomeIcon class="float-right cursor-pointer" :icon="icons.faSort" @click="getTableData(true)" />
                 {{ col.label }}
               </b>
             </template>
@@ -84,7 +85,7 @@
 </template>
 
 <script>
-import { faSearch } from '@fortawesome/free-solid-svg-icons'
+import { faSearch, faSort } from '@fortawesome/free-solid-svg-icons'
 import { ContentLoader } from 'vue-content-loader'
 import { getLogistics } from '../../../api/donation'
 let searchQueryTimeout = null
@@ -103,7 +104,8 @@ export default {
   data () {
     return {
       icons: {
-        faSearch
+        faSearch,
+        faSort
       },
       searchInput: false,
       searchInputQuery: '',
@@ -123,6 +125,7 @@ export default {
       ],
       isLoading: true,
       tableData: [],
+      tableSorting: 'matg_id:asc',
       perPage: 16,
       currentPage: 1,
       totalItems: 0,
@@ -174,13 +177,20 @@ export default {
     },
     getTableData (sort) {
       this.isLoading = true
+      if (sort) {
+        if (this.tableSorting === 'matg_id:asc') {
+          this.tableSorting = 'matg_id:desc'
+        } else {
+          this.tableSorting = 'matg_id:asc'
+        }
+      }
       return getLogistics({
         params: {
           limit: this.perPage,
           skip: this.skipCount,
           search: this.searchInputQuery || '',
           where: '{}',
-          sort: sort || 'matg_id:asc'
+          sort: this.tableSorting
         }
       }).then(({ total, data }) => {
         this.totalItems = total || data.length
