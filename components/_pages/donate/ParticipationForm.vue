@@ -78,10 +78,9 @@
               @click.prevent="$store.commit('donate/REMOVE_SELECTED_LOGISTIC', logistic)"
             />
             <input
-              :value="logistic.quantity || 1"
-              type="number"
-              min="1"
+              :value="$convertToLocalNumber(logistic.quantity)"
               class="quantity-logistic"
+              @keypress="$FieldNumberOnly($event)"
               @keyup="updateQuantity($event, logistic)"
               @blur="updateQuantity($event, logistic)"
             >
@@ -236,7 +235,7 @@ export default {
   methods: {
     updateQuantity (event, logistic) {
       this.$store.commit('donate/UPDATE_QUANTITY_SELECTED_LOGISTIC', {
-        quantity: event.target.value,
+        quantity: this.$FieldClearNumber(event.target.value) || 0,
         logistic
       })
     },
