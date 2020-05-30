@@ -90,7 +90,80 @@
           {{ logistic.matg_id }}
         </div>
         <div v-if="!$store.state.donate.selectedLogistics.length" class="logistic-selected text-center border-red-200">
-          Tidak ada data. <a href="#table-logistik" class="font-italic">Tambahkan sekarang</a>
+          <a href="#table-logistik" class="font-italic">Tambahkan Data</a>
+        </div>
+      </div>
+      <div class="mb-4">
+        <label class="input-label" for="type">
+          Kebutuhan Lainnya (opsional)
+        </label>
+        <div class="border border-grey-200 rounded mb-4 py-2 px-0">
+          <div class="flex flex-row">
+            <div class="w-1/3 px-1 md:px-2">
+              <input
+                ref="provisionsOtherNewName"
+                v-model="provisionsOtherNew.name"
+                class="input-text"
+                placeholder="Nama Kebutuhan"
+              >
+            </div>
+            <div class="w-1/4 px-1 md:px-2">
+              <input
+                ref="provisionsOtherNewQuantity"
+                v-model="provisionsOtherNew.quantity"
+                class="input-text"
+                placeholder="Jumlah"
+                @keypress="$FieldNumberOnly($event)"
+                @input="convertProvisionsOtherQuantity"
+              >
+            </div>
+            <div class="w-1/4 px-1 md:px-2">
+              <select
+                v-model="provisionsOtherNew.unit"
+                class="input-text cursor-pointer"
+              >
+                <option value="pcs">
+                  PCS
+                </option>
+                <option value="unit">
+                  UNIT
+                </option>
+                <option value="kg">
+                  KILOGRAM
+                </option>
+                <option value="liter">
+                  LITER
+                </option>
+              </select>
+            </div>
+            <div class="w-1/4 px-1 md:px-2">
+              <div class="input-text text-center text-green-600 cursor-pointer" @click.prevent="provisionsOtherAdd()">
+                Tambah
+              </div>
+            </div>
+          </div>
+        </div>
+        <div v-for="(prov, iProv) in provisionsOther" :key="iProv" class="logistic-selected">
+          <div class="float-right">
+            <FontAwesomeIcon
+              class="text-red-400 hover:text-red-600 cursor-pointer mr-2"
+              :icon="icons.faTrash"
+              @click.prevent="provisionsOtherRemove(iProv)"
+            />
+            <input
+              :value="$convertToLocalNumber(prov.quantity)"
+              class="quantity-logistic"
+              @keypress="$FieldNumberOnly($event)"
+              @keyup="provisionsOtherUpdate($event, iProv)"
+              @blur="provisionsOtherUpdate($event, iProv)"
+            >
+            <span class="inline-block text-xs">{{ prov.unit }}</span>
+          </div>
+          <FontAwesomeIcon class="inline-block mr-2 text-green-600 cursor-pointer" :icon="icons.faCheckCircle" />
+          {{ prov.name }}
+        </div>
+        <div v-if="!provisionsOther.length" class="text-center text-red-400 text-sm py-2 border border-red-200">
+          <span>Belum ada data</span>
         </div>
       </div>
       <div class="mb-4">
@@ -119,7 +192,7 @@
           Dokumen harus diunggah
         </p>
       </div>
-      <div class="mb-4">
+      <div class="mb-8">
         <label class="input-label" for="name">
           Tampilkan Sebagai Donatur Anonim ?
         </label>
@@ -136,7 +209,7 @@
           </option>
         </select>
       </div>
-      <hr class="mb-4">
+      <hr class="mb-8">
       <client-only>
         <vue-recaptcha
           v-if="isMounted"
@@ -194,8 +267,15 @@ export default {
         email: null,
         phone: null,
         provisions: [],
+        provisions_other: [],
         statement_letter_url: '',
         agreed_to_be_mentioned: true
+      },
+      provisionsOther: [],
+      provisionsOtherNew: {
+        name: '',
+        unit: 'pcs',
+        quantity: 0
       },
       documentURL: null,
       documentFile: null,
@@ -233,11 +313,40 @@ export default {
     })
   },
   methods: {
+    convertProvisionsOtherQuantity () {
+      const quantity = this.$FieldClearNumber(this.provisionsOtherNew.quantity || 0)
+      this.provisionsOtherNew.quantity = Number(quantity).toLocaleString('id-ID')
+    },
     updateQuantity (event, logistic) {
       this.$store.commit('donate/UPDATE_QUANTITY_SELECTED_LOGISTIC', {
         quantity: this.$FieldClearNumber(event.target.value) || 0,
         logistic
       })
+    },
+    provisionsOtherAdd () {
+      if (!this.provisionsOtherNew.name) {
+        this.$refs.provisionsOtherNewName.focus()
+        return
+      }
+      const quantity = this.$FieldClearNumber(this.provisionsOtherNew.quantity)
+      if (!quantity) {
+        this.$refs.provisionsOtherNewQuantity.focus()
+        return
+      }
+      this.provisionsOther.push({
+        name: this.provisionsOtherNew.name,
+        unit: this.provisionsOtherNew.unit,
+        quantity
+      })
+      this.provisionsOtherNew.name = ''
+      this.provisionsOtherNew.unit = 'pcs'
+      this.provisionsOtherNew.quantity = 0
+    },
+    provisionsOtherUpdate (event, index) {
+      this.provisionsOther[index].quantity = this.$FieldClearNumber(event.target.value) || 0
+    },
+    provisionsOtherRemove (index) {
+      this.provisionsOther.splice(index, 1)
     },
     beforeSubmit () {
       if (!this.documentURL || !this.documentFile) {
@@ -272,7 +381,13 @@ export default {
         type: x.matg_id,
         quantity: x.quantity
       }))
+      const provisionsOther = this.provisionsOther.map(x => ({
+        type: x.name,
+        quantity: x.quantity,
+        unit: x.unit
+      }))
       this.$set(this.payload, 'provisions', JSON.parse(JSON.stringify(selectedLogistics)))
+      this.$set(this.payload, 'provisions_other', JSON.parse(JSON.stringify(provisionsOther)))
       this.uploadFileToFirebaseStorage()
         .then(() => {
           this.postPayloadToFirestore()
@@ -282,6 +397,7 @@ export default {
           })
           this.payload = JSON.parse(JSON.stringify(emptyPayload))
           this.$store.commit('donate/SET_SELECTED_LOGISTICS', [])
+          this.provisions_other = []
         }).catch((e) => {
           Swal.fire({
             title: 'Terjadi kesalahan',
