@@ -157,6 +157,7 @@ export default {
       if (searchQueryTimeout) { clearTimeout(searchQueryTimeout) }
       if (this.searchInputQuery.length > 2) {
         searchQueryTimeout = setTimeout(() => {
+          this.currentPage = 1
           this.getTableData()
         }, 500)
       } else if (!this.searchInputQuery) {
@@ -166,7 +167,7 @@ export default {
     getCellValue (column, row, columnIndex, rowIndex) {
       return row[column.prop]
     },
-    getTableData () {
+    getTableData (sort) {
       this.isLoading = true
       return getLogistics({
         params: {
@@ -174,7 +175,7 @@ export default {
           skip: this.skipCount,
           search: this.searchInputQuery || '',
           where: '{}',
-          sort: 'matg_id:asc'
+          sort: sort || 'matg_id:asc'
         }
       }).then(({ total, data }) => {
         this.totalItems = total || data.length
