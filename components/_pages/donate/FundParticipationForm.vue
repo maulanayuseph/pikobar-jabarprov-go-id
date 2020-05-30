@@ -92,7 +92,6 @@
         </label>
         <input
           v-model="payload.amount"
-          type="number"
           :min="0"
           name="amount"
           autocomplete="off"
@@ -178,7 +177,7 @@ const emptyPayload = {
   address: null,
   email: null,
   phone: null,
-  amount: null,
+  amount: 0,
   receipt_url: '',
   agreed_to_be_mentioned: true
 }
@@ -203,7 +202,7 @@ export default {
         email: 'Email harus diisi',
         phone: 'No handphone harus diisi',
         address: 'Alamat harus diisi',
-        amount: 'Jumlah transfer harus diisi'
+        amount: 'Jumlah transfer minimum Rp10.000'
       }
     }
   },
@@ -215,8 +214,25 @@ export default {
     },
     inputListeners () {
       return {
+        keypress: (e) => {
+          if (e.target.name === 'amount') {
+            return this.$FieldNumberOnly(e)
+          } else {
+            return true
+          }
+        },
         input: (e) => {
-          this.validate(e.target.name)
+          if (e.target.name === 'amount') {
+            const amount = this.$FieldClearNumber(this.payload.amount)
+            if (amount < 10000) {
+              this.setErrorMessage('amount', this.messages.amount)
+            } else {
+              this.setErrorMessage('amount', null)
+            }
+            this.payload.amount = Number(amount).toLocaleString('id-ID')
+          } else {
+            this.validate(e.target.name)
+          }
         },
         blur: (e) => {
           this.validate(e.target.name)
