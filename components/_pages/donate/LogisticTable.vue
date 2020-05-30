@@ -67,7 +67,7 @@
               class="td-row px-4 py-2 text-gray-800 border-b-2 border-solid border-gray-300"
             >
               <input v-if="colIndex === 0" :checked="areSelected(row.id)" type="checkbox" class="inline-block mr-2 cursor-pointer">
-              {{ getCellValue(col, row, colIndex, rowIndex) }}
+              {{ col.prop === 'sisa' ? $convertToLocalNumber(getCellValue(col, row, colIndex, rowIndex)) : getCellValue(col, row, colIndex, rowIndex) }}
             </td>
           </tr>
         </template>

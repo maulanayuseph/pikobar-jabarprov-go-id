@@ -12,3 +12,7 @@ Vue.prototype.$FieldClearNumber = (no) => {
   return no ? parseInt(no.split(',').join('')
     .split('.').join('')) : 0
 }
+
+Vue.prototype.$convertToLocalNumber = (no) => {
+  return no ? Number(no).toLocaleString('id-ID') : 0
+}
