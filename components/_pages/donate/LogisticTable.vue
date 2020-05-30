@@ -27,6 +27,7 @@
                 autocomplete="search"
                 class="input-text"
                 placeholder="Cari Kebutuhan Logistik"
+                @keydown="triggerSearch()"
               >
               <b v-else>
                 {{ col.label }}
@@ -86,6 +87,7 @@
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
 import { ContentLoader } from 'vue-content-loader'
 import { getLogistics } from '../../../api/donation'
+let searchQueryTimeout = null
 
 export default {
   components: {
@@ -151,10 +153,20 @@ export default {
     })
   },
   methods: {
+    triggerSearch () {
+      if (searchQueryTimeout) { clearTimeout(searchQueryTimeout) }
+      if (this.searchInputQuery.length > 2) {
+        searchQueryTimeout = setTimeout(() => {
+          this.getTableData()
+        }, 500)
+      } else if (!this.searchInputQuery) {
+        this.getTableData()
+      }
+    },
     getCellValue (column, row, columnIndex, rowIndex) {
       return row[column.prop]
     },
-    getTableData (search) {
+    getTableData () {
       this.isLoading = true
       return getLogistics({
         params: {
