@@ -42,7 +42,8 @@ export const actions = {
             enableDownload,
             downloadAppURL,
             selfDiagnoseURL,
-            announcement: JSON.parse(announcement)
+            announcement
+            // announcement: JSON.parse(announcement)
           })
         })
     }
