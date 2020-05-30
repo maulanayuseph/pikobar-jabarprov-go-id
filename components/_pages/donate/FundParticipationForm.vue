@@ -146,12 +146,13 @@
       <client-only>
         <vue-recaptcha
           v-if="isMounted"
-          ref="invisibleRecaptcha"
+          ref="invisibleRecaptchaFund"
           :load-recaptcha-script="true"
           size="invisible"
           :sitekey="recaptchaKey"
-          @verify="onVerify"
-          @expired="onExpired"
+          @verify="onRecaptchaVerify"
+          @expired="onRecaptchaExpired"
+          @error="onRecaptchaError"
         />
       </client-only>
       <button
@@ -203,11 +204,14 @@ export default {
         email: 'Email harus diisi',
         phone: 'No handphone harus diisi',
         address: 'Alamat harus diisi',
-        amount: 'Jumlah transfer minimum Rp10.000'
+        amount: 'Jumlah transfer harus valid'
       }
     }
   },
   computed: {
+    recaptchaKey () {
+      return process.env.RECAPTCHA_SITE_KEY
+    },
     hasAtLeastOneError () {
       if ((!this.documentFile) || this.$FieldClearNumber(this.payload.amount) < 10000) {
         return true
@@ -244,6 +248,11 @@ export default {
         }
       }
     }
+  },
+  mounted () {
+    this.$nextTick(() => {
+      this.isMounted = true
+    })
   },
   methods: {
     validate (field) {
@@ -291,6 +300,15 @@ export default {
         title: 'Menyimpan data...',
         onBeforeOpen: () => Swal.showLoading()
       })
+      this.$refs.invisibleRecaptchaFund.execute()
+    },
+    onRecaptchaError () {
+      console.log('recaptcha error')
+    },
+    onRecaptchaExpired () {
+      console.log('recaptcha expired')
+    },
+    onRecaptchaVerify (response) {
       this.uploadFileToFirebaseStorage()
         .then(() => {
           this.postPayloadToFirestore()

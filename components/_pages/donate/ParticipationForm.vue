@@ -145,8 +145,9 @@
           :load-recaptcha-script="true"
           size="invisible"
           :sitekey="recaptchaKey"
-          @verify="onVerify"
-          @expired="onExpired"
+          @verify="onRecaptchaVerify"
+          @expired="onRecaptchaExpired"
+          @error="onRecaptchaError"
         />
       </client-only>
       <button
@@ -254,19 +255,25 @@ export default {
       this.onSubmit()
     },
     onSubmit () {
+      Swal.fire({
+        title: 'Menyimpan data...',
+        onBeforeOpen: () => Swal.showLoading()
+      })
       this.$refs.invisibleRecaptcha.execute()
     },
-    onVerify (response) {
+    onRecaptchaError () {
+      console.log('recaptcha error')
+    },
+    onRecaptchaExpired () {
+      console.log('recaptcha expired')
+    },
+    onRecaptchaVerify (response) {
       const selectedLogistics = this.$store.state.donate.selectedLogistics.map(x => ({
         id: x.id,
         type: x.matg_id,
         quantity: x.quantity
       }))
       this.$set(this.payload, 'provisions', JSON.parse(JSON.stringify(selectedLogistics)))
-      Swal.fire({
-        title: 'Menyimpan data...',
-        onBeforeOpen: () => Swal.showLoading()
-      })
       this.uploadFileToFirebaseStorage()
         .then(() => {
           this.postPayloadToFirestore()
@@ -308,9 +315,6 @@ export default {
         .then((docRef) => {
           // console.log(docRef.id)
         })
-    },
-    onExpired () {
-      console.log('expired')
     },
     validate (field) {
       if (field === 'statement_letter_url') {
