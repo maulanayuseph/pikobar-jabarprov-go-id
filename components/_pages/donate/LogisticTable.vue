@@ -13,9 +13,6 @@
     <table class="mt-4 w-full text-left">
       <thead>
         <tr>
-          <!-- <th class="bg-gray-300 uppercase text-gray-600 text-sm px-4 py-2 border-t-2 border-b-2 border-solid border-gray-400">
-            No.
-          </th> -->
           <th
             v-for="col in columns"
             :key="col.prop"
@@ -91,15 +88,15 @@ import { ContentLoader } from 'vue-content-loader'
 import { getLogistics } from '../../../api/donation'
 
 export default {
+  components: {
+    Pagination: () => import('../../Pagination'),
+    ContentLoader
+  },
   props: {
     tabSelected: {
       type: String,
       default: 'medic'
     }
-  },
-  components: {
-    Pagination: () => import('../../Pagination'),
-    ContentLoader
   },
   data () {
     return {
