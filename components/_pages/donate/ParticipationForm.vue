@@ -70,6 +70,23 @@
         <label class="input-label" for="type">
           Kebutuhan Logistik
         </label>
+        <div class="relative mb-4">
+          <input
+            v-model="fieldLogistic.search"
+            class="input-text"
+            placeholder="Cari data ..."
+          >
+          <div v-if="fieldLogistic.show" class="autocomplete-data px-3 bg-white shadow-lg rounded rounded-t-none">
+            <div v-for="(log, iLog) in fieldLogistic.data" :key="iLog" class="relative py-1 px-2 border-b border-grey-100 pb-1 mb-1 cursor-pointer hover:bg-gray-100" @click="addLogisticItem(log)">
+              <span class="float-right text-green-600 text-xs rounded border border-green-600 px-6 py-0 mt-1">
+                TAMBAH
+              </span>
+              <div class="py-1">
+                {{ log.matg_id }}
+              </div>
+            </div>
+          </div>
+        </div>
         <div v-for="(logistic) in $store.state.donate.selectedLogistics" :key="logistic.id" class="logistic-selected">
           <div class="float-right">
             <FontAwesomeIcon
@@ -89,8 +106,8 @@
           <FontAwesomeIcon class="inline-block mr-2 text-green-600 cursor-pointer" :icon="icons.faCheckCircle" />
           {{ logistic.matg_id }}
         </div>
-        <div v-if="!$store.state.donate.selectedLogistics.length" class="logistic-selected text-center border-red-200">
-          <a href="#table-logistik" class="font-italic">Tambahkan Data</a>
+        <div v-if="!$store.state.donate.selectedLogistics.length" class="text-center text-red-400 text-sm py-2 border border-red-200">
+          <span>Belum ada data</span>
         </div>
       </div>
       <div class="mb-4">
@@ -238,6 +255,7 @@
 import { faCheckCircle, faTrash, faFileDownload, faFileUpload } from '@fortawesome/free-solid-svg-icons'
 import VueRecaptcha from 'vue-recaptcha'
 import Swal from 'sweetalert2'
+import { getLogistics } from '../../../api/donation'
 import { storage, db } from '@/lib/firebase'
 
 const emptyPayload = {
@@ -249,6 +267,7 @@ const emptyPayload = {
   statement_letter_url: '',
   agreed_to_be_mentioned: true
 }
+let fieldSearchTimeout = null
 export default {
   components: { VueRecaptcha },
   data () {
@@ -284,6 +303,11 @@ export default {
         name: 'Nama harus diisi',
         email: 'Email harus diisi',
         phone: 'No handphone harus diisi'
+      },
+      fieldLogistic: {
+        show: false,
+        search: '',
+        data: []
       }
     }
   },
@@ -307,12 +331,48 @@ export default {
       }
     }
   },
+  watch: {
+    /* eslint-disable-next-line */
+    'fieldLogistic.search': function (v) {
+      if (fieldSearchTimeout) { clearTimeout(fieldSearchTimeout) }
+      if (v.length < 3) {
+        return
+      }
+      fieldSearchTimeout = setTimeout(() => {
+        this.searchFieldLogistic()
+        clearTimeout(fieldSearchTimeout)
+      }, 500)
+    }
+  },
   mounted () {
     this.$nextTick(() => {
       this.isMounted = true
     })
   },
   methods: {
+    searchFieldLogistic () {
+      this.fieldLogistic.show = true
+      return getLogistics({
+        params: {
+          limit: 15,
+          skip: 0,
+          search: this.fieldLogistic.search,
+          where: '{}',
+          sort: 'matg_id:asc'
+        }
+      }).then(({ total, data }) => {
+        this.fieldLogistic.data = data
+      })
+    },
+    addLogisticItem (logistic) {
+      const foundRow = this.$store.state.donate.selectedLogistics.find(result => result.id === logistic.id)
+      if (!foundRow) {
+        this.$store.commit('donate/ADD_SELECTED_LOGISTIC', Object.assign({ quantity: 10 }, logistic))
+      }
+      this.fieldLogistic.show = false
+      this.fieldLogistic.search = ''
+      this.fieldLogistic.data = []
+    },
     convertProvisionsOtherQuantity () {
       const quantity = this.$FieldClearNumber(this.provisionsOtherNew.quantity || 0)
       this.provisionsOtherNew.quantity = Number(quantity).toLocaleString('id-ID')
@@ -502,5 +562,13 @@ export default {
 .quantity-logistic {
   @apply outline-none bg-gray-200 px-2 text-center;
   width: 75px;
+}
+.autocomplete-data {
+  position: absolute;
+  top: 45px;
+  left: 0px;
+  width: 100%;
+  max-height: 200px;
+  overflow-y: auto;
 }
 </style>

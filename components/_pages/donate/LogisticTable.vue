@@ -1,5 +1,5 @@
 <template>
-  <div id="table-logistik" class="relative overflow-x-auto">
+  <div class="relative overflow-x-auto">
     <client-only>
       <Pagination :page-range="3" :page-count="totalPages" :initial-page="currentPage" :click-handler="onPaginationClick" />
     </client-only>
