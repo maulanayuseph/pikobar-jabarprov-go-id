@@ -26,7 +26,7 @@
                 name="search"
                 autocomplete="search"
                 class="input-text"
-                placeholder="Cari Kebutuhan Logistik"
+                placeholder="Cari Data ..."
                 @keydown="triggerSearch()"
               >
               <b v-else>
