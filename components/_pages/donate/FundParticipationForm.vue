@@ -113,10 +113,10 @@
         <div class="relative">
           <button
             class="border rounded-lg px-4 text-sm py-1 mr-2"
-            :class="[documentFile && documentURL ? 'border-green-400 text-green-600' : 'border-red-400 text-red-600']"
+            :class="[documentFile ? 'border-green-400 text-green-600' : 'border-red-400 text-red-600']"
             @click.prevent="uploadDocument()"
           >
-            <FontAwesomeIcon v-if="documentFile && documentURL" class="inline-block mr-2 text-green-600" :icon="icons.faCheckCircle" />
+            <FontAwesomeIcon v-if="documentFile" class="inline-block mr-2 text-green-600" :icon="icons.faCheckCircle" />
             <FontAwesomeIcon v-else class="inline-block mr-2 text-red-600" :icon="icons.faFileUpload" />
             Upload Dokumen
           </button>
@@ -209,9 +209,13 @@ export default {
   },
   computed: {
     hasAtLeastOneError () {
-      return Object.keys(this.errors).some((key) => {
-        return !!this.errors[key]
-      })
+      if ((!this.documentFile) || this.$FieldClearNumber(this.payload.amount) < 10000) {
+        return true
+      } else {
+        return Object.keys(this.errors).some((key) => {
+          return !!this.errors[key]
+        })
+      }
     },
     inputListeners () {
       return {
