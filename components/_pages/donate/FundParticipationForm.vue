@@ -112,11 +112,12 @@
         </label>
         <div class="relative">
           <button
-            class="border border-green-400 text-green-600 rounded-lg px-4 text-sm py-1 mr-2"
+            class="border rounded-lg px-4 text-sm py-1 mr-2"
+            :class="[documentFile && documentURL ? 'border-green-400 text-green-600' : 'border-red-400 text-red-600']"
             @click.prevent="uploadDocument()"
           >
-            <FontAwesomeIcon v-if="payload.receipt_url.match(/http/gi)" class="inline-block mr-2 text-green-600" :icon="icons.faCheckCircle" />
-            <FontAwesomeIcon v-else class="inline-block mr-2 text-green-600" :icon="icons.faFileUpload" />
+            <FontAwesomeIcon v-if="documentFile && documentURL" class="inline-block mr-2 text-green-600" :icon="icons.faCheckCircle" />
+            <FontAwesomeIcon v-else class="inline-block mr-2 text-red-600" :icon="icons.faFileUpload" />
             Upload Dokumen
           </button>
         </div>
