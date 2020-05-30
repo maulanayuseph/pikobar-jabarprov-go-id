@@ -151,6 +151,11 @@ export default {
       this.searchInputQuery = ''
       this.getTableData()
     })
+    this.$watch('searchInput', (v) => {
+      if (!v) {
+        this.searchInputQuery = ''
+      }
+    })
   },
   methods: {
     triggerSearch () {
