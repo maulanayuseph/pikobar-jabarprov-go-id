@@ -16,7 +16,23 @@
                 :key="col.prop"
                 class="bg-gray-300 uppercase text-gray-600 text-sm px-4 py-2 border-t-2 border-b-2 border-solid border-gray-400"
               >
-                <b>
+                <template v-if="col.prop === 'matg_id'">
+                  <FontAwesomeIcon class="inline-block mr-2 cursor-pointer" :icon="icons.faSearch" @click="searchInput = !searchInput" />
+                  <input
+                    v-if="searchInput"
+                    v-model="searchInputQuery"
+                    name="search"
+                    autocomplete="search"
+                    class="input-text"
+                    placeholder="Cari Data ..."
+                    @keydown="triggerSearch()"
+                  >
+                  <b v-else>
+                    <FontAwesomeIcon class="float-right cursor-pointer" :icon="icons.faSort" @click="getTableData(true)" />
+                    {{ col.label }}
+                  </b>
+                </template>
+                <b v-if="col.prop !== 'matg_id'">
                   {{ col.label }}
                 </b>
               </th>
@@ -68,9 +84,11 @@
 </template>
 
 <script>
-
+import { faSearch, faSort } from '@fortawesome/free-solid-svg-icons'
 import { ContentLoader } from 'vue-content-loader'
 import { getCollectedDonations } from '../../../api/donation'
+let searchQueryTimeout = null
+
 export default {
   components: {
     Pagination: () => import('../../Pagination'),
@@ -78,6 +96,13 @@ export default {
   },
   data () {
     return {
+      icons: {
+        faSearch,
+        faSort
+      },
+      searchInput: false,
+      searchInputQuery: '',
+      tableSorting: 'matg_id:asc',
       columns: [
         {
           prop: 'matg_id',
@@ -120,18 +145,43 @@ export default {
       },
       { immediate: false }
     )
+    this.$watch('searchInput', (v) => {
+      if (!v) {
+        this.searchInputQuery = ''
+      }
+    })
   },
   methods: {
+    triggerSearch () {
+      if (searchQueryTimeout) { clearTimeout(searchQueryTimeout) }
+      if (this.searchInputQuery.length > 2) {
+        searchQueryTimeout = setTimeout(() => {
+          this.currentPage = 1
+          this.getTableData()
+        }, 500)
+      } else if (!this.searchInputQuery) {
+        this.getTableData()
+      }
+    },
     getCellValue (column, row, columnIndex, rowIndex) {
       return row[column.prop]
     },
-    getTableData () {
+    getTableData (sort) {
       this.isLoading = true
+      if (sort) {
+        if (this.tableSorting === 'matg_id:asc') {
+          this.tableSorting = 'matg_id:desc'
+        } else {
+          this.tableSorting = 'matg_id:asc'
+        }
+      }
       return getCollectedDonations({
         params: {
           limit: this.perPage,
           skip: this.skipCount,
-          sort: 'matg_id:asc'
+          search: this.searchInputQuery || '',
+          where: '{}',
+          sort: this.tableSorting
         }
       }).then(({ total, data }) => {
         this.data = data

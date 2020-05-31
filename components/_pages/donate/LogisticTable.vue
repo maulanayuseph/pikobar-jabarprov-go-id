@@ -1,5 +1,5 @@
 <template>
-  <div id="table-logistik" class="relative overflow-x-auto">
+  <div class="relative overflow-x-auto">
     <client-only>
       <Pagination :page-range="3" :page-count="totalPages" :initial-page="currentPage" :click-handler="onPaginationClick" />
     </client-only>
@@ -13,9 +13,6 @@
     <table class="mt-4 w-full text-left">
       <thead>
         <tr>
-          <!-- <th class="bg-gray-300 uppercase text-gray-600 text-sm px-4 py-2 border-t-2 border-b-2 border-solid border-gray-400">
-            No.
-          </th> -->
           <th
             v-for="col in columns"
             :key="col.prop"
@@ -29,9 +26,11 @@
                 name="search"
                 autocomplete="search"
                 class="input-text"
-                placeholder="Cari Kebutuhan Logistik"
+                placeholder="Cari Data ..."
+                @keydown="triggerSearch()"
               >
               <b v-else>
+                <FontAwesomeIcon class="float-right cursor-pointer" :icon="icons.faSort" @click="getTableData(true)" />
                 {{ col.label }}
               </b>
             </template>
@@ -67,7 +66,7 @@
               class="td-row px-4 py-2 text-gray-800 border-b-2 border-solid border-gray-300"
             >
               <input v-if="colIndex === 0" :checked="areSelected(row.id)" type="checkbox" class="inline-block mr-2 cursor-pointer">
-              {{ getCellValue(col, row, colIndex, rowIndex) }}
+              {{ col.prop === 'sisa' ? $convertToLocalNumber(getCellValue(col, row, colIndex, rowIndex)) : getCellValue(col, row, colIndex, rowIndex) }}
             </td>
           </tr>
         </template>
@@ -86,25 +85,27 @@
 </template>
 
 <script>
-import { faSearch } from '@fortawesome/free-solid-svg-icons'
+import { faSearch, faSort } from '@fortawesome/free-solid-svg-icons'
 import { ContentLoader } from 'vue-content-loader'
 import { getLogistics } from '../../../api/donation'
+let searchQueryTimeout = null
 
 export default {
+  components: {
+    Pagination: () => import('../../Pagination'),
+    ContentLoader
+  },
   props: {
     tabSelected: {
       type: String,
       default: 'medic'
     }
   },
-  components: {
-    Pagination: () => import('../../Pagination'),
-    ContentLoader
-  },
   data () {
     return {
       icons: {
-        faSearch
+        faSearch,
+        faSort
       },
       searchInput: false,
       searchInputQuery: '',
@@ -124,6 +125,7 @@ export default {
       ],
       isLoading: true,
       tableData: [],
+      tableSorting: 'matg_id:asc',
       perPage: 16,
       currentPage: 1,
       totalItems: 0,
@@ -152,20 +154,43 @@ export default {
       this.searchInputQuery = ''
       this.getTableData()
     })
+    this.$watch('searchInput', (v) => {
+      if (!v) {
+        this.searchInputQuery = ''
+      }
+    })
   },
   methods: {
+    triggerSearch () {
+      if (searchQueryTimeout) { clearTimeout(searchQueryTimeout) }
+      if (this.searchInputQuery.length > 2) {
+        searchQueryTimeout = setTimeout(() => {
+          this.currentPage = 1
+          this.getTableData()
+        }, 500)
+      } else if (!this.searchInputQuery) {
+        this.getTableData()
+      }
+    },
     getCellValue (column, row, columnIndex, rowIndex) {
       return row[column.prop]
     },
-    getTableData (search) {
+    getTableData (sort) {
       this.isLoading = true
+      if (sort) {
+        if (this.tableSorting === 'matg_id:asc') {
+          this.tableSorting = 'matg_id:desc'
+        } else {
+          this.tableSorting = 'matg_id:asc'
+        }
+      }
       return getLogistics({
         params: {
           limit: this.perPage,
           skip: this.skipCount,
           search: this.searchInputQuery || '',
           where: '{}',
-          sort: 'matg_id:asc'
+          sort: this.tableSorting
         }
       }).then(({ total, data }) => {
         this.totalItems = total || data.length
