@@ -256,17 +256,23 @@ import { faCheckCircle, faTrash, faFileDownload, faFileUpload } from '@fortaweso
 import VueRecaptcha from 'vue-recaptcha'
 import Swal from 'sweetalert2'
 import { getLogistics } from '../../../api/donation'
-import { storage, db } from '@/lib/firebase'
+import { storage, db, Timestamp } from '@/lib/firebase'
 
 const emptyPayload = {
+  created_at: Timestamp.fromDate(new Date()),
+  modified_at: null,
+  created_by: 'pikobar-web',
+  modified_by: null,
   entity_type: '', // 'personal' | 'organization' | 'company'
   name: null,
   email: null,
   phone: null,
   provisions: [],
+  provisions_other: [],
   statement_letter_url: '',
   agreed_to_be_mentioned: true
 }
+
 let fieldSearchTimeout = null
 export default {
   components: { VueRecaptcha },
@@ -280,16 +286,7 @@ export default {
         faFileDownload,
         faFileUpload
       },
-      payload: {
-        entity_type: '', // 'personal' | 'organization' | 'company'
-        name: null,
-        email: null,
-        phone: null,
-        provisions: [],
-        provisions_other: [],
-        statement_letter_url: '',
-        agreed_to_be_mentioned: true
-      },
+      payload: JSON.parse(JSON.stringify(emptyPayload)),
       provisionsOther: [],
       provisionsOtherNew: {
         name: '',
