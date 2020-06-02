@@ -92,7 +92,6 @@
         </label>
         <input
           v-model="payload.amount"
-          type="number"
           :min="0"
           name="amount"
           autocomplete="off"
@@ -113,11 +112,12 @@
         </label>
         <div class="relative">
           <button
-            class="border border-green-400 text-green-600 rounded-lg px-4 text-sm py-1 mr-2"
+            class="border rounded-lg px-4 text-sm py-1 mr-2"
+            :class="[documentFile ? 'border-green-400 text-green-600' : 'border-red-400 text-red-600']"
             @click.prevent="uploadDocument()"
           >
-            <FontAwesomeIcon v-if="payload.receipt_url.match(/http/gi)" class="inline-block mr-2 text-green-600" :icon="icons.faCheckCircle" />
-            <FontAwesomeIcon v-else class="inline-block mr-2 text-green-600" :icon="icons.faFileUpload" />
+            <FontAwesomeIcon v-if="documentFile" class="inline-block mr-2 text-green-600" :icon="icons.faCheckCircle" />
+            <FontAwesomeIcon v-else class="inline-block mr-2 text-red-600" :icon="icons.faFileUpload" />
             Upload Dokumen
           </button>
         </div>
@@ -146,12 +146,13 @@
       <client-only>
         <vue-recaptcha
           v-if="isMounted"
-          ref="invisibleRecaptcha"
+          ref="invisibleRecaptchaFund"
           :load-recaptcha-script="true"
           size="invisible"
           :sitekey="recaptchaKey"
-          @verify="onVerify"
-          @expired="onExpired"
+          @verify="onRecaptchaVerify"
+          @expired="onRecaptchaExpired"
+          @error="onRecaptchaError"
         />
       </client-only>
       <button
@@ -178,7 +179,7 @@ const emptyPayload = {
   address: null,
   email: null,
   phone: null,
-  amount: null,
+  amount: 0,
   receipt_url: '',
   agreed_to_be_mentioned: true
 }
@@ -203,26 +204,55 @@ export default {
         email: 'Email harus diisi',
         phone: 'No handphone harus diisi',
         address: 'Alamat harus diisi',
-        amount: 'Jumlah transfer harus diisi'
+        amount: 'Jumlah transfer harus valid'
       }
     }
   },
   computed: {
+    recaptchaKey () {
+      return process.env.RECAPTCHA_SITE_KEY
+    },
     hasAtLeastOneError () {
-      return Object.keys(this.errors).some((key) => {
-        return !!this.errors[key]
-      })
+      if ((!this.documentFile) || this.$FieldClearNumber(this.payload.amount) < 10000) {
+        return true
+      } else {
+        return Object.keys(this.errors).some((key) => {
+          return !!this.errors[key]
+        })
+      }
     },
     inputListeners () {
       return {
+        keypress: (e) => {
+          if (e.target.name === 'amount') {
+            return this.$FieldNumberOnly(e)
+          } else {
+            return true
+          }
+        },
         input: (e) => {
-          this.validate(e.target.name)
+          if (e.target.name === 'amount') {
+            const amount = this.$FieldClearNumber(this.payload.amount)
+            if (amount < 10000) {
+              this.setErrorMessage('amount', this.messages.amount)
+            } else {
+              this.setErrorMessage('amount', null)
+            }
+            this.payload.amount = Number(amount).toLocaleString('id-ID')
+          } else {
+            this.validate(e.target.name)
+          }
         },
         blur: (e) => {
           this.validate(e.target.name)
         }
       }
     }
+  },
+  mounted () {
+    this.$nextTick(() => {
+      this.isMounted = true
+    })
   },
   methods: {
     validate (field) {
@@ -270,6 +300,15 @@ export default {
         title: 'Menyimpan data...',
         onBeforeOpen: () => Swal.showLoading()
       })
+      this.$refs.invisibleRecaptchaFund.execute()
+    },
+    onRecaptchaError () {
+      console.log('recaptcha error')
+    },
+    onRecaptchaExpired () {
+      console.log('recaptcha expired')
+    },
+    onRecaptchaVerify (response) {
       this.uploadFileToFirebaseStorage()
         .then(() => {
           this.postPayloadToFirestore()

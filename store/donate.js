@@ -16,10 +16,9 @@ export const mutations = {
     }
   },
   UPDATE_QUANTITY_SELECTED_LOGISTIC (state, params) {
-    console.log(params)
     state.selectedLogistics.map((result) => {
       if (result.id === params.logistic.id) {
-        result.quantity = parseInt(params.quantity)
+        result.quantity = params.quantity
       }
     })
   }
