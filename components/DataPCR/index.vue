@@ -7,10 +7,10 @@
       <div class="w-full md:w-3/6 lg:w-3/6 h-auto text-sm mr-10 mt-2">
         Polymerase Chain Reaction atau PCR merupakan pemeriksaan diagnostik yang dianggap paling akurat untuk memastikan apakah seseorang menderita COVID-19 atau tidak.<br>
         <br><b style="font-size: larger;">Disclaimer :</b><br>
-        <span style="opacity: 0.6;">Angka Positif setelah tes PCR didapatkan berdasarkan hasil pengecekan yang dikeluarkan Laboratorium Kesehatan Daerah Jawa Barat. </span>
-        <span v-if="showMore" style="opacity: 0.6;">Angka Positif hasil tes PCR tidak merepresentasikan seluruh kasus Terkonfirmasi di Jawa Barat dikarenakan terdapat sumber pengujian lain selain Laboratorium Kesehatan Daerah Jawa Barat. </span>
-        <b><a v-if="!showMore" style="color: #17689D; cursor:pointer;" @click="clickShowMore"> Selengkapnya</a></b>
-        <b><a v-if="showMore" style="color: #17689D; cursor:pointer;" @click="clickShowMore"> Sembunyikan</a></b>
+        <span style="opacity: 0.6;">Jumlah tes PCR yang ditampilkan adalah hasil pengujian di Labkes Jabar.</span>
+        <span v-if="showMore" style="opacity: 0.6;">Angka Positif hasil tes PCR tidak merepresentasikan seluruh kasus terkonfirmasi dan jumlah pengujian massal di Jawa Barat, tim Pikobar sedang dalam proses pengumpulan dan integrasi data dari lab-lab satelit se-Jawa Barat.  </span>
+        <!-- <b><a v-if="!showMore" style="color: #17689D; cursor:pointer;" @click="clickShowMore"> Selengkapnya</a></b> -->
+        <!-- <b><a v-if="showMore" style="color: #17689D; cursor:pointer;" @click="clickShowMore"> Sembunyikan</a></b> -->
         <br>
       </div>
       <div class="w-full md:w-3/6 lg:w-3/6 h-auto text-sm mr-10 row">
@@ -104,7 +104,7 @@ export default {
           invalid: 0
         }
       },
-      showMore: false
+      showMore: true
     }
   },
   watch: {
