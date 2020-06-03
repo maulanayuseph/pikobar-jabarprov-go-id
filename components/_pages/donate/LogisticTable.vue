@@ -59,7 +59,14 @@
           </tr>
         </template>
         <template v-else-if="tableData.length">
-          <tr v-for="(row, rowIndex) in tableData" :key="rowIndex" :class="[areSelected(row.id)]" class="cursor-pointer" @click="selectRow(row)">
+          <tr
+            v-for="(row, rowIndex) in tableData"
+            v-show="row.matg_id !== 'CIMAHI' && row.matg_id !== 'CANCEL'"
+            :key="rowIndex"
+            :class="[areSelected(row.id)]"
+            class="cursor-pointer"
+            @click="selectRow(row)"
+          >
             <td
               v-for="(col, colIndex) in columns"
               :key="col.prop"
