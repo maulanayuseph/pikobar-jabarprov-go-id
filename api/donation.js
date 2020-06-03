@@ -20,9 +20,9 @@ export async function getCollectedDonations (config = {}) {
     })
   const total = await WMSApi.get('master/material', {
     params: {
-      search: config.params.search,
-      where: config.params.where,
-      count: true
+      where: {
+          matg_id: `${config.params.where}`.toUpperCase()
+      }
     }
   }).then((r) => {
     return r.data.data.count
