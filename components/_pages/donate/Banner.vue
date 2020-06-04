@@ -24,7 +24,7 @@ export default {
           sequence: 1,
           title: 'Banner 1',
           action_url: '#',
-          url: '/img/donasi-1.png',
+          url: '/img/donasi-1.jpg',
           objectFit: 'cover'
         },
         {
@@ -32,7 +32,7 @@ export default {
           sequence: 2,
           title: 'Banner 2',
           action_url: '#',
-          url: '/img/donasi-2.png',
+          url: '/img/donasi-2.jpg',
           objectFit: 'cover'
         },
         {
@@ -40,7 +40,7 @@ export default {
           sequence: 3,
           title: 'Banner 3',
           action_url: '#',
-          url: '/img/donasi-3.png',
+          url: '/img/donasi-3.jpg',
           objectFit: 'cover'
         },
         {
@@ -48,7 +48,7 @@ export default {
           sequence: 4,
           title: 'Banner 4',
           action_url: '#',
-          url: '/img/donasi-4.png',
+          url: '/img/donasi-4.jpg',
           objectFit: 'cover'
         }
       ]
@@ -60,10 +60,9 @@ export default {
 <style lang="scss" scoped>
 
 .container-with-ratio {
-  padding-top: (500 * 100/ 900) * 1%;
-
-  @screen lg {
-    padding-top: (300 * 100/ 900) * 1%;
-  }
+  padding-top: (300 * 100/ 900) * 1%;
+  // @screen lg {
+  //   padding-top: (300 * 100/ 900) * 1%;
+  // }
 }
 </style>

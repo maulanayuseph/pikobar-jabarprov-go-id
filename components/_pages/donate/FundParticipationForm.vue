@@ -108,6 +108,14 @@
       </div>
       <div class="mb-4">
         <label class="input-label" for="type">
+          Harap mentransfer jumlah tersebut ke rekening Gugus Tugas Penanganan COVID-19:
+        </label>
+        <div class="flex flex-col md:flex-row md:items-stretch">
+          <NoRekening logo="/img/ic-bank-bjb.png" nomor="345678 2019 001" atas-nama="GTPP COVID 19" />
+        </div>
+      </div>
+      <div class="mb-4">
+        <label class="input-label" for="type">
           Bukti Transfer
         </label>
         <div class="relative">
@@ -184,7 +192,10 @@ const emptyPayload = {
   agreed_to_be_mentioned: true
 }
 export default {
-  components: { VueRecaptcha },
+  components: {
+    NoRekening: () => import('~/components/_pages/donate/NoRekening'),
+    VueRecaptcha
+  },
   data () {
     return {
       showDocumentError: false,
