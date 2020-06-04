@@ -124,11 +124,11 @@ export default {
         {
           prop: 'sisa',
           label: 'Jumlah Dibutuhkan'
-        },
-        {
-          prop: 'masuk',
-          label: 'Jumlah Terpenuhi'
         }
+        // {
+        //   prop: 'masuk',
+        //   label: 'Jumlah Terpenuhi'
+        // }
       ],
       isLoading: true,
       tableData: [],

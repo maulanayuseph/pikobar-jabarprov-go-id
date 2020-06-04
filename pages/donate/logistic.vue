@@ -46,7 +46,7 @@ export default {
       tableTabs: [
         {
           id: 'medic',
-          title: 'Logistik Medis'
+          title: 'Logistik'
         }
         // {
         //   id: 'non-medic',

@@ -20,9 +20,9 @@ export async function getCollectedDonations (config = {}) {
     })
   const total = await WMSApi.get('master/material', {
     params: {
-      where: {
-        matg_id: `${config.params.search}`.toUpperCase()
-      }
+      search: config.params.search,
+      where: config.params.where,
+      count: true
     }
   }).then((r) => {
     return r.data.data.count
@@ -43,9 +43,8 @@ export async function getLogistics (config = {}) {
 
   const total = await WMSApi.get('api/logistik', {
     params: {
-      where: {
-        matg_id: `${config.params.search}`.toUpperCase()
-      },
+      search: config.params.search,
+      where: config.params.where,
       count: true
     }
   }).then((r) => {
