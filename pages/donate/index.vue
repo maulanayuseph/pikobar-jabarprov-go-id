@@ -29,7 +29,7 @@
         </nuxt-link>
       </div>
     </section>
-    <section class="m-4 mt-8 md:m-8 md:mt-16">
+    <section v-if="false" class="m-4 mt-8 md:m-8 md:mt-16">
       <div class="p-5 md:p-8 rounded-lg border border-solid border-gray-300 bg-white">
         <CollectedDonationTable />
       </div>
