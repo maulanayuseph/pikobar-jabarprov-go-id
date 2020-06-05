@@ -61,6 +61,14 @@ export default {
         selection.removeAllRanges()
         selection.addRange(range)
       }
+
+      // remove whitespace from copied text
+      document.addEventListener('copy', function (e) {
+        const text = window.getSelection().toString().replace(/\s/g, '')
+        e.clipboardData.setData('text/plain', text)
+        e.preventDefault()
+      })
+
       try {
         document.execCommand('copy')
       } catch (err) {
