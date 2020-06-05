@@ -42,14 +42,6 @@ export default {
           action_url: '#',
           url: '/img/donasi-3.jpg',
           objectFit: 'cover'
-        },
-        {
-          id: 3,
-          sequence: 4,
-          title: 'Banner 4',
-          action_url: '#',
-          url: '/img/donasi-4.jpg',
-          objectFit: 'cover'
         }
       ]
     }

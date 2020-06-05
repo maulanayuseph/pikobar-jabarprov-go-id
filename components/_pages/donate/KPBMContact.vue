@@ -19,7 +19,7 @@
         </p>
       </div>
       <div class="flex flex-row items-start">
-        <a href="https://api.whatsapp.com/send?phone=6282121590085&text=Informasi%20Donasi%20..." target="_blank" class="text-white rounded-lg px-6 py-2 bg-brand-green">
+        <a href="https://api.whatsapp.com/send?phone=6282121590085&text=Halo, saya ingin bertanya terkait donasi untuk penanganan COVID-19 yang ada di Pikobar." target="_blank" class="text-white rounded-lg px-6 py-2 bg-brand-green">
           <span class="inline-block">
             <svg
               aria-hidden="true"
