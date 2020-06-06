@@ -12,14 +12,14 @@
           <FontAwesomeIcon :icon="icon.faPhoneAlt" class="text-green-500" />
         </span>
         <p>
-          <b>Ani Widiani (0821-2159-0085)</b><br>
+          <b>Hotline Donasi</b><br>
           <small class="opacity-75">
             Divisi Kemitraan dan Penggalangan Bantuan Masyarakat
           </small>
         </p>
       </div>
       <div class="flex flex-row items-start">
-        <a href="https://api.whatsapp.com/send?phone=6282121590085&text=Informasi%20Donasi%20..." target="_blank" class="text-white rounded-lg px-6 py-2 bg-brand-green">
+        <a href="https://s.id/ChatbotPikobar" target="_blank" class="text-white rounded-lg px-6 py-2 bg-brand-green">
           <span class="inline-block">
             <svg
               aria-hidden="true"
@@ -38,7 +38,7 @@
               />
             </svg>
           </span>
-          0821-2159-0085
+          Direct to Whatsapp
         </a>
       </div>
     </div>

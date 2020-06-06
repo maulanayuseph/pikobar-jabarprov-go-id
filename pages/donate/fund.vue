@@ -10,7 +10,7 @@
           <b>Bantu Kebutuhan Tunai</b>
         </h4>
         <p class="mb-4 opacity-75 text-center">
-          Ikut berpartisipasi untuk memenuhi kebutuhan tunai disini
+          Ikut berpartisipasi untuk memenuhi kebutuhan tunai di sini
         </p>
       </div>
     </section>
