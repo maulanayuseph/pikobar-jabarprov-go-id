@@ -6,7 +6,7 @@
           :is-pending="isPending"
           class="lg:mr-5 mb-8 lg:w-1/4 border border-solid"
           style="background-color: #E0E6F6; border-color: #747BAD; padding: 1rem;"
-          label="Terkonfirmasi Positif"
+          label="Terkonfirmasi"
         >
           <div class="flex justify-between items-baseline text-2xl">
             <h4>
