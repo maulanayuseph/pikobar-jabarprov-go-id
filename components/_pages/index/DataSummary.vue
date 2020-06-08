@@ -4,8 +4,8 @@
       <section class="flex flex-col lg:flex-row lg:flex-no-wrap">
         <CounterCardLoader
           :is-pending="isPending"
-          class="lg:mr-8 mb-8 lg:w-1/3 border border-solid"
-          style="background-color: #FCDFE0; border-color: #FFB4B5;"
+          class="lg:mr-5 mb-8 lg:w-1/4 border border-solid"
+          style="background-color: #E0E6F6; border-color: #747BAD; padding: 1rem;"
           label="Terkonfirmasi"
         >
           <div class="flex justify-between items-baseline text-2xl">
@@ -17,7 +17,7 @@
                 {{ formatNumber(positifJabar) }}
               </b>
               <b>
-                <span class="text-xl tag-red-100 py-0 px-1 rounded text-white align-middle">{{ formatNumberPlusMinus(pertumbuhan.jabarPositif) }}</span>
+                <span class="text-xl tag-purple-100 py-0 px-1 rounded text-white align-middle">{{ formatNumberPlusMinus(pertumbuhan.jabarPositif) }}</span>
               </b>
             </span>
           </div>
@@ -30,15 +30,48 @@
                 {{ formatNumber(positifNasional) }}
               </b>
               <b>
-                <span class="text-base tag-red-100 py-0 px-1 rounded text-white align-middle">{{ formatNumberPlusMinus(pertumbuhan.nasionalPositif) }}</span>
+                <span class="text-base tag-purple-100 py-0 px-1 rounded text-white align-middle">{{ formatNumberPlusMinus(pertumbuhan.nasionalPositif) }}</span>
               </b>
             </span>
           </div>
         </CounterCardLoader>
         <CounterCardLoader
           :is-pending="isPending"
-          class="lg:mr-8 mb-8 lg:w-1/3 border border-solid"
-          style="background-color: #D3EEE3; border-color: #91DCBD;"
+          class="lg:mr-5 mb-8 lg:w-1/4 border border-solid"
+          style="background-color: #FCDFE0; border-color: #FFB4B5; padding: 1rem;"
+          label="Positif Aktif"
+        >
+          <div class="flex justify-between items-baseline text-2xl">
+            <h4>
+              <b>Jawa Barat</b>
+            </h4>
+            <span>
+              <b>
+                {{ formatNumber(positifJabar - sembuhJabar - meninggalJabar) }}
+              </b>
+              <b>
+                <span class="text-xl tag-red-100 py-0 px-1 rounded text-white align-middle">{{ formatNumberPlusMinus(pertumbuhan.jabarPositif - pertumbuhan.jabarSembuh - pertumbuhan.jabarMeninggal) }}</span>
+              </b>
+            </span>
+          </div>
+          <div class="flex justify-between items-baseline text-xl">
+            <h4>
+              <b>Indonesia</b>
+            </h4>
+            <span>
+              <b>
+                {{ formatNumber(positifNasional - sembuhNasional - meninggalNasional) }}
+              </b>
+              <b>
+                <span class="text-base tag-red-100 py-0 px-1 rounded text-white align-middle">{{ formatNumberPlusMinus(pertumbuhan.nasionalPositif - pertumbuhan.nasionalSembuh - pertumbuhan.nasionalMeninggal) }}</span>
+              </b>
+            </span>
+          </div>
+        </CounterCardLoader>
+        <CounterCardLoader
+          :is-pending="isPending"
+          class="lg:mr-5 mb-8 lg:w-1/4 border border-solid"
+          style="background-color: #D3EEE3; border-color: #91DCBD; padding: 1rem;"
           label="Sembuh"
         >
           <div class="flex justify-between items-baseline text-2xl">
@@ -70,8 +103,8 @@
         </CounterCardLoader>
         <CounterCardLoader
           :is-pending="isPending"
-          class="mb-8 lg:w-1/3 border border-solid"
-          style="background-color: #FBEADF; border-color: #FED1B1;"
+          class="mb-8 lg:w-1/4 border border-solid"
+          style="background-color: #FBEADF; border-color: #FED1B1; padding: 1rem;"
           label="Meninggal"
         >
           <div class="flex justify-between items-baseline text-2xl">
@@ -278,6 +311,13 @@ export default {
 <style lang="scss" scoped>
 .text-white {
   color: white;
+}
+.tag-purple-100 {
+  background-color: #2C347C;
+}
+.tag-purple-camouflage {
+  background-color: #E0E6F6;
+  color: #E0E6F6;
 }
 .tag-red-100 {
   background-color: #EF6464;
