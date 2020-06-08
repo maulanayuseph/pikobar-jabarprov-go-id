@@ -714,7 +714,7 @@ export default {
       ChartKumulatifOptions: {
         height: 500,
         orientation: 'horizontal',
-        colors: ['#FF4A4B', '#03B167', '#9C0000', '#7E7E7E'],
+        colors: ['#ef6464', '#03B167', '#9c0000', '#7E7E7E'],
         legend: {
           position: 'bottom'
         },
@@ -732,6 +732,12 @@ export default {
         chartArea: {
           width: '85%',
           bottom: 100
+        },
+        series: {
+          0: { lineWidth: 2 },
+          1: { lineWidth: 2 },
+          2: { lineWidth: 2 },
+          3: { lineWidth: 2 }
         },
         tooltip: { isHtml: true }
       },
