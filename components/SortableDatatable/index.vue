@@ -27,7 +27,7 @@
             PDP
           </button> -->
         </div>
-        <div class="md:w-1/2 text-right mt-2">
+        <!-- <div class="md:w-1/2 text-right mt-2">
           <label class="inline-block font-bold text-gray-800 mr-4">
             {{ multipleSort ? 'Sorting Order' : 'Urutkan' }} :
           </label>
@@ -46,7 +46,7 @@
               {{ list.text }}
             </option>
           </select>
-        </div>
+        </div> -->
       </div>
     </header>
     <div class="my-custom-scrollbar">
@@ -105,8 +105,9 @@
                     :key="index"
                     ref="tableHeaders"
                     class="px-2 py-1 hover:opacity-75"
-                    style="padding-left: 1.5em !important; width: 9%;"
+                    style="padding-left: 0.5em !important; width: 9%;"
                     :style="{backgroundColor: col.backgroundColor || '', color: col.textColor || ''}"
+                    @click="onClickTableHeader(col.field)"
                   >
                     <p class="pointer-events-none flex justify-between items-center" style="float: right;">
                       <span
@@ -114,6 +115,7 @@
                         class="textright"
                       >
                         {{ col.label }}
+                        <font-awesome-icon :icon="getSortIcon(col.field)" />
                       </span>
                     </p>
                   </th>
@@ -334,7 +336,6 @@ export default {
       deep: true,
       handler (arr) {
         this.data2.columns = this.data.columns
-        // console.log(this.data2)
         // this.data2.columns = this.data2.columns.slice(1)
       }
     },
@@ -371,8 +372,8 @@ export default {
       obj[col.field] = 'none'
       return obj
     }, {})
-    this.currentSorting.positif_aktif = 'down'
-    this.sortingOrder.push(['positif_aktif', 'down'])
+    this.currentSorting.positif_aktif_total = 'down'
+    this.sortingOrder.push(['positif_aktif_total', 'down'])
   },
   methods: {
     getSortIcon (field) {
@@ -443,6 +444,17 @@ export default {
     },
     onClickTableHeader (field) {
       // const newSorting = this.updateColumnSorting(field)
+      const currentSorting = this.currentSorting
+      let sorting = 'down'
+      if (this.currentSorting[field] === 'down') {
+        sorting = 'none'
+      }
+      Object.keys(currentSorting).forEach(function (key) {
+        currentSorting[key] = 'none'
+      })
+
+      this.currentSorting[field] = sorting
+
       let newSorting = 'down'
       if (field === 'nama') {
         newSorting = 'up'
