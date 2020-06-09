@@ -294,6 +294,7 @@ export default {
       this.stat.isActiveFaskes = false
       this.stat.isActiveTimeslider = true
     },
+    // fetch small array on server
     fetchDataOnServer () {
       const wrap = async (fn) => {
         if (process.env.NODE_ENV !== 'production') {
@@ -310,9 +311,9 @@ export default {
         wrap(this.fetchDataRekapitulasiJabarHarianProv),
         wrap(this.fetchDataRekapitulasiJabarKumulatifProv),
         wrap(this.fetchDataRekapitulasiJabarKab),
-        wrap(this.fetchDataSebaranJabarFaskes),
       ])
     },
+    // fetch big array on client
     fetchDataOnClient () {
       const wrap = async (fn) => {
         if (process.env.NODE_ENV !== 'production') {
@@ -326,7 +327,8 @@ export default {
       return Promise.all([
         wrap(this.fetchDataRekapitulasiJabarHarianKab),
         wrap(this.fetchDataRekapitulasiJabarKumulatifKab),
-        wrap(this.fetchDataSebaranJabar)
+        wrap(this.fetchDataSebaranJabar),
+        wrap(this.fetchDataSebaranJabarFaskes),
       ])
     },
     fetchDataRekapitulasiJabarProv () {

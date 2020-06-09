@@ -113,13 +113,14 @@ export default {
     }
   },
   watch: {
-    // propsDataRekapitulasiJabar must not be null or undefined at all times to ensure watcher is working properly
-    'propsDataRekapitulasiJabar.rdt': {
+    propsDataRekapitulasiJabar: {
       immediate: true,
       deep: true,
-      handler (rdt) {
-        this.$set(this.data, 'rdt', _cloneDeep(rdt))
-        this.countPersentage()
+      handler (data) {
+        if (data && typeof data === 'object' && typeof data.rdt === 'object') {
+          this.$set(this.data, 'rdt', _cloneDeep(data.rdt))
+          this.countPersentage()
+        }
       }
     }
   },

@@ -34,6 +34,36 @@
 import { GChart } from 'vue-google-charts'
 import _cloneDeep from 'lodash/cloneDeep'
 
+const defaultJsonDataRekapitulasiJabar = {
+  kode_prov: '',
+  nama_prov: '',
+  odp_total: 0,
+  odp_total_per_gender: {
+    laki_laki: 0,
+    perempuan: 0
+  },
+  pdp_total: 0,
+  pdp_total_per_gender: {
+    laki_laki: 0,
+    perempuan: 0
+  },
+  positif: 0,
+  positif_per_gender: {
+    laki_laki: 0,
+    perempuan: 0
+  },
+  sembuh: 0,
+  sembuh_per_gender: {
+    laki_laki: 0,
+    perempuan: 0
+  },
+  meninggal: 0,
+  meninggal_per_gender: {
+    laki_laki: 0,
+    perempuan: 0
+  }
+}
+
 export default {
   name: 'BarStatJenisKelamin',
   components: {
@@ -42,35 +72,7 @@ export default {
   props: {
     propsDataRekapitulasiJabar: {
       type: Object,
-      default: () => ({
-        kode_prov: '',
-        nama_prov: '',
-        odp_total: 0,
-        odp_total_per_gender: {
-          laki_laki: 0,
-          perempuan: 0
-        },
-        pdp_total: 0,
-        pdp_total_per_gender: {
-          laki_laki: 0,
-          perempuan: 0
-        },
-        positif: 0,
-        positif_per_gender: {
-          laki_laki: 0,
-          perempuan: 0
-        },
-        sembuh: 0,
-        sembuh_per_gender: {
-          laki_laki: 0,
-          perempuan: 0
-        },
-        meninggal: 0,
-        meninggal_per_gender: {
-          laki_laki: 0,
-          perempuan: 0
-        }
-      })
+      default: () => defaultJsonDataRekapitulasiJabar
     }
   },
   data () {
@@ -83,35 +85,7 @@ export default {
         'Positif - Meninggal'
       ],
       optionSelected: 'Positif - Aktif',
-      jsonDataRekapitulasiJabar: {
-        kode_prov: '',
-        nama_prov: '',
-        odp_total: 0,
-        odp_total_per_gender: {
-          laki_laki: 0,
-          perempuan: 0
-        },
-        pdp_total: 0,
-        pdp_total_per_gender: {
-          laki_laki: 0,
-          perempuan: 0
-        },
-        positif: 0,
-        positif_per_gender: {
-          laki_laki: 0,
-          perempuan: 0
-        },
-        sembuh: 0,
-        sembuh_per_gender: {
-          laki_laki: 0,
-          perempuan: 0
-        },
-        meninggal: 0,
-        meninggal_per_gender: {
-          laki_laki: 0,
-          perempuan: 0
-        }
-      },
+      jsonDataRekapitulasiJabar: _cloneDeep(defaultJsonDataRekapitulasiJabar),
       pieChartJenisKelaminData: [
         ['Jenis Kelamin', 'Data'],
         ['Pria', 0],
@@ -140,8 +114,8 @@ export default {
       immediate: true,
       deep: false,
       handler (obj) {
-        if (!obj || typeof obj !== 'object') {
-          this.jsonDataRekapitulasiJabar = {}
+        if (!obj || typeof obj !== 'object' || !Object.keys(obj).length) {
+          this.jsonDataRekapitulasiJabar = _cloneDeep(defaultJsonDataRekapitulasiJabar)
           return
         }
         this.jsonDataRekapitulasiJabar = _cloneDeep(obj)

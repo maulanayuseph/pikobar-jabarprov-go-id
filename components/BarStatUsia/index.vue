@@ -66,6 +66,71 @@
 import { GChart } from 'vue-google-charts'
 import _cloneDeep from 'lodash/cloneDeep'
 
+const defaultJsonDataRekapitulasiJabar = {
+  kode_prov: '',
+  nama_prov: '',
+  odp_total: 0,
+  odp_total_per_usia: {
+    bawah_5: 0,
+    '6_19': 0,
+    '20_29': 0,
+    '30_39': 0,
+    '40_49': 0,
+    '50_59': 0,
+    '60_69': 0,
+    '70_79': 0,
+    atas_80: 0
+  },
+  pdp_total: 0,
+  pdp_total_per_usia: {
+    bawah_5: 0,
+    '6_19': 0,
+    '20_29': 0,
+    '30_39': 0,
+    '40_49': 0,
+    '50_59': 0,
+    '60_69': 0,
+    '70_79': 0,
+    atas_80: 0
+  },
+  positif: 0,
+  positif_per_usia: {
+    bawah_5: 0,
+    '6_19': 0,
+    '20_29': 0,
+    '30_39': 0,
+    '40_49': 0,
+    '50_59': 0,
+    '60_69': 0,
+    '70_79': 0,
+    atas_80: 0
+  },
+  sembuh: 0,
+  sembuh_per_usia: {
+    bawah_5: 0,
+    '6_19': 0,
+    '20_29': 0,
+    '30_39': 0,
+    '40_49': 0,
+    '50_59': 0,
+    '60_69': 0,
+    '70_79': 0,
+    atas_80: 0
+  },
+  meninggal: 0,
+  meninggal_per_usia: {
+    bawah_5: 0,
+    '6_19': 0,
+    '20_29': 0,
+    '30_39': 0,
+    '40_49': 0,
+    '50_59': 0,
+    '60_69': 0,
+    '70_79': 0,
+    atas_80: 0
+  }
+}
+
 export default {
   name: 'BarStatUsia',
   components: {
@@ -74,215 +139,7 @@ export default {
   props: {
     propsDataRekapitulasiJabar: {
       type: Object,
-      default: () => ({
-        kode_prov: '',
-        nama_prov: '',
-        odp_total: 0,
-        odp_total_per_usia: {
-          anak: {
-            laki_laki: {
-              bawah_1: 0,
-              '1_5': 0,
-              '5_6': 0,
-              '6_18': 0
-            },
-            perempuan: {
-              bawah_1: 0,
-              '1_5': 0,
-              '5_6': 0,
-              '6_18': 0
-            }
-          },
-          semua: {
-            laki_laki: {
-              bawah_5: 0,
-              '6_19': 0,
-              '20_29': 0,
-              '30_39': 0,
-              '40_49': 0,
-              '50_59': 0,
-              '60_69': 0,
-              '70_79': 0,
-              atas_80: 0
-            },
-            perempuan: {
-              bawah_5: 0,
-              '6_19': 0,
-              '20_29': 0,
-              '30_39': 0,
-              '40_49': 0,
-              '50_59': 0,
-              '60_69': 0,
-              '70_79': 0,
-              atas_80: 0
-            }
-          }
-        },
-        pdp_total: 0,
-        pdp_total_per_usia: {
-          anak: {
-            laki_laki: {
-              bawah_1: 0,
-              '1_5': 0,
-              '5_6': 0,
-              '6_18': 0
-            },
-            perempuan: {
-              bawah_1: 0,
-              '1_5': 0,
-              '5_6': 0,
-              '6_18': 0
-            }
-          },
-          semua: {
-            laki_laki: {
-              bawah_5: 0,
-              '6_19': 0,
-              '20_29': 0,
-              '30_39': 0,
-              '40_49': 0,
-              '50_59': 0,
-              '60_69': 0,
-              '70_79': 0,
-              atas_80: 0
-            },
-            perempuan: {
-              bawah_5: 0,
-              '6_19': 0,
-              '20_29': 0,
-              '30_39': 0,
-              '40_49': 0,
-              '50_59': 0,
-              '60_69': 0,
-              '70_79': 0,
-              atas_80: 0
-            }
-          }
-        },
-        positif: 0,
-        positif_per_usia: {
-          anak: {
-            laki_laki: {
-              bawah_1: 0,
-              '1_5': 0,
-              '5_6': 0,
-              '6_18': 0
-            },
-            perempuan: {
-              bawah_1: 0,
-              '1_5': 0,
-              '5_6': 0,
-              '6_18': 0
-            }
-          },
-          semua: {
-            laki_laki: {
-              bawah_5: 0,
-              '6_19': 0,
-              '20_29': 0,
-              '30_39': 0,
-              '40_49': 0,
-              '50_59': 0,
-              '60_69': 0,
-              '70_79': 0,
-              atas_80: 0
-            },
-            perempuan: {
-              bawah_5: 0,
-              '6_19': 0,
-              '20_29': 0,
-              '30_39': 0,
-              '40_49': 0,
-              '50_59': 0,
-              '60_69': 0,
-              '70_79': 0,
-              atas_80: 0
-            }
-          }
-        },
-        sembuh: 0,
-        sembuh_per_usia: {
-          anak: {
-            laki_laki: {
-              bawah_1: 0,
-              '1_5': 0,
-              '5_6': 0,
-              '6_18': 0
-            },
-            perempuan: {
-              bawah_1: 0,
-              '1_5': 0,
-              '5_6': 0,
-              '6_18': 0
-            }
-          },
-          semua: {
-            laki_laki: {
-              bawah_5: 0,
-              '6_19': 0,
-              '20_29': 0,
-              '30_39': 0,
-              '40_49': 0,
-              '50_59': 0,
-              '60_69': 0,
-              '70_79': 0,
-              atas_80: 0
-            },
-            perempuan: {
-              bawah_5: 0,
-              '6_19': 0,
-              '20_29': 0,
-              '30_39': 0,
-              '40_49': 0,
-              '50_59': 0,
-              '60_69': 0,
-              '70_79': 0,
-              atas_80: 0
-            }
-          }
-        },
-        meninggal: 0,
-        meninggal_per_usia: {
-          anak: {
-            laki_laki: {
-              bawah_1: 0,
-              '1_5': 0,
-              '5_6': 0,
-              '6_18': 0
-            },
-            perempuan: {
-              bawah_1: 0,
-              '1_5': 0,
-              '5_6': 0,
-              '6_18': 0
-            }
-          },
-          semua: {
-            laki_laki: {
-              bawah_5: 0,
-              '6_19': 0,
-              '20_29': 0,
-              '30_39': 0,
-              '40_49': 0,
-              '50_59': 0,
-              '60_69': 0,
-              '70_79': 0,
-              atas_80: 0
-            },
-            perempuan: {
-              bawah_5: 0,
-              '6_19': 0,
-              '20_29': 0,
-              '30_39': 0,
-              '40_49': 0,
-              '50_59': 0,
-              '60_69': 0,
-              '70_79': 0,
-              atas_80: 0
-            }
-          }
-        }
-      })
+      default: () => defaultJsonDataRekapitulasiJabar
     }
   },
   data () {
@@ -299,70 +156,7 @@ export default {
         'Positif - Meninggal'
       ],
       optionSelected: 'Positif - Aktif',
-      jsonDataRekapitulasiJabar: {
-        kode_prov: '',
-        nama_prov: '',
-        odp_total: 0,
-        odp_total_per_usia: {
-          bawah_5: 0,
-          '6_19': 0,
-          '20_29': 0,
-          '30_39': 0,
-          '40_49': 0,
-          '50_59': 0,
-          '60_69': 0,
-          '70_79': 0,
-          atas_80: 0
-        },
-        pdp_total: 0,
-        pdp_total_per_usia: {
-          bawah_5: 0,
-          '6_19': 0,
-          '20_29': 0,
-          '30_39': 0,
-          '40_49': 0,
-          '50_59': 0,
-          '60_69': 0,
-          '70_79': 0,
-          atas_80: 0
-        },
-        positif: 0,
-        positif_per_usia: {
-          bawah_5: 0,
-          '6_19': 0,
-          '20_29': 0,
-          '30_39': 0,
-          '40_49': 0,
-          '50_59': 0,
-          '60_69': 0,
-          '70_79': 0,
-          atas_80: 0
-        },
-        sembuh: 0,
-        sembuh_per_usia: {
-          bawah_5: 0,
-          '6_19': 0,
-          '20_29': 0,
-          '30_39': 0,
-          '40_49': 0,
-          '50_59': 0,
-          '60_69': 0,
-          '70_79': 0,
-          atas_80: 0
-        },
-        meninggal: 0,
-        meninggal_per_usia: {
-          bawah_5: 0,
-          '6_19': 0,
-          '20_29': 0,
-          '30_39': 0,
-          '40_49': 0,
-          '50_59': 0,
-          '60_69': 0,
-          '70_79': 0,
-          atas_80: 0
-        }
-      },
+      jsonDataRekapitulasiJabar: _cloneDeep(defaultJsonDataRekapitulasiJabar),
       barChartUmurJenisKelaminData: {
         cols: [
           { id: 'Umur', label: 'Umur', type: 'string' },
@@ -551,8 +345,8 @@ export default {
       immediate: true,
       deep: false,
       handler (obj) {
-        if (!obj || typeof obj !== 'object') {
-          this.jsonDataRekapitulasiJabar = {}
+        if (!obj || typeof obj !== 'object' || !Object.keys(obj).length) {
+          this.jsonDataRekapitulasiJabar = _cloneDeep(defaultJsonDataRekapitulasiJabar)
           return
         }
         const json = _cloneDeep(obj)

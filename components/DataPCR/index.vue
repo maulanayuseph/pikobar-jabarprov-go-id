@@ -108,13 +108,14 @@ export default {
     }
   },
   watch: {
-    // propsDataRekapitulasiJabar must not be null or undefined at all times to ensure watcher is working properly
-    'propsDataRekapitulasiJabar.pcr': {
+    propsDataRekapitulasiJabar: {
       immediate: true,
       deep: true,
-      handler (pcr) {
-        this.data.pcr = _cloneDeep(pcr)
-        this.countPersentage()
+      handler (data) {
+        if (data && typeof data === 'object' && typeof data.pcr === 'object') {
+          this.$set(this.data, 'pcr', _cloneDeep(data.pcr))
+          this.countPersentage()
+        }
       }
     }
   },
