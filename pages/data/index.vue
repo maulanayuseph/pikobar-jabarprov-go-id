@@ -260,18 +260,10 @@ export default {
       return this.isLeafletJSLoaded && this.isLeafletCSSLoaded && this.isLeafletFullscreenLoaded
     }
   },
-  fetchOnServer: true,
-  async fetch () {
-    console.log('is fetching data on server')
-    await this.fetchDataOnServer()
-  },
-  activated () {
-    if (this.$fetchState.timestamp <= (Date.now() - 30000)) {
-      this.$fetch()
-    }
+  created() {
+    this.fetchAllData()
   },
   async mounted () {
-    this.fetchDataOnClient()
     this.$store.dispatch('statistics/getCases')
     this.$nextTick(() => {
       if (process.browser) {
@@ -306,7 +298,7 @@ export default {
       this.stat.isActiveTimeslider = true
     },
     // fetch big array on client
-    async fetchDataOnClient () {
+    async fetchAllData () {
       const wrap = async (fn) => {
         if (process.env.NODE_ENV !== 'production') {
           console.time(fn.name)

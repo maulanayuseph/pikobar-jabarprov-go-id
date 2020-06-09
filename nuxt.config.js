@@ -25,7 +25,7 @@ export default {
     fallback: true,
     interval: 300,
     exclude: [
-      // /^\/(\bdata\b).*$/,
+      /^\/(\bdata\b).*$/,
       /^\/(\bdonate\b).*$/
     ],
     async routes () {
