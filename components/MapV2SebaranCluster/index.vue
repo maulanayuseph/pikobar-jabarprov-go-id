@@ -239,9 +239,22 @@ import { faFilter, faHome, faLayerGroup } from '@fortawesome/free-solid-svg-icon
 import * as turf from '@turf/turf'
 import { GeoSearchControl, OpenStreetMapProvider } from 'leaflet-geosearch'
 import _cloneDeep from 'lodash/cloneDeep'
-import jsonKota from '@/assets/kotaV2.json'
-import jsonKecamatan from '@/assets/kecamatanV2.json'
-import jsonKelurahan from '@/assets/kelurahanV2.json'
+
+import { isJsonKotaReady, isJsonKecamatanReady, isJsonKelurahanReady } from '../../lib/data'
+
+let jsonKota = null
+let jsonKecamatan = null
+let jsonKelurahan = null
+
+isJsonKotaReady.then((json) => {
+  jsonKota = json
+})
+isJsonKecamatanReady.then((json) => {
+  jsonKecamatan = json
+})
+isJsonKelurahanReady.then((json) => {
+  jsonKelurahan = json
+})
 
 /**
  * OPTIMIZED:
@@ -478,7 +491,8 @@ export default {
       })
     },
 
-    createLayerByKota () {
+    async createLayerByKota () {
+      await isJsonKotaReady
       const self = this
       this.removeLayer()
       this.removeMarker()
@@ -509,7 +523,8 @@ export default {
       })
     },
 
-    createLayerByKecamatan () {
+    async createLayerByKecamatan () {
+      await isJsonKecamatanReady
       const self = this
       this.removeLayer()
       this.removeMarker()
@@ -543,7 +558,8 @@ export default {
       })
     },
 
-    createLayerByKelurahan () {
+    async createLayerByKelurahan () {
+      await isJsonKelurahanReady
       const self = this
       this.removeLayer()
       this.removeMarker()

@@ -126,9 +126,22 @@
 
 import { faFilter, faHome, faLayerGroup } from '@fortawesome/free-solid-svg-icons'
 import { GeoSearchControl, OpenStreetMapProvider } from 'leaflet-geosearch'
-import jsonKota from '@/assets/kotaV2.json'
-import jsonKecamatan from '@/assets/kecamatanV2.json'
-import jsonKelurahan from '@/assets/kelurahanV2.json'
+
+import { isJsonKotaReady, isJsonKecamatanReady, isJsonKelurahanReady } from '../../lib/data'
+
+let jsonKota = null
+let jsonKecamatan = null
+let jsonKelurahan = null
+
+isJsonKotaReady.then((json) => {
+  jsonKota = json
+})
+isJsonKecamatanReady.then((json) => {
+  jsonKecamatan = json
+})
+isJsonKelurahanReady.then((json) => {
+  jsonKelurahan = json
+})
 
 export default {
   name: 'MapV2SebaranFaskes',
@@ -428,7 +441,8 @@ export default {
       this.dataLayer = []
     },
 
-    createLayerKota () {
+    async createLayerKota () {
+      await isJsonKotaReady
       const self = this
       this.$L.geoJSON(jsonKota, {
         style: (feature) => {
@@ -445,7 +459,8 @@ export default {
       })
     },
 
-    createLayerKecamatan () {
+    async createLayerKecamatan () {
+      await isJsonKecamatanReady
       const self = this
       this.$L.geoJSON(jsonKecamatan, {
         style: (feature) => {
@@ -464,7 +479,8 @@ export default {
       })
     },
 
-    createLayerKelurahan () {
+    async createLayerKelurahan () {
+      await isJsonKelurahanReady
       const self = this
       this.$L.geoJSON(jsonKelurahan, {
         style: (feature) => {

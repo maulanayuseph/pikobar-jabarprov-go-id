@@ -163,10 +163,22 @@
 import { faFilter, faHome, faLayerGroup } from '@fortawesome/free-solid-svg-icons'
 import { GeoSearchControl, OpenStreetMapProvider } from 'leaflet-geosearch'
 import _cloneDeep from 'lodash/cloneDeep'
-import jsonKota from '@/assets/kotaV2.json'
-import jsonKecamatan from '@/assets/kecamatanV2.json'
-import jsonKelurahan from '@/assets/kelurahanV2.json'
+import { isJsonKotaReady, isJsonKecamatanReady, isJsonKelurahanReady } from '../../lib/data'
 const percentile = require('percentile')
+
+let jsonKota = null
+let jsonKecamatan = null
+let jsonKelurahan = null
+
+isJsonKotaReady.then((json) => {
+  jsonKota = json
+})
+isJsonKecamatanReady.then((json) => {
+  jsonKecamatan = json
+})
+isJsonKelurahanReady.then((json) => {
+  jsonKelurahan = json
+})
 
 /**
  * OPTIMIZED:
@@ -424,7 +436,8 @@ export default {
       this.dataLayer = []
     },
 
-    createLayerKota (category) {
+    async createLayerKota (category) {
+      await isJsonKotaReady
       const self = this
       const result = this.createRange(self.styleColorPolygon[category], 'kota', this.dataJson[category], jsonKota.features)
       this.range = result[0]
@@ -455,7 +468,8 @@ export default {
       })
     },
 
-    createLayerKecamatan (category) {
+    async createLayerKecamatan (category) {
+      await isJsonKecamatanReady
       const self = this
       const result = this.createRange(self.styleColorPolygon[category], 'kecamatan', this.dataJson[category], jsonKecamatan.features)
       this.range = result[0]
@@ -487,7 +501,8 @@ export default {
       })
     },
 
-    createLayerKelurahan (category) {
+    async createLayerKelurahan (category) {
+      await isJsonKelurahanReady
       const self = this
       const result = this.createRange(self.styleColorPolygon[category], 'kelurahan', this.dataJson[category], jsonKelurahan.features)
       this.range = result[0]

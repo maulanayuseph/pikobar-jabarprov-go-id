@@ -143,13 +143,26 @@ import VueSlider from 'vue-slider-component/dist-css/vue-slider-component.umd.mi
 import 'vue-slider-component/dist-css/vue-slider-component.css'
 import 'vue-slider-component/theme/default.css'
 
-import * as L from 'leaflet'
+// import * as L from 'leaflet'
 // import * as turf from '@turf/turf'
 import { faFilter, faHome, faPlay, faPause, faStop } from '@fortawesome/free-solid-svg-icons'
 import { GeoSearchControl, OpenStreetMapProvider } from 'leaflet-geosearch'
-import jsonKota from '@/assets/kotaV2.json'
-import jsonKecamatan from '@/assets/kecamatanV2.json'
-import jsonKelurahan from '@/assets/kelurahanV2.json'
+
+import { isJsonKotaReady, isJsonKecamatanReady, isJsonKelurahanReady } from '../../lib/data'
+
+let jsonKota = null
+let jsonKecamatan = null
+let jsonKelurahan = null
+
+isJsonKotaReady.then((json) => {
+  jsonKota = json
+})
+isJsonKecamatanReady.then((json) => {
+  jsonKecamatan = json
+})
+isJsonKelurahanReady.then((json) => {
+  jsonKelurahan = json
+})
 
 // eslint-disable-next-line no-unused-vars
 let tileLayer = []
@@ -317,12 +330,12 @@ export default {
       self.createMap('kota')
     },
     createBasemap () {
-      mapView = new L.Map('map-wrap', {
+      mapView = new this.$L.Map('map-wrap', {
         zoomControl: false,
         fullscreenControl: true
       }).setView([-6.932694, 107.627449], 9)
 
-      tileLayer = new L.TileLayer('https://cartodb-basemaps-d.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {
+      tileLayer = new this.$L.TileLayer('https://cartodb-basemaps-d.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {
         attribution: '© OpenStreetMap contributors',
         maxZoom: 18,
         tileSize: 512,
@@ -342,7 +355,7 @@ export default {
 
       // add zoom control with your options
       // eslint-disable-next-line new-cap
-      new L.control.zoom({
+      new this.$L.control.zoom({
         position: 'bottomright'
       }).addTo(mapView)
       // // // on zoom
@@ -367,12 +380,17 @@ export default {
       // end
 
       // // create layer group
-      // this.layerGroup = new L.layerGroup().addTo(mapView)
+      // this.layerGroup = new this.$L.layerGroup().addTo(mapView)
     },
     createMap (level) {
       this.createLayerPasien(level)
     },
-    createLayerPasien (level) {
+    async createLayerPasien (level) {
+      await Promise.all([
+        isJsonKotaReady,
+        isJsonKecamatanReady,
+        isJsonKelurahanReady
+      ])
       this.listMarkerCluster = {
         odp: {
           proses: [],
@@ -409,7 +427,7 @@ export default {
       if (geojsonArea.length !== 0) {
         geojsonArea.remove()
       }
-      geojsonArea = new L.GeoJSON(geojsonActive, {
+      geojsonArea = new this.$L.GeoJSON(geojsonActive, {
         style: this.styleBatasWilayah
       }).addTo(mapView)
       const jsonData = this.jsonData
@@ -424,7 +442,7 @@ export default {
       })
       listWilActive = []
 
-      new L.GeoJSON(geoJSONArea, {
+      new this.$L.GeoJSON(geoJSONArea, {
         style: this.styleBatasWilayah
       }).eachLayer((el) => {
         markerClusters[el.feature.properties[kodeWilayahJSON]] = this.paramMarkerCluster()
@@ -493,7 +511,7 @@ export default {
       return this.statusStage[status]
     },
     createMarkerPasien (elPasien, icon, stage) {
-      const m = new L.Marker([elPasien.latitude, elPasien.longitude], { virtual: true, attributes: elPasien, icon })
+      const m = new this.$L.Marker([elPasien.latitude, elPasien.longitude], { virtual: true, attributes: elPasien, icon })
       let popup = `<b> Status </b> : ${elPasien.status} - ${stage} <br>`
 
       if (elPasien.nama_kab !== '' && elPasien.nama_kab !== null) {
@@ -532,13 +550,13 @@ export default {
           this.min = tanggalKonfirmasiTime
         }
         if (elPasien.stage === 'Meninggal' && tanggalUpdateTime <= this.sliderValue) {
-          icon = new L.DivIcon({
+          icon = new this.$L.DivIcon({
             className: 'cluster cluster-positif-meninggal digits-0',
             iconSize: null
           })
           updateMarker = this.createMarkerPasien(elPasien, icon, 'Meninggal')
         } else if (elPasien.stage === 'Sembuh' && tanggalUpdateTime <= this.sliderValue) {
-          icon = new L.DivIcon({
+          icon = new this.$L.DivIcon({
             className: 'cluster cluster-positif-sembuh digits-0',
             iconSize: null
           })
@@ -546,7 +564,7 @@ export default {
         }
 
         elPasien.updateMarker = updateMarker
-        icon = new L.DivIcon({
+        icon = new this.$L.DivIcon({
           className: 'cluster cluster-positif-proses digits-0',
           iconSize: null
         })
