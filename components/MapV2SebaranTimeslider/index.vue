@@ -154,13 +154,13 @@ let jsonKota = null
 let jsonKecamatan = null
 let jsonKelurahan = null
 
-isJsonKotaReady.then((json) => {
+isJsonKotaReady().then((json) => {
   jsonKota = json
 })
-isJsonKecamatanReady.then((json) => {
+isJsonKecamatanReady().then((json) => {
   jsonKecamatan = json
 })
-isJsonKelurahanReady.then((json) => {
+isJsonKelurahanReady().then((json) => {
   jsonKelurahan = json
 })
 

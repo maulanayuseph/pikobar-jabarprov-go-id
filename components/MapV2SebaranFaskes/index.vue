@@ -133,13 +133,13 @@ let jsonKota = null
 let jsonKecamatan = null
 let jsonKelurahan = null
 
-isJsonKotaReady.then((json) => {
+isJsonKotaReady().then((json) => {
   jsonKota = json
 })
-isJsonKecamatanReady.then((json) => {
+isJsonKecamatanReady().then((json) => {
   jsonKecamatan = json
 })
-isJsonKelurahanReady.then((json) => {
+isJsonKelurahanReady().then((json) => {
   jsonKelurahan = json
 })
 
@@ -442,7 +442,7 @@ export default {
     },
 
     async createLayerKota () {
-      await isJsonKotaReady
+      await isJsonKotaReady()
       const self = this
       this.$L.geoJSON(jsonKota, {
         style: (feature) => {
@@ -460,7 +460,7 @@ export default {
     },
 
     async createLayerKecamatan () {
-      await isJsonKecamatanReady
+      await isJsonKecamatanReady()
       const self = this
       this.$L.geoJSON(jsonKecamatan, {
         style: (feature) => {
@@ -480,7 +480,7 @@ export default {
     },
 
     async createLayerKelurahan () {
-      await isJsonKelurahanReady
+      await isJsonKelurahanReady()
       const self = this
       this.$L.geoJSON(jsonKelurahan, {
         style: (feature) => {

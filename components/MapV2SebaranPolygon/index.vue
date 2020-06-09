@@ -132,7 +132,7 @@
               style="margin-right: 0.5em;"
             />ODP - Proses
           </li>
-           <!--
+          <!--
           <li
             :class="filter.odp_selesai?'filter-active':''"
             @click="setFilter('odp_selesai')"
@@ -174,13 +174,13 @@ let jsonKota = null
 let jsonKecamatan = null
 let jsonKelurahan = null
 
-isJsonKotaReady.then((json) => {
+isJsonKotaReady().then((json) => {
   jsonKota = json
 })
-isJsonKecamatanReady.then((json) => {
+isJsonKecamatanReady().then((json) => {
   jsonKecamatan = json
 })
-isJsonKelurahanReady.then((json) => {
+isJsonKelurahanReady().then((json) => {
   jsonKelurahan = json
 })
 
@@ -441,7 +441,7 @@ export default {
     },
 
     async createLayerKota (category) {
-      await isJsonKotaReady
+      await isJsonKotaReady()
       const self = this
       const result = this.createRange(self.styleColorPolygon[category], 'kota', this.dataJson[category], jsonKota.features)
       this.range = result[0]
@@ -473,7 +473,7 @@ export default {
     },
 
     async createLayerKecamatan (category) {
-      await isJsonKecamatanReady
+      await isJsonKecamatanReady()
       const self = this
       const result = this.createRange(self.styleColorPolygon[category], 'kecamatan', this.dataJson[category], jsonKecamatan.features)
       this.range = result[0]
@@ -506,7 +506,7 @@ export default {
     },
 
     async createLayerKelurahan (category) {
-      await isJsonKelurahanReady
+      await isJsonKelurahanReady()
       const self = this
       const result = this.createRange(self.styleColorPolygon[category], 'kelurahan', this.dataJson[category], jsonKelurahan.features)
       this.range = result[0]
