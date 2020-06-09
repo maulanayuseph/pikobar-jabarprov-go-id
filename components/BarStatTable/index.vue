@@ -11,6 +11,7 @@
 </template>
 
 <script>
+import _cloneDeep from 'lodash/cloneDeep'
 import SortableDatatable from '../SortableDatatable'
 
 export default {
@@ -385,13 +386,33 @@ export default {
     }
   },
   watch: {
-    propsDataRekapitulasiJabarKab () {
-      this.temp = this.propsDataRekapitulasiJabarKab
-      this.fetchDataKabupaten()
+    // OPTIMIZE: use immediate watcher to ensure data is processed immediately
+    propsDataRekapitulasiJabarKab: {
+      immediate: true,
+      deep: false,
+      handler (arr) {
+        // OPTIMIZE: further processing is not needed if array is empty
+        if (!Array.isArray(arr) || !arr.length) {
+          this.temp = []
+          return
+        }
+        this.temp = _cloneDeep(arr)
+        this.fetchDataKabupaten()
+      }
     },
-    propsDataRekapitulasiJabarKumulatifKab () {
-      this.temporary = this.propsDataRekapitulasiJabarKumulatifKab
-      this.groupingKota()
+    // OPTIMIZE: use immediate watcher to ensure data is processed immediately
+    propsDataRekapitulasiJabarKumulatifKab: {
+      immediate: true,
+      deep: false,
+      handler (arr) {
+        // OPTIMIZE: further processing is not needed if array is empty
+        if (!Array.isArray(arr) || !arr.length) {
+          this.temporary = []
+          return
+        }
+        this.temporary = _cloneDeep(arr)
+        this.groupingKota()
+      }
     }
   },
   created () {

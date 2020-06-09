@@ -238,9 +238,26 @@
 import { faFilter, faHome, faLayerGroup } from '@fortawesome/free-solid-svg-icons'
 import * as turf from '@turf/turf'
 import { GeoSearchControl, OpenStreetMapProvider } from 'leaflet-geosearch'
+import _cloneDeep from 'lodash/cloneDeep'
 import jsonKota from '@/assets/kotaV2.json'
 import jsonKecamatan from '@/assets/kecamatanV2.json'
 import jsonKelurahan from '@/assets/kelurahanV2.json'
+
+/**
+ * OPTIMIZED:
+ * define default shape of data to prevent manual assignment if data reset is needed in the future
+*/
+const defaultDataJson = {
+  positif_proses: [],
+  positif_meninggal: [],
+  positif_sembuh: [],
+  pdp_proses: [],
+  pdp_selesai: [],
+  pdp_meninggal: [],
+  odp_proses: [],
+  odp_selesai: [],
+  odp_meninggal: []
+}
 
 export default {
   name: 'MapV2SebaranCluster',
@@ -281,17 +298,7 @@ export default {
       dataMarker: [],
       dataLayer: [],
 
-      dataJson: {
-        positif_proses: [],
-        positif_meninggal: [],
-        positif_sembuh: [],
-        pdp_proses: [],
-        pdp_selesai: [],
-        pdp_meninggal: [],
-        odp_proses: [],
-        odp_selesai: [],
-        odp_meninggal: []
-      },
+      dataJson: _cloneDeep(defaultDataJson),
 
       isShowFilter: false,
       filter: {
@@ -326,67 +333,76 @@ export default {
         odp_selesai: 'ODP - Selesai',
         odp_meninggal: 'ODP - Meninggal'
       },
-      statusOpenedMap: ''
-    }
-  },
-  watch: {
-    propsDataSebaranJabar () {
-      console.log('cluster on watch')
-      this.distributionProvinceData = this.propsDataSebaranJabar
-      this.onChanges()
+      statusOpenedMap: '',
+      unwatchData: null
     }
   },
   mounted () {
-    this.initMap()
-    if (this.distributionProvinceData.length > 0) {
-      console.log('cluster on mounted ada')
-      this.onChanges()
-    } else {
-      console.log('cluster on mounted no data')
+    if (typeof this.unwatchData === 'function') {
+      this.unwatchData()
     }
+    this.unwatchData = this.$watch(
+      'propsDataSebaranJabar',
+      function handler (arr) {
+        console.log('polygon on watch')
+        this.distributionProvinceData = Array.isArray(arr) ? arr : []
+        if (this.map instanceof this.$L.Class === false) {
+          this.initMap()
+        }
+        this.onChanges()
+      },
+      { immediate: true }
+    )
+    // OPTIMIZED: no need to call onChanges since watcher is already set to immediate
+    // if (this.distributionProvinceData.length > 0) {
+    //   console.log('cluster on mounted ada')
+    //   this.onChanges()
+    // } else {
+    //   console.log('cluster on mounted no data')
+    // }
   },
   created () {
     console.log('cluster on created')
-    this.distributionProvinceData = this.propsDataSebaranJabar
+    // OPTIMIZED: no need to assign value to distributionProvinceData since watcher is already set to immediate
+    // this.distributionProvinceData = this.propsDataSebaranJabar
     // this.onChanges()
   },
   methods: {
-
-    onChanges () {
+    async onChanges () {
       console.log('cluster on changes')
 
       this.jsonData = []
-      this.dataJson.positif_proses = []
-      this.dataJson.positif_meninggal = []
-      this.dataJson.positif_sembuh = []
-      this.dataJson.pdp_proses = []
-      this.dataJson.pdp_selesai = []
-      this.dataJson.pdp_meninggal = []
-      this.dataJson.odp_proses = []
-      this.dataJson.odp_selesai = []
-      this.dataJson.odp_meninggal = []
+      // OPTIMIZED: use default shape for data resetting
+      this.dataJson = _cloneDeep(defaultDataJson)
 
-      this.distributionProvinceData.forEach((row) => {
-        if (row.status === 'Positif' && row.stage === 'Proses') {
-          this.dataJson.positif_proses.push(row)
-        } else if (row.status === 'Positif' && row.stage === 'Meninggal') {
-          this.dataJson.positif_meninggal.push(row)
-        } else if (row.status === 'Positif' && row.stage === 'Sembuh') {
-          this.dataJson.positif_sembuh.push(row)
-        } else if (row.status === 'PDP' && row.stage === 'Proses') {
-          this.dataJson.pdp_proses.push(row)
-        } else if (row.status === 'PDP' && row.stage === 'Selesai') {
-          this.dataJson.pdp_selesai.push(row)
-        } else if (row.status === 'PDP' && row.stage === 'Meninggal') {
-          this.dataJson.pdp_meninggal.push(row)
-        } else if (row.status === 'ODP' && row.stage === 'Proses') {
-          this.dataJson.odp_proses.push(row)
-        } else if (row.status === 'ODP' && row.stage === 'Selesai') {
-          this.dataJson.odp_selesai.push(row)
-        } else if (row.status === 'ODP' && row.stage === 'Meninggal') {
-          this.dataJson.odp_meninggal.push(row)
+      // OPTIMIZED: use async on big array operation, use for loop instead of foreach
+      this.dataJson = await new Promise((resolve) => {
+        const result = _cloneDeep(defaultDataJson)
+        for (let i = 1, len = this.distributionProvinceData.length; i < len; i++) {
+          const row = this.distributionProvinceData[i]
+          if (row.status === 'Positif' && row.stage === 'Proses') {
+            result.positif_proses.push(row)
+          } else if (row.status === 'Positif' && row.stage === 'Meninggal') {
+            result.positif_meninggal.push(row)
+          } else if (row.status === 'Positif' && row.stage === 'Sembuh') {
+            result.positif_sembuh.push(row)
+          } else if (row.status === 'PDP' && row.stage === 'Proses') {
+            result.pdp_proses.push(row)
+          } else if (row.status === 'PDP' && row.stage === 'Selesai') {
+            result.pdp_selesai.push(row)
+          } else if (row.status === 'PDP' && row.stage === 'Meninggal') {
+            result.pdp_meninggal.push(row)
+          } else if (row.status === 'ODP' && row.stage === 'Proses') {
+            result.odp_proses.push(row)
+          } else if (row.status === 'ODP' && row.stage === 'Selesai') {
+            result.odp_selesai.push(row)
+          } else if (row.status === 'ODP' && row.stage === 'Meninggal') {
+            result.odp_meninggal.push(row)
+          }
         }
+        resolve(result)
       })
+
       this.removeLayer()
       this.removeMarker()
       this.setFilter('positif_proses')
@@ -396,7 +412,7 @@ export default {
 
     initMap () {
       // eslint-disable-next-line new-cap
-      this.map = new this.$L.map('map-wrap-cluster', {
+      this.map = this.$L.map('map-wrap-cluster', {
         zoomControl: false,
         fullscreenControl: false
       }).setView([-6.932694, 107.627449], 9)

@@ -74,7 +74,7 @@
 </template>
 
 <script>
-
+import _cloneDeep from 'lodash/cloneDeep'
 export default {
   name: 'DataRDT',
   components: {
@@ -113,9 +113,14 @@ export default {
     }
   },
   watch: {
-    propsDataRekapitulasiJabar () {
-      this.data.rdt = this.propsDataRekapitulasiJabar.rdt
-      this.countPersentage()
+    // propsDataRekapitulasiJabar must not be null or undefined at all times to ensure watcher is working properly
+    'propsDataRekapitulasiJabar.rdt': {
+      immediate: true,
+      deep: true,
+      handler (rdt) {
+        this.$set(this.data, 'rdt', _cloneDeep(rdt))
+        this.countPersentage()
+      }
     }
   },
   methods: {

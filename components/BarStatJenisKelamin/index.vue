@@ -32,6 +32,7 @@
 
 <script>
 import { GChart } from 'vue-google-charts'
+import _cloneDeep from 'lodash/cloneDeep'
 
 export default {
   name: 'BarStatJenisKelamin',
@@ -134,9 +135,18 @@ export default {
     }
   },
   watch: {
-    propsDataRekapitulasiJabar () {
-      this.jsonDataRekapitulasiJabar = this.propsDataRekapitulasiJabar
-      this.changeGroupJenisKelamin('Positif - Aktif')
+    // OPTIMIZE: use immediate watcher to ensure data is processed immediately
+    propsDataRekapitulasiJabar: {
+      immediate: true,
+      deep: false,
+      handler (obj) {
+        if (!obj || typeof obj !== 'object') {
+          this.jsonDataRekapitulasiJabar = {}
+          return
+        }
+        this.jsonDataRekapitulasiJabar = _cloneDeep(obj)
+        this.changeGroupJenisKelamin('Positif - Aktif')
+      }
     }
   },
   methods: {

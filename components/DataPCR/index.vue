@@ -69,7 +69,7 @@
 </template>
 
 <script>
-
+import _cloneDeep from 'lodash/cloneDeep'
 export default {
   name: 'DataPCR',
   components: {
@@ -108,9 +108,14 @@ export default {
     }
   },
   watch: {
-    propsDataRekapitulasiJabar () {
-      this.data.pcr = this.propsDataRekapitulasiJabar.pcr
-      this.countPersentage()
+    // propsDataRekapitulasiJabar must not be null or undefined at all times to ensure watcher is working properly
+    'propsDataRekapitulasiJabar.pcr': {
+      immediate: true,
+      deep: true,
+      handler (pcr) {
+        this.data.pcr = _cloneDeep(pcr)
+        this.countPersentage()
+      }
     }
   },
   methods: {

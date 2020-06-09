@@ -195,6 +195,7 @@
 import { GChart } from 'vue-google-charts'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faChartBar, faChartLine } from '@fortawesome/free-solid-svg-icons'
+import _cloneDeep from 'lodash/cloneDeep'
 
 export default {
   name: 'BarStatHarianAkumulatifV2',
@@ -486,74 +487,94 @@ export default {
     }
   },
   watch: {
-    propsDataRekapitulasiJabarHarianProv () {
-      // this.jsonDataProvinsiHarian = this.propsDataRekapitulasiJabarHarianProv
-      for (let i = 0; i < this.propsDataRekapitulasiJabarHarianProv.length; i++) {
-        const temp1 = this.propsDataRekapitulasiJabarHarianProv[i]
-        let odpJml = 0
-        let pdpJml = 0
-        let odpRatarata = 0
-        let pdpRatarata = 0
-        if (i === 0) {
-          odpJml = this.propsDataRekapitulasiJabarHarianProv[i].odp
-          pdpJml = this.propsDataRekapitulasiJabarHarianProv[i].pdp
-          odpRatarata = odpJml / 1
-          pdpRatarata = pdpJml / 1
-        } else if (i === 1) {
-          odpJml = this.propsDataRekapitulasiJabarHarianProv[i].odp + this.propsDataRekapitulasiJabarHarianProv[i - 1].odp
-          pdpJml = this.propsDataRekapitulasiJabarHarianProv[i].pdp + this.propsDataRekapitulasiJabarHarianProv[i - 1].pdp
-          odpRatarata = odpJml / 2
-          pdpRatarata = pdpJml / 2
-        } else if (i === 2) {
-          odpJml = this.propsDataRekapitulasiJabarHarianProv[i].odp + this.propsDataRekapitulasiJabarHarianProv[i - 1].odp + this.propsDataRekapitulasiJabarHarianProv[i - 2].odp
-          pdpJml = this.propsDataRekapitulasiJabarHarianProv[i].pdp + this.propsDataRekapitulasiJabarHarianProv[i - 1].pdp + this.propsDataRekapitulasiJabarHarianProv[i - 2].pdp
-          odpRatarata = odpJml / 3
-          pdpRatarata = pdpJml / 3
-        } else if (i === 3) {
-          odpJml = this.propsDataRekapitulasiJabarHarianProv[i].odp + this.propsDataRekapitulasiJabarHarianProv[i - 1].odp + this.propsDataRekapitulasiJabarHarianProv[i - 2].odp +
-            this.propsDataRekapitulasiJabarHarianProv[i - 3].odp
-          pdpJml = this.propsDataRekapitulasiJabarHarianProv[i].pdp + this.propsDataRekapitulasiJabarHarianProv[i - 1].pdp + this.propsDataRekapitulasiJabarHarianProv[i - 2].pdp +
-            this.propsDataRekapitulasiJabarHarianProv[i - 3].pdp
-          odpRatarata = odpJml / 4
-          pdpRatarata = pdpJml / 4
-        } else if (i === 4) {
-          odpJml = this.propsDataRekapitulasiJabarHarianProv[i].odp + this.propsDataRekapitulasiJabarHarianProv[i - 1].odp + this.propsDataRekapitulasiJabarHarianProv[i - 2].odp +
-            this.propsDataRekapitulasiJabarHarianProv[i - 3].odp + this.propsDataRekapitulasiJabarHarianProv[i - 4].odp
-          pdpJml = this.propsDataRekapitulasiJabarHarianProv[i].pdp + this.propsDataRekapitulasiJabarHarianProv[i - 1].pdp + this.propsDataRekapitulasiJabarHarianProv[i - 2].pdp +
-            this.propsDataRekapitulasiJabarHarianProv[i - 3].pdp + this.propsDataRekapitulasiJabarHarianProv[i - 4].pdp
-          odpRatarata = odpJml / 5
-          pdpRatarata = pdpJml / 5
-        } else if (i === 5) {
-          odpJml = this.propsDataRekapitulasiJabarHarianProv[i].odp + this.propsDataRekapitulasiJabarHarianProv[i - 1].odp + this.propsDataRekapitulasiJabarHarianProv[i - 2].odp +
-          this.propsDataRekapitulasiJabarHarianProv[i - 3].odp + this.propsDataRekapitulasiJabarHarianProv[i - 4].odp + this.propsDataRekapitulasiJabarHarianProv[i - 5].odp
-          pdpJml = this.propsDataRekapitulasiJabarHarianProv[i].pdp + this.propsDataRekapitulasiJabarHarianProv[i - 1].pdp + this.propsDataRekapitulasiJabarHarianProv[i - 2].pdp +
-          this.propsDataRekapitulasiJabarHarianProv[i - 3].pdp + this.propsDataRekapitulasiJabarHarianProv[i - 4].pdp + this.propsDataRekapitulasiJabarHarianProv[i - 5].pdp
-          odpRatarata = odpJml / 6
-          pdpRatarata = pdpJml / 6
-        } else if (i > 6) {
-          odpJml = this.propsDataRekapitulasiJabarHarianProv[i].odp + this.propsDataRekapitulasiJabarHarianProv[i - 1].odp + this.propsDataRekapitulasiJabarHarianProv[i - 2].odp +
-            this.propsDataRekapitulasiJabarHarianProv[i - 3].odp + this.propsDataRekapitulasiJabarHarianProv[i - 4].odp + this.propsDataRekapitulasiJabarHarianProv[i - 5].odp +
-            this.propsDataRekapitulasiJabarHarianProv[i - 6].odp
-          pdpJml = this.propsDataRekapitulasiJabarHarianProv[i].pdp + this.propsDataRekapitulasiJabarHarianProv[i - 1].pdp + this.propsDataRekapitulasiJabarHarianProv[i - 2].pdp +
-            this.propsDataRekapitulasiJabarHarianProv[i - 3].pdp + this.propsDataRekapitulasiJabarHarianProv[i - 4].pdp + this.propsDataRekapitulasiJabarHarianProv[i - 5].pdp +
-            this.propsDataRekapitulasiJabarHarianProv[i - 6].pdp
-          odpRatarata = odpJml / 7
-          pdpRatarata = pdpJml / 7
-        } else {
-          odpJml = 0
-          pdpJml = 0
-          odpRatarata = 0
-          pdpRatarata = 0
+    // OPTIMIZE: use immediate watcher to ensure data is processed immediately
+    propsDataRekapitulasiJabarHarianProv: {
+      immediate: true,
+      deep: false,
+      handler (arr) {
+        // OPTIMIZE: further processing is not needed if array is empty
+        if (!Array.isArray(arr) || !arr.length) {
+          this.jsonDataProvinsiHarian = []
+          return
         }
-        const temp2 = { odp_ratarata: parseInt(odpRatarata.toFixed(2)), pdp_ratarata: parseInt(pdpRatarata.toFixed(2)) }
-        const temp3 = { ...temp1, ...temp2 }
-        this.jsonDataProvinsiHarian.push(temp3)
+        // this.jsonDataProvinsiHarian = arr
+        for (let i = 0; i < arr.length; i++) {
+          const temp1 = arr[i]
+          let odpJml = 0
+          let pdpJml = 0
+          let odpRatarata = 0
+          let pdpRatarata = 0
+          if (i === 0) {
+            odpJml = arr[i].odp
+            pdpJml = arr[i].pdp
+            odpRatarata = odpJml / 1
+            pdpRatarata = pdpJml / 1
+          } else if (i === 1) {
+            odpJml = arr[i].odp + arr[i - 1].odp
+            pdpJml = arr[i].pdp + arr[i - 1].pdp
+            odpRatarata = odpJml / 2
+            pdpRatarata = pdpJml / 2
+          } else if (i === 2) {
+            odpJml = arr[i].odp + arr[i - 1].odp + arr[i - 2].odp
+            pdpJml = arr[i].pdp + arr[i - 1].pdp + arr[i - 2].pdp
+            odpRatarata = odpJml / 3
+            pdpRatarata = pdpJml / 3
+          } else if (i === 3) {
+            odpJml = arr[i].odp + arr[i - 1].odp + arr[i - 2].odp +
+              arr[i - 3].odp
+            pdpJml = arr[i].pdp + arr[i - 1].pdp + arr[i - 2].pdp +
+              arr[i - 3].pdp
+            odpRatarata = odpJml / 4
+            pdpRatarata = pdpJml / 4
+          } else if (i === 4) {
+            odpJml = arr[i].odp + arr[i - 1].odp + arr[i - 2].odp +
+              arr[i - 3].odp + arr[i - 4].odp
+            pdpJml = arr[i].pdp + arr[i - 1].pdp + arr[i - 2].pdp +
+              arr[i - 3].pdp + arr[i - 4].pdp
+            odpRatarata = odpJml / 5
+            pdpRatarata = pdpJml / 5
+          } else if (i === 5) {
+            odpJml = arr[i].odp + arr[i - 1].odp + arr[i - 2].odp +
+            arr[i - 3].odp + arr[i - 4].odp + arr[i - 5].odp
+            pdpJml = arr[i].pdp + arr[i - 1].pdp + arr[i - 2].pdp +
+            arr[i - 3].pdp + arr[i - 4].pdp + arr[i - 5].pdp
+            odpRatarata = odpJml / 6
+            pdpRatarata = pdpJml / 6
+          } else if (i > 6) {
+            odpJml = arr[i].odp + arr[i - 1].odp + arr[i - 2].odp +
+              arr[i - 3].odp + arr[i - 4].odp + arr[i - 5].odp +
+              arr[i - 6].odp
+            pdpJml = arr[i].pdp + arr[i - 1].pdp + arr[i - 2].pdp +
+              arr[i - 3].pdp + arr[i - 4].pdp + arr[i - 5].pdp +
+              arr[i - 6].pdp
+            odpRatarata = odpJml / 7
+            pdpRatarata = pdpJml / 7
+          } else {
+            odpJml = 0
+            pdpJml = 0
+            odpRatarata = 0
+            pdpRatarata = 0
+          }
+          const temp2 = { odp_ratarata: parseInt(odpRatarata.toFixed(2)), pdp_ratarata: parseInt(pdpRatarata.toFixed(2)) }
+          const temp3 = { ...temp1, ...temp2 }
+          this.jsonDataProvinsiHarian.push(temp3)
+        }
+        this.fetchDataODPProvinsiHarian()
+        this.fetchDataPDPProvinsiHarian()
       }
-      this.fetchDataODPProvinsiHarian()
-      this.fetchDataPDPProvinsiHarian()
     },
-    propsDataRekapitulasiJabarKumulatifProv () {
-      this.jsonDataProvinsiKumulatif = this.propsDataRekapitulasiJabarKumulatifProv
+    // OPTIMIZE: use immediate watcher to ensure data is processed immediately
+    propsDataRekapitulasiJabarKumulatifProv: {
+      immediate: true,
+      deep: false,
+      handler (arr) {
+        // OPTIMIZE: further processing is not needed if array is empty
+        if (!Array.isArray(arr) || !arr.length) {
+          this.jsonDataProvinsiKumulatif = []
+          return
+        }
+        this.jsonDataProvinsiKumulatif = _cloneDeep(arr)
+      }
     }
   },
   mounted () {

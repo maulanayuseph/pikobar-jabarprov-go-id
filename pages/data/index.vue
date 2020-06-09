@@ -12,10 +12,12 @@
     </section>
     <client-only>
       <section class="m-4 mb-8 md:m-8">
-        <DataRDT :props-data-rekapitulasi-jabar.sync="jsonDataRekapitulasiJabarProv" />
+        <!-- OPTIMIZED: remove .sync since DataRDT doesn't mutate this props  -->
+        <DataRDT :props-data-rekapitulasi-jabar="jsonDataRekapitulasiJabarProv" />
       </section>
       <section class="m-4 mb-8 md:m-8">
-        <DataPCR :props-data-rekapitulasi-jabar.sync="jsonDataRekapitulasiJabarProv" />
+        <!-- OPTIMIZED: remove .sync since DataPCR doesn't mutate this props  -->
+        <DataPCR :props-data-rekapitulasi-jabar="jsonDataRekapitulasiJabarProv" />
       </section>
       <section class="m-4 mb-8 md:m-8">
         <div class="items-stretch flex flex-col xl:flex-row xl:flex-no-wrap">
@@ -62,24 +64,31 @@
         </div>
         <div class="mt-4">
           <!-- <MapSebaranCovid v-if="stat.isActiveCovid" />
-        <MapFaskes v-if="stat.isActiveRS" />
-        <MapSebaranPolygon v-if="stat.isActivePolygon" /> -->
-          <MapV2SebaranPolygon
-            v-if="stat.isActivePolygon"
-            :props-data-sebaran-jawa-barat.sync="jsonDataSebaranJabar"
-          />
-          <MapV2SebaranCluster
-            v-if="stat.isActiveCluster"
-            :props-data-sebaran-jabar.sync="jsonDataSebaranJabar"
-          />
-          <MapV2SebaranFaskes
-            v-if="stat.isActiveFaskes"
-            :props-data-sebaran-jabar-faskes.sync="jsonDataSebaranJabarFaskes"
-          />
-          <MapV2SebaranTimeslider
-            v-if="stat.isActiveTimeslider"
-            :props-data-sebaran-jabar.sync="jsonDataSebaranJabar"
-          />
+            <MapFaskes v-if="stat.isActiveRS" />
+            <MapSebaranPolygon v-if="stat.isActivePolygon" /> -->
+
+          <keep-alive :max="4">
+            <!-- OPTIMIZED: remove sync if no mutation is intended by this component-->
+            <MapV2SebaranPolygon
+              v-if="stat.isActivePolygon"
+              :props-data-sebaran-jawa-barat="jsonDataSebaranJabar"
+            />
+
+            <!-- OPTIMIZED: remove sync if no mutation is intended by this component-->
+            <MapV2SebaranCluster
+              v-if="stat.isActiveCluster"
+              :props-data-sebaran-jabar="jsonDataSebaranJabar"
+            />
+
+            <MapV2SebaranFaskes
+              v-if="stat.isActiveFaskes"
+              :props-data-sebaran-jabar-faskes.sync="jsonDataSebaranJabarFaskes"
+            />
+            <MapV2SebaranTimeslider
+              v-if="stat.isActiveTimeslider"
+              :props-data-sebaran-jabar.sync="jsonDataSebaranJabar"
+            />
+          </keep-alive>
         </div>
       </section>
 
@@ -100,21 +109,25 @@
         :props-data-rekapitulasi-jabar-kumulatif-kab.sync="jsonDataRekapitulasiJabarKumulatifKab"
         :props-data-nasional-harian-kumulatif.sync="jsonDataNasionalHarianKumulatif"
       /> -->
+
+        <!-- OPTIMIZED: remove sync if no mutation is intended by this component-->
         <BarStatAreaSingleV2
-          :props-data-rekapitulasi-jabar-prov.sync="jsonDataRekapitulasiJabarProv"
-          :props-data-rekapitulasi-jabar-kab.sync="jsonDataRekapitulasiJabarKab"
-          :props-data-rekapitulasi-jabar-harian-prov.sync="jsonDataRekapitulasiJabarHarianProv"
-          :props-data-rekapitulasi-jabar-harian-kab.sync="jsonDataRekapitulasiJabarHarianKab"
-          :props-data-rekapitulasi-jabar-kumulatif-prov.sync="jsonDataRekapitulasiJabarKumulatifProv"
-          :props-data-rekapitulasi-jabar-kumulatif-kab.sync="jsonDataRekapitulasiJabarKumulatifKab"
-          :props-data-nasional-harian-kumulatif.sync="jsonDataNasionalHarianKumulatif"
+          :props-data-rekapitulasi-jabar-prov="jsonDataRekapitulasiJabarProv"
+          :props-data-rekapitulasi-jabar-kab="jsonDataRekapitulasiJabarKab"
+          :props-data-rekapitulasi-jabar-harian-prov="jsonDataRekapitulasiJabarHarianProv"
+          :props-data-rekapitulasi-jabar-harian-kab="jsonDataRekapitulasiJabarHarianKab"
+          :props-data-rekapitulasi-jabar-kumulatif-prov="jsonDataRekapitulasiJabarKumulatifProv"
+          :props-data-rekapitulasi-jabar-kumulatif-kab="jsonDataRekapitulasiJabarKumulatifKab"
+          :props-data-nasional-harian-kumulatif="jsonDataNasionalHarianKumulatif"
         />
       </section>
 
       <section class="m-4 mb-8 md:m-8">
         <div class="chart-container w-full">
-          <BarStatJenisKelamin :props-data-rekapitulasi-jabar.sync="jsonDataRekapitulasiJabarProv" />
-          <BarStatUsia :props-data-rekapitulasi-jabar.sync="jsonDataRekapitulasiJabarProv" />
+          <!-- OPTIMIZED: remove sync if no mutation is intended by this component-->
+          <BarStatJenisKelamin :props-data-rekapitulasi-jabar="jsonDataRekapitulasiJabarProv" />
+          <!-- OPTIMIZED: remove sync if no mutation is intended by this component-->
+          <BarStatUsia :props-data-rekapitulasi-jabar="jsonDataRekapitulasiJabarProv" />
         </div>
       </section>
 
@@ -194,6 +207,13 @@ export default {
     MapV2SebaranTimeslider: () => import('~/components/MapV2SebaranTimeslider')
     // FontAwesomeIcon
   },
+  asyncData ({ payload}) {
+    if (payload && typeof payload === 'object') {
+      return payload
+    // console.log(Object.keys(payload))
+    }
+    return {}
+  },
   data () {
     return {
       stat: {
@@ -231,14 +251,16 @@ export default {
   },
   fetchOnServer: true,
   async fetch () {
-    await this.fetchAllData()
+    console.log('is fetching data on server')
+    await this.fetchDataOnServer()
   },
   activated () {
     if (this.$fetchState.timestamp <= (Date.now() - 30000)) {
       this.$fetch()
     }
   },
-  mounted () {
+  async mounted () {
+    this.fetchDataOnClient()
     this.$store.dispatch('statistics/getCases')
     this.$nextTick(() => {
       if (process.browser) {
@@ -272,17 +294,39 @@ export default {
       this.stat.isActiveFaskes = false
       this.stat.isActiveTimeslider = true
     },
-    fetchAllData () {
+    fetchDataOnServer () {
+      const wrap = async (fn) => {
+        if (process.env.NODE_ENV !== 'production') {
+          console.time(fn.name)
+        }
+        await fn()
+        if (process.env.NODE_ENV !== 'production') {
+          console.timeEnd(fn.name)
+        }
+      }
       return Promise.all([
-        this.fetchDataNasionalHarian(),
-        this.fetchDataRekapitulasiJabarProv(),
-        this.fetchDataRekapitulasiJabarHarianProv(),
-        this.fetchDataRekapitulasiJabarKumulatifProv(),
-        this.fetchDataRekapitulasiJabarKab(),
-        this.fetchDataRekapitulasiJabarHarianKab(),
-        this.fetchDataRekapitulasiJabarKumulatifKab(),
-        this.fetchDataSebaranJabarFaskes(),
-        this.fetchDataSebaranJabar()
+        wrap(this.fetchDataNasionalHarian),
+        wrap(this.fetchDataRekapitulasiJabarProv),
+        wrap(this.fetchDataRekapitulasiJabarHarianProv),
+        wrap(this.fetchDataRekapitulasiJabarKumulatifProv),
+        wrap(this.fetchDataRekapitulasiJabarKab),
+        wrap(this.fetchDataSebaranJabarFaskes),
+      ])
+    },
+    fetchDataOnClient () {
+      const wrap = async (fn) => {
+        if (process.env.NODE_ENV !== 'production') {
+          console.time(fn.name)
+        }
+        await fn()
+        if (process.env.NODE_ENV !== 'production') {
+          console.timeEnd(fn.name)
+        }
+      }
+      return Promise.all([
+        wrap(this.fetchDataRekapitulasiJabarHarianKab),
+        wrap(this.fetchDataRekapitulasiJabarKumulatifKab),
+        wrap(this.fetchDataSebaranJabar)
       ])
     },
     fetchDataRekapitulasiJabarProv () {

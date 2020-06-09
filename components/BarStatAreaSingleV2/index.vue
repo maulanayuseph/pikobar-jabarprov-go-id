@@ -174,6 +174,7 @@
 import { GChart } from 'vue-google-charts'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faChartBar, faChartLine } from '@fortawesome/free-solid-svg-icons'
+import _cloneDeep from 'lodash/cloneDeep'
 
 export default {
   name: 'BarStatAreaSingleV2',
@@ -833,160 +834,206 @@ export default {
     }
   },
   watch: {
-    propsDataNasionalHarianKumulatif () {
-      // this.jsonDataNasionalHarianKumulatif = this.propsDataNasionalHarianKumulatif
-      for (let i = 0; i < this.propsDataNasionalHarianKumulatif.length; i++) {
-        const temp1 = this.propsDataNasionalHarianKumulatif[i]
-        let jmlHarian = 0
-        let ratarataHarian = 0
-        // let jmlKumulatif = 0
-        // let ratarataKumulatif = 0
-        if (i === 0) {
-          jmlHarian = this.propsDataNasionalHarianKumulatif[i].jumlahKasusBaruperHari
-          ratarataHarian = jmlHarian / 1
-          // jmlKumulatif = this.propsDataNasionalHarianKumulatif[i].jumlahKasusKumulatif
-          // ratarataKumulatif = jmlKumulatif / 1
-        } else if (i === 1) {
-          jmlHarian = this.propsDataNasionalHarianKumulatif[i].jumlahKasusBaruperHari + this.propsDataNasionalHarianKumulatif[i - 1].jumlahKasusBaruperHari
-          ratarataHarian = jmlHarian / 2
-          // jmlKumulatif = this.propsDataNasionalHarianKumulatif[i].jumlahKasusKumulatif + this.propsDataNasionalHarianKumulatif[i - 1].jumlahKasusKumulatif
-          // ratarataKumulatif = jmlKumulatif / 2
-        } else if (i === 2) {
-          jmlHarian = this.propsDataNasionalHarianKumulatif[i].jumlahKasusBaruperHari + this.propsDataNasionalHarianKumulatif[i - 1].jumlahKasusBaruperHari + this.propsDataNasionalHarianKumulatif[i - 2].jumlahKasusBaruperHari
-          ratarataHarian = jmlHarian / 3
-          // jmlKumulatif = this.propsDataNasionalHarianKumulatif[i].jumlahKasusKumulatif + this.propsDataNasionalHarianKumulatif[i - 1].jumlahKasusKumulatif + this.propsDataNasionalHarianKumulatif[i - 2].jumlahKasusKumulatif
-          // ratarataKumulatif = jmlKumulatif / 3
-        } else if (i === 3) {
-          jmlHarian = this.propsDataNasionalHarianKumulatif[i].jumlahKasusBaruperHari + this.propsDataNasionalHarianKumulatif[i - 1].jumlahKasusBaruperHari + this.propsDataNasionalHarianKumulatif[i - 2].jumlahKasusBaruperHari +
-            this.propsDataNasionalHarianKumulatif[i - 3].jumlahKasusBaruperHari
-          ratarataHarian = jmlHarian / 4
-          // jmlKumulatif = this.propsDataNasionalHarianKumulatif[i].jumlahKasusKumulatif + this.propsDataNasionalHarianKumulatif[i - 1].jumlahKasusKumulatif + this.propsDataNasionalHarianKumulatif[i - 2].jumlahKasusKumulatif +
-          //   this.propsDataNasionalHarianKumulatif[i - 3].jumlahKasusKumulatif
-          // ratarataKumulatif = jmlKumulatif / 4
-        } else if (i === 4) {
-          jmlHarian = this.propsDataNasionalHarianKumulatif[i].jumlahKasusBaruperHari + this.propsDataNasionalHarianKumulatif[i - 1].jumlahKasusBaruperHari + this.propsDataNasionalHarianKumulatif[i - 2].jumlahKasusBaruperHari +
-            this.propsDataNasionalHarianKumulatif[i - 3].jumlahKasusBaruperHari + this.propsDataNasionalHarianKumulatif[i - 4].jumlahKasusBaruperHari
-          ratarataHarian = jmlHarian / 5
-          // jmlKumulatif = this.propsDataNasionalHarianKumulatif[i].jumlahKasusKumulatif + this.propsDataNasionalHarianKumulatif[i - 1].jumlahKasusKumulatif + this.propsDataNasionalHarianKumulatif[i - 2].jumlahKasusKumulatif +
-          //   this.propsDataNasionalHarianKumulatif[i - 3].jumlahKasusKumulatif + this.propsDataNasionalHarianKumulatif[i - 4].jumlahKasusKumulatif
-          // ratarataKumulatif = jmlKumulatif / 5
-        } else if (i === 5) {
-          jmlHarian = this.propsDataNasionalHarianKumulatif[i].jumlahKasusBaruperHari + this.propsDataNasionalHarianKumulatif[i - 1].jumlahKasusBaruperHari + this.propsDataNasionalHarianKumulatif[i - 2].jumlahKasusBaruperHari +
-            this.propsDataNasionalHarianKumulatif[i - 3].jumlahKasusBaruperHari + this.propsDataNasionalHarianKumulatif[i - 4].jumlahKasusBaruperHari + this.propsDataNasionalHarianKumulatif[i - 5].jumlahKasusBaruperHari
-          ratarataHarian = jmlHarian / 6
-          // jmlKumulatif = this.propsDataNasionalHarianKumulatif[i].jumlahKasusKumulatif + this.propsDataNasionalHarianKumulatif[i - 1].jumlahKasusKumulatif + this.propsDataNasionalHarianKumulatif[i - 2].jumlahKasusKumulatif +
-          //   this.propsDataNasionalHarianKumulatif[i - 3].jumlahKasusKumulatif + this.propsDataNasionalHarianKumulatif[i - 4].jumlahKasusKumulatif + this.propsDataNasionalHarianKumulatif[i - 5].jumlahKasusKumulatif
-          // ratarataKumulatif = jmlKumulatif / 6
-        } else if (i > 6) {
-          jmlHarian = this.propsDataNasionalHarianKumulatif[i].jumlahKasusBaruperHari + this.propsDataNasionalHarianKumulatif[i - 1].jumlahKasusBaruperHari + this.propsDataNasionalHarianKumulatif[i - 2].jumlahKasusBaruperHari +
-            this.propsDataNasionalHarianKumulatif[i - 3].jumlahKasusBaruperHari + this.propsDataNasionalHarianKumulatif[i - 4].jumlahKasusBaruperHari + this.propsDataNasionalHarianKumulatif[i - 5].jumlahKasusBaruperHari +
-            this.propsDataNasionalHarianKumulatif[i - 6].jumlahKasusBaruperHari
-          ratarataHarian = jmlHarian / 7
-          // jmlKumulatif = this.propsDataNasionalHarianKumulatif[i].jumlahKasusKumulatif + this.propsDataNasionalHarianKumulatif[i - 1].jumlahKasusKumulatif + this.propsDataNasionalHarianKumulatif[i - 2].jumlahKasusKumulatif +
-          //   this.propsDataNasionalHarianKumulatif[i - 3].jumlahKasusKumulatif + this.propsDataNasionalHarianKumulatif[i - 4].jumlahKasusKumulatif + this.propsDataNasionalHarianKumulatif[i - 5].jumlahKasusKumulatif +
-          //   this.propsDataNasionalHarianKumulatif[i - 6].jumlahKasusKumulatif
-          // ratarataKumulatif = jmlKumulatif / 7
-        } else {
-          jmlHarian = 0
-          ratarataHarian = 0
-          // jmlKumulatif = 0
-          // ratarataKumulatif = 0
+    // OPTIMIZE: use immediate watcher to ensure data is processed immediately
+    propsDataNasionalHarianKumulatif: {
+      immediate: true,
+      deep: false,
+      handler (arr) {
+        if (!Array.isArray(arr)) {
+          this.jsonDataNasionalHarianKumulatif = []
+          return
         }
-        const temp2 = { jumlahKasusBaruperHari_ratarata: parseInt(ratarataHarian.toFixed(2)) }
-        const temp3 = { ...temp1, ...temp2 }
-        this.jsonDataNasionalHarianKumulatif.push(temp3)
+        // this.jsonDataNasionalHarianKumulatif = this.propsDataNasionalHarianKumulatif
+        for (let i = 0; i < arr.length; i++) {
+          const temp1 = arr[i]
+          let jmlHarian = 0
+          let ratarataHarian = 0
+          // let jmlKumulatif = 0
+          // let ratarataKumulatif = 0
+          if (i === 0) {
+            jmlHarian = arr[i].jumlahKasusBaruperHari
+            ratarataHarian = jmlHarian / 1
+            // jmlKumulatif = arr[i].jumlahKasusKumulatif
+            // ratarataKumulatif = jmlKumulatif / 1
+          } else if (i === 1) {
+            jmlHarian = arr[i].jumlahKasusBaruperHari + arr[i - 1].jumlahKasusBaruperHari
+            ratarataHarian = jmlHarian / 2
+            // jmlKumulatif = arr[i].jumlahKasusKumulatif + arr[i - 1].jumlahKasusKumulatif
+            // ratarataKumulatif = jmlKumulatif / 2
+          } else if (i === 2) {
+            jmlHarian = arr[i].jumlahKasusBaruperHari + arr[i - 1].jumlahKasusBaruperHari + arr[i - 2].jumlahKasusBaruperHari
+            ratarataHarian = jmlHarian / 3
+            // jmlKumulatif = arr[i].jumlahKasusKumulatif + arr[i - 1].jumlahKasusKumulatif + arr[i - 2].jumlahKasusKumulatif
+            // ratarataKumulatif = jmlKumulatif / 3
+          } else if (i === 3) {
+            jmlHarian = arr[i].jumlahKasusBaruperHari + arr[i - 1].jumlahKasusBaruperHari + arr[i - 2].jumlahKasusBaruperHari +
+              arr[i - 3].jumlahKasusBaruperHari
+            ratarataHarian = jmlHarian / 4
+            // jmlKumulatif = arr[i].jumlahKasusKumulatif + arr[i - 1].jumlahKasusKumulatif + arr[i - 2].jumlahKasusKumulatif +
+            //   arr[i - 3].jumlahKasusKumulatif
+            // ratarataKumulatif = jmlKumulatif / 4
+          } else if (i === 4) {
+            jmlHarian = arr[i].jumlahKasusBaruperHari + arr[i - 1].jumlahKasusBaruperHari + arr[i - 2].jumlahKasusBaruperHari +
+              arr[i - 3].jumlahKasusBaruperHari + arr[i - 4].jumlahKasusBaruperHari
+            ratarataHarian = jmlHarian / 5
+            // jmlKumulatif = arr[i].jumlahKasusKumulatif + arr[i - 1].jumlahKasusKumulatif + arr[i - 2].jumlahKasusKumulatif +
+            //   arr[i - 3].jumlahKasusKumulatif + arr[i - 4].jumlahKasusKumulatif
+            // ratarataKumulatif = jmlKumulatif / 5
+          } else if (i === 5) {
+            jmlHarian = arr[i].jumlahKasusBaruperHari + arr[i - 1].jumlahKasusBaruperHari + arr[i - 2].jumlahKasusBaruperHari +
+              arr[i - 3].jumlahKasusBaruperHari + arr[i - 4].jumlahKasusBaruperHari + arr[i - 5].jumlahKasusBaruperHari
+            ratarataHarian = jmlHarian / 6
+            // jmlKumulatif = arr[i].jumlahKasusKumulatif + arr[i - 1].jumlahKasusKumulatif + arr[i - 2].jumlahKasusKumulatif +
+            //   arr[i - 3].jumlahKasusKumulatif + arr[i - 4].jumlahKasusKumulatif + arr[i - 5].jumlahKasusKumulatif
+            // ratarataKumulatif = jmlKumulatif / 6
+          } else if (i > 6) {
+            jmlHarian = arr[i].jumlahKasusBaruperHari + arr[i - 1].jumlahKasusBaruperHari + arr[i - 2].jumlahKasusBaruperHari +
+              arr[i - 3].jumlahKasusBaruperHari + arr[i - 4].jumlahKasusBaruperHari + arr[i - 5].jumlahKasusBaruperHari +
+              arr[i - 6].jumlahKasusBaruperHari
+            ratarataHarian = jmlHarian / 7
+            // jmlKumulatif = arr[i].jumlahKasusKumulatif + arr[i - 1].jumlahKasusKumulatif + arr[i - 2].jumlahKasusKumulatif +
+            //   arr[i - 3].jumlahKasusKumulatif + arr[i - 4].jumlahKasusKumulatif + arr[i - 5].jumlahKasusKumulatif +
+            //   arr[i - 6].jumlahKasusKumulatif
+            // ratarataKumulatif = jmlKumulatif / 7
+          } else {
+            jmlHarian = 0
+            ratarataHarian = 0
+            // jmlKumulatif = 0
+            // ratarataKumulatif = 0
+          }
+          const temp2 = { jumlahKasusBaruperHari_ratarata: parseInt(ratarataHarian.toFixed(2)) }
+          const temp3 = { ...temp1, ...temp2 }
+          this.jsonDataNasionalHarianKumulatif.push(temp3)
+        }
       }
     },
-    propsDataRekapitulasiJabarHarianProv () {
-      // this.jsonDataProvinsiHarian = this.propsDataRekapitulasiJabarHarianProv
-      for (let i = 0; i < this.propsDataRekapitulasiJabarHarianProv.length; i++) {
-        const temp1 = this.propsDataRekapitulasiJabarHarianProv[i]
-        let jml = 0
-        let ratarata = 0
-        if (i === 0) {
-          jml = this.propsDataRekapitulasiJabarHarianProv[i].positif
-          ratarata = jml / 1
-        } else if (i === 1) {
-          jml = this.propsDataRekapitulasiJabarHarianProv[i].positif + this.propsDataRekapitulasiJabarHarianProv[i - 1].positif
-          ratarata = jml / 2
-        } else if (i === 2) {
-          jml = this.propsDataRekapitulasiJabarHarianProv[i].positif + this.propsDataRekapitulasiJabarHarianProv[i - 1].positif + this.propsDataRekapitulasiJabarHarianProv[i - 2].positif
-          ratarata = jml / 3
-        } else if (i === 3) {
-          jml = this.propsDataRekapitulasiJabarHarianProv[i].positif + this.propsDataRekapitulasiJabarHarianProv[i - 1].positif + this.propsDataRekapitulasiJabarHarianProv[i - 2].positif +
-            this.propsDataRekapitulasiJabarHarianProv[i - 3].positif
-          ratarata = jml / 4
-        } else if (i === 4) {
-          jml = this.propsDataRekapitulasiJabarHarianProv[i].positif + this.propsDataRekapitulasiJabarHarianProv[i - 1].positif + this.propsDataRekapitulasiJabarHarianProv[i - 2].positif +
-            this.propsDataRekapitulasiJabarHarianProv[i - 3].positif + this.propsDataRekapitulasiJabarHarianProv[i - 4].positif
-          ratarata = jml / 5
-        } else if (i === 5) {
-          jml = this.propsDataRekapitulasiJabarHarianProv[i].positif + this.propsDataRekapitulasiJabarHarianProv[i - 1].positif + this.propsDataRekapitulasiJabarHarianProv[i - 2].positif +
-          this.propsDataRekapitulasiJabarHarianProv[i - 3].positif + this.propsDataRekapitulasiJabarHarianProv[i - 4].positif + this.propsDataRekapitulasiJabarHarianProv[i - 5].positif
-          ratarata = jml / 6
-        } else if (i > 6) {
-          jml = this.propsDataRekapitulasiJabarHarianProv[i].positif + this.propsDataRekapitulasiJabarHarianProv[i - 1].positif + this.propsDataRekapitulasiJabarHarianProv[i - 2].positif +
-            this.propsDataRekapitulasiJabarHarianProv[i - 3].positif + this.propsDataRekapitulasiJabarHarianProv[i - 4].positif + this.propsDataRekapitulasiJabarHarianProv[i - 5].positif +
-            this.propsDataRekapitulasiJabarHarianProv[i - 6].positif
-          ratarata = jml / 7
-        } else {
-          jml = 0
-          ratarata = 0
+    // OPTIMIZE: use immediate watcher to ensure data is processed immediately
+    propsDataRekapitulasiJabarHarianProv: {
+      immediate: true,
+      deep: false,
+      handler (arr) {
+        if (!Array.isArray(arr)) {
+          this.jsonDataProvinsiHarian = []
+          return
         }
-        const temp2 = { positif_ratarata: parseInt(ratarata.toFixed(2)) }
-        const temp3 = { ...temp1, ...temp2 }
-        this.jsonDataProvinsiHarian.push(temp3)
+        // this.jsonDataProvinsiHarian = arr
+        for (let i = 0; i < arr.length; i++) {
+          const temp1 = arr[i]
+          let jml = 0
+          let ratarata = 0
+          if (i === 0) {
+            jml = arr[i].positif
+            ratarata = jml / 1
+          } else if (i === 1) {
+            jml = arr[i].positif + arr[i - 1].positif
+            ratarata = jml / 2
+          } else if (i === 2) {
+            jml = arr[i].positif + arr[i - 1].positif + arr[i - 2].positif
+            ratarata = jml / 3
+          } else if (i === 3) {
+            jml = arr[i].positif + arr[i - 1].positif + arr[i - 2].positif +
+              arr[i - 3].positif
+            ratarata = jml / 4
+          } else if (i === 4) {
+            jml = arr[i].positif + arr[i - 1].positif + arr[i - 2].positif +
+              arr[i - 3].positif + arr[i - 4].positif
+            ratarata = jml / 5
+          } else if (i === 5) {
+            jml = arr[i].positif + arr[i - 1].positif + arr[i - 2].positif +
+            arr[i - 3].positif + arr[i - 4].positif + arr[i - 5].positif
+            ratarata = jml / 6
+          } else if (i > 6) {
+            jml = arr[i].positif + arr[i - 1].positif + arr[i - 2].positif +
+              arr[i - 3].positif + arr[i - 4].positif + arr[i - 5].positif +
+              arr[i - 6].positif
+            ratarata = jml / 7
+          } else {
+            jml = 0
+            ratarata = 0
+          }
+          const temp2 = { positif_ratarata: parseInt(ratarata.toFixed(2)) }
+          const temp3 = { ...temp1, ...temp2 }
+          this.jsonDataProvinsiHarian.push(temp3)
+        }
+        this.changeData()
       }
-      this.changeData()
     },
-    propsDataRekapitulasiJabarKumulatifProv () {
-      this.jsonDataProvinsiKumulatif = this.propsDataRekapitulasiJabarKumulatifProv
-      // for (let i = 0; i < this.propsDataRekapitulasiJabarKumulatifProv.length; i++) {
-      //   const temp1 = this.propsDataRekapitulasiJabarKumulatifProv[i]
-      //   let jml = 0
-      //   let ratarata = 0
-      //   if (i === 0) {
-      //     jml = this.propsDataRekapitulasiJabarKumulatifProv[i].positif
-      //     ratarata = jml / 1
-      //   } else if (i === 1) {
-      //     jml = this.propsDataRekapitulasiJabarKumulatifProv[i].positif + this.propsDataRekapitulasiJabarKumulatifProv[i - 1].positif
-      //     ratarata = jml / 2
-      //   } else if (i === 2) {
-      //     jml = this.propsDataRekapitulasiJabarKumulatifProv[i].positif + this.propsDataRekapitulasiJabarKumulatifProv[i - 1].positif + this.propsDataRekapitulasiJabarKumulatifProv[i - 2].positif
-      //     ratarata = jml / 3
-      //   } else if (i === 3) {
-      //     jml = this.propsDataRekapitulasiJabarKumulatifProv[i].positif + this.propsDataRekapitulasiJabarKumulatifProv[i - 1].positif + this.propsDataRekapitulasiJabarKumulatifProv[i - 2].positif +
-      //       this.propsDataRekapitulasiJabarKumulatifProv[i - 3].positif
-      //     ratarata = jml / 4
-      //   } else if (i === 4) {
-      //     jml = this.propsDataRekapitulasiJabarKumulatifProv[i].positif + this.propsDataRekapitulasiJabarKumulatifProv[i - 1].positif + this.propsDataRekapitulasiJabarKumulatifProv[i - 2].positif +
-      //       this.propsDataRekapitulasiJabarKumulatifProv[i - 3].positif + this.propsDataRekapitulasiJabarKumulatifProv[i - 4].positif
-      //     ratarata = jml / 5
-      //   } else if (i === 5) {
-      //     jml = this.propsDataRekapitulasiJabarKumulatifProv[i].positif + this.propsDataRekapitulasiJabarKumulatifProv[i - 1].positif + this.propsDataRekapitulasiJabarKumulatifProv[i - 2].positif +
-      //     this.propsDataRekapitulasiJabarKumulatifProv[i - 3].positif + this.propsDataRekapitulasiJabarKumulatifProv[i - 4].positif + this.propsDataRekapitulasiJabarKumulatifProv[i - 5].positif
-      //     ratarata = jml / 6
-      //   } else if (i > 6) {
-      //     jml = this.propsDataRekapitulasiJabarKumulatifProv[i].positif + this.propsDataRekapitulasiJabarKumulatifProv[i - 1].positif + this.propsDataRekapitulasiJabarKumulatifProv[i - 2].positif +
-      //       this.propsDataRekapitulasiJabarKumulatifProv[i - 3].positif + this.propsDataRekapitulasiJabarKumulatifProv[i - 4].positif + this.propsDataRekapitulasiJabarKumulatifProv[i - 5].positif +
-      //       this.propsDataRekapitulasiJabarKumulatifProv[i - 6].positif
-      //     ratarata = jml / 7
-      //   } else {
-      //     jml = 0
-      //     ratarata = 0
-      //   }
-      //   const temp2 = { positif_ratarata: parseInt(ratarata.toFixed(2)) }
-      //   const temp3 = { ...temp1, ...temp2 }
-      //   this.jsonDataProvinsiKumulatif.push(temp3)
-      // }
+    // OPTIMIZE: use immediate watcher to ensure data is processed immediately
+    propsDataRekapitulasiJabarKumulatifProv: {
+      immediate: true,
+      deep: false,
+      handler (arr) {
+        if (!Array.isArray(arr)) {
+          this.jsonDataProvinsiKumulatif = []
+          return
+        }
+        this.jsonDataProvinsiKumulatif = _cloneDeep(arr)
+        // for (let i = 0; i < arr.length; i++) {
+        //   const temp1 = arr[i]
+        //   let jml = 0
+        //   let ratarata = 0
+        //   if (i === 0) {
+        //     jml = arr[i].positif
+        //     ratarata = jml / 1
+        //   } else if (i === 1) {
+        //     jml = arr[i].positif + arr[i - 1].positif
+        //     ratarata = jml / 2
+        //   } else if (i === 2) {
+        //     jml = arr[i].positif + arr[i - 1].positif + arr[i - 2].positif
+        //     ratarata = jml / 3
+        //   } else if (i === 3) {
+        //     jml = arr[i].positif + arr[i - 1].positif + arr[i - 2].positif +
+        //       arr[i - 3].positif
+        //     ratarata = jml / 4
+        //   } else if (i === 4) {
+        //     jml = arr[i].positif + arr[i - 1].positif + arr[i - 2].positif +
+        //       arr[i - 3].positif + arr[i - 4].positif
+        //     ratarata = jml / 5
+        //   } else if (i === 5) {
+        //     jml = arr[i].positif + arr[i - 1].positif + arr[i - 2].positif +
+        //     arr[i - 3].positif + arr[i - 4].positif + arr[i - 5].positif
+        //     ratarata = jml / 6
+        //   } else if (i > 6) {
+        //     jml = arr[i].positif + arr[i - 1].positif + arr[i - 2].positif +
+        //       arr[i - 3].positif + arr[i - 4].positif + arr[i - 5].positif +
+        //       arr[i - 6].positif
+        //     ratarata = jml / 7
+        //   } else {
+        //     jml = 0
+        //     ratarata = 0
+        //   }
+        //   const temp2 = { positif_ratarata: parseInt(ratarata.toFixed(2)) }
+        //   const temp3 = { ...temp1, ...temp2 }
+        //   this.jsonDataProvinsiKumulatif.push(temp3)
+        // }
+      }
     },
-    propsDataRekapitulasiJabarHarianKab () {
-      this.jsonDataKabupatenHarian = this.propsDataRekapitulasiJabarHarianKab
-      this.groupDataKabupatenHarian()
+    // OPTIMIZE: use immediate watcher to ensure data is processed immediately
+    propsDataRekapitulasiJabarHarianKab: {
+      immediate: true,
+      deep: false,
+      handler (arr) {
+        if (!Array.isArray(arr)) {
+          this.jsonDataKabupatenHarian = []
+          return
+        }
+        this.jsonDataKabupatenHarian = _cloneDeep(arr)
+        this.groupDataKabupatenHarian()
+      }
     },
-    propsDataRekapitulasiJabarKumulatifKab () {
-      this.jsonDataKabupatenKumulatif = this.propsDataRekapitulasiJabarKumulatifKab
-      this.groupDataKabupatenKumulatif()
+    // OPTIMIZE: use immediate watcher to ensure data is processed immediately
+    propsDataRekapitulasiJabarKumulatifKab: {
+      immediate: true,
+      deep: false,
+      handler (arr) {
+        // OPTIMIZE: use immediate watcher to ensure data is processed immediately
+        if (!Array.isArray(arr)) {
+          this.jsonDataKabupatenKumulatif = []
+          return
+        }
+        this.jsonDataKabupatenKumulatif = _cloneDeep(arr)
+        this.groupDataKabupatenKumulatif()
+      }
     }
   },
   mounted () {
@@ -1078,7 +1125,8 @@ export default {
     //   this.selectedListWaktu = stat
     //   this.changeData()
     // },
-    changeData () {
+    // eslint-disable-next-line require-await
+    async changeData () {
       this.ChartHarianData = [
         [
           'Tanggal',
@@ -1124,7 +1172,8 @@ export default {
         }
       }
     },
-    groupDataKabupatenHarian () {
+    // eslint-disable-next-line require-await
+    async groupDataKabupatenHarian () {
       const self = this
       let max = 0
       for (let j = 0; j < self.jsonDataKota.length; j++) {
@@ -1177,7 +1226,8 @@ export default {
         }
       }
     },
-    groupDataKabupatenKumulatif () {
+    // eslint-disable-next-line require-await
+    async groupDataKabupatenKumulatif () {
       const self = this
       let max = 0
       for (let j = 0; j < self.jsonDataKota.length; j++) {

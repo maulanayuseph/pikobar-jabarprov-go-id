@@ -23,7 +23,7 @@ export default {
   },
   generate: {
     fallback: true,
-    interval: 100,
+    interval: 300,
     exclude: [
       // /^\/(\bdata\b).*$/,
       /^\/(\bdonate\b).*$/

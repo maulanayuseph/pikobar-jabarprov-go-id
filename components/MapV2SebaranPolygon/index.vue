@@ -162,10 +162,27 @@
 
 import { faFilter, faHome, faLayerGroup } from '@fortawesome/free-solid-svg-icons'
 import { GeoSearchControl, OpenStreetMapProvider } from 'leaflet-geosearch'
+import _cloneDeep from 'lodash/cloneDeep'
 import jsonKota from '@/assets/kotaV2.json'
 import jsonKecamatan from '@/assets/kecamatanV2.json'
 import jsonKelurahan from '@/assets/kelurahanV2.json'
 const percentile = require('percentile')
+
+/**
+ * OPTIMIZED:
+ * define default shape of data to prevent manual assignment if data reset is needed in the future
+*/
+const defaultDataJson = {
+  positif_proses: [],
+  positif_meninggal: [],
+  positif_sembuh: [],
+  pdp_proses: [],
+  pdp_selesai: [],
+  pdp_meninggal: [],
+  odp_proses: [],
+  odp_selesai: [],
+  odp_meninggal: []
+}
 
 export default {
   name: 'MapV2SebaranPolygon',
@@ -189,17 +206,7 @@ export default {
       dataKota: {},
       dataKecamatan: {},
       dataKelurahan: {},
-      dataJson: {
-        positif_proses: [],
-        positif_meninggal: [],
-        positif_sembuh: [],
-        pdp_proses: [],
-        pdp_selesai: [],
-        pdp_meninggal: [],
-        odp_proses: [],
-        odp_selesai: [],
-        odp_meninggal: []
-      },
+      dataJson: _cloneDeep(defaultDataJson),
 
       layerGroup: '',
       dataMarker: [],
@@ -252,64 +259,71 @@ export default {
       },
 
       range: [],
-      infolegend: ''
-    }
-  },
-  watch: {
-    propsDataSebaranJawaBarat () {
-      console.log('polygon on watch')
-      this.distributionProvinceData = this.propsDataSebaranJawaBarat
-      this.onChanges()
+      infolegend: '',
+      unwatchData: null
     }
   },
   mounted () {
-    this.initMap()
-    if (this.distributionProvinceData.length > 0) {
-      console.log('polygon on mounted ada')
-      this.onChanges()
-    } else {
-      console.log('polygon on mounted no data')
+    if (typeof this.unwatchData === 'function') {
+      this.unwatchData()
     }
+    this.unwatchData = this.$watch(
+      'propsDataSebaranJawaBarat',
+      function handler (arr) {
+        console.log('polygon on watch')
+        this.distributionProvinceData = Array.isArray(arr) ? arr : []
+        if (this.map instanceof this.$L.Class === false) {
+          this.initMap()
+        }
+        this.onChanges()
+      },
+      { immediate: true }
+    )
+    // OPTIMIZED: no need to call onChanges since watcher is already set to immediate
+    // if (this.distributionProvinceData.length > 0) {
+    //   console.log('polygon on mounted ada')
+    //   this.onChanges()
+    // } else {
+    //   console.log('polygon on mounted no data')
+    // }
   },
   created () {
     console.log('polygon on created')
-    this.distributionProvinceData = this.propsDataSebaranJawaBarat
+    // OPTIMIZED: no need to assign value to distributionProvinceData since watcher is already set to immediate
+    // this.distributionProvinceData = this.propsDataSebaranJawaBarat
     // this.onChanges()
   },
   methods: {
-
-    onChanges () {
+    async onChanges () {
       console.log('polygon on changes')
-      this.dataJson.positif_proses = []
-      this.dataJson.positif_meninggal = []
-      this.dataJson.positif_sembuh = []
-      this.dataJson.pdp_proses = []
-      this.dataJson.pdp_selesai = []
-      this.dataJson.pdp_meninggal = []
-      this.dataJson.odp_proses = []
-      this.dataJson.odp_selesai = []
-      this.dataJson.odp_meninggal = []
+      // OPTIMIZED: use default shape for data resetting
+      this.dataJson = _cloneDeep(defaultDataJson)
 
-      this.distributionProvinceData.forEach((row) => {
-        if (row.status === 'Positif' && row.stage === 'Proses') {
-          this.dataJson.positif_proses.push(row)
-        } else if (row.status === 'Positif' && row.stage === 'Meninggal') {
-          this.dataJson.positif_meninggal.push(row)
-        } else if (row.status === 'Positif' && row.stage === 'Sembuh') {
-          this.dataJson.positif_sembuh.push(row)
-        } else if (row.status === 'PDP' && row.stage === 'Proses') {
-          this.dataJson.pdp_proses.push(row)
-        } else if (row.status === 'PDP' && row.stage === 'Selesai') {
-          this.dataJson.pdp_selesai.push(row)
-        } else if (row.status === 'PDP' && row.stage === 'Meninggal') {
-          this.dataJson.pdp_meninggal.push(row)
-        } else if (row.status === 'ODP' && row.stage === 'Proses') {
-          this.dataJson.odp_proses.push(row)
-        } else if (row.status === 'ODP' && row.stage === 'Selesai') {
-          this.dataJson.odp_selesai.push(row)
-        } else if (row.status === 'ODP' && row.stage === 'Meninggal') {
-          this.dataJson.odp_meninggal.push(row)
+      // OPTIMIZED: use async on big array operation, use for loop instead of foreach
+      await new Promise((resolve) => {
+        for (let i = 1, len = this.distributionProvinceData.length; i < len; i++) {
+          const row = this.distributionProvinceData[i]
+          if (row.status === 'Positif' && row.stage === 'Proses') {
+            this.dataJson.positif_proses.push(row)
+          } else if (row.status === 'Positif' && row.stage === 'Meninggal') {
+            this.dataJson.positif_meninggal.push(row)
+          } else if (row.status === 'Positif' && row.stage === 'Sembuh') {
+            this.dataJson.positif_sembuh.push(row)
+          } else if (row.status === 'PDP' && row.stage === 'Proses') {
+            this.dataJson.pdp_proses.push(row)
+          } else if (row.status === 'PDP' && row.stage === 'Selesai') {
+            this.dataJson.pdp_selesai.push(row)
+          } else if (row.status === 'PDP' && row.stage === 'Meninggal') {
+            this.dataJson.pdp_meninggal.push(row)
+          } else if (row.status === 'ODP' && row.stage === 'Proses') {
+            this.dataJson.odp_proses.push(row)
+          } else if (row.status === 'ODP' && row.stage === 'Selesai') {
+            this.dataJson.odp_selesai.push(row)
+          } else if (row.status === 'ODP' && row.stage === 'Meninggal') {
+            this.dataJson.odp_meninggal.push(row)
+          }
         }
+        resolve()
       })
 
       this.removeLayer()
@@ -435,7 +449,7 @@ export default {
 
           // add tooltip
           let popup = self.titleize(feature.properties.kemendagri_kabupaten_nama)
-          popup += '<br>Jumlah Kasus : ' + feature.properties.jumlah_kasus
+          popup += '<br>Jumlah Kasus : ' + (feature.properties.jumlah_kasus || '-')
           layer.bindTooltip(popup)
         }
       })
@@ -467,7 +481,7 @@ export default {
           // add tooltip
           let popup = self.titleize(feature.properties.kemendagri_kabupaten_nama)
           popup += '<br>Kecamatan ' + feature.properties.kemendagri_kecamatan_nama
-          popup += '<br>Jumlah Kasus : ' + feature.properties.jumlah_kasus
+          popup += '<br>Jumlah Kasus : ' + (feature.properties.jumlah_kasus || '-')
           layer.bindTooltip(popup)
         }
       })
@@ -500,7 +514,7 @@ export default {
           let popup = self.titleize(feature.properties.kemendagri_kabupaten_nama)
           popup += '<br>Kecamatan ' + feature.properties.kemendagri_kecamatan_nama
           popup += '<br>Kel/Desa ' + feature.properties.kemendagri_desa_nama
-          popup += '<br>Jumlah Kasus :' + feature.properties.jumlah_kasus
+          popup += '<br>Jumlah Kasus : ' + (feature.properties.jumlah_kasus || '-')
           layer.bindTooltip(popup)
         }
       })
@@ -572,10 +586,13 @@ export default {
       // create legend
       const labels = ['<b>Jumlah Kasus: </b>', '<br>', '<ul style="display: flex; margin-top: 10px;">']
       range.forEach((element, index) => {
+        const rangeLabel = typeof element.from !== 'undefined' && typeof element.to !== 'undefined'
+          ? `${element.from} - ${element.to}`
+          : '-'
         labels.push(
           '<li style="margin-right: 20px;"><i style="background:' + self.rangeColor[self.filterActive][index] + '; ' +
           'opacity: 1;"></i>' +
-          element.from + ' - ' + element.to + '</li>'
+          rangeLabel + '</li>'
         )
       })
       labels.push('</ul>')
