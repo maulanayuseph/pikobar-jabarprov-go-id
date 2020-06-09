@@ -10,7 +10,7 @@
     <section class="m-4 mb-8 md:m-8">
       <DataSummary />
     </section>
-    <client-only>
+    <client-only v-if="canRender">
       <section class="m-4 mb-8 md:m-8">
         <!-- OPTIMIZED: remove .sync since DataRDT doesn't mutate this props  -->
         <DataRDT :props-data-rekapitulasi-jabar="jsonDataRekapitulasiJabarProv" />
@@ -183,6 +183,10 @@ import { faFirstAid, faBug, faMap, faCalendarMinus, faArrowRight } from '@fortaw
 import { formatDateTimeShort } from '~/lib/date'
 import { analytics } from '~/lib/firebase'
 
+let isLeafletCSSLoaded = false
+let isLeafletJSLoaded = false
+let isLeafletFullscreenLoaded = false
+
 export default {
   components: {
     DataSummary,
@@ -235,7 +239,11 @@ export default {
       jsonDataRekapitulasiJabarKumulatifKab: [],
       jsonDataNasionalHarianKumulatif: [],
       jsonDataSebaranJabar: [],
-      jsonDataSebaranJabarFaskes: []
+      jsonDataSebaranJabarFaskes: [],
+
+      isLeafletCSSLoaded: false,
+      isLeafletJSLoaded: false,
+      isLeafletFullscreenLoaded: false
     }
   },
   computed: {
@@ -247,6 +255,9 @@ export default {
         return ''
       }
       return this.formatDateTimeShort(this.cases.updated_at)
+    },
+    canRender () {
+      return this.isLeafletJSLoaded && this.isLeafletCSSLoaded && this.isLeafletFullscreenLoaded
     }
   },
   fetchOnServer: true,
@@ -294,27 +305,8 @@ export default {
       this.stat.isActiveFaskes = false
       this.stat.isActiveTimeslider = true
     },
-    // fetch small array on server
-    fetchDataOnServer () {
-      const wrap = async (fn) => {
-        if (process.env.NODE_ENV !== 'production') {
-          console.time(fn.name)
-        }
-        await fn()
-        if (process.env.NODE_ENV !== 'production') {
-          console.timeEnd(fn.name)
-        }
-      }
-      return Promise.all([
-        wrap(this.fetchDataNasionalHarian),
-        wrap(this.fetchDataRekapitulasiJabarProv),
-        wrap(this.fetchDataRekapitulasiJabarHarianProv),
-        wrap(this.fetchDataRekapitulasiJabarKumulatifProv),
-        wrap(this.fetchDataRekapitulasiJabarKab),
-      ])
-    },
     // fetch big array on client
-    fetchDataOnClient () {
+    async fetchDataOnClient () {
       const wrap = async (fn) => {
         if (process.env.NODE_ENV !== 'production') {
           console.time(fn.name)
@@ -324,12 +316,15 @@ export default {
           console.timeEnd(fn.name)
         }
       }
-      return Promise.all([
-        wrap(this.fetchDataRekapitulasiJabarHarianKab),
-        wrap(this.fetchDataRekapitulasiJabarKumulatifKab),
-        wrap(this.fetchDataSebaranJabar),
-        wrap(this.fetchDataSebaranJabarFaskes),
-      ])
+      await wrap(this.fetchDataNasionalHarian)
+      await wrap(this.fetchDataRekapitulasiJabarProv)
+      await wrap(this.fetchDataRekapitulasiJabarHarianProv)
+      await wrap(this.fetchDataRekapitulasiJabarKumulatifProv)
+      await wrap(this.fetchDataRekapitulasiJabarKab)
+      await wrap(this.fetchDataRekapitulasiJabarHarianKab)
+      await wrap(this.fetchDataRekapitulasiJabarKumulatifKab)
+      await wrap(this.fetchDataSebaranJabar)
+      await wrap(this.fetchDataSebaranJabarFaskes)
     },
     fetchDataRekapitulasiJabarProv () {
       const self = this
@@ -429,6 +424,52 @@ export default {
         .catch(function (error) {
           console.log(error)
         })
+    }
+  },
+  head () {
+    return {
+      link: [
+        {
+          hid: 'leaflet-css-link',
+          // once: true,
+          rel: 'stylesheet',
+          href: 'https://unpkg.com/leaflet@1.6.0/dist/leaflet.css',
+          callback: () => {
+            isLeafletCSSLoaded = true
+            this.isLeafletCSSLoaded = true
+          }
+        },
+        {
+          // once: true,
+          skip: !this.isLeafletJSLoaded && !isLeafletJSLoaded,
+          rel: 'stylesheet',
+          href: 'https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/leaflet.fullscreen.css'
+        },
+      ],
+      script: [
+        {
+          hid: 'leaflet-js-script',
+          // once: true,
+          skip: !this.isLeafletCSSLoaded && !isLeafletCSSLoaded,
+          src: 'https://unpkg.com/leaflet@1.6.0/dist/leaflet.js',
+          crossorigin: '',
+          integrity: 'sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==',
+          callback: () => {
+            isLeafletJSLoaded = true
+            this.isLeafletJSLoaded = true
+            console.log('SCRIPT JS IS LOADED', isLeafletJSLoaded, this.isLeafletJSLoaded)
+          }
+        },
+        {
+          // once: true,
+          skip: !this.isLeafletJSLoaded && !isLeafletJSLoaded,
+          src: 'https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/Leaflet.fullscreen.min.js',
+          callback: () => {
+            isLeafletFullscreenLoaded = true
+            this.isLeafletFullscreenLoaded = true
+          }
+        },
+      ]
     }
   }
 }

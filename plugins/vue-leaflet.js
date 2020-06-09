@@ -2,10 +2,10 @@
 import Vue from 'vue'
 import Vue2LeafletMarkerCluster from 'vue2-leaflet-markercluster'
 import VGeosearch from 'vue2-leaflet-geosearch'
-import 'leaflet-fullscreen/dist/leaflet.fullscreen.css'
-import 'leaflet-fullscreen/dist/Leaflet.fullscreen'
+// import 'leaflet-fullscreen/dist/leaflet.fullscreen.css'
+// import 'leaflet-fullscreen/dist/Leaflet.fullscreen'
 import * as Vue2Leaflet from 'vue2-leaflet'
-import * as L from 'leaflet'
+// import * as L from 'leaflet'
 
 Vue.component('l-circle', Vue2Leaflet.LCircle)
 Vue.component('l-circle-marker', Vue2Leaflet.LCircleMarker)
@@ -34,6 +34,8 @@ Vue.component('v-geosearch', VGeosearch)
 Vue.component('v-geosearch', VGeosearch)
 
 // Build icon assets.
+const L = window.L
+
 delete L.Icon.Default.prototype._getIconUrl
 L.Icon.Default.imagePath = ''
 L.Icon.Default.mergeOptions({
@@ -45,7 +47,11 @@ L.Icon.Default.mergeOptions({
 const LeafletPlugin = {
   install (Vue, options) {
     // Expose Leaflet
-    Vue.prototype.$L = L
+    Object.defineProperty(Vue.prototype, '$L', {
+      get () {
+        return window.L
+      }
+    })
   }
 }
 
