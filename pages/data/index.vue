@@ -10,87 +10,88 @@
     <section class="m-4 mb-8 md:m-8">
       <DataSummary />
     </section>
-    <section class="m-4 mb-8 md:m-8">
-      <DataRDT :props-data-rekapitulasi-jabar.sync="jsonDataRekapitulasiJabarProv" />
-    </section>
-    <section class="m-4 mb-8 md:m-8">
-      <DataPCR :props-data-rekapitulasi-jabar.sync="jsonDataRekapitulasiJabarProv" />
-    </section>
-    <section class="m-4 mb-8 md:m-8">
-      <div class="items-stretch flex flex-col xl:flex-row xl:flex-no-wrap">
-        <button
-          class="button-selector m-1 w-full xl:w-auto "
-          style="display: flex;"
-          :active="stat.isActivePolygon"
-          @click="enablePolygon"
-        >
-          <img v-if="stat.isActivePolygon" src="/img/icon-sebaran-active.svg" style="margin-top: 2px; margin-right:5px;">
-          <img v-if="!stat.isActivePolygon" src="/img/icon-sebaran-inactive.svg" style="margin-top: 2px; margin-right:5px;">
-          Sebaran Polygon
-        </button>
-        <button
-          class="button-selector m-1 w-full xl:w-auto "
-          style="display: flex;"
-          :active="stat.isActiveCluster"
-          @click="enableCluster"
-        >
-          <img v-if="stat.isActiveCluster" src="/img/icon-sebaran-active.svg" style="margin-top: 2px; margin-right:5px;">
-          <img v-if="!stat.isActiveCluster" src="/img/icon-sebaran-inactive.svg" style="margin-top: 2px; margin-right:5px;">
-          Sebaran Titik
-        </button>
-        <button
-          class="button-selector m-1 w-full xl:w-auto "
-          style="display: flex;"
-          :active="stat.isActiveFaskes"
-          @click="enableFaskes"
-        >
-          <img v-if="stat.isActiveFaskes" src="/img/icon-faskes-active.svg" style="margin-top: 2px; margin-right:5px;">
-          <img v-if="!stat.isActiveFaskes" src="/img/icon-faskes-inactive.svg" style="margin-top: 2px; margin-right:5px;">
-          Fasilitas Kesehatan
-        </button>
-        <button
-          class="button-selector m-1 w-full xl:w-auto "
-          style="display: flex;"
-          :active="stat.isActiveTimeslider"
-          @click="enableTimeslider"
-        >
-          <img v-if="stat.isActiveTimeslider" src="/img/icon-data-positif-active.svg" style="margin-top: 2px; margin-right:5px;">
-          <img v-if="!stat.isActiveTimeslider" src="/img/icon-data-positif-inactive.svg" style="margin-top: 2px; margin-right:5px;">
-          Timeslider - Data Positif
-        </button>
-      </div>
-      <div class="mt-4">
-        <!-- <MapSebaranCovid v-if="stat.isActiveCovid" />
+    <client-only>
+      <section class="m-4 mb-8 md:m-8">
+        <DataRDT :props-data-rekapitulasi-jabar.sync="jsonDataRekapitulasiJabarProv" />
+      </section>
+      <section class="m-4 mb-8 md:m-8">
+        <DataPCR :props-data-rekapitulasi-jabar.sync="jsonDataRekapitulasiJabarProv" />
+      </section>
+      <section class="m-4 mb-8 md:m-8">
+        <div class="items-stretch flex flex-col xl:flex-row xl:flex-no-wrap">
+          <button
+            class="button-selector m-1 w-full xl:w-auto "
+            style="display: flex;"
+            :active="stat.isActivePolygon"
+            @click="enablePolygon"
+          >
+            <img v-if="stat.isActivePolygon" src="/img/icon-sebaran-active.svg" style="margin-top: 2px; margin-right:5px;">
+            <img v-if="!stat.isActivePolygon" src="/img/icon-sebaran-inactive.svg" style="margin-top: 2px; margin-right:5px;">
+            Sebaran Polygon
+          </button>
+          <button
+            class="button-selector m-1 w-full xl:w-auto "
+            style="display: flex;"
+            :active="stat.isActiveCluster"
+            @click="enableCluster"
+          >
+            <img v-if="stat.isActiveCluster" src="/img/icon-sebaran-active.svg" style="margin-top: 2px; margin-right:5px;">
+            <img v-if="!stat.isActiveCluster" src="/img/icon-sebaran-inactive.svg" style="margin-top: 2px; margin-right:5px;">
+            Sebaran Titik
+          </button>
+          <button
+            class="button-selector m-1 w-full xl:w-auto "
+            style="display: flex;"
+            :active="stat.isActiveFaskes"
+            @click="enableFaskes"
+          >
+            <img v-if="stat.isActiveFaskes" src="/img/icon-faskes-active.svg" style="margin-top: 2px; margin-right:5px;">
+            <img v-if="!stat.isActiveFaskes" src="/img/icon-faskes-inactive.svg" style="margin-top: 2px; margin-right:5px;">
+            Fasilitas Kesehatan
+          </button>
+          <button
+            class="button-selector m-1 w-full xl:w-auto "
+            style="display: flex;"
+            :active="stat.isActiveTimeslider"
+            @click="enableTimeslider"
+          >
+            <img v-if="stat.isActiveTimeslider" src="/img/icon-data-positif-active.svg" style="margin-top: 2px; margin-right:5px;">
+            <img v-if="!stat.isActiveTimeslider" src="/img/icon-data-positif-inactive.svg" style="margin-top: 2px; margin-right:5px;">
+            Timeslider - Data Positif
+          </button>
+        </div>
+        <div class="mt-4">
+          <!-- <MapSebaranCovid v-if="stat.isActiveCovid" />
         <MapFaskes v-if="stat.isActiveRS" />
         <MapSebaranPolygon v-if="stat.isActivePolygon" /> -->
-        <MapV2SebaranPolygon
-          v-if="stat.isActivePolygon"
-          :props-data-sebaran-jawa-barat.sync="jsonDataSebaranJabar"
-        />
-        <MapV2SebaranCluster
-          v-if="stat.isActiveCluster"
-          :props-data-sebaran-jabar.sync="jsonDataSebaranJabar"
-        />
-        <MapV2SebaranFaskes
-          v-if="stat.isActiveFaskes"
-          :props-data-sebaran-jabar-faskes.sync="jsonDataSebaranJabarFaskes"
-        />
-        <MapV2SebaranTimeslider
-          v-if="stat.isActiveTimeslider"
-          :props-data-sebaran-jabar.sync="jsonDataSebaranJabar"
-        />
-      </div>
-    </section>
+          <MapV2SebaranPolygon
+            v-if="stat.isActivePolygon"
+            :props-data-sebaran-jawa-barat.sync="jsonDataSebaranJabar"
+          />
+          <MapV2SebaranCluster
+            v-if="stat.isActiveCluster"
+            :props-data-sebaran-jabar.sync="jsonDataSebaranJabar"
+          />
+          <MapV2SebaranFaskes
+            v-if="stat.isActiveFaskes"
+            :props-data-sebaran-jabar-faskes.sync="jsonDataSebaranJabarFaskes"
+          />
+          <MapV2SebaranTimeslider
+            v-if="stat.isActiveTimeslider"
+            :props-data-sebaran-jabar.sync="jsonDataSebaranJabar"
+          />
+        </div>
+      </section>
 
-    <section class="m-4 mb-8 md:m-8">
-      <BarStatTable
-        :props-data-rekapitulasi-jabar-kab.sync="jsonDataRekapitulasiJabarKab"
-        :props-data-rekapitulasi-jabar-kumulatif-kab.sync="jsonDataRekapitulasiJabarKumulatifKab"
-      />
-    </section>
+      <section class="m-4 mb-8 md:m-8">
+        <BarStatTable
+          :props-data-rekapitulasi-jabar-kab.sync="jsonDataRekapitulasiJabarKab"
+          :props-data-rekapitulasi-jabar-kumulatif-kab.sync="jsonDataRekapitulasiJabarKumulatifKab"
+        />
+      </section>
 
-    <section class="m-4 mb-8 md:m-8">
-      <!-- <BarStatArea
+      <section class="m-4 mb-8 md:m-8">
+        <!-- <BarStatArea
         :props-data-rekapitulasi-jabar-prov.sync="jsonDataRekapitulasiJabarProv"
         :props-data-rekapitulasi-jabar-kab.sync="jsonDataRekapitulasiJabarKab"
         :props-data-rekapitulasi-jabar-harian-prov.sync="jsonDataRekapitulasiJabarHarianProv"
@@ -99,57 +100,58 @@
         :props-data-rekapitulasi-jabar-kumulatif-kab.sync="jsonDataRekapitulasiJabarKumulatifKab"
         :props-data-nasional-harian-kumulatif.sync="jsonDataNasionalHarianKumulatif"
       /> -->
-      <BarStatAreaSingleV2
-        :props-data-rekapitulasi-jabar-prov.sync="jsonDataRekapitulasiJabarProv"
-        :props-data-rekapitulasi-jabar-kab.sync="jsonDataRekapitulasiJabarKab"
-        :props-data-rekapitulasi-jabar-harian-prov.sync="jsonDataRekapitulasiJabarHarianProv"
-        :props-data-rekapitulasi-jabar-harian-kab.sync="jsonDataRekapitulasiJabarHarianKab"
-        :props-data-rekapitulasi-jabar-kumulatif-prov.sync="jsonDataRekapitulasiJabarKumulatifProv"
-        :props-data-rekapitulasi-jabar-kumulatif-kab.sync="jsonDataRekapitulasiJabarKumulatifKab"
-        :props-data-nasional-harian-kumulatif.sync="jsonDataNasionalHarianKumulatif"
-      />
-    </section>
+        <BarStatAreaSingleV2
+          :props-data-rekapitulasi-jabar-prov.sync="jsonDataRekapitulasiJabarProv"
+          :props-data-rekapitulasi-jabar-kab.sync="jsonDataRekapitulasiJabarKab"
+          :props-data-rekapitulasi-jabar-harian-prov.sync="jsonDataRekapitulasiJabarHarianProv"
+          :props-data-rekapitulasi-jabar-harian-kab.sync="jsonDataRekapitulasiJabarHarianKab"
+          :props-data-rekapitulasi-jabar-kumulatif-prov.sync="jsonDataRekapitulasiJabarKumulatifProv"
+          :props-data-rekapitulasi-jabar-kumulatif-kab.sync="jsonDataRekapitulasiJabarKumulatifKab"
+          :props-data-nasional-harian-kumulatif.sync="jsonDataNasionalHarianKumulatif"
+        />
+      </section>
 
-    <section class="m-4 mb-8 md:m-8">
-      <div class="chart-container w-full">
-        <BarStatJenisKelamin :props-data-rekapitulasi-jabar.sync="jsonDataRekapitulasiJabarProv" />
-        <BarStatUsia :props-data-rekapitulasi-jabar.sync="jsonDataRekapitulasiJabarProv" />
-      </div>
-    </section>
+      <section class="m-4 mb-8 md:m-8">
+        <div class="chart-container w-full">
+          <BarStatJenisKelamin :props-data-rekapitulasi-jabar.sync="jsonDataRekapitulasiJabarProv" />
+          <BarStatUsia :props-data-rekapitulasi-jabar.sync="jsonDataRekapitulasiJabarProv" />
+        </div>
+      </section>
 
-    <section class="m-4 md:m-8">
-      <!-- <BarStatHarianAkumulatif
+      <section class="m-4 md:m-8">
+        <!-- <BarStatHarianAkumulatif
         :props-data-rekapitulasi-jabar-harian-prov.sync="jsonDataRekapitulasiJabarHarianProv"
         :props-data-rekapitulasi-jabar-kumulatif-prov.sync="jsonDataRekapitulasiJabarKumulatifProv"
       /> -->
-      <BarStatHarianAkumulatifV2
-        :props-data-rekapitulasi-jabar-harian-prov.sync="jsonDataRekapitulasiJabarHarianProv"
-        :props-data-rekapitulasi-jabar-kumulatif-prov.sync="jsonDataRekapitulasiJabarKumulatifProv"
-      />
-    </section>
+        <BarStatHarianAkumulatifV2
+          :props-data-rekapitulasi-jabar-harian-prov.sync="jsonDataRekapitulasiJabarHarianProv"
+          :props-data-rekapitulasi-jabar-kumulatif-prov.sync="jsonDataRekapitulasiJabarKumulatifProv"
+        />
+      </section>
 
-    <section class="m-4 md:m-8 flex">
-      <a class="link-hover bg-white rounded-lg overflow-hidden shadow-md w-1/2 mr-2" href="/table-case" target="_blank">
-        <div class="flex" style="padding: 40px;">
-          <div class="w-5/6 text-xl">
-            <b>Akses Data Kasus COVID-19 - <br>di sini</b>
+      <section class="m-4 md:m-8 flex">
+        <a class="link-hover bg-white rounded-lg overflow-hidden shadow-md w-1/2 mr-2" href="/table-case" target="_blank">
+          <div class="flex" style="padding: 40px;">
+            <div class="w-5/6 text-xl">
+              <b>Akses Data Kasus COVID-19 - <br>di sini</b>
+            </div>
+            <div class="w-1/6">
+              <FontAwesomeIcon :icon="faArrowRight" size="2x" style="margin-top: 10px;" />
+            </div>
           </div>
-          <div class="w-1/6">
-            <FontAwesomeIcon :icon="faArrowRight" size="2x" style="margin-top: 10px;" />
+        </a>
+        <a class="link-hover bg-white rounded-lg overflow-hidden shadow-md w-1/2 ml-2" href="https://covid19-public.digitalservice.id/api/v1/">
+          <div class="flex" style="padding: 40px;">
+            <div class="w-5/6 text-xl">
+              <b>Dapatkan akses API Publik - <br>Data Pikobar di sini</b>
+            </div>
+            <div class="w-1/6">
+              <FontAwesomeIcon :icon="faArrowRight" size="2x" style="margin-top: 10px;" />
+            </div>
           </div>
-        </div>
-      </a>
-      <a class="link-hover bg-white rounded-lg overflow-hidden shadow-md w-1/2 ml-2" href="https://covid19-public.digitalservice.id/api/v1/">
-        <div class="flex" style="padding: 40px;">
-          <div class="w-5/6 text-xl">
-            <b>Dapatkan akses API Publik - <br>Data Pikobar di sini</b>
-          </div>
-          <div class="w-1/6">
-            <FontAwesomeIcon :icon="faArrowRight" size="2x" style="margin-top: 10px;" />
-          </div>
-        </div>
-      </a>
-    </section>
+        </a>
+      </section>
+    </client-only>
   </div>
 </template>
 
