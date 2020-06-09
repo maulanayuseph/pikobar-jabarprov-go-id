@@ -227,16 +227,14 @@ export default {
       return this.formatDateTimeShort(this.cases.updated_at)
     }
   },
-  created () {
-    this.fetchDataNasionalHarian()
-    this.fetchDataRekapitulasiJabarProv()
-    this.fetchDataRekapitulasiJabarHarianProv()
-    this.fetchDataRekapitulasiJabarKumulatifProv()
-    this.fetchDataRekapitulasiJabarKab()
-    this.fetchDataRekapitulasiJabarHarianKab()
-    this.fetchDataRekapitulasiJabarKumulatifKab()
-    this.fetchDataSebaranJabarFaskes()
-    this.fetchDataSebaranJabar()
+  fetchOnServer: true,
+  async fetch () {
+    await this.fetchAllData()
+  },
+  activated () {
+    if (this.$fetchState.timestamp <= (Date.now() - 30000)) {
+      this.$fetch()
+    }
   },
   mounted () {
     this.$store.dispatch('statistics/getCases')
@@ -272,9 +270,22 @@ export default {
       this.stat.isActiveFaskes = false
       this.stat.isActiveTimeslider = true
     },
+    fetchAllData () {
+      return Promise.all([
+        this.fetchDataNasionalHarian(),
+        this.fetchDataRekapitulasiJabarProv(),
+        this.fetchDataRekapitulasiJabarHarianProv(),
+        this.fetchDataRekapitulasiJabarKumulatifProv(),
+        this.fetchDataRekapitulasiJabarKab(),
+        this.fetchDataRekapitulasiJabarHarianKab(),
+        this.fetchDataRekapitulasiJabarKumulatifKab(),
+        this.fetchDataSebaranJabarFaskes(),
+        this.fetchDataSebaranJabar()
+      ])
+    },
     fetchDataRekapitulasiJabarProv () {
       const self = this
-      axios
+      return axios
         .get('https://covid19-public.digitalservice.id/api/v1/rekapitulasi/jabar?level=prov')
         .then(function (response) {
           self.jsonDataRekapitulasiJabarProv = response.data.data.content
@@ -285,7 +296,7 @@ export default {
     },
     fetchDataRekapitulasiJabarKab () {
       const self = this
-      axios
+      return axios
         .get('https://covid19-public.digitalservice.id/api/v1/rekapitulasi/jabar?level=kab')
         .then(function (response) {
           self.jsonDataRekapitulasiJabarKab = response.data.data.content
@@ -296,7 +307,7 @@ export default {
     },
     fetchDataRekapitulasiJabarHarianProv () {
       const self = this
-      axios
+      return axios
         .get('https://covid19-public.digitalservice.id/api/v1/rekapitulasi/jabar/harian?level=prov')
         .then(function (response) {
           self.jsonDataRekapitulasiJabarHarianProv = response.data.data.content
@@ -307,7 +318,7 @@ export default {
     },
     fetchDataRekapitulasiJabarHarianKab () {
       const self = this
-      axios
+      return axios
         .get('https://covid19-public.digitalservice.id/api/v1/rekapitulasi/jabar/harian?level=kab')
         .then(function (response) {
           self.jsonDataRekapitulasiJabarHarianKab = response.data.data.content
@@ -318,7 +329,7 @@ export default {
     },
     fetchDataRekapitulasiJabarKumulatifProv () {
       const self = this
-      axios
+      return axios
         .get('https://covid19-public.digitalservice.id/api/v1/rekapitulasi/jabar/kumulatif?level=prov')
         .then(function (response) {
           self.jsonDataRekapitulasiJabarKumulatifProv = response.data.data.content
@@ -329,7 +340,7 @@ export default {
     },
     fetchDataRekapitulasiJabarKumulatifKab () {
       const self = this
-      axios
+      return axios
         .get('https://covid19-public.digitalservice.id/api/v1/rekapitulasi/jabar/kumulatif?level=kab')
         .then(function (response) {
           self.jsonDataRekapitulasiJabarKumulatifKab = response.data.data.content
@@ -340,7 +351,7 @@ export default {
     },
     fetchDataNasionalHarian () {
       const self = this
-      axios
+      return axios
         .get('https://indonesia-covid-19.mathdro.id/api/harian')
         .then(function (response) {
           self.jsonDataNasionalHarianKumulatif = response.data.data
@@ -351,7 +362,7 @@ export default {
     },
     fetchDataSebaranJabar () {
       const self = this
-      axios
+      return axios
         .get('https://covid19-public.digitalservice.id/api/v1/sebaran/jabar')
         .then(function (response) {
           self.jsonDataSebaranJabar = response.data.data.content
@@ -362,7 +373,7 @@ export default {
     },
     fetchDataSebaranJabarFaskes () {
       const self = this
-      axios
+      return axios
         .get('https://covid19-public.digitalservice.id/api/v1/sebaran/jabar/faskes')
         .then(function (response) {
           self.jsonDataSebaranJabarFaskes = response.data.data

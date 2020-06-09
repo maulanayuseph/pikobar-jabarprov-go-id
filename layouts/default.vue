@@ -23,7 +23,7 @@
       style="min-height: 75vh;"
     >
       <div ref="sidebarTopRef" style="visibility: hidden;" />
-      <nuxt />
+      <nuxt keep-alive :keep-alive-props="{ max: 10 }" />
     </div>
     <BackToTopButton />
     <AppFooter v-show="isTopLevelRoute" class="container mx-auto pb-32">
