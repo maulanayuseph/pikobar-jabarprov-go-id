@@ -2,7 +2,7 @@
   <div
     class="bg-white overflow-hidden rounded-lg shadow-md"
   >
-    <div class="container-map example">
+    <div class="container-map">
       <div
         id="map-wrap-polygon"
         style="height: 500px; z-index:0; position: relative;">
@@ -325,7 +325,7 @@ export default {
   },
   methods: {
     toggle () {
-      this.$fullscreen.toggle(this.$el.querySelector('.example'), {
+      this.$fullscreen.toggle(this.$el.querySelector('.container-map'), {
         wrap: false,
         callback: this.fullscreenChange
       })
