@@ -735,10 +735,10 @@ export default {
           bottom: 100
         },
         series: {
-          0: { lineWidth: 2 },
-          1: { lineWidth: 2 },
-          2: { lineWidth: 2 },
-          3: { lineWidth: 2 }
+          0: { lineWidth: 3 },
+          1: { lineWidth: 3 },
+          2: { lineWidth: 3 },
+          3: { lineWidth: 3 }
         },
         tooltip: { isHtml: true }
       },

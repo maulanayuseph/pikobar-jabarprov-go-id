@@ -103,6 +103,7 @@
               style="margin-right: 0.5em;"
             />PDP - Proses
           </li>
+          <!--
           <li
             :class="filter.pdp_selesai?'filter-active':''"
             @click="setFilter('pdp_selesai')"
@@ -112,6 +113,7 @@
               style="margin-right: 0.5em;"
             />PDP - Selesai
           </li>
+          !-->
           <li
             :class="filter.pdp_meninggal?'filter-active':''"
             @click="setFilter('pdp_meninggal')"
@@ -130,6 +132,7 @@
               style="margin-right: 0.5em;"
             />ODP - Proses
           </li>
+           <!--
           <li
             :class="filter.odp_selesai?'filter-active':''"
             @click="setFilter('odp_selesai')"
@@ -139,6 +142,7 @@
               style="margin-right: 0.5em;"
             />ODP - Selesai
           </li>
+          !-->
           <li
             :class="filter.odp_meninggal?'filter-active':''"
             @click="setFilter('odp_meninggal')"
