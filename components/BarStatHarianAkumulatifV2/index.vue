@@ -607,7 +607,7 @@ export default {
           val[i - 3].pdp + val[i - 4].pdp + val[i - 5].pdp
           odpRatarata = odpJml / 6
           pdpRatarata = pdpJml / 6
-        } else if (i > 6) {
+        } else if (i >= 6) {
           odpJml = val[i].odp + val[i - 1].odp + val[i - 2].odp +
             val[i - 3].odp + val[i - 4].odp + val[i - 5].odp +
             val[i - 6].odp

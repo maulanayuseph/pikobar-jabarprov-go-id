@@ -1038,7 +1038,7 @@ export default {
           jml = val[i].positif + val[i - 1].positif + val[i - 2].positif +
           val[i - 3].positif + val[i - 4].positif + val[i - 5].positif
           ratarata = jml / 6
-        } else if (i > 6) {
+        } else if (i >= 6) {
           jml = val[i].positif + val[i - 1].positif + val[i - 2].positif +
             val[i - 3].positif + val[i - 4].positif + val[i - 5].positif +
             val[i - 6].positif
@@ -1108,7 +1108,7 @@ export default {
           // jmlKumulatif = val[i].jumlahKasusKumulatif + val[i - 1].jumlahKasusKumulatif + val[i - 2].jumlahKasusKumulatif +
           //   val[i - 3].jumlahKasusKumulatif + val[i - 4].jumlahKasusKumulatif + val[i - 5].jumlahKasusKumulatif
           // ratarataKumulatif = jmlKumulatif / 6
-        } else if (i > 6) {
+        } else if (i >= 6) {
           jmlHarian = val[i].jumlahKasusBaruperHari + val[i - 1].jumlahKasusBaruperHari + val[i - 2].jumlahKasusBaruperHari +
             val[i - 3].jumlahKasusBaruperHari + val[i - 4].jumlahKasusBaruperHari + val[i - 5].jumlahKasusBaruperHari +
             val[i - 6].jumlahKasusBaruperHari
@@ -1295,7 +1295,7 @@ export default {
               jml = this.jsonDataKabupatenHarian[i].positif + this.jsonDataKabupatenHarian[i - (1 * 27)].positif + this.jsonDataKabupatenHarian[i - (2 * 27)].positif +
               this.jsonDataKabupatenHarian[i - (3 * 27)].positif + this.jsonDataKabupatenHarian[i - (4 * 27)].positif + this.jsonDataKabupatenHarian[i - (5 * 27)].positif
               ratarata = jml / 6
-            } else if (i > 6 * 27) {
+            } else if (i >= 6 * 27) {
               jml = this.jsonDataKabupatenHarian[i].positif + this.jsonDataKabupatenHarian[i - (1 * 27)].positif + this.jsonDataKabupatenHarian[i - (2 * 27)].positif +
                 this.jsonDataKabupatenHarian[i - (3 * 27)].positif + this.jsonDataKabupatenHarian[i - (4 * 27)].positif + this.jsonDataKabupatenHarian[i - (5 * 27)].positif +
                 this.jsonDataKabupatenHarian[i - (6 * 27)].positif
