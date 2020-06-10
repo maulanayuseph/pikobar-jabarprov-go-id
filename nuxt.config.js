@@ -13,7 +13,10 @@ export default {
     FIREBASE_MEASUREMENT_ID: process.env.FIREBASE_MEASUREMENT_ID,
     FIREBASE_PUBLIC_VAPID_KEY: process.env.FIREBASE_PUBLIC_VAPID_KEY,
     APP_TITLE,
-    URL: process.env.URL
+    URL: process.env.URL,
+    WMS_API_KEY: process.env.WMS_API_KEY,
+    WMS_BASE_URL: process.env.WMS_BASE_URL,
+    RECAPTCHA_SITE_KEY: process.env.RECAPTCHA_SITE_KEY
   },
   router: {
     prefetchLinks: false
@@ -22,7 +25,8 @@ export default {
     fallback: true,
     interval: 100,
     exclude: [
-      /^\/(\bdata\b).*$/
+      /^\/(\bdata\b).*$/,
+      /^\/(\bdonate\b).*$/
     ],
     async routes () {
       const genFn = await import('./routes-generator').then(m => m ? m.default || m : null)
@@ -81,7 +85,8 @@ export default {
     { src: '~/plugins/vue-lazyload.js', mode: 'client' },
     { src: '~/plugins/vue-carousel.js', mode: 'client' },
     { src: '~/plugins/vue-rangedate-picker', mode: 'client' },
-    { src: '~/plugins/vue-fullscreen', mode: 'client' }
+    { src: '~/plugins/vue-fullscreen', mode: 'client' },
+    { src: '~/plugins/custom', mode: 'client' }
   ],
   /*
   ** Nuxt.js dev-modules

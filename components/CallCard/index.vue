@@ -10,23 +10,23 @@
   >
     <div class="hidden sm:block lg:inline-flex lg:order-2 lg:w-full items-center text-green-500">
       <FontAwesomeIcon
-        class="mr-3 text-2xl pointer-events-none lg:hidden xl:inline-block"
-        :icon="icon.faPhoneAlt"
+        :class="['mr-3 lg:hidden xl:inline-block text-2xl', iconClass]"
+        :icon="iconToUse"
       />
-      <label class="hidden text-xl lg:inline-block font-bold ml-2">
+      <span class="hidden text-xl lg:inline-block font-bold ml-2">
         {{ number }}
-      </label>
+      </span>
     </div>
-    <div class="pointer-events-none text-gray-900 lg:order-1 sm:ml-2 lg:ml-0 lg:mb-4">
-      <label class="block text-base" v-text="title" />
+    <div class="text-gray-900 lg:order-1 sm:ml-2 lg:ml-0 lg:mb-4">
+      <span class="block text-base" v-text="title" />
       <small
         v-if="subtitle"
         class="block text-sm opacity-75"
         v-text="subtitle"
       />
-      <label class="hidden sm:block lg:hidden text-xl lg:inline-block font-bold text-green-500">
+      <span class="hidden sm:block lg:hidden text-xl lg:inline-block font-bold text-green-500">
         {{ number }}
-      </label>
+      </span>
     </div>
     <label class="flex-none w-full sm:hidden text-xl font-bold text-green-500">
       {{ number }}
@@ -55,13 +55,29 @@ export default {
     logOnClick: {
       type: Boolean,
       default: false
+    },
+    href: {
+      type: String,
+      default: null
+    },
+    icon: {
+      type: Object,
+      default: null
+    },
+    iconClass: {
+      type: String,
+      default: ''
     }
   },
-  data () {
-    return {
-      icon: {
-        faPhoneAlt
+  computed: {
+    iconToUse () {
+      if (!this.icon) {
+        return faPhoneAlt
       }
+      if (typeof this.icon === 'object') {
+        return this.icon
+      }
+      return null
     }
   },
   methods: {
@@ -71,7 +87,11 @@ export default {
           to: this.number
         })
       }
-      window.open(`tel:${this.number}`, '_blank')
+      if (!this.href) {
+        window.open(`tel:${this.number}`, '_blank')
+      } else {
+        window.open(`${this.href}`, '_blank')
+      }
     }
   }
 }
