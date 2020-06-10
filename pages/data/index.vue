@@ -443,6 +443,7 @@ export default {
     width:100%;
     height:100%;
     position: relative;
+    background-color: #ffffff;
 }
 
 .filter-layer {
@@ -721,6 +722,26 @@ export default {
 
 .leaflet-control-geosearch a.reset:hover {
   background: #f5f5f5;
+}
+
+.btn-fullscreen {
+  position: absolute;
+  bottom: 0px;
+  left: 10px;
+  font-size: 1.3em;
+  padding: 2px 6px;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.65);
+  z-index: 401;
+}
+
+.btn-fullscreen:hover {
+  cursor: pointer;
+}
+
+.title-map {
+  position: absolute;
+  top: 0;
+  color: #ffffff;
 }
 
 </style>

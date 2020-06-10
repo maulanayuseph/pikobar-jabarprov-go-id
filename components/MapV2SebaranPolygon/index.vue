@@ -5,8 +5,19 @@
     <div class="container-map">
       <div
         id="map-wrap-polygon"
-        style="height: 500px; z-index:0; position: relative;"
-      />
+        style="height: 500px; z-index:0; position: relative;">
+        <button
+          class="btn-fullscreen btn btn-light mb-2"
+          style="background-color: white"
+          @click="toggle"
+        >
+          <font-awesome-icon v-if="fullscreen" :icon="faCompress" />
+          <font-awesome-icon v-if="!fullscreen" :icon="faExpand" />
+        </button>
+      </div>
+      <div :class="activeTitle.className" class="title-map mt-2 ml-2 p-2 rounded">
+        Peta Sebaran {{ activeTitle.name }}
+      </div>
       <div class="filter-layer">
         <div class="text-right">
           <button
@@ -154,6 +165,7 @@
           </li>
         </div>
       </div>
+
       <div class="legend-data info-legend p-3">
         <!-- eslint-disable-next-line vue/no-v-html -->
         <div class="mb-1" v-html="infolegend" />
@@ -164,13 +176,12 @@
 
 <script>
 
-import { faFilter, faHome, faLayerGroup } from '@fortawesome/free-solid-svg-icons'
+import { faFilter, faHome, faLayerGroup, faExpand, faCompress } from '@fortawesome/free-solid-svg-icons'
 import { GeoSearchControl, OpenStreetMapProvider } from 'leaflet-geosearch'
 import jsonKota from '@/assets/kotaV2.json'
 import jsonKecamatan from '@/assets/kecamatanV2.json'
 import jsonKelurahan from '@/assets/kelurahanV2.json'
 const percentile = require('percentile')
-
 export default {
   name: 'MapV2SebaranPolygon',
   props: {
@@ -181,12 +192,15 @@ export default {
   },
   data () {
     return {
+      fullscreen: false,
       map: '',
       zoom: 9,
 
       faFilter,
       faHome,
       faLayerGroup,
+      faExpand,
+      faCompress,
 
       distributionProvinceData: [],
 
@@ -242,7 +256,10 @@ export default {
         kelurahan: false
       },
       layerActive: 'kota',
-
+      activeTitle: {
+        className: 'cluster-positif-proses',
+        name: 'Positif - Proses'
+      },
       rangeColor: {
         positif_proses: ['#E54C95', '#E40769', '#CE005E', '#B30253', '#940047'],
         positif_meninggal: ['#F78C5B', '#EE654C', '#CF331D', '#B60008', '#7D0005'],
@@ -256,7 +273,33 @@ export default {
       },
 
       range: [],
-      infolegend: ''
+      infolegend: '',
+      totalPerCluster: {
+        kota: {
+          0: 0,
+          1: 0,
+          2: 0,
+          3: 0,
+          4: 0,
+          5: 0
+        },
+        kecamatan: {
+          0: 0,
+          1: 0,
+          2: 0,
+          3: 0,
+          4: 0,
+          5: 0
+        },
+        kelurahan: {
+          0: 0,
+          1: 0,
+          2: 0,
+          3: 0,
+          4: 0,
+          5: 0
+        }
+      }
     }
   },
   computed: {
@@ -294,7 +337,20 @@ export default {
     // this.onChanges()
   },
   methods: {
-
+    toggle () {
+      this.$fullscreen.toggle(this.$el.querySelector('.container-map'), {
+        wrap: false,
+        callback: this.fullscreenChange
+      })
+    },
+    fullscreenChange (fullscreen) {
+      this.fullscreen = fullscreen
+      if (fullscreen) {
+        document.getElementById('map-wrap-polygon').style.height = '85%'
+      } else {
+        document.getElementById('map-wrap-polygon').style.height = '500px'
+      }
+    },
     onChanges () {
       console.log('polygon on changes')
       this.dataJson.positif_proses = []
@@ -359,18 +415,18 @@ export default {
         .addTo(this.map)
 
       // add full screen control with your options
-      this.$L.control
-        .fullscreen({
-          position: 'bottomleft'
-        })
-        .addTo(this.map)
+      // this.$L.control
+      //   .fullscreen({
+      //     position: 'bottomleft'
+      //   })
+      //   .addTo(this.map)
 
       // add search control
       const searchProvider = new OpenStreetMapProvider()
       // eslint-disable-next-line no-unused-vars
       const searchControl = new GeoSearchControl({
         provider: searchProvider,
-        position: 'topleft',
+        position: 'bottomright',
         showMarker: true,
         autoClose: true,
         marker: {
@@ -426,7 +482,43 @@ export default {
       })
       this.dataLayer = []
     },
+    createLegend () {
+      let detailLabel = ''
+      // create legend
+      const labels = ['<b>Jumlah Kasus: </b>', '<br>', '<ul style="display: flex; margin-top: 10px;">']
 
+      let region = ''
+      switch (this.layerActive) {
+        case 'kecamatan': {
+          region = 'Kecamatan'
+          break
+        }
+        case 'kelurahan': {
+          region = 'Kelurahan/Desa'
+          break
+        }
+        default: {
+          region = 'Kota/Kabupaten'
+        }
+      }
+      detailLabel = '<li style="margin-right: 20px;"><i style="background:#ffffff;border: 1px solid #000000;' +
+          'opacity: 1;"></i>' + '0 - 0'
+      detailLabel += ' <br> <span class="text-xs">' + this.totalPerCluster[this.layerActive][0] + ' ' + region + '</span></li>'
+      labels.push(
+        detailLabel
+      )
+      this.range.forEach((element, index) => {
+        detailLabel = '<li style="margin-right: 20px;"><i style="background:' + this.rangeColor[this.filterActive][index] + '; ' +
+            'opacity: 1;"></i>' +
+            element.from + ' - ' + element.to
+        detailLabel += ' <br> <span class="text-xs">' + this.totalPerCluster[this.layerActive][index + 1] + ' ' + region + '</span></li>'
+        labels.push(
+          detailLabel
+        )
+      })
+      labels.push('</ul>')
+      this.infolegend = labels.join('')
+    },
     createLayerKota (category) {
       const self = this
       const result = this.createRange(self.styleColorPolygon[category], 'kota', this.dataJson[category], jsonKota.features)
@@ -456,6 +548,8 @@ export default {
           layer.bindTooltip(popup)
         }
       })
+
+      this.createLegend()
     },
 
     createLayerKecamatan (category) {
@@ -488,6 +582,7 @@ export default {
           layer.bindTooltip(popup)
         }
       })
+      this.createLegend()
     },
 
     createLayerKelurahan (category) {
@@ -521,10 +616,11 @@ export default {
           layer.bindTooltip(popup)
         }
       })
+      this.createLegend()
     },
 
     createRange (hex, wilayah, data, geojson) {
-      const self = this
+      // const self = this
       // let max = 0
       // let min = 0
       // let z = 0
@@ -586,42 +682,51 @@ export default {
       range.push({ from: q4, to: q5 })
       range.push({ from: q5, to: q6 })
 
-      // create legend
-      const labels = ['<b>Jumlah Kasus: </b>', '<br>', '<ul style="display: flex; margin-top: 10px;">']
-      range.forEach((element, index) => {
-        labels.push(
-          '<li style="margin-right: 20px;"><i style="background:' + self.rangeColor[self.filterActive][index] + '; ' +
-          'opacity: 1;"></i>' +
-          element.from + ' - ' + element.to + '</li>'
-        )
-      })
-      labels.push('</ul>')
-      this.infolegend = labels.join('')
       return [range, geojson]
     },
 
     getColor (range, angka, category) {
       let color = ''
       if (angka === 0) {
-        color = '#00000000'
+        this.totalPerCluster[this.layerActive][0] += 1
+        color = '#ffffff'
       } else if (angka >= range[0].from && angka < range[0].to + 1) {
+        this.totalPerCluster[this.layerActive][1] += 1
         color = this.rangeColor[category][0]
       } else if (angka >= range[1].from && angka < range[1].to + 1) {
+        this.totalPerCluster[this.layerActive][2] += 1
         color = this.rangeColor[category][1]
       } else if (angka >= range[2].from && angka < range[2].to + 1) {
+        this.totalPerCluster[this.layerActive][3] += 1
         color = this.rangeColor[category][2]
       } else if (angka >= range[3].from && angka < range[3].to + 1) {
+        this.totalPerCluster[this.layerActive][4] += 1
         color = this.rangeColor[category][3]
       } else if (angka >= range[4].from && angka < range[4].to + 1) {
+        this.totalPerCluster[this.layerActive][5] += 1
         color = this.rangeColor[category][4]
       }
+
       return color
     },
 
     showFilter () {
       this.isShowFilter = !this.isShowFilter
     },
+    resetTotalCluster () {
+      this.totalPerCluster[this.layerActive] = {
+        0: 0,
+        1: 0,
+        2: 0,
+        3: 0,
+        4: 0,
+        5: 0
+      }
+    },
     setFilter (category) {
+      this.resetTotalCluster()
+
+      this.setTitle(category)
       this.removeMarker()
       for (const cat of Object.keys(this.filter)) {
         this.filter[cat] = false
@@ -651,11 +756,64 @@ export default {
         this.createLayerKelurahan(this.filterActive)
       }
     },
-
+    setTitle (category) {
+      switch (category) {
+        case 'positif_sembuh': {
+          this.activeTitle = {
+            name: 'Positif - Sembuh',
+            className: 'cluster-positif-sembuh'
+          }
+          break
+        }
+        case 'positif_meninggal': {
+          this.activeTitle = {
+            name: 'Positif - Meninggal',
+            className: 'cluster-positif-meninggal'
+          }
+          break
+        }
+        case 'pdp_proses': {
+          this.activeTitle = {
+            name: 'PDP - Proses',
+            className: 'cluster-pdp-proses'
+          }
+          break
+        }
+        case 'pdp_meninggal': {
+          this.activeTitle = {
+            name: 'PDP - Meninggal',
+            className: 'cluster-pdp-meninggal'
+          }
+          break
+        }
+        case 'odp_proses': {
+          this.activeTitle = {
+            name: 'ODP - Proses',
+            className: 'cluster-odp-proses'
+          }
+          break
+        }
+        case 'odp_meninggal': {
+          this.activeTitle = {
+            name: 'ODP - Meninggal',
+            className: 'cluster-odp-meninggal'
+          }
+          break
+        }
+        default: {
+          this.activeTitle = {
+            name: 'Positif - Proses',
+            className: 'cluster-positif-proses'
+          }
+        }
+      }
+    },
     showLayer () {
       this.isShowLayer = !this.isShowLayer
     },
     setLayer (category) {
+      this.resetTotalCluster()
+
       for (const cat of Object.keys(this.layer)) {
         this.layer[cat] = false
       }
