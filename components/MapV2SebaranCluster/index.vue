@@ -103,7 +103,7 @@
               style="margin-right: 0.5em;"
             />PDP - Proses
           </li>
-           <!--
+          <!--
           <li
             :class="filter.pdp_selesai?'filter-active':''"
             @click="setFilter('pdp_selesai')"
@@ -132,7 +132,7 @@
               style="margin-right: 0.5em;"
             />ODP - Proses
           </li>
-           <!--
+          <!--
           <li
             :class="filter.odp_selesai?'filter-active':''"
             @click="setFilter('odp_selesai')"
@@ -176,7 +176,7 @@
               class="legend-color cluster-pdp-proses"
               style="margin-right: 0.5em;"
             />PDP - Aktif <br>
-             <!--
+            <!--
             <div
               class="legend-color cluster-pdp-selesai"
               style="margin-right: 0.5em;"
@@ -337,10 +337,20 @@ export default {
       statusOpenedMap: ''
     }
   },
+  computed: {
+    dataSebaranJabar () {
+      return this.$store.getters['data-sebaran-jabar/itemsMap']
+    }
+  },
   watch: {
-    propsDataSebaranJabar () {
+    // propsDataSebaranJabar () {
+    //   console.log('cluster on watch')
+    //   this.distributionProvinceData = this.propsDataSebaranJabar
+    //   this.onChanges()
+    // }
+    dataSebaranJabar (val) {
       console.log('cluster on watch')
-      this.distributionProvinceData = this.propsDataSebaranJabar
+      this.distributionProvinceData = val
       this.onChanges()
     }
   },
@@ -355,7 +365,10 @@ export default {
   },
   created () {
     console.log('cluster on created')
-    this.distributionProvinceData = this.propsDataSebaranJabar
+    // this.distributionProvinceData = this.propsDataSebaranJabar
+    if (this.$store.getters['data-sebaran-jabar/itemsMap']) {
+      this.distributionProvinceData = this.$store.getters['data-sebaran-jabar/itemsMap']
+    }
     // this.onChanges()
   },
   methods: {

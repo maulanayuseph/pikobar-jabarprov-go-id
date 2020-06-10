@@ -265,6 +265,16 @@ export default {
       isGrouping: false
     }
   },
+  computed: {
+    dataSebaranJabar () {
+      return this.$store.getters['data-sebaran-jabar/itemsMap']
+    }
+  },
+  watch: {
+    dataSebaranJabar (val) {
+      this.jsonData = val
+    }
+  },
   beforeMount () {
     // this.tesMap()
   },
@@ -313,7 +323,10 @@ export default {
       //   .catch(function (error) {
       //     console.log(error)
       //   })
-      self.jsonData = self.propsDataSebaranJabar
+      // self.jsonData = self.propsDataSebaranJabar
+      if (this.$store.getters['data-sebaran-jabar/itemsMap']) {
+        self.jsonData = self.$store.getters['data-sebaran-jabar/itemsMap']
+      }
       self.createMap('kota')
     },
     createBasemap () {

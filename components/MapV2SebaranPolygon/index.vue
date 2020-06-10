@@ -132,7 +132,7 @@
               style="margin-right: 0.5em;"
             />ODP - Proses
           </li>
-           <!--
+          <!--
           <li
             :class="filter.odp_selesai?'filter-active':''"
             @click="setFilter('odp_selesai')"
@@ -259,10 +259,20 @@ export default {
       infolegend: ''
     }
   },
+  computed: {
+    dataSebaranJabar () {
+      return this.$store.getters['data-sebaran-jabar/itemsMap']
+    }
+  },
   watch: {
-    propsDataSebaranJawaBarat () {
+    // propsDataSebaranJawaBarat () {
+    //   console.log('polygon on watch')
+    //   this.distributionProvinceData = this.propsDataSebaranJawaBarat
+    //   this.onChanges()
+    // }
+    dataSebaranJabar (val) {
       console.log('polygon on watch')
-      this.distributionProvinceData = this.propsDataSebaranJawaBarat
+      this.distributionProvinceData = val
       this.onChanges()
     }
   },
@@ -277,7 +287,10 @@ export default {
   },
   created () {
     console.log('polygon on created')
-    this.distributionProvinceData = this.propsDataSebaranJawaBarat
+    // this.distributionProvinceData = this.propsDataSebaranJawaBarat
+    if (this.$store.getters['data-sebaran-jabar/itemsMap']) {
+      this.distributionProvinceData = this.$store.getters['data-sebaran-jabar/itemsMap']
+    }
     // this.onChanges()
   },
   methods: {

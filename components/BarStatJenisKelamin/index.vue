@@ -133,9 +133,18 @@ export default {
       }
     }
   },
+  computed: {
+    dataRekapitulasiJabarProv () {
+      return this.$store.getters['data-rekapitulasi-jabar-prov/itemsMap']
+    }
+  },
   watch: {
-    propsDataRekapitulasiJabar () {
-      this.jsonDataRekapitulasiJabar = this.propsDataRekapitulasiJabar
+    // propsDataRekapitulasiJabar () {
+    //   this.jsonDataRekapitulasiJabar = this.propsDataRekapitulasiJabar
+    //   this.changeGroupJenisKelamin('Positif - Aktif')
+    // }
+    dataRekapitulasiJabarProv (val) {
+      this.jsonDataRekapitulasiJabar = val
       this.changeGroupJenisKelamin('Positif - Aktif')
     }
   },
