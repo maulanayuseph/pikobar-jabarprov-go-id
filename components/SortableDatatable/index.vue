@@ -53,8 +53,9 @@
       <table class="table w-full border-t border-solid border-gray-300 tableFixHead">
         <thead class="select-none">
           <tr>
-            <th rowspan="1" class="px-2 py-1 hover:opacity-75" style="background-color: #EBEBEB; color: #5F5F5F; text-align: left; padding-left:20px;">
+            <th rowspan="1" class="px-2 py-1 hover:opacity-75" style="background-color: #EBEBEB; color: #5F5F5F; text-align: left; padding-left:20px;" @click="onClickTableHeader('nama')">
               Nama Kota / Kabupaten
+              <font-awesome-icon :icon="getSortIcon('nama')" />
             </th>
             <th v-if="statCategory === 'Terkonfirmasi'" colspan="3" class="px-2 py-1 hover:opacity-75" style="background-color: #FF4A4B; color: #ffffff;">
               Positif Aktif
@@ -447,7 +448,11 @@ export default {
       const currentSorting = this.currentSorting
       let sorting = 'down'
       if (this.currentSorting[field] === 'down') {
-        sorting = 'none'
+        sorting = 'up'
+      }
+
+      if (this.currentSorting[field] === 'up') {
+        sorting = 'down'
       }
       Object.keys(currentSorting).forEach(function (key) {
         currentSorting[key] = 'none'
@@ -455,13 +460,13 @@ export default {
 
       this.currentSorting[field] = sorting
 
-      let newSorting = 'down'
-      if (field === 'nama') {
-        newSorting = 'up'
-      } else {
-        newSorting = 'down'
-      }
-      this.upsertSorting(field, newSorting)
+      // const newSorting = 'up'
+      // if (field === 'nama') {
+      //   newSorting = 'up'
+      // } else {
+      //   newSorting = 'down'
+      // }
+      this.upsertSorting(field, sorting)
     },
     enableTerkonfirmasi () {
       this.statCategory = 'Terkonfirmasi'
