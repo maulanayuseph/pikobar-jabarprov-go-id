@@ -258,7 +258,7 @@ export default {
       layerActive: 'kota',
       activeTitle: {
         className: 'cluster-positif-proses',
-        name: 'Positif - Proses'
+        name: 'Positif - Aktif'
       },
       rangeColor: {
         positif_proses: ['#E54C95', '#E40769', '#CE005E', '#B30253', '#940047'],
