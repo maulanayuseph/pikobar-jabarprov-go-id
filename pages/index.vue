@@ -20,7 +20,15 @@
           <div class="relative container-with-ratio container-with-ratio--lg">
             <div class="static lg:absolute lg:inset-0 w-full h-full top-grid">
               <CallCard class="top-grid__call-card" title="Call Center" subtitle="Nomor Darurat" number="119" />
-              <CallCard class="top-grid__call-card" title="Dinkes Jabar" subtitle="Pertanyaan Umum" number="0811 2093 306" />
+              <CallCard
+                class="top-grid__call-card"
+                title="Hotline Pikobar"
+                subtitle="Chat WA seputar COVID-19"
+                number="Klik untuk chat"
+                href="https://s.id/ChatbotPikobar"
+                :icon="require('@fortawesome/free-brands-svg-icons').faWhatsapp"
+                icon-class="text-4xl"
+              />
               <div
                 v-show="cases"
                 class="top-grid__call-status rounded-lg"
@@ -101,7 +109,7 @@
       </h2>
       <div class="p-5 mt-4 md:mt-12 md:p-8 rounded-lg bg-brand-green-dark">
         <h3 class="text-xl lg:text-2xl text-white">
-          <strong>Ketahui Resiko dari COVID-19</strong>
+          <strong>Ketahui Risiko dari COVID-19</strong>
         </h3>
         <br>
         <div class="flex flex-col lg:flex-row justify-between items-start">
@@ -128,20 +136,14 @@
       </div>
       <div class="flex flex-row flex-wrap items-stretch my-8">
         <div
-          class="w-full mb-8 lg:mb-0 lg:w-1/4 rounded-lg bg-white shadow-md lg:mr-8 p-5 md:p-8"
+          class="w-full flex flex-col mb-8 lg:mb-0 lg:w-1/4 lg:mr-8"
           style="min-width:320px"
         >
-          <div class="flex flex-col justify-between items-start h-full">
+          <div class="flex flex-col justify-between items-start mb-8 p-5 md:p-8 rounded-lg bg-white shadow-md">
             <header>
               <h3 class="text-lg lg:text-2xl">
-                <strong>Punya Pertanyaan Terkait COVID-19?</strong>
+                <strong>Tanya kepada sesama wargi Jabar soal penanganan COVID-19 di Forum Pikobar!</strong>
               </h3>
-              <br>
-              <br>
-              <p>
-                Penting bagi Anda untuk menilai kondisi secara mandiri.
-                Anda bergejala?
-              </p>
             </header>
             <a
               class="mt-8 px-6 py-4 inline-block rounded-lg bg-brand-green text-white border-2 border-solid border-brand-green"
@@ -149,6 +151,20 @@
               target="_blank"
             >
               <b>Tanyakan Sekarang</b>
+            </a>
+          </div>
+          <div class="flex flex-col justify-between items-start p-5 md:p-8 rounded-lg bg-white shadow-md">
+            <header>
+              <h3 class="text-lg lg:text-2xl">
+                <strong>Ingin berkontribusi membantu Jabar dalam menangani COVID-19?</strong>
+              </h3>
+            </header>
+            <a
+              class="mt-8 px-6 py-4 inline-block rounded-lg bg-brand-green text-white border-2 border-solid border-brand-green"
+              href="https://indorelawan.org/p/pikobar"
+              target="_blank"
+            >
+              <b>Daftar Relawan</b>
             </a>
           </div>
         </div>
@@ -228,21 +244,16 @@
                 Bersihkan permukaan benda yang disentuh banyak orang
               </li>
               <li class="li-check-mark">
-                Social Distancing! Minimalisir kontak fisik dengan sesama
+                Physical Distancing! Minimalisir kontak fisik dengan sesama
               </li>
               <li class="li-check-mark">
-                Jaga jarak 1-3 meter dengan orang yang sakit
+                Jaga jarak 1-3 meter dengan sesama
               </li>
               <li class="li-check-mark">
-                Jika sakit, maka:
-                <ol style="list-style-type: decimal; list-style-position: inside;">
-                  <li class="ml-0">
-                    Tinggal di rumah
-                  </li>
-                  <li class="ml-0">
-                    Gunakan masker
-                  </li>
-                </ol>
+                Tetap tinggal di rumah, hindari bepergian ke tempat umum bila tidak perlu
+              </li>
+              <li class="li-check-mark">
+                Selalu gunakan masker jika harus keluar rumah dan berinteraksi langsung dengan orang lain
               </li>
             </ul>
           </article>
@@ -265,7 +276,7 @@
     </section>
     <section class="mt-2 m-4 md:mt-4 md:m-8 rounded-lg bg-white shadow-md p-5 md:p-8">
       <h2 class="mb-4 md:mb-8 text-left text-xl md:text-2xl">
-        <b>Kenapa harus Social Distancing (Jaga Jarak Sesama)?</b>
+        <b>Kenapa harus Physical Distancing (Jaga Jarak Sesama)?</b>
       </h2>
       <article class="flex flex-col lg:flex-row">
         <img
@@ -280,7 +291,7 @@
             jumlah orang terinfeksi akan meledak dan fasilitas layanan kesehatan akan kewalahan sehingga banyak kasus akan tidak tertangani.
           </p>
           <p class="font-bold text-lg">
-            Social distancing akan mengurangi laju penularan dan memungkinkan pasien terinfeksi untuk ditangani hingga sembuh, seperti di grafik terlampir.
+            Physical distancing akan mengurangi laju penularan dan memungkinkan pasien terinfeksi untuk ditangani hingga sembuh, seperti di grafik terlampir.
           </p>
         </div>
       </article>

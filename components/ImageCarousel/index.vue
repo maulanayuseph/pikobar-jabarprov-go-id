@@ -12,7 +12,11 @@
             :class="['banner-slide', item.action_url && 'cursor-pointer']"
             @slide-click="onItemClick(item)"
           >
-            <img role="main" :src="item.url">
+            <img
+              role="main"
+              :src="item.url"
+              :style="{'object-fit': item.objectFit || 'contain'}"
+            >
           </VueCarouselSlide>
         </VueCarousel>
       </template>
@@ -82,6 +86,10 @@ export default {
     items: {
       type: [Array, Function, Promise],
       default: null
+    },
+    carouselProps: {
+      type: Object,
+      default: () => ({})
     }
   },
   data () {
@@ -90,7 +98,17 @@ export default {
         faChevronLeft,
         faChevronRight
       },
-      carouselConfig: {
+
+      isPending: true,
+      error: null,
+      carouselItems: null,
+
+      showNavigation: false
+    }
+  },
+  computed: {
+    carouselConfig () {
+      const def = {
         autoplay: true,
         autoplayTimeout: 4000,
         paginationEnabled: false,
@@ -98,13 +116,8 @@ export default {
         perPage: 1,
         mouseDrag: true,
         loop: true
-      },
-
-      isPending: true,
-      error: null,
-      carouselItems: null,
-
-      showNavigation: false
+      }
+      return Object.assign({}, def, this.carouselProps)
     }
   },
   watch: {
@@ -165,13 +178,8 @@ export default {
   @apply relative flex flex-row justify-center items-center;
 
   > img[role="main"] {
-    @apply absolute top-0 w-full h-full
-    object-contain object-top;
+    @apply absolute top-0 w-full h-full object-top;
   }
-}
-
-.banner-slide.cursor-pointer:hover {
-  @apply opacity-75;
 }
 
 .carousel-nav-button {
@@ -222,5 +230,14 @@ export default {
 .VueCarousel-wrapper,
 .VueCarousel-inner {
   height: 100% !important;
+}
+
+.VueCarousel {
+  position: relative;
+
+  .VueCarousel-pagination {
+    position: absolute;
+    bottom: 0;
+  }
 }
 </style>

@@ -212,10 +212,20 @@ export default {
 
     }
   },
+  computed: {
+    dataSebaranJabarFaskes () {
+      return this.$store.getters['data-sebaran-jabar-faskes/itemsMap']
+    }
+  },
   watch: {
-    propsDataSebaranJabarFaskes () {
+    // propsDataSebaranJabarFaskes () {
+    //   console.log('faskes on watch')
+    //   this.distributionProvinceData = this.propsDataSebaranJabarFaskes
+    //   this.onChanges()
+    // }
+    dataSebaranJabarFaskes (val) {
       console.log('faskes on watch')
-      this.distributionProvinceData = this.propsDataSebaranJabarFaskes
+      this.distributionProvinceData = val
       this.onChanges()
     }
   },
@@ -230,7 +240,10 @@ export default {
   },
   created () {
     console.log('faskes on created')
-    this.distributionProvinceData = this.propsDataSebaranJabarFaskes
+    // this.distributionProvinceData = this.propsDataSebaranJabarFaskes
+    if (this.$store.getters['data-sebaran-jabar-faskes/itemsMap']) {
+      this.distributionProvinceData = this.$store.getters['data-sebaran-jabar-faskes/itemsMap']
+    }
     // this.onChanges()
   },
   methods: {

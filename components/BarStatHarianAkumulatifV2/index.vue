@@ -485,58 +485,135 @@ export default {
       }
     }
   },
+  computed: {
+    dataRekapitulasiJabarHarianProv () {
+      return this.$store.getters['data-rekapitulasi-jabar-harian-prov/itemsMap']
+    },
+    dataRekapitulasiJabarKumulatifProv () {
+      return this.$store.getters['data-rekapitulasi-jabar-kumulatif-prov/itemsMap']
+    }
+  },
   watch: {
-    propsDataRekapitulasiJabarHarianProv () {
-      // this.jsonDataProvinsiHarian = this.propsDataRekapitulasiJabarHarianProv
-      for (let i = 0; i < this.propsDataRekapitulasiJabarHarianProv.length; i++) {
-        const temp1 = this.propsDataRekapitulasiJabarHarianProv[i]
+    // propsDataRekapitulasiJabarHarianProv () {
+    //   // this.jsonDataProvinsiHarian = this.propsDataRekapitulasiJabarHarianProv
+    //   for (let i = 0; i < this.propsDataRekapitulasiJabarHarianProv.length; i++) {
+    //     const temp1 = this.propsDataRekapitulasiJabarHarianProv[i]
+    //     let odpJml = 0
+    //     let pdpJml = 0
+    //     let odpRatarata = 0
+    //     let pdpRatarata = 0
+    //     if (i === 0) {
+    //       odpJml = this.propsDataRekapitulasiJabarHarianProv[i].odp
+    //       pdpJml = this.propsDataRekapitulasiJabarHarianProv[i].pdp
+    //       odpRatarata = odpJml / 1
+    //       pdpRatarata = pdpJml / 1
+    //     } else if (i === 1) {
+    //       odpJml = this.propsDataRekapitulasiJabarHarianProv[i].odp + this.propsDataRekapitulasiJabarHarianProv[i - 1].odp
+    //       pdpJml = this.propsDataRekapitulasiJabarHarianProv[i].pdp + this.propsDataRekapitulasiJabarHarianProv[i - 1].pdp
+    //       odpRatarata = odpJml / 2
+    //       pdpRatarata = pdpJml / 2
+    //     } else if (i === 2) {
+    //       odpJml = this.propsDataRekapitulasiJabarHarianProv[i].odp + this.propsDataRekapitulasiJabarHarianProv[i - 1].odp + this.propsDataRekapitulasiJabarHarianProv[i - 2].odp
+    //       pdpJml = this.propsDataRekapitulasiJabarHarianProv[i].pdp + this.propsDataRekapitulasiJabarHarianProv[i - 1].pdp + this.propsDataRekapitulasiJabarHarianProv[i - 2].pdp
+    //       odpRatarata = odpJml / 3
+    //       pdpRatarata = pdpJml / 3
+    //     } else if (i === 3) {
+    //       odpJml = this.propsDataRekapitulasiJabarHarianProv[i].odp + this.propsDataRekapitulasiJabarHarianProv[i - 1].odp + this.propsDataRekapitulasiJabarHarianProv[i - 2].odp +
+    //         this.propsDataRekapitulasiJabarHarianProv[i - 3].odp
+    //       pdpJml = this.propsDataRekapitulasiJabarHarianProv[i].pdp + this.propsDataRekapitulasiJabarHarianProv[i - 1].pdp + this.propsDataRekapitulasiJabarHarianProv[i - 2].pdp +
+    //         this.propsDataRekapitulasiJabarHarianProv[i - 3].pdp
+    //       odpRatarata = odpJml / 4
+    //       pdpRatarata = pdpJml / 4
+    //     } else if (i === 4) {
+    //       odpJml = this.propsDataRekapitulasiJabarHarianProv[i].odp + this.propsDataRekapitulasiJabarHarianProv[i - 1].odp + this.propsDataRekapitulasiJabarHarianProv[i - 2].odp +
+    //         this.propsDataRekapitulasiJabarHarianProv[i - 3].odp + this.propsDataRekapitulasiJabarHarianProv[i - 4].odp
+    //       pdpJml = this.propsDataRekapitulasiJabarHarianProv[i].pdp + this.propsDataRekapitulasiJabarHarianProv[i - 1].pdp + this.propsDataRekapitulasiJabarHarianProv[i - 2].pdp +
+    //         this.propsDataRekapitulasiJabarHarianProv[i - 3].pdp + this.propsDataRekapitulasiJabarHarianProv[i - 4].pdp
+    //       odpRatarata = odpJml / 5
+    //       pdpRatarata = pdpJml / 5
+    //     } else if (i === 5) {
+    //       odpJml = this.propsDataRekapitulasiJabarHarianProv[i].odp + this.propsDataRekapitulasiJabarHarianProv[i - 1].odp + this.propsDataRekapitulasiJabarHarianProv[i - 2].odp +
+    //       this.propsDataRekapitulasiJabarHarianProv[i - 3].odp + this.propsDataRekapitulasiJabarHarianProv[i - 4].odp + this.propsDataRekapitulasiJabarHarianProv[i - 5].odp
+    //       pdpJml = this.propsDataRekapitulasiJabarHarianProv[i].pdp + this.propsDataRekapitulasiJabarHarianProv[i - 1].pdp + this.propsDataRekapitulasiJabarHarianProv[i - 2].pdp +
+    //       this.propsDataRekapitulasiJabarHarianProv[i - 3].pdp + this.propsDataRekapitulasiJabarHarianProv[i - 4].pdp + this.propsDataRekapitulasiJabarHarianProv[i - 5].pdp
+    //       odpRatarata = odpJml / 6
+    //       pdpRatarata = pdpJml / 6
+    //     } else if (i > 6) {
+    //       odpJml = this.propsDataRekapitulasiJabarHarianProv[i].odp + this.propsDataRekapitulasiJabarHarianProv[i - 1].odp + this.propsDataRekapitulasiJabarHarianProv[i - 2].odp +
+    //         this.propsDataRekapitulasiJabarHarianProv[i - 3].odp + this.propsDataRekapitulasiJabarHarianProv[i - 4].odp + this.propsDataRekapitulasiJabarHarianProv[i - 5].odp +
+    //         this.propsDataRekapitulasiJabarHarianProv[i - 6].odp
+    //       pdpJml = this.propsDataRekapitulasiJabarHarianProv[i].pdp + this.propsDataRekapitulasiJabarHarianProv[i - 1].pdp + this.propsDataRekapitulasiJabarHarianProv[i - 2].pdp +
+    //         this.propsDataRekapitulasiJabarHarianProv[i - 3].pdp + this.propsDataRekapitulasiJabarHarianProv[i - 4].pdp + this.propsDataRekapitulasiJabarHarianProv[i - 5].pdp +
+    //         this.propsDataRekapitulasiJabarHarianProv[i - 6].pdp
+    //       odpRatarata = odpJml / 7
+    //       pdpRatarata = pdpJml / 7
+    //     } else {
+    //       odpJml = 0
+    //       pdpJml = 0
+    //       odpRatarata = 0
+    //       pdpRatarata = 0
+    //     }
+    //     const temp2 = { odp_ratarata: parseInt(odpRatarata.toFixed(2)), pdp_ratarata: parseInt(pdpRatarata.toFixed(2)) }
+    //     const temp3 = { ...temp1, ...temp2 }
+    //     this.jsonDataProvinsiHarian.push(temp3)
+    //   }
+    //   this.fetchDataODPProvinsiHarian()
+    //   this.fetchDataPDPProvinsiHarian()
+    // },
+    // propsDataRekapitulasiJabarKumulatifProv () {
+    //   this.jsonDataProvinsiKumulatif = this.propsDataRekapitulasiJabarKumulatifProv
+    // }
+    dataRekapitulasiJabarHarianProv (val) {
+      // this.jsonDataProvinsiHarian = val
+      for (let i = 0; i < val.length; i++) {
+        const temp1 = val[i]
         let odpJml = 0
         let pdpJml = 0
         let odpRatarata = 0
         let pdpRatarata = 0
         if (i === 0) {
-          odpJml = this.propsDataRekapitulasiJabarHarianProv[i].odp
-          pdpJml = this.propsDataRekapitulasiJabarHarianProv[i].pdp
+          odpJml = val[i].odp
+          pdpJml = val[i].pdp
           odpRatarata = odpJml / 1
           pdpRatarata = pdpJml / 1
         } else if (i === 1) {
-          odpJml = this.propsDataRekapitulasiJabarHarianProv[i].odp + this.propsDataRekapitulasiJabarHarianProv[i - 1].odp
-          pdpJml = this.propsDataRekapitulasiJabarHarianProv[i].pdp + this.propsDataRekapitulasiJabarHarianProv[i - 1].pdp
+          odpJml = val[i].odp + val[i - 1].odp
+          pdpJml = val[i].pdp + val[i - 1].pdp
           odpRatarata = odpJml / 2
           pdpRatarata = pdpJml / 2
         } else if (i === 2) {
-          odpJml = this.propsDataRekapitulasiJabarHarianProv[i].odp + this.propsDataRekapitulasiJabarHarianProv[i - 1].odp + this.propsDataRekapitulasiJabarHarianProv[i - 2].odp
-          pdpJml = this.propsDataRekapitulasiJabarHarianProv[i].pdp + this.propsDataRekapitulasiJabarHarianProv[i - 1].pdp + this.propsDataRekapitulasiJabarHarianProv[i - 2].pdp
+          odpJml = val[i].odp + val[i - 1].odp + val[i - 2].odp
+          pdpJml = val[i].pdp + val[i - 1].pdp + val[i - 2].pdp
           odpRatarata = odpJml / 3
           pdpRatarata = pdpJml / 3
         } else if (i === 3) {
-          odpJml = this.propsDataRekapitulasiJabarHarianProv[i].odp + this.propsDataRekapitulasiJabarHarianProv[i - 1].odp + this.propsDataRekapitulasiJabarHarianProv[i - 2].odp +
-            this.propsDataRekapitulasiJabarHarianProv[i - 3].odp
-          pdpJml = this.propsDataRekapitulasiJabarHarianProv[i].pdp + this.propsDataRekapitulasiJabarHarianProv[i - 1].pdp + this.propsDataRekapitulasiJabarHarianProv[i - 2].pdp +
-            this.propsDataRekapitulasiJabarHarianProv[i - 3].pdp
+          odpJml = val[i].odp + val[i - 1].odp + val[i - 2].odp +
+            val[i - 3].odp
+          pdpJml = val[i].pdp + val[i - 1].pdp + val[i - 2].pdp +
+            val[i - 3].pdp
           odpRatarata = odpJml / 4
           pdpRatarata = pdpJml / 4
         } else if (i === 4) {
-          odpJml = this.propsDataRekapitulasiJabarHarianProv[i].odp + this.propsDataRekapitulasiJabarHarianProv[i - 1].odp + this.propsDataRekapitulasiJabarHarianProv[i - 2].odp +
-            this.propsDataRekapitulasiJabarHarianProv[i - 3].odp + this.propsDataRekapitulasiJabarHarianProv[i - 4].odp
-          pdpJml = this.propsDataRekapitulasiJabarHarianProv[i].pdp + this.propsDataRekapitulasiJabarHarianProv[i - 1].pdp + this.propsDataRekapitulasiJabarHarianProv[i - 2].pdp +
-            this.propsDataRekapitulasiJabarHarianProv[i - 3].pdp + this.propsDataRekapitulasiJabarHarianProv[i - 4].pdp
+          odpJml = val[i].odp + val[i - 1].odp + val[i - 2].odp +
+            val[i - 3].odp + val[i - 4].odp
+          pdpJml = val[i].pdp + val[i - 1].pdp + val[i - 2].pdp +
+            val[i - 3].pdp + val[i - 4].pdp
           odpRatarata = odpJml / 5
           pdpRatarata = pdpJml / 5
         } else if (i === 5) {
-          odpJml = this.propsDataRekapitulasiJabarHarianProv[i].odp + this.propsDataRekapitulasiJabarHarianProv[i - 1].odp + this.propsDataRekapitulasiJabarHarianProv[i - 2].odp +
-          this.propsDataRekapitulasiJabarHarianProv[i - 3].odp + this.propsDataRekapitulasiJabarHarianProv[i - 4].odp + this.propsDataRekapitulasiJabarHarianProv[i - 5].odp
-          pdpJml = this.propsDataRekapitulasiJabarHarianProv[i].pdp + this.propsDataRekapitulasiJabarHarianProv[i - 1].pdp + this.propsDataRekapitulasiJabarHarianProv[i - 2].pdp +
-          this.propsDataRekapitulasiJabarHarianProv[i - 3].pdp + this.propsDataRekapitulasiJabarHarianProv[i - 4].pdp + this.propsDataRekapitulasiJabarHarianProv[i - 5].pdp
+          odpJml = val[i].odp + val[i - 1].odp + val[i - 2].odp +
+          val[i - 3].odp + val[i - 4].odp + val[i - 5].odp
+          pdpJml = val[i].pdp + val[i - 1].pdp + val[i - 2].pdp +
+          val[i - 3].pdp + val[i - 4].pdp + val[i - 5].pdp
           odpRatarata = odpJml / 6
           pdpRatarata = pdpJml / 6
-        } else if (i > 6) {
-          odpJml = this.propsDataRekapitulasiJabarHarianProv[i].odp + this.propsDataRekapitulasiJabarHarianProv[i - 1].odp + this.propsDataRekapitulasiJabarHarianProv[i - 2].odp +
-            this.propsDataRekapitulasiJabarHarianProv[i - 3].odp + this.propsDataRekapitulasiJabarHarianProv[i - 4].odp + this.propsDataRekapitulasiJabarHarianProv[i - 5].odp +
-            this.propsDataRekapitulasiJabarHarianProv[i - 6].odp
-          pdpJml = this.propsDataRekapitulasiJabarHarianProv[i].pdp + this.propsDataRekapitulasiJabarHarianProv[i - 1].pdp + this.propsDataRekapitulasiJabarHarianProv[i - 2].pdp +
-            this.propsDataRekapitulasiJabarHarianProv[i - 3].pdp + this.propsDataRekapitulasiJabarHarianProv[i - 4].pdp + this.propsDataRekapitulasiJabarHarianProv[i - 5].pdp +
-            this.propsDataRekapitulasiJabarHarianProv[i - 6].pdp
+        } else if (i >= 6) {
+          odpJml = val[i].odp + val[i - 1].odp + val[i - 2].odp +
+            val[i - 3].odp + val[i - 4].odp + val[i - 5].odp +
+            val[i - 6].odp
+          pdpJml = val[i].pdp + val[i - 1].pdp + val[i - 2].pdp +
+            val[i - 3].pdp + val[i - 4].pdp + val[i - 5].pdp +
+            val[i - 6].pdp
           odpRatarata = odpJml / 7
           pdpRatarata = pdpJml / 7
         } else {
@@ -552,8 +629,8 @@ export default {
       this.fetchDataODPProvinsiHarian()
       this.fetchDataPDPProvinsiHarian()
     },
-    propsDataRekapitulasiJabarKumulatifProv () {
-      this.jsonDataProvinsiKumulatif = this.propsDataRekapitulasiJabarKumulatifProv
+    dataRekapitulasiJabarKumulatifProv (val) {
+      this.jsonDataProvinsiKumulatif = val
     }
   },
   mounted () {
