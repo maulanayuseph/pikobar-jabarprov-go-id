@@ -789,7 +789,7 @@ export default {
         }
         default: {
           this.activeTitle = {
-            name: 'Positif - Proses',
+            name: 'Positif - Aktif',
             className: 'cluster-positif-proses'
           }
         }
