@@ -11,10 +11,12 @@
       <DataSummary />
     </section>
     <section class="m-4 mb-8 md:m-8">
-      <DataRDT :props-data-rekapitulasi-jabar.sync="jsonDataRekapitulasiJabarProv" />
+      <!-- <DataRDT :props-data-rekapitulasi-jabar.sync="jsonDataRekapitulasiJabarProv" /> -->
+      <DataRDT />
     </section>
     <section class="m-4 mb-8 md:m-8">
-      <DataPCR :props-data-rekapitulasi-jabar.sync="jsonDataRekapitulasiJabarProv" />
+      <!-- <DataPCR :props-data-rekapitulasi-jabar.sync="jsonDataRekapitulasiJabarProv" /> -->
+      <DataPCR />
     </section>
     <section class="m-4 mb-8 md:m-8">
       <div class="items-stretch flex flex-col xl:flex-row xl:flex-no-wrap">
@@ -60,33 +62,46 @@
         </button>
       </div>
       <div class="mt-4">
-        <!-- <MapSebaranCovid v-if="stat.isActiveCovid" />
-        <MapFaskes v-if="stat.isActiveRS" />
-        <MapSebaranPolygon v-if="stat.isActivePolygon" /> -->
-        <MapV2SebaranPolygon
+        <!-- <MapSebaranCovid v-if="stat.isActiveCovid" /> -->
+        <!-- <MapFaskes v-if="stat.isActiveRS" /> -->
+        <!-- <MapSebaranPolygon v-if="stat.isActivePolygon" /> -->
+        <!-- <MapV2SebaranPolygon
           v-if="stat.isActivePolygon"
           :props-data-sebaran-jawa-barat.sync="jsonDataSebaranJabar"
+        /> -->
+        <MapV2SebaranPolygon
+          v-if="stat.isActivePolygon"
         />
-        <MapV2SebaranCluster
+        <!-- <MapV2SebaranCluster
           v-if="stat.isActiveCluster"
           :props-data-sebaran-jabar.sync="jsonDataSebaranJabar"
+        /> -->
+        <MapV2SebaranCluster
+          v-if="stat.isActiveCluster"
         />
-        <MapV2SebaranFaskes
+        <!-- <MapV2SebaranFaskes
           v-if="stat.isActiveFaskes"
           :props-data-sebaran-jabar-faskes.sync="jsonDataSebaranJabarFaskes"
+        /> -->
+        <MapV2SebaranFaskes
+          v-if="stat.isActiveFaskes"
         />
-        <MapV2SebaranTimeslider
+        <!-- <MapV2SebaranTimeslider
           v-if="stat.isActiveTimeslider"
           :props-data-sebaran-jabar.sync="jsonDataSebaranJabar"
+        /> -->
+        <MapV2SebaranTimeslider
+          v-if="stat.isActiveTimeslider"
         />
       </div>
     </section>
 
     <section class="m-4 mb-8 md:m-8">
-      <BarStatTable
+      <!-- <BarStatTable
         :props-data-rekapitulasi-jabar-kab.sync="jsonDataRekapitulasiJabarKab"
         :props-data-rekapitulasi-jabar-kumulatif-kab.sync="jsonDataRekapitulasiJabarKumulatifKab"
-      />
+      /> -->
+      <BarStatTable />
     </section>
 
     <section class="m-4 mb-8 md:m-8">
@@ -99,7 +114,7 @@
         :props-data-rekapitulasi-jabar-kumulatif-kab.sync="jsonDataRekapitulasiJabarKumulatifKab"
         :props-data-nasional-harian-kumulatif.sync="jsonDataNasionalHarianKumulatif"
       /> -->
-      <BarStatAreaSingleV2
+      <!-- <BarStatAreaSingleV2
         :props-data-rekapitulasi-jabar-prov.sync="jsonDataRekapitulasiJabarProv"
         :props-data-rekapitulasi-jabar-kab.sync="jsonDataRekapitulasiJabarKab"
         :props-data-rekapitulasi-jabar-harian-prov.sync="jsonDataRekapitulasiJabarHarianProv"
@@ -107,13 +122,16 @@
         :props-data-rekapitulasi-jabar-kumulatif-prov.sync="jsonDataRekapitulasiJabarKumulatifProv"
         :props-data-rekapitulasi-jabar-kumulatif-kab.sync="jsonDataRekapitulasiJabarKumulatifKab"
         :props-data-nasional-harian-kumulatif.sync="jsonDataNasionalHarianKumulatif"
-      />
+      /> -->
+      <BarStatAreaSingleV2 />
     </section>
 
     <section class="m-4 mb-8 md:m-8">
       <div class="chart-container w-full">
-        <BarStatJenisKelamin :props-data-rekapitulasi-jabar.sync="jsonDataRekapitulasiJabarProv" />
-        <BarStatUsia :props-data-rekapitulasi-jabar.sync="jsonDataRekapitulasiJabarProv" />
+        <!-- <BarStatJenisKelamin :props-data-rekapitulasi-jabar.sync="jsonDataRekapitulasiJabarProv" /> -->
+        <BarStatJenisKelamin />
+        <!-- <BarStatUsia :props-data-rekapitulasi-jabar.sync="jsonDataRekapitulasiJabarProv" /> -->
+        <BarStatUsia />
       </div>
     </section>
 
@@ -122,10 +140,11 @@
         :props-data-rekapitulasi-jabar-harian-prov.sync="jsonDataRekapitulasiJabarHarianProv"
         :props-data-rekapitulasi-jabar-kumulatif-prov.sync="jsonDataRekapitulasiJabarKumulatifProv"
       /> -->
-      <BarStatHarianAkumulatifV2
+      <!-- <BarStatHarianAkumulatifV2
         :props-data-rekapitulasi-jabar-harian-prov.sync="jsonDataRekapitulasiJabarHarianProv"
         :props-data-rekapitulasi-jabar-kumulatif-prov.sync="jsonDataRekapitulasiJabarKumulatifProv"
-      />
+      /> -->
+      <BarStatHarianAkumulatifV2 />
     </section>
 
     <section class="m-4 md:m-8 flex">
@@ -227,18 +246,27 @@ export default {
       return this.formatDateTimeShort(this.cases.updated_at)
     }
   },
-  created () {
-    this.fetchDataNasionalHarian()
-    this.fetchDataRekapitulasiJabarProv()
-    this.fetchDataRekapitulasiJabarHarianProv()
-    this.fetchDataRekapitulasiJabarKumulatifProv()
-    this.fetchDataRekapitulasiJabarKab()
-    this.fetchDataRekapitulasiJabarHarianKab()
-    this.fetchDataRekapitulasiJabarKumulatifKab()
-    this.fetchDataSebaranJabarFaskes()
-    this.fetchDataSebaranJabar()
-  },
+  // created () {
+  //   this.fetchDataNasionalHarian()
+  //   this.fetchDataRekapitulasiJabarProv()
+  //   this.fetchDataRekapitulasiJabarHarianProv()
+  //   this.fetchDataRekapitulasiJabarKumulatifProv()
+  //   this.fetchDataRekapitulasiJabarKab()
+  //   this.fetchDataRekapitulasiJabarHarianKab()
+  //   this.fetchDataRekapitulasiJabarKumulatifKab()
+  //   this.fetchDataSebaranJabarFaskes()
+  //   this.fetchDataSebaranJabar()
+  // },
   mounted () {
+    this.$store.dispatch('data-nasional-harian/getItems')
+    this.$store.dispatch('data-rekapitulasi-jabar-harian-kab/getItems')
+    this.$store.dispatch('data-rekapitulasi-jabar-harian-prov/getItems')
+    this.$store.dispatch('data-rekapitulasi-jabar-kab/getItems')
+    this.$store.dispatch('data-rekapitulasi-jabar-kumulatif-kab/getItems')
+    this.$store.dispatch('data-rekapitulasi-jabar-kumulatif-prov/getItems')
+    this.$store.dispatch('data-rekapitulasi-jabar-prov/getItems')
+    this.$store.dispatch('data-sebaran-jabar-faskes/getItems')
+    this.$store.dispatch('data-sebaran-jabar/getItems')
     this.$store.dispatch('statistics/getCases')
     this.$nextTick(() => {
       if (process.browser) {
@@ -271,106 +299,106 @@ export default {
       this.stat.isActiveCluster = false
       this.stat.isActiveFaskes = false
       this.stat.isActiveTimeslider = true
-    },
-    fetchDataRekapitulasiJabarProv () {
-      const self = this
-      axios
-        .get('https://covid19-public.digitalservice.id/api/v1/rekapitulasi/jabar?level=prov')
-        .then(function (response) {
-          self.jsonDataRekapitulasiJabarProv = response.data.data.content
-        })
-        .catch(function (error) {
-          console.log(error)
-        })
-    },
-    fetchDataRekapitulasiJabarKab () {
-      const self = this
-      axios
-        .get('https://covid19-public.digitalservice.id/api/v1/rekapitulasi/jabar?level=kab')
-        .then(function (response) {
-          self.jsonDataRekapitulasiJabarKab = response.data.data.content
-        })
-        .catch(function (error) {
-          console.log(error)
-        })
-    },
-    fetchDataRekapitulasiJabarHarianProv () {
-      const self = this
-      axios
-        .get('https://covid19-public.digitalservice.id/api/v1/rekapitulasi/jabar/harian?level=prov')
-        .then(function (response) {
-          self.jsonDataRekapitulasiJabarHarianProv = response.data.data.content
-        })
-        .catch(function (error) {
-          console.log(error)
-        })
-    },
-    fetchDataRekapitulasiJabarHarianKab () {
-      const self = this
-      axios
-        .get('https://covid19-public.digitalservice.id/api/v1/rekapitulasi/jabar/harian?level=kab')
-        .then(function (response) {
-          self.jsonDataRekapitulasiJabarHarianKab = response.data.data.content
-        })
-        .catch(function (error) {
-          console.log(error)
-        })
-    },
-    fetchDataRekapitulasiJabarKumulatifProv () {
-      const self = this
-      axios
-        .get('https://covid19-public.digitalservice.id/api/v1/rekapitulasi/jabar/kumulatif?level=prov')
-        .then(function (response) {
-          self.jsonDataRekapitulasiJabarKumulatifProv = response.data.data.content
-        })
-        .catch(function (error) {
-          console.log(error)
-        })
-    },
-    fetchDataRekapitulasiJabarKumulatifKab () {
-      const self = this
-      axios
-        .get('https://covid19-public.digitalservice.id/api/v1/rekapitulasi/jabar/kumulatif?level=kab')
-        .then(function (response) {
-          self.jsonDataRekapitulasiJabarKumulatifKab = response.data.data.content
-        })
-        .catch(function (error) {
-          console.log(error)
-        })
-    },
-    fetchDataNasionalHarian () {
-      const self = this
-      axios
-        .get('https://indonesia-covid-19.mathdro.id/api/harian')
-        .then(function (response) {
-          self.jsonDataNasionalHarianKumulatif = response.data.data
-        })
-        .catch(function (error) {
-          console.log(error)
-        })
-    },
-    fetchDataSebaranJabar () {
-      const self = this
-      axios
-        .get('https://covid19-public.digitalservice.id/api/v1/sebaran/jabar')
-        .then(function (response) {
-          self.jsonDataSebaranJabar = response.data.data.content
-        })
-        .catch(function (error) {
-          console.log(error)
-        })
-    },
-    fetchDataSebaranJabarFaskes () {
-      const self = this
-      axios
-        .get('https://covid19-public.digitalservice.id/api/v1/sebaran/jabar/faskes')
-        .then(function (response) {
-          self.jsonDataSebaranJabarFaskes = response.data.data
-        })
-        .catch(function (error) {
-          console.log(error)
-        })
     }
+    // fetchDataRekapitulasiJabarProv () {
+    //   const self = this
+    //   axios
+    //     .get('https://covid19-public.digitalservice.id/api/v1/rekapitulasi/jabar?level=prov')
+    //     .then(function (response) {
+    //       self.jsonDataRekapitulasiJabarProv = response.data.data.content
+    //     })
+    //     .catch(function (error) {
+    //       console.log(error)
+    //     })
+    // },
+    // fetchDataRekapitulasiJabarKab () {
+    //   const self = this
+    //   axios
+    //     .get('https://covid19-public.digitalservice.id/api/v1/rekapitulasi/jabar?level=kab')
+    //     .then(function (response) {
+    //       self.jsonDataRekapitulasiJabarKab = response.data.data.content
+    //     })
+    //     .catch(function (error) {
+    //       console.log(error)
+    //     })
+    // },
+    // fetchDataRekapitulasiJabarHarianProv () {
+    //   const self = this
+    //   axios
+    //     .get('https://covid19-public.digitalservice.id/api/v1/rekapitulasi/jabar/harian?level=prov')
+    //     .then(function (response) {
+    //       self.jsonDataRekapitulasiJabarHarianProv = response.data.data.content
+    //     })
+    //     .catch(function (error) {
+    //       console.log(error)
+    //     })
+    // },
+    // fetchDataRekapitulasiJabarHarianKab () {
+    //   const self = this
+    //   axios
+    //     .get('https://covid19-public.digitalservice.id/api/v1/rekapitulasi/jabar/harian?level=kab')
+    //     .then(function (response) {
+    //       self.jsonDataRekapitulasiJabarHarianKab = response.data.data.content
+    //     })
+    //     .catch(function (error) {
+    //       console.log(error)
+    //     })
+    // },
+    // fetchDataRekapitulasiJabarKumulatifProv () {
+    //   const self = this
+    //   axios
+    //     .get('https://covid19-public.digitalservice.id/api/v1/rekapitulasi/jabar/kumulatif?level=prov')
+    //     .then(function (response) {
+    //       self.jsonDataRekapitulasiJabarKumulatifProv = response.data.data.content
+    //     })
+    //     .catch(function (error) {
+    //       console.log(error)
+    //     })
+    // },
+    // fetchDataRekapitulasiJabarKumulatifKab () {
+    //   const self = this
+    //   axios
+    //     .get('https://covid19-public.digitalservice.id/api/v1/rekapitulasi/jabar/kumulatif?level=kab')
+    //     .then(function (response) {
+    //       self.jsonDataRekapitulasiJabarKumulatifKab = response.data.data.content
+    //     })
+    //     .catch(function (error) {
+    //       console.log(error)
+    //     })
+    // },
+    // fetchDataNasionalHarian () {
+    //   const self = this
+    //   axios
+    //     .get('https://indonesia-covid-19.mathdro.id/api/harian')
+    //     .then(function (response) {
+    //       self.jsonDataNasionalHarianKumulatif = response.data.data
+    //     })
+    //     .catch(function (error) {
+    //       console.log(error)
+    //     })
+    // },
+    // fetchDataSebaranJabar () {
+    //   const self = this
+    //   axios
+    //     .get('https://covid19-public.digitalservice.id/api/v1/sebaran/jabar')
+    //     .then(function (response) {
+    //       self.jsonDataSebaranJabar = response.data.data.content
+    //     })
+    //     .catch(function (error) {
+    //       console.log(error)
+    //     })
+    // },
+    // fetchDataSebaranJabarFaskes () {
+    //   const self = this
+    //   axios
+    //     .get('https://covid19-public.digitalservice.id/api/v1/sebaran/jabar/faskes')
+    //     .then(function (response) {
+    //       self.jsonDataSebaranJabarFaskes = response.data.data
+    //     })
+    //     .catch(function (error) {
+    //       console.log(error)
+    //     })
+    // }
   }
 }
 </script>
@@ -415,6 +443,7 @@ export default {
     width:100%;
     height:100%;
     position: relative;
+    background-color: #ffffff;
 }
 
 .filter-layer {
@@ -693,6 +722,26 @@ export default {
 
 .leaflet-control-geosearch a.reset:hover {
   background: #f5f5f5;
+}
+
+.btn-fullscreen {
+  position: absolute;
+  bottom: 0px;
+  left: 10px;
+  font-size: 1.3em;
+  padding: 2px 6px;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.65);
+  z-index: 401;
+}
+
+.btn-fullscreen:hover {
+  cursor: pointer;
+}
+
+.title-map {
+  position: absolute;
+  top: 0;
+  color: #ffffff;
 }
 
 </style>
