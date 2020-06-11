@@ -112,9 +112,18 @@ export default {
       }
     }
   },
+  computed: {
+    dataRekapitulasiJabarProv () {
+      return this.$store.getters['data-rekapitulasi-jabar-prov/itemsMap']
+    }
+  },
   watch: {
-    propsDataRekapitulasiJabar () {
-      this.data.rdt = this.propsDataRekapitulasiJabar.rdt
+    // propsDataRekapitulasiJabar () {
+    //   this.data.rdt = this.propsDataRekapitulasiJabar.rdt
+    //   this.countPersentage()
+    // }
+    dataRekapitulasiJabarProv (val) {
+      this.data.rdt = val.rdt
       this.countPersentage()
     }
   },

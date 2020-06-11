@@ -384,13 +384,29 @@ export default {
       selectedCategory: 'Terkonfirmasi'
     }
   },
+  computed: {
+    dataRekapitulasiJabarKab () {
+      return this.$store.getters['data-rekapitulasi-jabar-kab/itemsMap']
+    },
+    dataRekapitulasiJabarKumulatifKab () {
+      return this.$store.getters['data-rekapitulasi-jabar-kumulatif-kab/itemsMap']
+    }
+  },
   watch: {
-    propsDataRekapitulasiJabarKab () {
-      this.temp = this.propsDataRekapitulasiJabarKab
+    // propsDataRekapitulasiJabarKab () {
+    //   this.temp = this.propsDataRekapitulasiJabarKab
+    //   this.fetchDataKabupaten()
+    // },
+    // propsDataRekapitulasiJabarKumulatifKab () {
+    //   this.temporary = this.propsDataRekapitulasiJabarKumulatifKab
+    //   this.groupingKota()
+    // }
+    dataRekapitulasiJabarKab (val) {
+      this.temp = val
       this.fetchDataKabupaten()
     },
-    propsDataRekapitulasiJabarKumulatifKab () {
-      this.temporary = this.propsDataRekapitulasiJabarKumulatifKab
+    dataRekapitulasiJabarKumulatifKab (val) {
+      this.temporary = val
       this.groupingKota()
     }
   },

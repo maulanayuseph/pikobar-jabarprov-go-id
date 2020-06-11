@@ -85,6 +85,7 @@ export default {
     { src: '~/plugins/vue-lazyload.js', mode: 'client' },
     { src: '~/plugins/vue-carousel.js', mode: 'client' },
     { src: '~/plugins/vue-rangedate-picker', mode: 'client' },
+    { src: '~/plugins/vue-fullscreen', mode: 'client' },
     { src: '~/plugins/custom', mode: 'client' }
   ],
   /*
