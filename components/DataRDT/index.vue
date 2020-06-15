@@ -16,6 +16,9 @@
             <br><br>
           </b>
         </span>
+        <span>
+          Update Terakhir: {{ date_update }}
+        </span>
       </div>
       <div class="w-full md:w-3/6 lg:w-3/6 h-auto text-sm mr-10 row">
         <div class="flex flex-col md:flex-row h-auto text-left">
@@ -74,6 +77,7 @@
 </template>
 
 <script>
+import moment from 'moment'
 
 export default {
   name: 'DataRDT',
@@ -95,13 +99,15 @@ export default {
   },
   data () {
     return {
+      date_update: '',
       data: {
         rdt: {
           total: 0,
           positif: 0,
           negatif: 0,
           invalid: 0,
-          belum_diketahui: 0
+          belum_diketahui: 0,
+          tanggal: ''
         },
         rdt_persentase_by_total: {
           positif: 0,
@@ -124,6 +130,7 @@ export default {
     // }
     dataRekapitulasiJabarProv (val) {
       this.data.rdt = val.rdt
+      this.date_update = moment(this.data.rdt.tanggal, 'DD/MM/YYYY').lang('id').format('dddd, DD MMM YYYY')
       this.countPersentage()
     }
   },

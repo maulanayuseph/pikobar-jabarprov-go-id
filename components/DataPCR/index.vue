@@ -11,6 +11,11 @@
         <span v-if="showMore" style="opacity: 0.6;">Angka Positif hasil tes PCR tidak merepresentasikan seluruh kasus terkonfirmasi dan jumlah pengujian massal di Jawa Barat, tim Pikobar sedang dalam proses pengumpulan dan integrasi data dari lab-lab satelit se-Jawa Barat.  </span>
         <!-- <b><a v-if="!showMore" style="color: #17689D; cursor:pointer;" @click="clickShowMore"> Selengkapnya</a></b> -->
         <!-- <b><a v-if="showMore" style="color: #17689D; cursor:pointer;" @click="clickShowMore"> Sembunyikan</a></b> -->
+        <span>
+          <br>
+          <br>
+          Update Terakhir: {{ date_update }}
+        </span>
         <br>
       </div>
       <div class="w-full md:w-3/6 lg:w-3/6 h-auto text-sm mr-10 row">
@@ -69,6 +74,7 @@
 </template>
 
 <script>
+import moment from 'moment'
 
 export default {
   name: 'DataPCR',
@@ -89,6 +95,7 @@ export default {
   },
   data () {
     return {
+      date_update: '',
       data: {
         pcr: {
           total: 0,
@@ -119,6 +126,7 @@ export default {
     // }
     dataRekapitulasiJabarProv (val) {
       this.data.pcr = val.pcr
+      this.date_update = moment(this.data.pcr.tanggal, 'DD/MM/YYYY').lang('id').format('dddd, DD MMM YYYY')
       this.countPersentage()
     }
   },
