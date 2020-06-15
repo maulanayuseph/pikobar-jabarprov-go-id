@@ -41,7 +41,7 @@
             <div class="h-20 pt-3">
               <div class="mb-1">
                 <span class="text-2xl">{{ Number(data.rdt.positif).toLocaleString('id-ID') }}</span>
-                <span class="text-sm">({{ Number(data.rdt_persentase_by_total.positif.toFixed(2)).toLocaleString('id-ID') }})%</span>
+                <span class="text-sm">({{ Number(data.rdt_persentase_by_total.positif.toFixed(2)).toLocaleString('id-ID') }}%)</span>
               </div>
               <div class="text-sm">
                 Reaktif
@@ -52,7 +52,7 @@
             <div class="h-20 pt-3">
               <div class="mb-1">
                 <span class="text-2xl">{{ Number(data.rdt.negatif).toLocaleString('id-ID') }}</span>
-                <span class="text-sm">({{ Number(data.rdt_persentase_by_total.negatif.toFixed(2)).toLocaleString('id-ID') }})%</span>
+                <span class="text-sm">({{ Number(data.rdt_persentase_by_total.negatif.toFixed(2)).toLocaleString('id-ID') }}%)</span>
               </div>
               <div class="text-sm">
                 Non Reaktif
@@ -63,7 +63,7 @@
             <div class="h-20 pt-3">
               <div class="mb-1">
                 <span class="text-2xl">{{ Number(data.rdt.invalid).toLocaleString('id-ID') }}</span>
-                <span class="text-sm">({{ Number(data.rdt_persentase_by_total.invalid.toFixed(2)).toLocaleString('id-ID') }})%</span>
+                <span class="text-sm">({{ Number(data.rdt_persentase_by_total.invalid.toFixed(2)).toLocaleString('id-ID') }}%)</span>
               </div>
               <div class="text-sm">
                 Invalid
