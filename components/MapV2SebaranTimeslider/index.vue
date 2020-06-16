@@ -207,8 +207,8 @@ export default {
     return {
       isStartPlayer: false,
       dataSlide: 0,
-      sliderValue: new Date(),
-      min: new Date().setDate(new Date().getDate() - 5),
+      sliderValue: new Date('03-04-2020').getTime(),
+      min: new Date('03-04-2020').getTime(),
       max: new Date().setDate(new Date().getDate()),
 
       map: [],
@@ -326,6 +326,7 @@ export default {
       // self.jsonData = self.propsDataSebaranJabar
       if (this.$store.getters['data-sebaran-jabar/itemsMap']) {
         self.jsonData = self.$store.getters['data-sebaran-jabar/itemsMap']
+        console.log(self.jsonData)
       }
       self.createMap('kota')
     },
@@ -431,6 +432,7 @@ export default {
         r[a[kodeWilayahDataMarker]].push(a)
         return r
       }, Object.create(null))
+
       const keysResult = Object.keys(result)
       const geoJSONArea = geojsonActive.features.filter((el) => {
         return keysResult.includes(el.properties[kodeWilayahJSON])
@@ -537,13 +539,14 @@ export default {
     addMarkerLayer (kodeLevel, kodeWilayah, elPasien) {
       let icon = ''
       let updateMarker = false
+      // console.log(elPasien)
       if (elPasien.status === 'Positif') {
         // set minimum date
-        const tanggalKonfirmasiTime = new Date(elPasien.tanggal_konfirmasi).getTime()
+        // const tanggalKonfirmasiTime = new Date(elPasien.tanggal_konfirmasi).getTime()
         const tanggalUpdateTime = new Date(elPasien.tanggal_update).getTime()
-        if (tanggalKonfirmasiTime < this.min) {
-          this.min = tanggalKonfirmasiTime
-        }
+        // if (tanggalKonfirmasiTime < this.min) {
+        //   this.min = tanggalKonfirmasiTime
+        // }
         if (elPasien.stage === 'Meninggal' && tanggalUpdateTime <= this.sliderValue) {
           icon = new L.DivIcon({
             className: 'cluster cluster-positif-meninggal digits-0',
@@ -762,7 +765,6 @@ export default {
         let date = new Date(this.sliderValue)
         date = date.setDate(date.getDate() + 1)
         if (date < new Date().getTime() && this.isStartPlayer) {
-          console.log(this.sliderValue + ' = ' + this.min)
           this.sliderValue = date
           this.onChangeTimeSlider()
           this.moveTimeDay()
