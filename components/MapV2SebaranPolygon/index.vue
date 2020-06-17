@@ -178,10 +178,11 @@
 
 import { faFilter, faHome, faLayerGroup, faExpand, faCompress } from '@fortawesome/free-solid-svg-icons'
 import { GeoSearchControl, OpenStreetMapProvider } from 'leaflet-geosearch'
+import Percentile from '@iusername/percentile'
 import jsonKota from '@/assets/kotaV2.json'
 import jsonKecamatan from '@/assets/kecamatanV2.json'
 import jsonKelurahan from '@/assets/kelurahanV2.json'
-const percentile = require('percentile')
+
 export default {
   name: 'MapV2SebaranPolygon',
   props: {
@@ -224,15 +225,15 @@ export default {
       dataLayer: [],
 
       styleColorPolygon: {
-        positif_proses: 'EB5757',
-        positif_meninggal: 'A51212',
-        positif_sembuh: '27AE60',
-        pdp_proses: 'F2C94C',
-        pdp_selesai: 'F2C94C',
-        pdp_meninggal: 'F2C94C',
-        odp_proses: '2D9CDB',
-        odp_selesai: '2D9CDB',
-        odp_meninggal: '2D9CDB'
+        positif_proses: ['#ffa3cf', '#940047'],
+        positif_meninggal: ['#ffbea0', '#7D0005'],
+        positif_sembuh: ['#92ffdc', '#00441F'],
+        pdp_proses: ['#fff8d4', '#F0BE06'],
+        pdp_selesai: ['#ffefbb', '#EFA400'],
+        pdp_meninggal: ['#fff1af', '#C79403'],
+        odp_proses: ['#b3d3ff', '#2962BD'],
+        odp_selesai: ['#90e6ff', '#053755'],
+        odp_meninggal: ['#8cd6ff', '#02275D']
       },
 
       isShowFilter: false,
@@ -261,15 +262,15 @@ export default {
         name: 'Positif - Aktif'
       },
       rangeColor: {
-        positif_proses: ['#E54C95', '#E40769', '#CE005E', '#B30253', '#940047'],
-        positif_meninggal: ['#F78C5B', '#EE654C', '#CF331D', '#B60008', '#7D0005'],
-        positif_sembuh: ['#63C4A5', '#3EAE7A', '#228945', '#036A2B', '#00441F'],
-        pdp_proses: ['#F9EAA0', '#FDE175', '#FCD648', '#F6C304', '#F0BE06'],
-        pdp_selesai: ['#F9DC7F', '#FDD153', '#FEB728', '#F7AE03', '#EFA400'],
-        pdp_meninggal: ['#E7D068', '#FACD58', '#F3C448', '#EFB211', '#C79403'],
-        odp_proses: ['#86B8FC', '#72A5ED', '#588DE8', '#3E78D0', '#2962BD'],
-        odp_selesai: ['#66C9E6', '#49B5D2', '#298CC2', '#0267AD', '#053755'],
-        odp_meninggal: ['#68AED5', '#3F91C8', '#2171B6', '#094E9F', '#02275D']
+        positif_proses: [],
+        positif_meninggal: [],
+        positif_sembuh: [],
+        pdp_proses: [],
+        pdp_selesai: [],
+        pdp_meninggal: [],
+        odp_proses: [],
+        odp_selesai: [],
+        odp_meninggal: []
       },
 
       range: [],
@@ -482,6 +483,7 @@ export default {
       })
       this.dataLayer = []
     },
+
     createLegend () {
       let detailLabel = ''
       // create legend
@@ -519,9 +521,10 @@ export default {
       labels.push('</ul>')
       this.infolegend = labels.join('')
     },
+
     createLayerKota (category) {
       const self = this
-      const result = this.createRange(self.styleColorPolygon[category], 'kota', this.dataJson[category], jsonKota.features)
+      const result = this.createRange(category, 'kota', this.dataJson[category], jsonKota.features)
       this.range = result[0]
       this.dataKota = result[1]
 
@@ -529,8 +532,6 @@ export default {
         onEachFeature: (feature, layer, element) => {
           // create style color gradien
           const styleBatasWilayah = {
-            // fillColor: '#' + self.styleColorPolygon[category],
-            // fillOpacity: self.getColor(this.range, feature.properties.jumlah_kasus),
             fillOpacity: 1,
             fillColor: self.getColor(this.range, feature.properties.jumlah_kasus, category),
             weight: 0.7,
@@ -554,7 +555,7 @@ export default {
 
     createLayerKecamatan (category) {
       const self = this
-      const result = this.createRange(self.styleColorPolygon[category], 'kecamatan', this.dataJson[category], jsonKecamatan.features)
+      const result = this.createRange(category, 'kecamatan', this.dataJson[category], jsonKecamatan.features)
       this.range = result[0]
       this.dataKecamatan = result[1]
 
@@ -562,8 +563,6 @@ export default {
         onEachFeature: (feature, layer, element) => {
           // create style color gradien
           const styleBatasWilayah = {
-            // fillColor: '#' + self.styleColorPolygon[category],
-            // fillOpacity: self.getColor(this.range, feature.properties.jumlah_kasus),
             fillOpacity: 1,
             fillColor: self.getColor(this.range, feature.properties.jumlah_kasus, category),
             weight: 0.4,
@@ -587,7 +586,7 @@ export default {
 
     createLayerKelurahan (category) {
       const self = this
-      const result = this.createRange(self.styleColorPolygon[category], 'kelurahan', this.dataJson[category], jsonKelurahan.features)
+      const result = this.createRange(category, 'kelurahan', this.dataJson[category], jsonKelurahan.features)
       this.range = result[0]
       this.dataKelurahan = result[1]
 
@@ -595,8 +594,6 @@ export default {
         onEachFeature: (feature, layer, element) => {
           // create style color gradien
           const styleBatasWilayah = {
-            // fillColor: '#' + self.styleColorPolygon[category],
-            // fillOpacity: self.getColor(this.range, feature.properties.jumlah_kasus),
             fillOpacity: 1,
             fillColor: self.getColor(this.range, feature.properties.jumlah_kasus, category),
             weight: 0.1,
@@ -619,100 +616,190 @@ export default {
       this.createLegend()
     },
 
-    createRange (hex, wilayah, data, geojson) {
-      // const self = this
-      // let max = 0
-      // let min = 0
-      // let z = 0
-      const arrTobePercentile = []
+    createRange (category, wilayah, data, geojson) {
+      // count case per area (grouping)
+      let occurences = []
+      if (wilayah === 'kota') {
+        occurences = data.reduce(function (r, row) {
+          r[row.kode_kab] = ++r[row.kode_kab] || 1
+          return r
+        }, {})
+      } else if (wilayah === 'kecamatan') {
+        occurences = data.reduce(function (r, row) {
+          r[row.kode_kec] = ++r[row.kode_kec] || 1
+          return r
+        }, {})
+      } else if (wilayah === 'kelurahan') {
+        occurences = data.reduce(function (r, row) {
+          r[row.kode_kel] = ++r[row.kode_kel] || 1
+          return r
+        }, {})
+      }
 
-      geojson.forEach((feature) => {
-        // count kasus by wilayah & category kasus
-        let sum = 0
-        if (wilayah === 'kota') {
-          data.forEach((row) => {
-            if (feature.properties.bps_kabupaten_kode === row.kode_kab) {
-              sum = sum + 1
-            }
-          })
-        } else if (wilayah === 'kecamatan') {
-          data.forEach((row) => {
-            if (feature.properties.bps_kecamatan_kode === row.kode_kec) {
-              sum = sum + 1
-            }
-          })
-        } else if (wilayah === 'kelurahan') {
-          data.forEach((row) => {
-            if (feature.properties.bps_desa_kode === row.kode_kel) {
-              sum = sum + 1
-            }
-          })
-        }
-        // add to element
-        if (sum > 0) {
-          arrTobePercentile.push(sum)
-        }
-        const temp = { jumlah_kasus: sum }
-        feature.properties = { ...feature.properties, ...temp }
-        // get max kasus
-        // if (feature.properties.jumlah_kasus > max) {
-        //   max = feature.properties.jumlah_kasus
-        // }
-        // get min kasus
-        // if (z > 0) {
-        //   min = feature.properties.jumlah_kasus
-        // }
-        // if (feature.properties.jumlah_kasus < min) {
-        //   min = feature.properties.jumlah_kasus
-        // }
-        // z = z + 1
+      // define data for generate cluster
+      let arrTobePercentile = []
+      Object.keys(occurences).forEach(function (key) {
+        arrTobePercentile.push(occurences[key])
       })
 
-      // count range per list
+      // loop data geojson
+      geojson.forEach((feature) => {
+        let sum = 0
+        let temp = {}
+        if (wilayah === 'kota') {
+          // check if jumlah kasus is not null
+          if (occurences[feature.properties.bps_kabupaten_kode]) {
+            sum = occurences[feature.properties.bps_kabupaten_kode]
+          }
+        } else if (wilayah === 'kecamatan') {
+          // check if jumlah kasus is not null
+          if (occurences[feature.properties.bps_kecamatan_kode]) {
+            sum = occurences[feature.properties.bps_kecamatan_kode]
+          }
+        } else if (wilayah === 'kelurahan') {
+          // check if jumlah kasus is not null
+          if (occurences[feature.properties.bps_desa_kode]) {
+            sum = occurences[feature.properties.bps_desa_kode]
+          }
+        }
+        // add data jumlah kasus to geojson
+        temp = { jumlah_kasus: sum }
+        feature.properties = { ...feature.properties, ...temp }
+      })
+
+      // prepare hierarchical clustering
+      const percentile = new Percentile()
+      let count = 5
+      let isDuplicate = false
+      let arrPercentile = []
+
+      // looping hierarchical clustering
+      do {
+        // define differencial per cluster
+        const diff = 100 / count
+
+        // count percentile
+        for (let j = 0; j < count + 1; j++) {
+          const perc = Math.ceil(percentile.incOnce(arrTobePercentile, j * diff))
+          arrPercentile.push(perc)
+        }
+
+        // check if data percentile is duplicate (not valid)
+        isDuplicate = this.isDuplicate(arrPercentile)
+        if (isDuplicate === false) {
+          // if valid then finish
+          break
+        } else {
+          // if duplicate then looping again (hierarchical)
+          count--
+          arrTobePercentile = arrPercentile
+          arrPercentile = []
+        }
+      } while (count >= 1)
+
+      // create range
       const range = []
-      const q1 = percentile(0, arrTobePercentile)
-      const q2 = percentile(20, arrTobePercentile)
-      const q3 = percentile(40, arrTobePercentile)
-      const q4 = percentile(60, arrTobePercentile)
-      const q5 = percentile(80, arrTobePercentile)
-      const q6 = percentile(100, arrTobePercentile)
-      range.push({ from: q1, to: q2 })
-      range.push({ from: q2, to: q3 })
-      range.push({ from: q3, to: q4 })
-      range.push({ from: q4, to: q5 })
-      range.push({ from: q5, to: q6 })
+      for (let i = 0; i < arrPercentile.length - 1; i++) {
+        range.push({ from: arrPercentile[i], to: arrPercentile[i + 1] })
+      }
+
+      // create range color
+      const color = this.generateRangeColor(this.styleColorPolygon[category][0], this.styleColorPolygon[category][1], range.length)
+      this.rangeColor[category] = color
 
       return [range, geojson]
     },
 
+    isDuplicate (arrPercentile) {
+      return arrPercentile.length !== new Set(arrPercentile).size
+    },
+
     getColor (range, angka, category) {
+      // define color
       let color = ''
       if (angka === 0) {
         this.totalPerCluster[this.layerActive][0] += 1
         color = '#ffffff'
-      } else if (angka >= range[0].from && angka < range[0].to + 1) {
-        this.totalPerCluster[this.layerActive][1] += 1
-        color = this.rangeColor[category][0]
-      } else if (angka >= range[1].from && angka < range[1].to + 1) {
-        this.totalPerCluster[this.layerActive][2] += 1
-        color = this.rangeColor[category][1]
-      } else if (angka >= range[2].from && angka < range[2].to + 1) {
-        this.totalPerCluster[this.layerActive][3] += 1
-        color = this.rangeColor[category][2]
-      } else if (angka >= range[3].from && angka < range[3].to + 1) {
-        this.totalPerCluster[this.layerActive][4] += 1
-        color = this.rangeColor[category][3]
-      } else if (angka >= range[4].from && angka < range[4].to + 1) {
-        this.totalPerCluster[this.layerActive][5] += 1
-        color = this.rangeColor[category][4]
+      } else {
+        // loop data range, match data
+        for (let i = 0; i <= range.length - 1; i++) {
+          if (angka >= range[i].from && angka <= range[i].to) {
+            this.totalPerCluster[this.layerActive][i + 1] += 1
+            color = this.rangeColor[category][i]
+          }
+        }
       }
-
+      // return color
       return color
+    },
+
+    processHEX (val) {
+      const hex = (val.length > 6) ? val.substr(1, val.length - 1) : val
+      let r
+      let g
+      let b
+      if (hex.length > 3) {
+        r = hex.substr(0, 2)
+        g = hex.substr(2, 2)
+        b = hex.substr(4, 2)
+      } else {
+        r = hex.substr(0, 1) + hex.substr(0, 1)
+        g = hex.substr(1, 1) + hex.substr(1, 1)
+        b = hex.substr(2, 1) + hex.substr(2, 1)
+      }
+      return [
+        parseInt(r, 16),
+        parseInt(g, 16),
+        parseInt(b, 16)
+      ]
+    },
+
+    pad (n, width, z) {
+      z = z || '0'
+      n = n + ''
+      return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n
+    },
+
+    generateRangeColor (val1El, val2El, stepsEl) {
+      const val1RGB = this.processHEX(val1El)
+      const val2RGB = this.processHEX(val2El)
+      const colors = []
+
+      const stepsInt = parseInt(stepsEl, 10)
+      const stepsPerc = 100 / (stepsInt + 1)
+
+      const valClampRGB = [
+        val2RGB[0] - val1RGB[0],
+        val2RGB[1] - val1RGB[1],
+        val2RGB[2] - val1RGB[2]
+      ]
+
+      for (let i = 0; i < stepsInt; i++) {
+        const clampedR = (valClampRGB[0] > 0)
+          ? this.pad((Math.round(valClampRGB[0] / 100 * (stepsPerc * (i + 1)))).toString(16), 2)
+          : this.pad((Math.round((val1RGB[0] + (valClampRGB[0]) / 100 * (stepsPerc * (i + 1))))).toString(16), 2)
+
+        const clampedG = (valClampRGB[1] > 0)
+          ? this.pad((Math.round(valClampRGB[1] / 100 * (stepsPerc * (i + 1)))).toString(16), 2)
+          : this.pad((Math.round((val1RGB[1] + (valClampRGB[1]) / 100 * (stepsPerc * (i + 1))))).toString(16), 2)
+
+        const clampedB = (valClampRGB[2] > 0)
+          ? this.pad((Math.round(valClampRGB[2] / 100 * (stepsPerc * (i + 1)))).toString(16), 2)
+          : this.pad((Math.round((val1RGB[2] + (valClampRGB[2]) / 100 * (stepsPerc * (i + 1))))).toString(16), 2)
+        colors[i] = [
+          '#',
+          clampedR,
+          clampedG,
+          clampedB
+        ].join('')
+      }
+      return colors
     },
 
     showFilter () {
       this.isShowFilter = !this.isShowFilter
     },
+
     resetTotalCluster () {
       this.totalPerCluster[this.layerActive] = {
         0: 0,
@@ -723,6 +810,7 @@ export default {
         5: 0
       }
     },
+
     setFilter (category) {
       this.resetTotalCluster()
 
@@ -756,6 +844,7 @@ export default {
         this.createLayerKelurahan(this.filterActive)
       }
     },
+
     setTitle (category) {
       switch (category) {
         case 'positif_sembuh': {
@@ -808,9 +897,11 @@ export default {
         }
       }
     },
+
     showLayer () {
       this.isShowLayer = !this.isShowLayer
     },
+
     setLayer (category) {
       this.resetTotalCluster()
 
