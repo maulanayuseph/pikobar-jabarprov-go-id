@@ -36,7 +36,7 @@ export default {
   },
   computed: {
     ...mapState('remote-config', {
-      campaign: state => state.pikobarWebPopupCampaign || {}
+      campaign: state => state.config ? state.config.pikobarWebPopupCampaign : {}
     })
   },
   watch: {
