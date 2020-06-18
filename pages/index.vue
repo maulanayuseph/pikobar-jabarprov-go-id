@@ -2,6 +2,7 @@
 <template>
   <div class="container mx-auto">
     <client-only>
+      <PopupCampaign />
       <section class="m-4 md:m-8">
         <TopAlert />
       </section>
@@ -443,9 +444,11 @@ import BlogPostPreview from '~/components/Blog/BlogPostPreview'
 import DataTabs from '~/components/_pages/index/DataTabs'
 import ShareableItems from '~/components/ShareableItems'
 import ShareableItemTable from '~/components/ShareableItemTable'
+import PopupCampaign from '~/components/PopupCampaign'
 
 export default {
   components: {
+    PopupCampaign,
     ContentLoader,
     TopAlert,
     ImageCarousel,
