@@ -1,44 +1,92 @@
 <template>
   <div class="container mx-auto">
-    <div class="container mx-4 p-5 max-w-3xl mx-auto">
-      <section class="md:w-2/3 flex-shrink flex-grow-0 mr-6">
-        <div class="bg-white rounded-lg mb-8 p-6 shadow-lg">
-          <div class="items-stretch flex flex-col xl:flex-row xl:flex-no-wrap mb-2">
-            <button
-              class="button-selector m-1 w-full xl:w-auto "
-              style="display: flex;"
-              :active="activeMap === 'polygon'"
-              @click="enableMap('polygon')"
-            >
-              <img v-if="activeMap === 'polygon'" src="/img/icon-sebaran-active.svg" style="margin-top: 2px; margin-right:5px;">
-              <img v-if="activeMap !== 'polygon'" src="/img/icon-sebaran-inactive.svg" style="margin-top: 2px; margin-right:5px;">
-              Sebaran Polygon
-            </button>
-            <button
-              class="button-selector m-1 w-full xl:w-auto "
-              style="display: flex;"
-              :active="activeMap === 'titik'"
-              @click="enableMap('titik')"
-            >
-              <img v-if="activeMap === 'titik'" src="/img/icon-sebaran-active.svg" style="margin-top: 2px; margin-right:5px;">
-              <img v-if="activeMap !== 'titik'" src="/img/icon-sebaran-inactive.svg" style="margin-top: 2px; margin-right:5px;">
-              Sebaran Titik
-            </button>
-            <button
-              class="button-selector m-1 w-full xl:w-auto "
-              style="display: flex;"
-              :active="activeMap === 'timeslider'"
-              @click="enableMap('timeslider')"
-            >
-              <img v-if="activeMap === 'timeslider'" src="/img/icon-data-positif-active.svg" style="margin-top: 2px; margin-right:5px;">
-              <img v-if="activeMap !== 'timeslider'" src="/img/icon-data-positif-inactive.svg" style="margin-top: 2px; margin-right:5px;">
-              Timeslider - Data Positif
-            </button>
+    <section class="m-4 md:m-8">
+      <div class="flex flex-col lg:flex-row lg:items-stretch">
+        <div class="w-full mb-6 lg:w-3/5 lg:mr-6 lg:mb-0 bg-white rounded-lg mb-8 shadow-lg">
+          <div>
+            <h3 class="p-5 text-lg md:text">
+              <b>Peta Kasus Covid-19 di Jawa Barat</b>
+            </h3>
+            <hr>
           </div>
-          <MapV3SebaranPolygon v-if="activeMap === 'polygon'" />
+          <div class="p-6">
+            <div class="flex flex-col lg:flex-row lg:items-stretch mb-3">
+              <button
+                class="button-selector m-1 w-full xl:w-auto "
+                style="display: flex;"
+                :active="activeMap === 'polygon'"
+                @click="enableMap('polygon')"
+              >
+                <img v-if="activeMap === 'polygon'" src="/img/icon-sebaran-active.svg" style="margin-top: 2px; margin-right:5px;">
+                <img v-if="activeMap !== 'polygon'" src="/img/icon-sebaran-inactive.svg" style="margin-top: 2px; margin-right:5px;">
+                Sebaran Polygon
+              </button>
+              <button
+                class="button-selector m-1 w-full xl:w-auto "
+                style="display: flex;"
+                :active="activeMap === 'titik'"
+                @click="enableMap('titik')"
+              >
+                <img v-if="activeMap === 'titik'" src="/img/icon-sebaran-active.svg" style="margin-top: 2px; margin-right:5px;">
+                <img v-if="activeMap !== 'titik'" src="/img/icon-sebaran-inactive.svg" style="margin-top: 2px; margin-right:5px;">
+                Sebaran Titik
+              </button>
+              <button
+                class="button-selector m-1 w-full xl:w-auto "
+                style="display: flex;"
+                :active="activeMap === 'timeslider'"
+                @click="enableMap('timeslider')"
+              >
+                <img v-if="activeMap === 'timeslider'" src="/img/icon-data-positif-active.svg" style="margin-top: 2px; margin-right:5px;">
+                <img v-if="activeMap !== 'timeslider'" src="/img/icon-data-positif-inactive.svg" style="margin-top: 2px; margin-right:5px;">
+                Timeslider - Data Positif
+              </button>
+            </div>
+            <MapV3SebaranPolygon v-if="activeMap === 'polygon'" :activeRegionId.sync="activeRegionId" :activeCategory.sync="activeCategory" />
+          </div>
         </div>
-      </section>
-    </div>
+        <div class="w-full mb-6 lg:w-2/5 lg:mb-0 bg-white rounded-lg mb-8 shadow-lg">
+          <RasioConfirmedCase :activeRegionId.sync="activeRegionId" :activeCategory="activeCategory" />
+        </div>
+      </div>
+    </section>
+    <section class="m-4 md:m-8">
+      <div class="flex flex-col lg:flex-row lg:items-stretch">
+        <div class="w-full mb-6 lg:mb-0 bg-white rounded-lg mb-8 shadow-lg">
+          <div>
+            <h3 class="p-5 text-lg md:text">
+              <b>Tabel Kasus Covid-19 di Jawa Barat</b>
+            </h3>
+            <hr>
+          </div>
+          <div class="p-6">
+            <div class="mb-2">
+              Data yang ditampilkan berdasarkan: <b>Kota/Kabupaten di Jawa Barat</b> <br>
+            </div>
+            <div class="flex flex-col lg:flex-row lg:items-stretch">
+              <button
+                class="button-selector mr-1 mt-1 mb-1 w-full xl:w-auto "
+                style="display: flex;"
+                :active="activeTable === 'confirmed'"
+                @click="enableTable('confirmed')"
+              >
+                Terkonfirmasi
+              </button>
+              <button
+                class="button-selector m-1 w-full xl:w-auto "
+                style="display: flex;"
+                :active="activeTable === 'unconfirmed'"
+                @click="enableTable('unconfirmed')"
+              >
+                ODP dan PDP
+              </button>
+            </div>
+          </div>
+          <ConfirmedCaseList v-if="activeTable === 'confirmed'" :activeRegionId.sync="activeRegionId" :activeCategory="activeCategory" />
+          <UnconfirmedCaseList v-if="activeTable === 'unconfirmed'" :activeRegionId="activeRegionId" :activeCategory.sync="activeCategory" />
+        </div>
+      </div>
+    </section>
   </div>
 </template>
 
@@ -49,7 +97,10 @@
 
 export default {
   components: {
-    MapV3SebaranPolygon: () => import('~/components/MapV3SebaranPolygon')
+    MapV3SebaranPolygon: () => import('~/components/MapV3SebaranPolygon'),
+    RasioConfirmedCase: () => import('~/components/RasioConfirmedCase'),
+    ConfirmedCaseList: () => import('~/components/ConfirmedCaseList'),
+    UnconfirmedCaseList: () => import('~/components/UnconfirmedCaseList')
   },
   async fetch () {
     await new Promise((resolve) => {
@@ -62,7 +113,10 @@ export default {
   },
   data () {
     return {
-      activeMap: 'polygon'
+      activeRegionId: '32',
+      activeCategory: 'kota',
+      activeMap: 'polygon',
+      activeTable: 'confirmed'
     }
   },
   computed: {
@@ -75,6 +129,9 @@ export default {
   methods: {
     enableMap (type) {
       this.activeMap = type
+    },
+    enableTable (type) {
+      this.activeTable = type
     }
   },
   head () {

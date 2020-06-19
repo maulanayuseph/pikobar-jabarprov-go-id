@@ -37,6 +37,14 @@ export default {
     propsDataSebaranJawaBarat: {
       type: Array,
       default: () => [{}]
+    },
+    activeRegionId: {
+      type: String,
+      default: ''
+    },
+    activeRegionCategory: {
+      type: String,
+      default: ''
     }
   },
   data () {
@@ -189,6 +197,7 @@ export default {
       let region = 'kota'
       let jsonRegion = []
       let parentCodeRegion = ''
+      let parentBpsCode = ''
 
       if (e.target.feature.properties.bps_kecamatan_kode !== undefined) {
         jsonRegion = this.jsonKelurahan
@@ -200,16 +209,21 @@ export default {
         region = 'kecamatan'
       }
 
-      this.map.fitBounds(e.target.getBounds())
-      this.map.flyTo(e.target.getCenter())
-      const parentBpsCode = e.target.feature.properties[parentCodeRegion]
+      parentBpsCode = e.target.feature.properties[parentCodeRegion]
+
       for (let i = 0; i < jsonRegion.features.length; i++) {
         if (jsonRegion.features[i].properties[parentCodeRegion] === parentBpsCode) {
           geojson.features.push(jsonRegion.features[i])
         }
       }
+      this.map.fitBounds(e.target.getBounds())
+      this.map.flyTo(e.target.getCenter())
       this.removeLayer()
       this.createBorderLine(geojson, region)
+
+      // update props region
+      this.$emit('update:activeRegionId', parentBpsCode)
+      this.$emit('update:activeRegionCategory', region)
     },
     backToHome () {
       this.map.flyTo([-6.932694, 107.627449], 9)
