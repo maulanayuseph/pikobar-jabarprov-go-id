@@ -21,6 +21,7 @@
         v-for="(tab, index) in tabs"
         v-show="tab.id === activeTabId"
         :key="index"
+        :activeId= activeTabId
       />
     </div>
   </div>
@@ -41,9 +42,9 @@ export default {
           component: () => import('./DataSummary')
         },
         {
-          id: 'map-kota',
+          id: 'map-area',
           title: 'Peta Sebaran Kota/Kab',
-          component: () => import('../../Tableau/PetaSebaranKotaKabupaten')
+          component: () => import('../../MapV2SebaranPolygon')
         },
         {
           id: 'map-kel',

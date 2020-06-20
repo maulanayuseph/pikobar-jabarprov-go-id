@@ -5,7 +5,7 @@
     <div class="container-map">
       <div
         id="map-wrap-polygon"
-        style="height: 500px; z-index:0; position: relative;">
+        style="height: 500px; width: 100%; z-index:0; position: relative;">
         <button
           class="btn-fullscreen btn btn-light mb-2"
           style="background-color: white"
@@ -170,6 +170,29 @@
         <!-- eslint-disable-next-line vue/no-v-html -->
         <div class="mb-1" v-html="infolegend" />
       </div>
+      <div v-if="!isHiddenDisclaimer" class="disclaimer">
+        <div class="backdrop" />
+        <div class="text-disclaimer">
+          <div class="title">
+            Disclaimer
+          </div>
+          <!-- <div class="subtitle">
+            Sumber: Dinas Kesehatan Provinsi Jawa Barat
+          </div> -->
+          <div class="description mt-2 text-justify pl-5 pr-5">
+            Perbesar peta untuk melihat jumlah titik akurat. Beberapa titik yang saling berdekatan terlihat menyatu pada pembesaran peta skala besar.
+
+            Titik lokasi merupakan titik acak (random by system) wilayah yang tertera pada identitas kasus dan tidak menunjuk pada alamat persis masing-masing kasus.
+
+            Saat ini, data yang Pikobar tampilkan berasal dari sinkronisasi data dengan Dinas Kesehatan Kabupaten/Kota. Proses ini mungkin membutuhkan waktu 1-2 hari setiap perbaruan data terjadi. Oleh karena itu, untuk sementara Anda mungkin melihat perbedaan antara angka yang tampil di Pikobar dengan yang diumumkan di kabupaten/kota selama proses sinkronisasi berlangsung. Silakan periksa kembali 1-2 hari setelah perbaruan terakhir dari masing-masing kabupaten/kota.
+
+            Terima kasih dan mohon untuk dimaklumi.
+          </div>
+          <button class="px-6 py-2 bg-brand-green hover:bg-brand-green-lighter text-white rounded-lg shadow-md mt-8" style="color: #fff" @click="onClickDisclaimer">
+            <b>Mengerti</b>
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -189,6 +212,10 @@ export default {
     propsDataSebaranJawaBarat: {
       type: Array,
       default: () => [{}]
+    },
+    activeId: {
+      type: String,
+      default: ''
     }
   },
   data () {
@@ -196,6 +223,8 @@ export default {
       fullscreen: false,
       map: '',
       zoom: 9,
+      isHiddenDisclaimer: false,
+      isRendered: false,
 
       faFilter,
       faHome,
@@ -317,14 +346,22 @@ export default {
     dataSebaranJabar (val) {
       console.log('polygon on watch')
       this.distributionProvinceData = val
-      this.onChanges()
+      // this.onChanges()
+    },
+    activeId () {
+      if (this.activeId === 'map-area' && !this.isRendered) {
+        this.initMap()
+      }
     }
   },
   mounted () {
-    this.initMap()
+    if (this.activeId === 'map-area' && !this.isRendered) {
+      this.initMap()
+    }
+
     if (this.distributionProvinceData.length > 0) {
       console.log('polygon on mounted ada')
-      this.onChanges()
+      // this.onChanges()
     } else {
       console.log('polygon on mounted no data')
     }
@@ -391,7 +428,12 @@ export default {
       this.createLayerKota(this.filterActive)
       this.setZoomLevel()
     },
-
+    onClickDisclaimer () {
+      if (this.distributionProvinceData.length > 0 && this.isRendered) {
+        this.isHiddenDisclaimer = true
+        this.onChanges()
+      }
+    },
     initMap () {
       this.map = this.$L.map('map-wrap-polygon', {
         zoomControl: false,
@@ -452,6 +494,7 @@ export default {
 
       // create layer group
       this.layerGroup = this.$L.layerGroup().addTo(this.map)
+      this.isRendered = true
     },
 
     setZoomLevel () {
@@ -503,7 +546,7 @@ export default {
           region = 'Kota/Kabupaten'
         }
       }
-      detailLabel = '<li style="margin-right: 20px;"><i style="background:#ffffff;border: 1px solid #000000;' +
+      detailLabel = '<li style="margin-right: 20px;"><i style="background:#ffffff;border: 1px solid #000000;width: 13px;height: 13px;float: left;margin-right: 8px;' +
           'opacity: 1;"></i>' + '0 - 0'
       detailLabel += ' <br> <span class="text-xs">' + this.totalPerCluster[this.layerActive][0] + ' ' + region + '</span></li>'
       labels.push(
@@ -511,7 +554,7 @@ export default {
       )
       this.range.forEach((element, index) => {
         detailLabel = '<li style="margin-right: 20px;"><i style="background:' + this.rangeColor[this.filterActive][index] + '; ' +
-            'opacity: 1;"></i>' +
+            'opacity: 1; width: 13px;height: 13px;float: left;margin-right: 8px;border: white 1px solid;"></i>' +
             element.from + ' - ' + element.to
         detailLabel += ' <br> <span class="text-xs">' + this.totalPerCluster[this.layerActive][index + 1] + ' ' + region + '</span></li>'
         labels.push(
@@ -954,3 +997,325 @@ export default {
   }
 }
 </script>
+<style>
+
+@import "leaflet-geosearch/assets/css/leaflet.css";
+@import "leaflet.markercluster/dist/MarkerCluster.css";
+@import "leaflet.markercluster/dist/MarkerCluster.Default.css";
+</style>
+<style scoped>
+.bg-green-100 {
+  background-color: #5AAA4E;
+}
+.text-white {
+  color: white;
+}
+.btn {
+  border-radius: 0.25rem;
+}
+
+.container-map {
+    width:100%;
+    height:100%;
+    position: relative;
+    background-color: #ffffff;
+}
+
+.filter-layer {
+    position: absolute;
+    top: 0px;
+    right: 10px;
+    padding-right: 1em;
+    padding-top: 1em;
+}
+
+.filter-layer .btn {
+    font-size: 0.8em;
+    padding: 2px 6px;
+    box-shadow: 0 1px 5px rgba(0,0,0,0.65);
+}
+
+.filter-data {
+    background: #fff;
+    margin-top: 0.5em;
+    padding: 0.6em;
+    border-radius: 0.6em;
+    box-shadow: 0 1px 5px rgba(0,0,0,0.65);
+}
+
+.filter-layer li {
+    list-style: none;
+    opacity: 0.4;
+    padding-bottom: 0.2em;
+}
+
+.filter-layer li:hover {
+    cursor: pointer;
+}
+
+.filter-active {
+    opacity: 1 !important;
+}
+
+.filter-data {
+    background: #fff;
+    color: black;
+    margin-top: 0.5em;
+    padding: 0.6em;
+    border-radius: 0.6em;
+    box-shadow: 0 1px 5px rgba(0,0,0,0.65);
+}
+
+.legend-color {
+    width: 1em;
+    height: 1em;
+    float: left;
+    border-radius: 10px;
+    margin-top: 4px;
+}
+
+.cluster {
+    border-radius: 50%;
+    text-align: center;
+    color: white;
+    font-weight: 700;
+    font-family: monospace;
+    height: 10px;
+    width: 10px;
+}
+
+.cluster-odp-proses {
+  /* box-shadow: 0 0 5px 0 rgb(45, 156, 219, 0.9); */
+  border: 2px solid rgb(45, 156, 219, 0.9);
+  background: rgb(45, 156, 219, 0.9);
+}
+
+.cluster-odp-selesai {
+  /* box-shadow: 0 0 5px 0 rgb(45, 156, 219, 0.9); */
+  border: 2px solid rgb(45, 156, 219, 0.9);
+  background: rgba(196, 195, 195, 0.9);
+}
+
+.cluster-odp-meninggal {
+  /* box-shadow: 0 0 5px 0 rgb(45, 156, 219, 0.9); */
+  border: 2px solid rgb(45, 156, 219, 0.9);
+  background: rgb(165,18,18, 0.9);
+}
+
+.cluster-pdp-proses {
+  /* box-shadow: 0 0 5px 0 rgb(242, 201, 76, 0.9); */
+  border: 2px solid rgb(242, 201, 76, 0.9);
+  background: rgb(242, 201, 76, 0.9);
+}
+
+.cluster-pdp-selesai {
+  /* box-shadow: 0 0 5px 0 rgb(242, 201, 76, 0.9); */
+  border: 2px solid rgb(242, 201, 76, 0.9);
+  background: rgba(196, 195, 195, 0.9);
+}
+
+.cluster-pdp-meninggal {
+  /* box-shadow: 0 0 5px 0 rgb(242, 201, 76, 0.9); */
+  border: 2px solid rgb(242, 201, 76, 0.9);
+  background: rgb(165,18,18, 0.9);
+}
+
+.cluster-positif-proses {
+  /* box-shadow: 0 0 5px 0 rgb(235, 87, 87, 0.9); */
+  border: 2px solid rgb(235, 87, 87, 0.9);
+  background: rgb(235, 87, 87, 0.9);
+}
+
+.cluster-positif-sembuh {
+  /* box-shadow: 0 0 5px 0 rgb(235, 87, 87, 0.9); */
+  border: 2px solid rgb(235, 87, 87, 0.9);
+  background: rgb(39, 174, 96, 0.9);
+}
+
+.cluster-positif-meninggal {
+  /* box-shadow: 0 0 5px 0 rgb(235, 87, 87, 0.9); */
+  border: 2px solid rgb(235, 87, 87, 0.9);
+  background: rgb(165,18,18, 0.9);
+}
+
+.digits-0 {
+  height: 17px;
+  width: 17px;
+  margin-top: -14px;
+  margin-left: -14px;
+}
+
+.digits-1 {
+  font-size: 14px;
+  height: 28px;
+  width: 28px;
+  line-height: 28px;
+  margin-top: -14px;
+  margin-left: -14px;
+}
+
+.digits-2 {
+  font-size: 16px;
+  height: 34px;
+  width: 34px;
+  line-height: 35px;
+  margin-top: -17px;
+  margin-left: -17px;
+}
+
+.digits-3 {
+  font-size: 18px;
+  height: 48px;
+  width: 47px;
+  line-height: 47px;
+  /* border-width: 3px; */
+  margin-top: -24px;
+  margin-left: -24px;
+}
+
+.digits-4 {
+  font-size: 18px;
+  height: 58px;
+  width: 58px;
+  line-height: 57px;
+  /* border-width: 4px; */
+  margin-top: -29px;
+  margin-left: -29px;
+}
+
+.legend-layer {
+  /* position: absolute; */
+  /* bottom: 10px; */
+  /* left: 30px; */
+  /* padding-right: 1em; */
+  /* padding-top: 1em; */
+}
+
+.legend-data {
+  background: rgb(255,255,2555);
+  margin-top: 0.5em;
+  padding: 0.6em;
+  /* border-radius: 0.6em; */
+  /* box-shadow: 0 1px 5px rgba(0,0,0,0.65); */
+  line-height: 18px;
+  color: #252525;
+}
+
+.legend-data ul {
+  list-style: none;
+  margin-bottom: 0px;
+}
+
+.legend-data li {
+  padding: 3px;
+}
+
+/* .legend-data i {
+  width: 13px;
+  height: 13px;
+  float: left;
+  margin-right: 8px;
+  border: white 1px solid;
+} */
+
+.leaflet-div-icon {
+  border: none!important;
+  border-radius: 20px;
+}
+
+.backdrop {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: black;
+  opacity: 0.5;
+  border-radius: 1em;
+}
+
+.text-disclaimer {
+  top:15%;
+  width: 100%;
+  position: absolute;
+  text-align: center;
+  color: #fff;
+}
+
+.leaflet-top .leaflet-control-geosearch.bar,
+.leaflet-bottom .leaflet-control-geosearch.bar {
+  display: none;
+}
+
+.leaflet-control-geosearch.bar {
+  position: relative;
+  display: block;
+  height: auto;
+  width: 400px;
+  margin: 10px auto 0;
+  cursor: auto;
+  z-index: 1000;
+}
+
+.leaflet-control-geosearch.bar form {
+  position: relative;
+  top: 0;
+  left: 0;
+  display: block;
+  border: 2px solid rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
+
+.leaflet-control-geosearch.bar form input {
+  min-width: 100%;
+  width: 100%;
+}
+
+.leaflet-control-geosearch.bar .results.active:after {
+  opacity: .2;
+}
+
+.leaflet-right .leaflet-control-geosearch form {
+  right: 28px;
+  left: initial;
+  border-radius: 4px 0 0 4px;
+  border-left: inherit;
+  border-right: none;
+}
+
+.leaflet-control-geosearch a.reset {
+  color: black;
+  position: absolute;
+  line-height: 30px;
+  padding: 0 8px;
+  right: 0;
+  top: 0;
+  cursor: pointer;
+  border: none;
+}
+
+.leaflet-control-geosearch a.reset:hover {
+  background: #f5f5f5;
+}
+
+.btn-fullscreen {
+  position: absolute;
+  bottom: 0px;
+  left: 10px;
+  font-size: 1.3em;
+  padding: 2px 6px;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.65);
+  z-index: 401;
+}
+
+.btn-fullscreen:hover {
+  cursor: pointer;
+}
+
+.title-map {
+  position: absolute;
+  top: 0;
+  color: #ffffff;
+}
+
+</style>

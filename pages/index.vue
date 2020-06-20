@@ -546,7 +546,8 @@ export default {
   mounted () {
     this.$nextTick(() => {
       Promise.all([
-        this.$store.dispatch('statistics/getCases')
+        this.$store.dispatch('statistics/getCases'),
+        this.$store.dispatch('data-sebaran-jabar/getItems')
       ]).then(() => {
         Promise.all([
           this.$store.dispatch('banners/getItems'),
