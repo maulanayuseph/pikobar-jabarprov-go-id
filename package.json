@@ -26,6 +26,7 @@
     "firebase-admin": "^8.10.0",
     "leaflet-fullscreen": "^1.0.2",
     "leaflet-search": "^2.9.8",
+    "leaflet.heat": "^0.2.0",
     "lodash": "^4.17.15",
     "lodash.orderby": "^4.6.0",
     "mdbvue": "^6.5.1",

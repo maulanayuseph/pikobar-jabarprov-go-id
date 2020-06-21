@@ -49,7 +49,7 @@ export default {
         {
           id: 'map-kel',
           title: 'Peta Titik Sebaran Kasus',
-          component: () => import('../../Tableau/PetaPersebaranAllCases')
+          component: () => import('../../MapSebaranHeatmap')
         }
       ],
       activeTabId: 'stat',
