@@ -318,8 +318,8 @@ export default {
       const heatLayer = this.$L.heatLayer(
         dataHeat,
         {
-          radius: 25,
-          minOpacity: 0.5,
+          radius: 8,
+          minOpacity: 1,
           position: 'front'
         }).addTo(this.map)
 
