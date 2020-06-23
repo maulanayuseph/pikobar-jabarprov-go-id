@@ -71,6 +71,7 @@
         /> -->
         <MapV2SebaranPolygon
           v-if="stat.isActivePolygon"
+          activeId="map-area"
         />
         <!-- <MapV2SebaranCluster
           v-if="stat.isActiveCluster"

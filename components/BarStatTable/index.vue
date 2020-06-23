@@ -558,8 +558,8 @@ export default {
       this.jsonDataKota.forEach((element, index) => {
         for (let i = rangeTotalDari; i <= rangeTotalSampai; i++) {
           if (element.kode.toString() === this.temporary[i].kode_kab) {
-            // this.jsonDataKota[index].positif_aktif_total = this.temporary[i].positif - this.temporary[i].sembuh - this.temporary[i].meninggal
-            this.jsonDataKota[index].positif_aktif_total = this.temporary[i].positif
+            this.jsonDataKota[index].positif_aktif_total = this.temporary[i].positif - this.temporary[i].sembuh - this.temporary[i].meninggal
+            // this.jsonDataKota[index].positif_aktif_total = this.temporary[i].positif
             this.jsonDataKota[index].positif_sembuh_total = this.temporary[i].sembuh
             this.jsonDataKota[index].positif_meninggal_total = this.temporary[i].meninggal
             this.jsonDataKota[index].odp_total_total = this.temporary[i].odp
@@ -574,8 +574,8 @@ export default {
       this.jsonDataKota.forEach((element, index) => {
         for (let i = rangeH1Dari; i <= rangeH1Sampai; i++) {
           if (element.kode.toString() === this.temporary[i].kode_kab) {
-            // this.jsonDataKota[index].positif_aktif_h1 = this.temporary[i].positif - this.temporary[i].sembuh - this.temporary[i].meninggal
-            this.jsonDataKota[index].positif_aktif_h1 = this.temporary[i].positif
+            this.jsonDataKota[index].positif_aktif_h1 = this.temporary[i].positif - this.temporary[i].sembuh - this.temporary[i].meninggal
+            // this.jsonDataKota[index].positif_aktif_h1 = this.temporary[i].positif
             this.jsonDataKota[index].positif_sembuh_h1 = this.temporary[i].sembuh
             this.jsonDataKota[index].positif_meninggal_h1 = this.temporary[i].meninggal
             this.jsonDataKota[index].odp_total_h1 = this.temporary[i].odp
@@ -590,8 +590,8 @@ export default {
       this.jsonDataKota.forEach((element, index) => {
         for (let i = rangeH7Dari; i <= rangeH7Sampai; i++) {
           if (element.kode.toString() === this.temporary[i].kode_kab) {
-            // this.jsonDataKota[index].positif_aktif_h7 = this.temporary[i].positif - this.temporary[i].sembuh - this.temporary[i].meninggal
-            this.jsonDataKota[index].positif_aktif_h7 = this.temporary[i].positif
+            this.jsonDataKota[index].positif_aktif_h7 = this.temporary[i].positif - this.temporary[i].sembuh - this.temporary[i].meninggal
+            // this.jsonDataKota[index].positif_aktif_h7 = this.temporary[i].positif
             this.jsonDataKota[index].positif_sembuh_h7 = this.temporary[i].sembuh
             this.jsonDataKota[index].positif_meninggal_h7 = this.temporary[i].meninggal
             this.jsonDataKota[index].odp_total_h7 = this.temporary[i].odp
