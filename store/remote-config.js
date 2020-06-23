@@ -30,19 +30,20 @@ export const actions = {
             return fetch()
           })
       }
-      await remoteConfig.activate()
+      await fetch()
         .then(() => {
-          return fetch()
-        }).then(() => {
+          console.log(remoteConfig)
           const enableDownload = remoteConfig.getValue('download_app_via_web_enabled')._value === 'true'
           const downloadAppURL = remoteConfig.getValue('download_app_url')._value
           const selfDiagnoseURL = remoteConfig.getValue('selfdiagnose_url')._value
           const announcement = remoteConfig.getValue('announcement')._value
+          const pikobarWebPopupCampaign = remoteConfig.getValue('pikobar_web_popup_campaign')._value
           commit('setConfig', {
             enableDownload,
             downloadAppURL,
             selfDiagnoseURL,
-            announcement: announcement ? JSON.parse(announcement) : null
+            announcement: announcement ? JSON.parse(announcement) : null,
+            pikobarWebPopupCampaign: pikobarWebPopupCampaign ? JSON.parse(pikobarWebPopupCampaign) : null
           })
         })
     }

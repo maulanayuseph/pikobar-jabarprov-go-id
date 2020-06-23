@@ -5,7 +5,8 @@ import VGeosearch from 'vue2-leaflet-geosearch'
 import 'leaflet-fullscreen/dist/leaflet.fullscreen.css'
 import 'leaflet-fullscreen/dist/Leaflet.fullscreen'
 import * as Vue2Leaflet from 'vue2-leaflet'
-import * as L from 'leaflet'
+import L from 'leaflet'
+import 'leaflet.heat'
 
 Vue.component('l-circle', Vue2Leaflet.LCircle)
 Vue.component('l-circle-marker', Vue2Leaflet.LCircleMarker)
@@ -30,7 +31,6 @@ Vue.component('l-tile-layer', Vue2Leaflet.LTileLayer)
 Vue.component('l-tooltip', Vue2Leaflet.LTooltip)
 Vue.component('l-lwms-tile-layer', Vue2Leaflet.LWMSTileLayer)
 Vue.component('v-marker-cluster', Vue2LeafletMarkerCluster)
-Vue.component('v-geosearch', VGeosearch)
 Vue.component('v-geosearch', VGeosearch)
 
 // Build icon assets.
