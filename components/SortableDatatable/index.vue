@@ -57,7 +57,7 @@
               Nama Kota / Kabupaten
               <font-awesome-icon :icon="getSortIcon('nama')" />
             </th>
-            <th v-if="statCategory === 'Terkonfirmasi'" colspan="3" class="px-2 py-1 hover:opacity-75" style="background-color: #747BAD; color: #ffffff;">
+            <th v-if="statCategory === 'Terkonfirmasi'" colspan="3" class="px-2 py-1 hover:opacity-75" style="background-color: #4b56b2; color: #ffffff;">
               Positif Terkonfirmasi
             </th>
             <th v-if="statCategory === 'Terkonfirmasi'" colspan="3" class="px-2 py-1 hover:opacity-75" style="background-color: #FF4A4B; color: #ffffff;">
@@ -141,6 +141,64 @@
                       </span>
                     </p>
                   </th>
+                </template>
+              </template>
+            </template>
+          </tr>
+          <tr>
+            <template v-for="(col, index) in data2.columns">
+              <template v-if="index === 0">
+                <td
+                  v-if="statCategory === col.category || 'kota' === col.category"
+                  :key="index"
+                  ref="tableHeaders"
+                  class="px-2 py-1 hover:opacity-75 border-b border-solid px-2 py-1 textright textleft"
+                  style="padding-left: 1.5em !important; width: 19%;"
+                >
+                  <p class="pointer-events-none flex justify-between items-center" style="float: right;">
+                    <span
+                      v-if="index >= 1"
+                      class="textright"
+                    >
+                      <b>{{ col.total }}</b>
+                    </span>
+                  </p>
+                </td>
+              </template>
+              <template v-else>
+                <template v-if="statCategory === col.category ">
+                  <td
+                    :key="index"
+                    ref="tableHeaders"
+                    class="px-2 py-1 hover:opacity-75 border-b border-solid px-2 py-1 textright"
+                    style="padding-left: 0.5em !important; width: 250px;"
+                  >
+                    <p class="pointer-events-none flex justify-between items-center" style="float: right;">
+                      <span
+                        v-if="index >= 1"
+                        class="textright"
+                      >
+                        <b>{{ col.total }}</b>
+                      </span>
+                    </p>
+                  </td>
+                </template>
+                <template v-else-if="statCategory === col.category ">
+                  <td
+                    :key="index"
+                    ref="tableHeaders"
+                    class="px-2 py-1 hover:opacity-75 border-b border-solid px-2 py-1 textright"
+                    style="padding-left: 1.5em !important; width: 13.5%;"
+                  >
+                    <p class="pointer-events-none flex justify-between items-center" style="float: right;">
+                      <span
+                        v-if="index >= 1"
+                        class="textright"
+                      >
+                        <b>{{ col.total }}</b>
+                      </span>
+                    </p>
+                  </td>
                 </template>
               </template>
             </template>
