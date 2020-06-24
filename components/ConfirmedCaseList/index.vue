@@ -1,6 +1,30 @@
 <template>
   <div>
-    <div class="my-custom-scrollbar">
+    <div
+      class="w-full pt-0 p-5"
+      style="min-height: 300px;"
+      :class="!isLoading?'hidden':''"
+    >
+      <ContentLoader
+        class="w-full hidden lg:block"
+        :speed="3"
+        :width="400"
+        :height="110"
+        primary-color="#eee"
+        secondary-color="#fff"
+      >
+        <rect
+          :key="1"
+          x="0"
+          :y="4"
+          width="100%"
+          height="100"
+          rx="3"
+          ry="3"
+        />
+      </ContentLoader>
+    </div>
+    <div class="my-custom-scrollbar" :class="isLoading?'hidden':''">
       <table class="table w-full border-t border-solid border-gray-300 tableFixHead">
         <thead class="select-none">
           <tr>
@@ -29,7 +53,7 @@
             >
               <p class="pointer-events-none flex justify-between items-center" style="float: right;">
                 <span>
-                  18 Juni 2020
+                  {{ dateNow }}
                   <font-awesome-icon :icon="getSortIcon('positiveNow')" />
                 </span>
               </p>
@@ -74,7 +98,7 @@
             >
               <p class="pointer-events-none flex justify-between items-center" style="float: right;">
                 <span>
-                  18 Juni 2020
+                  {{ dateNow }}
                   <font-awesome-icon :icon="getSortIcon('recoverNow')" />
                 </span>
               </p>
@@ -119,7 +143,7 @@
             >
               <p class="pointer-events-none flex justify-between items-center" style="float: right;">
                 <span>
-                  18 Juni 2020
+                  {{ dateNow }}
                   <font-awesome-icon :icon="getSortIcon('dieNow')" />
                 </span>
               </p>
@@ -196,6 +220,7 @@
 </template>
 
 <script>
+import { ContentLoader } from 'vue-content-loader'
 import {
   faSort,
   faSortUp,
@@ -204,15 +229,21 @@ import {
   faTimesCircle
 } from '@fortawesome/free-solid-svg-icons'
 import _orderBy from 'lodash/orderBy'
+import moment from 'moment'
 
 export default {
   name: 'ConfirmedCaseList',
   components: {
+    ContentLoader
   },
   props: {
-    propsDataSebaranJawaBarat: {
-      type: Array,
-      default: () => [{}]
+    activeRegionId: {
+      type: String,
+      default: '32'
+    },
+    activeRegionCategory: {
+      type: String,
+      default: '32'
     }
   },
   data () {
@@ -225,6 +256,7 @@ export default {
         faTimesCircle
       },
       currentSorting: {
+        region: 'none',
         positiveNow: 'none',
         positiveAverage: 'none',
         positiveTotal: 'none',
@@ -235,443 +267,60 @@ export default {
         dieAverage: 'none',
         dieTotal: 'none'
       },
-      dataCase: [
-        {
-          region: 'Kab. Bekasi',
-          positiveNow: 1013,
-          positiveAverage: 10,
-          positiveTotal: 100,
-          recoverNow: 8,
-          recoverAverage: 8,
-          recoverTotal: 30,
-          dieNow: 4,
-          dieAverage: 4,
-          dieTotal: 70
-        },
-        {
-          region: 'Kab. Bandung',
-          positiveNow: 110,
-          positiveAverage: 10,
-          positiveTotal: 200,
-          recoverNow: 8,
-          recoverAverage: 8,
-          recoverTotal: 330,
-          dieNow: 4,
-          dieAverage: 4,
-          dieTotal: 70
-        },
-        {
-          region: 'Kab. Bekasi',
-          positiveNow: 1013,
-          positiveAverage: 10,
-          positiveTotal: 100,
-          recoverNow: 8,
-          recoverAverage: 8,
-          recoverTotal: 30,
-          dieNow: 4,
-          dieAverage: 4,
-          dieTotal: 70
-        },
-        {
-          region: 'Kab. Bandung',
-          positiveNow: 110,
-          positiveAverage: 10,
-          positiveTotal: 200,
-          recoverNow: 8,
-          recoverAverage: 8,
-          recoverTotal: 330,
-          dieNow: 4,
-          dieAverage: 4,
-          dieTotal: 70
-        },
-        {
-          region: 'Kab. Bekasi',
-          positiveNow: 1013,
-          positiveAverage: 10,
-          positiveTotal: 100,
-          recoverNow: 8,
-          recoverAverage: 8,
-          recoverTotal: 30,
-          dieNow: 4,
-          dieAverage: 4,
-          dieTotal: 70
-        },
-        {
-          region: 'Kab. Bandung',
-          positiveNow: 110,
-          positiveAverage: 10,
-          positiveTotal: 200,
-          recoverNow: 8,
-          recoverAverage: 8,
-          recoverTotal: 330,
-          dieNow: 4,
-          dieAverage: 4,
-          dieTotal: 70
-        },
-        {
-          region: 'Kab. Bekasi',
-          positiveNow: 1013,
-          positiveAverage: 10,
-          positiveTotal: 100,
-          recoverNow: 8,
-          recoverAverage: 8,
-          recoverTotal: 30,
-          dieNow: 4,
-          dieAverage: 4,
-          dieTotal: 70
-        },
-        {
-          region: 'Kab. Bandung',
-          positiveNow: 110,
-          positiveAverage: 10,
-          positiveTotal: 200,
-          recoverNow: 8,
-          recoverAverage: 8,
-          recoverTotal: 330,
-          dieNow: 4,
-          dieAverage: 4,
-          dieTotal: 70
-        },
-        {
-          region: 'Kab. Bekasi',
-          positiveNow: 1013,
-          positiveAverage: 10,
-          positiveTotal: 100,
-          recoverNow: 8,
-          recoverAverage: 8,
-          recoverTotal: 30,
-          dieNow: 4,
-          dieAverage: 4,
-          dieTotal: 70
-        },
-        {
-          region: 'Kab. Bandung',
-          positiveNow: 110,
-          positiveAverage: 10,
-          positiveTotal: 200,
-          recoverNow: 8,
-          recoverAverage: 8,
-          recoverTotal: 330,
-          dieNow: 4,
-          dieAverage: 4,
-          dieTotal: 70
-        },
-        {
-          region: 'Kab. Bekasi',
-          positiveNow: 1013,
-          positiveAverage: 10,
-          positiveTotal: 100,
-          recoverNow: 8,
-          recoverAverage: 8,
-          recoverTotal: 30,
-          dieNow: 4,
-          dieAverage: 4,
-          dieTotal: 70
-        },
-        {
-          region: 'Kab. Bandung',
-          positiveNow: 110,
-          positiveAverage: 10,
-          positiveTotal: 200,
-          recoverNow: 8,
-          recoverAverage: 8,
-          recoverTotal: 330,
-          dieNow: 4,
-          dieAverage: 4,
-          dieTotal: 70
-        },
-        {
-          region: 'Kab. Bekasi',
-          positiveNow: 1013,
-          positiveAverage: 10,
-          positiveTotal: 100,
-          recoverNow: 8,
-          recoverAverage: 8,
-          recoverTotal: 30,
-          dieNow: 4,
-          dieAverage: 4,
-          dieTotal: 70
-        },
-        {
-          region: 'Kab. Bandung',
-          positiveNow: 110,
-          positiveAverage: 10,
-          positiveTotal: 200,
-          recoverNow: 8,
-          recoverAverage: 8,
-          recoverTotal: 330,
-          dieNow: 4,
-          dieAverage: 4,
-          dieTotal: 70
-        },
-        {
-          region: 'Kab. Bekasi',
-          positiveNow: 1013,
-          positiveAverage: 10,
-          positiveTotal: 100,
-          recoverNow: 8,
-          recoverAverage: 8,
-          recoverTotal: 30,
-          dieNow: 4,
-          dieAverage: 4,
-          dieTotal: 70
-        },
-        {
-          region: 'Kab. Bandung',
-          positiveNow: 110,
-          positiveAverage: 10,
-          positiveTotal: 200,
-          recoverNow: 8,
-          recoverAverage: 8,
-          recoverTotal: 330,
-          dieNow: 4,
-          dieAverage: 4,
-          dieTotal: 70
-        },
-        {
-          region: 'Kab. Bekasi',
-          positiveNow: 1013,
-          positiveAverage: 10,
-          positiveTotal: 100,
-          recoverNow: 8,
-          recoverAverage: 8,
-          recoverTotal: 30,
-          dieNow: 4,
-          dieAverage: 4,
-          dieTotal: 70
-        },
-        {
-          region: 'Kab. Bandung',
-          positiveNow: 110,
-          positiveAverage: 10,
-          positiveTotal: 200,
-          recoverNow: 8,
-          recoverAverage: 8,
-          recoverTotal: 330,
-          dieNow: 4,
-          dieAverage: 4,
-          dieTotal: 70
-        },
-        {
-          region: 'Kab. Bekasi',
-          positiveNow: 1013,
-          positiveAverage: 10,
-          positiveTotal: 100,
-          recoverNow: 8,
-          recoverAverage: 8,
-          recoverTotal: 30,
-          dieNow: 4,
-          dieAverage: 4,
-          dieTotal: 70
-        },
-        {
-          region: 'Kab. Bandung',
-          positiveNow: 110,
-          positiveAverage: 10,
-          positiveTotal: 200,
-          recoverNow: 8,
-          recoverAverage: 8,
-          recoverTotal: 330,
-          dieNow: 4,
-          dieAverage: 4,
-          dieTotal: 70
-        },
-        {
-          region: 'Kab. Bekasi',
-          positiveNow: 1013,
-          positiveAverage: 10,
-          positiveTotal: 100,
-          recoverNow: 8,
-          recoverAverage: 8,
-          recoverTotal: 30,
-          dieNow: 4,
-          dieAverage: 4,
-          dieTotal: 70
-        },
-        {
-          region: 'Kab. Bandung',
-          positiveNow: 110,
-          positiveAverage: 10,
-          positiveTotal: 200,
-          recoverNow: 8,
-          recoverAverage: 8,
-          recoverTotal: 330,
-          dieNow: 4,
-          dieAverage: 4,
-          dieTotal: 70
-        },
-        {
-          region: 'Kab. Bekasi',
-          positiveNow: 1013,
-          positiveAverage: 10,
-          positiveTotal: 100,
-          recoverNow: 8,
-          recoverAverage: 8,
-          recoverTotal: 30,
-          dieNow: 4,
-          dieAverage: 4,
-          dieTotal: 70
-        },
-        {
-          region: 'Kab. Bandung',
-          positiveNow: 110,
-          positiveAverage: 10,
-          positiveTotal: 200,
-          recoverNow: 8,
-          recoverAverage: 8,
-          recoverTotal: 330,
-          dieNow: 4,
-          dieAverage: 4,
-          dieTotal: 70
-        },
-        {
-          region: 'Kab. Bekasi',
-          positiveNow: 1013,
-          positiveAverage: 10,
-          positiveTotal: 100,
-          recoverNow: 8,
-          recoverAverage: 8,
-          recoverTotal: 30,
-          dieNow: 4,
-          dieAverage: 4,
-          dieTotal: 70
-        },
-        {
-          region: 'Kab. Bandung',
-          positiveNow: 110,
-          positiveAverage: 10,
-          positiveTotal: 200,
-          recoverNow: 8,
-          recoverAverage: 8,
-          recoverTotal: 330,
-          dieNow: 4,
-          dieAverage: 4,
-          dieTotal: 70
-        },
-        {
-          region: 'Kab. Bekasi',
-          positiveNow: 1013,
-          positiveAverage: 10,
-          positiveTotal: 100,
-          recoverNow: 8,
-          recoverAverage: 8,
-          recoverTotal: 30,
-          dieNow: 4,
-          dieAverage: 4,
-          dieTotal: 70
-        },
-        {
-          region: 'Kab. Bandung',
-          positiveNow: 110,
-          positiveAverage: 10,
-          positiveTotal: 200,
-          recoverNow: 8,
-          recoverAverage: 8,
-          recoverTotal: 330,
-          dieNow: 4,
-          dieAverage: 4,
-          dieTotal: 70
-        },
-        {
-          region: 'Kab. Bekasi',
-          positiveNow: 1013,
-          positiveAverage: 10,
-          positiveTotal: 100,
-          recoverNow: 8,
-          recoverAverage: 8,
-          recoverTotal: 30,
-          dieNow: 4,
-          dieAverage: 4,
-          dieTotal: 70
-        },
-        {
-          region: 'Kab. Bandung',
-          positiveNow: 110,
-          positiveAverage: 10,
-          positiveTotal: 200,
-          recoverNow: 8,
-          recoverAverage: 8,
-          recoverTotal: 330,
-          dieNow: 4,
-          dieAverage: 4,
-          dieTotal: 70
-        },
-        {
-          region: 'Kab. Bekasi',
-          positiveNow: 1013,
-          positiveAverage: 10,
-          positiveTotal: 100,
-          recoverNow: 8,
-          recoverAverage: 8,
-          recoverTotal: 30,
-          dieNow: 4,
-          dieAverage: 4,
-          dieTotal: 70
-        },
-        {
-          region: 'Kab. Bandung',
-          positiveNow: 110,
-          positiveAverage: 10,
-          positiveTotal: 200,
-          recoverNow: 8,
-          recoverAverage: 8,
-          recoverTotal: 330,
-          dieNow: 4,
-          dieAverage: 4,
-          dieTotal: 70
-        },
-        {
-          region: 'Kab. Bekasi',
-          positiveNow: 1013,
-          positiveAverage: 10,
-          positiveTotal: 100,
-          recoverNow: 8,
-          recoverAverage: 8,
-          recoverTotal: 30,
-          dieNow: 4,
-          dieAverage: 4,
-          dieTotal: 70
-        },
-        {
-          region: 'Kab. Bandung',
-          positiveNow: 110,
-          positiveAverage: 10,
-          positiveTotal: 200,
-          recoverNow: 8,
-          recoverAverage: 8,
-          recoverTotal: 330,
-          dieNow: 4,
-          dieAverage: 4,
-          dieTotal: 70
-        },
-        {
-          region: 'Kab. Bekasi',
-          positiveNow: 1013,
-          positiveAverage: 10,
-          positiveTotal: 100,
-          recoverNow: 8,
-          recoverAverage: 8,
-          recoverTotal: 30,
-          dieNow: 4,
-          dieAverage: 4,
-          dieTotal: 70
-        },
-        {
-          region: 'Kab. Bandung',
-          positiveNow: 110,
-          positiveAverage: 10,
-          positiveTotal: 200,
-          recoverNow: 8,
-          recoverAverage: 8,
-          recoverTotal: 330,
-          dieNow: 4,
-          dieAverage: 4,
-          dieTotal: 70
-        }
-      ]
+      dataCase: [],
+      dateNow: ''
     }
   },
   computed: {
+    dataSebaranPertumbuhan () {
+      return this.$store.getters['data-sebaran-pertumbuhan/itemMap']
+    },
+    isLoading () {
+      return this.$store.getters['data-sebaran-pertumbuhan/isLoading']
+    }
+  },
+  watch: {
+    activeRegionId (newVal, oldVal) { // watch it
+      console.log('Prop changed: ', newVal, ' | was: ', oldVal)
+      this.getDataSebaranPertumbuhan(this.activeRegionCategory, this.activeRegionId)
+    },
+    dataSebaranPertumbuhan (val) {
+      let nameApiRegion = 'nama_kab'
+      const dataCase = []
+
+      if (this.activeRegionCategory === 'kelurahan') {
+        nameApiRegion = 'nama_kel'
+      } else if (this.activeRegionCategory === 'kecamatan') {
+        nameApiRegion = 'nama_kec'
+      } else {
+        nameApiRegion = 'nama_kab'
+      }
+
+      val.forEach((element) => {
+        console.log(element)
+        console.log(nameApiRegion)
+        dataCase.push({
+          region: element[nameApiRegion],
+          positiveNow: element.positif.positif_aktif_h1,
+          positiveAverage: element.positif.positif_aktif_h7,
+          positiveTotal: element.positif.positif_aktif,
+          recoverNow: element.positif.positif_sembuh_h1,
+          recoverAverage: element.positif.positif_sembuh_h7,
+          recoverTotal: element.positif.positif_sembuh,
+          dieNow: element.positif.positif_meninggal_h1,
+          dieAverage: element.positif.positif_meninggal_h7,
+          dieTotal: element.positif.positif_meninggal
+        })
+      })
+
+      this.dataCase = dataCase
+    }
+  },
+  created () {
+    this.dateNow = moment(new Date()).lang('id').format('DD MMMM YYYY')
+  },
+  mounted () {
+    this.getDataSebaranPertumbuhan(this.activeRegionCategory, this.activeRegionId)
   },
   methods: {
     getSortIcon (field) {
@@ -711,6 +360,28 @@ export default {
         [field],
         [sorting]
       )
+    },
+
+    // get data
+    getDataSebaranPertumbuhan (region, regionCode = '') {
+      let parentKeyCode = ''
+      let query = 'wilayah=' + region
+
+      switch (region) {
+        case 'kecamatan' : {
+          parentKeyCode = 'kode_kab'
+          break
+        }
+        case 'kelurahan' : {
+          parentKeyCode = 'kode_kec'
+          break
+        }
+        default : parentKeyCode = ''
+      }
+
+      query += `&${parentKeyCode}=${regionCode}`
+
+      this.$store.dispatch('data-sebaran-pertumbuhan/getItem', query)
     }
   }
 }

@@ -42,11 +42,11 @@
                 Timeslider - Data Positif
               </button>
             </div>
-            <MapV3SebaranPolygon v-if="activeMap === 'polygon'" :activeRegionId.sync="activeRegionId" :activeCategory.sync="activeCategory" />
+            <MapV3SebaranPolygon v-if="activeMap === 'polygon'" :activeRegionId.sync="activeRegionId" :activeRegionCategory.sync="activeRegionCategory" />
           </div>
         </div>
         <div class="w-full mb-6 lg:w-2/5 lg:mb-0 bg-white rounded-lg mb-8 shadow-lg">
-          <RasioConfirmedCase :activeRegionId.sync="activeRegionId" :activeCategory="activeCategory" />
+          <RasioConfirmedCase :activeRegionId="activeRegionId" :activeRegionCategory="activeRegionCategory" />
         </div>
       </div>
     </section>
@@ -82,8 +82,8 @@
               </button>
             </div>
           </div>
-          <ConfirmedCaseList v-if="activeTable === 'confirmed'" :activeRegionId.sync="activeRegionId" :activeCategory="activeCategory" />
-          <UnconfirmedCaseList v-if="activeTable === 'unconfirmed'" :activeRegionId="activeRegionId" :activeCategory.sync="activeCategory" />
+          <ConfirmedCaseList v-if="activeTable === 'confirmed'" :activeRegionId.sync="activeRegionId" :activeRegionCategory.sync="activeRegionCategory" />
+          <UnconfirmedCaseList v-if="activeTable === 'unconfirmed'" :activeRegionId.sync="activeRegionId" :activeRegionCategory.sync="activeRegionCategory" />
         </div>
       </div>
     </section>
@@ -102,19 +102,10 @@ export default {
     ConfirmedCaseList: () => import('~/components/ConfirmedCaseList'),
     UnconfirmedCaseList: () => import('~/components/UnconfirmedCaseList')
   },
-  async fetch () {
-    await new Promise((resolve) => {
-      this.getItems()
-        .then(() => {
-          this.performFiltering()
-          resolve()
-        })
-    })
-  },
   data () {
     return {
       activeRegionId: '32',
-      activeCategory: 'kota',
+      activeRegionCategory: 'kota',
       activeMap: 'polygon',
       activeTable: 'confirmed'
     }
@@ -124,7 +115,6 @@ export default {
   watch: {
   },
   mounted () {
-    this.$store.dispatch('data-sebaran-jabar/getItems')
   },
   methods: {
     enableMap (type) {

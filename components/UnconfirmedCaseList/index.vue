@@ -1,7 +1,31 @@
 <template>
   <div>
-    <div class="my-custom-scrollbar">
-      <table class="table w-full border-t border-solid border-gray-300 tableFixHead">
+    <div
+      class="w-full pt-0 p-5"
+      style="min-height: 300px;"
+      :class="!isLoading?'hidden':''"
+    >
+      <ContentLoader
+        class="w-full hidden lg:block"
+        :speed="3"
+        :width="400"
+        :height="110"
+        primary-color="#eee"
+        secondary-color="#fff"
+      >
+        <rect
+          :key="1"
+          x="0"
+          :y="4"
+          width="100%"
+          height="100"
+          rx="3"
+          ry="3"
+        />
+      </ContentLoader>
+    </div>
+    <div class="my-custom-scrollbar" :class="isLoading?'hidden':''">
+      <table class="table w-full border-t border-solid border-gray-300 tableFixHead" :class="isLoading?'hidden':''">
         <thead class="select-none">
           <tr>
             <th rowspan="2" class="px-2 py-1 hover:opacity-75" style="background-color: #EBEBEB; color: #5F5F5F; text-align: left; padding-left:20px;width: 19%" @click="onClickSort('region')">
@@ -26,7 +50,7 @@
             >
               <p class="pointer-events-none flex justify-between items-center" style="float: right;">
                 <span>
-                  18 Juni 2020
+                  {{ dateNow }}
                   <font-awesome-icon :icon="getSortIcon('suspectNow')" />
                 </span>
               </p>
@@ -71,7 +95,7 @@
             >
               <p class="pointer-events-none flex justify-between items-center" style="float: right;">
                 <span>
-                  18 Juni 2020
+                  {{ dateNow }}
                   <font-awesome-icon :icon="getSortIcon('probableNow')" />
                 </span>
               </p>
@@ -139,6 +163,7 @@
 </template>
 
 <script>
+import { ContentLoader } from 'vue-content-loader'
 import {
   faSort,
   faSortUp,
@@ -147,15 +172,21 @@ import {
   faTimesCircle
 } from '@fortawesome/free-solid-svg-icons'
 import _orderBy from 'lodash/orderBy'
+import moment from 'moment'
 
 export default {
   name: 'UnconfirmedCaseList',
   components: {
+    ContentLoader
   },
   props: {
-    propsDataSebaranJawaBarat: {
-      type: Array,
-      default: () => [{}]
+    activeRegionId: {
+      type: String,
+      default: '32'
+    },
+    activeRegionCategory: {
+      type: String,
+      default: '32'
     }
   },
   data () {
@@ -175,29 +206,56 @@ export default {
         probableAverage: 'none',
         probableTotal: 'none'
       },
-      dataCase: [
-        {
-          region: 'Kab. Bekasi',
-          suspectNow: 113,
-          suspectAverage: 10,
-          suspectTotal: 100,
-          probableNow: 8,
-          probableAverage: 8,
-          probableTotal: 30
-        },
-        {
-          region: 'Kab. Bekasi',
-          suspectNow: 1013,
-          suspectAverage: 10,
-          suspectTotal: 100,
-          probableNow: 8,
-          probableAverage: 8,
-          probableTotal: 30
-        }
-      ]
+      dataCase: [],
+      dateNow: ''
     }
   },
   computed: {
+    dataSebaranPertumbuhan () {
+      return this.$store.getters['data-sebaran-pertumbuhan/itemMap']
+    },
+    isLoading () {
+      return this.$store.getters['data-sebaran-pertumbuhan/isLoading']
+    }
+  },
+  watch: {
+    activeRegionId (newVal, oldVal) { // watch it
+      console.log('Prop changed: ', newVal, ' | was: ', oldVal)
+      this.getDataSebaranPertumbuhan(this.activeRegionCategory, this.activeRegionId)
+    },
+    dataSebaranPertumbuhan (val) {
+      let nameApiRegion = 'nama_kab'
+      const dataCase = []
+
+      if (this.activeRegionCategory === 'kelurahan') {
+        nameApiRegion = 'nama_kel'
+      } else if (this.activeRegionCategory === 'kecamatan') {
+        nameApiRegion = 'nama_kec'
+      } else {
+        nameApiRegion = 'nama_kab'
+      }
+
+      val.forEach((element) => {
+        dataCase.push({
+          region: element[nameApiRegion],
+          suspectNow: element.odp.odp_aktif_h1,
+          suspectAverage: element.odp.odp_aktif_h7,
+          suspectTotal: element.odp.odp_aktif,
+          probableNow: element.pdp.pdp_aktif_h1,
+          probableAverage: element.pdp.pdp_aktif_h7,
+          probableTotal: element.pdp.pdp_aktif
+        })
+      })
+
+      this.dataCase = dataCase
+    }
+  },
+  created () {
+    this.dateNow = moment(new Date()).lang('id').format('DD MMMM YYYY')
+  },
+  mounted () {
+    this.getDataSebaranPertumbuhan(this.activeRegionCategory, this.activeRegionId)
+    console.log(this.isLoading)
   },
   methods: {
     getSortIcon (field) {
@@ -237,6 +295,28 @@ export default {
         [field],
         [sorting]
       )
+    },
+
+    // get data
+    getDataSebaranPertumbuhan (region, regionCode = '') {
+      let parentKeyCode = ''
+      let query = 'wilayah=' + region
+
+      switch (region) {
+        case 'kecamatan' : {
+          parentKeyCode = 'kode_kab'
+          break
+        }
+        case 'kelurahan' : {
+          parentKeyCode = 'kode_kec'
+          break
+        }
+        default : parentKeyCode = ''
+      }
+
+      query += `&${parentKeyCode}=${regionCode}`
+
+      this.$store.dispatch('data-sebaran-pertumbuhan/getItem', query)
     }
   }
 }

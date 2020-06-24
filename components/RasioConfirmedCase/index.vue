@@ -4,30 +4,59 @@
       <b>Rasio Kasus Terkonfirmasi</b>
     </h3>
     <hr>
-    <p class="p-3 text-sm sm:text">
-      Data yang ditampilkan berdasarkan: <b>Kota/Kabupaten di Jawa Barat</b>
-    </p>
-    <div class="p-3">
-      <GChart
-        :settings="{packages: ['corechart']}"
-        :data="chartData"
-        :options="chartOptions"
-        :createChart="(el, google) => {
-          return new google.visualization.BarChart(el)
-        }"
-        @ready="onChartReady"
-      />
+    <div
+      class="w-full p-5"
+      style="min-height: 300px;"
+      :class="!isLoading?'hidden':''"
+    >
+      <ContentLoader
+        class="w-full hidden lg:block"
+        :speed="3"
+        :width="400"
+        :height="560"
+        primary-color="#eee"
+        secondary-color="#fff"
+      >
+        <rect
+          :key="1"
+          x="0"
+          :y="4"
+          width="100%"
+          height="100%"
+          rx="3"
+          ry="3"
+        />
+      </ContentLoader>
+    </div>
+    <div :class="isLoading?'hidden':''">
+      <p class="p-3 text-sm sm:text">
+        Data yang ditampilkan berdasarkan: <b>Kota/Kabupaten di Jawa Barat</b>
+      </p>
+      <div class="p-3">
+        <GChart
+          class="chart-area"
+          :settings="{packages: ['corechart']}"
+          :data="chartData"
+          :options="chartOptions"
+          :create-chart="(el, google) => {
+            return new google.visualization.BarChart(el)
+          }"
+          @ready="onChartReady"
+        />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import { GChart } from 'vue-google-charts'
+import { ContentLoader } from 'vue-content-loader'
 
 export default {
   name: 'RasioConfirmedCase',
   components: {
-    GChart
+    GChart,
+    ContentLoader
   },
   props: {
     propsDataSebaranJawaBarat: {
@@ -55,36 +84,9 @@ export default {
           { id: 'Aktif', label: 'Aktif', type: 'number' },
           { id: 'annot', type: 'string', role: 'annotation' }
         ],
-        rows: [
-          {
-            c: [
-              { v: 0, f: 'Kota Bekasi' },
-              { v: 10, f: '0' },
-              { v: 20, f: '0' },
-              { v: 100, f: '0' },
-              { v: 300, f: '200' }
-            ]
-          },
-          {
-            c: [
-              { v: 0, f: 'Kota Bandung' },
-              { v: 20, f: '0' },
-              { v: 50, f: '0' },
-              { v: 100, f: '0' },
-              { v: 200, f: '0' }
-            ]
-          },
-          {
-            c: [
-              { v: 0, f: 'Kota Bandung' },
-              { v: 20, f: '0' },
-              { v: 50, f: '0' },
-              { v: 100, f: '0' },
-              { v: 200, f: '0' }
-            ]
-          }
-        ]
-      }
+        rows: []
+      },
+      rowHeight: 500
     }
   },
   computed: {
@@ -94,16 +96,22 @@ export default {
       }
       return {
         chartArea: {
+          width: '60%',
           top: -20,
-          height: 400
+          left: 140,
+          height: this.rowHeight
         },
         orientation: 'vertical',
-        height: 500,
+        height: this.rowHeight + 60,
         isStacked: true,
         legend: {
-          position: 'bottom'
+          position: 'bottom',
+          textStyle: {
+            fontSize: 10,
+            bold: true
+          }
         },
-        bar: { groupWidth: '95%' },
+        bar: { groupWidth: '50%' },
         series: {
           0: {
             color: '#a6241f'
@@ -126,7 +134,7 @@ export default {
         },
         annotations: {
           textStyle: {
-            fontSize: 14,
+            fontSize: 10,
             bold: true,
             color: '#000000',
             opacity: 0.8
@@ -134,19 +142,56 @@ export default {
           alwaysOutside: true
         },
         vAxis: {
-          format: '##;##',
-          html: true
+          html: true,
+          textStyle: {
+            fontSize: 10,
+            bold: true
+          }
         },
         hAxis: {
           format: ';',
           viewWindowMode: 'explicit'
         }
       }
+    },
+    dataSebaranPolygon () {
+      return this.$store.getters['data-sebaran-polygon/itemMap']
+    },
+    isLoading () {
+      return this.$store.getters['data-sebaran-polygon/isLoading']
     }
   },
   watch: {
     activeRegionId (newVal, oldVal) { // watch it
-      console.log('Prop changed: ', newVal, ' | was: ', oldVal)
+      // console.log('Prop changed: ', newVal, ' | was: ', oldVal)
+    },
+    dataSebaranPolygon (val) {
+      let nameApiRegion = 'nama_kab'
+      const rows = []
+
+      if (this.activeRegionCategory === 'kelurahan') {
+        nameApiRegion = 'nama_kel'
+      } else if (this.activeRegionCategory === 'kecamatan') {
+        nameApiRegion = 'nama_kec'
+      } else {
+        nameApiRegion = 'nama_kab'
+      }
+
+      this.rowHeight = val.wilayah.length * 30
+      val.wilayah.forEach((element) => {
+        const data = {
+          c: [
+            { v: '0', f: element[nameApiRegion] },
+            { v: element.positif_meninggal, f: 0 },
+            { v: element.positif_sembuh, f: 0 },
+            { v: element.positif_aktif, f: 0 },
+            { v: element.positif_total, f: element.positif_total }
+          ]
+        }
+        rows.push(data)
+      })
+
+      this.chartData.rows = rows
     }
   },
   methods: {
@@ -160,3 +205,11 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+  .chart-area {
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 600px;
+  }
+</style>
