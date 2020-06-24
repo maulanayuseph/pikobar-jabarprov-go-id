@@ -58,7 +58,7 @@
               <font-awesome-icon :icon="getSortIcon('nama')" />
             </th>
             <th v-if="statCategory === 'Terkonfirmasi'" colspan="3" class="px-2 py-1 hover:opacity-75" style="background-color: #4b56b2; color: #ffffff;">
-              Positif Terkonfirmasi
+              Terkonfirmasi
             </th>
             <th v-if="statCategory === 'Terkonfirmasi'" colspan="3" class="px-2 py-1 hover:opacity-75" style="background-color: #FF4A4B; color: #ffffff;">
               Positif Aktif
@@ -178,7 +178,7 @@
                         v-if="index >= 1"
                         class="textright"
                       >
-                        <b>{{ col.total }}</b>
+                        <b>{{ Number(col.total).toLocaleString('id-ID') }}</b>
                       </span>
                     </p>
                   </td>
@@ -195,7 +195,7 @@
                         v-if="index >= 1"
                         class="textright"
                       >
-                        <b>{{ col.total }}</b>
+                        <b>{{ Number(col.total).toLocaleString('id-ID') }}</b>
                       </span>
                     </p>
                   </td>
