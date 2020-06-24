@@ -107,8 +107,7 @@ export default {
         legend: {
           position: 'bottom',
           textStyle: {
-            fontSize: 10,
-            bold: true
+            fontSize: 11
           }
         },
         bar: { groupWidth: '50%' },
