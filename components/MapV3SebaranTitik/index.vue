@@ -264,10 +264,10 @@ export default {
       return this.$store.getters['data-sebaran-polygon/itemMap']
     },
     dataSebaranMarker () {
-      return this.$store.getters['data-sebaran-marker/itemMap']
+      return this.$store.getters['data-sebaran-marker-cluster/itemMap']
     },
     isLoading () {
-      return this.$store.getters['data-sebaran-marker/isLoading']
+      return this.$store.getters['data-sebaran-marker-cluster/isLoading']
     }
   },
   watch: {
@@ -281,7 +281,7 @@ export default {
   mounted () {
     this.initMap()
     this.getDataSebaranPolygon('kota', this.activeDataCategory)
-    this.getDataSebaranMarker('kota', this.activeDataCategory)
+    this.getDataSebaranMarkerCluster('kota', this.activeDataCategory)
   },
   created () {
   },
@@ -352,7 +352,7 @@ export default {
       this.createPolygonRegion()
 
       this.getDataSebaranPolygon(this.activeRegion, this.activeDataCategory, this.activeParentCode)
-      this.getDataSebaranMarker(this.activeRegion, this.activeDataCategory, this.activeParentCode)
+      this.getDataSebaranMarkerCluster(this.activeRegion, this.activeDataCategory, this.activeParentCode)
 
       // update props region
       this.$emit('update:activeRegionId', this.activeParentCode)
@@ -533,7 +533,7 @@ export default {
       this.map.flyTo([-6.932694, 107.627449], 8)
 
       this.getDataSebaranPolygon(this.activeRegion, this.activeDataCategory)
-      this.getDataSebaranMarker(this.activeRegion, this.activeDataCategory)
+      this.getDataSebaranMarkerCluster(this.activeRegion, this.activeDataCategory)
 
       this.removeLayer()
       this.createPolygonRegion()
@@ -554,7 +554,7 @@ export default {
       this.activeDataCategory = category
       this.removeLayer()
       this.getDataSebaranPolygon(this.activeRegion, this.activeDataCategory, this.activeParentCode)
-      this.getDataSebaranMarker(this.activeRegion, this.activeDataCategory, this.activeParentCode)
+      this.getDataSebaranMarkerCluster(this.activeRegion, this.activeDataCategory, this.activeParentCode)
       this.createPolygonRegion()
     },
     findCategory (category) {
@@ -645,7 +645,7 @@ export default {
 
       this.$store.dispatch('data-sebaran-polygon/getItem', query)
     },
-    getDataSebaranMarker (region, category, regionCode = '') {
+    getDataSebaranMarkerCluster (region, category, regionCode = '') {
       let parentKeyCode = ''
       let query = 'wilayah=' + region
 
@@ -667,7 +667,7 @@ export default {
 
       query += `&${parentKeyCode}=${regionCode}`
 
-      this.$store.dispatch('data-sebaran-marker/getItem', query)
+      this.$store.dispatch('data-sebaran-marker-cluster/getItem', query)
     }
   }
 }
