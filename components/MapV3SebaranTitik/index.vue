@@ -435,12 +435,29 @@ export default {
       })
     },
     createMarker () {
+      const apiRegion = {
+        kota: {
+          key: 'nama_kab',
+          name: 'Kota/Kabupaten'
+        },
+        kecamatan: {
+          key: 'nama_kec',
+          name: 'Kecamatan'
+        },
+        kelurahan: {
+          key: 'nama_kel',
+          name: 'Kelurahan/Desa'
+        }
+      }
+
       const dataSebaranMarker = this.dataSebaranMarker
       const category = this.findCategory(this.activeDataCategory)
       if (dataSebaranMarker !== undefined) {
         dataSebaranMarker.forEach((element) => {
+          const keyApiRegion = apiRegion[this.activeRegion].key
+          const nameApiRegion = apiRegion[this.activeRegion].name
           const total = element.count
-          const region = element.nama_kab
+          const region = element[keyApiRegion]
           const latitude = element.latitude
           const longitude = element.longitude
 
@@ -452,7 +469,7 @@ export default {
           }).addTo(this.map)
             .bindPopup('<b>Status:</b> ' + category.name +
             '<br> <b>Jumlah:</b> ' + total +
-            '<br> <b>Kota/Kabupaten:</b> ' + region)
+            '<br> <b>' + nameApiRegion + ':</b> ' + region)
           this.dataLayer.push(marker)
         })
       }
