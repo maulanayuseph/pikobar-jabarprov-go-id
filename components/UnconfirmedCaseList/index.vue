@@ -220,7 +220,7 @@ export default {
   },
   watch: {
     activeRegionId (newVal, oldVal) { // watch it
-      console.log('Prop changed: ', newVal, ' | was: ', oldVal)
+      // console.log('Prop changed: ', newVal, ' | was: ', oldVal)
       this.getDataSebaranPertumbuhan(this.activeRegionCategory, this.activeRegionId)
     },
     dataSebaranPertumbuhan (val) {
@@ -255,7 +255,7 @@ export default {
   },
   mounted () {
     this.getDataSebaranPertumbuhan(this.activeRegionCategory, this.activeRegionId)
-    console.log(this.isLoading)
+    // console.log(this.isLoading)
   },
   methods: {
     getSortIcon (field) {

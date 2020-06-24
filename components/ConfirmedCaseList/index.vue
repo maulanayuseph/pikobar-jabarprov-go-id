@@ -281,7 +281,7 @@ export default {
   },
   watch: {
     activeRegionId (newVal, oldVal) { // watch it
-      console.log('Prop changed: ', newVal, ' | was: ', oldVal)
+      // console.log('Prop changed: ', newVal, ' | was: ', oldVal)
       this.getDataSebaranPertumbuhan(this.activeRegionCategory, this.activeRegionId)
     },
     dataSebaranPertumbuhan (val) {
@@ -297,8 +297,8 @@ export default {
       }
 
       val.forEach((element) => {
-        console.log(element)
-        console.log(nameApiRegion)
+        // console.log(element)
+        // console.log(nameApiRegion)
         dataCase.push({
           region: element[nameApiRegion],
           positiveNow: element.positif.positif_aktif_h1,
