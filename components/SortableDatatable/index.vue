@@ -57,6 +57,9 @@
               Nama Kota / Kabupaten
               <font-awesome-icon :icon="getSortIcon('nama')" />
             </th>
+            <th v-if="statCategory === 'Terkonfirmasi'" colspan="3" class="px-2 py-1 hover:opacity-75" style="background-color: #747BAD; color: #ffffff;">
+              Positif Terkonfirmasi
+            </th>
             <th v-if="statCategory === 'Terkonfirmasi'" colspan="3" class="px-2 py-1 hover:opacity-75" style="background-color: #FF4A4B; color: #ffffff;">
               Positif Aktif
             </th>
@@ -106,7 +109,7 @@
                     :key="index"
                     ref="tableHeaders"
                     class="px-2 py-1 hover:opacity-75"
-                    style="padding-left: 0.5em !important; width: 9%;"
+                    style="padding-left: 0.5em !important; width: 250px;"
                     :style="{backgroundColor: col.backgroundColor || '', color: col.textColor || ''}"
                     @click="onClickTableHeader(col.field)"
                   >
@@ -208,7 +211,7 @@
                     {{ getCellValue({row, column: col, rowIndex, columnIndex: colIndex}) }}
                   </td>
                 </template>
-                <template v-if="statCategory === 'Terkonfirmasi' && colIndex >= 1 && colIndex <=9">
+                <template v-if="statCategory === 'Terkonfirmasi' && colIndex >= 1 && colIndex <=12">
                   <td
                     :key="colIndex"
                     :class="{ textleft: colIndex==0 }"
@@ -218,7 +221,7 @@
                     {{ getCellValue({row, column: col, rowIndex, columnIndex: colIndex}) }}
                   </td>
                 </template>
-                <template v-if="statCategory === 'ODP_PDP' && colIndex >= 10 && colIndex <=15">
+                <template v-if="statCategory === 'ODP_PDP' && colIndex >= 13 && colIndex <=18">
                   <td
                     :key="colIndex"
                     :class="{ textleft: colIndex==0 }"

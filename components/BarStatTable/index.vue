@@ -171,6 +171,13 @@ export default {
             textColor: 'white'
           },
           {
+            label: 'Positif - Terkonfirmasi',
+            field: 'positif_terkonfirmasi',
+            sort: 'desc',
+            backgroundColor: '#E0E6F6',
+            textColor: 'white'
+          },
+          {
             label: 'Positif - Aktif',
             field: 'positif_aktif',
             sort: 'desc',
@@ -208,6 +215,30 @@ export default {
             sort: 'desc',
             backgroundColor: '#eee',
             category: 'kota'
+          },
+          {
+            label: 'H-1',
+            field: 'positif_terkonfirmasi_h1',
+            sort: 'desc',
+            backgroundColor: '#2C347C',
+            textColor: 'white',
+            category: 'Terkonfirmasi'
+          },
+          {
+            label: 'H-7',
+            field: 'positif_terkonfirmasi_h7',
+            sort: 'desc',
+            backgroundColor: '#2C347C',
+            textColor: 'white',
+            category: 'Terkonfirmasi'
+          },
+          {
+            label: 'Total',
+            field: 'positif_terkonfirmasi_total',
+            sort: 'desc',
+            backgroundColor: '#2C347C',
+            textColor: 'white',
+            category: 'Terkonfirmasi'
           },
           {
             label: 'H-1',
@@ -525,6 +556,9 @@ export default {
       // temporary data
       this.jsonDataKota.forEach((element, index) => {
         const tempMerge = {
+          positif_terkonfirmasi_h1: 0,
+          positif_terkonfirmasi_h7: 0,
+          positif_terkonfirmasi_total: 0,
           positif_aktif_h1: 0,
           positif_aktif_h7: 0,
           positif_aktif_total: 0,
@@ -558,8 +592,8 @@ export default {
       this.jsonDataKota.forEach((element, index) => {
         for (let i = rangeTotalDari; i <= rangeTotalSampai; i++) {
           if (element.kode.toString() === this.temporary[i].kode_kab) {
+            this.jsonDataKota[index].positif_terkonfirmasi_total = this.temporary[i].positif
             this.jsonDataKota[index].positif_aktif_total = this.temporary[i].positif - this.temporary[i].sembuh - this.temporary[i].meninggal
-            // this.jsonDataKota[index].positif_aktif_total = this.temporary[i].positif
             this.jsonDataKota[index].positif_sembuh_total = this.temporary[i].sembuh
             this.jsonDataKota[index].positif_meninggal_total = this.temporary[i].meninggal
             this.jsonDataKota[index].odp_total_total = this.temporary[i].odp
@@ -574,8 +608,8 @@ export default {
       this.jsonDataKota.forEach((element, index) => {
         for (let i = rangeH1Dari; i <= rangeH1Sampai; i++) {
           if (element.kode.toString() === this.temporary[i].kode_kab) {
+            this.jsonDataKota[index].positif_terkonfirmasi_h1 = this.temporary[i].positif
             this.jsonDataKota[index].positif_aktif_h1 = this.temporary[i].positif - this.temporary[i].sembuh - this.temporary[i].meninggal
-            // this.jsonDataKota[index].positif_aktif_h1 = this.temporary[i].positif
             this.jsonDataKota[index].positif_sembuh_h1 = this.temporary[i].sembuh
             this.jsonDataKota[index].positif_meninggal_h1 = this.temporary[i].meninggal
             this.jsonDataKota[index].odp_total_h1 = this.temporary[i].odp
@@ -590,8 +624,8 @@ export default {
       this.jsonDataKota.forEach((element, index) => {
         for (let i = rangeH7Dari; i <= rangeH7Sampai; i++) {
           if (element.kode.toString() === this.temporary[i].kode_kab) {
+            this.jsonDataKota[index].positif_terkonfirmasi_h7 = this.temporary[i].positif
             this.jsonDataKota[index].positif_aktif_h7 = this.temporary[i].positif - this.temporary[i].sembuh - this.temporary[i].meninggal
-            // this.jsonDataKota[index].positif_aktif_h7 = this.temporary[i].positif
             this.jsonDataKota[index].positif_sembuh_h7 = this.temporary[i].sembuh
             this.jsonDataKota[index].positif_meninggal_h7 = this.temporary[i].meninggal
             this.jsonDataKota[index].odp_total_h7 = this.temporary[i].odp
@@ -605,6 +639,8 @@ export default {
       })
 
       this.jsonDataKota.forEach((element, index) => {
+        this.jsonDataKota[index].positif_terkonfirmasi_h1 = this.jsonDataKota[index].positif_terkonfirmasi_total - this.jsonDataKota[index].positif_terkonfirmasi_h1
+        this.jsonDataKota[index].positif_terkonfirmasi_h7 = this.jsonDataKota[index].positif_terkonfirmasi_total - this.jsonDataKota[index].positif_terkonfirmasi_h7
         this.jsonDataKota[index].positif_aktif_h1 = this.jsonDataKota[index].positif_aktif_total - this.jsonDataKota[index].positif_aktif_h1
         this.jsonDataKota[index].positif_aktif_h7 = this.jsonDataKota[index].positif_aktif_total - this.jsonDataKota[index].positif_aktif_h7
         this.jsonDataKota[index].positif_sembuh_h1 = this.jsonDataKota[index].positif_sembuh_total - this.jsonDataKota[index].positif_sembuh_h1
@@ -625,8 +661,9 @@ export default {
       this.dataV2.columns[7].label = this.formatDate(this.temporary[rangeTotalSampai].tanggal)
       this.dataV2.columns[10].label = this.formatDate(this.temporary[rangeTotalSampai].tanggal)
       this.dataV2.columns[13].label = this.formatDate(this.temporary[rangeTotalSampai].tanggal)
-      // this.dataV2.columns[16].label = this.formatDate(this.temporary[rangeH1Dari].tanggal)
+      this.dataV2.columns[16].label = this.formatDate(this.temporary[rangeH1Dari].tanggal)
       // this.dataV2.columns[19].label = this.formatDate(this.temporary[rangeH1Dari].tanggal)
+      // this.dataV2.columns[22].label = this.formatDate(this.temporary[rangeH1Dari].tanggal)
       this.dataV2.rows = this.jsonDataKota
     }
   }
