@@ -71,7 +71,7 @@ export default {
       },
       menus: [
         { to: '/', label: 'Home', exact: true },
-        { to: '/distribution-case', label: 'Data' },
+        { to: '/data', label: 'Data' },
         { to: '/articles?tab=jabar', label: 'Berita' },
         { to: '/faq', label: 'FAQ' },
         { to: '/contact', label: 'Kontak' },
