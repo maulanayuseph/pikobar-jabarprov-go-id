@@ -20,7 +20,7 @@ export const mutations = {
 
 export const actions = {
   async getItems ({ commit }, options) {
-    const { data } = await axios.get('http://dashboard-pikobar-api.digitalservice.id/sebaran/marker_cluster', {
+    const { data } = await axios.get('https://dashboard-pikobar-api.digitalservice.id/sebaran/marker_cluster', {
       headers: {
         'api-key': '480d0aeb78bd0064d45ef6b2254be9b3'
       }
@@ -30,7 +30,7 @@ export const actions = {
 
   async getItem ({ commit }, query, options) {
     commit('setIsLoading', true)
-    const { data } = await axios.get('http://dashboard-pikobar-api.digitalservice.id/sebaran/marker_cluster?' + query, {
+    const { data } = await axios.get('https://dashboard-pikobar-api.digitalservice.id/sebaran/marker_cluster?' + query, {
       headers: {
         'api-key': '480d0aeb78bd0064d45ef6b2254be9b3'
       }
