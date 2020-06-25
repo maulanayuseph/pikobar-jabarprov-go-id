@@ -266,7 +266,7 @@
                     class="border-b border-solid px-2 py-1 textright"
                     style="border-color: rgba(0,0,0,0.1); padding-left: 1.5em !important;"
                   >
-                    {{ getCellValue({row, column: col, rowIndex, columnIndex: colIndex}) }}
+                    {{ ifNegativeReturnZero(getCellValue({row, column: col, rowIndex, columnIndex: colIndex})) }}
                   </td>
                 </template>
                 <template v-if="statCategory === 'Terkonfirmasi' && colIndex >= 1 && colIndex <=12">
@@ -276,7 +276,7 @@
                     class="border-b border-solid px-2 py-1 textright"
                     style="border-color: rgba(0,0,0,0.1); padding-left: 1.5em !important;"
                   >
-                    {{ getCellValue({row, column: col, rowIndex, columnIndex: colIndex}) }}
+                    {{ ifNegativeReturnZero(getCellValue({row, column: col, rowIndex, columnIndex: colIndex})) }}
                   </td>
                 </template>
                 <template v-if="statCategory === 'ODP_PDP' && colIndex >= 13 && colIndex <=18">
@@ -286,7 +286,7 @@
                     class="border-b border-solid px-2 py-1 textright"
                     style="border-color: rgba(0,0,0,0.1); padding-left: 1.5em !important;"
                   >
-                    {{ getCellValue({row, column: col, rowIndex, columnIndex: colIndex}) }}
+                    {{ ifNegativeReturnZero(getCellValue({row, column: col, rowIndex, columnIndex: colIndex})) }}
                   </td>
                 </template>
                 <!-- <template v-if="statCategory === 'PDP' && colIndex >= 16 && colIndex <=21">
@@ -438,6 +438,13 @@ export default {
     this.sortingOrder.push(['positif_aktif_total', 'down'])
   },
   methods: {
+    ifNegativeReturnZero (num) {
+      if (num < 0) {
+        return 0
+      } else {
+        return num
+      }
+    },
     getSortIcon (field) {
       try {
         const sortingType = this.currentSorting[field]
