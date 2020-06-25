@@ -178,7 +178,7 @@
                         v-if="index >= 1"
                         class="textright"
                       >
-                        <b>{{ Number(col.total).toLocaleString('id-ID') }}</b>
+                        <b>{{ ifNegativeReturnZero(Number(col.total)).toLocaleString('id-ID') }}</b>
                       </span>
                     </p>
                   </td>
@@ -195,7 +195,7 @@
                         v-if="index >= 1"
                         class="textright"
                       >
-                        <b>{{ Number(col.total).toLocaleString('id-ID') }}</b>
+                        <b>{{ ifNegativeReturnZero(Number(col.total)).toLocaleString('id-ID') }}</b>
                       </span>
                     </p>
                   </td>

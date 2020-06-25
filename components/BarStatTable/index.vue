@@ -138,11 +138,11 @@ export default {
         {
           kode: '3278',
           nama: 'Kota Tasikmalaya'
+        },
+        {
+          kode: '0000',
+          nama: 'Belum Teridentifikasi'
         }
-        // {
-        //   kode: '000',
-        //   nama: 'Belum Teridentifikasi'
-        // }
       ],
       jsonDataKabupaten: [],
       temp: [],
