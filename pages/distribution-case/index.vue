@@ -42,13 +42,13 @@
                 Timeslider - Data Positif
               </button>
             </div>
-            <MapV3SebaranPolygon v-if="activeMap === 'polygon'" :activeRegionId.sync="activeRegionId" :activeRegionCategory.sync="activeRegionCategory" />
-            <MapV3SebaranTitik v-if="activeMap === 'titik'" :activeRegionId.sync="activeRegionId" :activeRegionCategory.sync="activeRegionCategory" />
-            <MapV3SebaranTimeSlider v-if="activeMap === 'timeslider'" :activeRegionId.sync="activeRegionId" :activeRegionCategory.sync="activeRegionCategory" />
+            <MapV3SebaranPolygon v-if="activeMap === 'polygon'" :activeRegionId.sync="activeRegionId" :activeRegionCategory.sync="activeRegionCategory"  :activeParentRegionName.sync="activeParentRegionName"/>
+            <MapV3SebaranTitik v-if="activeMap === 'titik'" :activeRegionId.sync="activeRegionId" :activeRegionCategory.sync="activeRegionCategory"  :activeParentRegionName.sync="activeParentRegionName"/>
+            <MapV3SebaranTimeSlider v-if="activeMap === 'timeslider'" :activeRegionId.sync="activeRegionId" :activeRegionCategory.sync="activeRegionCategory"  :activeParentRegionName.sync="activeParentRegionName"/>
           </div>
         </div>
         <div class="w-full mb-6 lg:w-2/5 lg:mb-0 bg-white rounded-lg mb-8 shadow-lg">
-          <RasioConfirmedCase :activeRegionId="activeRegionId" :activeRegionCategory="activeRegionCategory" />
+          <RasioConfirmedCase :activeRegionId="activeRegionId" :activeRegionCategory="activeRegionCategory"  :activeParentRegionName.sync="activeParentRegionName"/>
         </div>
       </div>
     </section>
@@ -63,7 +63,7 @@
           </div>
           <div class="p-6">
             <div class="mb-2">
-              Data yang ditampilkan berdasarkan: <b>Kota/Kabupaten di Jawa Barat</b> <br>
+              Data yang ditampilkan berdasarkan: <b>{{ parentLabel[activeRegionCategory].label }} di {{ activeParentRegionName }}</b> <br>
             </div>
             <div class="flex flex-col lg:flex-row lg:items-stretch">
               <button
@@ -84,8 +84,8 @@
               </button>
             </div>
           </div>
-          <ConfirmedCaseList v-if="activeTable === 'confirmed'" :activeRegionId.sync="activeRegionId" :activeRegionCategory.sync="activeRegionCategory" />
-          <UnconfirmedCaseList v-if="activeTable === 'unconfirmed'" :activeRegionId.sync="activeRegionId" :activeRegionCategory.sync="activeRegionCategory" />
+          <ConfirmedCaseList v-if="activeTable === 'confirmed'" :activeRegionId.sync="activeRegionId" :activeRegionCategory.sync="activeRegionCategory" :activeParentRegionName.sync="activeParentRegionName" />
+          <UnconfirmedCaseList v-if="activeTable === 'unconfirmed'" :activeRegionId.sync="activeRegionId" :activeRegionCategory.sync="activeRegionCategory"  :activeParentRegionName.sync="activeParentRegionName"/>
         </div>
       </div>
     </section>
@@ -110,8 +110,21 @@ export default {
     return {
       activeRegionId: '32',
       activeRegionCategory: 'kota',
+      activeParentRegionName: 'Jawa Barat',
       activeMap: 'polygon',
-      activeTable: 'confirmed'
+      activeTable: 'confirmed',
+      // data
+      parentLabel: {
+        kota: {
+          label: 'Kota/Kabupaten'
+        },
+        kecamatan: {
+          label: 'Kecamatan'
+        },
+        kelurahan: {
+          label: 'Kelurahan/Desa'
+        }
+      }
     }
   },
   computed: {

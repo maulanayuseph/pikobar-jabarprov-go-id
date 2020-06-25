@@ -110,6 +110,10 @@ export default {
     activeRegionCategory: {
       type: String,
       default: 'kota'
+    },
+    activeParentRegionName: {
+      type: String,
+      default: 'kota'
     }
   },
   data () {
@@ -184,8 +188,8 @@ export default {
   },
   mounted () {
     this.initMap()
-    this.getDataSebaranPolygon('kota', this.activeDataCategory)
-    this.getDataSebaranMarker('kota')
+    this.getDataSebaranPolygon(this.activeRegionCategory, this.activeDataCategory, this.activeRegionId)
+    this.getDataSebaranMarker(this.activeRegionCategory, this.activeDataCategory, this.activeRegionId)
   },
   created () {
   },
@@ -238,13 +242,16 @@ export default {
     changeRegionMap (e) {
       const featureProperties = e.target.feature.properties
       let keyParentRegion = ''
+      let nameParentRegion = ''
 
       if (featureProperties.bps_kecamatan_kode !== undefined) {
         this.activeRegion = 'kelurahan'
         keyParentRegion = 'bps_kecamatan_kode'
+        nameParentRegion = 'bps_kecamatan_nama'
       } else if (featureProperties.bps_kabupaten_kode !== undefined) {
         this.activeRegion = 'kecamatan'
         keyParentRegion = 'bps_kabupaten_kode'
+        nameParentRegion = 'bps_kabupaten_nama'
       }
       this.activeParentCode = featureProperties[keyParentRegion]
 
@@ -261,6 +268,7 @@ export default {
       // update props region
       this.$emit('update:activeRegionId', this.activeParentCode)
       this.$emit('update:activeRegionCategory', this.activeRegion)
+      this.$emit('update:activeParentRegionName', this.capitalizeFirstLetter(featureProperties[nameParentRegion]))
     },
     createPolygonRegion () {
       this.jsonRegion = {
@@ -513,6 +521,7 @@ export default {
       // update props region
       this.$emit('update:activeRegionId', this.activeParentCode)
       this.$emit('update:activeRegionCategory', this.activeRegion)
+      this.$emit('update:activeParentRegionName', 'Jawa Barat')
     },
     findCategory (category) {
       let classMarker = ''
@@ -638,6 +647,16 @@ export default {
       }).on('clustermouseout', (c) => {
         this.map.closePopup()
       })
+    },
+    capitalizeFirstLetter (string) {
+      const res = string.split(' ')
+      const newStr = []
+      for (let i = 0; i < res.length; i++) {
+        const lowerStr = res[i].toLowerCase()
+        newStr.push(lowerStr.charAt(0).toUpperCase() + lowerStr.slice(1))
+      }
+
+      return newStr.join(' ')
     },
 
     // get data

@@ -30,7 +30,7 @@
     </div>
     <div :class="isLoading?'hidden':''">
       <p class="p-3 text-sm sm:text">
-        Data yang ditampilkan berdasarkan: <b>Kota/Kabupaten di Jawa Barat</b>
+        Data yang ditampilkan berdasarkan: <b>{{ parentLabel[activeRegionCategory].label }} di {{ activeParentRegionName }}</b>
       </p>
       <div class="p-3">
         <GChart
@@ -70,6 +70,10 @@ export default {
     activeRegionCategory: {
       type: String,
       default: '32'
+    },
+    activeParentRegionName: {
+      type: String,
+      default: '32'
     }
   },
   data () {
@@ -86,7 +90,20 @@ export default {
         ],
         rows: []
       },
-      rowHeight: 500
+      rowHeight: 500,
+
+      // data
+      parentLabel: {
+        kota: {
+          label: 'Kota/Kabupaten'
+        },
+        kecamatan: {
+          label: 'Kecamatan'
+        },
+        kelurahan: {
+          label: 'Kelurahan/Desa'
+        }
+      }
     }
   },
   computed: {

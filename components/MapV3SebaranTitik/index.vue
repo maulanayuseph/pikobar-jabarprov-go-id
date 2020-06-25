@@ -280,8 +280,8 @@ export default {
   },
   mounted () {
     this.initMap()
-    this.getDataSebaranPolygon('kota', this.activeDataCategory)
-    this.getDataSebaranMarkerCluster('kota', this.activeDataCategory)
+    this.getDataSebaranPolygon(this.activeRegionCategory, this.activeDataCategory, this.activeRegionId)
+    this.getDataSebaranMarkerCluster(this.activeRegionCategory, this.activeDataCategory, this.activeRegionId)
   },
   created () {
   },
@@ -338,9 +338,13 @@ export default {
       if (featureProperties.bps_kecamatan_kode !== undefined) {
         this.activeRegion = 'kelurahan'
         keyParentRegion = 'bps_kecamatan_kode'
+        this.activeParentRegionName = this.capitalizeFirstLetter(featureProperties.bps_kecamatan_nama)
       } else if (featureProperties.bps_kabupaten_kode !== undefined) {
         this.activeRegion = 'kecamatan'
         keyParentRegion = 'bps_kabupaten_kode'
+        this.activeParentRegionName = this.capitalizeFirstLetter(featureProperties.bps_kabupaten_nama)
+      } else {
+        this.activeParentRegionName = 'Jawa Barat'
       }
       this.activeParentCode = featureProperties[keyParentRegion]
 
@@ -357,6 +361,7 @@ export default {
       // update props region
       this.$emit('update:activeRegionId', this.activeParentCode)
       this.$emit('update:activeRegionCategory', this.activeRegion)
+      this.$emit('update:activeParentRegionName', this.activeParentRegionName)
     },
     createPolygonRegion () {
       let jsonRegion = {
@@ -541,6 +546,7 @@ export default {
       // update props region
       this.$emit('update:activeRegionId', this.activeParentCode)
       this.$emit('update:activeRegionCategory', this.activeRegion)
+      this.$emit('update:activeParentRegionName', 'Jawa Barat')
     },
 
     showFilter () {
@@ -618,6 +624,17 @@ export default {
       }
 
       return classMarker
+    },
+    capitalizeFirstLetter (string) {
+      const res = string.split(' ')
+      const newStr = []
+      for (let i = 0; i < res.length; i++) {
+        const lowerStr = res[i].toLowerCase()
+        newStr.push(lowerStr.charAt(0).toUpperCase() + lowerStr.slice(1))
+      }
+
+      console.log(newStr)
+      return newStr.join(' ')
     },
 
     // get data
