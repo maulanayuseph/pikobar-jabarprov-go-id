@@ -196,7 +196,7 @@ import _get from 'lodash/get'
 import _round from 'lodash/round'
 import CounterCardLoader from './CounterCardLoader'
 import StatisticLoader from './StatisticLoader'
-import { formatNumber, formatNumberPlusMinus } from '~/lib/number'
+import { formatNumber, formatNumberPlusMinus, formatNumberOnlyPlus } from '~/lib/number'
 
 export default {
   components: {
@@ -269,6 +269,7 @@ export default {
     _round,
     formatNumber,
     formatNumberPlusMinus,
+    formatNumberOnlyPlus,
     fetchDataRekapitulasiJabarKumulatifProv () {
       const self = this
       axios
