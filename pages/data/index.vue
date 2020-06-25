@@ -95,6 +95,16 @@
           v-if="stat.isActiveTimeslider"
         />
       </div>
+       <div class="text-center md:self-center mb-8 xl:mt-8">
+        <a
+          target="_blank"
+          class="px-4 py-2 font-bold text-lg text-brand-green-darker hover:text-brand-green-light"
+          href="/distribution-case"
+        >
+          Lihat Selengkapnya
+          <FontAwesomeIcon class="ml-2" :icon="faChevronRight" />
+        </a>
+      </div>
     </section>
 
     <section class="m-4 mb-8 md:m-8">
@@ -184,7 +194,7 @@
 import axios from 'axios'
 import { mapState } from 'vuex'
 import DataSummary from '~/components/_pages/index/DataSummary'
-import { faFirstAid, faBug, faMap, faCalendarMinus, faArrowRight } from '@fortawesome/free-solid-svg-icons'
+import { faFirstAid, faBug, faMap, faCalendarMinus, faArrowRight, faChevronRight } from '@fortawesome/free-solid-svg-icons'
 import { formatDateTimeShort } from '~/lib/date'
 import { analytics } from '~/lib/firebase'
 
@@ -225,6 +235,8 @@ export default {
       faMap,
       faCalendarMinus,
       faArrowRight,
+      faChevronRight,
+
       jsonDataRekapitulasiJabarProv: {},
       jsonDataRekapitulasiJabarKab: [],
       jsonDataRekapitulasiJabarHarianProv: [],
