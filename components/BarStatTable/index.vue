@@ -141,7 +141,7 @@ export default {
         },
         {
           kode: '0000',
-          nama: 'Belum Teridentifikasi'
+          nama: 'Kota/Kab Belum Teridentifikasi'
         }
       ],
       jsonDataKabupaten: [],
