@@ -44,6 +44,7 @@
             </div>
             <MapV3SebaranPolygon v-if="activeMap === 'polygon'" :activeRegionId.sync="activeRegionId" :activeRegionCategory.sync="activeRegionCategory" />
             <MapV3SebaranTitik v-if="activeMap === 'titik'" :activeRegionId.sync="activeRegionId" :activeRegionCategory.sync="activeRegionCategory" />
+            <MapV3SebaranTimeSlider v-if="activeMap === 'timeslider'" :activeRegionId.sync="activeRegionId" :activeRegionCategory.sync="activeRegionCategory" />
           </div>
         </div>
         <div class="w-full mb-6 lg:w-2/5 lg:mb-0 bg-white rounded-lg mb-8 shadow-lg">
@@ -100,6 +101,7 @@ export default {
   components: {
     MapV3SebaranPolygon: () => import('~/components/MapV3SebaranPolygon'),
     MapV3SebaranTitik: () => import('~/components/MapV3SebaranTitik'),
+    MapV3SebaranTimeSlider: () => import('~/components/MapV3SebaranTimeSlider'),
     RasioConfirmedCase: () => import('~/components/RasioConfirmedCase'),
     ConfirmedCaseList: () => import('~/components/ConfirmedCaseList'),
     UnconfirmedCaseList: () => import('~/components/UnconfirmedCaseList')
