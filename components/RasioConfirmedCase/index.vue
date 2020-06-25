@@ -51,6 +51,7 @@
 <script>
 import { GChart } from 'vue-google-charts'
 import { ContentLoader } from 'vue-content-loader'
+import _orderBy from 'lodash/orderBy'
 
 export default {
   name: 'RasioConfirmedCase',
@@ -124,7 +125,7 @@ export default {
         legend: {
           position: 'bottom',
           textStyle: {
-            fontSize: 11
+            fontSize: 12
           }
         },
         bar: { groupWidth: '50%' },
@@ -146,6 +147,11 @@ export default {
             lineWidth: 0,
             pointSize: 0,
             visibleInLegend: false
+          }
+        },
+        tooltip: {
+          textStyle: {
+            fontSize: 10
           }
         },
         annotations: {
@@ -184,6 +190,7 @@ export default {
     dataSebaranPolygon (val) {
       let nameApiRegion = 'nama_kab'
       const rows = []
+      let sortedData = []
 
       if (this.activeRegionCategory === 'kelurahan') {
         nameApiRegion = 'nama_kel'
@@ -193,14 +200,21 @@ export default {
         nameApiRegion = 'nama_kab'
       }
 
+      sortedData = _orderBy(
+        val.wilayah,
+        ['positif_total'],
+        ['desc']
+      )
+
       this.rowHeight = val.wilayah.length * 30
-      val.wilayah.forEach((element) => {
+
+      sortedData.forEach((element) => {
         const data = {
           c: [
             { v: '0', f: element[nameApiRegion] },
-            { v: element.positif_meninggal, f: 0 },
-            { v: element.positif_sembuh, f: 0 },
-            { v: element.positif_aktif, f: 0 },
+            { v: element.positif_meninggal, f: element.positif_meninggal },
+            { v: element.positif_sembuh, f: element.positif_sembuh },
+            { v: element.positif_aktif, f: element.positif_aktif },
             { v: element.positif_total, f: element.positif_total }
           ]
         }
