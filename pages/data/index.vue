@@ -95,7 +95,7 @@
           v-if="stat.isActiveTimeslider"
         />
       </div>
-       <div class="text-center md:self-center mb-8 xl:mt-8">
+      <!-- <div class="text-center md:self-center mb-8 xl:mt-8">
         <a
           target="_blank"
           class="px-4 py-2 font-bold text-lg text-brand-green-darker hover:text-brand-green-light"
@@ -104,7 +104,7 @@
           Lihat Selengkapnya
           <FontAwesomeIcon class="ml-2" :icon="faChevronRight" />
         </a>
-      </div>
+      </div> -->
     </section>
 
     <section class="m-4 mb-8 md:m-8">
