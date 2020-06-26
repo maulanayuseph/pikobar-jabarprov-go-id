@@ -32,6 +32,9 @@
               Nama Kota / Kabupaten
               <font-awesome-icon :icon="getSortIcon('region')" />
             </th>
+            <th colspan="3" class="px-2 py-1 hover:opacity-75" style="background-color: #4b56b2; color: #ffffff;">
+              Terkonfirmasi
+            </th>
             <th colspan="3" class="px-2 py-1 hover:opacity-75" style="background-color: #FF4A4B; color: #ffffff;">
               Positif Aktif
             </th>
@@ -47,7 +50,52 @@
               :key="0"
               ref="tableHeaders"
               class="px-2 py-1 hover:opacity-75"
-              style="padding-left: 0.5em !important; width: 10%;"
+              style="padding-left: 0.5em !important; width: 7%;"
+              :style="{backgroundColor: '#2c347c' || '', color: '#ffffff' || ''}"
+              @click="onClickSort('positiveTotalNow')"
+            >
+              <p class="pointer-events-none flex justify-between items-center" style="float: right;">
+                <span>
+                  {{ dateNow }}
+                  <font-awesome-icon :icon="getSortIcon('confirmedNow')" />
+                </span>
+              </p>
+            </th>
+            <th
+              :key="1"
+              ref="tableHeaders"
+              class="px-2 py-1 hover:opacity-75"
+              style="padding-left: 0.5em !important; width: 6%;"
+              :style="{backgroundColor: '#2c347c' || '', color: '#ffffff' || ''}"
+              @click="onClickSort('confirmedAverage')"
+            >
+              <p class="pointer-events-none flex justify-between items-center" style="float: right;">
+                <span>
+                  H-7
+                  <font-awesome-icon :icon="getSortIcon('confirmedAverage')" />
+                </span>
+              </p>
+            </th>
+            <th
+              :key="2"
+              ref="tableHeaders"
+              class="px-2 py-1 hover:opacity-75"
+              style="padding-left: 0.5em !important; width: 6%;"
+              :style="{backgroundColor: '#2c347c' || '', color: '#ffffff' || ''}"
+              @click="onClickSort('confirmedTotal')"
+            >
+              <p class="pointer-events-none flex justify-between items-center" style="float: right;">
+                <span>
+                  Total
+                  <font-awesome-icon :icon="getSortIcon('confirmedTotal')" />
+                </span>
+              </p>
+            </th>
+            <th
+              :key="0"
+              ref="tableHeaders"
+              class="px-2 py-1 hover:opacity-75"
+              style="padding-left: 0.5em !important; width: 7%;"
               :style="{backgroundColor: '#d93f40' || '', color: '#ffffff' || ''}"
               @click="onClickSort('positiveNow')"
             >
@@ -62,7 +110,7 @@
               :key="1"
               ref="tableHeaders"
               class="px-2 py-1 hover:opacity-75"
-              style="padding-left: 0.5em !important; width: 9%;"
+              style="padding-left: 0.5em !important; width: 6%;"
               :style="{backgroundColor: '#d93f40' || '', color: '#ffffff' || ''}"
               @click="onClickSort('positiveAverage')"
             >
@@ -77,7 +125,7 @@
               :key="2"
               ref="tableHeaders"
               class="px-2 py-1 hover:opacity-75"
-              style="padding-left: 0.5em !important; width: 9%;"
+              style="padding-left: 0.5em !important; width: 6%;"
               :style="{backgroundColor: '#d93f40' || '', color: '#ffffff' || ''}"
               @click="onClickSort('positiveTotal')"
             >
@@ -92,7 +140,7 @@
               :key="3"
               ref="tableHeaders"
               class="px-2 py-1 hover:opacity-75"
-              style="padding-left: 0.5em !important; width: 10%;"
+              style="padding-left: 0.5em !important; width: 7%;"
               :style="{backgroundColor: '#039658' || '', color: '#ffffff' || ''}"
               @click="onClickSort('recoverNow')"
             >
@@ -107,7 +155,7 @@
               :key="4"
               ref="tableHeaders"
               class="px-2 py-1 hover:opacity-75"
-              style="padding-left: 0.5em !important; width: 9%;"
+              style="padding-left: 0.5em !important; width: 6%;"
               :style="{backgroundColor: '#039658' || '', color: '#ffffff' || ''}"
               @click="onClickSort('recoverAverage')"
             >
@@ -122,7 +170,7 @@
               :key="5"
               ref="tableHeaders"
               class="px-2 py-1 hover:opacity-75"
-              style="padding-left: 0.5em !important; width: 9%;"
+              style="padding-left: 0.5em !important; width: 6%;"
               :style="{backgroundColor: '#039658' || '', color: '#ffffff' || ''}"
               @click="onClickSort('recoverTotal')"
             >
@@ -137,7 +185,7 @@
               :key="6"
               ref="tableHeaders"
               class="px-2 py-1 hover:opacity-75"
-              style="padding-left: 0.5em !important; width: 10%;"
+              style="padding-left: 0.5em !important; width: 7%;"
               :style="{backgroundColor: '#9c0000' || '', color: '#ffffff' || ''}"
               @click="onClickSort('dieNow')"
             >
@@ -152,7 +200,7 @@
               :key="7"
               ref="tableHeaders"
               class="px-2 py-1 hover:opacity-75"
-              style="padding-left: 0.5em !important; width: 9%;"
+              style="padding-left: 0.5em !important; width: 6%;"
               :style="{backgroundColor: '#9c0000' || '', color: '#ffffff' || ''}"
               @click="onClickSort('dieAverage')"
             >
@@ -167,7 +215,7 @@
               :key="8"
               ref="tableHeaders"
               class="px-2 py-1 hover:opacity-75"
-              style="padding-left: 0.5em !important; width: 9%;"
+              style="padding-left: 0.5em !important; width: 6%;"
               :style="{backgroundColor: '#9c0000' || '', color: '#ffffff' || ''}"
               @click="onClickSort('dieTotal')"
             >
@@ -181,9 +229,57 @@
           </tr>
         </thead>
         <tbody>
+          <tr>
+            <td class="table-col border-b border-solid px-2 py-1" />
+            <td class="table-col border-b border-solid px-2 py-1 textright">
+              <b>{{ total.confirmedNow }}</b>
+            </td>
+            <td class="table-col border-b border-solid px-2 py-1 textright">
+              <b>{{ total.confirmedAverage }}</b>
+            </td>
+            <td class="table-col border-b border-solid px-2 py-1 textright">
+              <b>{{ total.confirmedTotal }}</b>
+            </td>
+            <td class="table-col border-b border-solid px-2 py-1 textright">
+              <b>{{ total.positiveNow }}</b>
+            </td>
+            <td class="table-col border-b border-solid px-2 py-1 textright">
+              <b>{{ total.positiveAverage }}</b>
+            </td>
+            <td class="table-col border-b border-solid px-2 py-1 textright">
+              <b>{{ total.positiveTotal }}</b>
+            </td>
+            <td class="table-col border-b border-solid px-2 py-1 textright">
+              <b>{{ total.recoverNow }}</b>
+            </td>
+            <td class="table-col border-b border-solid px-2 py-1 textright">
+              <b>{{ total.recoverAverage }}</b>
+            </td>
+            <td class="table-col border-b border-solid px-2 py-1 textright">
+              <b>{{ total.recoverTotal }}</b>
+            </td>
+            <td class="table-col border-b border-solid px-2 py-1 textright">
+              <b>{{ total.dieNow }}</b>
+            </td>
+            <td class="table-col border-b border-solid px-2 py-1 textright">
+              <b>{{ total.dieAverage }}</b>
+            </td>
+            <td class="table-col border-b border-solid px-2 py-1 textright">
+              <b>{{ total.dieTotal }}</b>
+            </td>
+          </tr>
           <tr v-for="(row, rowIndex) in dataCase" :key="rowIndex">
             <td class="table-col border-b border-solid px-2 py-1">
               {{ row.region }}
+            </td>
+            <td class="table-col border-b border-solid px-2 py-1 textright">
+              {{ row.confirmedNow }}
+            </td>
+            <td class="table-col border-b border-solid px-2 py-1 textright">
+              {{ row.confirmedAverage }}
+            </td>
+            <td class="table-col border-b border-solid px-2 py-1 textright">
+              {{ row.confirmedTotal }}
             </td>
             <td class="table-col border-b border-solid px-2 py-1 textright">
               {{ row.positiveNow }}
@@ -257,6 +353,9 @@ export default {
       },
       currentSorting: {
         region: 'none',
+        confirmedNow: 'none',
+        confirmedAverage: 'none',
+        confirmedTotal: 'none',
         positiveNow: 'none',
         positiveAverage: 'none',
         positiveTotal: 'none',
@@ -268,7 +367,21 @@ export default {
         dieTotal: 'none'
       },
       dataCase: [],
-      dateNow: ''
+      dateNow: '',
+      total: {
+        confirmedNow: 0,
+        confirmedAverage: 0,
+        confirmedTotal: 0,
+        positiveNow: 0,
+        positiveAverage: 0,
+        positiveTotal: 0,
+        recoverNow: 0,
+        recoverAverage: 0,
+        recoverTotal: 0,
+        dieNow: 0,
+        dieAverage: 0,
+        dieTotal: 0
+      }
     }
   },
   computed: {
@@ -287,7 +400,20 @@ export default {
     dataSebaranPertumbuhan (val) {
       let nameApiRegion = 'nama_kab'
       const dataCase = []
-
+      const total = {
+        confirmedNow: 0,
+        confirmedAverage: 0,
+        confirmedTotal: 0,
+        positiveNow: 0,
+        positiveAverage: 0,
+        positiveTotal: 0,
+        recoverNow: 0,
+        recoverAverage: 0,
+        recoverTotal: 0,
+        dieNow: 0,
+        dieAverage: 0,
+        dieTotal: 0
+      }
       if (this.activeRegionCategory === 'kelurahan') {
         nameApiRegion = 'nama_kel'
       } else if (this.activeRegionCategory === 'kecamatan') {
@@ -297,10 +423,26 @@ export default {
       }
 
       val.forEach((element) => {
-        // console.log(element)
-        // console.log(nameApiRegion)
+        // total
+        total.confirmedNow += element.positif.positif_total_h1
+        total.confirmedAverage += element.positif.positif_total_h7
+        total.confirmedTotal += element.positif.positif_total
+        total.positiveNow += element.positif.positif_aktif_h1
+        total.positiveAverage += element.positif.positif_aktif_h7
+        total.positiveTotal += element.positif.positif_aktif
+        total.recoverNow += element.positif.positif_sembuh_h1
+        total.recoverAverage += element.positif.positif_sembuh_h7
+        total.recoverTotal += element.positif.positif_sembuh
+        total.dieNow += element.positif.positif_meninggal_h1
+        total.dieAverage += element.positif.positif_meninggal_h7
+        total.dieTotal += element.positif.positif_meninggal
+
+        // data table
         dataCase.push({
           region: element[nameApiRegion],
+          confirmedNow: element.positif.positif_total_h1,
+          confirmedAverage: element.positif.positif_total_h7,
+          confirmedTotal: element.positif.positif_total,
           positiveNow: element.positif.positif_aktif_h1,
           positiveAverage: element.positif.positif_aktif_h7,
           positiveTotal: element.positif.positif_aktif,
@@ -313,6 +455,7 @@ export default {
         })
       })
 
+      this.total = total
       this.dataCase = dataCase
     }
   },
