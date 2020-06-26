@@ -133,6 +133,27 @@
           </tr>
         </thead>
         <tbody>
+          <tr>
+            <td class="table-col border-b border-solid px-2 py-1" />
+            <td class="table-col border-b border-solid px-2 py-1 textright">
+              <b>{{ total.suspectNow }}</b>
+            </td>
+            <td class="table-col border-b border-solid px-2 py-1 textright">
+              <b>{{ total.suspectAverage }}</b>
+            </td>
+            <td class="table-col border-b border-solid px-2 py-1 textright">
+              <b>{{ total.suspectTotal }}</b>
+            </td>
+            <td class="table-col border-b border-solid px-2 py-1 textright">
+              <b>{{ total.probableNow }}</b>
+            </td>
+            <td class="table-col border-b border-solid px-2 py-1 textright">
+              <b>{{ total.probableAverage }}</b>
+            </td>
+            <td class="table-col border-b border-solid px-2 py-1 textright">
+              <b>{{ total.probableTotal }}</b>
+            </td>
+          </tr>
           <tr v-for="(row, rowIndex) in dataCase" :key="rowIndex">
             <td class="table-col border-b border-solid px-2 py-1">
               {{ row.region }}
@@ -206,6 +227,14 @@ export default {
         probableAverage: 'none',
         probableTotal: 'none'
       },
+      total: {
+        suspectNow: 0,
+        suspectAverage: 0,
+        suspectTotal: 0,
+        probableNow: 0,
+        probableAverage: 0,
+        probableTotal: 0
+      },
       dataCase: [],
       dateNow: ''
     }
@@ -226,6 +255,14 @@ export default {
     dataSebaranPertumbuhan (val) {
       let nameApiRegion = 'nama_kab'
       const dataCase = []
+      const total = {
+        suspectNow: 0,
+        suspectAverage: 0,
+        suspectTotal: 0,
+        probableNow: 0,
+        probableAverage: 0,
+        probableTotal: 0
+      }
 
       if (this.activeRegionCategory === 'kelurahan') {
         nameApiRegion = 'nama_kel'
@@ -236,6 +273,14 @@ export default {
       }
 
       val.forEach((element) => {
+        // total
+        total.suspectNow += element.odp.odp_aktif_h1
+        total.suspectAverage += element.odp.odp_aktif_h7
+        total.suspectTotal = element.odp.odp_aktif
+        total.probableNow = element.pdp.pdp_aktif_h1
+        total.probableAverage = element.pdp.pdp_aktif_h7
+        total.probableTotal = element.pdp.pdp_aktif
+
         dataCase.push({
           region: element[nameApiRegion],
           suspectNow: element.odp.odp_aktif_h1,
@@ -247,6 +292,7 @@ export default {
         })
       })
 
+      this.total = total
       this.dataCase = dataCase
     }
   },
