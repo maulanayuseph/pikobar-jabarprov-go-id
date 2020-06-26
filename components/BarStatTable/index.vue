@@ -138,11 +138,11 @@ export default {
         {
           kode: '3278',
           nama: 'Kota Tasikmalaya'
+        },
+        {
+          kode: '0000',
+          nama: 'Kota/Kab Belum Teridentifikasi'
         }
-        // {
-        //   kode: '0000',
-        //   nama: 'Kota/Kab Belum Teridentifikasi'
-        // }
       ],
       jsonDataKabupaten: [],
       temp: [],
@@ -568,12 +568,12 @@ export default {
       }
     },
     groupingKota () {
-      const rangeTotalSampai = this.temporary.length - (0 * 27) - 1
-      const rangeTotalDari = this.temporary.length - (1 * 27)
-      const rangeH1Sampai = this.temporary.length - (1 * 27) - 1
-      const rangeH1Dari = this.temporary.length - (2 * 27)
-      const rangeH7Sampai = this.temporary.length - (8 * 27) - 1
-      const rangeH7Dari = this.temporary.length - (9 * 27)
+      const rangeTotalSampai = this.temporary.length - (0 * 28) - 1
+      const rangeTotalDari = this.temporary.length - (1 * 28)
+      const rangeH1Sampai = this.temporary.length - (1 * 28) - 1
+      const rangeH1Dari = this.temporary.length - (2 * 28)
+      const rangeH7Sampai = this.temporary.length - (8 * 28) - 1
+      const rangeH7Dari = this.temporary.length - (9 * 28)
 
       // const rangeTotalSampai = this.temporary.length - (1 * 27) - 1
       // const rangeTotalDari = this.temporary.length - (2 * 27)

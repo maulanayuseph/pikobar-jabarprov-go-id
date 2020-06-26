@@ -145,7 +145,7 @@
               </template>
             </template>
           </tr>
-          <!-- <tr>
+          <tr>
             <template v-for="(col, index) in data2.columns">
               <template v-if="index === 0">
                 <td
@@ -178,7 +178,7 @@
                         v-if="index >= 1"
                         class="textright"
                       >
-                        <b>{{ ifNegativeReturnZero(Number(col.total)).toLocaleString('id-ID') }}</b>
+                        <b>{{ (Number(col.total)).toLocaleString('id-ID') }}</b>
                       </span>
                     </p>
                   </td>
@@ -195,14 +195,14 @@
                         v-if="index >= 1"
                         class="textright"
                       >
-                        <b>{{ ifNegativeReturnZero(Number(col.total)).toLocaleString('id-ID') }}</b>
+                        <b>{{ (Number(col.total)).toLocaleString('id-ID') }}</b>
                       </span>
                     </p>
                   </td>
                 </template>
               </template>
             </template>
-          </tr> -->
+          </tr>
         </thead>
         <tbody>
           <template v-if="!sortedRows || !sortedRows.length">
@@ -266,7 +266,7 @@
                     class="border-b border-solid px-2 py-1 textright"
                     style="border-color: rgba(0,0,0,0.1); padding-left: 1.5em !important;"
                   >
-                    {{ ifNegativeReturnZero(getCellValue({row, column: col, rowIndex, columnIndex: colIndex})) }}
+                    {{ (getCellValue({row, column: col, rowIndex, columnIndex: colIndex})) }}
                   </td>
                 </template>
                 <template v-if="statCategory === 'Terkonfirmasi' && colIndex >= 1 && colIndex <=12">
@@ -276,7 +276,7 @@
                     class="border-b border-solid px-2 py-1 textright"
                     style="border-color: rgba(0,0,0,0.1); padding-left: 1.5em !important;"
                   >
-                    {{ ifNegativeReturnZero(getCellValue({row, column: col, rowIndex, columnIndex: colIndex})) }}
+                    {{ (getCellValue({row, column: col, rowIndex, columnIndex: colIndex})) }}
                   </td>
                 </template>
                 <template v-if="statCategory === 'ODP_PDP' && colIndex >= 13 && colIndex <=18">
@@ -286,7 +286,7 @@
                     class="border-b border-solid px-2 py-1 textright"
                     style="border-color: rgba(0,0,0,0.1); padding-left: 1.5em !important;"
                   >
-                    {{ ifNegativeReturnZero(getCellValue({row, column: col, rowIndex, columnIndex: colIndex})) }}
+                    {{ (getCellValue({row, column: col, rowIndex, columnIndex: colIndex})) }}
                   </td>
                 </template>
                 <!-- <template v-if="statCategory === 'PDP' && colIndex >= 16 && colIndex <=21">
