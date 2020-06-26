@@ -138,11 +138,11 @@ export default {
         {
           kode: '3278',
           nama: 'Kota Tasikmalaya'
-        },
-        {
-          kode: '0000',
-          nama: 'Kota/Kab Belum Teridentifikasi'
         }
+        // {
+        //   kode: '0000',
+        //   nama: 'Kota/Kab Belum Teridentifikasi'
+        // }
       ],
       jsonDataKabupaten: [],
       temp: [],
