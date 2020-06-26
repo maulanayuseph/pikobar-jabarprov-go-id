@@ -52,7 +52,7 @@
               class="px-2 py-1 hover:opacity-75"
               style="padding-left: 0.5em !important; width: 7%;"
               :style="{backgroundColor: '#2c347c' || '', color: '#ffffff' || ''}"
-              @click="onClickSort('positiveTotalNow')"
+              @click="onClickSort('confirmedNow')"
             >
               <p class="pointer-events-none flex justify-between items-center" style="float: right;">
                 <span>
