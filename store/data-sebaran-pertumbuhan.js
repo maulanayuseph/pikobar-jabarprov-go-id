@@ -22,7 +22,7 @@ export const actions = {
   async getItems ({ commit }, options) {
     const { data } = await axios.get('https://dashboard-pikobar-api.digitalservice.id/sebaran/pertumbuhan', {
       headers: {
-        'api-key': '480d0aeb78bd0064d45ef6b2254be9b3'
+        'api-key': process.env.DASHBOARD_API_KEY
       }
     })
     commit('setItems', data.data)
@@ -32,7 +32,7 @@ export const actions = {
     commit('setIsLoading', true)
     const { data } = await axios.get('https://dashboard-pikobar-api.digitalservice.id/sebaran/pertumbuhan?' + query, {
       headers: {
-        'api-key': '480d0aeb78bd0064d45ef6b2254be9b3'
+        'api-key': process.env.DASHBOARD_API_KEY
       }
     })
     commit('setItem', data.data)
