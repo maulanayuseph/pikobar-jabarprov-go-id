@@ -17,7 +17,7 @@
                 {{ formatNumber(positifJabar) }}
               </b>
               <b>
-                <span class="text-xl tag-purple-100 py-0 px-1 rounded text-white align-middle">{{ formatNumberOnlyPlus(pertumbuhan.jabarPositif) }}</span>
+                <span class="text-xl tag-purple-100 py-0 px-1 rounded text-white align-middle">{{ formatNumberPlusMinus(pertumbuhan.jabarPositif) }}</span>
               </b>
             </span>
           </div>
@@ -30,7 +30,7 @@
                 {{ formatNumber(positifNasional) }}
               </b>
               <b>
-                <span class="text-base tag-purple-100 py-0 px-1 rounded text-white align-middle">{{ formatNumberOnlyPlus(pertumbuhan.nasionalPositif) }}</span>
+                <span class="text-base tag-purple-100 py-0 px-1 rounded text-white align-middle">{{ formatNumberPlusMinus(pertumbuhan.nasionalPositif) }}</span>
               </b>
             </span>
           </div>
@@ -50,7 +50,7 @@
                 {{ formatNumber(positifJabar - sembuhJabar - meninggalJabar) }}
               </b>
               <b>
-                <span class="text-xl tag-red-100 py-0 px-1 rounded text-white align-middle">{{ formatNumberOnlyPlus(pertumbuhan.jabarPositif - pertumbuhan.jabarSembuh - pertumbuhan.jabarMeninggal) }}</span>
+                <span class="text-xl tag-red-100 py-0 px-1 rounded text-white align-middle">{{ formatNumberPlusMinus(pertumbuhan.jabarPositif - pertumbuhan.jabarSembuh - pertumbuhan.jabarMeninggal) }}</span>
               </b>
             </span>
           </div>
@@ -63,7 +63,7 @@
                 {{ formatNumber(positifNasional - sembuhNasional - meninggalNasional) }}
               </b>
               <b>
-                <span class="text-base tag-red-100 py-0 px-1 rounded text-white align-middle">{{ formatNumberOnlyPlus(pertumbuhan.nasionalPositif - pertumbuhan.nasionalSembuh - pertumbuhan.nasionalMeninggal) }}</span>
+                <span class="text-base tag-red-100 py-0 px-1 rounded text-white align-middle">{{ formatNumberPlusMinus(pertumbuhan.nasionalPositif - pertumbuhan.nasionalSembuh - pertumbuhan.nasionalMeninggal) }}</span>
               </b>
             </span>
           </div>
@@ -83,7 +83,7 @@
                 {{ formatNumber(sembuhJabar) }}
               </b>
               <b>
-                <span class="text-xl tag-green-100 py-0 px-1 rounded text-white align-middle">{{ formatNumberOnlyPlus(pertumbuhan.jabarSembuh) }}</span>
+                <span class="text-xl tag-green-100 py-0 px-1 rounded text-white align-middle">{{ formatNumberPlusMinus(pertumbuhan.jabarSembuh) }}</span>
               </b>
             </span>
           </div>
@@ -96,7 +96,7 @@
                 {{ formatNumber(sembuhNasional) }}
               </b>
               <b>
-                <span class="text-base tag-green-100 py-0 px-1 rounded text-white align-middle">{{ formatNumberOnlyPlus(pertumbuhan.nasionalSembuh) }}</span>
+                <span class="text-base tag-green-100 py-0 px-1 rounded text-white align-middle">{{ formatNumberPlusMinus(pertumbuhan.nasionalSembuh) }}</span>
               </b>
             </span>
           </div>
@@ -116,7 +116,7 @@
                 {{ formatNumber(meninggalJabar) }}
               </b>
               <b>
-                <span class="text-xl tag-orange-100 py-0 px-1 rounded text-white align-middle">{{ formatNumberOnlyPlus(pertumbuhan.jabarMeninggal) }}</span>
+                <span class="text-xl tag-orange-100 py-0 px-1 rounded text-white align-middle">{{ formatNumberPlusMinus(pertumbuhan.jabarMeninggal) }}</span>
               </b>
             </span>
           </div>
@@ -129,7 +129,7 @@
                 {{ formatNumber(meninggalNasional) }}
               </b>
               <b>
-                <span class="text-base tag-orange-100 py-0 px-1 rounded text-white align-middle">{{ formatNumberOnlyPlus(pertumbuhan.nasionalMeninggal) }}</span>
+                <span class="text-base tag-orange-100 py-0 px-1 rounded text-white align-middle">{{ formatNumberPlusMinus(pertumbuhan.nasionalMeninggal) }}</span>
               </b>
             </span>
           </div>
@@ -277,9 +277,15 @@ export default {
         .then(function (response) {
           self.jsonDataRekapitulasiJabarKumulatifProv = response.data.data.content
           const numArr = self.jsonDataRekapitulasiJabarKumulatifProv.length
-          self.pertumbuhan.jabarPositif = self.jsonDataRekapitulasiJabarKumulatifProv[numArr - 1].positif - self.jsonDataRekapitulasiJabarKumulatifProv[numArr - 2].positif
-          self.pertumbuhan.jabarSembuh = self.jsonDataRekapitulasiJabarKumulatifProv[numArr - 1].sembuh - self.jsonDataRekapitulasiJabarKumulatifProv[numArr - 2].sembuh
-          self.pertumbuhan.jabarMeninggal = self.jsonDataRekapitulasiJabarKumulatifProv[numArr - 1].meninggal - self.jsonDataRekapitulasiJabarKumulatifProv[numArr - 2].meninggal
+          if (self.jsonDataRekapitulasiJabarKumulatifProv[numArr - 1].positif !== null && self.jsonDataRekapitulasiJabarKumulatifProv[numArr - 1].positif > 0) {
+            self.pertumbuhan.jabarPositif = self.jsonDataRekapitulasiJabarKumulatifProv[numArr - 1].positif - self.jsonDataRekapitulasiJabarKumulatifProv[numArr - 2].positif
+            self.pertumbuhan.jabarSembuh = self.jsonDataRekapitulasiJabarKumulatifProv[numArr - 1].sembuh - self.jsonDataRekapitulasiJabarKumulatifProv[numArr - 2].sembuh
+            self.pertumbuhan.jabarMeninggal = self.jsonDataRekapitulasiJabarKumulatifProv[numArr - 1].meninggal - self.jsonDataRekapitulasiJabarKumulatifProv[numArr - 2].meninggal
+          } else {
+            self.pertumbuhan.jabarPositif = self.jsonDataRekapitulasiJabarKumulatifProv[numArr - 2].positif - self.jsonDataRekapitulasiJabarKumulatifProv[numArr - 3].positif
+            self.pertumbuhan.jabarSembuh = self.jsonDataRekapitulasiJabarKumulatifProv[numArr - 2].sembuh - self.jsonDataRekapitulasiJabarKumulatifProv[numArr - 3].sembuh
+            self.pertumbuhan.jabarMeninggal = self.jsonDataRekapitulasiJabarKumulatifProv[numArr - 2].meninggal - self.jsonDataRekapitulasiJabarKumulatifProv[numArr - 3].meninggal
+          }
         })
         .catch(function (error) {
           console.log(error)
