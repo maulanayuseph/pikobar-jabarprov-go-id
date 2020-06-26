@@ -139,6 +139,10 @@ export default {
           kode: '3278',
           nama: 'Kota Tasikmalaya'
         }
+        // {
+        //   kode: '0000',
+        //   nama: 'Kota/Kab Belum Teridentifikasi'
+        // }
       ],
       jsonDataKabupaten: [],
       temp: [],
@@ -168,6 +172,13 @@ export default {
             field: 'pdp_total',
             sort: 'desc',
             backgroundColor: '#FDC74A',
+            textColor: 'white'
+          },
+          {
+            label: 'Positif - Terkonfirmasi',
+            field: 'positif_terkonfirmasi',
+            sort: 'desc',
+            backgroundColor: '#E0E6F6',
             textColor: 'white'
           },
           {
@@ -207,7 +218,35 @@ export default {
             field: 'nama',
             sort: 'desc',
             backgroundColor: '#eee',
-            category: 'kota'
+            category: 'kota',
+            total: ''
+          },
+          {
+            label: 'H-1',
+            field: 'positif_terkonfirmasi_h1',
+            sort: 'desc',
+            backgroundColor: '#2C347C',
+            textColor: 'white',
+            category: 'Terkonfirmasi',
+            total: ''
+          },
+          {
+            label: 'H-7',
+            field: 'positif_terkonfirmasi_h7',
+            sort: 'desc',
+            backgroundColor: '#2C347C',
+            textColor: 'white',
+            category: 'Terkonfirmasi',
+            total: ''
+          },
+          {
+            label: 'Total',
+            field: 'positif_terkonfirmasi_total',
+            sort: 'desc',
+            backgroundColor: '#2C347C',
+            textColor: 'white',
+            category: 'Terkonfirmasi',
+            total: ''
           },
           {
             label: 'H-1',
@@ -215,7 +254,8 @@ export default {
             sort: 'desc',
             backgroundColor: '#D93F40',
             textColor: 'white',
-            category: 'Terkonfirmasi'
+            category: 'Terkonfirmasi',
+            total: ''
           },
           {
             label: 'H-7',
@@ -223,7 +263,8 @@ export default {
             sort: 'desc',
             backgroundColor: '#D93F40',
             textColor: 'white',
-            category: 'Terkonfirmasi'
+            category: 'Terkonfirmasi',
+            total: ''
           },
           {
             label: 'Total',
@@ -231,7 +272,8 @@ export default {
             sort: 'desc',
             backgroundColor: '#D93F40',
             textColor: 'white',
-            category: 'Terkonfirmasi'
+            category: 'Terkonfirmasi',
+            total: ''
           },
           {
             label: 'H-1',
@@ -239,7 +281,8 @@ export default {
             sort: 'desc',
             backgroundColor: '#039658',
             textColor: 'white',
-            category: 'Terkonfirmasi'
+            category: 'Terkonfirmasi',
+            total: ''
           },
           {
             label: 'H-7',
@@ -247,7 +290,8 @@ export default {
             sort: 'desc',
             backgroundColor: '#039658',
             textColor: 'white',
-            category: 'Terkonfirmasi'
+            category: 'Terkonfirmasi',
+            total: ''
           },
           {
             label: 'Total',
@@ -255,7 +299,8 @@ export default {
             sort: 'desc',
             backgroundColor: '#039658',
             textColor: 'white',
-            category: 'Terkonfirmasi'
+            category: 'Terkonfirmasi',
+            total: ''
           },
           {
             label: 'H-1',
@@ -263,7 +308,8 @@ export default {
             sort: 'desc',
             backgroundColor: '#9C0000',
             textColor: 'white',
-            category: 'Terkonfirmasi'
+            category: 'Terkonfirmasi',
+            total: ''
           },
           {
             label: 'H-7',
@@ -271,7 +317,8 @@ export default {
             sort: 'desc',
             backgroundColor: '#9C0000',
             textColor: 'white',
-            category: 'Terkonfirmasi'
+            category: 'Terkonfirmasi',
+            total: ''
           },
           {
             label: 'Total',
@@ -279,7 +326,8 @@ export default {
             sort: 'desc',
             backgroundColor: '#9C0000',
             textColor: 'white',
-            category: 'Terkonfirmasi'
+            category: 'Terkonfirmasi',
+            total: ''
           },
           {
             label: 'H-1',
@@ -287,7 +335,8 @@ export default {
             sort: 'desc',
             backgroundColor: '#008ec6',
             textColor: 'white',
-            category: 'ODP_PDP'
+            category: 'ODP_PDP',
+            total: ''
           },
           {
             label: 'H-7',
@@ -295,7 +344,8 @@ export default {
             sort: 'desc',
             backgroundColor: '#008ec6',
             textColor: 'white',
-            category: 'ODP_PDP'
+            category: 'ODP_PDP',
+            total: ''
           },
           {
             label: 'Total',
@@ -303,7 +353,8 @@ export default {
             sort: 'desc',
             backgroundColor: '#008ec6',
             textColor: 'white',
-            category: 'ODP_PDP'
+            category: 'ODP_PDP',
+            total: ''
           },
           // {
           //   label: 'H-1',
@@ -311,7 +362,8 @@ export default {
           //   sort: 'desc',
           //   backgroundColor: '#19a7df',
           //   textColor: 'white',
-          //   category: 'ODP'
+          //   category: 'ODP',
+          //   total: ''
           // },
           // {
           //   label: 'H-7',
@@ -319,7 +371,8 @@ export default {
           //   sort: 'desc',
           //   backgroundColor: '#19a7df',
           //   textColor: 'white',
-          //   category: 'ODP'
+          //   category: 'ODP',
+          //   total: ''
           // },
           // {
           //   label: 'Total',
@@ -327,7 +380,8 @@ export default {
           //   sort: 'desc',
           //   backgroundColor: '#19a7df',
           //   textColor: 'white',
-          //   category: 'ODP'
+          //   category: 'ODP',
+          //   total: ''
           // },
           {
             label: 'H-1',
@@ -335,7 +389,8 @@ export default {
             sort: 'desc',
             backgroundColor: '#e3b342',
             textColor: 'white',
-            category: 'ODP_PDP'
+            category: 'ODP_PDP',
+            total: ''
           },
           {
             label: 'H-7',
@@ -343,7 +398,8 @@ export default {
             sort: 'desc',
             backgroundColor: '#e3b342',
             textColor: 'white',
-            category: 'ODP_PDP'
+            category: 'ODP_PDP',
+            total: ''
           },
           {
             label: 'Total',
@@ -351,7 +407,8 @@ export default {
             sort: 'desc',
             backgroundColor: '#e3b342',
             textColor: 'white',
-            category: 'ODP_PDP'
+            category: 'ODP_PDP',
+            total: ''
           }
           // {
           //   label: 'H-1',
@@ -359,7 +416,8 @@ export default {
           //   sort: 'desc',
           //   backgroundColor: '#fdcc5c',
           //   textColor: 'white',
-          //   category: 'PDP'
+          //   category: 'PDP',
+          //   total: ''
           // },
           // {
           //   label: 'H-7',
@@ -367,7 +425,8 @@ export default {
           //   sort: 'desc',
           //   backgroundColor: '#fdcc5c',
           //   textColor: 'white',
-          //   category: 'PDP'
+          //   category: 'PDP',
+          //   total: ''
           // },
           // {
           //   label: 'Total',
@@ -375,7 +434,8 @@ export default {
           //   sort: 'desc',
           //   backgroundColor: '#fdcc5c',
           //   textColor: 'white',
-          //   category: 'PDP'
+          //   category: 'PDP',
+          //   total: ''
           // }
         ],
         rows: [
@@ -525,6 +585,9 @@ export default {
       // temporary data
       this.jsonDataKota.forEach((element, index) => {
         const tempMerge = {
+          positif_terkonfirmasi_h1: 0,
+          positif_terkonfirmasi_h7: 0,
+          positif_terkonfirmasi_total: 0,
           positif_aktif_h1: 0,
           positif_aktif_h7: 0,
           positif_aktif_total: 0,
@@ -558,8 +621,8 @@ export default {
       this.jsonDataKota.forEach((element, index) => {
         for (let i = rangeTotalDari; i <= rangeTotalSampai; i++) {
           if (element.kode.toString() === this.temporary[i].kode_kab) {
+            this.jsonDataKota[index].positif_terkonfirmasi_total = this.temporary[i].positif
             this.jsonDataKota[index].positif_aktif_total = this.temporary[i].positif - this.temporary[i].sembuh - this.temporary[i].meninggal
-            // this.jsonDataKota[index].positif_aktif_total = this.temporary[i].positif
             this.jsonDataKota[index].positif_sembuh_total = this.temporary[i].sembuh
             this.jsonDataKota[index].positif_meninggal_total = this.temporary[i].meninggal
             this.jsonDataKota[index].odp_total_total = this.temporary[i].odp
@@ -574,8 +637,8 @@ export default {
       this.jsonDataKota.forEach((element, index) => {
         for (let i = rangeH1Dari; i <= rangeH1Sampai; i++) {
           if (element.kode.toString() === this.temporary[i].kode_kab) {
+            this.jsonDataKota[index].positif_terkonfirmasi_h1 = this.temporary[i].positif
             this.jsonDataKota[index].positif_aktif_h1 = this.temporary[i].positif - this.temporary[i].sembuh - this.temporary[i].meninggal
-            // this.jsonDataKota[index].positif_aktif_h1 = this.temporary[i].positif
             this.jsonDataKota[index].positif_sembuh_h1 = this.temporary[i].sembuh
             this.jsonDataKota[index].positif_meninggal_h1 = this.temporary[i].meninggal
             this.jsonDataKota[index].odp_total_h1 = this.temporary[i].odp
@@ -590,8 +653,8 @@ export default {
       this.jsonDataKota.forEach((element, index) => {
         for (let i = rangeH7Dari; i <= rangeH7Sampai; i++) {
           if (element.kode.toString() === this.temporary[i].kode_kab) {
+            this.jsonDataKota[index].positif_terkonfirmasi_h7 = this.temporary[i].positif
             this.jsonDataKota[index].positif_aktif_h7 = this.temporary[i].positif - this.temporary[i].sembuh - this.temporary[i].meninggal
-            // this.jsonDataKota[index].positif_aktif_h7 = this.temporary[i].positif
             this.jsonDataKota[index].positif_sembuh_h7 = this.temporary[i].sembuh
             this.jsonDataKota[index].positif_meninggal_h7 = this.temporary[i].meninggal
             this.jsonDataKota[index].odp_total_h7 = this.temporary[i].odp
@@ -604,7 +667,28 @@ export default {
         }
       })
 
+      this.dataV2.columns[1].total = 0
+      this.dataV2.columns[2].total = 0
+      this.dataV2.columns[3].total = 0
+      this.dataV2.columns[4].total = 0
+      this.dataV2.columns[5].total = 0
+      this.dataV2.columns[6].total = 0
+      this.dataV2.columns[7].total = 0
+      this.dataV2.columns[8].total = 0
+      this.dataV2.columns[9].total = 0
+      this.dataV2.columns[10].total = 0
+      this.dataV2.columns[11].total = 0
+      this.dataV2.columns[12].total = 0
+      this.dataV2.columns[13].total = 0
+      this.dataV2.columns[14].total = 0
+      this.dataV2.columns[15].total = 0
+      this.dataV2.columns[16].total = 0
+      this.dataV2.columns[17].total = 0
+      this.dataV2.columns[18].total = 0
+
       this.jsonDataKota.forEach((element, index) => {
+        this.jsonDataKota[index].positif_terkonfirmasi_h1 = this.jsonDataKota[index].positif_terkonfirmasi_total - this.jsonDataKota[index].positif_terkonfirmasi_h1
+        this.jsonDataKota[index].positif_terkonfirmasi_h7 = this.jsonDataKota[index].positif_terkonfirmasi_total - this.jsonDataKota[index].positif_terkonfirmasi_h7
         this.jsonDataKota[index].positif_aktif_h1 = this.jsonDataKota[index].positif_aktif_total - this.jsonDataKota[index].positif_aktif_h1
         this.jsonDataKota[index].positif_aktif_h7 = this.jsonDataKota[index].positif_aktif_total - this.jsonDataKota[index].positif_aktif_h7
         this.jsonDataKota[index].positif_sembuh_h1 = this.jsonDataKota[index].positif_sembuh_total - this.jsonDataKota[index].positif_sembuh_h1
@@ -615,6 +699,25 @@ export default {
         this.jsonDataKota[index].odp_total_h7 = this.jsonDataKota[index].odp_total_total - this.jsonDataKota[index].odp_total_h7
         this.jsonDataKota[index].pdp_total_h1 = this.jsonDataKota[index].pdp_total_total - this.jsonDataKota[index].pdp_total_h1
         this.jsonDataKota[index].pdp_total_h7 = this.jsonDataKota[index].pdp_total_total - this.jsonDataKota[index].pdp_total_h7
+
+        this.dataV2.columns[1].total += this.jsonDataKota[index].positif_terkonfirmasi_h1
+        this.dataV2.columns[2].total += this.jsonDataKota[index].positif_terkonfirmasi_h7
+        this.dataV2.columns[3].total += this.jsonDataKota[index].positif_terkonfirmasi_total
+        this.dataV2.columns[4].total += this.jsonDataKota[index].positif_aktif_h1
+        this.dataV2.columns[5].total += this.jsonDataKota[index].positif_aktif_h7
+        this.dataV2.columns[6].total += this.jsonDataKota[index].positif_aktif_total
+        this.dataV2.columns[7].total += this.jsonDataKota[index].positif_sembuh_h1
+        this.dataV2.columns[8].total += this.jsonDataKota[index].positif_sembuh_h7
+        this.dataV2.columns[9].total += this.jsonDataKota[index].positif_sembuh_total
+        this.dataV2.columns[10].total += this.jsonDataKota[index].positif_meninggal_h1
+        this.dataV2.columns[11].total += this.jsonDataKota[index].positif_meninggal_h7
+        this.dataV2.columns[12].total += this.jsonDataKota[index].positif_meninggal_total
+        this.dataV2.columns[13].total += this.jsonDataKota[index].odp_total_h1
+        this.dataV2.columns[14].total += this.jsonDataKota[index].odp_total_h7
+        this.dataV2.columns[15].total += this.jsonDataKota[index].odp_total_total
+        this.dataV2.columns[16].total += this.jsonDataKota[index].pdp_total_h1
+        this.dataV2.columns[17].total += this.jsonDataKota[index].pdp_total_h7
+        this.dataV2.columns[18].total += this.jsonDataKota[index].pdp_total_total
       })
 
       this.jsonDataKota.sort(this.compareValues('positif_aktif_total', 'desc'))
@@ -625,8 +728,9 @@ export default {
       this.dataV2.columns[7].label = this.formatDate(this.temporary[rangeTotalSampai].tanggal)
       this.dataV2.columns[10].label = this.formatDate(this.temporary[rangeTotalSampai].tanggal)
       this.dataV2.columns[13].label = this.formatDate(this.temporary[rangeTotalSampai].tanggal)
-      // this.dataV2.columns[16].label = this.formatDate(this.temporary[rangeH1Dari].tanggal)
+      this.dataV2.columns[16].label = this.formatDate(this.temporary[rangeTotalSampai].tanggal)
       // this.dataV2.columns[19].label = this.formatDate(this.temporary[rangeH1Dari].tanggal)
+      // this.dataV2.columns[22].label = this.formatDate(this.temporary[rangeH1Dari].tanggal)
       this.dataV2.rows = this.jsonDataKota
     }
   }

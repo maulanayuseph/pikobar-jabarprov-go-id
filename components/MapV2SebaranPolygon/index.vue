@@ -326,6 +326,14 @@ export default {
           3: 0,
           4: 0,
           5: 0
+        },
+        custom: {
+          0: 0,
+          1: 0,
+          2: 0,
+          3: 0,
+          4: 0,
+          5: 0
         }
       }
     }
@@ -540,6 +548,10 @@ export default {
           region = 'Kelurahan/Desa'
           break
         }
+        case 'custom': {
+          region = 'Wilayah'
+          break
+        }
         default: {
           region = 'Kota/Kabupaten'
         }
@@ -572,9 +584,10 @@ export default {
       this.$L.geoJSON(this.dataKota, {
         onEachFeature: (feature, layer, element) => {
           // create style color gradien
+          const resultColor = self.getColor(this.range, feature.properties.jumlah_kasus, category)
           const styleBatasWilayah = {
-            fillOpacity: 1,
-            fillColor: self.getColor(this.range, feature.properties.jumlah_kasus, category),
+            fillColor: resultColor[0],
+            fillOpacity: resultColor[1],
             weight: 0.7,
             opacity: 0.7,
             color: '#000000'
@@ -603,9 +616,10 @@ export default {
       this.$L.geoJSON(this.dataKecamatan, {
         onEachFeature: (feature, layer, element) => {
           // create style color gradien
+          const resultColor = self.getColor(this.range, feature.properties.jumlah_kasus, category)
           const styleBatasWilayah = {
-            fillOpacity: 1,
-            fillColor: self.getColor(this.range, feature.properties.jumlah_kasus, category),
+            fillColor: resultColor[0],
+            fillOpacity: resultColor[1],
             weight: 0.4,
             opacity: 0.4,
             color: '#000000'
@@ -634,9 +648,10 @@ export default {
       this.$L.geoJSON(this.dataKelurahan, {
         onEachFeature: (feature, layer, element) => {
           // create style color gradien
+          const resultColor = self.getColor(this.range, feature.properties.jumlah_kasus, category)
           const styleBatasWilayah = {
-            fillOpacity: 1,
-            fillColor: self.getColor(this.range, feature.properties.jumlah_kasus, category),
+            fillColor: resultColor[0],
+            fillOpacity: resultColor[1],
             weight: 0.1,
             opacity: 0.7,
             color: '#000000'
@@ -758,20 +773,23 @@ export default {
     getColor (range, angka, category) {
       // define color
       let color = ''
+      let opacity = 1
       if (angka === 0) {
         this.totalPerCluster[this.layerActive][0] += 1
         color = '#ffffff'
+        opacity = 0
       } else {
         // loop data range, match data
         for (let i = 0; i <= range.length - 1; i++) {
           if (angka >= range[i].from && angka <= range[i].to) {
             this.totalPerCluster[this.layerActive][i + 1] += 1
             color = this.rangeColor[category][i]
+            opacity = 1
           }
         }
       }
       // return color
-      return color
+      return [color, opacity]
     },
 
     processHEX (val) {
