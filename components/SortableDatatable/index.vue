@@ -145,7 +145,7 @@
               </template>
             </template>
           </tr>
-          <tr>
+          <!-- <tr>
             <template v-for="(col, index) in data2.columns">
               <template v-if="index === 0">
                 <td
@@ -202,7 +202,7 @@
                 </template>
               </template>
             </template>
-          </tr>
+          </tr> -->
         </thead>
         <tbody>
           <template v-if="!sortedRows || !sortedRows.length">
