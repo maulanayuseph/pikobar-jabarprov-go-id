@@ -50,7 +50,7 @@
             >
               <p class="pointer-events-none flex justify-between items-center" style="float: right;">
                 <span>
-                  {{ dateNow }}
+                  {{ dateH1 }}
                   <font-awesome-icon :icon="getSortIcon('suspectNow')" />
                 </span>
               </p>
@@ -95,7 +95,7 @@
             >
               <p class="pointer-events-none flex justify-between items-center" style="float: right;">
                 <span>
-                  {{ dateNow }}
+                  {{ dateH1 }}
                   <font-awesome-icon :icon="getSortIcon('probableNow')" />
                 </span>
               </p>
@@ -236,7 +236,7 @@ export default {
         probableTotal: 0
       },
       dataCase: [],
-      dateNow: '',
+      dateH1: '',
       parentLabel: {
         kota: {
           label: 'Kota/Kabupaten'
@@ -256,6 +256,9 @@ export default {
     },
     isLoading () {
       return this.$store.getters['data-sebaran-pertumbuhan/isLoading']
+    },
+    metadataSebaranPertumbuhan () {
+      return this.$store.getters['data-sebaran-pertumbuhan/metadata']
     }
   },
   watch: {
@@ -305,10 +308,13 @@ export default {
 
       this.total = total
       this.dataCase = dataCase
+
+      const lastUpdate = this.metadataSebaranPertumbuhan.last_update
+      this.dateH1 = moment(lastUpdate).subtract(1, 'days').locale('id').format('DD MMMM YYYY')
     }
   },
   created () {
-    this.dateNow = moment(new Date()).locale('id').format('DD MMMM YYYY')
+    this.dateH1 = moment(new Date()).locale('id').format('DD MMMM YYYY')
   },
   mounted () {
     this.getDataSebaranPertumbuhan(this.activeRegionCategory, this.activeRegionId)

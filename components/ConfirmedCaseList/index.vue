@@ -55,7 +55,7 @@
             >
               <p class="pointer-events-none flex justify-between items-center" style="float: right;">
                 <span>
-                  {{ dateNow }}
+                  {{ dateH1 }}
                   <font-awesome-icon :icon="getSortIcon('confirmedNow')" />
                 </span>
               </p>
@@ -100,7 +100,7 @@
             >
               <p class="pointer-events-none flex justify-between items-center" style="float: right;">
                 <span>
-                  {{ dateNow }}
+                  {{ dateH1 }}
                   <font-awesome-icon :icon="getSortIcon('positiveNow')" />
                 </span>
               </p>
@@ -145,7 +145,7 @@
             >
               <p class="pointer-events-none flex justify-between items-center" style="float: right;">
                 <span>
-                  {{ dateNow }}
+                  {{ dateH1 }}
                   <font-awesome-icon :icon="getSortIcon('recoverNow')" />
                 </span>
               </p>
@@ -190,7 +190,7 @@
             >
               <p class="pointer-events-none flex justify-between items-center" style="float: right;">
                 <span>
-                  {{ dateNow }}
+                  {{ dateH1 }}
                   <font-awesome-icon :icon="getSortIcon('dieNow')" />
                 </span>
               </p>
@@ -366,7 +366,7 @@ export default {
         dieTotal: 'none'
       },
       dataCase: [],
-      dateNow: '',
+      dateH1: '',
       total: {
         confirmedNow: 0,
         confirmedAverage: 0,
@@ -400,6 +400,9 @@ export default {
     },
     isLoading () {
       return this.$store.getters['data-sebaran-pertumbuhan/isLoading']
+    },
+    metadataSebaranPertumbuhan () {
+      return this.$store.getters['data-sebaran-pertumbuhan/metadata']
     }
   },
   watch: {
@@ -467,10 +470,13 @@ export default {
 
       this.total = total
       this.dataCase = dataCase
+
+      const lastUpdate = this.metadataSebaranPertumbuhan.last_update
+      this.dateH1 = moment(lastUpdate).subtract(1, 'days').locale('id').format('DD MMMM YYYY')
     }
   },
   created () {
-    this.dateNow = moment(new Date()).locale('id').format('DD MMMM YYYY')
+    this.dateH1 = moment(new Date()).locale('id').format('DD MMMM YYYY')
   },
   mounted () {
     this.getDataSebaranPertumbuhan(this.activeRegionCategory, this.activeRegionId)
@@ -493,6 +499,7 @@ export default {
       }
     },
     onClickSort (field) {
+      console.log(this.metadataSebaranPertumbuhan)
       const currentSorting = this.currentSorting
       let sorting = 'desc'
       if (this.currentSorting[field] === 'desc') {
