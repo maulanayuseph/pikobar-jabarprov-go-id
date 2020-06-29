@@ -196,7 +196,7 @@ import _get from 'lodash/get'
 import _round from 'lodash/round'
 import CounterCardLoader from './CounterCardLoader'
 import StatisticLoader from './StatisticLoader'
-import { formatNumber, formatNumberPlusMinus } from '~/lib/number'
+import { formatNumber, formatNumberPlusMinus, formatNumberOnlyPlus } from '~/lib/number'
 
 export default {
   components: {
@@ -269,6 +269,7 @@ export default {
     _round,
     formatNumber,
     formatNumberPlusMinus,
+    formatNumberOnlyPlus,
     fetchDataRekapitulasiJabarKumulatifProv () {
       const self = this
       axios
@@ -276,9 +277,15 @@ export default {
         .then(function (response) {
           self.jsonDataRekapitulasiJabarKumulatifProv = response.data.data.content
           const numArr = self.jsonDataRekapitulasiJabarKumulatifProv.length
-          self.pertumbuhan.jabarPositif = self.jsonDataRekapitulasiJabarKumulatifProv[numArr - 1].positif - self.jsonDataRekapitulasiJabarKumulatifProv[numArr - 2].positif
-          self.pertumbuhan.jabarSembuh = self.jsonDataRekapitulasiJabarKumulatifProv[numArr - 1].sembuh - self.jsonDataRekapitulasiJabarKumulatifProv[numArr - 2].sembuh
-          self.pertumbuhan.jabarMeninggal = self.jsonDataRekapitulasiJabarKumulatifProv[numArr - 1].meninggal - self.jsonDataRekapitulasiJabarKumulatifProv[numArr - 2].meninggal
+          if (self.jsonDataRekapitulasiJabarKumulatifProv[numArr - 1].positif !== null && self.jsonDataRekapitulasiJabarKumulatifProv[numArr - 1].positif > 0) {
+            self.pertumbuhan.jabarPositif = self.jsonDataRekapitulasiJabarKumulatifProv[numArr - 1].positif - self.jsonDataRekapitulasiJabarKumulatifProv[numArr - 2].positif
+            self.pertumbuhan.jabarSembuh = self.jsonDataRekapitulasiJabarKumulatifProv[numArr - 1].sembuh - self.jsonDataRekapitulasiJabarKumulatifProv[numArr - 2].sembuh
+            self.pertumbuhan.jabarMeninggal = self.jsonDataRekapitulasiJabarKumulatifProv[numArr - 1].meninggal - self.jsonDataRekapitulasiJabarKumulatifProv[numArr - 2].meninggal
+          } else {
+            self.pertumbuhan.jabarPositif = self.jsonDataRekapitulasiJabarKumulatifProv[numArr - 2].positif - self.jsonDataRekapitulasiJabarKumulatifProv[numArr - 3].positif
+            self.pertumbuhan.jabarSembuh = self.jsonDataRekapitulasiJabarKumulatifProv[numArr - 2].sembuh - self.jsonDataRekapitulasiJabarKumulatifProv[numArr - 3].sembuh
+            self.pertumbuhan.jabarMeninggal = self.jsonDataRekapitulasiJabarKumulatifProv[numArr - 2].meninggal - self.jsonDataRekapitulasiJabarKumulatifProv[numArr - 3].meninggal
+          }
         })
         .catch(function (error) {
           console.log(error)

@@ -81,7 +81,7 @@ export default {
         'Positif - Sembuh',
         'Positif - Meninggal'
       ],
-      optionSelected: 'Positif - Aktif',
+      optionSelected: 'Positif - Sembuh',
       jsonDataRekapitulasiJabar: {
         kode_prov: '',
         nama_prov: '',
@@ -145,7 +145,7 @@ export default {
     // }
     dataRekapitulasiJabarProv (val) {
       this.jsonDataRekapitulasiJabar = val
-      this.changeGroupJenisKelamin('Positif - Aktif')
+      this.changeGroupJenisKelamin('Positif - Sembuh')
     }
   },
   methods: {

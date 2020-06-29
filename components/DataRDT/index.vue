@@ -130,7 +130,7 @@ export default {
     // }
     dataRekapitulasiJabarProv (val) {
       this.data.rdt = val.rdt
-      this.date_update = moment(this.data.rdt.tanggal, 'DD/MM/YYYY').lang('id').format('dddd, DD MMM YYYY')
+      this.date_update = moment(this.data.rdt.tanggal, 'DD/MM/YYYY').locale('id').format('dddd, DD MMM YYYY')
       this.countPersentage()
     }
   },

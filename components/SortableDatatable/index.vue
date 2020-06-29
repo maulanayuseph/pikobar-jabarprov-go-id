@@ -57,6 +57,9 @@
               Nama Kota / Kabupaten
               <font-awesome-icon :icon="getSortIcon('nama')" />
             </th>
+            <th v-if="statCategory === 'Terkonfirmasi'" colspan="3" class="px-2 py-1 hover:opacity-75" style="background-color: #4b56b2; color: #ffffff;">
+              Terkonfirmasi
+            </th>
             <th v-if="statCategory === 'Terkonfirmasi'" colspan="3" class="px-2 py-1 hover:opacity-75" style="background-color: #FF4A4B; color: #ffffff;">
               Positif Aktif
             </th>
@@ -106,7 +109,7 @@
                     :key="index"
                     ref="tableHeaders"
                     class="px-2 py-1 hover:opacity-75"
-                    style="padding-left: 0.5em !important; width: 9%;"
+                    style="padding-left: 0.5em !important; width: 250px;"
                     :style="{backgroundColor: col.backgroundColor || '', color: col.textColor || ''}"
                     @click="onClickTableHeader(col.field)"
                   >
@@ -138,6 +141,64 @@
                       </span>
                     </p>
                   </th>
+                </template>
+              </template>
+            </template>
+          </tr>
+          <tr>
+            <template v-for="(col, index) in data2.columns">
+              <template v-if="index === 0">
+                <td
+                  v-if="statCategory === col.category || 'kota' === col.category"
+                  :key="index"
+                  ref="tableHeaders"
+                  class="px-2 py-1 hover:opacity-75 border-b border-solid px-2 py-1 textright textleft"
+                  style="padding-left: 1.5em !important; width: 19%;"
+                >
+                  <p class="pointer-events-none flex justify-between items-center" style="float: right;">
+                    <span
+                      v-if="index >= 1"
+                      class="textright"
+                    >
+                      <b>{{ col.total }}</b>
+                    </span>
+                  </p>
+                </td>
+              </template>
+              <template v-else>
+                <template v-if="statCategory === col.category ">
+                  <td
+                    :key="index"
+                    ref="tableHeaders"
+                    class="px-2 py-1 hover:opacity-75 border-b border-solid px-2 py-1 textright"
+                    style="padding-left: 0.5em !important; width: 250px;"
+                  >
+                    <p class="pointer-events-none flex justify-between items-center" style="float: right;">
+                      <span
+                        v-if="index >= 1"
+                        class="textright"
+                      >
+                        <b>{{ (Number(col.total)).toLocaleString('id-ID') }}</b>
+                      </span>
+                    </p>
+                  </td>
+                </template>
+                <template v-else-if="statCategory === col.category ">
+                  <td
+                    :key="index"
+                    ref="tableHeaders"
+                    class="px-2 py-1 hover:opacity-75 border-b border-solid px-2 py-1 textright"
+                    style="padding-left: 1.5em !important; width: 13.5%;"
+                  >
+                    <p class="pointer-events-none flex justify-between items-center" style="float: right;">
+                      <span
+                        v-if="index >= 1"
+                        class="textright"
+                      >
+                        <b>{{ (Number(col.total)).toLocaleString('id-ID') }}</b>
+                      </span>
+                    </p>
+                  </td>
                 </template>
               </template>
             </template>
@@ -205,27 +266,27 @@
                     class="border-b border-solid px-2 py-1 textright"
                     style="border-color: rgba(0,0,0,0.1); padding-left: 1.5em !important;"
                   >
-                    {{ getCellValue({row, column: col, rowIndex, columnIndex: colIndex}) }}
+                    {{ (getCellValue({row, column: col, rowIndex, columnIndex: colIndex})) }}
                   </td>
                 </template>
-                <template v-if="statCategory === 'Terkonfirmasi' && colIndex >= 1 && colIndex <=9">
+                <template v-if="statCategory === 'Terkonfirmasi' && colIndex >= 1 && colIndex <=12">
                   <td
                     :key="colIndex"
                     :class="{ textleft: colIndex==0 }"
                     class="border-b border-solid px-2 py-1 textright"
                     style="border-color: rgba(0,0,0,0.1); padding-left: 1.5em !important;"
                   >
-                    {{ getCellValue({row, column: col, rowIndex, columnIndex: colIndex}) }}
+                    {{ (getCellValue({row, column: col, rowIndex, columnIndex: colIndex})) }}
                   </td>
                 </template>
-                <template v-if="statCategory === 'ODP_PDP' && colIndex >= 10 && colIndex <=15">
+                <template v-if="statCategory === 'ODP_PDP' && colIndex >= 13 && colIndex <=18">
                   <td
                     :key="colIndex"
                     :class="{ textleft: colIndex==0 }"
                     class="border-b border-solid px-2 py-1 textright"
                     style="border-color: rgba(0,0,0,0.1); padding-left: 1.5em !important;"
                   >
-                    {{ getCellValue({row, column: col, rowIndex, columnIndex: colIndex}) }}
+                    {{ (getCellValue({row, column: col, rowIndex, columnIndex: colIndex})) }}
                   </td>
                 </template>
                 <!-- <template v-if="statCategory === 'PDP' && colIndex >= 16 && colIndex <=21">
@@ -377,6 +438,13 @@ export default {
     this.sortingOrder.push(['positif_aktif_total', 'down'])
   },
   methods: {
+    ifNegativeReturnZero (num) {
+      if (num < 0) {
+        return 0
+      } else {
+        return num
+      }
+    },
     getSortIcon (field) {
       try {
         const sortingType = this.currentSorting[field]
