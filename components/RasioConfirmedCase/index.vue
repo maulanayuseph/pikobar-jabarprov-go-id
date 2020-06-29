@@ -85,8 +85,11 @@ export default {
         cols: [
           { id: 'Kasus', label: 'Jumlah Kasus', type: 'string' },
           { id: 'Meninggal', label: 'Meninggal', type: 'number' },
+          { type: 'string', role: 'tooltip', p: { html: true } },
           { id: 'Sembuh', label: 'Sembuh', type: 'number' },
+          { type: 'string', role: 'tooltip', p: { html: true } },
           { id: 'Aktif', label: 'Aktif', type: 'number' },
+          { type: 'string', role: 'tooltip', p: { html: true } },
           { id: 'annot', type: 'string', role: 'annotation' }
         ],
         rows: []
@@ -152,7 +155,8 @@ export default {
         tooltip: {
           textStyle: {
             fontSize: 10
-          }
+          },
+          isHtml: true
         },
         annotations: {
           textStyle: {
@@ -209,12 +213,24 @@ export default {
       this.rowHeight = val.wilayah.length * 30
 
       sortedData.forEach((element) => {
+        const tooltip = `
+          <div class="p-3" style="font-size: 0.7rem; border-radius: 0.5rem; width: 8rem;">
+            <b>${element[nameApiRegion]}</b> <br>
+            Aktif : ${element.positif_aktif} <br>
+            Meninggal : ${element.positif_meninggal} <br>
+            Sembuh : ${element.positif_sembuh} <br>
+            Terkonfirmasi : ${element.positif_total} <br>
+          </div>
+        `
         const data = {
           c: [
             { v: '0', f: element[nameApiRegion] },
             { v: element.positif_meninggal, f: element.positif_meninggal },
+            { v: '', f: tooltip },
             { v: element.positif_sembuh, f: element.positif_sembuh },
+            { v: '', f: tooltip },
             { v: element.positif_aktif, f: element.positif_aktif },
+            { v: '', f: tooltip },
             { v: element.positif_total, f: element.positif_total }
           ]
         }

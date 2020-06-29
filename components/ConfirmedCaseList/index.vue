@@ -14,7 +14,6 @@
         secondary-color="#fff"
       >
         <rect
-          :key="1"
           x="0"
           :y="4"
           width="100%"
@@ -29,7 +28,7 @@
         <thead class="select-none">
           <tr>
             <th rowspan="2" class="px-2 py-1 hover:opacity-75" style="background-color: #EBEBEB; color: #5F5F5F; text-align: left; padding-left:20px;width: 19%" @click="onClickSort('region')">
-              Nama Kota / Kabupaten
+              Nama {{ parentLabel[activeRegionCategory].label }}
               <font-awesome-icon :icon="getSortIcon('region')" />
             </th>
             <th colspan="3" class="px-2 py-1 hover:opacity-75" style="background-color: #4b56b2; color: #ffffff;">
@@ -92,7 +91,7 @@
               </p>
             </th>
             <th
-              :key="0"
+              :key="3"
               ref="tableHeaders"
               class="px-2 py-1 hover:opacity-75"
               style="padding-left: 0.5em !important; width: 7%;"
@@ -107,7 +106,7 @@
               </p>
             </th>
             <th
-              :key="1"
+              :key="4"
               ref="tableHeaders"
               class="px-2 py-1 hover:opacity-75"
               style="padding-left: 0.5em !important; width: 6%;"
@@ -122,7 +121,7 @@
               </p>
             </th>
             <th
-              :key="2"
+              :key="5"
               ref="tableHeaders"
               class="px-2 py-1 hover:opacity-75"
               style="padding-left: 0.5em !important; width: 6%;"
@@ -137,7 +136,7 @@
               </p>
             </th>
             <th
-              :key="3"
+              :key="6"
               ref="tableHeaders"
               class="px-2 py-1 hover:opacity-75"
               style="padding-left: 0.5em !important; width: 7%;"
@@ -152,7 +151,7 @@
               </p>
             </th>
             <th
-              :key="4"
+              :key="7"
               ref="tableHeaders"
               class="px-2 py-1 hover:opacity-75"
               style="padding-left: 0.5em !important; width: 6%;"
@@ -167,7 +166,7 @@
               </p>
             </th>
             <th
-              :key="5"
+              :key="8"
               ref="tableHeaders"
               class="px-2 py-1 hover:opacity-75"
               style="padding-left: 0.5em !important; width: 6%;"
@@ -182,7 +181,7 @@
               </p>
             </th>
             <th
-              :key="6"
+              :key="9"
               ref="tableHeaders"
               class="px-2 py-1 hover:opacity-75"
               style="padding-left: 0.5em !important; width: 7%;"
@@ -197,7 +196,7 @@
               </p>
             </th>
             <th
-              :key="7"
+              :key="10"
               ref="tableHeaders"
               class="px-2 py-1 hover:opacity-75"
               style="padding-left: 0.5em !important; width: 6%;"
@@ -212,7 +211,7 @@
               </p>
             </th>
             <th
-              :key="8"
+              :key="11"
               ref="tableHeaders"
               class="px-2 py-1 hover:opacity-75"
               style="padding-left: 0.5em !important; width: 6%;"
@@ -381,6 +380,17 @@ export default {
         dieNow: 0,
         dieAverage: 0,
         dieTotal: 0
+      },
+      parentLabel: {
+        kota: {
+          label: 'Kota/Kabupaten'
+        },
+        kecamatan: {
+          label: 'Kecamatan'
+        },
+        kelurahan: {
+          label: 'Kelurahan/Desa'
+        }
       }
     }
   },
@@ -460,7 +470,7 @@ export default {
     }
   },
   created () {
-    this.dateNow = moment(new Date()).lang('id').format('DD MMMM YYYY')
+    this.dateNow = moment(new Date()).locale('id').format('DD MMMM YYYY')
   },
   mounted () {
     this.getDataSebaranPertumbuhan(this.activeRegionCategory, this.activeRegionId)
@@ -549,7 +559,7 @@ export default {
 
   .my-custom-scrollbar {
     position: relative;
-    height: 365px;
+    height: 565px;
     overflow-y: scroll;
   }
 </style>

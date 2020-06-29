@@ -29,7 +29,7 @@
         <thead class="select-none">
           <tr>
             <th rowspan="2" class="px-2 py-1 hover:opacity-75" style="background-color: #EBEBEB; color: #5F5F5F; text-align: left; padding-left:20px;width: 19%" @click="onClickSort('region')">
-              Nama Kota / Kabupaten
+              Nama {{ parentLabel[activeRegionCategory].label }}
               <font-awesome-icon :icon="getSortIcon('region')" />
             </th>
             <th colspan="3" class="px-2 py-1 hover:opacity-75" style="background-color: #009edc; color: #ffffff;">
@@ -236,7 +236,18 @@ export default {
         probableTotal: 0
       },
       dataCase: [],
-      dateNow: ''
+      dateNow: '',
+      parentLabel: {
+        kota: {
+          label: 'Kota/Kabupaten'
+        },
+        kecamatan: {
+          label: 'Kecamatan'
+        },
+        kelurahan: {
+          label: 'Kelurahan/Desa'
+        }
+      }
     }
   },
   computed: {
@@ -297,7 +308,7 @@ export default {
     }
   },
   created () {
-    this.dateNow = moment(new Date()).lang('id').format('DD MMMM YYYY')
+    this.dateNow = moment(new Date()).locale('id').format('DD MMMM YYYY')
   },
   mounted () {
     this.getDataSebaranPertumbuhan(this.activeRegionCategory, this.activeRegionId)
@@ -387,7 +398,7 @@ export default {
 
   .my-custom-scrollbar {
     position: relative;
-    height: 365px;
+    height: 565px;
     overflow-y: scroll;
   }
 </style>
