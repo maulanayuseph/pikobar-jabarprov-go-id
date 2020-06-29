@@ -29,7 +29,7 @@
         <thead class="select-none">
           <tr>
             <th rowspan="2" class="px-2 py-1 hover:opacity-75" style="background-color: #EBEBEB; color: #5F5F5F; text-align: left; padding-left:20px;width: 19%" @click="onClickSort('region')">
-              Nama Kota / Kabupaten
+              Nama {{ parentLabel[activeRegionCategory].label }}
               <font-awesome-icon :icon="getSortIcon('region')" />
             </th>
             <th colspan="3" class="px-2 py-1 hover:opacity-75" style="background-color: #009edc; color: #ffffff;">
@@ -50,7 +50,7 @@
             >
               <p class="pointer-events-none flex justify-between items-center" style="float: right;">
                 <span>
-                  {{ dateNow }}
+                  {{ dateH1 }}
                   <font-awesome-icon :icon="getSortIcon('suspectNow')" />
                 </span>
               </p>
@@ -95,7 +95,7 @@
             >
               <p class="pointer-events-none flex justify-between items-center" style="float: right;">
                 <span>
-                  {{ dateNow }}
+                  {{ dateH1 }}
                   <font-awesome-icon :icon="getSortIcon('probableNow')" />
                 </span>
               </p>
@@ -136,22 +136,22 @@
           <tr>
             <td class="table-col border-b border-solid px-2 py-1" />
             <td class="table-col border-b border-solid px-2 py-1 textright">
-              <b>{{ total.suspectNow }}</b>
+              <b>{{ total.suspectNow.toLocaleString('id') }}</b>
             </td>
             <td class="table-col border-b border-solid px-2 py-1 textright">
-              <b>{{ total.suspectAverage }}</b>
+              <b>{{ total.suspectAverage.toLocaleString('id') }}</b>
             </td>
             <td class="table-col border-b border-solid px-2 py-1 textright">
-              <b>{{ total.suspectTotal }}</b>
+              <b>{{ total.suspectTotal.toLocaleString('id') }}</b>
             </td>
             <td class="table-col border-b border-solid px-2 py-1 textright">
-              <b>{{ total.probableNow }}</b>
+              <b>{{ total.probableNow.toLocaleString('id') }}</b>
             </td>
             <td class="table-col border-b border-solid px-2 py-1 textright">
-              <b>{{ total.probableAverage }}</b>
+              <b>{{ total.probableAverage.toLocaleString('id') }}</b>
             </td>
             <td class="table-col border-b border-solid px-2 py-1 textright">
-              <b>{{ total.probableTotal }}</b>
+              <b>{{ total.probableTotal.toLocaleString('id') }}</b>
             </td>
           </tr>
           <tr v-for="(row, rowIndex) in dataCase" :key="rowIndex">
@@ -236,7 +236,18 @@ export default {
         probableTotal: 0
       },
       dataCase: [],
-      dateNow: ''
+      dateH1: '',
+      parentLabel: {
+        kota: {
+          label: 'Kota/Kabupaten'
+        },
+        kecamatan: {
+          label: 'Kecamatan'
+        },
+        kelurahan: {
+          label: 'Kelurahan/Desa'
+        }
+      }
     }
   },
   computed: {
@@ -245,6 +256,9 @@ export default {
     },
     isLoading () {
       return this.$store.getters['data-sebaran-pertumbuhan/isLoading']
+    },
+    metadataSebaranPertumbuhan () {
+      return this.$store.getters['data-sebaran-pertumbuhan/metadata']
     }
   },
   watch: {
@@ -294,10 +308,13 @@ export default {
 
       this.total = total
       this.dataCase = dataCase
+
+      const lastUpdate = this.metadataSebaranPertumbuhan.last_update
+      this.dateH1 = moment(lastUpdate).locale('id').format('DD MMMM YYYY')
     }
   },
   created () {
-    this.dateNow = moment(new Date()).lang('id').format('DD MMMM YYYY')
+    this.dateH1 = moment(new Date()).locale('id').format('DD MMMM YYYY')
   },
   mounted () {
     this.getDataSebaranPertumbuhan(this.activeRegionCategory, this.activeRegionId)
@@ -387,7 +404,7 @@ export default {
 
   .my-custom-scrollbar {
     position: relative;
-    height: 365px;
+    height: 565px;
     overflow-y: scroll;
   }
 </style>

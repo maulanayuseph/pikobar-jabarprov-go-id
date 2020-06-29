@@ -1,5 +1,11 @@
 <template>
   <div class="container mx-auto">
+    <br>
+    <header class="m-4 mb-8 md:m-8">
+      <h3 class="text-3xl text-gray-900 font-bold text-left leading-none" style="margin-bottom: 10px; ">
+        Sebaran Kasus Covid-19 di Jawa Barat
+      </h3>
+    </header>
     <section class="m-4 md:m-8">
       <div class="flex flex-col lg:flex-row lg:items-stretch">
         <div class="w-full mb-6 lg:w-3/5 lg:mr-6 lg:mb-0 bg-white rounded-lg mb-8 shadow-lg">

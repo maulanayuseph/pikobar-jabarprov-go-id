@@ -15,6 +15,9 @@ export const mutations = {
   },
   setIsLoading (state, item) {
     state.isLoading = item
+  },
+  setMetaData (state, item) {
+    state.metadata = item
   }
 }
 
@@ -37,6 +40,7 @@ export const actions = {
     })
     commit('setItem', data.data)
     commit('setIsLoading', false)
+    commit('setMetaData', data.metadata)
   }
 }
 
@@ -49,5 +53,8 @@ export const getters = {
   },
   isLoading (state) {
     return state.isLoading
+  },
+  metadata (state) {
+    return state.metadata
   }
 }

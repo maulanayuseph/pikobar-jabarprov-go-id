@@ -466,16 +466,18 @@ export default {
           const latitude = element.latitude
           const longitude = element.longitude
 
-          const marker = this.$L.marker([latitude, longitude], {
-            icon: new this.$L.DivIcon({
-              className: 'cluster ' + category.className + ' digits-2',
-              html: total
-            })
-          }).addTo(this.map)
-            .bindPopup('<b>Status:</b> ' + category.name +
-            '<br> <b>Jumlah:</b> ' + total +
-            '<br> <b>' + nameApiRegion + ':</b> ' + region)
-          this.dataLayer.push(marker)
+          if (latitude !== null) {
+            const marker = this.$L.marker([latitude, longitude], {
+              icon: new this.$L.DivIcon({
+                className: 'cluster ' + category.className + ' digits-2',
+                html: total
+              })
+            }).addTo(this.map)
+              .bindPopup('<b>Status:</b> ' + category.name +
+              '<br> <b>Jumlah:</b> ' + total +
+              '<br> <b>' + nameApiRegion + ':</b> ' + region)
+            this.dataLayer.push(marker)
+          }
         })
       }
     },

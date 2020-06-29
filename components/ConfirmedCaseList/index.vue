@@ -14,7 +14,6 @@
         secondary-color="#fff"
       >
         <rect
-          :key="1"
           x="0"
           :y="4"
           width="100%"
@@ -29,7 +28,7 @@
         <thead class="select-none">
           <tr>
             <th rowspan="2" class="px-2 py-1 hover:opacity-75" style="background-color: #EBEBEB; color: #5F5F5F; text-align: left; padding-left:20px;width: 19%" @click="onClickSort('region')">
-              Nama Kota / Kabupaten
+              Nama {{ parentLabel[activeRegionCategory].label }}
               <font-awesome-icon :icon="getSortIcon('region')" />
             </th>
             <th colspan="3" class="px-2 py-1 hover:opacity-75" style="background-color: #4b56b2; color: #ffffff;">
@@ -56,7 +55,7 @@
             >
               <p class="pointer-events-none flex justify-between items-center" style="float: right;">
                 <span>
-                  {{ dateNow }}
+                  {{ dateH1 }}
                   <font-awesome-icon :icon="getSortIcon('confirmedNow')" />
                 </span>
               </p>
@@ -92,7 +91,7 @@
               </p>
             </th>
             <th
-              :key="0"
+              :key="3"
               ref="tableHeaders"
               class="px-2 py-1 hover:opacity-75"
               style="padding-left: 0.5em !important; width: 7%;"
@@ -101,13 +100,13 @@
             >
               <p class="pointer-events-none flex justify-between items-center" style="float: right;">
                 <span>
-                  {{ dateNow }}
+                  {{ dateH1 }}
                   <font-awesome-icon :icon="getSortIcon('positiveNow')" />
                 </span>
               </p>
             </th>
             <th
-              :key="1"
+              :key="4"
               ref="tableHeaders"
               class="px-2 py-1 hover:opacity-75"
               style="padding-left: 0.5em !important; width: 6%;"
@@ -122,7 +121,7 @@
               </p>
             </th>
             <th
-              :key="2"
+              :key="5"
               ref="tableHeaders"
               class="px-2 py-1 hover:opacity-75"
               style="padding-left: 0.5em !important; width: 6%;"
@@ -137,7 +136,7 @@
               </p>
             </th>
             <th
-              :key="3"
+              :key="6"
               ref="tableHeaders"
               class="px-2 py-1 hover:opacity-75"
               style="padding-left: 0.5em !important; width: 7%;"
@@ -146,13 +145,13 @@
             >
               <p class="pointer-events-none flex justify-between items-center" style="float: right;">
                 <span>
-                  {{ dateNow }}
+                  {{ dateH1 }}
                   <font-awesome-icon :icon="getSortIcon('recoverNow')" />
                 </span>
               </p>
             </th>
             <th
-              :key="4"
+              :key="7"
               ref="tableHeaders"
               class="px-2 py-1 hover:opacity-75"
               style="padding-left: 0.5em !important; width: 6%;"
@@ -167,7 +166,7 @@
               </p>
             </th>
             <th
-              :key="5"
+              :key="8"
               ref="tableHeaders"
               class="px-2 py-1 hover:opacity-75"
               style="padding-left: 0.5em !important; width: 6%;"
@@ -182,7 +181,7 @@
               </p>
             </th>
             <th
-              :key="6"
+              :key="9"
               ref="tableHeaders"
               class="px-2 py-1 hover:opacity-75"
               style="padding-left: 0.5em !important; width: 7%;"
@@ -191,13 +190,13 @@
             >
               <p class="pointer-events-none flex justify-between items-center" style="float: right;">
                 <span>
-                  {{ dateNow }}
+                  {{ dateH1 }}
                   <font-awesome-icon :icon="getSortIcon('dieNow')" />
                 </span>
               </p>
             </th>
             <th
-              :key="7"
+              :key="10"
               ref="tableHeaders"
               class="px-2 py-1 hover:opacity-75"
               style="padding-left: 0.5em !important; width: 6%;"
@@ -212,7 +211,7 @@
               </p>
             </th>
             <th
-              :key="8"
+              :key="11"
               ref="tableHeaders"
               class="px-2 py-1 hover:opacity-75"
               style="padding-left: 0.5em !important; width: 6%;"
@@ -232,40 +231,40 @@
           <tr>
             <td class="table-col border-b border-solid px-2 py-1" />
             <td class="table-col border-b border-solid px-2 py-1 textright">
-              <b>{{ total.confirmedNow }}</b>
+              <b>{{ total.confirmedNow.toLocaleString('id') }}</b>
             </td>
             <td class="table-col border-b border-solid px-2 py-1 textright">
-              <b>{{ total.confirmedAverage }}</b>
+              <b>{{ total.confirmedAverage.toLocaleString('id') }}</b>
             </td>
             <td class="table-col border-b border-solid px-2 py-1 textright">
-              <b>{{ total.confirmedTotal }}</b>
+              <b>{{ total.confirmedTotal.toLocaleString('id') }}</b>
             </td>
             <td class="table-col border-b border-solid px-2 py-1 textright">
-              <b>{{ total.positiveNow }}</b>
+              <b>{{ total.positiveNow.toLocaleString('id') }}</b>
             </td>
             <td class="table-col border-b border-solid px-2 py-1 textright">
-              <b>{{ total.positiveAverage }}</b>
+              <b>{{ total.positiveAverage.toLocaleString('id') }}</b>
             </td>
             <td class="table-col border-b border-solid px-2 py-1 textright">
-              <b>{{ total.positiveTotal }}</b>
+              <b>{{ total.positiveTotal.toLocaleString('id') }}</b>
             </td>
             <td class="table-col border-b border-solid px-2 py-1 textright">
-              <b>{{ total.recoverNow }}</b>
+              <b>{{ total.recoverNow.toLocaleString('id') }}</b>
             </td>
             <td class="table-col border-b border-solid px-2 py-1 textright">
-              <b>{{ total.recoverAverage }}</b>
+              <b>{{ total.recoverAverage.toLocaleString('id') }}</b>
             </td>
             <td class="table-col border-b border-solid px-2 py-1 textright">
-              <b>{{ total.recoverTotal }}</b>
+              <b>{{ total.recoverTotal.toLocaleString('id') }}</b>
             </td>
             <td class="table-col border-b border-solid px-2 py-1 textright">
-              <b>{{ total.dieNow }}</b>
+              <b>{{ total.dieNow.toLocaleString('id') }}</b>
             </td>
             <td class="table-col border-b border-solid px-2 py-1 textright">
-              <b>{{ total.dieAverage }}</b>
+              <b>{{ total.dieAverage.toLocaleString('id') }}</b>
             </td>
             <td class="table-col border-b border-solid px-2 py-1 textright">
-              <b>{{ total.dieTotal }}</b>
+              <b>{{ total.dieTotal.toLocaleString('id') }}</b>
             </td>
           </tr>
           <tr v-for="(row, rowIndex) in dataCase" :key="rowIndex">
@@ -367,7 +366,7 @@ export default {
         dieTotal: 'none'
       },
       dataCase: [],
-      dateNow: '',
+      dateH1: '',
       total: {
         confirmedNow: 0,
         confirmedAverage: 0,
@@ -381,6 +380,17 @@ export default {
         dieNow: 0,
         dieAverage: 0,
         dieTotal: 0
+      },
+      parentLabel: {
+        kota: {
+          label: 'Kota/Kabupaten'
+        },
+        kecamatan: {
+          label: 'Kecamatan'
+        },
+        kelurahan: {
+          label: 'Kelurahan/Desa'
+        }
       }
     }
   },
@@ -390,6 +400,9 @@ export default {
     },
     isLoading () {
       return this.$store.getters['data-sebaran-pertumbuhan/isLoading']
+    },
+    metadataSebaranPertumbuhan () {
+      return this.$store.getters['data-sebaran-pertumbuhan/metadata']
     }
   },
   watch: {
@@ -457,10 +470,13 @@ export default {
 
       this.total = total
       this.dataCase = dataCase
+
+      const lastUpdate = this.metadataSebaranPertumbuhan.last_update
+      this.dateH1 = moment(lastUpdate).locale('id').format('DD MMMM YYYY')
     }
   },
   created () {
-    this.dateNow = moment(new Date()).lang('id').format('DD MMMM YYYY')
+    this.dateH1 = moment(new Date()).locale('id').format('DD MMMM YYYY')
   },
   mounted () {
     this.getDataSebaranPertumbuhan(this.activeRegionCategory, this.activeRegionId)
@@ -483,6 +499,7 @@ export default {
       }
     },
     onClickSort (field) {
+      console.log(this.metadataSebaranPertumbuhan)
       const currentSorting = this.currentSorting
       let sorting = 'desc'
       if (this.currentSorting[field] === 'desc') {
@@ -549,7 +566,7 @@ export default {
 
   .my-custom-scrollbar {
     position: relative;
-    height: 365px;
+    height: 565px;
     overflow-y: scroll;
   }
 </style>
