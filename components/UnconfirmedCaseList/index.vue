@@ -136,22 +136,22 @@
           <tr>
             <td class="table-col border-b border-solid px-2 py-1" />
             <td class="table-col border-b border-solid px-2 py-1 textright">
-              <b>{{ total.suspectNow }}</b>
+              <b>{{ total.suspectNow.toLocaleString('id') }}</b>
             </td>
             <td class="table-col border-b border-solid px-2 py-1 textright">
-              <b>{{ total.suspectAverage }}</b>
+              <b>{{ total.suspectAverage.toLocaleString('id') }}</b>
             </td>
             <td class="table-col border-b border-solid px-2 py-1 textright">
-              <b>{{ total.suspectTotal }}</b>
+              <b>{{ total.suspectTotal.toLocaleString('id') }}</b>
             </td>
             <td class="table-col border-b border-solid px-2 py-1 textright">
-              <b>{{ total.probableNow }}</b>
+              <b>{{ total.probableNow.toLocaleString('id') }}</b>
             </td>
             <td class="table-col border-b border-solid px-2 py-1 textright">
-              <b>{{ total.probableAverage }}</b>
+              <b>{{ total.probableAverage.toLocaleString('id') }}</b>
             </td>
             <td class="table-col border-b border-solid px-2 py-1 textright">
-              <b>{{ total.probableTotal }}</b>
+              <b>{{ total.probableTotal.toLocaleString('id') }}</b>
             </td>
           </tr>
           <tr v-for="(row, rowIndex) in dataCase" :key="rowIndex">

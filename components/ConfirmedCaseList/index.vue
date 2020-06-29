@@ -231,40 +231,40 @@
           <tr>
             <td class="table-col border-b border-solid px-2 py-1" />
             <td class="table-col border-b border-solid px-2 py-1 textright">
-              <b>{{ total.confirmedNow }}</b>
+              <b>{{ total.confirmedNow.toLocaleString('id') }}</b>
             </td>
             <td class="table-col border-b border-solid px-2 py-1 textright">
-              <b>{{ total.confirmedAverage }}</b>
+              <b>{{ total.confirmedAverage.toLocaleString('id') }}</b>
             </td>
             <td class="table-col border-b border-solid px-2 py-1 textright">
-              <b>{{ total.confirmedTotal }}</b>
+              <b>{{ total.confirmedTotal.toLocaleString('id') }}</b>
             </td>
             <td class="table-col border-b border-solid px-2 py-1 textright">
-              <b>{{ total.positiveNow }}</b>
+              <b>{{ total.positiveNow.toLocaleString('id') }}</b>
             </td>
             <td class="table-col border-b border-solid px-2 py-1 textright">
-              <b>{{ total.positiveAverage }}</b>
+              <b>{{ total.positiveAverage.toLocaleString('id') }}</b>
             </td>
             <td class="table-col border-b border-solid px-2 py-1 textright">
-              <b>{{ total.positiveTotal }}</b>
+              <b>{{ total.positiveTotal.toLocaleString('id') }}</b>
             </td>
             <td class="table-col border-b border-solid px-2 py-1 textright">
-              <b>{{ total.recoverNow }}</b>
+              <b>{{ total.recoverNow.toLocaleString('id') }}</b>
             </td>
             <td class="table-col border-b border-solid px-2 py-1 textright">
-              <b>{{ total.recoverAverage }}</b>
+              <b>{{ total.recoverAverage.toLocaleString('id') }}</b>
             </td>
             <td class="table-col border-b border-solid px-2 py-1 textright">
-              <b>{{ total.recoverTotal }}</b>
+              <b>{{ total.recoverTotal.toLocaleString('id') }}</b>
             </td>
             <td class="table-col border-b border-solid px-2 py-1 textright">
-              <b>{{ total.dieNow }}</b>
+              <b>{{ total.dieNow.toLocaleString('id') }}</b>
             </td>
             <td class="table-col border-b border-solid px-2 py-1 textright">
-              <b>{{ total.dieAverage }}</b>
+              <b>{{ total.dieAverage.toLocaleString('id') }}</b>
             </td>
             <td class="table-col border-b border-solid px-2 py-1 textright">
-              <b>{{ total.dieTotal }}</b>
+              <b>{{ total.dieTotal.toLocaleString('id') }}</b>
             </td>
           </tr>
           <tr v-for="(row, rowIndex) in dataCase" :key="rowIndex">
