@@ -179,6 +179,6 @@ export default {
 }
 </style>
 <style>
-  @import "leaflet-geosearch/assets/css/leaflet.css";
+  /* @import "leaflet-geosearch/assets/css/leaflet.css"; */
 
 </style>

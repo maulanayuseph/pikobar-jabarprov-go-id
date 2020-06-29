@@ -36,7 +36,7 @@
     <div class="container-map" :class="isLoading?'hidden':''">
       <div id="map-wrap-polygon">
         <button
-          class="btn-fullscreen btn btn-light mb-2"
+          class="btn-custom btn-fullscreen btn btn-light mb-2"
           style="background-color: white"
           @click="toggleFullscreen"
         >
@@ -50,7 +50,7 @@
       <div class="filter-layer">
         <div class="text-right">
           <button
-            class="btn btn-light"
+            class="btn-custom btn btn-light"
             style="background-color: white"
             @click="toggleBackToHome()"
           >
@@ -58,7 +58,7 @@
             <i class="fas fa-home cc-primary" style="color: black !important;" />
           </button><br>
           <button
-            class="btn btn-light mt-2"
+            class="btn-custom btn btn-light mt-2"
             style="background-color: white"
             @click="showFilter()"
           >
@@ -146,6 +146,7 @@
 <script>
 import { ContentLoader } from 'vue-content-loader'
 import { faFilter, faHome, faLayerGroup, faExpand, faCompress } from '@fortawesome/free-solid-svg-icons'
+// eslint-disable-next-line no-unused-vars
 import { GeoSearchControl, OpenStreetMapProvider } from 'leaflet-geosearch'
 import jsonKota from '@/assets/kotaV2.json'
 import jsonKecamatan from '@/assets/kecamatanV2.json'
@@ -265,15 +266,16 @@ export default {
       // add zoom control with your options
       this.$L.control
         .zoom({
-          position: 'bottomright'
+          position: 'bottomleft'
         })
         .addTo(this.map)
 
       // add search control
+      // eslint-disable-next-line no-unused-vars
       const searchProvider = new OpenStreetMapProvider()
       new GeoSearchControl({
         provider: searchProvider,
-        position: 'bottomright',
+        position: 'bottomleft',
         showMarker: true,
         autoClose: true,
         marker: {
@@ -458,6 +460,8 @@ export default {
         callback: this.onFullscreenChange
       })
     },
+    toggleSearch () {
+    },
     toggleBackToHome () {
       this.activeRegion = 'kota'
       this.activeParentCode = ''
@@ -605,7 +609,7 @@ export default {
   .filter-layer {
     position: absolute;
     top: 0px;
-    right: 10px;
+    right: 0px;
     padding-right: 1em;
       padding-top: 1em;
   }
@@ -637,11 +641,26 @@ export default {
   .btn-fullscreen {
     position: absolute;
     bottom: 0px;
-    left: 10px;
+    right: 10px;
     font-size: 1.3em;
     padding: 2px 6px;
     box-shadow: 0 1px 5px rgba(0,0,0,0.65);
     z-index: 401;
+  }
+
+  .btn-search {
+    position: absolute;
+    bottom: 40px;
+    right: 10px;
+    font-size: 1.3em;
+    padding: 2px 6px;
+    box-shadow: 0 1px 5px rgba(0,0,0,0.65);
+    z-index: 401;
+  }
+  .btn-custom {
+    width: 1.7rem;
+    height: 1.7rem;
+    border-radius: 0.3rem;
   }
 
   .cluster-odp-proses {
@@ -704,7 +723,196 @@ export default {
     color: #ffffff;
   }
 
-  .leaflet-top .leaflet-control-geosearch.bar,
+  .legend-color {
+      width: 1em;
+      height: 1em;
+      float: left;
+      border-radius: 10px;
+      margin-top: 4px;
+  }
+  .legend-data {
+    background: rgb(255,255,2555);
+    margin-top: 0.5em;
+    padding: 0.6em;
+    /* border-radius: 0.6em; */
+    /* box-shadow: 0 1px 5px rgba(0,0,0,0.65); */
+    line-height: 18px;
+    color: #252525;
+  }
+
+  .legend-data ul {
+    list-style: none;
+    margin-bottom: 0px;
+  }
+
+  .legend-data li {
+    padding: 3px;
+  }
+
+</style>
+
+<style>
+  .legend-data-box {
+    width: 13px;
+    height: 13px;
+    float: left;
+    margin-right: 8px;
+    border: #000 1px solid;
+  }
+
+  /*  ========== GEOSEARCH CONTROL ===============*/
+  /* global styling */
+.leaflet-control-geosearch *,
+.leaflet-control-geosearch *:before,
+.leaflet-control-geosearch *:after {
+  box-sizing: border-box;
+}
+
+/* leaflet button styling */
+.leaflet-control-geosearch .leaflet-bar-part {
+  border-radius: 4px;
+  border-bottom: none;
+}
+
+.leaflet-control-geosearch a.leaflet-bar-part:before,
+.leaflet-control-geosearch a.leaflet-bar-part:after {
+  position: absolute;
+  display: block;
+  content: '';
+}
+
+/* magnifying glass */
+.leaflet-control-geosearch a.leaflet-bar-part:before {
+  top: 19px;
+  left: 16px;
+  width: 8px;
+  border-top: 2px solid #555;
+  transform: rotateZ(45deg);
+}
+
+.leaflet-control-geosearch a.leaflet-bar-part:after {
+  top: 6px;
+  left: 6px;
+  height: 14px;
+  width: 14px;
+  border-radius: 50%;
+  border: 2px solid #555;
+}
+
+/* resets for pending and error icons */
+.leaflet-control-geosearch.error a.leaflet-bar-part:before,
+.leaflet-control-geosearch.pending a.leaflet-bar-part:before {
+  display: none;
+}
+
+.leaflet-control-geosearch.pending a.leaflet-bar-part:after,
+.leaflet-control-geosearch.error a.leaflet-bar-part:after {
+  left: 50%;
+  top: 50%;
+  width: 18px;
+  height: 18px;
+  margin: -9px 0 0 -9px;
+  border-radius: 50%;
+}
+
+/* pending icon */
+.leaflet-control-geosearch.pending a.leaflet-bar-part:after {
+  content: '';
+  border: 2px solid #555;
+  border-top: 2px solid #f3f3f3;
+  animation: spin 1s linear infinite;
+}
+
+/* error icon */
+.leaflet-control-geosearch.error a.leaflet-bar-part:after {
+  content: '!';
+  line-height: initial;
+  font-weight: 600;
+  font-size: 18px;
+  border: none;
+}
+
+/* search form styling */
+.leaflet-control-geosearch form {
+  display: none;
+  position: absolute;
+  top: -2px;
+  left: 28px;
+  border-radius: 0 4px 4px 0;
+  border: 2px solid rgba(0, 0, 0, 0.2);
+  border-left: none;
+  background-color: #fff;
+  background-clip: padding-box;
+  z-index: -1;
+  height: auto;
+  margin: 0;
+  padding: 0 8px;
+}
+
+.leaflet-control-geosearch.active form {
+  display: block;
+}
+
+.leaflet-control-geosearch form input {
+  min-width: 200px;
+  width: 100%;
+  border: none;
+  outline: none;
+  margin: 0;
+  padding: 0;
+  font-size: 12px;
+  height: 30px;
+  border-radius: 0 4px 4px 0;
+  text-indent: 8px;
+}
+
+.leaflet-control-geosearch .results {
+  background: #fff;
+}
+
+.leaflet-control-geosearch .results > * {
+  line-height: 24px;
+  padding: 0 8px;
+  border: 1px solid transparent;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.leaflet-control-geosearch .results.active {
+  padding: 8px 0;
+  border-top: 1px solid #c6c6c6;
+  height: 60px;
+  overflow: auto;
+}
+
+.leaflet-control-geosearch .results > .active,
+.leaflet-control-geosearch .results > :hover {
+  background-color: #f8f8f8;
+  border-color: #c6c6c6;
+  cursor: pointer;
+}
+
+/* add missing border to form */
+.leaflet-control-geosearch .results.active:after {
+  content: '';
+  display: block;
+  width: 0;
+  border-left: 2px solid rgba(0, 0, 0, .2);
+  position: absolute;
+  left: -2px;
+  bottom: -2px;
+  top: 30px;
+}
+
+/* animations */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.leaflet-top .leaflet-control-geosearch.bar,
 .leaflet-bottom .leaflet-control-geosearch.bar {
   display: none;
 }
@@ -760,40 +968,4 @@ export default {
   background: #f5f5f5;
 }
 
-.legend-color {
-    width: 1em;
-    height: 1em;
-    float: left;
-    border-radius: 10px;
-    margin-top: 4px;
-}
-.legend-data {
-  background: rgb(255,255,2555);
-  margin-top: 0.5em;
-  padding: 0.6em;
-  /* border-radius: 0.6em; */
-  /* box-shadow: 0 1px 5px rgba(0,0,0,0.65); */
-  line-height: 18px;
-  color: #252525;
-}
-
-.legend-data ul {
-  list-style: none;
-  margin-bottom: 0px;
-}
-
-.legend-data li {
-  padding: 3px;
-}
-
-</style>
-
-<style>
-  .legend-data-box {
-    width: 13px;
-    height: 13px;
-    float: left;
-    margin-right: 8px;
-    border: #000 1px solid;
-  }
 </style>
