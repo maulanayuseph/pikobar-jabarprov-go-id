@@ -28,7 +28,7 @@
         />
       </ContentLoader>
     </div>
-    <div :class="isLoading?'hidden':''">
+    <div :class="isLoading?'hide-chart':''">
       <p class="p-3 text-sm sm:text">
         Data yang ditampilkan berdasarkan: <b>{{ parentLabel[activeRegionCategory].label }} di {{ activeParentRegionName }}</b>
       </p>
@@ -243,6 +243,7 @@ export default {
         }
         rows.push(data)
       })
+
       this.chartData.rows = rows
     }
   },
@@ -269,5 +270,10 @@ export default {
     overflow-y: auto;
     overflow-x: hidden;
     height: 600px;
+  }
+  .hide-chart {
+    width: 0;
+    height: 0;
+    opacity: 0;
   }
 </style>
