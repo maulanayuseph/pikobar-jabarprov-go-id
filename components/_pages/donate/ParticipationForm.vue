@@ -229,7 +229,7 @@
       <hr class="mb-8">
       <client-only>
         <vue-recaptcha
-          v-if="false"
+          
           ref="invisibleRecaptcha"
           :load-recaptcha-script="true"
           size="invisible"
@@ -417,8 +417,7 @@ export default {
       if (this.hasAtLeastOneError) {
         return
       }
-      this.onVerify()
-      // this.onSubmit()
+      this.onSubmit()
     },
     onSubmit () {
       Swal.fire({
