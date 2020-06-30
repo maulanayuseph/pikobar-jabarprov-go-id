@@ -240,10 +240,14 @@
         />
       </client-only>
       <button
-        :disabled="documentFile && $store.state.donate.selectedLogistics.length ? false : true"
+        :disabled="!(documentFile && (!!$store.state.donate.selectedLogistics.length || !!provisionsOther.length))"
         type="submit"
         class="text-white rounded-lg px-6 py-2"
-        :class="[documentFile && $store.state.donate.selectedLogistics.length ? 'bg-brand-green' : 'bg-gray-400 cursor-not-allowed']"
+        :class="[
+          documentFile && ($store.state.donate.selectedLogistics.length || provisionsOther.length)
+            ? 'bg-brand-green'
+            : 'bg-gray-400 cursor-not-allowed'
+        ]"
       >
         Kirim
       </button>
