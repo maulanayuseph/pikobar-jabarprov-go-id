@@ -135,6 +135,9 @@
           </li>
         </div>
       </div>
+      <div class="hint-map mt-2 p-2 text-center text-sm font-bold">
+        Lakukan klik dua kali pada peta untuk memperdalam wilayah peta
+      </div>
       <div class="legend-data info-legend p-3">
         <!-- eslint-disable-next-line vue/no-v-html -->
         <div class="mb-1" v-html="infolegend" />
@@ -747,6 +750,10 @@ export default {
 
   .legend-data li {
     padding: 3px;
+  }
+
+  .hint-map {
+    background-color: #eaeab8;
   }
 
 </style>
