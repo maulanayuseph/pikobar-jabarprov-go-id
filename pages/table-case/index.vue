@@ -290,7 +290,7 @@ export default {
               pertumbuhan_sembuh: 0,
               pertumbuhan_meninggal: 0,
             }
-            if (i < 27) {
+            if (i < 28) {
               temp2.pertumbuhan_odp = temp[i].odp
               temp2.pertumbuhan_odp_selesai = temp[i].odp_selesai
               temp2.pertumbuhan_odp_proses = temp[i].odp_proses
@@ -301,15 +301,15 @@ export default {
               temp2.pertumbuhan_sembuh = temp[i].sembuh
               temp2.pertumbuhan_meninggal = temp[i].meninggal
             } else {
-              temp2.pertumbuhan_odp = temp[i].odp - temp[i-27].odp
-              temp2.pertumbuhan_odp_selesai = temp[i].odp_selesai - temp[i-27].odp_selesai
-              temp2.pertumbuhan_odp_proses = temp[i].odp_proses - temp[i-27].odp_proses
-              temp2.pertumbuhan_pdp = temp[i].pdp - temp[i-27].pdp
-              temp2.pertumbuhan_pdp_selesai = temp[i].pdp_selesai - temp[i-27].pdp_selesai
-              temp2.pertumbuhan_pdp_proses = temp[i].pdp_proses - temp[i-27].pdp_proses
-              temp2.pertumbuhan_positif = temp[i].positif - temp[i-27].positif
-              temp2.pertumbuhan_sembuh = temp[i].sembuh - temp[i-27].sembuh
-              temp2.pertumbuhan_meninggal = temp[i].meninggal - temp[i-27].meninggal
+              temp2.pertumbuhan_odp = temp[i].odp - temp[i-28].odp
+              temp2.pertumbuhan_odp_selesai = temp[i].odp_selesai - temp[i-28].odp_selesai
+              temp2.pertumbuhan_odp_proses = temp[i].odp_proses - temp[i-28].odp_proses
+              temp2.pertumbuhan_pdp = temp[i].pdp - temp[i-28].pdp
+              temp2.pertumbuhan_pdp_selesai = temp[i].pdp_selesai - temp[i-28].pdp_selesai
+              temp2.pertumbuhan_pdp_proses = temp[i].pdp_proses - temp[i-28].pdp_proses
+              temp2.pertumbuhan_positif = temp[i].positif - temp[i-28].positif
+              temp2.pertumbuhan_sembuh = temp[i].sembuh - temp[i-28].sembuh
+              temp2.pertumbuhan_meninggal = temp[i].meninggal - temp[i-28].meninggal
             }
             self.jsonDataRekapitulasiJabarKumulatifKab.push({...temp[i], ...temp2})
           }

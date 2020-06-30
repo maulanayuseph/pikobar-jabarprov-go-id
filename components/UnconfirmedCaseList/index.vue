@@ -310,7 +310,7 @@ export default {
       this.dataCase = dataCase
 
       const lastUpdate = this.metadataSebaranPertumbuhan.last_update
-      this.dateH1 = moment(lastUpdate).subtract(1, 'days').locale('id').format('DD MMMM YYYY')
+      this.dateH1 = moment(lastUpdate).locale('id').format('DD MMMM YYYY')
     }
   },
   created () {
