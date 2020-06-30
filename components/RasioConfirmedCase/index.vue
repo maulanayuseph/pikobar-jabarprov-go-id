@@ -34,12 +34,14 @@
       </p>
       <div class="p-3">
         <GChart
+          id="chart_div"
           class="chart-area"
           :settings="{packages: ['corechart']}"
           :data="chartData"
           :options="chartOptions"
           :create-chart="(el, google) => {
-            return new google.visualization.BarChart(el)
+            let chart = new google.visualization.BarChart(el)
+            return chart
           }"
           @ready="onChartReady"
         />
@@ -128,7 +130,12 @@ export default {
         legend: {
           position: 'bottom',
           textStyle: {
-            fontSize: 12
+            fontName: 'Arial',
+            fontSize: 12,
+            // The color of the text.
+            // The color of the text outline.
+            // The transparency of the text.
+            opacity: 1
           }
         },
         bar: { groupWidth: '50%' },
@@ -236,7 +243,6 @@ export default {
         }
         rows.push(data)
       })
-
       this.chartData.rows = rows
     }
   },
@@ -244,9 +250,15 @@ export default {
     onChartReady (chart, google) {
       this.chartsLib = google
       const data = new google.visualization.DataTable(this.chartData)
-      const view = new google.visualization.DataView(data)
-
-      return chart.draw(view)
+      // const view = new google.visualization.DataView(data)
+      google.charts.load('current', {
+        packages: ['corechart']
+      }).then(() => {
+        const container = document.getElementById('chart_div')
+        const chart = new google.charts.Bar(container)
+        return chart.draw(data, google.charts.Bar.convertOptions(this.chartOptions))
+      })
+      // return chart.draw(view)
     }
   }
 }
