@@ -87,7 +87,6 @@ export default {
     return {
       titleCase: 'Rasio Kasus Terkonfirmasi',
       chartsLib: null,
-      // Array will be automatically processed with visualization.arrayToDataTable function
       chartData: {
         cols: [
           { id: 'Kasus', label: 'Jumlah Kasus', type: 'string' },
