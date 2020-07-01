@@ -207,6 +207,10 @@ export default {
     activeRegionCategory: {
       type: String,
       default: 'kota'
+    },
+    activeCaseCategory: {
+      type: String,
+      default: 'positif_aktif'
     }
   },
   data () {
@@ -564,6 +568,7 @@ export default {
       this.getDataSebaranPolygon(this.activeRegion, this.activeDataCategory, this.activeParentCode)
       this.getDataSebaranMarkerCluster(this.activeRegion, this.activeDataCategory, this.activeParentCode)
       this.createPolygonRegion()
+      this.$emit('update:activeCaseCategory', category)
     },
     findCategory (category) {
       let classMarker = ''

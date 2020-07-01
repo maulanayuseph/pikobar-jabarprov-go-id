@@ -1,7 +1,7 @@
 <template>
   <div>
     <h3 class="p-5 text-lg md:text">
-      <b>Rasio Kasus Terkonfirmasi</b>
+      <b>{{ titleCase }}</b>
     </h3>
     <hr>
     <div
@@ -72,15 +72,20 @@ export default {
     },
     activeRegionCategory: {
       type: String,
-      default: '32'
+      default: 'kota'
     },
     activeParentRegionName: {
       type: String,
-      default: '32'
+      default: ''
+    },
+    activeCaseCategory: {
+      type: String,
+      default: 'positif_aktif'
     }
   },
   data () {
     return {
+      titleCase: 'Rasio Kasus Terkonfirmasi',
       chartsLib: null,
       // Array will be automatically processed with visualization.arrayToDataTable function
       chartData: {
@@ -195,10 +200,22 @@ export default {
     }
   },
   watch: {
-    activeRegionId (newVal, oldVal) { // watch it
-      // console.log('Prop changed: ', newVal, ' | was: ', oldVal)
+    activeRegionId (newVal, oldVal) {
     },
     dataSebaranPolygon (val) {
+      let category = this.activeCaseCategory
+      category = category.split('_')
+      this.setChartData(val, category[0])
+    }
+  },
+  methods: {
+    onChartReady (chart, google) {
+      this.chartsLib = google
+      const data = new google.visualization.DataTable(this.chartData)
+      const view = new google.visualization.DataView(data)
+      return chart.draw(view)
+    },
+    setChartData (data, category) {
       let nameApiRegion = 'nama_kab'
       const rows = []
       let sortedData = []
@@ -212,54 +229,136 @@ export default {
       }
 
       sortedData = _orderBy(
-        val.wilayah,
-        ['positif_total'],
+        data.wilayah,
+        [category + '_total'],
         ['desc']
       )
 
-      this.rowHeight = val.wilayah.length * 30
-
+      this.rowHeight = data.wilayah.length * 30
       sortedData.forEach((element) => {
-        const tooltip = `
-          <div class="p-3" style="font-size: 0.7rem; border-radius: 0.5rem; width: 8rem;">
-            <b>${element[nameApiRegion]}</b> <br>
-            Aktif : ${element.positif_aktif} <br>
-            Meninggal : ${element.positif_meninggal} <br>
-            Sembuh : ${element.positif_sembuh} <br>
-            Terkonfirmasi : ${element.positif_total} <br>
-          </div>
-        `
-        const data = {
-          c: [
-            { v: '0', f: element[nameApiRegion] },
-            { v: element.positif_meninggal, f: element.positif_meninggal },
-            { v: '', f: tooltip },
-            { v: element.positif_sembuh, f: element.positif_sembuh },
-            { v: '', f: tooltip },
-            { v: element.positif_aktif, f: element.positif_aktif },
-            { v: '', f: tooltip },
-            { v: element.positif_total, f: element.positif_total }
-          ]
-        }
+        const data = this.setData(element, category, nameApiRegion)
         rows.push(data)
       })
 
+      this.setColorSeries(category)
+      this.setCols(category)
       this.chartData.rows = rows
-    }
-  },
-  methods: {
-    onChartReady (chart, google) {
-      this.chartsLib = google
-      const data = new google.visualization.DataTable(this.chartData)
-      // const view = new google.visualization.DataView(data)
-      google.charts.load('current', {
-        packages: ['corechart']
-      }).then(() => {
-        const container = document.getElementById('chart_div')
-        const chart = new google.charts.Bar(container)
-        return chart.draw(data, google.charts.Bar.convertOptions(this.chartOptions))
-      })
-      // return chart.draw(view)
+    },
+    setData (el, category, nameApiRegion) {
+      let tooltip = ''
+      let data = ''
+      if (category === 'pdp') {
+        this.titleCase = 'Rasio Kasus PDP'
+        tooltip = `
+        <div class="p-3" style="font-size: 0.7rem; border-radius: 0.5rem; width: 8rem;">
+          <b>${el[nameApiRegion]}</b> <br>
+          Meninggal : ${el.pdp_meninggal} <br>
+          Selesai : ${el.pdp_selesai} <br>
+          Proses : ${el.pdp_aktif} <br>
+          Total : ${el.pdp_total} <br>
+        </div>
+        `
+        data = {
+          c: [
+            { v: '0', f: el[nameApiRegion] },
+            { v: el.pdp_meninggal, f: el.pdp_meninggal },
+            { v: '', f: tooltip },
+            { v: el.pdp_selesai, f: el.pdp_selesai },
+            { v: '', f: tooltip },
+            { v: el.pdp_aktif, f: el.pdp_aktif },
+            { v: '', f: tooltip },
+            { v: el.pdp_total, f: el.pdp_total }
+          ]
+        }
+      } else if (category === 'odp') {
+        this.titleCase = 'Rasio Kasus ODP'
+        tooltip = `
+        <div class="p-3" style="font-size: 0.7rem; border-radius: 0.5rem; width: 8rem;">
+          <b>${el[nameApiRegion]}</b> <br>
+          Meninggal : ${el.odp_meninggal} <br>
+          Selesai : ${el.odp_selesai} <br>
+          Proses : ${el.odp_aktif} <br>
+          Total : ${el.odp_total} <br>
+        </div>
+        `
+        data = {
+          c: [
+            { v: '0', f: el[nameApiRegion] },
+            { v: el.odp_meninggal, f: el.odp_meninggal },
+            { v: '', f: tooltip },
+            { v: el.odp_selesai, f: el.odp_selesai },
+            { v: '', f: tooltip },
+            { v: el.odp_aktif, f: el.odp_aktif },
+            { v: '', f: tooltip },
+            { v: el.odp_total, f: el.odp_total }
+          ]
+        }
+      } else {
+        this.titleCase = 'Rasio Kasus Terkonfirmasi'
+        tooltip = `
+        <div class="p-3" style="font-size: 0.7rem; border-radius: 0.5rem; width: 8rem;">
+          <b>${el[nameApiRegion]}</b> <br>
+          Aktif : ${el.positif_aktif} <br>
+          Meninggal : ${el.positif_meninggal} <br>
+          Sembuh : ${el.positif_sembuh} <br>
+          Terkonfirmasi : ${el.positif_total} <br>
+        </div>
+        `
+        data = {
+          c: [
+            { v: '0', f: el[nameApiRegion] },
+            { v: el.positif_meninggal, f: el.positif_meninggal },
+            { v: '', f: tooltip },
+            { v: el.positif_sembuh, f: el.positif_sembuh },
+            { v: '', f: tooltip },
+            { v: el.positif_aktif, f: el.positif_aktif },
+            { v: '', f: tooltip },
+            { v: el.positif_total, f: el.positif_total }
+          ]
+        }
+      }
+
+      return data
+    },
+    setColorSeries (category) {
+      if (category === 'pdp') {
+        this.chartOptions.series[0].color = '#ae2929'
+        this.chartOptions.series[1].color = '#3bb46d'
+        this.chartOptions.series[2].color = '#f3ce5e'
+      } else if (category === 'odp') {
+        this.chartOptions.series[0].color = '#ae2929'
+        this.chartOptions.series[1].color = '#3bb46d'
+        this.chartOptions.series[2].color = '#42a6df'
+      } else {
+        this.chartOptions.series[0].color = '#a6241f'
+        this.chartOptions.series[1].color = '#3bb46d'
+        this.chartOptions.series[2].color = '#ef6464'
+      }
+    },
+    setCols (category) {
+      if (category === 'pdp' || category === 'odp') {
+        this.chartData.cols = [
+          { id: 'Kasus', label: 'Jumlah Kasus', type: 'string' },
+          { id: 'Meninggal', label: 'Meninggal', type: 'number' },
+          { type: 'string', role: 'tooltip', p: { html: true } },
+          { id: 'Proses', label: 'Selesai', type: 'number' },
+          { type: 'string', role: 'tooltip', p: { html: true } },
+          { id: 'Selesai', label: 'Proses', type: 'number' },
+          { type: 'string', role: 'tooltip', p: { html: true } },
+          { id: 'annot', type: 'string', role: 'annotation' }
+        ]
+      } else {
+        this.chartData.cols = [
+          { id: 'Kasus', label: 'Jumlah Kasus', type: 'string' },
+          { id: 'Meninggal', label: 'Meninggal', type: 'number' },
+          { type: 'string', role: 'tooltip', p: { html: true } },
+          { id: 'Sembuh', label: 'Sembuh', type: 'number' },
+          { type: 'string', role: 'tooltip', p: { html: true } },
+          { id: 'Aktif', label: 'Aktif', type: 'number' },
+          { type: 'string', role: 'tooltip', p: { html: true } },
+          { id: 'annot', type: 'string', role: 'annotation' }
+        ]
+      }
     }
   }
 }

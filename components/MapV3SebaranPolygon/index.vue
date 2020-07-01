@@ -170,7 +170,11 @@ export default {
     },
     activeParentRegionName: {
       type: String,
-      default: 'kota'
+      default: ''
+    },
+    activeCaseCategory: {
+      type: String,
+      default: 'positif_aktif'
     }
   },
   data () {
@@ -302,11 +306,11 @@ export default {
       if (featureProperties.bps_kecamatan_kode !== undefined) {
         this.activeRegion = 'kelurahan'
         keyParentRegion = 'bps_kecamatan_kode'
-        nameParentRegion = 'bps_kecamatan_nama'
+        nameParentRegion = 'kemendagri_kecamatan_nama'
       } else if (featureProperties.bps_kabupaten_kode !== undefined) {
         this.activeRegion = 'kecamatan'
         keyParentRegion = 'bps_kabupaten_kode'
-        nameParentRegion = 'bps_kabupaten_nama'
+        nameParentRegion = 'kemendagri_kabupaten_nama'
       }
       this.activeParentCode = featureProperties[keyParentRegion]
 
@@ -416,7 +420,7 @@ export default {
 
       if (dataSebaranPolygon.range !== undefined) {
         // create legend
-        const labels = ['<b>Jumlah Kasus: </b>', '<br>', '<ul style="display: flex; margin-top: 10px;">']
+        const labels = ['<b>Jumlah Kasus: </b>', '<br>', '<ul style="display: flex; margin-top: 10px;overflow-x:auto">']
 
         let region = ''
         switch (this.activeRegion) {
@@ -493,6 +497,7 @@ export default {
       this.removeLayer()
       this.getDataSebaranPolygon(this.activeRegion, this.activeDataCategory, this.activeParentCode)
       this.createPolygonRegion()
+      this.$emit('update:activeCaseCategory', category)
     },
     setTitle (category) {
       switch (category) {
