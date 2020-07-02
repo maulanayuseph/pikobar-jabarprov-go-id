@@ -11,11 +11,9 @@
       <DataSummary />
     </section>
     <section class="m-4 mb-8 md:m-8">
-      <!-- <DataRDT :props-data-rekapitulasi-jabar.sync="jsonDataRekapitulasiJabarProv" /> -->
       <DataRDT />
     </section>
     <section class="m-4 mb-8 md:m-8">
-      <!-- <DataPCR :props-data-rekapitulasi-jabar.sync="jsonDataRekapitulasiJabarProv" /> -->
       <DataPCR />
     </section>
     <section class="m-4 mb-8 md:m-8">
@@ -23,21 +21,11 @@
         <button
           class="button-selector m-1 w-full xl:w-auto "
           style="display: flex;"
-          :active="stat.isActivePolygon"
-          @click="enablePolygon"
+          :active="stat.isActiveHeatmap"
+          @click="enableHeatmap"
         >
-          <img v-if="stat.isActivePolygon" src="/img/icon-sebaran-active.svg" style="margin-top: 2px; margin-right:5px;">
-          <img v-if="!stat.isActivePolygon" src="/img/icon-sebaran-inactive.svg" style="margin-top: 2px; margin-right:5px;">
-          Sebaran Polygon
-        </button>
-        <button
-          class="button-selector m-1 w-full xl:w-auto "
-          style="display: flex;"
-          :active="stat.isActiveCluster"
-          @click="enableCluster"
-        >
-          <img v-if="stat.isActiveCluster" src="/img/icon-sebaran-active.svg" style="margin-top: 2px; margin-right:5px;">
-          <img v-if="!stat.isActiveCluster" src="/img/icon-sebaran-inactive.svg" style="margin-top: 2px; margin-right:5px;">
+          <img v-if="stat.isActiveHeatmap" src="/img/icon-sebaran-active.svg" style="margin-top: 2px; margin-right:5px;">
+          <img v-if="!stat.isActiveHeatmap" src="/img/icon-sebaran-inactive.svg" style="margin-top: 2px; margin-right:5px;">
           Sebaran Titik
         </button>
         <button
@@ -50,111 +38,45 @@
           <img v-if="!stat.isActiveFaskes" src="/img/icon-faskes-inactive.svg" style="margin-top: 2px; margin-right:5px;">
           Fasilitas Kesehatan
         </button>
-        <button
-          class="button-selector m-1 w-full xl:w-auto "
-          style="display: flex;"
-          :active="stat.isActiveTimeslider"
-          @click="enableTimeslider"
-        >
-          <img v-if="stat.isActiveTimeslider" src="/img/icon-data-positif-active.svg" style="margin-top: 2px; margin-right:5px;">
-          <img v-if="!stat.isActiveTimeslider" src="/img/icon-data-positif-inactive.svg" style="margin-top: 2px; margin-right:5px;">
-          Timeslider - Data Positif
-        </button>
       </div>
       <div class="mt-4">
-        <!-- <MapSebaranCovid v-if="stat.isActiveCovid" /> -->
-        <!-- <MapFaskes v-if="stat.isActiveRS" /> -->
-        <!-- <MapSebaranPolygon v-if="stat.isActivePolygon" /> -->
-        <!-- <MapV2SebaranPolygon
-          v-if="stat.isActivePolygon"
-          :props-data-sebaran-jawa-barat.sync="jsonDataSebaranJabar"
-        /> -->
-        <MapV2SebaranPolygon
-          v-if="stat.isActivePolygon"
-          activeId="map-area"
+        <MapSebaranHeatmap
+          v-if="stat.isActiveHeatmap"
+          :activeId="activeTabId"
         />
-        <!-- <MapV2SebaranCluster
-          v-if="stat.isActiveCluster"
-          :props-data-sebaran-jabar.sync="jsonDataSebaranJabar"
-        /> -->
-        <MapV2SebaranCluster
-          v-if="stat.isActiveCluster"
-        />
-        <!-- <MapV2SebaranFaskes
-          v-if="stat.isActiveFaskes"
-          :props-data-sebaran-jabar-faskes.sync="jsonDataSebaranJabarFaskes"
-        /> -->
         <MapV2SebaranFaskes
           v-if="stat.isActiveFaskes"
         />
-        <!-- <MapV2SebaranTimeslider
-          v-if="stat.isActiveTimeslider"
-          :props-data-sebaran-jabar.sync="jsonDataSebaranJabar"
-        /> -->
-        <MapV2SebaranTimeslider
-          v-if="stat.isActiveTimeslider"
-        />
       </div>
-      <!-- <div class="text-center md:self-center mb-8 xl:mt-8">
+      <div class="link-hover-warning rounded-lg border border-solid mt-5 p-5" style="background-color: #FBEADF; border-color: #FED1B1;">
         <a
           target="_blank"
-          class="px-4 py-2 font-bold text-lg text-brand-green-darker hover:text-brand-green-light"
+          class="px-4 py-2 font-bold text-lg"
           href="/distribution-case"
         >
-          Lihat Selengkapnya
-          <FontAwesomeIcon class="ml-2" :icon="faChevronRight" />
+          <FontAwesomeIcon class="ml-2 mr-2 warning" :style="{ color: '#FFA800' }" :icon="faInfo" />
+          Informasi lebih lengkap mengenai Sebaran COVID-19 di Jawa Barat
+          <FontAwesomeIcon class="ml-2 mr-2" :icon="faArrowRight" :style="{ float: 'right' }" />
         </a>
-      </div> -->
+      </div>
     </section>
 
-    <section class="m-4 mb-8 md:m-8">
-      <!-- <BarStatTable
-        :props-data-rekapitulasi-jabar-kab.sync="jsonDataRekapitulasiJabarKab"
-        :props-data-rekapitulasi-jabar-kumulatif-kab.sync="jsonDataRekapitulasiJabarKumulatifKab"
-      /> -->
+    <!-- <section class="m-4 mb-8 md:m-8">
       <BarStatTable />
-    </section>
+    </section> -->
 
     <section class="m-4 mb-8 md:m-8">
-      <!-- <BarStatArea
-        :props-data-rekapitulasi-jabar-prov.sync="jsonDataRekapitulasiJabarProv"
-        :props-data-rekapitulasi-jabar-kab.sync="jsonDataRekapitulasiJabarKab"
-        :props-data-rekapitulasi-jabar-harian-prov.sync="jsonDataRekapitulasiJabarHarianProv"
-        :props-data-rekapitulasi-jabar-harian-kab.sync="jsonDataRekapitulasiJabarHarianKab"
-        :props-data-rekapitulasi-jabar-kumulatif-prov.sync="jsonDataRekapitulasiJabarKumulatifProv"
-        :props-data-rekapitulasi-jabar-kumulatif-kab.sync="jsonDataRekapitulasiJabarKumulatifKab"
-        :props-data-nasional-harian-kumulatif.sync="jsonDataNasionalHarianKumulatif"
-      /> -->
-      <!-- <BarStatAreaSingleV2
-        :props-data-rekapitulasi-jabar-prov.sync="jsonDataRekapitulasiJabarProv"
-        :props-data-rekapitulasi-jabar-kab.sync="jsonDataRekapitulasiJabarKab"
-        :props-data-rekapitulasi-jabar-harian-prov.sync="jsonDataRekapitulasiJabarHarianProv"
-        :props-data-rekapitulasi-jabar-harian-kab.sync="jsonDataRekapitulasiJabarHarianKab"
-        :props-data-rekapitulasi-jabar-kumulatif-prov.sync="jsonDataRekapitulasiJabarKumulatifProv"
-        :props-data-rekapitulasi-jabar-kumulatif-kab.sync="jsonDataRekapitulasiJabarKumulatifKab"
-        :props-data-nasional-harian-kumulatif.sync="jsonDataNasionalHarianKumulatif"
-      /> -->
       <BarStatAreaSingleV2 />
     </section>
 
     <section class="m-4 mb-8 md:m-8">
       <div class="chart-container w-full">
-        <!-- <BarStatJenisKelamin :props-data-rekapitulasi-jabar.sync="jsonDataRekapitulasiJabarProv" /> -->
         <BarStatJenisKelamin />
-        <!-- <BarStatUsia :props-data-rekapitulasi-jabar.sync="jsonDataRekapitulasiJabarProv" /> -->
         <BarStatUsia />
       </div>
     </section>
 
     <section class="m-4 md:m-8">
-      <!-- <BarStatHarianAkumulatif
-        :props-data-rekapitulasi-jabar-harian-prov.sync="jsonDataRekapitulasiJabarHarianProv"
-        :props-data-rekapitulasi-jabar-kumulatif-prov.sync="jsonDataRekapitulasiJabarKumulatifProv"
-      /> -->
-      <!-- <BarStatHarianAkumulatifV2
-        :props-data-rekapitulasi-jabar-harian-prov.sync="jsonDataRekapitulasiJabarHarianProv"
-        :props-data-rekapitulasi-jabar-kumulatif-prov.sync="jsonDataRekapitulasiJabarKumulatifProv"
-      /> -->
       <BarStatHarianAkumulatifV2 />
     </section>
 
@@ -188,13 +110,17 @@
   box-shadow: 0 0 20px #6DD174;
   color: #6DD174;
 }
+.link-hover-warning:hover {
+  box-shadow: 0 0 10px #FED1B1;
+  text-decoration: underline;
+}
 </style>
 <script>
 /* eslint-disable */
 import axios from 'axios'
 import { mapState } from 'vuex'
 import DataSummary from '~/components/_pages/index/DataSummary'
-import { faFirstAid, faBug, faMap, faCalendarMinus, faArrowRight, faChevronRight } from '@fortawesome/free-solid-svg-icons'
+import { faFirstAid, faBug, faMap, faCalendarMinus, faArrowRight, faChevronRight, faInfo, faCircle } from '@fortawesome/free-solid-svg-icons'
 import { formatDateTimeShort } from '~/lib/date'
 import { analytics } from '~/lib/firebase'
 
@@ -203,39 +129,31 @@ export default {
     DataSummary,
     DataRDT: () => import('~/components/DataRDT'),
     DataPCR: () => import('~/components/DataPCR'),
-    // MapSebaranCovid: () => import('~/components/MapSebaranCovid'),
-    // MapSebaranPolygon: () => import('~/components/MapSebaranPolygon'),
-    // MapFaskes: () => import('~/components/MapFaskes'),
     BarStat: () => import('~/components/BarStat'),
     BarStatDetail: () => import('~/components/BarStatDetail'),
-    // BarStatArea: () => import('~/components/BarStatArea'),
-    // BarStatAreaSingle: () => import('~/components/BarStatAreaSingle'),
     BarStatAreaSingleV2: () => import('~/components/BarStatAreaSingleV2'),
     BarStatJenisKelamin: () => import('~/components/BarStatJenisKelamin'),
     BarStatUsia: () => import('~/components/BarStatUsia'),
-    // BarStatHarianAkumulatif: () => import('~/components/BarStatHarianAkumulatif'),
     BarStatHarianAkumulatifV2: () => import('~/components/BarStatHarianAkumulatifV2'),
     BarStatTable: () => import('~/components/BarStatTable'),
-    MapV2SebaranCluster: () => import('~/components/MapV2SebaranCluster'),
-    MapV2SebaranPolygon: () => import('~/components/MapV2SebaranPolygon'),
-    MapV2SebaranFaskes: () => import('~/components/MapV2SebaranFaskes'),
-    MapV2SebaranTimeslider: () => import('~/components/MapV2SebaranTimeslider')
-    // FontAwesomeIcon
+    MapSebaranHeatmap: () => import('~/components/MapSebaranHeatmap'),
+    MapV2SebaranFaskes: () => import('~/components/MapV2SebaranFaskes')
   },
   data () {
     return {
       stat: {
-        isActivePolygon: true,
-        isActiveCluster: false,
+        isActiveHeatmap: true,
         isActiveFaskes: false,
-        isActiveTimeslider: false
       },
+      activeTabId: 'map-kel',
       faFirstAid,
       faBug,
       faMap,
       faCalendarMinus,
       faArrowRight,
       faChevronRight,
+      faInfo,
+      faCircle,
 
       jsonDataRekapitulasiJabarProv: {},
       jsonDataRekapitulasiJabarKab: [],
@@ -271,17 +189,21 @@ export default {
   //   this.fetchDataSebaranJabar()
   // },
   mounted () {
-    this.$store.dispatch('data-nasional-harian/getItems')
-    this.$store.dispatch('data-rekapitulasi-jabar-harian-kab/getItems')
-    this.$store.dispatch('data-rekapitulasi-jabar-harian-prov/getItems')
-    this.$store.dispatch('data-rekapitulasi-jabar-kab/getItems')
-    this.$store.dispatch('data-rekapitulasi-jabar-kumulatif-kab/getItems')
-    this.$store.dispatch('data-rekapitulasi-jabar-kumulatif-prov/getItems')
-    this.$store.dispatch('data-rekapitulasi-jabar-prov/getItems')
-    this.$store.dispatch('data-sebaran-jabar-faskes/getItems')
-    this.$store.dispatch('data-sebaran-jabar/getItems')
-    this.$store.dispatch('statistics/getCases')
     this.$nextTick(() => {
+      Promise.all([
+        this.$store.dispatch('data-nasional-harian/getItems'),
+        this.$store.dispatch('data-rekapitulasi-jabar-harian-kab/getItems'),
+        this.$store.dispatch('data-rekapitulasi-jabar-harian-prov/getItems'),
+        this.$store.dispatch('data-rekapitulasi-jabar-kab/getItems'),
+        this.$store.dispatch('data-rekapitulasi-jabar-kumulatif-kab/getItems'),
+        this.$store.dispatch('data-rekapitulasi-jabar-kumulatif-prov/getItems'),
+        this.$store.dispatch('data-rekapitulasi-jabar-prov/getItems'),
+        this.$store.dispatch('data-sebaran-jabar-faskes/getItems'),
+        this.$store.dispatch('data-sebaran-jabar/getItems'),
+        this.$store.dispatch('statistics/getCases')
+      ]).then(() => {
+      })
+
       if (process.browser) {
         analytics.logEvent('dashboard_view')
       }
@@ -289,30 +211,14 @@ export default {
   },
   methods: {
     formatDateTimeShort,
-    enablePolygon () {
-      this.stat.isActivePolygon = true
-      this.stat.isActiveCluster = false
+    enableHeatmap () {
+      this.stat.isActiveHeatmap = true
       this.stat.isActiveFaskes = false
-      this.stat.isActiveTimeslider = false
-    },
-    enableCluster () {
-      this.stat.isActivePolygon = false
-      this.stat.isActiveCluster = true
-      this.stat.isActiveFaskes = false
-      this.stat.isActiveTimeslider = false
     },
     enableFaskes () {
-      this.stat.isActivePolygon = false
-      this.stat.isActiveCluster = false
+      this.stat.isActiveHeatmap = false
       this.stat.isActiveFaskes = true
-      this.stat.isActiveTimeslider = false
     },
-    enableTimeslider () {
-      this.stat.isActivePolygon = false
-      this.stat.isActiveCluster = false
-      this.stat.isActiveFaskes = false
-      this.stat.isActiveTimeslider = true
-    }
     // fetchDataRekapitulasiJabarProv () {
     //   const self = this
     //   axios
