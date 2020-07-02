@@ -220,6 +220,9 @@ export default {
     }
   },
   mounted () {
+    if (this.activeId === 'map-kel') {
+      this.initMap()
+    }
   },
   created () {
     console.log('polygon on created')
