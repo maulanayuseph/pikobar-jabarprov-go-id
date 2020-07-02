@@ -113,6 +113,7 @@
 .link-hover-warning:hover {
   box-shadow: 0 0 10px #FED1B1;
   text-decoration: underline;
+  cursor: pointer;
 }
 </style>
 <script>
