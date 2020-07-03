@@ -48,13 +48,13 @@
                 Timeslider - Data Positif
               </button>
             </div>
-            <MapV3SebaranPolygon v-if="activeMap === 'polygon'" :activeRegionId.sync="activeRegionId" :activeRegionCategory.sync="activeRegionCategory"  :activeParentRegionName.sync="activeParentRegionName"/>
-            <MapV3SebaranTitik v-if="activeMap === 'titik'" :activeRegionId.sync="activeRegionId" :activeRegionCategory.sync="activeRegionCategory"  :activeParentRegionName.sync="activeParentRegionName"/>
-            <MapV3SebaranTimeSlider v-if="activeMap === 'timeslider'" :activeRegionId.sync="activeRegionId" :activeRegionCategory.sync="activeRegionCategory"  :activeParentRegionName.sync="activeParentRegionName"/>
+            <MapV3SebaranPolygon v-if="activeMap === 'polygon'" :active-region-id.sync="activeRegionId" :active-region-category.sync="activeRegionCategory" :active-parent-region-name.sync="activeParentRegionName" :active-case-category.sync="activeCaseCategory" />
+            <MapV3SebaranTitik v-if="activeMap === 'titik'" :active-region-id.sync="activeRegionId" :active-region-category.sync="activeRegionCategory" :active-parent-region-name.sync="activeParentRegionName" :active-case-category.sync="activeCaseCategory" />
+            <MapV3SebaranTimeSlider v-if="activeMap === 'timeslider'" :active-region-id.sync="activeRegionId" :active-region-category.sync="activeRegionCategory" :active-parent-region-name.sync="activeParentRegionName" :active-case-category.sync="activeCaseCategory" />
           </div>
         </div>
         <div class="w-full mb-6 lg:w-2/5 lg:mb-0 bg-white rounded-lg mb-8 shadow-lg">
-          <RasioConfirmedCase :activeRegionId="activeRegionId" :activeRegionCategory="activeRegionCategory"  :activeParentRegionName.sync="activeParentRegionName"/>
+          <RasioConfirmedCase :active-region-id="activeRegionId" :active-region-category="activeRegionCategory" :active-parent-region-name.sync="activeParentRegionName" :active-case-category.sync="activeCaseCategory" />
         </div>
       </div>
     </section>
@@ -90,8 +90,8 @@
               </button>
             </div>
           </div>
-          <ConfirmedCaseList v-if="activeTable === 'confirmed'" :activeRegionId.sync="activeRegionId" :activeRegionCategory.sync="activeRegionCategory" :activeParentRegionName.sync="activeParentRegionName" />
-          <UnconfirmedCaseList v-if="activeTable === 'unconfirmed'" :activeRegionId.sync="activeRegionId" :activeRegionCategory.sync="activeRegionCategory"  :activeParentRegionName.sync="activeParentRegionName"/>
+          <ConfirmedCaseList v-if="activeTable === 'confirmed'" :active-region-id.sync="activeRegionId" :active-region-category.sync="activeRegionCategory" :active-parent-region-name.sync="activeParentRegionName" />
+          <UnconfirmedCaseList v-if="activeTable === 'unconfirmed'" :active-region-id.sync="activeRegionId" :active-region-category.sync="activeRegionCategory" :active-parent-region-name.sync="activeParentRegionName" />
         </div>
       </div>
     </section>
@@ -119,6 +119,8 @@ export default {
       activeParentRegionName: 'Jawa Barat',
       activeMap: 'polygon',
       activeTable: 'confirmed',
+      activeCaseCategory: 'positif_aktif',
+
       // data
       parentLabel: {
         kota: {
@@ -142,6 +144,7 @@ export default {
   methods: {
     enableMap (type) {
       this.activeMap = type
+      this.activeCaseCategory = 'positif_aktif'
     },
     enableTable (type) {
       this.activeTable = type
@@ -179,6 +182,6 @@ export default {
 }
 </style>
 <style>
-  @import "leaflet-geosearch/assets/css/leaflet.css";
+  /* @import "leaflet-geosearch/assets/css/leaflet.css"; */
 
 </style>

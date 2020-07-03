@@ -1,10 +1,10 @@
 <template>
   <div class="container mx-auto">
     <div>
-      <section class="flex flex-col lg:flex-row lg:flex-no-wrap">
+      <section class="flex flex-row flex-wrap">
         <CounterCardLoader
           :is-pending="isPending"
-          class="lg:mr-5 mb-8 lg:w-1/4 border border-solid"
+          class="mb-8 border border-solid digital-signage"
           style="background-color: #E0E6F6; border-color: #747BAD; padding: 1rem;"
           label="Terkonfirmasi"
         >
@@ -37,7 +37,7 @@
         </CounterCardLoader>
         <CounterCardLoader
           :is-pending="isPending"
-          class="lg:mr-5 mb-8 lg:w-1/4 border border-solid"
+          class="mb-8 border border-solid digital-signage"
           style="background-color: #FCDFE0; border-color: #FFB4B5; padding: 1rem;"
           label="Positif Aktif"
         >
@@ -70,7 +70,7 @@
         </CounterCardLoader>
         <CounterCardLoader
           :is-pending="isPending"
-          class="lg:mr-5 mb-8 lg:w-1/4 border border-solid"
+          class="mb-8 border border-solid digital-signage"
           style="background-color: #D3EEE3; border-color: #91DCBD; padding: 1rem;"
           label="Sembuh"
         >
@@ -103,7 +103,7 @@
         </CounterCardLoader>
         <CounterCardLoader
           :is-pending="isPending"
-          class="mb-8 lg:w-1/4 border border-solid"
+          class="mb-8 border order-solid digital-signage"
           style="background-color: #FBEADF; border-color: #FED1B1; padding: 1rem;"
           label="Meninggal"
         >
@@ -371,5 +371,27 @@ export default {
       display: flex !important;
   }
 
+}
+</style>
+<style>
+@media screen and (min-width: 1080px) {
+  .digital-signage {
+    width: 24% !important;
+    margin: 0.5%;
+    margin-bottom: 20px;
+  }
+}
+@media screen and (max-width: 1080px) {
+  .digital-signage {
+    width: 48% !important;
+    margin: 1%;
+    margin-bottom: 20px;
+  }
+}
+@media screen and (max-width: 576px) {
+  .digital-signage {
+    width: 100% !important;
+    margin-bottom: 20px;
+  }
 }
 </style>

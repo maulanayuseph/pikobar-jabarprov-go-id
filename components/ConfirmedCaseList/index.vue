@@ -560,6 +560,9 @@ export default {
   thead tr:nth-child(1) th { position: sticky; top: 0; }
   thead tr:nth-child(2) th { position: sticky; top: 29px; }
 
+  tr:nth-child(even) {background: #dfdfdf6e}
+  tr:nth-child(odd) {background: #FFF}
+
   .textright {
     text-align: right;
   }
