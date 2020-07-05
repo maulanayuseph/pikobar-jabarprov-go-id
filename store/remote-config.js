@@ -32,7 +32,6 @@ export const actions = {
       }
       await fetch()
         .then(() => {
-          console.log(remoteConfig)
           const enableDownload = remoteConfig.getValue('download_app_via_web_enabled')._value === 'true'
           const downloadAppURL = remoteConfig.getValue('download_app_url')._value
           const selfDiagnoseURL = remoteConfig.getValue('selfdiagnose_url')._value
