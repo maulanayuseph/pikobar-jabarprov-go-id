@@ -407,4 +407,7 @@ export default {
     height: 565px;
     overflow-y: scroll;
   }
+
+    tr:nth-child(even) {background: #dfdfdf6e}
+  tr:nth-child(odd) {background: #FFF}
 </style>

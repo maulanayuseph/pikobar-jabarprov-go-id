@@ -207,6 +207,10 @@ export default {
     activeRegionCategory: {
       type: String,
       default: 'kota'
+    },
+    activeCaseCategory: {
+      type: String,
+      default: 'positif_aktif'
     }
   },
   data () {
@@ -307,7 +311,7 @@ export default {
       // add zoom control with your options
       this.$L.control
         .zoom({
-          position: 'bottomright'
+          position: 'topleft'
         })
         .addTo(this.map)
 
@@ -315,7 +319,7 @@ export default {
       const searchProvider = new OpenStreetMapProvider()
       new GeoSearchControl({
         provider: searchProvider,
-        position: 'bottomright',
+        position: 'topleft',
         showMarker: true,
         autoClose: true,
         marker: {
@@ -564,6 +568,7 @@ export default {
       this.getDataSebaranPolygon(this.activeRegion, this.activeDataCategory, this.activeParentCode)
       this.getDataSebaranMarkerCluster(this.activeRegion, this.activeDataCategory, this.activeParentCode)
       this.createPolygonRegion()
+      this.$emit('update:activeCaseCategory', category)
     },
     findCategory (category) {
       let classMarker = ''
@@ -743,7 +748,7 @@ export default {
   .btn-fullscreen {
     position: absolute;
     bottom: 0px;
-    left: 10px;
+    right: 10px;
     font-size: 1.3em;
     padding: 2px 6px;
     box-shadow: 0 1px 5px rgba(0,0,0,0.65);
