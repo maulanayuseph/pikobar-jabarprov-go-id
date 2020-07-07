@@ -35,14 +35,19 @@
                 class="top-grid__call-status rounded-lg"
               >
                 <h6>
-                  <strong>Pertanyaan Terlayani</strong><br>
-                  <small>
-                    Telpon & Pesan Teks
-                  </small>
+                  <strong>Media Sosial Pikobar</strong><br>
                 </h6>
-                <summary class="text-5xl text-yellopx-40 font-bold">
-                  {{ cases ? formatNumber(cases.pertanyaan_terlayani) : '' }}
-                </summary>
+                <br>
+                <ul class="flex justify-start items-center text-base">
+                  <li v-for="(sm, index) in pikobarSocmeds" :key="index" class="mr-4">
+                    <a :href="`https://instagram.com/${sm.id}`" target="_blank">
+                      <FontAwesomeIcon :icon="icon.faInstagram" class="text-purple-800" />
+                      <b class="text-purple-600">
+                        {{ sm.label }}
+                      </b>
+                    </a>
+                  </li>
+                </ul>
               </div>
               <div
                 v-show="!cases"
@@ -432,6 +437,7 @@
 import { ContentLoader } from 'vue-content-loader'
 import { mapState } from 'vuex'
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons'
+import { faInstagram } from '@fortawesome/free-brands-svg-icons'
 import { formatDateTimeShort } from '~/lib/date'
 import { formatNumber } from '~/lib/number'
 import { analytics } from '~/lib/firebase'
@@ -468,9 +474,15 @@ export default {
   data () {
     return {
       icon: {
-        faChevronRight
+        faChevronRight,
+        faInstagram
       },
-      todayDateAndTime: formatDateTimeShort(new Date())
+      todayDateAndTime: formatDateTimeShort(new Date()),
+      pikobarSocmeds: [
+        { id: 'pikobar_jabar', label: 'Pikobar' },
+        { id: 'jabardigitalservice', label: 'Jabar Digital Service' },
+        { id: 'humas_jabar', label: 'Humas Jabar' }
+      ]
     }
   },
   computed: {
@@ -597,9 +609,9 @@ export default {
 
   &__call-status {
     grid-column: span 2;
-    @apply p-5 flex items-center justify-between
-    text-xl text-white
-    bg-brand-green-dark
+    @apply p-5
+    text-xl
+    bg-white
     shadow-md;
   }
 }
