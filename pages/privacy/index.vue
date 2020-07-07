@@ -23,7 +23,8 @@
 export default {
   computed: {
     TAC () {
-      return this.$store.state['remote-config'].config.termsAndCondition || {}
+      const config = this.$store.state['remote-config'].config
+      return config ? config.termsAndCondition : {}
     }
   }
 }
