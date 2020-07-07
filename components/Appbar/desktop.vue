@@ -77,7 +77,7 @@ export default {
         { to: '/faq', label: 'FAQ' },
         { to: '/contact', label: 'Kontak' },
         { to: '/donate', label: 'Donasi' },
-        { to: 'https://bansos.pikobar.jabarprov.go.id/', label: 'Solidaritas' }
+        { to: 'https://bansos.pikobar.jabarprov.go.id/', label: 'Bantuan Sosial' }
       ]
     }
   },
