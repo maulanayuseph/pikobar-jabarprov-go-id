@@ -1,5 +1,5 @@
 <template>
-  <div class="md:hidden">
+  <div class="lg:hidden">
     <a
       v-show="canGoBack"
       class="cursor-pointer flex items-center"
