@@ -31,61 +31,9 @@
                 icon-class="text-4xl"
               />
               <div
-                v-show="cases"
-                class="top-grid__call-status rounded-lg"
+                class="top-grid__socmed rounded-lg"
               >
-                <h6>
-                  <strong>Media Sosial Pikobar</strong><br>
-                </h6>
-                <br>
-                <ul class="flex justify-start items-center text-base">
-                  <li v-for="(sm, index) in pikobarSocmeds" :key="index" class="mr-4">
-                    <a :href="`https://instagram.com/${sm.id}`" target="_blank">
-                      <FontAwesomeIcon :icon="icon.faInstagram" class="text-purple-800" />
-                      <b class="text-purple-600">
-                        {{ sm.label }}
-                      </b>
-                    </a>
-                  </li>
-                </ul>
-              </div>
-              <div
-                v-show="!cases"
-                class="top-grid__call-status rounded-lg"
-              >
-                <ContentLoader
-                  :speed="2"
-                  :height="100"
-                  primary-color="rgba(255,255,255,0.3)"
-                  secondary-color="rgba(255,255,255,0.1)"
-                  class="w-full h-full max-w-xs"
-                  style="grid-column-end: span 2;"
-                >
-                  <rect
-                    x="0"
-                    y="0"
-                    rx="8"
-                    ry="6"
-                    width="50%"
-                    height="16"
-                  />
-                  <rect
-                    x="0"
-                    y="30"
-                    rx="8"
-                    ry="6"
-                    width="66%"
-                    height="16"
-                  />
-                  <rect
-                    x="0"
-                    y="64"
-                    rx="8"
-                    ry="6"
-                    width="20%"
-                    height="16"
-                  />
-                </ContentLoader>
+                <PikobarSocmed />
               </div>
             </div>
           </div>
@@ -434,10 +382,8 @@
   </div>
 </template>
 <script>
-import { ContentLoader } from 'vue-content-loader'
 import { mapState } from 'vuex'
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons'
-import { faInstagram } from '@fortawesome/free-brands-svg-icons'
 import { formatDateTimeShort } from '~/lib/date'
 import { formatNumber } from '~/lib/number'
 import { analytics } from '~/lib/firebase'
@@ -451,11 +397,11 @@ import DataTabs from '~/components/_pages/index/DataTabs'
 import ShareableItems from '~/components/ShareableItems'
 import ShareableItemTable from '~/components/ShareableItemTable'
 import PopupCampaign from '~/components/PopupCampaign'
+import PikobarSocmed from '~/components/PikobarSocmed'
 
 export default {
   components: {
     PopupCampaign,
-    ContentLoader,
     TopAlert,
     ImageCarousel,
     CallCard,
@@ -464,7 +410,8 @@ export default {
     CallCenter,
     DataTabs,
     ShareableItems,
-    ShareableItemTable
+    ShareableItemTable,
+    PikobarSocmed
   },
   async fetch () {
     await this.$store.dispatch('hospitals/getItems')
@@ -474,15 +421,9 @@ export default {
   data () {
     return {
       icon: {
-        faChevronRight,
-        faInstagram
+        faChevronRight
       },
-      todayDateAndTime: formatDateTimeShort(new Date()),
-      pikobarSocmeds: [
-        { id: 'pikobar_jabar', label: 'Pikobar' },
-        { id: 'jabardigitalservice', label: 'Jabar Digital Service' },
-        { id: 'humas_jabar', label: 'Humas Jabar' }
-      ]
+      todayDateAndTime: formatDateTimeShort(new Date())
     }
   },
   computed: {
@@ -607,10 +548,9 @@ export default {
     @apply shadow-md;
   }
 
-  &__call-status {
+  &__socmed {
     grid-column: span 2;
     @apply p-5
-    text-xl
     bg-white
     shadow-md;
   }
