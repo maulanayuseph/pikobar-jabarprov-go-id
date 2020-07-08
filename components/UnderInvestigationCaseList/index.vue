@@ -437,7 +437,7 @@ export default {
         total.finishedTotal = element.pdp.pdp_selesai
         total.diedNow += element.pdp.pdp_meninggal_h1
         total.diedAverage += element.pdp.pdp_meninggal_h7
-        total.diedTotal = element.pdp.pdp_meninggal
+        total.diedTotal += element.pdp.pdp_meninggal
 
         dataCase.push({
           region: element[nameApiRegion],
