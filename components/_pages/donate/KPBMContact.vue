@@ -13,9 +13,6 @@
         </span>
         <p>
           <b>Hotline Pikobar</b><br>
-          <small class="opacity-75">
-            
-          </small>
         </p>
       </div>
       <div class="flex flex-row items-start">

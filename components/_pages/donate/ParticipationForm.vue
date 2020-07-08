@@ -229,7 +229,6 @@
       <hr class="mb-8">
       <client-only>
         <vue-recaptcha
-          
           ref="invisibleRecaptcha"
           :load-recaptcha-script="true"
           size="invisible"
