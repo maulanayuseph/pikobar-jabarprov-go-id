@@ -31,9 +31,9 @@
           class="hidden lg:flex appbar-menu-item cursor-pointer mx-2 px-2 py-2 hover:bg-gray-200"
           @click.prevent.stop="onMenuItemClicked(item)"
         >
-          <a>
+          <span>
             {{ item.label }}
-          </a>
+          </span>
         </a>
         <nuxt-link
           tag="li"
