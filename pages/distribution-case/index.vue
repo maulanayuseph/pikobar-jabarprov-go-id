@@ -88,11 +88,20 @@
               >
                 ODP
               </button>
+              <button
+                class="button-selector m-1 w-full xl:w-auto "
+                style="display: flex;"
+                :active="activeTable === 'underinvestigation'"
+                @click="enableTable('underinvestigation')"
+              >
+                PDP
+              </button>
             </div>
           </div>
           <ConfirmedCaseList v-if="activeTable === 'confirmed'" :active-region-id.sync="activeRegionId" :active-region-category.sync="activeRegionCategory" :active-parent-region-name.sync="activeParentRegionName" />
           <UnconfirmedCaseList v-if="activeTable === 'unconfirmed'" :active-region-id.sync="activeRegionId" :active-region-category.sync="activeRegionCategory" :active-parent-region-name.sync="activeParentRegionName" />
           <UnderMonitoringCaseList v-if="activeTable === 'undermonitoring'" :active-region-id.sync="activeRegionId" :active-region-category.sync="activeRegionCategory" :active-parent-region-name.sync="activeParentRegionName" />
+          <UnderInvestigationCaseList v-if="activeTable === 'underinvestigation'" :active-region-id.sync="activeRegionId" :active-region-category.sync="activeRegionCategory" :active-parent-region-name.sync="activeParentRegionName" />
         </div>
       </div>
     </section>
@@ -112,7 +121,8 @@ export default {
     RasioConfirmedCase: () => import('~/components/RasioConfirmedCase'),
     ConfirmedCaseList: () => import('~/components/ConfirmedCaseList'),
     UnconfirmedCaseList: () => import('~/components/UnconfirmedCaseList'),
-    UnderMonitoringCaseList: () => import('~/components/UnderMonitoringCaseList')
+    UnderMonitoringCaseList: () => import('~/components/UnderMonitoringCaseList'),
+    UnderInvestigationCaseList: () => import('~/components/UnderInvestigationCaseList')
   },
   data () {
     return {
