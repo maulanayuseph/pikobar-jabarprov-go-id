@@ -2,83 +2,119 @@
   <div
     class="pcr-main text-white overflow-hidden rounded-lg shadow-md p-5"
   >
-    <b class="text-lg">PCR (Polymerase Chain Reaction)</b>
-    <div class="flex flex-col md:flex-row mb-2 mt-2">
-      <div class="w-full md:w-3/6 lg:w-3/6 h-auto text-sm mr-10 mt-2">
-        Polymerase Chain Reaction atau PCR merupakan pemeriksaan diagnostik yang dianggap paling akurat untuk memastikan apakah seseorang menderita COVID-19 atau tidak.<br>
-        <br><b style="font-size: larger;">Disclaimer :</b><br>
-        <span style="opacity: 0.6;">Jumlah tes PCR yang ditampilkan adalah hasil pengujian di Labkes Jabar.</span>
-        <span v-if="showMore" style="opacity: 0.6;">Angka Positif hasil tes PCR tidak merepresentasikan seluruh kasus terkonfirmasi dan jumlah pengujian massal di Jawa Barat, tim Pikobar sedang dalam proses pengumpulan dan integrasi data dari lab-lab satelit se-Jawa Barat.  </span>
-        <!-- <b><a v-if="!showMore" style="color: #17689D; cursor:pointer;" @click="clickShowMore"> Selengkapnya</a></b> -->
-        <!-- <b><a v-if="showMore" style="color: #17689D; cursor:pointer;" @click="clickShowMore"> Sembunyikan</a></b> -->
-        <span>
+    <div :class="isLoading ? 'block' : 'hidden'">
+      <ContentLoader
+        primaryColor="#67b6e3"
+        secondaryColor="rgba(255,255,255,1)"
+        height="80"
+        >
+        <rect
+          x="0"
+          y="0"
+          rx="8"
+          ry="6"
+          width="40%"
+          height="16"
+        />
+        <rect
+          x="0"
+          y="30"
+          rx="8"
+          ry="6"
+          width="60%"
+          height="16"
+        />
+        <rect
+          x="0"
+          y="64"
+          rx="8"
+          ry="6"
+          width="100%"
+          height="16"
+        />
+      </ContentLoader>
+    </div>
+    <div :class="!isLoading ? 'block' : 'hidden'">
+      <b class="text-lg">PCR (Polymerase Chain Reaction)</b>
+      <div class="flex flex-col md:flex-row mb-2 mt-2">
+        <div class="w-full md:w-3/6 lg:w-3/6 h-auto text-sm mr-10 mt-2">
+          Polymerase Chain Reaction atau PCR merupakan pemeriksaan diagnostik yang dianggap paling akurat untuk memastikan apakah seseorang menderita COVID-19 atau tidak.<br>
+          <br><b style="font-size: larger;">Disclaimer :</b><br>
+          <span style="opacity: 0.6;">Jumlah tes PCR yang ditampilkan adalah hasil pengujian di Labkes Jabar.</span>
+          <span v-if="showMore" style="opacity: 0.6;">Angka Positif hasil tes PCR tidak merepresentasikan seluruh kasus terkonfirmasi dan jumlah pengujian massal di Jawa Barat, tim Pikobar sedang dalam proses pengumpulan dan integrasi data dari lab-lab satelit se-Jawa Barat.  </span>
+          <!-- <b><a v-if="!showMore" style="color: #17689D; cursor:pointer;" @click="clickShowMore"> Selengkapnya</a></b> -->
+          <!-- <b><a v-if="showMore" style="color: #17689D; cursor:pointer;" @click="clickShowMore"> Sembunyikan</a></b> -->
+          <span>
+            <br>
+            <br>
+            Update Terakhir: {{ date_update }}
+          </span>
           <br>
-          <br>
-          Update Terakhir: {{ date_update }}
-        </span>
-        <br>
-      </div>
-      <div class="w-full md:w-3/6 lg:w-3/6 h-auto text-sm mr-10 row">
-        <div class="flex flex-col md:flex-row h-auto text-left">
-          <div class="w-full md:w-1/3 lg:w-1/3 pl-2 h-auto text-left">
-            <div class="text-4xl">
-              {{ Number(data.pcr.total).toLocaleString('id-ID') }}
+        </div>
+        <div class="w-full md:w-3/6 lg:w-3/6 h-auto text-sm mr-10 row">
+          <div class="flex flex-col md:flex-row h-auto text-left">
+            <div class="w-full md:w-1/3 lg:w-1/3 pl-2 h-auto text-left">
+              <div class="text-4xl">
+                {{ Number(data.pcr.total).toLocaleString('id-ID') }}
+              </div>
+              <div class="text-sm">
+                Jumlah PCR
+                <div class="tooltip pl-1">
+                  &#9432;
+                  <span class="tooltiptext text-xs">Jumlah Polymerase Chain Reaction (PCR) yang telah dilakukan</span>
+                </div>
+              </div>
             </div>
-            <div class="text-sm">
-              Jumlah PCR
-              <div class="tooltip pl-1">
-                &#9432;
-                <span class="tooltiptext text-xs">Jumlah Polymerase Chain Reaction (PCR) yang telah dilakukan</span>
+          </div>
+          <div class="flex flex-col md:flex-row h-auto text-left">
+            <div class="w-full md:w-1/3 lg:w-1/3 pl-2 h-auto text-left">
+              <div class="h-20 pt-3">
+                <div class="mb-1">
+                  <span class="text-2xl">{{ Number(data.pcr.positif).toLocaleString('id-ID') }}</span>
+                  <span class="text-sm">({{ Number(data.pcr_persentase_by_total.positif.toFixed(2)).toLocaleString('id-ID') }}%)</span>
+                </div>
+                <div class="text-sm">
+                  Positif
+                </div>
+              </div>
+            </div>
+            <div class="w-full md:w-1/3 lg:w-1/3 pl-2 h-auto text-left">
+              <div class="h-20 pt-3">
+                <div class="mb-1">
+                  <span class="text-2xl">{{ Number(data.pcr.negatif).toLocaleString('id-ID') }}</span>
+                  <span class="text-sm">({{ Number(data.pcr_persentase_by_total.negatif.toFixed(2)).toLocaleString('id-ID') }}%)</span>
+                </div>
+                <div class="text-sm">
+                  Negatif
+                </div>
+              </div>
+            </div>
+            <div class="w-full md:w-1/3 lg:w-1/3 pl-2 h-auto text-left">
+              <div class="h-20 pt-3">
+                <div class="mb-1">
+                  <span class="text-2xl">{{ Number(data.pcr.invalid).toLocaleString('id-ID') }}</span>
+                  <span class="text-sm">({{ Number(data.pcr_persentase_by_total.invalid.toFixed(2)).toLocaleString('id-ID') }}%)</span>
+                </div>
+                <div class="text-sm">
+                  Invalid
+                </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="flex flex-col md:flex-row h-auto text-left">
-          <div class="w-full md:w-1/3 lg:w-1/3 pl-2 h-auto text-left">
-            <div class="h-20 pt-3">
-              <div class="mb-1">
-                <span class="text-2xl">{{ Number(data.pcr.positif).toLocaleString('id-ID') }}</span>
-                <span class="text-sm">({{ Number(data.pcr_persentase_by_total.positif.toFixed(2)).toLocaleString('id-ID') }}%)</span>
-              </div>
-              <div class="text-sm">
-                Positif
-              </div>
-            </div>
-          </div>
-          <div class="w-full md:w-1/3 lg:w-1/3 pl-2 h-auto text-left">
-            <div class="h-20 pt-3">
-              <div class="mb-1">
-                <span class="text-2xl">{{ Number(data.pcr.negatif).toLocaleString('id-ID') }}</span>
-                <span class="text-sm">({{ Number(data.pcr_persentase_by_total.negatif.toFixed(2)).toLocaleString('id-ID') }}%)</span>
-              </div>
-              <div class="text-sm">
-                Negatif
-              </div>
-            </div>
-          </div>
-          <div class="w-full md:w-1/3 lg:w-1/3 pl-2 h-auto text-left">
-            <div class="h-20 pt-3">
-              <div class="mb-1">
-                <span class="text-2xl">{{ Number(data.pcr.invalid).toLocaleString('id-ID') }}</span>
-                <span class="text-sm">({{ Number(data.pcr_persentase_by_total.invalid.toFixed(2)).toLocaleString('id-ID') }}%)</span>
-              </div>
-              <div class="text-sm">
-                Invalid
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+    </div>
     </div>
   </div>
 </template>
 
 <script>
+import { ContentLoader } from 'vue-content-loader'
 import moment from 'moment'
 
 export default {
   name: 'DataPCR',
   components: {
+    ContentLoader
   },
   props: {
     propsDataRekapitulasiJabar: {
@@ -96,6 +132,7 @@ export default {
   data () {
     return {
       date_update: '',
+      isLoading: true,
       data: {
         pcr: {
           total: 0,
@@ -125,9 +162,13 @@ export default {
     //   this.countPersentage()
     // }
     dataRekapitulasiJabarProv (val) {
-      this.data.pcr = val.pcr
-      this.date_update = moment(this.data.pcr.tanggal, 'DD/MM/YYYY').lang('id').format('dddd, DD MMM YYYY')
-      this.countPersentage()
+      const self = this
+      self.data.pcr = val.pcr
+      self.date_update = moment(self.data.pcr.tanggal, 'DD/MM/YYYY').lang('id').format('dddd, DD MMM YYYY')
+      self.countPersentage()
+      if (val.rdt) {
+        self.isLoading = false
+      }
     }
   },
   methods: {

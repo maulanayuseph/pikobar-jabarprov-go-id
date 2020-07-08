@@ -32,12 +32,14 @@ export const actions = {
       }
       await fetch()
         .then(() => {
+          const termsAndCondition = remoteConfig.getValue('terms_conditions')._value
           const enableDownload = remoteConfig.getValue('download_app_via_web_enabled')._value === 'true'
           const downloadAppURL = remoteConfig.getValue('download_app_url')._value
           const selfDiagnoseURL = remoteConfig.getValue('selfdiagnose_url')._value
           const announcement = remoteConfig.getValue('announcement')._value
           const pikobarWebPopupCampaign = remoteConfig.getValue('pikobar_web_popup_campaign')._value
           commit('setConfig', {
+            termsAndCondition: termsAndCondition ? JSON.parse(termsAndCondition) : null,
             enableDownload,
             downloadAppURL,
             selfDiagnoseURL,
