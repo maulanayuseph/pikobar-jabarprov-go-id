@@ -1,5 +1,5 @@
 <template>
-  <div class="hidden md:block md:mx-4">
+  <div class="hidden lg:block lg:mx-4">
     <div class="flex justify-between items-center">
       <div
         class="flex items-center"
@@ -22,18 +22,19 @@
             Menu
           </ul> -->
       <ul class="flex flex-row items-center">
-        <nuxt-link
+        <a
           v-for="item in menus"
           :key="item.to"
           tag="li"
-          :to="item.to"
+          :href="item.to"
           :exact="item.exact"
           class="hidden lg:flex appbar-menu-item cursor-pointer mx-2 px-2 py-2 hover:bg-gray-200"
+          @click.prevent.stop="onMenuItemClicked(item)"
         >
           <a>
             {{ item.label }}
           </a>
-        </nuxt-link>
+        </a>
         <nuxt-link
           tag="li"
           to="/notifications"
@@ -75,7 +76,8 @@ export default {
         { to: '/articles?tab=jabar', label: 'Berita' },
         { to: '/faq', label: 'FAQ' },
         { to: '/contact', label: 'Kontak' },
-        { to: '/donate', label: 'Donasi' }
+        { to: '/donate', label: 'Donasi' },
+        { to: 'https://bansos.pikobar.jabarprov.go.id/', label: 'Bantuan Sosial' }
       ]
     }
   },
@@ -87,6 +89,15 @@ export default {
     downloadAppURL () {
       const { config } = this.$store.state['remote-config']
       return !!config && !!config.downloadAppURL ? config.downloadAppURL : '#'
+    }
+  },
+  methods: {
+    onMenuItemClicked (m) {
+      if (m.to.startsWith('http')) {
+        window.open(m.to, '_blank')
+      } else {
+        this.$router.push(m.to)
+      }
     }
   }
 }

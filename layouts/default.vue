@@ -17,12 +17,12 @@
       </div>
     </div>
     <Appbar :drawer-active="isDrawerOpen" @toggle:drawer="isDrawerOpen = $event" />
-    <AppDrawer ref="drawer" :show.sync="isDrawerOpen" class="-mt-4 md:hidden" />
+    <div ref="sidebarTopRef" style="visibility: hidden;" />
+    <AppDrawer ref="drawer" :show.sync="isDrawerOpen" class="lg:hidden" />
     <div
       class="w-full"
       style="min-height: 75vh;"
     >
-      <div ref="sidebarTopRef" style="visibility: hidden;" />
       <nuxt />
     </div>
     <BackToTopButton />

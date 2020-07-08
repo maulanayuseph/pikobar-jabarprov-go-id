@@ -47,7 +47,8 @@ export default {
         { to: '/contact', label: 'Kontak', icon: this.icon.faPhoneAlt },
         { to: '/faq', label: 'FAQ', icon: this.icon.faQuestionCircle },
         { to: 'https://forum.pikobar.jabarprov.go.id/', label: 'Forum', icon: this.icon.faComment },
-        { to: '/donate', label: 'Donasi', icon: this.icon.faBoxOpen }
+        { to: '/donate', label: 'Donasi', icon: this.icon.faBoxOpen },
+        { to: 'https://bansos.pikobar.jabarprov.go.id/', label: 'Bantuan Sosial', icon: this.icon.faBoxOpen }
       ]
     }
   },
@@ -125,12 +126,13 @@ export default {
       }
     },
     onClickMenuItem (menu) {
+      if (this.isExternalLink(menu.to)) {
+        window.open(menu.to, '_blank')
+        return
+      }
+
       this.animateHide()
       setTimeout(() => {
-        if (this.isExternalLink(menu.to)) {
-          window.open(menu.to, '_blank')
-          return
-        }
         this.$router.push({
           path: menu.to
         }, null, () => {})
@@ -149,6 +151,7 @@ export default {
   transition: transform 0.3s ease-out;
   transform: translateX(-100%);
   width: 75%;
+  max-width: 400px;
   min-width: 300px;
   @apply absolute top-0 left-0 bottom-0
   bg-white;
