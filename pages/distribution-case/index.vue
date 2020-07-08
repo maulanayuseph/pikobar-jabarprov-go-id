@@ -83,15 +83,16 @@
               <button
                 class="button-selector m-1 w-full xl:w-auto "
                 style="display: flex;"
-                :active="activeTable === 'unconfirmed'"
-                @click="enableTable('unconfirmed')"
+                :active="activeTable === 'undermonitoring'"
+                @click="enableTable('undermonitoring')"
               >
-                ODP dan PDP
+                ODP
               </button>
             </div>
           </div>
           <ConfirmedCaseList v-if="activeTable === 'confirmed'" :active-region-id.sync="activeRegionId" :active-region-category.sync="activeRegionCategory" :active-parent-region-name.sync="activeParentRegionName" />
           <UnconfirmedCaseList v-if="activeTable === 'unconfirmed'" :active-region-id.sync="activeRegionId" :active-region-category.sync="activeRegionCategory" :active-parent-region-name.sync="activeParentRegionName" />
+          <UnderMonitoringCaseList v-if="activeTable === 'undermonitoring'" :active-region-id.sync="activeRegionId" :active-region-category.sync="activeRegionCategory" :active-parent-region-name.sync="activeParentRegionName" />
         </div>
       </div>
     </section>
@@ -110,7 +111,8 @@ export default {
     MapV3SebaranTimeSlider: () => import('~/components/MapV3SebaranTimeSlider'),
     RasioConfirmedCase: () => import('~/components/RasioConfirmedCase'),
     ConfirmedCaseList: () => import('~/components/ConfirmedCaseList'),
-    UnconfirmedCaseList: () => import('~/components/UnconfirmedCaseList')
+    UnconfirmedCaseList: () => import('~/components/UnconfirmedCaseList'),
+    UnderMonitoringCaseList: () => import('~/components/UnderMonitoringCaseList')
   },
   data () {
     return {
