@@ -39,6 +39,10 @@
       </div>
     </div>
     <hr>
+    <div class="m-5 mb-0 p-2" style="background:#e6e6e6">
+      <b>Disclaimer :</b>
+      <p>Tidak seluruh data kasus memiliki kelengkapan data Umur sehingga tidak seluruhnya dapat divisualisasikan</p>
+    </div>
     <section
       v-if="stat.isActiveAnak"
     >
