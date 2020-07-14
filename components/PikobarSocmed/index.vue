@@ -4,10 +4,15 @@
       Ikuti perkembangan terkini seputar Covid-19
       dengan mengikuti kanal sosial media kami.
     </h6>
-    <ul class="flex-none flex justify-start items-center text-base">
-      <li v-for="(sm, index) in pikobarSocmeds" :key="index" class="mr-4">
-        <a :href="`https://instagram.com/${sm.id}`" target="_blank">
-          <img :src="sm.icon" :class="['socmed-icon object-contain object-center', sm.class]">
+    <ul class="socmed-list">
+      <li class="mr-4">
+        <a href="https://instagram.com/pikobar_jabar" target="_blank">
+          <FontAwesomeIcon :icon="faInstagram" class="text-4xl text-gray-600" />
+        </a>
+      </li>
+      <li class="mr-4">
+        <a href="https://twitter.com/pikobar" target="_blank">
+          <img :src="iconTwitter" class="text-4xl text-gray-600 w-10 h-10 object-contain object-center">
         </a>
       </li>
     </ul>
@@ -15,29 +20,13 @@
 </template>
 
 <script>
+import { faInstagram } from '@fortawesome/free-brands-svg-icons'
+import iconTwitter from '~/assets/icons/twitter.svg'
 export default {
   data () {
     return {
-      pikobarSocmeds: Object.freeze([
-        {
-          id: 'pikobar_jabar',
-          label: 'Pikobar',
-          icon: '/logo.jpg',
-          class: 'w-8 h-8'
-        },
-        {
-          id: 'jabardigitalservice',
-          label: 'Jabar Digital Service',
-          icon: '/img/logo-jds.png',
-          class: 'w-12 h-12'
-        },
-        {
-          id: 'humas_jabar',
-          label: 'Humas Jabar',
-          icon: '/img/logo-humas-jabar.png',
-          class: 'w-16 h-16'
-        }
-      ])
+      faInstagram,
+      iconTwitter
     }
   }
 }
@@ -46,21 +35,30 @@ export default {
 <style lang="scss" scoped>
 .socmed-card {
   @screen sm {
-    @apply flex flex-row justify-between items-center;
+    @apply h-full flex flex-row justify-between items-stretch;
   }
 }
+
 .socmed-cta {
-  @apply text-lg text-gray-600 mb-4;
+  @apply flex-initial text-lg text-gray-600 mb-4 flex items-center;
 
   @screen sm {
     @apply w-1/2 mb-0;
   }
-
-  @screen lg {
-    @apply w-auto text-sm;
-  }
 }
-.socmed-icon:hover {
-  @apply opacity-75;
+
+.socmed-list {
+  @apply flex-initial flex justify-start items-center;
+
+  svg, img {
+    margin: 0.5rem;
+    &:hover {
+      opacity: 0.5;
+    }
+  }
+
+  @screen sm {
+    @apply w-2/5;
+  }
 }
 </style>
