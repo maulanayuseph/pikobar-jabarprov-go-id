@@ -326,7 +326,7 @@ export default {
       // self.jsonData = self.propsDataSebaranJabar
       if (this.$store.getters['data-sebaran-jabar/itemsMap']) {
         self.jsonData = self.$store.getters['data-sebaran-jabar/itemsMap']
-        console.log(self.jsonData)
+        // console.log(self.jsonData)
       }
       self.createMap('kota')
     },

@@ -499,7 +499,6 @@ export default {
       }
     },
     onClickSort (field) {
-      console.log(this.metadataSebaranPertumbuhan)
       const currentSorting = this.currentSorting
       let sorting = 'desc'
       if (this.currentSorting[field] === 'desc') {
