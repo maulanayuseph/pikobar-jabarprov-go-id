@@ -2,153 +2,116 @@
   <div class="container mx-auto">
     <div>
       <section class="flex flex-row flex-wrap">
+        <!-- Terkonfirmasi -->
         <CounterCardLoader
-          :is-pending="isPending"
+          :is-pending="isLoading"
           class="mb-8 border border-solid digital-signage"
           style="background-color: #E0E6F6; border-color: #747BAD; padding: 1rem;"
           label="Terkonfirmasi"
         >
           <div class="flex justify-between items-baseline text-2xl">
-            <h4>
-              <b>Jawa Barat</b>
-            </h4>
+            <h4><b>Jawa Barat</b></h4>
             <span>
-              <b>
-                {{ formatNumber(positifJabar) }}
-              </b>
-              <b>
-                <span class="text-xl tag-purple-100 py-0 px-1 rounded text-white align-middle">{{ formatNumberPlusMinus(pertumbuhan.jabarPositif) }}</span>
-              </b>
+              <b>{{ formatNumber(jsonDataKasusTotal.positif_total) }}</b>
+              <b><span class="text-xl tag-purple-100 py-0 px-1 rounded text-white align-middle">{{ formatNumberPlusMinus(jsonDataKasusTotal.positif_total_pertumbuhan) }}</span></b>
             </span>
           </div>
           <div class="flex justify-between items-baseline text-xl">
-            <h4>
-              <b>Indonesia</b>
-            </h4>
+            <h4><b>Indonesia</b></h4>
             <span>
-              <b>
-                {{ formatNumber(positifNasional) }}
-              </b>
-              <b>
-                <span class="text-base tag-purple-100 py-0 px-1 rounded text-white align-middle">{{ formatNumberPlusMinus(pertumbuhan.nasionalPositif) }}</span>
-              </b>
+              <b>{{ formatNumber(positifNasional) }}</b>
+              <b><span class="text-base tag-purple-100 py-0 px-1 rounded text-white align-middle">{{ formatNumberPlusMinus(pertumbuhan.nasionalPositif) }}</span></b>
             </span>
           </div>
         </CounterCardLoader>
+
+        <!-- Positif AKtif -->
         <CounterCardLoader
-          :is-pending="isPending"
+          :is-pending="isLoading"
           class="mb-8 border border-solid digital-signage"
           style="background-color: #FCDFE0; border-color: #FFB4B5; padding: 1rem;"
           label="Positif Aktif"
         >
           <div class="flex justify-between items-baseline text-2xl">
-            <h4>
-              <b>Jawa Barat</b>
-            </h4>
+            <h4><b>Jawa Barat</b></h4>
             <span>
-              <b>
-                {{ formatNumber(positifJabar - sembuhJabar - meninggalJabar) }}
-              </b>
-              <b>
-                <span class="text-xl tag-red-100 py-0 px-1 rounded text-white align-middle">{{ formatNumberPlusMinus(pertumbuhan.jabarPositif - pertumbuhan.jabarSembuh - pertumbuhan.jabarMeninggal) }}</span>
-              </b>
+              <b>{{ formatNumber(jsonDataKasusTotal.positif_aktif) }}</b>
+              <b><span class="text-xl tag-red-100 py-0 px-1 rounded text-white align-middle">{{ formatNumberPlusMinus(jsonDataKasusTotal.positif_aktif_pertumbuhan) }}</span></b>
             </span>
           </div>
           <div class="flex justify-between items-baseline text-xl">
-            <h4>
-              <b>Indonesia</b>
-            </h4>
+            <h4><b>Indonesia</b></h4>
             <span>
-              <b>
-                {{ formatNumber(positifNasional - sembuhNasional - meninggalNasional) }}
-              </b>
-              <b>
-                <span class="text-base tag-red-100 py-0 px-1 rounded text-white align-middle">{{ formatNumberPlusMinus(pertumbuhan.nasionalPositif - pertumbuhan.nasionalSembuh - pertumbuhan.nasionalMeninggal) }}</span>
-              </b>
+              <b>{{ formatNumber(positifNasional - sembuhNasional - meninggalNasional) }}</b>
+              <b><span class="text-base tag-red-100 py-0 px-1 rounded text-white align-middle">{{ formatNumberPlusMinus(pertumbuhan.nasionalPositif - pertumbuhan.nasionalSembuh - pertumbuhan.nasionalMeninggal) }}</span></b>
             </span>
           </div>
         </CounterCardLoader>
+
+        <!-- Positif Sembuh -->
         <CounterCardLoader
-          :is-pending="isPending"
+          :is-pending="isLoading"
           class="mb-8 border border-solid digital-signage"
           style="background-color: #D3EEE3; border-color: #91DCBD; padding: 1rem;"
           label="Sembuh"
         >
           <div class="flex justify-between items-baseline text-2xl">
-            <h4>
-              <b>Jawa Barat</b>
-            </h4>
+            <h4><b>Jawa Barat</b></h4>
             <span>
-              <b>
-                {{ formatNumber(sembuhJabar) }}
-              </b>
-              <b>
-                <span class="text-xl tag-green-100 py-0 px-1 rounded text-white align-middle">{{ formatNumberPlusMinus(pertumbuhan.jabarSembuh) }}</span>
-              </b>
+              <b>{{ formatNumber(jsonDataKasusTotal.positif_sembuh) }}</b>
+              <b><span class="text-xl tag-green-100 py-0 px-1 rounded text-white align-middle">{{ formatNumberPlusMinus(jsonDataKasusTotal.positif_sembuh_pertumbuhan) }}</span></b>
             </span>
           </div>
           <div class="flex justify-between items-baseline text-xl">
-            <h4>
-              <b>Indonesia</b>
-            </h4>
+            <h4><b>Indonesia</b></h4>
             <span>
-              <b>
-                {{ formatNumber(sembuhNasional) }}
-              </b>
-              <b>
-                <span class="text-base tag-green-100 py-0 px-1 rounded text-white align-middle">{{ formatNumberPlusMinus(pertumbuhan.nasionalSembuh) }}</span>
-              </b>
+              <b>{{ formatNumber(sembuhNasional) }}</b>
+              <b><span class="text-base tag-green-100 py-0 px-1 rounded text-white align-middle">{{ formatNumberPlusMinus(pertumbuhan.nasionalSembuh) }}</span></b>
             </span>
           </div>
         </CounterCardLoader>
+
+        <!-- Positif Meninggal -->
         <CounterCardLoader
-          :is-pending="isPending"
+          :is-pending="isLoading"
           class="mb-8 border order-solid digital-signage"
           style="background-color: #FBEADF; border-color: #FED1B1; padding: 1rem;"
           label="Meninggal"
         >
           <div class="flex justify-between items-baseline text-2xl">
-            <h4>
-              <b>Jawa Barat</b>
-            </h4>
+            <h4><b>Jawa Barat</b></h4>
             <span>
-              <b>
-                {{ formatNumber(meninggalJabar) }}
-              </b>
-              <b>
-                <span class="text-xl tag-orange-100 py-0 px-1 rounded text-white align-middle">{{ formatNumberPlusMinus(pertumbuhan.jabarMeninggal) }}</span>
-              </b>
+              <b>{{ formatNumber(jsonDataKasusTotal.positif_meninggal) }}</b>
+              <b><span class="text-xl tag-orange-100 py-0 px-1 rounded text-white align-middle">{{ formatNumberPlusMinus(jsonDataKasusTotal.positif_meninggal_pertumbuhan) }}</span></b>
             </span>
           </div>
           <div class="flex justify-between items-baseline text-xl">
-            <h4>
-              <b>Indonesia</b>
-            </h4>
+            <h4><b>Indonesia</b></h4>
             <span>
-              <b>
-                {{ formatNumber(meninggalNasional) }}
-              </b>
-              <b>
-                <span class="text-base tag-orange-100 py-0 px-1 rounded text-white align-middle">{{ formatNumberPlusMinus(pertumbuhan.nasionalMeninggal) }}</span>
-              </b>
+              <b>{{ formatNumber(meninggalNasional) }}</b>
+              <b><span class="text-base tag-orange-100 py-0 px-1 rounded text-white align-middle">{{ formatNumberPlusMinus(pertumbuhan.nasionalMeninggal) }}</span></b>
             </span>
           </div>
         </CounterCardLoader>
       </section>
 
       <section class="flex flex-col xl:flex-row xl:flex-no-wrap">
+        <!-- ODP -->
         <StatisticLoader
           class="w-full xl:w-auto xl:mr-8"
-          :is-pending="isPending"
+          :is-pending="isLoading"
           label="ODP (Orang Dalam Pemantauan)"
           processed-label="Proses Pemantauan"
           finished-label="Selesai Pemantauan"
+          died-label="Meninggal"
           total-label="Total ODP"
-          :processed="ODPProses"
-          :processed-percentage="_round(ODPProses * 100 / ODPTotal, 2)"
-          :finished="ODPSelesai"
-          :finished-percentage="_round(ODPSelesai * 100 / ODPTotal, 2)"
-          :total="ODPTotal"
+          :processed="jsonDataKasusTotal.odp_aktif"
+          :processed-percentage="_round(jsonDataKasusTotal.odp_aktif * 100 / jsonDataKasusTotal.odp_total, 2)"
+          :finished="jsonDataKasusTotal.odp_selesai"
+          :finished-percentage="_round(jsonDataKasusTotal.odp_selesai * 100 / jsonDataKasusTotal.odp_total, 2)"
+          :died="jsonDataKasusTotal.odp_meninggal"
+          :died-percentage="_round(jsonDataKasusTotal.odp_meninggal * 100 / jsonDataKasusTotal.odp_total, 2)"
+          :total="jsonDataKasusTotal.odp_total"
         >
           <template #footnote>
             <footer class="p-5">
@@ -162,18 +125,23 @@
             </footer>
           </template>
         </StatisticLoader>
+
+        <!-- PDP -->
         <StatisticLoader
           class="w-full xl:w-auto"
-          :is-pending="isPending"
+          :is-pending="isLoading"
           label="PDP (Pasien Dalam Pengawasan)"
           processed-label="Proses Pengawasan"
           finished-label="Selesai Pengawasan"
+          died-label="Meninggal"
           total-label="Total PDP"
-          :processed="PDPProses"
-          :processed-percentage="_round(PDPProses * 100 / PDPTotal, 2)"
-          :finished="PDPSelesai"
-          :finished-percentage="_round(PDPSelesai * 100 / PDPTotal, 2)"
-          :total="PDPTotal"
+          :processed="jsonDataKasusTotal.pdp_aktif"
+          :processed-percentage="_round(jsonDataKasusTotal.pdp_aktif * 100 / jsonDataKasusTotal.pdp_total, 2)"
+          :finished="jsonDataKasusTotal.pdp_selesai"
+          :finished-percentage="_round(jsonDataKasusTotal.pdp_selesai * 100 / jsonDataKasusTotal.pdp_total, 2)"
+          :died="jsonDataKasusTotal.pdp_meninggal"
+          :died-percentage="_round(jsonDataKasusTotal.pdp_meninggal * 100 / jsonDataKasusTotal.pdp_total, 2)"
+          :total="jsonDataKasusTotal.pdp_total"
         >
           <template #footnote>
             <footer class="p-5">
@@ -205,12 +173,10 @@ export default {
   },
   data () {
     return {
+      jsonDataKasusTotal: {},
       jsonDataRekapitulasiJabarKumulatifProv: [],
       jsonDataNasionalHarianKumulatif: [],
       pertumbuhan: {
-        jabarPositif: 0,
-        jabarSembuh: 0,
-        jabarMeninggal: 0,
         nasionalPositif: 0,
         nasionalSembuh: 0,
         nasionalMeninggal: 0
@@ -221,48 +187,33 @@ export default {
     cases () {
       return this.$store.state.statistics.cases
     },
-    ODPProses () {
-      return _get(this.cases, 'odp.proses.jabar')
-    },
-    ODPSelesai () {
-      return _get(this.cases, 'odp.selesai.jabar')
-    },
-    ODPTotal () {
-      return _get(this.cases, 'odp.total.jabar')
-    },
-    PDPProses () {
-      return _get(this.cases, 'pdp.proses.jabar')
-    },
-    PDPSelesai () {
-      return _get(this.cases, 'pdp.selesai.jabar')
-    },
-    PDPTotal () {
-      return _get(this.cases, 'pdp.total.jabar')
-    },
-    positifJabar () {
-      return _get(this.cases, 'aktif.jabar')
-    },
     positifNasional () {
       return _get(this.cases, 'aktif.nasional')
     },
-    sembuhJabar () {
-      return _get(this.cases, 'sembuh.jabar')
-    },
     sembuhNasional () {
       return _get(this.cases, 'sembuh.nasional')
-    },
-    meninggalJabar () {
-      return _get(this.cases, 'meninggal.jabar')
     },
     meninggalNasional () {
       return _get(this.cases, 'meninggal.nasional')
     },
     isPending () {
       return this.$store.state.statistics.cases === null
+    },
+    dataKasusTotal () {
+      return this.$store.getters['data-kasus-total/itemsMap']
+    },
+    isLoading () {
+      return this.$store.getters['data-kasus-total/isLoading']
     }
   },
-  created () {
-    this.fetchDataRekapitulasiJabarKumulatifProv()
+  watch: {
+    dataKasusTotal (val) {
+      this.jsonDataKasusTotal = val[0]
+      console.log(this.jsonDataKasusTotal)
+    }
+  },
+  mounted () {
+    this.getDataKasusTotal()
     this.fetchDataNasionalHarian()
   },
   methods: {
@@ -270,27 +221,6 @@ export default {
     formatNumber,
     formatNumberPlusMinus,
     formatNumberOnlyPlus,
-    fetchDataRekapitulasiJabarKumulatifProv () {
-      const self = this
-      axios
-        .get('https://covid19-public.digitalservice.id/api/v1/rekapitulasi/jabar/kumulatif?level=prov')
-        .then(function (response) {
-          self.jsonDataRekapitulasiJabarKumulatifProv = response.data.data.content
-          const numArr = self.jsonDataRekapitulasiJabarKumulatifProv.length
-          if (self.jsonDataRekapitulasiJabarKumulatifProv[numArr - 1].positif !== null && self.jsonDataRekapitulasiJabarKumulatifProv[numArr - 1].positif > 0) {
-            self.pertumbuhan.jabarPositif = self.jsonDataRekapitulasiJabarKumulatifProv[numArr - 1].positif - self.jsonDataRekapitulasiJabarKumulatifProv[numArr - 2].positif
-            self.pertumbuhan.jabarSembuh = self.jsonDataRekapitulasiJabarKumulatifProv[numArr - 1].sembuh - self.jsonDataRekapitulasiJabarKumulatifProv[numArr - 2].sembuh
-            self.pertumbuhan.jabarMeninggal = self.jsonDataRekapitulasiJabarKumulatifProv[numArr - 1].meninggal - self.jsonDataRekapitulasiJabarKumulatifProv[numArr - 2].meninggal
-          } else {
-            self.pertumbuhan.jabarPositif = self.jsonDataRekapitulasiJabarKumulatifProv[numArr - 2].positif - self.jsonDataRekapitulasiJabarKumulatifProv[numArr - 3].positif
-            self.pertumbuhan.jabarSembuh = self.jsonDataRekapitulasiJabarKumulatifProv[numArr - 2].sembuh - self.jsonDataRekapitulasiJabarKumulatifProv[numArr - 3].sembuh
-            self.pertumbuhan.jabarMeninggal = self.jsonDataRekapitulasiJabarKumulatifProv[numArr - 2].meninggal - self.jsonDataRekapitulasiJabarKumulatifProv[numArr - 3].meninggal
-          }
-        })
-        .catch(function (error) {
-          console.log(error)
-        })
-    },
     fetchDataNasionalHarian () {
       const self = this
       axios
@@ -311,6 +241,10 @@ export default {
         .catch(function (error) {
           console.log(error)
         })
+    },
+    // get data
+    getDataKasusTotal () {
+      this.$store.dispatch('data-kasus-total/getItems')
     }
   }
 }
