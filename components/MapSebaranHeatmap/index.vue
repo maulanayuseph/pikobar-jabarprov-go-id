@@ -38,8 +38,8 @@
           class="filter-data"
         >
           <li
-            :class="filter.positif_proses?'filter-active':''"
-            @click="setFilter('positif_proses')"
+            :class="filter.positif_aktif?'filter-active':''"
+            @click="setFilter('positif_aktif')"
           >
             <div
               class="legend-color cluster-positif-proses"
@@ -65,8 +65,8 @@
             />Positif - Meninggal
           </li>
           <li
-            :class="filter.pdp_proses?'filter-active':''"
-            @click="setFilter('pdp_proses')"
+            :class="filter.pdp_aktif?'filter-active':''"
+            @click="setFilter('pdp_aktif')"
           >
             <div
               class="legend-color cluster-pdp-proses"
@@ -94,8 +94,8 @@
             />PDP - Meninggal
           </li>
           <li
-            :class="filter.odp_proses?'filter-active':''"
-            @click="setFilter('odp_proses')"
+            :class="filter.odp_aktif?'filter-active':''"
+            @click="setFilter('odp_aktif')"
           >
             <div
               class="legend-color cluster-odp-proses"
@@ -175,31 +175,31 @@ export default {
       isRendered: false,
       isHiddenDisclaimer: false,
       isShowFilter: false,
-      activeLayer: 'positif_proses',
+      activeLayer: 'positif_aktif',
       listLayer: [],
       activeTitle: {
         className: 'cluster-positif-proses',
         name: 'Positif - Aktif'
       },
       dataJson: {
-        positif_proses: [],
+        positif_aktif: [],
         positif_meninggal: [],
         positif_sembuh: [],
-        pdp_proses: [],
+        pdp_aktif: [],
         pdp_selesai: [],
         pdp_meninggal: [],
-        odp_proses: [],
+        odp_aktif: [],
         odp_selesai: [],
         odp_meninggal: []
       },
       filter: {
-        positif_proses: true,
+        positif_aktif: true,
         positif_meninggal: false,
         positif_sembuh: false,
-        pdp_proses: false,
+        pdp_aktif: false,
         pdp_selesai: false,
         pdp_meninggal: false,
-        odp_proses: false,
+        odp_aktif: false,
         odp_selesai: false,
         odp_meninggal: false
       },
@@ -211,25 +211,42 @@ export default {
     }
   },
   computed: {
+    dataSebaranMarker () {
+      return this.$store.getters['data-sebaran-marker/itemMap']
+    },
+    isLoading () {
+      return this.$store.getters['data-sebaran-marker/isLoading']
+    }
   },
   watch: {
     activeId () {
       if (this.activeId === 'map-kel' && !this.isRendered) {
         this.initMap()
       }
+    },
+    dataSebaranMarker (val) {
+      this.distributionProvinceData = val
+      if (this.isRendered) {
+        this.onChanges()
+        this.removeLayer()
+        this.createHeatmap()
+      } else if (this.activeId === 'map-kel') {
+        this.initMap()
+      }
     }
   },
   mounted () {
+    this.getDataSebaranMarker()
     if (this.activeId === 'map-kel') {
       this.initMap()
     }
   },
   created () {
-    console.log('polygon on created')
+    // console.log('polygon on created')
     // this.distributionProvinceData = this.propsDataSebaranJawaBarat
-    if (this.$store.getters['data-sebaran-jabar/itemsMap']) {
-      this.distributionProvinceData = this.$store.getters['data-sebaran-jabar/itemsMap']
-    }
+    // if (this.$store.getters['data-sebaran-marker/itemMap']) {
+    //   this.distributionProvinceData = this.$store.getters['data-sebaran-marker/itemsMap']
+    // }
   },
   methods: {
     initMap () {
@@ -336,13 +353,13 @@ export default {
     },
     onChanges () {
       const dataJson = {
-        positif_proses: [],
+        positif_aktif: [],
         positif_meninggal: [],
         positif_sembuh: [],
-        pdp_proses: [],
+        pdp_aktif: [],
         pdp_selesai: [],
         pdp_meninggal: [],
-        odp_proses: [],
+        odp_aktif: [],
         odp_selesai: [],
         odp_meninggal: []
       }
@@ -350,19 +367,19 @@ export default {
         this.distributionProvinceData.forEach((row) => {
           if (row.latitude !== null || row.longitude != null) {
             if (row.status === 'Positif' && row.stage === 'Proses') {
-              dataJson.positif_proses.push(row)
+              dataJson.positif_aktif.push(row)
             } else if (row.status === 'Positif' && row.stage === 'Meninggal') {
               dataJson.positif_meninggal.push(row)
             } else if (row.status === 'Positif' && row.stage === 'Sembuh') {
               dataJson.positif_sembuh.push(row)
             } else if (row.status === 'PDP' && row.stage === 'Proses') {
-              dataJson.pdp_proses.push(row)
+              dataJson.pdp_aktif.push(row)
             } else if (row.status === 'PDP' && row.stage === 'Selesai') {
               dataJson.pdp_selesai.push(row)
             } else if (row.status === 'PDP' && row.stage === 'Meninggal') {
               dataJson.pdp_meninggal.push(row)
             } else if (row.status === 'ODP' && row.stage === 'Proses') {
-              dataJson.odp_proses.push(row)
+              dataJson.odp_aktif.push(row)
             } else if (row.status === 'ODP' && row.stage === 'Selesai') {
               dataJson.odp_selesai.push(row)
             } else if (row.status === 'ODP' && row.stage === 'Meninggal') {
@@ -375,9 +392,9 @@ export default {
       }
     },
     onClickDisclaimer () {
-      if (this.$store.getters['data-sebaran-jabar/itemsMap']) {
-        this.distributionProvinceData = this.$store.getters['data-sebaran-jabar/itemsMap']
-      }
+      // if (this.$store.getters['data-sebaran-marker/itemsMap']) {
+      // this.distributionProvinceData = this.$store.getters['data-sebaran-marker/itemsMap']
+      // }
 
       if (this.distributionProvinceData) {
         this.isHiddenDisclaimer = true
@@ -419,7 +436,7 @@ export default {
           }
           break
         }
-        case 'pdp_proses': {
+        case 'pdp_aktif': {
           this.activeTitle = {
             name: 'PDP - Proses',
             className: 'cluster-pdp-proses'
@@ -433,7 +450,7 @@ export default {
           }
           break
         }
-        case 'odp_proses': {
+        case 'odp_aktif': {
           this.activeTitle = {
             name: 'ODP - Proses',
             className: 'cluster-odp-proses'
@@ -465,8 +482,13 @@ export default {
       }
       this.filter[category] = !this.filter[category]
       this.activeLayer = category
-      this.removeLayer()
-      this.createHeatmap()
+      this.getDataSebaranMarker()
+    },
+
+    // get data
+    getDataSebaranMarker () {
+      const query = 'category=' + this.activeLayer
+      this.$store.dispatch('data-sebaran-marker/getItem', query)
     }
 
   }

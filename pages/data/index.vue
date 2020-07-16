@@ -200,7 +200,6 @@ export default {
         this.$store.dispatch('data-rekapitulasi-jabar-kumulatif-prov/getItems'),
         this.$store.dispatch('data-rekapitulasi-jabar-prov/getItems'),
         this.$store.dispatch('data-sebaran-jabar-faskes/getItems'),
-        this.$store.dispatch('data-sebaran-jabar/getItems'),
         this.$store.dispatch('statistics/getCases')
       ]).then(() => {
       })
