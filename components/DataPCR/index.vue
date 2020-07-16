@@ -15,7 +15,7 @@
           rx="3"
           ry="3"
           width="30%"
-          height="4"
+          height="6"
         />
         <rect
           x="0"
@@ -23,7 +23,7 @@
           rx="3"
           ry="3"
           width="50%"
-          height="4"
+          height="6"
         />
         <rect
           x="0"
@@ -31,7 +31,7 @@
           rx="3"
           ry="3"
           width="50%"
-          height="4"
+          height="6"
         />
         <rect
           x="0"
@@ -39,7 +39,7 @@
           rx="3"
           ry="3"
           width="50%"
-          height="4"
+          height="6"
         />
         <rect
           x="0"
@@ -47,7 +47,7 @@
           rx="3"
           ry="3"
           width="40%"
-          height="4"
+          height="6"
         />
         <rect
           x="0"
@@ -55,7 +55,7 @@
           rx="3"
           ry="3"
           width="30%"
-          height="4"
+          height="6"
         />
         <rect
           x="270"
@@ -63,7 +63,7 @@
           rx="3"
           ry="3"
           width="10%"
-          height="4"
+          height="6"
         />
         <rect
           x="270"
@@ -71,7 +71,7 @@
           rx="3"
           ry="3"
           width="10%"
-          height="4"
+          height="6"
         />
         <rect
           x="330"
@@ -79,7 +79,7 @@
           rx="3"
           ry="3"
           width="10%"
-          height="4"
+          height="6"
         />
         <rect
           x="390"
@@ -87,7 +87,7 @@
           rx="3"
           ry="3"
           width="10%"
-          height="4"
+          height="6"
         />
       </ContentLoader>
     </div>
