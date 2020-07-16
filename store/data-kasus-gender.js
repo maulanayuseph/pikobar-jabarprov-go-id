@@ -3,7 +3,7 @@ import axios from 'axios'
 export const state = () => ({
   items: null,
   item: null,
-  isLoading: false
+  isLoading: true
 })
 
 export const mutations = {
@@ -21,7 +21,7 @@ export const mutations = {
 export const actions = {
   async getItems ({ commit }, options) {
     commit('setIsLoading', true)
-    const { data } = await axios.get('http://dashboard-pikobar-api.digitalservice.id/kasus/gender', {
+    const { data } = await axios.get('https://dashboard-pikobar-api.digitalservice.id/kasus/gender', {
       headers: {
         'api-key': process.env.DASHBOARD_API_KEY
       }
@@ -32,7 +32,7 @@ export const actions = {
 
   async getItem ({ commit }, query, options) {
     commit('setIsLoading', true)
-    const { data } = await axios.get('http://dashboard-pikobar-api.digitalservice.id/kasus/gender?' + query, {
+    const { data } = await axios.get('https://dashboard-pikobar-api.digitalservice.id/kasus/gender?' + query, {
       headers: {
         'api-key': process.env.DASHBOARD_API_KEY
       }
