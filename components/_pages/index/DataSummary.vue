@@ -209,7 +209,6 @@ export default {
   watch: {
     dataKasusTotal (val) {
       this.jsonDataKasusTotal = val[0]
-      console.log(this.jsonDataKasusTotal)
     }
   },
   mounted () {

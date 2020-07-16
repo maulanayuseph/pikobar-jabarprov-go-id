@@ -3,6 +3,7 @@ import axios from 'axios'
 export const state = () => ({
   items: null,
   item: null,
+  metadata: null,
   isLoading: true
 })
 
@@ -12,6 +13,9 @@ export const mutations = {
   },
   setItem (state, item) {
     state.item = item
+  },
+  setMetadata (state, item) {
+    state.metadata = item
   },
   setIsLoading (state, item) {
     state.isLoading = item
@@ -27,6 +31,7 @@ export const actions = {
       }
     })
     commit('setItems', data.data)
+    commit('setMetadata', data.metadata)
     commit('setIsLoading', false)
   },
 
@@ -48,6 +53,9 @@ export const getters = {
   },
   itemMap (state) {
     return state.item
+  },
+  metadataMap (state) {
+    return state.metadata
   },
   isLoading (state) {
     return state.isLoading
