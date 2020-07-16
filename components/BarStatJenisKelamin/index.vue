@@ -21,56 +21,61 @@
       </select>
     </div>
     <hr>
-    <GChart
-      class="p-5"
-      type="PieChart"
-      :data="pieChartJenisKelaminData"
-      :options="pieChartJenisKelaminOptions"
-    />
+    <div
+      class="w-full p-5"
+      style="min-height: 300px;"
+      :class="isLoading?'':'hidden'"
+    >
+      <ContentLoader
+        class="w-full hidden lg:block"
+        :speed="3"
+        :width="400"
+        :height="350"
+        primary-color="#eee"
+        secondary-color="#fff"
+      >
+        <rect
+          :key="1"
+          x="0"
+          :y="4"
+          width="100%"
+          height="300"
+          rx="3"
+          ry="3"
+        />
+        <rect
+          :key="2"
+          x="0"
+          :y="310"
+          width="100%"
+          height="30"
+          rx="3"
+          ry="3"
+        />
+      </ContentLoader>
+    </div>
+    <div
+      :class="!isLoading?'':'hidden'"
+    >
+      <GChart
+        class="p-5"
+        type="PieChart"
+        :data="pieChartJenisKelaminData"
+        :options="pieChartJenisKelaminOptions"
+      />
+    </div>
   </div>
 </template>
 
 <script>
+import { ContentLoader } from 'vue-content-loader'
 import { GChart } from 'vue-google-charts'
 
 export default {
   name: 'BarStatJenisKelamin',
   components: {
-    GChart
-  },
-  props: {
-    propsDataRekapitulasiJabar: {
-      type: Object,
-      default: () => ({
-        kode_prov: '',
-        nama_prov: '',
-        odp_total: 0,
-        odp_total_per_gender: {
-          laki_laki: 0,
-          perempuan: 0
-        },
-        pdp_total: 0,
-        pdp_total_per_gender: {
-          laki_laki: 0,
-          perempuan: 0
-        },
-        positif: 0,
-        positif_per_gender: {
-          laki_laki: 0,
-          perempuan: 0
-        },
-        sembuh: 0,
-        sembuh_per_gender: {
-          laki_laki: 0,
-          perempuan: 0
-        },
-        meninggal: 0,
-        meninggal_per_gender: {
-          laki_laki: 0,
-          perempuan: 0
-        }
-      })
-    }
+    GChart,
+    ContentLoader
   },
   data () {
     return {
@@ -82,33 +87,54 @@ export default {
         'Positif - Meninggal'
       ],
       optionSelected: 'Positif - Sembuh',
-      jsonDataRekapitulasiJabar: {
-        kode_prov: '',
-        nama_prov: '',
-        odp_total: 0,
-        odp_total_per_gender: {
-          laki_laki: 0,
-          perempuan: 0
+      jsonDataKasusGender: {
+        odp_meninggal: {
+          perempuan: 0,
+          lakilaki: 0
         },
-        pdp_total: 0,
-        pdp_total_per_gender: {
-          laki_laki: 0,
-          perempuan: 0
+        pdp_total: {
+          perempuan: 0,
+          lakilaki: 0
         },
-        positif: 0,
-        positif_per_gender: {
-          laki_laki: 0,
-          perempuan: 0
+        pdp_aktif: {
+          perempuan: 0,
+          lakilaki: 0
         },
-        sembuh: 0,
-        sembuh_per_gender: {
-          laki_laki: 0,
-          perempuan: 0
+        odp_total: {
+          perempuan: 0,
+          lakilaki: 0
         },
-        meninggal: 0,
-        meninggal_per_gender: {
-          laki_laki: 0,
-          perempuan: 0
+        positif_meninggal: {
+          perempuan: 0,
+          lakilaki: 0
+        },
+        pdp_selesai: {
+          perempuan: 0,
+          lakilaki: 0
+        },
+        positif_total: {
+          perempuan: 0,
+          lakilaki: 0
+        },
+        odp_selesai: {
+          perempuan: 0,
+          lakilaki: 0
+        },
+        odp_aktif: {
+          perempuan: 0,
+          lakilaki: 0
+        },
+        pdp_meninggal: {
+          perempuan: 0,
+          lakilaki: 0
+        },
+        positif_sembuh: {
+          perempuan: 0,
+          lakilaki: 0
+        },
+        positif_aktif: {
+          perempuan: 0,
+          lakilaki: 0
         }
       },
       pieChartJenisKelaminData: [
@@ -134,19 +160,21 @@ export default {
     }
   },
   computed: {
-    dataRekapitulasiJabarProv () {
-      return this.$store.getters['data-rekapitulasi-jabar-prov/itemsMap']
+    dataKasusGender () {
+      return this.$store.getters['data-kasus-gender/itemsMap']
+    },
+    isLoading () {
+      return this.$store.getters['data-kasus-gender/isLoading']
     }
   },
   watch: {
-    // propsDataRekapitulasiJabar () {
-    //   this.jsonDataRekapitulasiJabar = this.propsDataRekapitulasiJabar
-    //   this.changeGroupJenisKelamin('Positif - Aktif')
-    // }
-    dataRekapitulasiJabarProv (val) {
-      this.jsonDataRekapitulasiJabar = val
+    dataKasusGender (val) {
+      this.jsonDataKasusGender = val
       this.changeGroupJenisKelamin('Positif - Sembuh')
     }
+  },
+  mounted () {
+    this.getDataKasusGender()
   },
   methods: {
     ifNullReturnZero (str) {
@@ -183,51 +211,34 @@ export default {
 
       let tempJenisKelaminPria = 0
       let tempJenisKelaminWanita = 0
-      let tempJenisKelaminNull = 0
 
       if (stat === 'ODP') {
-        tempJenisKelaminPria = parseInt(this.jsonDataRekapitulasiJabar.odp_total_per_gender.laki_laki)
-        tempJenisKelaminWanita = parseInt(this.jsonDataRekapitulasiJabar.odp_total_per_gender.perempuan)
-        tempJenisKelaminNull = parseInt(this.jsonDataRekapitulasiJabar.odp_total) - parseInt(tempJenisKelaminPria + tempJenisKelaminWanita)
-        if (tempJenisKelaminNull < 0) {
-          tempJenisKelaminNull = 0
-        }
+        tempJenisKelaminPria = parseInt(this.jsonDataKasusGender.odp_total.lakilaki)
+        tempJenisKelaminWanita = parseInt(this.jsonDataKasusGender.odp_total.perempuan)
       } else if (stat === 'PDP') {
-        tempJenisKelaminPria = parseInt(this.jsonDataRekapitulasiJabar.pdp_total_per_gender.laki_laki)
-        tempJenisKelaminWanita = parseInt(this.jsonDataRekapitulasiJabar.pdp_total_per_gender.perempuan)
-        tempJenisKelaminNull = parseInt(this.jsonDataRekapitulasiJabar.pdp_total) - parseInt(tempJenisKelaminPria + tempJenisKelaminWanita)
-        if (tempJenisKelaminNull < 0) {
-          tempJenisKelaminNull = 0
-        }
+        tempJenisKelaminPria = parseInt(this.jsonDataKasusGender.pdp_total.lakilaki)
+        tempJenisKelaminWanita = parseInt(this.jsonDataKasusGender.pdp_total.perempuan)
       } else if (stat === 'Positif - Aktif') {
-        tempJenisKelaminPria = parseInt(this.jsonDataRekapitulasiJabar.positif_per_gender.laki_laki) - parseInt(this.jsonDataRekapitulasiJabar.sembuh_per_gender.laki_laki) - parseInt(this.jsonDataRekapitulasiJabar.meninggal_per_gender.laki_laki)
-        tempJenisKelaminWanita = parseInt(this.jsonDataRekapitulasiJabar.positif_per_gender.perempuan) - parseInt(this.jsonDataRekapitulasiJabar.sembuh_per_gender.perempuan) - parseInt(this.jsonDataRekapitulasiJabar.meninggal_per_gender.perempuan)
-        tempJenisKelaminNull = parseInt(tempJenisKelaminPria) - parseInt(tempJenisKelaminPria + tempJenisKelaminWanita)
-        if (tempJenisKelaminNull < 0) {
-          tempJenisKelaminNull = 0
-        }
+        tempJenisKelaminPria = parseInt(this.jsonDataKasusGender.positif_aktif.lakilaki)
+        tempJenisKelaminWanita = parseInt(this.jsonDataKasusGender.positif_aktif.perempuan)
       } else if (stat === 'Positif - Sembuh') {
-        tempJenisKelaminPria = parseInt(this.jsonDataRekapitulasiJabar.sembuh_per_gender.laki_laki)
-        tempJenisKelaminWanita = parseInt(this.jsonDataRekapitulasiJabar.sembuh_per_gender.perempuan)
-        tempJenisKelaminNull = parseInt(this.jsonDataRekapitulasiJabar.sembuh) - parseInt(tempJenisKelaminPria + tempJenisKelaminWanita)
-        if (tempJenisKelaminNull < 0) {
-          tempJenisKelaminNull = 0
-        }
+        tempJenisKelaminPria = parseInt(this.jsonDataKasusGender.positif_sembuh.lakilaki)
+        tempJenisKelaminWanita = parseInt(this.jsonDataKasusGender.positif_sembuh.perempuan)
       } else if (stat === 'Positif - Meninggal') {
-        tempJenisKelaminPria = parseInt(this.jsonDataRekapitulasiJabar.meninggal_per_gender.laki_laki)
-        tempJenisKelaminWanita = parseInt(this.jsonDataRekapitulasiJabar.meninggal_per_gender.perempuan)
-        tempJenisKelaminNull = parseInt(this.jsonDataRekapitulasiJabar.meninggal) - parseInt(tempJenisKelaminPria + tempJenisKelaminWanita)
-        if (tempJenisKelaminNull < 0) {
-          tempJenisKelaminNull = 0
-        }
+        tempJenisKelaminPria = parseInt(this.jsonDataKasusGender.positif_meninggal.lakilaki)
+        tempJenisKelaminWanita = parseInt(this.jsonDataKasusGender.positif_meninggal.perempuan)
       }
 
       self.pieChartJenisKelaminData = [
         ['Jenis Kelamin', 'Data'],
         ['Pria', tempJenisKelaminPria],
         ['Wanita', tempJenisKelaminWanita],
-        ['N/A', tempJenisKelaminNull]
+        ['N/A', 0]
       ]
+    },
+    // get data
+    getDataKasusGender () {
+      this.$store.dispatch('data-kasus-gender/getItems')
     }
   }
 }
