@@ -302,68 +302,486 @@ export default {
         'Positif - Meninggal'
       ],
       optionSelected: 'Positif - Sembuh',
-      jsonDataRekapitulasiJabar: {
-        kode_prov: '',
-        nama_prov: '',
-        odp_total: 0,
-        odp_total_per_usia: {
-          bawah_5: 0,
-          '6_19': 0,
-          '20_29': 0,
-          '30_39': 0,
-          '40_49': 0,
-          '50_59': 0,
-          '60_69': 0,
-          '70_79': 0,
-          atas_80: 0
+      jsonDataKasusUmur: {
+        odp_meninggal: {
+          anak: {
+            perempuan: {
+              '6_18': 0,
+              bawah_1: 0,
+              '1_5': 0,
+              '5_6': 0
+            },
+            laki_laki: {
+              '6_18': 0,
+              bawah_1: 0,
+              '1_5': 0,
+              '5_6': 0
+            }
+          },
+          semua: {
+            perempuan: {
+              '70_79': 0,
+              '6_19': 0,
+              '30_39': 0,
+              atas_80: 0,
+              bawah_5: 0,
+              '40_49': 0,
+              '20_29': 0,
+              '50_59': 0,
+              '60_69': 0
+            },
+            laki_laki: {
+              '70_79': 0,
+              '6_19': 0,
+              '30_39': 0,
+              atas_80: 0,
+              bawah_5: 0,
+              '40_49': 0,
+              '20_29': 0,
+              '50_59': 0,
+              '60_69': 0
+            }
+          }
         },
-        pdp_total: 0,
-        pdp_total_per_usia: {
-          bawah_5: 0,
-          '6_19': 0,
-          '20_29': 0,
-          '30_39': 0,
-          '40_49': 0,
-          '50_59': 0,
-          '60_69': 0,
-          '70_79': 0,
-          atas_80: 0
+        pdp_total: {
+          anak: {
+            perempuan: {
+              '6_18': 0,
+              bawah_1: 0,
+              '1_5': 0,
+              '5_6': 0
+            },
+            laki_laki: {
+              '6_18': 0,
+              bawah_1: 0,
+              '1_5': 0,
+              '5_6': 0
+            }
+          },
+          semua: {
+            perempuan: {
+              '70_79': 0,
+              '6_19': 0,
+              '30_39': 0,
+              atas_80: 0,
+              bawah_5: 0,
+              '40_49': 0,
+              '20_29': 0,
+              '50_59': 0,
+              '60_69': 0
+            },
+            laki_laki: {
+              '70_79': 0,
+              '6_19': 0,
+              '30_39': 0,
+              atas_80: 0,
+              bawah_5: 0,
+              '40_49': 0,
+              '20_29': 0,
+              '50_59': 0,
+              '60_69': 0
+            }
+          }
         },
-        positif: 0,
-        positif_per_usia: {
-          bawah_5: 0,
-          '6_19': 0,
-          '20_29': 0,
-          '30_39': 0,
-          '40_49': 0,
-          '50_59': 0,
-          '60_69': 0,
-          '70_79': 0,
-          atas_80: 0
+        pdp_aktif: {
+          anak: {
+            perempuan: {
+              '6_18': 0,
+              bawah_1: 0,
+              '1_5': 0,
+              '5_6': 0
+            },
+            laki_laki: {
+              '6_18': 0,
+              bawah_1: 0,
+              '1_5': 0,
+              '5_6': 0
+            }
+          },
+          semua: {
+            perempuan: {
+              '70_79': 0,
+              '6_19': 0,
+              '30_39': 0,
+              atas_80: 0,
+              bawah_5: 0,
+              '40_49': 0,
+              '20_29': 0,
+              '50_59': 0,
+              '60_69': 0
+            },
+            laki_laki: {
+              '70_79': 0,
+              '6_19': 0,
+              '30_39': 0,
+              atas_80: 0,
+              bawah_5: 0,
+              '40_49': 0,
+              '20_29': 0,
+              '50_59': 0,
+              '60_69': 0
+            }
+          }
         },
-        sembuh: 0,
-        sembuh_per_usia: {
-          bawah_5: 0,
-          '6_19': 0,
-          '20_29': 0,
-          '30_39': 0,
-          '40_49': 0,
-          '50_59': 0,
-          '60_69': 0,
-          '70_79': 0,
-          atas_80: 0
+        odp_total: {
+          anak: {
+            perempuan: {
+              '6_18': 0,
+              bawah_1: 0,
+              '1_5': 0,
+              '5_6': 0
+            },
+            laki_laki: {
+              '6_18': 0,
+              bawah_1: 0,
+              '1_5': 0,
+              '5_6': 0
+            }
+          },
+          semua: {
+            perempuan: {
+              '70_79': 0,
+              '6_19': 0,
+              '30_39': 0,
+              atas_80: 0,
+              bawah_5: 0,
+              '40_49': 0,
+              '20_29': 0,
+              '50_59': 0,
+              '60_69': 0
+            },
+            laki_laki: {
+              '70_79': 0,
+              '6_19': 0,
+              '30_39': 0,
+              atas_80: 0,
+              bawah_5: 0,
+              '40_49': 0,
+              '20_29': 0,
+              '50_59': 0,
+              '60_69': 0
+            }
+          }
         },
-        meninggal: 0,
-        meninggal_per_usia: {
-          bawah_5: 0,
-          '6_19': 0,
-          '20_29': 0,
-          '30_39': 0,
-          '40_49': 0,
-          '50_59': 0,
-          '60_69': 0,
-          '70_79': 0,
-          atas_80: 0
+        positif_meninggal: {
+          anak: {
+            perempuan: {
+              '6_18': 0,
+              bawah_1: 0,
+              '1_5': 0,
+              '5_6': 0
+            },
+            laki_laki: {
+              '6_18': 0,
+              bawah_1: 0,
+              '1_5': 0,
+              '5_6': 0
+            }
+          },
+          semua: {
+            perempuan: {
+              '70_79': 0,
+              '6_19': 0,
+              '30_39': 0,
+              atas_80: 0,
+              bawah_5: 0,
+              '40_49': 0,
+              '20_29': 0,
+              '50_59': 0,
+              '60_69': 0
+            },
+            laki_laki: {
+              '70_79': 0,
+              '6_19': 0,
+              '30_39': 0,
+              atas_80: 0,
+              bawah_5: 0,
+              '40_49': 0,
+              '20_29': 0,
+              '50_59': 0,
+              '60_69': 0
+            }
+          }
+        },
+        pdp_selesai: {
+          anak: {
+            perempuan: {
+              '6_18': 0,
+              bawah_1: 0,
+              '1_5': 0,
+              '5_6': 0
+            },
+            laki_laki: {
+              '6_18': 0,
+              bawah_1: 0,
+              '1_5': 0,
+              '5_6': 0
+            }
+          },
+          semua: {
+            perempuan: {
+              '70_79': 0,
+              '6_19': 0,
+              '30_39': 0,
+              atas_80: 0,
+              bawah_5: 0,
+              '40_49': 0,
+              '20_29': 0,
+              '50_59': 0,
+              '60_69': 0
+            },
+            laki_laki: {
+              '70_79': 0,
+              '6_19': 0,
+              '30_39': 0,
+              atas_80: 0,
+              bawah_5: 0,
+              '40_49': 0,
+              '20_29': 0,
+              '50_59': 0,
+              '60_69': 0
+            }
+          }
+        },
+        positif_total: {
+          anak: {
+            perempuan: {
+              '6_18': 0,
+              bawah_1: 0,
+              '1_5': 0,
+              '5_6': 0
+            },
+            laki_laki: {
+              '6_18': 0,
+              bawah_1: 0,
+              '1_5': 0,
+              '5_6': 0
+            }
+          },
+          semua: {
+            perempuan: {
+              '70_79': 0,
+              '6_19': 0,
+              '30_39': 0,
+              atas_80: 0,
+              bawah_5: 0,
+              '40_49': 0,
+              '20_29': 0,
+              '50_59': 0,
+              '60_69': 0
+            },
+            laki_laki: {
+              '70_79': 0,
+              '6_19': 0,
+              '30_39': 0,
+              atas_80: 0,
+              bawah_5: 0,
+              '40_49': 0,
+              '20_29': 0,
+              '50_59': 0,
+              '60_69': 0
+            }
+          }
+        },
+        odp_selesai: {
+          anak: {
+            perempuan: {
+              '6_18': 0,
+              bawah_1: 0,
+              '1_5': 0,
+              '5_6': 0
+            },
+            laki_laki: {
+              '6_18': 0,
+              bawah_1: 0,
+              '1_5': 0,
+              '5_6': 0
+            }
+          },
+          semua: {
+            perempuan: {
+              '70_79': 0,
+              '6_19': 0,
+              '30_39': 0,
+              atas_80: 0,
+              bawah_5: 0,
+              '40_49': 0,
+              '20_29': 0,
+              '50_59': 0,
+              '60_69': 0
+            },
+            laki_laki: {
+              '70_79': 0,
+              '6_19': 0,
+              '30_39': 0,
+              atas_80: 0,
+              bawah_5: 0,
+              '40_49': 0,
+              '20_29': 0,
+              '50_59': 0,
+              '60_69': 0
+            }
+          }
+        },
+        odp_aktif: {
+          anak: {
+            perempuan: {
+              '6_18': 0,
+              bawah_1: 0,
+              '1_5': 0,
+              '5_6': 0
+            },
+            laki_laki: {
+              '6_18': 0,
+              bawah_1: 0,
+              '1_5': 0,
+              '5_6': 0
+            }
+          },
+          semua: {
+            perempuan: {
+              '70_79': 0,
+              '6_19': 0,
+              '30_39': 0,
+              atas_80: 0,
+              bawah_5: 0,
+              '40_49': 0,
+              '20_29': 0,
+              '50_59': 0,
+              '60_69': 0
+            },
+            laki_laki: {
+              '70_79': 0,
+              '6_19': 0,
+              '30_39': 0,
+              atas_80: 0,
+              bawah_5: 0,
+              '40_49': 0,
+              '20_29': 0,
+              '50_59': 0,
+              '60_69': 0
+            }
+          }
+        },
+        pdp_meninggal: {
+          anak: {
+            perempuan: {
+              '6_18': 0,
+              bawah_1: 0,
+              '1_5': 0,
+              '5_6': 0
+            },
+            laki_laki: {
+              '6_18': 0,
+              bawah_1: 0,
+              '1_5': 0,
+              '5_6': 0
+            }
+          },
+          semua: {
+            perempuan: {
+              '70_79': 0,
+              '6_19': 0,
+              '30_39': 0,
+              atas_80: 0,
+              bawah_5: 0,
+              '40_49': 0,
+              '20_29': 0,
+              '50_59': 0,
+              '60_69': 0
+            },
+            laki_laki: {
+              '70_79': 0,
+              '6_19': 0,
+              '30_39': 0,
+              atas_80: 0,
+              bawah_5: 0,
+              '40_49': 0,
+              '20_29': 0,
+              '50_59': 0,
+              '60_69': 0
+            }
+          }
+        },
+        positif_sembuh: {
+          anak: {
+            perempuan: {
+              '6_18': 0,
+              bawah_1: 0,
+              '1_5': 0,
+              '5_6': 0
+            },
+            laki_laki: {
+              '6_18': 0,
+              bawah_1: 0,
+              '1_5': 0,
+              '5_6': 0
+            }
+          },
+          semua: {
+            perempuan: {
+              '70_79': 0,
+              '6_19': 0,
+              '30_39': 0,
+              atas_80: 0,
+              bawah_5: 0,
+              '40_49': 0,
+              '20_29': 0,
+              '50_59': 0,
+              '60_69': 0
+            },
+            laki_laki: {
+              '70_79': 0,
+              '6_19': 0,
+              '30_39': 0,
+              atas_80: 0,
+              bawah_5: 0,
+              '40_49': 0,
+              '20_29': 0,
+              '50_59': 0,
+              '60_69': 0
+            }
+          }
+        },
+        positif_aktif: {
+          anak: {
+            perempuan: {
+              '6_18': 0,
+              bawah_1: 0,
+              '1_5': 0,
+              '5_6': 0
+            },
+            laki_laki: {
+              '6_18': 0,
+              bawah_1: 0,
+              '1_5': 0,
+              '5_6': 0
+            }
+          },
+          semua: {
+            perempuan: {
+              '70_79': 0,
+              '6_19': 0,
+              '30_39': 0,
+              atas_80: 0,
+              bawah_5: 0,
+              '40_49': 0,
+              '20_29': 0,
+              '50_59': 0,
+              '60_69': 0
+            },
+            laki_laki: {
+              '70_79': 0,
+              '6_19': 0,
+              '30_39': 0,
+              atas_80: 0,
+              bawah_5: 0,
+              '40_49': 0,
+              '20_29': 0,
+              '50_59': 0,
+              '60_69': 0
+            }
+          }
         }
       },
       barChartUmurJenisKelaminData: {
@@ -549,50 +967,21 @@ export default {
     }
   },
   computed: {
-    dataRekapitulasiJabarProv () {
-      return this.$store.getters['data-rekapitulasi-jabar-prov/itemsMap']
+    dataKasusUmur () {
+      return this.$store.getters['data-kasus-umur/itemMap']
+    },
+    isLoading () {
+      return this.$store.getters['data-kasus-umur/isLoading']
     }
   },
   watch: {
-    // propsDataRekapitulasiJabar () {
-    //   this.jsonDataRekapitulasiJabar = this.propsDataRekapitulasiJabar
-
-    //   this.jsonDataRekapitulasiJabar.positif_per_usia.anak.laki_laki.bawah_1 = this.ifNegatifReturnZero(this.jsonDataRekapitulasiJabar.positif_per_usia.anak.laki_laki.bawah_1 - this.jsonDataRekapitulasiJabar.sembuh_per_usia.anak.laki_laki.bawah_1 - this.jsonDataRekapitulasiJabar.meninggal_per_usia.anak.laki_laki.bawah_1)
-    //   this.jsonDataRekapitulasiJabar.positif_per_usia.anak.laki_laki['1_5'] = this.ifNegatifReturnZero(this.jsonDataRekapitulasiJabar.positif_per_usia.anak.laki_laki['1_5'] - this.jsonDataRekapitulasiJabar.sembuh_per_usia.anak.laki_laki['1_5'] - this.jsonDataRekapitulasiJabar.meninggal_per_usia.anak.laki_laki['1_5'])
-    //   this.jsonDataRekapitulasiJabar.positif_per_usia.anak.laki_laki['5_6'] = this.ifNegatifReturnZero(this.jsonDataRekapitulasiJabar.positif_per_usia.anak.laki_laki['5_6'] - this.jsonDataRekapitulasiJabar.sembuh_per_usia.anak.laki_laki['5_6'] - this.jsonDataRekapitulasiJabar.meninggal_per_usia.anak.laki_laki['5_6'])
-    //   this.jsonDataRekapitulasiJabar.positif_per_usia.anak.laki_laki['6_18'] = this.ifNegatifReturnZero(this.jsonDataRekapitulasiJabar.positif_per_usia.anak.laki_laki['6_18'] - this.jsonDataRekapitulasiJabar.sembuh_per_usia.anak.laki_laki['6_18'] - this.jsonDataRekapitulasiJabar.meninggal_per_usia.anak.laki_laki['6_18'])
-
-    //   this.jsonDataRekapitulasiJabar.positif_per_usia.anak.perempuan.bawah_1 = this.ifNegatifReturnZero(this.jsonDataRekapitulasiJabar.positif_per_usia.anak.perempuan.bawah_1 - this.jsonDataRekapitulasiJabar.sembuh_per_usia.anak.perempuan.bawah_1 - this.jsonDataRekapitulasiJabar.meninggal_per_usia.anak.perempuan.bawah_1)
-    //   this.jsonDataRekapitulasiJabar.positif_per_usia.anak.perempuan['1_5'] = this.ifNegatifReturnZero(this.jsonDataRekapitulasiJabar.positif_per_usia.anak.perempuan['1_5'] - this.jsonDataRekapitulasiJabar.sembuh_per_usia.anak.perempuan['1_5'] - this.jsonDataRekapitulasiJabar.meninggal_per_usia.anak.perempuan['1_5'])
-    //   this.jsonDataRekapitulasiJabar.positif_per_usia.anak.perempuan['5_6'] = this.ifNegatifReturnZero(this.jsonDataRekapitulasiJabar.positif_per_usia.anak.perempuan['5_6'] - this.jsonDataRekapitulasiJabar.sembuh_per_usia.anak.perempuan['5_6'] - this.jsonDataRekapitulasiJabar.meninggal_per_usia.anak.perempuan['5_6'])
-    //   this.jsonDataRekapitulasiJabar.positif_per_usia.anak.perempuan['6_18'] = this.ifNegatifReturnZero(this.jsonDataRekapitulasiJabar.positif_per_usia.anak.perempuan['6_18'] - this.jsonDataRekapitulasiJabar.sembuh_per_usia.anak.perempuan['6_18'] - this.jsonDataRekapitulasiJabar.meninggal_per_usia.anak.perempuan['6_18'])
-
-    //   this.jsonDataRekapitulasiJabar.positif_per_usia.semua.laki_laki.bawah_5 = this.ifNegatifReturnZero(this.jsonDataRekapitulasiJabar.positif_per_usia.semua.laki_laki.bawah_5 - this.jsonDataRekapitulasiJabar.sembuh_per_usia.semua.laki_laki.bawah_5 - this.jsonDataRekapitulasiJabar.meninggal_per_usia.semua.laki_laki.bawah_5)
-    //   this.jsonDataRekapitulasiJabar.positif_per_usia.semua.laki_laki['6_19'] = this.ifNegatifReturnZero(this.jsonDataRekapitulasiJabar.positif_per_usia.semua.laki_laki['6_19'] - this.jsonDataRekapitulasiJabar.sembuh_per_usia.semua.laki_laki['6_19'] - this.jsonDataRekapitulasiJabar.meninggal_per_usia.semua.laki_laki['6_19'])
-    //   this.jsonDataRekapitulasiJabar.positif_per_usia.semua.laki_laki['20_29'] = this.ifNegatifReturnZero(this.jsonDataRekapitulasiJabar.positif_per_usia.semua.laki_laki['20_29'] - this.jsonDataRekapitulasiJabar.sembuh_per_usia.semua.laki_laki['20_29'] - this.jsonDataRekapitulasiJabar.meninggal_per_usia.semua.laki_laki['20_29'])
-    //   this.jsonDataRekapitulasiJabar.positif_per_usia.semua.laki_laki['30_39'] = this.ifNegatifReturnZero(this.jsonDataRekapitulasiJabar.positif_per_usia.semua.laki_laki['30_39'] - this.jsonDataRekapitulasiJabar.sembuh_per_usia.semua.laki_laki['30_39'] - this.jsonDataRekapitulasiJabar.meninggal_per_usia.semua.laki_laki['30_39'])
-    //   this.jsonDataRekapitulasiJabar.positif_per_usia.semua.laki_laki['40_49'] = this.ifNegatifReturnZero(this.jsonDataRekapitulasiJabar.positif_per_usia.semua.laki_laki['40_49'] - this.jsonDataRekapitulasiJabar.sembuh_per_usia.semua.laki_laki['40_49'] - this.jsonDataRekapitulasiJabar.meninggal_per_usia.semua.laki_laki['40_49'])
-    //   this.jsonDataRekapitulasiJabar.positif_per_usia.semua.laki_laki['50_59'] = this.ifNegatifReturnZero(this.jsonDataRekapitulasiJabar.positif_per_usia.semua.laki_laki['50_59'] - this.jsonDataRekapitulasiJabar.sembuh_per_usia.semua.laki_laki['50_59'] - this.jsonDataRekapitulasiJabar.meninggal_per_usia.semua.laki_laki['50_59'])
-    //   this.jsonDataRekapitulasiJabar.positif_per_usia.semua.laki_laki['60_69'] = this.ifNegatifReturnZero(this.jsonDataRekapitulasiJabar.positif_per_usia.semua.laki_laki['60_69'] - this.jsonDataRekapitulasiJabar.sembuh_per_usia.semua.laki_laki['60_69'] - this.jsonDataRekapitulasiJabar.meninggal_per_usia.semua.laki_laki['60_69'])
-    //   this.jsonDataRekapitulasiJabar.positif_per_usia.semua.laki_laki['70_79'] = this.ifNegatifReturnZero(this.jsonDataRekapitulasiJabar.positif_per_usia.semua.laki_laki['70_79'] - this.jsonDataRekapitulasiJabar.sembuh_per_usia.semua.laki_laki['70_79'] - this.jsonDataRekapitulasiJabar.meninggal_per_usia.semua.laki_laki['70_79'])
-    //   this.jsonDataRekapitulasiJabar.positif_per_usia.semua.laki_laki.atas_80 = this.ifNegatifReturnZero(this.jsonDataRekapitulasiJabar.positif_per_usia.semua.laki_laki.atas_80 - this.jsonDataRekapitulasiJabar.sembuh_per_usia.semua.laki_laki.atas_80 - this.jsonDataRekapitulasiJabar.meninggal_per_usia.semua.laki_laki.atas_80)
-
-    //   this.jsonDataRekapitulasiJabar.positif_per_usia.semua.perempuan.bawah_5 = this.ifNegatifReturnZero(this.jsonDataRekapitulasiJabar.positif_per_usia.semua.perempuan.bawah_5 - this.jsonDataRekapitulasiJabar.sembuh_per_usia.semua.perempuan.bawah_5 - this.jsonDataRekapitulasiJabar.meninggal_per_usia.semua.perempuan.bawah_5)
-    //   this.jsonDataRekapitulasiJabar.positif_per_usia.semua.perempuan['6_19'] = this.ifNegatifReturnZero(this.jsonDataRekapitulasiJabar.positif_per_usia.semua.perempuan['6_19'] - this.jsonDataRekapitulasiJabar.sembuh_per_usia.semua.perempuan['6_19'] - this.jsonDataRekapitulasiJabar.meninggal_per_usia.semua.perempuan['6_19'])
-    //   this.jsonDataRekapitulasiJabar.positif_per_usia.semua.perempuan['20_29'] = this.ifNegatifReturnZero(this.jsonDataRekapitulasiJabar.positif_per_usia.semua.perempuan['20_29'] - this.jsonDataRekapitulasiJabar.sembuh_per_usia.semua.perempuan['20_29'] - this.jsonDataRekapitulasiJabar.meninggal_per_usia.semua.perempuan['20_29'])
-    //   this.jsonDataRekapitulasiJabar.positif_per_usia.semua.perempuan['30_39'] = this.ifNegatifReturnZero(this.jsonDataRekapitulasiJabar.positif_per_usia.semua.perempuan['30_39'] - this.jsonDataRekapitulasiJabar.sembuh_per_usia.semua.perempuan['30_39'] - this.jsonDataRekapitulasiJabar.meninggal_per_usia.semua.perempuan['30_39'])
-    //   this.jsonDataRekapitulasiJabar.positif_per_usia.semua.perempuan['40_49'] = this.ifNegatifReturnZero(this.jsonDataRekapitulasiJabar.positif_per_usia.semua.perempuan['40_49'] - this.jsonDataRekapitulasiJabar.sembuh_per_usia.semua.perempuan['40_49'] - this.jsonDataRekapitulasiJabar.meninggal_per_usia.semua.perempuan['40_49'])
-    //   this.jsonDataRekapitulasiJabar.positif_per_usia.semua.perempuan['50_59'] = this.ifNegatifReturnZero(this.jsonDataRekapitulasiJabar.positif_per_usia.semua.perempuan['50_59'] - this.jsonDataRekapitulasiJabar.sembuh_per_usia.semua.perempuan['50_59'] - this.jsonDataRekapitulasiJabar.meninggal_per_usia.semua.perempuan['50_59'])
-    //   this.jsonDataRekapitulasiJabar.positif_per_usia.semua.perempuan['60_69'] = this.ifNegatifReturnZero(this.jsonDataRekapitulasiJabar.positif_per_usia.semua.perempuan['60_69'] - this.jsonDataRekapitulasiJabar.sembuh_per_usia.semua.perempuan['60_69'] - this.jsonDataRekapitulasiJabar.meninggal_per_usia.semua.perempuan['60_69'])
-    //   this.jsonDataRekapitulasiJabar.positif_per_usia.semua.perempuan['70_79'] = this.ifNegatifReturnZero(this.jsonDataRekapitulasiJabar.positif_per_usia.semua.perempuan['70_79'] - this.jsonDataRekapitulasiJabar.sembuh_per_usia.semua.perempuan['70_79'] - this.jsonDataRekapitulasiJabar.meninggal_per_usia.semua.perempuan['70_79'])
-    //   this.jsonDataRekapitulasiJabar.positif_per_usia.semua.perempuan.atas_80 = this.ifNegatifReturnZero(this.jsonDataRekapitulasiJabar.positif_per_usia.semua.perempuan.atas_80 - this.jsonDataRekapitulasiJabar.sembuh_per_usia.semua.perempuan.atas_80 - this.jsonDataRekapitulasiJabar.meninggal_per_usia.semua.perempuan.atas_80)
-
-    //   this.changeGroupUsia('Positif - Aktif')
-    // }
-    dataRekapitulasiJabarProv (val) {
-      this.jsonDataRekapitulasiJabar = val
+    dataKasusUmur (val) {
+      this.jsonDataKasusUmur = val
       this.changeGroupUsia('Positif - Sembuh')
     }
+  },
+  mounted () {
+    this.getDataKasusUmur()
   },
   methods: {
     ifNullReturnZero (str) {
@@ -745,194 +1134,200 @@ export default {
     },
     changeGroupUsia (stat) {
       const self = this
-      let filter = 'positif_per_usia'
+      let filter = 'positif_aktif'
       this.resetBarChartUmurJenisKelaminData()
       this.resetBarChartAnakUmurJenisKelaminData()
 
       if (stat === 'ODP') {
-        filter = 'odp_total_per_usia'
+        filter = 'odp_total'
       } else if (stat === 'PDP') {
-        filter = 'pdp_total_per_usia'
+        filter = 'pdp_total'
       } else if (stat === 'Positif - Aktif') {
-        filter = 'positif_per_usia'
+        filter = 'positif_aktif'
       } else if (stat === 'Positif - Sembuh') {
-        filter = 'sembuh_per_usia'
+        filter = 'positif_sembuh'
       } else if (stat === 'Positif - Meninggal') {
-        filter = 'meninggal_per_usia'
+        filter = 'positif_meninggal'
       }
 
-      // Semua Umur
-      this.barChartUmurJenisKelaminData = {
-        cols: [
-          { id: 'Umur', label: 'Umur', type: 'string' },
-          { id: 'Pria', label: 'Pria', type: 'number' },
-          { id: 'Wanita', label: 'Wanita', type: 'number' }
-        ],
-        rows: [
-          {
-            c: [
-              { v: 100, f: '>80' },
-              { v: parseInt(this.jsonDataRekapitulasiJabar[filter].semua.laki_laki.atas_80) * -1, f: (parseInt(this.jsonDataRekapitulasiJabar[filter].semua.laki_laki.atas_80)).toString() },
-              { v: parseInt(this.jsonDataRekapitulasiJabar[filter].semua.perempuan.atas_80), f: parseInt(this.jsonDataRekapitulasiJabar[filter].semua.perempuan.atas_80).toString() }
-            ]
-          },
-          {
-            c: [
-              { v: 80, f: '70-79' },
-              { v: parseInt(this.jsonDataRekapitulasiJabar[filter].semua.laki_laki['70_79']) * -1, f: (parseInt(this.jsonDataRekapitulasiJabar[filter].semua.laki_laki['70_79'])).toString() },
-              { v: parseInt(this.jsonDataRekapitulasiJabar[filter].semua.perempuan['70_79']), f: parseInt(this.jsonDataRekapitulasiJabar[filter].semua.perempuan['70_79']).toString() }
-            ]
-          },
-          {
-            c: [
-              { v: 70, f: '60-69' },
-              { v: parseInt(this.jsonDataRekapitulasiJabar[filter].semua.laki_laki['60_69']) * -1, f: (parseInt(this.jsonDataRekapitulasiJabar[filter].semua.laki_laki['60_69'])).toString() },
-              { v: parseInt(this.jsonDataRekapitulasiJabar[filter].semua.perempuan['60_69']), f: parseInt(this.jsonDataRekapitulasiJabar[filter].semua.perempuan['60_69']).toString() }
-            ]
-          },
-          {
-            c: [
-              { v: 60, f: '50-59' },
-              { v: parseInt(this.jsonDataRekapitulasiJabar[filter].semua.laki_laki['50_59']) * -1, f: (parseInt(this.jsonDataRekapitulasiJabar[filter].semua.laki_laki['50_59'])).toString() },
-              { v: parseInt(this.jsonDataRekapitulasiJabar[filter].semua.perempuan['50_59']), f: parseInt(this.jsonDataRekapitulasiJabar[filter].semua.perempuan['50_59']).toString() }
-            ]
-          },
-          {
-            c: [
-              { v: 50, f: '40-49' },
-              { v: parseInt(this.jsonDataRekapitulasiJabar[filter].semua.laki_laki['40_49']) * -1, f: (parseInt(this.jsonDataRekapitulasiJabar[filter].semua.laki_laki['40_49'])).toString() },
-              { v: parseInt(this.jsonDataRekapitulasiJabar[filter].semua.perempuan['40_49']), f: parseInt(this.jsonDataRekapitulasiJabar[filter].semua.perempuan['40_49']).toString() }
-            ]
-          },
-          {
-            c: [
-              { v: 40, f: '30-39' },
-              { v: parseInt(this.jsonDataRekapitulasiJabar[filter].semua.laki_laki['30_39']) * -1, f: (parseInt(this.jsonDataRekapitulasiJabar[filter].semua.laki_laki['30_39'])).toString() },
-              { v: parseInt(this.jsonDataRekapitulasiJabar[filter].semua.perempuan['30_39']), f: parseInt(this.jsonDataRekapitulasiJabar[filter].semua.perempuan['30_39']).toString() }
-            ]
-          },
-          {
-            c: [
-              { v: 30, f: '20-29' },
-              { v: parseInt(this.jsonDataRekapitulasiJabar[filter].semua.laki_laki['20_29']) * -1, f: (parseInt(this.jsonDataRekapitulasiJabar[filter].semua.laki_laki['20_29'])).toString() },
-              { v: parseInt(this.jsonDataRekapitulasiJabar[filter].semua.perempuan['20_29']), f: parseInt(this.jsonDataRekapitulasiJabar[filter].semua.perempuan['20_29']).toString() }
-            ]
-          },
-          {
-            c: [
-              { v: 20, f: '6-19' },
-              { v: parseInt(this.jsonDataRekapitulasiJabar[filter].semua.laki_laki['6_19']) * -1, f: (parseInt(this.jsonDataRekapitulasiJabar[filter].semua.laki_laki['6_19'])).toString() },
-              { v: parseInt(this.jsonDataRekapitulasiJabar[filter].semua.perempuan['6_19']), f: parseInt(this.jsonDataRekapitulasiJabar[filter].semua.perempuan['6_19']).toString() }
-            ]
-          },
-          {
-            c: [
-              { v: 10, f: '<5' },
-              { v: parseInt(this.jsonDataRekapitulasiJabar[filter].semua.laki_laki.bawah_5) * -1, f: (parseInt(this.jsonDataRekapitulasiJabar[filter].semua.laki_laki.bawah_5)).toString() },
-              { v: parseInt(this.jsonDataRekapitulasiJabar[filter].semua.perempuan.bawah_5), f: parseInt(this.jsonDataRekapitulasiJabar[filter].semua.perempuan.bawah_5).toString() }
-            ]
+      if (this.jsonDataKasusUmur[filter] !== undefined) {
+        // Semua Umur
+        this.barChartUmurJenisKelaminData = {
+          cols: [
+            { id: 'Umur', label: 'Umur', type: 'string' },
+            { id: 'Pria', label: 'Pria', type: 'number' },
+            { id: 'Wanita', label: 'Wanita', type: 'number' }
+          ],
+          rows: [
+            {
+              c: [
+                { v: 100, f: '>80' },
+                { v: parseInt(this.jsonDataKasusUmur[filter].semua.laki_laki.atas_80) * -1, f: (parseInt(this.jsonDataKasusUmur[filter].semua.laki_laki.atas_80)).toString() },
+                { v: parseInt(this.jsonDataKasusUmur[filter].semua.perempuan.atas_80), f: parseInt(this.jsonDataKasusUmur[filter].semua.perempuan.atas_80).toString() }
+              ]
+            },
+            {
+              c: [
+                { v: 80, f: '70-79' },
+                { v: parseInt(this.jsonDataKasusUmur[filter].semua.laki_laki['70_79']) * -1, f: (parseInt(this.jsonDataKasusUmur[filter].semua.laki_laki['70_79'])).toString() },
+                { v: parseInt(this.jsonDataKasusUmur[filter].semua.perempuan['70_79']), f: parseInt(this.jsonDataKasusUmur[filter].semua.perempuan['70_79']).toString() }
+              ]
+            },
+            {
+              c: [
+                { v: 70, f: '60-69' },
+                { v: parseInt(this.jsonDataKasusUmur[filter].semua.laki_laki['60_69']) * -1, f: (parseInt(this.jsonDataKasusUmur[filter].semua.laki_laki['60_69'])).toString() },
+                { v: parseInt(this.jsonDataKasusUmur[filter].semua.perempuan['60_69']), f: parseInt(this.jsonDataKasusUmur[filter].semua.perempuan['60_69']).toString() }
+              ]
+            },
+            {
+              c: [
+                { v: 60, f: '50-59' },
+                { v: parseInt(this.jsonDataKasusUmur[filter].semua.laki_laki['50_59']) * -1, f: (parseInt(this.jsonDataKasusUmur[filter].semua.laki_laki['50_59'])).toString() },
+                { v: parseInt(this.jsonDataKasusUmur[filter].semua.perempuan['50_59']), f: parseInt(this.jsonDataKasusUmur[filter].semua.perempuan['50_59']).toString() }
+              ]
+            },
+            {
+              c: [
+                { v: 50, f: '40-49' },
+                { v: parseInt(this.jsonDataKasusUmur[filter].semua.laki_laki['40_49']) * -1, f: (parseInt(this.jsonDataKasusUmur[filter].semua.laki_laki['40_49'])).toString() },
+                { v: parseInt(this.jsonDataKasusUmur[filter].semua.perempuan['40_49']), f: parseInt(this.jsonDataKasusUmur[filter].semua.perempuan['40_49']).toString() }
+              ]
+            },
+            {
+              c: [
+                { v: 40, f: '30-39' },
+                { v: parseInt(this.jsonDataKasusUmur[filter].semua.laki_laki['30_39']) * -1, f: (parseInt(this.jsonDataKasusUmur[filter].semua.laki_laki['30_39'])).toString() },
+                { v: parseInt(this.jsonDataKasusUmur[filter].semua.perempuan['30_39']), f: parseInt(this.jsonDataKasusUmur[filter].semua.perempuan['30_39']).toString() }
+              ]
+            },
+            {
+              c: [
+                { v: 30, f: '20-29' },
+                { v: parseInt(this.jsonDataKasusUmur[filter].semua.laki_laki['20_29']) * -1, f: (parseInt(this.jsonDataKasusUmur[filter].semua.laki_laki['20_29'])).toString() },
+                { v: parseInt(this.jsonDataKasusUmur[filter].semua.perempuan['20_29']), f: parseInt(this.jsonDataKasusUmur[filter].semua.perempuan['20_29']).toString() }
+              ]
+            },
+            {
+              c: [
+                { v: 20, f: '6-19' },
+                { v: parseInt(this.jsonDataKasusUmur[filter].semua.laki_laki['6_19']) * -1, f: (parseInt(this.jsonDataKasusUmur[filter].semua.laki_laki['6_19'])).toString() },
+                { v: parseInt(this.jsonDataKasusUmur[filter].semua.perempuan['6_19']), f: parseInt(this.jsonDataKasusUmur[filter].semua.perempuan['6_19']).toString() }
+              ]
+            },
+            {
+              c: [
+                { v: 10, f: '<5' },
+                { v: parseInt(this.jsonDataKasusUmur[filter].semua.laki_laki.bawah_5) * -1, f: (parseInt(this.jsonDataKasusUmur[filter].semua.laki_laki.bawah_5)).toString() },
+                { v: parseInt(this.jsonDataKasusUmur[filter].semua.perempuan.bawah_5), f: parseInt(this.jsonDataKasusUmur[filter].semua.perempuan.bawah_5).toString() }
+              ]
+            }
+          ]
+        }
+
+        let max = 0
+        let asc = 0
+        // find max count for scala
+        for (let j = 0; j < self.barChartUmurJenisKelaminData.rows.length; j++) {
+          if (self.barChartUmurJenisKelaminData.rows[j].c[2].v > max) {
+            max = self.barChartUmurJenisKelaminData.rows[j].c[2].v
           }
-        ]
-      }
-
-      let max = 0
-      let asc = 0
-      // find max count for scala
-      for (let j = 0; j < self.barChartUmurJenisKelaminData.rows.length; j++) {
-        if (self.barChartUmurJenisKelaminData.rows[j].c[2].v > max) {
-          max = self.barChartUmurJenisKelaminData.rows[j].c[2].v
-        }
-        if (self.barChartUmurJenisKelaminData.rows[j].c[1].v * -1 > max) {
-          max = self.barChartUmurJenisKelaminData.rows[j].c[1].v * -1
-        }
-        asc = Math.ceil(max / 10)
-        self.barChartUmurJenisKelaminOptions.hAxis.viewWindow.min = (max + asc) * -1
-        self.barChartUmurJenisKelaminOptions.hAxis.viewWindow.max = max + asc
-      }
-
-      // set number of scala
-      self.barChartUmurJenisKelaminOptions.hAxis.ticks = []
-      if (max > 0) {
-        asc = Math.ceil(max / 10)
-        for (let k = 0; k <= max + asc; k = k + asc) {
-          self.barChartUmurJenisKelaminOptions.hAxis.ticks.push({ v: k * -1, f: k.toString() })
-        }
-        for (let k = 0; k <= max + asc; k = k + asc) {
-          self.barChartUmurJenisKelaminOptions.hAxis.ticks.push(k)
-        }
-      } else {
-        self.barChartUmurJenisKelaminOptions.hAxis.ticks.push({ v: 0, f: '0' })
-        self.barChartUmurJenisKelaminOptions.hAxis.ticks.push(0)
-      }
-
-      // Umur Anak
-      this.barChartAnakUmurJenisKelaminData = {
-        cols: [
-          { id: 'Umur', label: 'Umur', type: 'string' },
-          { id: 'Pria', label: 'Pria', type: 'number' },
-          { id: 'Wanita', label: 'Wanita', type: 'number' }
-        ],
-        rows: [
-          {
-            c: [
-              { v: 18, f: '( 6 - 18 tahun ) Anak Usia Sekolah' },
-              { v: parseInt(this.jsonDataRekapitulasiJabar[filter].anak.laki_laki['6_18']) * -1, f: (parseInt(this.jsonDataRekapitulasiJabar[filter].anak.laki_laki['6_18'])).toString() },
-              { v: parseInt(this.jsonDataRekapitulasiJabar[filter].anak.perempuan['6_18']), f: parseInt(this.jsonDataRekapitulasiJabar[filter].anak.perempuan['6_18']).toString() }
-            ]
-          },
-          {
-            c: [
-              { v: 6, f: '( 5 - 6 tahun ) Anak Pra Sekolah' },
-              { v: parseInt(this.jsonDataRekapitulasiJabar[filter].anak.laki_laki['5_6']) * -1, f: (parseInt(this.jsonDataRekapitulasiJabar[filter].anak.laki_laki['5_6'])).toString() },
-              { v: parseInt(this.jsonDataRekapitulasiJabar[filter].anak.perempuan['5_6']), f: parseInt(this.jsonDataRekapitulasiJabar[filter].anak.perempuan['5_6']).toString() }
-            ]
-          },
-          {
-            c: [
-              { v: 5, f: '( 1 - 5 tahun ) Anak Balita' },
-              { v: parseInt(this.jsonDataRekapitulasiJabar[filter].anak.laki_laki['1_5']) * -1, f: (parseInt(this.jsonDataRekapitulasiJabar[filter].anak.laki_laki['1_5'])).toString() },
-              { v: parseInt(this.jsonDataRekapitulasiJabar[filter].anak.perempuan['1_5']), f: parseInt(this.jsonDataRekapitulasiJabar[filter].anak.perempuan['1_5']).toString() }
-            ]
-          },
-          {
-            c: [
-              { v: 1, f: '( 0 - 1 tahun ) Bayi' },
-              { v: parseInt(this.jsonDataRekapitulasiJabar[filter].anak.laki_laki.bawah_1) * -1, f: (parseInt(this.jsonDataRekapitulasiJabar[filter].anak.laki_laki.bawah_1)).toString() },
-              { v: parseInt(this.jsonDataRekapitulasiJabar[filter].anak.perempuan.bawah_1), f: parseInt(this.jsonDataRekapitulasiJabar[filter].anak.perempuan.bawah_1).toString() }
-            ]
+          if (self.barChartUmurJenisKelaminData.rows[j].c[1].v * -1 > max) {
+            max = self.barChartUmurJenisKelaminData.rows[j].c[1].v * -1
           }
-        ]
-      }
+          asc = Math.ceil(max / 10)
+          self.barChartUmurJenisKelaminOptions.hAxis.viewWindow.min = (max + asc) * -1
+          self.barChartUmurJenisKelaminOptions.hAxis.viewWindow.max = max + asc
+        }
 
-      let maxAnak = 0
-      let ascAnak = 0
-      // find max count for scala
-      for (let j = 0; j < self.barChartAnakUmurJenisKelaminData.rows.length; j++) {
-        if (self.barChartAnakUmurJenisKelaminData.rows[j].c[2].v > maxAnak) {
-          maxAnak = self.barChartAnakUmurJenisKelaminData.rows[j].c[2].v
+        // set number of scala
+        self.barChartUmurJenisKelaminOptions.hAxis.ticks = []
+        if (max > 0) {
+          asc = Math.ceil(max / 10)
+          for (let k = 0; k <= max + asc; k = k + asc) {
+            self.barChartUmurJenisKelaminOptions.hAxis.ticks.push({ v: k * -1, f: k.toString() })
+          }
+          for (let k = 0; k <= max + asc; k = k + asc) {
+            self.barChartUmurJenisKelaminOptions.hAxis.ticks.push(k)
+          }
+        } else {
+          self.barChartUmurJenisKelaminOptions.hAxis.ticks.push({ v: 0, f: '0' })
+          self.barChartUmurJenisKelaminOptions.hAxis.ticks.push(0)
         }
-        if (self.barChartAnakUmurJenisKelaminData.rows[j].c[1].v * -1 > maxAnak) {
-          maxAnak = self.barChartAnakUmurJenisKelaminData.rows[j].c[1].v * -1
-        }
-        ascAnak = Math.ceil(maxAnak / 4)
-        self.barChartAnakUmurJenisKelaminOptions.hAxis.viewWindow.min = (maxAnak + asc) * -1
-        self.barChartAnakUmurJenisKelaminOptions.hAxis.viewWindow.max = maxAnak + asc
-      }
 
-      // set number of scala
-      self.barChartAnakUmurJenisKelaminOptions.hAxis.ticks = []
-      if (maxAnak > 0) {
-        ascAnak = Math.ceil(maxAnak / 4)
-        for (let k = 0; k <= maxAnak + ascAnak; k = k + ascAnak) {
-          self.barChartAnakUmurJenisKelaminOptions.hAxis.ticks.push({ v: k * -1, f: k.toString() })
+        // Umur Anak
+        this.barChartAnakUmurJenisKelaminData = {
+          cols: [
+            { id: 'Umur', label: 'Umur', type: 'string' },
+            { id: 'Pria', label: 'Pria', type: 'number' },
+            { id: 'Wanita', label: 'Wanita', type: 'number' }
+          ],
+          rows: [
+            {
+              c: [
+                { v: 18, f: '( 6 - 18 tahun ) Anak Usia Sekolah' },
+                { v: parseInt(this.jsonDataKasusUmur[filter].anak.laki_laki['6_18']) * -1, f: (parseInt(this.jsonDataKasusUmur[filter].anak.laki_laki['6_18'])).toString() },
+                { v: parseInt(this.jsonDataKasusUmur[filter].anak.perempuan['6_18']), f: parseInt(this.jsonDataKasusUmur[filter].anak.perempuan['6_18']).toString() }
+              ]
+            },
+            {
+              c: [
+                { v: 6, f: '( 5 - 6 tahun ) Anak Pra Sekolah' },
+                { v: parseInt(this.jsonDataKasusUmur[filter].anak.laki_laki['5_6']) * -1, f: (parseInt(this.jsonDataKasusUmur[filter].anak.laki_laki['5_6'])).toString() },
+                { v: parseInt(this.jsonDataKasusUmur[filter].anak.perempuan['5_6']), f: parseInt(this.jsonDataKasusUmur[filter].anak.perempuan['5_6']).toString() }
+              ]
+            },
+            {
+              c: [
+                { v: 5, f: '( 1 - 5 tahun ) Anak Balita' },
+                { v: parseInt(this.jsonDataKasusUmur[filter].anak.laki_laki['1_5']) * -1, f: (parseInt(this.jsonDataKasusUmur[filter].anak.laki_laki['1_5'])).toString() },
+                { v: parseInt(this.jsonDataKasusUmur[filter].anak.perempuan['1_5']), f: parseInt(this.jsonDataKasusUmur[filter].anak.perempuan['1_5']).toString() }
+              ]
+            },
+            {
+              c: [
+                { v: 1, f: '( 0 - 1 tahun ) Bayi' },
+                { v: parseInt(this.jsonDataKasusUmur[filter].anak.laki_laki.bawah_1) * -1, f: (parseInt(this.jsonDataKasusUmur[filter].anak.laki_laki.bawah_1)).toString() },
+                { v: parseInt(this.jsonDataKasusUmur[filter].anak.perempuan.bawah_1), f: parseInt(this.jsonDataKasusUmur[filter].anak.perempuan.bawah_1).toString() }
+              ]
+            }
+          ]
         }
-        for (let k = 0; k <= maxAnak + ascAnak; k = k + ascAnak) {
-          self.barChartAnakUmurJenisKelaminOptions.hAxis.ticks.push(k)
+
+        let maxAnak = 0
+        let ascAnak = 0
+        // find max count for scala
+        for (let j = 0; j < self.barChartAnakUmurJenisKelaminData.rows.length; j++) {
+          if (self.barChartAnakUmurJenisKelaminData.rows[j].c[2].v > maxAnak) {
+            maxAnak = self.barChartAnakUmurJenisKelaminData.rows[j].c[2].v
+          }
+          if (self.barChartAnakUmurJenisKelaminData.rows[j].c[1].v * -1 > maxAnak) {
+            maxAnak = self.barChartAnakUmurJenisKelaminData.rows[j].c[1].v * -1
+          }
+          ascAnak = Math.ceil(maxAnak / 4)
+          self.barChartAnakUmurJenisKelaminOptions.hAxis.viewWindow.min = (maxAnak + asc) * -1
+          self.barChartAnakUmurJenisKelaminOptions.hAxis.viewWindow.max = maxAnak + asc
         }
-      } else {
-        self.barChartAnakUmurJenisKelaminOptions.hAxis.ticks.push({ v: 0, f: '0' })
-        self.barChartAnakUmurJenisKelaminOptions.hAxis.ticks.push(0)
+
+        // set number of scala
+        self.barChartAnakUmurJenisKelaminOptions.hAxis.ticks = []
+        if (maxAnak > 0) {
+          ascAnak = Math.ceil(maxAnak / 4)
+          for (let k = 0; k <= maxAnak + ascAnak; k = k + ascAnak) {
+            self.barChartAnakUmurJenisKelaminOptions.hAxis.ticks.push({ v: k * -1, f: k.toString() })
+          }
+          for (let k = 0; k <= maxAnak + ascAnak; k = k + ascAnak) {
+            self.barChartAnakUmurJenisKelaminOptions.hAxis.ticks.push(k)
+          }
+        } else {
+          self.barChartAnakUmurJenisKelaminOptions.hAxis.ticks.push({ v: 0, f: '0' })
+          self.barChartAnakUmurJenisKelaminOptions.hAxis.ticks.push(0)
+        }
       }
+    },
+    // get data
+    getDataKasusUmur () {
+      this.$store.dispatch('data-kasus-umur/getItem', '')
     }
   }
 }
