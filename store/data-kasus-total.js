@@ -4,7 +4,7 @@ export const state = () => ({
   items: null,
   item: null,
   metadata: null,
-  isLoading: true
+  isLoading: false
 })
 
 export const mutations = {

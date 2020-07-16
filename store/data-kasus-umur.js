@@ -3,7 +3,7 @@ import axios from 'axios'
 export const state = () => ({
   items: null,
   item: null,
-  isLoading: true
+  isLoading: false
 })
 
 export const mutations = {

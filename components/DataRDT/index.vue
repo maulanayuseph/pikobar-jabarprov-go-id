@@ -57,38 +57,6 @@
           width="30%"
           height="6"
         />
-        <rect
-          x="270"
-          y="15"
-          rx="3"
-          ry="3"
-          width="10%"
-          height="6"
-        />
-        <rect
-          x="270"
-          y="35"
-          rx="3"
-          ry="3"
-          width="10%"
-          height="6"
-        />
-        <rect
-          x="330"
-          y="35"
-          rx="3"
-          ry="3"
-          width="10%"
-          height="6"
-        />
-        <rect
-          x="390"
-          y="35"
-          rx="3"
-          ry="3"
-          width="10%"
-          height="6"
-        />
       </ContentLoader>
     </div>
     <div :class="!isLoading ? 'block' : 'hidden'">
@@ -174,20 +142,6 @@ export default {
   name: 'DataRDT',
   components: {
     ContentLoader
-  },
-  props: {
-    propsDataRekapitulasiJabar: {
-      type: Object,
-      default: () => ({
-        rdt: {
-          total: 0,
-          positif: 0,
-          negatif: 0,
-          invalid: 0,
-          belum_diketahui: 0
-        }
-      })
-    }
   },
   data () {
     return {

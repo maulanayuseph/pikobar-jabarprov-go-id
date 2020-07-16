@@ -75,7 +75,7 @@ export default {
               <span
                 class="text-sm font-bold ml-2"
                 style="color: #000000;">
-                { `(${formatNumber(context.props.processedPercentage)} % )` }
+                { `(${formatNumber(context.props.processedPercentage)}%)` }
               </span>
               <p
                 class="mt-2 text-base whitespace-no-wrap"
@@ -92,7 +92,7 @@ export default {
               <span
                 class="text-sm font-bold ml-2"
                 style="color: #000000;">
-                { `(${formatNumber(context.props.finishedPercentage)} %)` }
+                { `(${formatNumber(context.props.finishedPercentage)}%)` }
               </span>
               <p
                 class="mt-2 text-base whitespace-no-wrap "
@@ -109,7 +109,7 @@ export default {
               <span
                 class="text-sm font-bold ml-2"
                 style="color: #000000;">
-                { `(${formatNumber(context.props.diedPercentage)} %)` }
+                { `(${formatNumber(context.props.diedPercentage)}%)` }
               </span>
               <p
                 class="mt-2 text-base whitespace-no-wrap "
