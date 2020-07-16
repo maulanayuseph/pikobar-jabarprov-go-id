@@ -202,16 +202,6 @@ export default {
     GChart,
     FontAwesomeIcon
   },
-  props: {
-    propsDataRekapitulasiJabarHarianProv: {
-      type: Array,
-      default: () => ([])
-    },
-    propsDataRekapitulasiJabarKumulatifProv: {
-      type: Array,
-      default: () => ([])
-    }
-  },
   data () {
     return {
       stat: {
@@ -221,34 +211,9 @@ export default {
       isMobile: false,
       fontChartBar: faChartBar,
       fontChartLine: faChartLine,
+      jsonDataKasusHarian: [],
       jsonDataProvinsiHarian: [],
       jsonDataProvinsiKumulatif: [],
-      jsonDataRekap: [
-      ],
-      jsonDataSatuan: [
-      ],
-      jsonDataResult: {
-        odp: 0,
-        odp_proses: 0,
-        odp_proses_persen: 0,
-        odp_selesai: 0,
-        odp_selesai_persen: 0,
-        pdp: 0,
-        pdp_proses: 0,
-        pdp_proses_persen: 0,
-        pdp_selesai: 0,
-        pdp_selesai_persen: 0,
-        positif: 0,
-        perawatan: 0,
-        sembuh: 0,
-        meninggal: 0,
-        total_positif_saat_ini: 0,
-        total_sembuh: 0,
-        total_meninggal: 0,
-        last_update: '',
-        umur_max: 0,
-        count_kota: 0
-      },
       barChartHarianODPData: [
         [
           'Tanggal',
@@ -486,151 +451,25 @@ export default {
     }
   },
   computed: {
-    dataRekapitulasiJabarHarianProv () {
-      return this.$store.getters['data-rekapitulasi-jabar-harian-prov/itemsMap']
+    dataKasusHarian () {
+      return this.$store.getters['data-kasus-harian/itemsMap']
     },
-    dataRekapitulasiJabarKumulatifProv () {
-      return this.$store.getters['data-rekapitulasi-jabar-kumulatif-prov/itemsMap']
+    isLoading () {
+      return this.$store.getters['data-kasus-harian/isLoading']
     }
   },
   watch: {
-    // propsDataRekapitulasiJabarHarianProv () {
-    //   // this.jsonDataProvinsiHarian = this.propsDataRekapitulasiJabarHarianProv
-    //   for (let i = 0; i < this.propsDataRekapitulasiJabarHarianProv.length; i++) {
-    //     const temp1 = this.propsDataRekapitulasiJabarHarianProv[i]
-    //     let odpJml = 0
-    //     let pdpJml = 0
-    //     let odpRatarata = 0
-    //     let pdpRatarata = 0
-    //     if (i === 0) {
-    //       odpJml = this.propsDataRekapitulasiJabarHarianProv[i].odp
-    //       pdpJml = this.propsDataRekapitulasiJabarHarianProv[i].pdp
-    //       odpRatarata = odpJml / 1
-    //       pdpRatarata = pdpJml / 1
-    //     } else if (i === 1) {
-    //       odpJml = this.propsDataRekapitulasiJabarHarianProv[i].odp + this.propsDataRekapitulasiJabarHarianProv[i - 1].odp
-    //       pdpJml = this.propsDataRekapitulasiJabarHarianProv[i].pdp + this.propsDataRekapitulasiJabarHarianProv[i - 1].pdp
-    //       odpRatarata = odpJml / 2
-    //       pdpRatarata = pdpJml / 2
-    //     } else if (i === 2) {
-    //       odpJml = this.propsDataRekapitulasiJabarHarianProv[i].odp + this.propsDataRekapitulasiJabarHarianProv[i - 1].odp + this.propsDataRekapitulasiJabarHarianProv[i - 2].odp
-    //       pdpJml = this.propsDataRekapitulasiJabarHarianProv[i].pdp + this.propsDataRekapitulasiJabarHarianProv[i - 1].pdp + this.propsDataRekapitulasiJabarHarianProv[i - 2].pdp
-    //       odpRatarata = odpJml / 3
-    //       pdpRatarata = pdpJml / 3
-    //     } else if (i === 3) {
-    //       odpJml = this.propsDataRekapitulasiJabarHarianProv[i].odp + this.propsDataRekapitulasiJabarHarianProv[i - 1].odp + this.propsDataRekapitulasiJabarHarianProv[i - 2].odp +
-    //         this.propsDataRekapitulasiJabarHarianProv[i - 3].odp
-    //       pdpJml = this.propsDataRekapitulasiJabarHarianProv[i].pdp + this.propsDataRekapitulasiJabarHarianProv[i - 1].pdp + this.propsDataRekapitulasiJabarHarianProv[i - 2].pdp +
-    //         this.propsDataRekapitulasiJabarHarianProv[i - 3].pdp
-    //       odpRatarata = odpJml / 4
-    //       pdpRatarata = pdpJml / 4
-    //     } else if (i === 4) {
-    //       odpJml = this.propsDataRekapitulasiJabarHarianProv[i].odp + this.propsDataRekapitulasiJabarHarianProv[i - 1].odp + this.propsDataRekapitulasiJabarHarianProv[i - 2].odp +
-    //         this.propsDataRekapitulasiJabarHarianProv[i - 3].odp + this.propsDataRekapitulasiJabarHarianProv[i - 4].odp
-    //       pdpJml = this.propsDataRekapitulasiJabarHarianProv[i].pdp + this.propsDataRekapitulasiJabarHarianProv[i - 1].pdp + this.propsDataRekapitulasiJabarHarianProv[i - 2].pdp +
-    //         this.propsDataRekapitulasiJabarHarianProv[i - 3].pdp + this.propsDataRekapitulasiJabarHarianProv[i - 4].pdp
-    //       odpRatarata = odpJml / 5
-    //       pdpRatarata = pdpJml / 5
-    //     } else if (i === 5) {
-    //       odpJml = this.propsDataRekapitulasiJabarHarianProv[i].odp + this.propsDataRekapitulasiJabarHarianProv[i - 1].odp + this.propsDataRekapitulasiJabarHarianProv[i - 2].odp +
-    //       this.propsDataRekapitulasiJabarHarianProv[i - 3].odp + this.propsDataRekapitulasiJabarHarianProv[i - 4].odp + this.propsDataRekapitulasiJabarHarianProv[i - 5].odp
-    //       pdpJml = this.propsDataRekapitulasiJabarHarianProv[i].pdp + this.propsDataRekapitulasiJabarHarianProv[i - 1].pdp + this.propsDataRekapitulasiJabarHarianProv[i - 2].pdp +
-    //       this.propsDataRekapitulasiJabarHarianProv[i - 3].pdp + this.propsDataRekapitulasiJabarHarianProv[i - 4].pdp + this.propsDataRekapitulasiJabarHarianProv[i - 5].pdp
-    //       odpRatarata = odpJml / 6
-    //       pdpRatarata = pdpJml / 6
-    //     } else if (i > 6) {
-    //       odpJml = this.propsDataRekapitulasiJabarHarianProv[i].odp + this.propsDataRekapitulasiJabarHarianProv[i - 1].odp + this.propsDataRekapitulasiJabarHarianProv[i - 2].odp +
-    //         this.propsDataRekapitulasiJabarHarianProv[i - 3].odp + this.propsDataRekapitulasiJabarHarianProv[i - 4].odp + this.propsDataRekapitulasiJabarHarianProv[i - 5].odp +
-    //         this.propsDataRekapitulasiJabarHarianProv[i - 6].odp
-    //       pdpJml = this.propsDataRekapitulasiJabarHarianProv[i].pdp + this.propsDataRekapitulasiJabarHarianProv[i - 1].pdp + this.propsDataRekapitulasiJabarHarianProv[i - 2].pdp +
-    //         this.propsDataRekapitulasiJabarHarianProv[i - 3].pdp + this.propsDataRekapitulasiJabarHarianProv[i - 4].pdp + this.propsDataRekapitulasiJabarHarianProv[i - 5].pdp +
-    //         this.propsDataRekapitulasiJabarHarianProv[i - 6].pdp
-    //       odpRatarata = odpJml / 7
-    //       pdpRatarata = pdpJml / 7
-    //     } else {
-    //       odpJml = 0
-    //       pdpJml = 0
-    //       odpRatarata = 0
-    //       pdpRatarata = 0
-    //     }
-    //     const temp2 = { odp_ratarata: parseInt(odpRatarata.toFixed(2)), pdp_ratarata: parseInt(pdpRatarata.toFixed(2)) }
-    //     const temp3 = { ...temp1, ...temp2 }
-    //     this.jsonDataProvinsiHarian.push(temp3)
-    //   }
-    //   this.fetchDataODPProvinsiHarian()
-    //   this.fetchDataPDPProvinsiHarian()
-    // },
-    // propsDataRekapitulasiJabarKumulatifProv () {
-    //   this.jsonDataProvinsiKumulatif = this.propsDataRekapitulasiJabarKumulatifProv
-    // }
-    dataRekapitulasiJabarHarianProv (val) {
-      // this.jsonDataProvinsiHarian = val
-      for (let i = 0; i < val.length; i++) {
-        const temp1 = val[i]
-        let odpJml = 0
-        let pdpJml = 0
-        let odpRatarata = 0
-        let pdpRatarata = 0
-        if (i === 0) {
-          odpJml = val[i].odp
-          pdpJml = val[i].pdp
-          odpRatarata = odpJml / 1
-          pdpRatarata = pdpJml / 1
-        } else if (i === 1) {
-          odpJml = val[i].odp + val[i - 1].odp
-          pdpJml = val[i].pdp + val[i - 1].pdp
-          odpRatarata = odpJml / 2
-          pdpRatarata = pdpJml / 2
-        } else if (i === 2) {
-          odpJml = val[i].odp + val[i - 1].odp + val[i - 2].odp
-          pdpJml = val[i].pdp + val[i - 1].pdp + val[i - 2].pdp
-          odpRatarata = odpJml / 3
-          pdpRatarata = pdpJml / 3
-        } else if (i === 3) {
-          odpJml = val[i].odp + val[i - 1].odp + val[i - 2].odp +
-            val[i - 3].odp
-          pdpJml = val[i].pdp + val[i - 1].pdp + val[i - 2].pdp +
-            val[i - 3].pdp
-          odpRatarata = odpJml / 4
-          pdpRatarata = pdpJml / 4
-        } else if (i === 4) {
-          odpJml = val[i].odp + val[i - 1].odp + val[i - 2].odp +
-            val[i - 3].odp + val[i - 4].odp
-          pdpJml = val[i].pdp + val[i - 1].pdp + val[i - 2].pdp +
-            val[i - 3].pdp + val[i - 4].pdp
-          odpRatarata = odpJml / 5
-          pdpRatarata = pdpJml / 5
-        } else if (i === 5) {
-          odpJml = val[i].odp + val[i - 1].odp + val[i - 2].odp +
-          val[i - 3].odp + val[i - 4].odp + val[i - 5].odp
-          pdpJml = val[i].pdp + val[i - 1].pdp + val[i - 2].pdp +
-          val[i - 3].pdp + val[i - 4].pdp + val[i - 5].pdp
-          odpRatarata = odpJml / 6
-          pdpRatarata = pdpJml / 6
-        } else if (i >= 6) {
-          odpJml = val[i].odp + val[i - 1].odp + val[i - 2].odp +
-            val[i - 3].odp + val[i - 4].odp + val[i - 5].odp +
-            val[i - 6].odp
-          pdpJml = val[i].pdp + val[i - 1].pdp + val[i - 2].pdp +
-            val[i - 3].pdp + val[i - 4].pdp + val[i - 5].pdp +
-            val[i - 6].pdp
-          odpRatarata = odpJml / 7
-          pdpRatarata = pdpJml / 7
-        } else {
-          odpJml = 0
-          pdpJml = 0
-          odpRatarata = 0
-          pdpRatarata = 0
-        }
-        const temp2 = { odp_ratarata: parseInt(odpRatarata.toFixed(2)), pdp_ratarata: parseInt(pdpRatarata.toFixed(2)) }
-        const temp3 = { ...temp1, ...temp2 }
-        this.jsonDataProvinsiHarian.push(temp3)
-      }
+    dataKasusHarian (val) {
+      this.jsonDataKasusHarian = val
+      this.jsonDataKasusHarian.forEach((element) => {
+        const temp1 = { tanggal: element.tanggal }
+        const temp2 = { ...temp1, ...element.harian }
+        const temp3 = { ...temp1, ...element.kumulatif }
+        this.jsonDataProvinsiHarian.push(temp2)
+        this.jsonDataProvinsiKumulatif.push(temp3)
+      })
       this.fetchDataODPProvinsiHarian()
       this.fetchDataPDPProvinsiHarian()
-    },
-    dataRekapitulasiJabarKumulatifProv (val) {
-      this.jsonDataProvinsiKumulatif = val
     }
   },
   mounted () {
@@ -639,6 +478,7 @@ export default {
     this.selectedDatePDP.start = new Date('2020-03-01')
     this.selectedDatePDP.end = new Date()
     this.checkIsMobile()
+    this.getDataKasusHarian()
   },
   methods: {
     ifNullReturnZero (str) {
@@ -648,18 +488,15 @@ export default {
         return str
       }
     },
+    ifNegativeReturnZero (str) {
+      if (str <= 0) {
+        return 0
+      } else {
+        return str
+      }
+    },
     formatDate (date) {
       const d = new Date(date)
-      // const year = d.getFullYear()
-      // let month = '' + (d.getMonth() + 1)
-      // let day = '' + d.getDate()
-      // if (month.length < 2) {
-      //   month = '0' + month
-      // }
-      // if (day.length < 2) {
-      //   day = '0' + day
-      // }
-      // return [day, month, year].join('-')
       const options = {
         day: 'numeric',
         month: 'short',
@@ -741,14 +578,14 @@ export default {
         if (stop === false) {
           let tooltipODP = '<table style="white-space: nowrap; margin: 10px;">'
           tooltipODP += '<tr><td style="font-size: larger;">' + self.formatDate(date) + '</td><td></td></tr>'
-          tooltipODP += '<tr><td>Proses Pemantauan </td><td><b style="margin-left: 10px;">' + self.jsonDataProvinsiHarian[i].odp_proses + '</b></td></tr>'
+          tooltipODP += '<tr><td>Proses Pemantauan </td><td><b style="margin-left: 10px;">' + self.ifNegativeReturnZero(self.jsonDataProvinsiHarian[i].odp_aktif) + '</b></td></tr>'
           tooltipODP += '<tr><td>Selesai Pemantauan </td><td><b style="margin-left: 10px;">' + self.jsonDataProvinsiHarian[i].odp_selesai + '</b></td></tr>'
-          tooltipODP += '<tr><td>Total ODP</td><td><b style="margin-left: 10px;">' + self.jsonDataProvinsiHarian[i].odp + '</b></td></tr>'
+          tooltipODP += '<tr><td>Total ODP</td><td><b style="margin-left: 10px;">' + self.jsonDataProvinsiHarian[i].odp_total + '</b></td></tr>'
           tooltipODP += '<tr><td>Rata-rata 7 Hari</td><td><b style="margin-left: 10px;">' + self.jsonDataProvinsiHarian[i].odp_ratarata + '</b></td></tr>'
           tooltipODP += '</table>'
           self.barChartHarianODPData.push([
             self.formatDateNoYear(date),
-            self.jsonDataProvinsiHarian[i].odp_proses, tooltipODP,
+            self.ifNegativeReturnZero(self.jsonDataProvinsiHarian[i].odp_aktif), tooltipODP,
             self.jsonDataProvinsiHarian[i].odp_selesai, tooltipODP,
             self.jsonDataProvinsiHarian[i].odp_ratarata, tooltipODP
           ])
@@ -800,14 +637,14 @@ export default {
         if (stop === false) {
           let tooltipPDP = '<table style="white-space: nowrap; margin: 10px;">'
           tooltipPDP += '<tr><td style="font-size: larger;">' + self.formatDate(date) + '</td><td></td></tr>'
-          tooltipPDP += '<tr><td>Proses Pengawasan </td><td><b style="margin-left: 10px;">' + self.jsonDataProvinsiHarian[i].pdp_proses + '</b></td></tr>'
+          tooltipPDP += '<tr><td>Proses Pengawasan </td><td><b style="margin-left: 10px;">' + self.ifNegativeReturnZero(self.jsonDataProvinsiHarian[i].pdp_aktif) + '</b></td></tr>'
           tooltipPDP += '<tr><td>Selesai Pengawasan </td><td><b style="margin-left: 10px;">' + self.jsonDataProvinsiHarian[i].pdp_selesai + '</b></td></tr>'
-          tooltipPDP += '<tr><td>Total PDP</td><td><b style="margin-left: 10px;">' + self.jsonDataProvinsiHarian[i].pdp + '</b></td></tr>'
+          tooltipPDP += '<tr><td>Total PDP</td><td><b style="margin-left: 10px;">' + self.jsonDataProvinsiHarian[i].pdp_total + '</b></td></tr>'
           tooltipPDP += '<tr><td>Rata-rata 7 Hari</td><td><b style="margin-left: 10px;">' + self.jsonDataProvinsiHarian[i].pdp_ratarata + '</b></td></tr>'
           tooltipPDP += '</table>'
           self.barChartHarianPDPData.push([
             self.formatDateNoYear(date),
-            self.jsonDataProvinsiHarian[i].pdp_proses, tooltipPDP,
+            self.ifNegativeReturnZero(self.jsonDataProvinsiHarian[i].pdp_aktif), tooltipPDP,
             self.jsonDataProvinsiHarian[i].pdp_selesai, tooltipPDP,
             self.jsonDataProvinsiHarian[i].pdp_ratarata, tooltipPDP
           ])
@@ -859,11 +696,11 @@ export default {
         if (stop === false) {
           let tooltipODP = '<table style="white-space: nowrap; margin: 10px;">'
           tooltipODP += '<tr><td style="font-size: larger;">' + self.formatDate(date) + '</td><td></td></tr>'
-          tooltipODP += '<tr><td>Proses Pemantauan </td><td><b style="margin-left: 10px;">' + self.jsonDataProvinsiKumulatif[i].odp_proses + '</b></td></tr>'
+          tooltipODP += '<tr><td>Proses Pemantauan </td><td><b style="margin-left: 10px;">' + self.jsonDataProvinsiKumulatif[i].odp_aktif + '</b></td></tr>'
           tooltipODP += '<tr><td>Selesai Pemantauan </td><td><b style="margin-left: 10px;">' + self.jsonDataProvinsiKumulatif[i].odp_selesai + '</b></td></tr>'
-          tooltipODP += '<tr><td style="font-size: larger;">Total ODP</td><td><b style="margin-left: 10px;">' + self.jsonDataProvinsiKumulatif[i].odp + '</b></td></tr>'
+          tooltipODP += '<tr><td style="font-size: larger;">Total ODP</td><td><b style="margin-left: 10px;">' + self.jsonDataProvinsiKumulatif[i].odp_total + '</b></td></tr>'
           tooltipODP += '</table>'
-          self.barChartAkumulatifODPData.push([self.formatDateNoYear(date), self.jsonDataProvinsiKumulatif[i].odp_proses, tooltipODP, self.jsonDataProvinsiKumulatif[i].odp_selesai, tooltipODP, self.jsonDataProvinsiKumulatif[i].odp, tooltipODP])
+          self.barChartAkumulatifODPData.push([self.formatDateNoYear(date), self.jsonDataProvinsiKumulatif[i].odp_aktif, tooltipODP, self.jsonDataProvinsiKumulatif[i].odp_selesai, tooltipODP, self.jsonDataProvinsiKumulatif[i].odp_total, tooltipODP])
         }
         if (self.formatDate(date) === strToday) {
           stop = true
@@ -912,11 +749,11 @@ export default {
         if (stop === false) {
           let tooltipPDP = '<table style="white-space: nowrap; margin: 10px;">'
           tooltipPDP += '<tr><td style="font-size: larger;">' + self.formatDate(date) + '</td><td></td></tr>'
-          tooltipPDP += '<tr><td>Proses Pengawasan </td><td><b style="margin-left: 10px;">' + self.jsonDataProvinsiKumulatif[i].pdp_proses + '</b></td></tr>'
+          tooltipPDP += '<tr><td>Proses Pengawasan </td><td><b style="margin-left: 10px;">' + self.jsonDataProvinsiKumulatif[i].pdp_aktif + '</b></td></tr>'
           tooltipPDP += '<tr><td>Selesai Pengawasan </td><td><b style="margin-left: 10px;">' + self.jsonDataProvinsiKumulatif[i].pdp_selesai + '</b></td></tr>'
-          tooltipPDP += '<tr><td style="font-size: larger;">Total PDP</td><td><b style="margin-left: 10px;">' + self.jsonDataProvinsiKumulatif[i].pdp + '</b></td></tr>'
+          tooltipPDP += '<tr><td style="font-size: larger;">Total PDP</td><td><b style="margin-left: 10px;">' + self.jsonDataProvinsiKumulatif[i].pdp_total + '</b></td></tr>'
           tooltipPDP += '</table>'
-          self.barChartAkumulatifPDPData.push([self.formatDateNoYear(date), self.jsonDataProvinsiKumulatif[i].pdp_proses, tooltipPDP, self.jsonDataProvinsiKumulatif[i].pdp_selesai, tooltipPDP, self.jsonDataProvinsiKumulatif[i].pdp, tooltipPDP])
+          self.barChartAkumulatifPDPData.push([self.formatDateNoYear(date), self.jsonDataProvinsiKumulatif[i].pdp_aktif, tooltipPDP, self.jsonDataProvinsiKumulatif[i].pdp_selesai, tooltipPDP, self.jsonDataProvinsiKumulatif[i].pdp_total, tooltipPDP])
         }
         if (self.formatDate(date) === strToday) {
           stop = true
@@ -946,6 +783,10 @@ export default {
       } else {
         this.isMobile = false
       }
+    },
+    // get data
+    getDataKasusHarian () {
+      this.$store.dispatch('data-kasus-harian/getItems')
     }
   }
 }
