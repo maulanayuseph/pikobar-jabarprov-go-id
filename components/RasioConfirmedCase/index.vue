@@ -33,6 +33,17 @@
         Data yang ditampilkan berdasarkan: <b>{{ parentLabel[activeRegionCategory].label }} di {{ activeParentRegionName }}</b>
       </p>
       <div class="p-3">
+        <ul class="ml-32 mb-5 overflow-x-auto flex">
+          <li class="text-sm mr-5 leading-tight">
+            <i class="legend-rasio-box" style="background:#a03733;" /> Meninggal
+          </li>
+          <li class="text-sm mr-5 leading-tight">
+            <i class="legend-rasio-box" style="background:#3bb46d;" /> Sembuh
+          </li>
+          <li class="text-sm mr-5 leading-tight">
+            <i class="legend-rasio-box" style="background:#ef6464;" /> Aktif
+          </li>
+        </ul>
         <GChart
           id="chart_div"
           class="chart-area"
@@ -132,7 +143,7 @@ export default {
         height: this.rowHeight + 60,
         isStacked: true,
         legend: {
-          position: 'bottom',
+          position: 'none',
           textStyle: {
             fontName: 'Arial',
             fontSize: 12,
@@ -373,5 +384,12 @@ export default {
     width: 0;
     height: 0;
     opacity: 0;
+  }
+
+  .legend-rasio-box {
+    width: 20px;
+    height: 13px;
+    float: left;
+    margin-right: 8px;
   }
 </style>
