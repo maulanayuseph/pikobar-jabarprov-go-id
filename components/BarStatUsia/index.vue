@@ -38,41 +38,70 @@
         </select>
       </div>
     </div>
-    <hr>
-    <div class="m-5 mb-0 p-2" style="background:#e6e6e6">
-      <b>Disclaimer :</b>
-      <p>Tidak seluruh data kasus memiliki kelengkapan data Umur sehingga tidak seluruhnya dapat divisualisasikan</p>
+    <div
+      class="w-full p-5"
+      :class="isLoading?'':'hidden'"
+    >
+      <ContentLoader
+        class="w-full hidden lg:block"
+        :speed="3"
+        :width="400"
+        :height="200"
+        primary-color="#eee"
+        secondary-color="#fff"
+      >
+        <rect
+          :key="1"
+          x="0"
+          :y="4"
+          width="100%"
+          height="200"
+          rx="3"
+          ry="3"
+        />
+      </ContentLoader>
     </div>
-    <section
-      v-if="stat.isActiveAnak"
+    <div
+      :class="!isLoading?'':'hidden'"
     >
-      <GChart
-        class="p-5"
-        type="BarChart"
-        :data="barChartAnakUmurJenisKelaminData"
-        :options="barChartAnakUmurJenisKelaminOptions"
-      />
-    </section>
-    <section
-      v-if="stat.isActiveSemua"
-    >
-      <GChart
-        class="p-5"
-        type="BarChart"
-        :data="barChartUmurJenisKelaminData"
-        :options="barChartUmurJenisKelaminOptions"
-      />
-    </section>
+      <hr>
+      <div class="m-5 mb-0 p-2" style="background:#e6e6e6">
+        <b>Disclaimer :</b>
+        <p>Tidak seluruh data kasus memiliki kelengkapan data Umur sehingga tidak seluruhnya dapat divisualisasikan</p>
+      </div>
+      <section
+        v-if="stat.isActiveAnak"
+      >
+        <GChart
+          class="p-5"
+          type="BarChart"
+          :data="barChartAnakUmurJenisKelaminData"
+          :options="barChartAnakUmurJenisKelaminOptions"
+        />
+      </section>
+      <section
+        v-if="stat.isActiveSemua"
+      >
+        <GChart
+          class="p-5"
+          type="BarChart"
+          :data="barChartUmurJenisKelaminData"
+          :options="barChartUmurJenisKelaminOptions"
+        />
+      </section>
+    </div>
   </div>
 </template>
 
 <script>
 import { GChart } from 'vue-google-charts'
+import { ContentLoader } from 'vue-content-loader'
 
 export default {
   name: 'BarStatUsia',
   components: {
-    GChart
+    GChart,
+    ContentLoader
   },
   props: {
     propsDataRekapitulasiJabar: {
@@ -968,7 +997,7 @@ export default {
   },
   computed: {
     dataKasusUmur () {
-      return this.$store.getters['data-kasus-umur/itemMap']
+      return this.$store.getters['data-kasus-umur/itemsMap']
     },
     isLoading () {
       return this.$store.getters['data-kasus-umur/isLoading']
@@ -1327,7 +1356,7 @@ export default {
     },
     // get data
     getDataKasusUmur () {
-      this.$store.dispatch('data-kasus-umur/getItem', '')
+      this.$store.dispatch('data-kasus-umur/getItems')
     }
   }
 }
