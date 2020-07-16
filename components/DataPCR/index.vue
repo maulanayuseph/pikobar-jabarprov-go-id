@@ -192,13 +192,8 @@ export default {
     }
   },
   mounted () {
-    this.getDataKasusTotal()
   },
   methods: {
-    // get data
-    getDataKasusTotal () {
-      this.$store.dispatch('data-kasus-total/getItems')
-    },
     clickShowMore () {
       this.showMore = !this.showMore
     }

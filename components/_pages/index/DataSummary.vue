@@ -212,8 +212,6 @@ export default {
     }
   },
   mounted () {
-    this.getDataKasusTotal()
-    this.fetchDataNasionalHarian()
   },
   methods: {
     _round,
@@ -240,10 +238,6 @@ export default {
         .catch(function (error) {
           console.log(error)
         })
-    },
-    // get data
-    getDataKasusTotal () {
-      this.$store.dispatch('data-kasus-total/getItems')
     }
   }
 }

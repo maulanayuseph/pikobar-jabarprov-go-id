@@ -550,7 +550,8 @@ export default {
       ]).then(() => {
         Promise.all([
           this.$store.dispatch('banners/getItems'),
-          this.$store.dispatch('news/getItems')
+          this.$store.dispatch('news/getItems'),
+          this.$store.dispatch('data-kasus-total/getItems')
         ])
       })
       if (process.browser) {

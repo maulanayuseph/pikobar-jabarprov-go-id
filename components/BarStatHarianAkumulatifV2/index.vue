@@ -478,7 +478,6 @@ export default {
     this.selectedDatePDP.start = new Date('2020-03-01')
     this.selectedDatePDP.end = new Date()
     this.checkIsMobile()
-    this.getDataKasusHarian()
   },
   methods: {
     ifNullReturnZero (str) {
@@ -783,10 +782,6 @@ export default {
       } else {
         this.isMobile = false
       }
-    },
-    // get data
-    getDataKasusHarian () {
-      this.$store.dispatch('data-kasus-harian/getItems')
     }
   }
 }
