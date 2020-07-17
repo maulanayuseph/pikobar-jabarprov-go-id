@@ -45,7 +45,7 @@
         <b>Angka Kejadian di Jawa Barat</b><br>
         <small class="opacity-50">Update Terakhir: {{ lastUpdatedAt }}</small>
       </h2>
-      <DataTabs />
+      <DataTabs v-if="false" />
       <div class="text-center md:self-center mb-8 xl:mt-8">
         <a
           target="_blank"
@@ -501,15 +501,10 @@ export default {
   },
   mounted () {
     this.$nextTick(() => {
-      Promise.all([
-        this.$store.dispatch('statistics/getCases'),
-        this.$store.dispatch('data-sebaran-jabar/getItems')
-      ]).then(() => {
-        Promise.all([
-          this.$store.dispatch('banners/getItems'),
-          this.$store.dispatch('news/getItems')
-        ])
-      })
+      this.$store.dispatch('statistics/getCases')
+      this.$store.dispatch('data-sebaran-jabar/getItems')
+      this.$store.dispatch('banners/getItems')
+      this.$store.dispatch('news/getItems')
       if (process.browser) {
         analytics.logEvent('homepage_view')
       }
