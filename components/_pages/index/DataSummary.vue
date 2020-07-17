@@ -212,6 +212,7 @@ export default {
     }
   },
   mounted () {
+    this.fetchDataNasionalHarian()
   },
   methods: {
     _round,
