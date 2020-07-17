@@ -502,12 +502,12 @@ export default {
   mounted () {
     this.$nextTick(() => {
       Promise.all([
-        this.$store.dispatch('statistics/getCases'),
-        this.$store.dispatch('data-sebaran-jabar/getItems')
+        this.$store.dispatch('statistics/getCases')
       ]).then(() => {
         Promise.all([
           this.$store.dispatch('banners/getItems'),
-          this.$store.dispatch('news/getItems')
+          this.$store.dispatch('news/getItems'),
+          this.$store.dispatch('data-kasus-total/getItems')
         ])
       })
       if (process.browser) {

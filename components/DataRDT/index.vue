@@ -7,30 +7,55 @@
         primaryColor="#70aa67"
         secondaryColor="rgba(255,255,255,1)"
         height="80"
-        >
+        width="500"
+      >
         <rect
           x="0"
           y="0"
-          rx="8"
-          ry="6"
+          rx="3"
+          ry="3"
+          width="30%"
+          height="6"
+        />
+        <rect
+          x="0"
+          y="15"
+          rx="3"
+          ry="3"
+          width="50%"
+          height="6"
+        />
+        <rect
+          x="0"
+          y="25"
+          rx="3"
+          ry="3"
+          width="50%"
+          height="6"
+        />
+        <rect
+          x="0"
+          y="35"
+          rx="3"
+          ry="3"
+          width="50%"
+          height="6"
+        />
+        <rect
+          x="0"
+          y="50"
+          rx="3"
+          ry="3"
           width="40%"
-          height="16"
+          height="6"
         />
         <rect
           x="0"
-          y="30"
-          rx="8"
-          ry="6"
-          width="60%"
-          height="16"
-        />
-        <rect
-          x="0"
-          y="64"
-          rx="8"
-          ry="6"
-          width="100%"
-          height="16"
+          y="70"
+          rx="3"
+          ry="3"
+          width="30%"
+          height="6"
         />
       </ContentLoader>
     </div>
@@ -118,24 +143,11 @@ export default {
   components: {
     ContentLoader
   },
-  props: {
-    propsDataRekapitulasiJabar: {
-      type: Object,
-      default: () => ({
-        rdt: {
-          total: 0,
-          positif: 0,
-          negatif: 0,
-          invalid: 0,
-          belum_diketahui: 0
-        }
-      })
-    }
-  },
   data () {
     return {
+      jsonDataKasusTotal: {},
+      metadata: {},
       date_update: '',
-      isLoading: true,
       data: {
         rdt: {
           total: 0,
@@ -155,34 +167,35 @@ export default {
     }
   },
   computed: {
-    dataRekapitulasiJabarProv () {
-      return this.$store.getters['data-rekapitulasi-jabar-prov/itemsMap']
+    dataKasusTotal () {
+      return this.$store.getters['data-kasus-total/itemsMap']
+    },
+    dataKasusTotalMetadata () {
+      return this.$store.getters['data-kasus-total/metadataMap']
+    },
+    isLoading () {
+      return this.$store.getters['data-kasus-total/isLoading']
     }
   },
   watch: {
-    // propsDataRekapitulasiJabar () {
-    //   this.data.rdt = this.propsDataRekapitulasiJabar.rdt
-    //   this.countPersentage()
-    // }
-    dataRekapitulasiJabarProv (val) {
-      const self = this
-      self.data.rdt = val.rdt
-      self.date_update = moment(self.data.rdt.tanggal, 'DD/MM/YYYY').locale('id').format('dddd, DD MMM YYYY')
-      self.countPersentage()
-
-      if (val.rdt) {
-        self.isLoading = false
-      }
+    dataKasusTotal (val) {
+      this.jsonDataKasusTotal = val[0]
+      this.data.rdt.total = this.jsonDataKasusTotal.rdt_total
+      this.data.rdt.positif = this.jsonDataKasusTotal.rdt_positif
+      this.data.rdt.negatif = this.jsonDataKasusTotal.rdt_negatif
+      this.data.rdt.invalid = this.jsonDataKasusTotal.rdt_invalid
+      this.data.rdt_persentase_by_total.positif = this.data.rdt.positif / this.data.rdt.total * 100
+      this.data.rdt_persentase_by_total.negatif = this.data.rdt.negatif / this.data.rdt.total * 100
+      this.data.rdt_persentase_by_total.invalid = this.data.rdt.invalid / this.data.rdt.total * 100
+    },
+    dataKasusTotalMetadata (val) {
+      this.metadata = val
+      this.date_update = moment(this.metadata.last_update, 'YYYY-MM-DD').lang('id').format('dddd, DD MMM YYYY')
     }
   },
+  mounted () {
+  },
   methods: {
-    countPersentage () {
-      const self = this
-      self.data.rdt_persentase_by_total.positif = self.data.rdt.positif / self.data.rdt.total * 100
-      self.data.rdt_persentase_by_total.negatif = self.data.rdt.negatif / self.data.rdt.total * 100
-      self.data.rdt_persentase_by_total.invalid = self.data.rdt.invalid / self.data.rdt.total * 100
-      self.data.rdt_persentase_by_total.belum_diketahui = self.data.rdt.belum_diketahui / self.data.rdt.total * 100
-    }
   }
 }
 

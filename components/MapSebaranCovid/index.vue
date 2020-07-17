@@ -3,7 +3,7 @@
   <div class="container-map">
     <div class="bg-white col-md-12 shadow-md" style="height:50em;">
         <div id="map-wrap" style="height: 75%;z-index:0;" />
-        <div class="filter-layer"> 
+        <div class="filter-layer">
 
           <div class="text-right mb-2">
             <button class="btn bg-white" >
@@ -15,7 +15,7 @@
             <button class="btn bg-white" @click="showFilter">
               <font-awesome-icon :icon="faFilter" />
             </button>
-          </div> 
+          </div>
           <div data-v-dfef036a="" v-if="isShowFilter" class="filter-data">
             <li @click="setFilter('odp', 'proses')" :class="filter.odp.proses ? 'filter-active' : ''">
               <div data-v-dfef036a="" class="legend-color" style="background: rgb(45, 156, 219);margin-right: 0.5em;"></div>
@@ -275,7 +275,7 @@ export default {
         fillOpacity: 0
       },
       level: 'kota',
-      
+
       statusStage: {
         positif: {
           proses: 'Positif - Aktif',
@@ -291,13 +291,13 @@ export default {
           belumupdate: 'ODP (belum diupdate)'
         }
       },
-      
+
       searchControl: [],
     }
   },
   asyncData() {
     return {
-      
+
       listLayer: {
         odp : {
           proses: [],
@@ -323,7 +323,7 @@ export default {
         kecamatan: [],
         kelurahan: []
       },
-      
+
       jsonData: [],
     }
   },
@@ -333,7 +333,7 @@ export default {
   },
   created() {
     this.importJSON()
-      .then(() => {   
+      .then(() => {
         this.fetchData()
       })
 
@@ -345,7 +345,7 @@ export default {
     setFilter (status, stage) {
       try {
         this.removeLayer(false)
-        this.filter[status][stage] = !this.filter[status][stage] 
+        this.filter[status][stage] = !this.filter[status][stage]
         for (let status in this.filter) {
           for (let stage in this.filter[status]) {
             this.listLayer[status][stage].forEach((element) => {
@@ -408,7 +408,6 @@ export default {
         .then(function (response) {
           self.jsonData = response.data.data.content
           self.createMap('kota')
-          console.log('tes')
         })
         .catch(function (error) {
           console.log(error)
@@ -428,7 +427,7 @@ export default {
 
       provider = new OpenStreetMapProvider();
 
-      // add search control 
+      // add search control
       this.searchControl = new GeoSearchControl({
         provider: provider,
         position: 'topleft'
@@ -441,20 +440,20 @@ export default {
       new L.control.zoom({
         position: 'bottomright'
       }).addTo(map)
-      
-      
+
+
       // // // on zoom
       // // // Here the events for zooming and dragging
       map.on('zoomend', () => {
         this.createMapByZoomLevel()
       })
 
-      
+
       // map.on('dragend', () => {
       //   // if (this.zoom > 15) {
       //   //   this.removeLayer()
       //   //   this.createLayerByKelurahan()
-      //   // } else 
+      //   // } else
       //   if (map.getZoom()  > 12) {
       //     this.removeLayer()
       //     this.createLayerPasien('kelurahan')
@@ -484,7 +483,7 @@ export default {
           let count = cluster.getChildCount()
           const digits = (count + '').length
           let classMarker = 'cluster ' + className + ' digits-' + digits
-          
+
           if (count === 1) {
             count = ''
             classMarker = 'cluster ' + className + ' digits-0'
@@ -648,7 +647,7 @@ export default {
           meninggal: [],
           sembuh: []
         }
-      } 
+      }
       let geojsonActive = []
       let kode_wilayah = ''
 
@@ -676,14 +675,14 @@ export default {
 
 
       let jsonData = this.jsonData
-     
+
       const result = jsonData.reduce(function (r, a) {
         r[a[kode_wilayah]] = r[a[kode_wilayah]] || [];
         r[a[kode_wilayah]].push(a);
         return r;
       }, Object.create(null))
 
-      const keys_result = Object.keys(result) 
+      const keys_result = Object.keys(result)
       let geoJSONArea = geojsonActive.features.filter((el) => {
         return keys_result.includes(el.properties.bps_kode)
       })
@@ -692,13 +691,13 @@ export default {
         style: this.styleBatasWilayah
       }).eachLayer((el) => {
         if (map.getBounds().intersects(el._bounds)) {
-            let nama_kab = '' 
-            let nama_kec = '' 
-            let nama_kel = '' 
+            let nama_kab = ''
+            let nama_kec = ''
+            let nama_kel = ''
             const markerClusters = this.paramMarkerCluster()
             kotaCluster[el.feature.properties.bps_kode] = markerClusters
             for (let i in result[el.feature.properties.bps_kode]) {
-              nama_kab = result[el.feature.properties.bps_kode][i].nama_kab 
+              nama_kab = result[el.feature.properties.bps_kode][i].nama_kab
               nama_kec = result[el.feature.properties.bps_kode][i].nama_kec
               nama_kel = result[el.feature.properties.bps_kode][i].nama_kel
               this.addMarkerLayer(kotaCluster, el.feature.properties.bps_kode, result[el.feature.properties.bps_kode][i])
@@ -708,13 +707,13 @@ export default {
         }
       })
       // for (let kode_level in result) {
-      //   let nama_kab = '' 
-      //   let nama_kec = '' 
-      //   let nama_kel = '' 
+      //   let nama_kab = ''
+      //   let nama_kec = ''
+      //   let nama_kel = ''
       //   const markerClusters = this.paramMarkerCluster()
       //   kotaCluster[kode_level] = markerClusters
       //   for (let i in result[kode_level]) {
-      //     nama_kab = result[kode_level][i].nama_kab 
+      //     nama_kab = result[kode_level][i].nama_kab
       //     nama_kec = result[kode_level][i].nama_kec
       //     nama_kel = result[kode_level][i].nama_kel
       //     this.addMarkerLayer(kotaCluster, kode_level, result[kode_level][i])
@@ -732,7 +731,7 @@ export default {
     async createMapByZoomLevel() {
       if (map.getZoom() > 12) {
         this.removeLayer ()
-        
+
 
         this.level = 'kelurahan'
         this.createLayerPasien('kelurahan')
@@ -794,7 +793,7 @@ export default {
       this.listLayer = []
     },
     isMarkerInsidePolygon(marker, poly) {
-      var polyPoints = poly.getLatLngs();       
+      var polyPoints = poly.getLatLngs();
       var x = marker[0], y = marker[1];
 
       var inside = false;
@@ -810,7 +809,7 @@ export default {
       return inside;
     },
     tesMap () {
-      
+
     }
   }
 }
@@ -1086,5 +1085,5 @@ export default {
   .glass {
     height: 26px !important;
   }
-  
+
 </style>

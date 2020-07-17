@@ -640,7 +640,7 @@ export default {
         newStr.push(lowerStr.charAt(0).toUpperCase() + lowerStr.slice(1))
       }
 
-      console.log(newStr)
+      // console.log(newStr)
       return newStr.join(' ')
     },
 
