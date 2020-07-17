@@ -501,15 +501,10 @@ export default {
   },
   mounted () {
     this.$nextTick(() => {
-      Promise.all([
-        this.$store.dispatch('statistics/getCases'),
-        this.$store.dispatch('data-sebaran-jabar/getItems')
-      ]).then(() => {
-        Promise.all([
-          this.$store.dispatch('banners/getItems'),
-          this.$store.dispatch('news/getItems')
-        ])
-      })
+      this.$store.dispatch('statistics/getCases')
+      this.$store.dispatch('data-sebaran-jabar/getItems')
+      this.$store.dispatch('banners/getItems')
+      this.$store.dispatch('news/getItems')
       if (process.browser) {
         analytics.logEvent('homepage_view')
       }
