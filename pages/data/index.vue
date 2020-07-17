@@ -50,7 +50,6 @@
       </div>
       <div class="link-hover-warning rounded-lg border border-solid mt-5 p-5" style="background-color: #FBEADF; border-color: #FED1B1;">
         <a
-          target="_blank"
           class="px-4 py-2 font-bold text-lg"
           href="/distribution-case"
         >
