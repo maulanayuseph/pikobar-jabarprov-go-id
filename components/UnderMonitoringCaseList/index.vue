@@ -215,47 +215,49 @@
               </p>
             </th>
           </tr>
+          <tr style="line-height: 51px;">
+            <th class="table-col border-b border-solid px-2 py-1 bg-white">
+              <b>TOTAL SELURUH KOTA/KAB</b>
+            </th>
+            <th class="table-col border-b border-solid px-2 py-1 textright bg-white">
+              <b>{{ total.suspectNow.toLocaleString('id') }}</b>
+            </th>
+            <th class="table-col border-b border-solid px-2 py-1 textright bg-white">
+              <b>{{ total.suspectAverage.toLocaleString('id') }}</b>
+            </th>
+            <th class="table-col border-b border-solid px-2 py-1 textright bg-white">
+              <b>{{ total.suspectTotal.toLocaleString('id') }}</b>
+            </th>
+            <th class="table-col border-b border-solid px-2 py-1 textright bg-white">
+              <b>{{ total.processNow.toLocaleString('id') }}</b>
+            </th>
+            <th class="table-col border-b border-solid px-2 py-1 textright bg-white">
+              <b>{{ total.processAverage.toLocaleString('id') }}</b>
+            </th>
+            <th class="table-col border-b border-solid px-2 py-1 textright bg-white">
+              <b>{{ total.processTotal.toLocaleString('id') }}</b>
+            </th>
+            <th class="table-col border-b border-solid px-2 py-1 textright bg-white">
+              <b>{{ total.finishedNow.toLocaleString('id') }}</b>
+            </th>
+            <th class="table-col border-b border-solid px-2 py-1 textright bg-white">
+              <b>{{ total.finishedAverage.toLocaleString('id') }}</b>
+            </th>
+            <th class="table-col border-b border-solid px-2 py-1 textright bg-white">
+              <b>{{ total.finishedTotal.toLocaleString('id') }}</b>
+            </th>
+            <th class="table-col border-b border-solid px-2 py-1 textright bg-white">
+              <b>{{ total.diedNow.toLocaleString('id') }}</b>
+            </th>
+            <th class="table-col border-b border-solid px-2 py-1 textright bg-white">
+              <b>{{ total.diedAverage.toLocaleString('id') }}</b>
+            </th>
+            <th class="table-col border-b border-solid px-2 py-1 textright bg-white">
+              <b>{{ total.diedTotal.toLocaleString('id') }}</b>
+            </th>
+          </tr>
         </thead>
         <tbody>
-          <tr>
-            <td class="table-col border-b border-solid px-2 py-1" />
-            <td class="table-col border-b border-solid px-2 py-1 textright">
-              <b>{{ total.suspectNow.toLocaleString('id') }}</b>
-            </td>
-            <td class="table-col border-b border-solid px-2 py-1 textright">
-              <b>{{ total.suspectAverage.toLocaleString('id') }}</b>
-            </td>
-            <td class="table-col border-b border-solid px-2 py-1 textright">
-              <b>{{ total.suspectTotal.toLocaleString('id') }}</b>
-            </td>
-            <td class="table-col border-b border-solid px-2 py-1 textright">
-              <b>{{ total.processNow.toLocaleString('id') }}</b>
-            </td>
-            <td class="table-col border-b border-solid px-2 py-1 textright">
-              <b>{{ total.processAverage.toLocaleString('id') }}</b>
-            </td>
-            <td class="table-col border-b border-solid px-2 py-1 textright">
-              <b>{{ total.processTotal.toLocaleString('id') }}</b>
-            </td>
-            <td class="table-col border-b border-solid px-2 py-1 textright">
-              <b>{{ total.finishedNow.toLocaleString('id') }}</b>
-            </td>
-            <td class="table-col border-b border-solid px-2 py-1 textright">
-              <b>{{ total.finishedAverage.toLocaleString('id') }}</b>
-            </td>
-            <td class="table-col border-b border-solid px-2 py-1 textright">
-              <b>{{ total.finishedTotal.toLocaleString('id') }}</b>
-            </td>
-            <td class="table-col border-b border-solid px-2 py-1 textright">
-              <b>{{ total.diedNow.toLocaleString('id') }}</b>
-            </td>
-            <td class="table-col border-b border-solid px-2 py-1 textright">
-              <b>{{ total.diedAverage.toLocaleString('id') }}</b>
-            </td>
-            <td class="table-col border-b border-solid px-2 py-1 textright">
-              <b>{{ total.diedTotal.toLocaleString('id') }}</b>
-            </td>
-          </tr>
           <tr v-for="(row, rowIndex) in dataCase" :key="rowIndex">
             <td class="table-col border-b border-solid px-2 py-1">
               {{ row.region }}
@@ -547,6 +549,7 @@ export default {
 
   thead tr:nth-child(1) th { position: sticky; top: 0; }
   thead tr:nth-child(2) th { position: sticky; top: 29px; }
+  thead tr:nth-child(3) th { position: sticky; top: 79px; }
 
   .textright {
     text-align: right;
