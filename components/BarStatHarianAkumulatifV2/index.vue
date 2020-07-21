@@ -217,25 +217,27 @@ export default {
       barChartHarianODPData: [
         [
           'Tanggal',
-          'Proses Pemantauan',
+          'Proses',
           { type: 'string', role: 'tooltip', p: { html: true } },
-          'Selesai Pemantauan',
+          'Selesai',
+          { type: 'string', role: 'tooltip', p: { html: true } },
+          'Meninggal',
           { type: 'string', role: 'tooltip', p: { html: true } },
           'Rata-rata 7 Hari',
           { type: 'string', role: 'tooltip', p: { html: true } }
         ],
-        ['0', 0, '', 0, '', 0, '']
+        ['0', 0, '', 0, '', 0, '', 0, '']
       ],
       barChartHarianODPOptions: {
         height: 450,
         orientation: 'horizontal',
-        colors: ['#2964BC', '#023857', '#EB5757'],
+        colors: ['#2964BC', '#023857', '#434656', '#EB5757'],
         legend: {
           position: 'bottom'
         },
         isStacked: true,
         seriesType: 'bars',
-        series: { 2: { type: 'line' } },
+        series: { 3: { type: 'line' } },
         hAxis: {
           slantedText: true,
           slantedTextAngle: -90
@@ -249,25 +251,27 @@ export default {
       barChartHarianPDPData: [
         [
           'Tanggal',
-          'Proses Pengawasan',
+          'Proses',
           { type: 'string', role: 'tooltip', p: { html: true } },
-          'Selesai Pengawasan',
+          'Selesai',
+          { type: 'string', role: 'tooltip', p: { html: true } },
+          'Meninggal',
           { type: 'string', role: 'tooltip', p: { html: true } },
           'Rata-rata 7 Hari',
           { type: 'string', role: 'tooltip', p: { html: true } }
         ],
-        ['0', 0, '', 0, '', 0, '']
+        ['0', 0, '', 0, '', 0, '', 0, '']
       ],
       barChartHarianPDPOptions: {
         height: 450,
         orientation: 'horizontal',
-        colors: ['#FFD648', '#C99307', '#EB5757'],
+        colors: ['#FFD648', '#C99307', '#A68D65', '#EB5757'],
         legend: {
           position: 'bottom'
         },
         isStacked: true,
         seriesType: 'bars',
-        series: { 2: { type: 'line' } },
+        series: { 3: { type: 'line' } },
         hAxis: {
           slantedText: true,
           slantedTextAngle: -90
@@ -290,15 +294,17 @@ export default {
           { type: 'string', role: 'tooltip', p: { html: true } },
           'Selesai Pemantauan',
           { type: 'string', role: 'tooltip', p: { html: true } },
+          'Meninggal',
+          { type: 'string', role: 'tooltip', p: { html: true } },
           'Total ODP',
           { type: 'string', role: 'tooltip', p: { html: true } }
         ],
-        ['0', 0, '', 0, '', 0, '']
+        ['0', 0, '', 0, '', 0, '', 0, '']
       ],
       barChartAkumulatifODPOptions: {
         height: 450,
         orientation: 'horizontal',
-        colors: ['#73A5EF', '#0667AC', '#06285A'],
+        colors: ['#73A5EF', '#0667AC', '#434656', '#06285A'],
         legend: {
           position: 'bottom',
           alignment: 'center',
@@ -322,15 +328,17 @@ export default {
           { type: 'string', role: 'tooltip', p: { html: true } },
           'Selesai Pengawasan',
           { type: 'string', role: 'tooltip', p: { html: true } },
+          'Meninggal',
+          { type: 'string', role: 'tooltip', p: { html: true } },
           'Total PDP',
           { type: 'string', role: 'tooltip', p: { html: true } }
         ],
-        ['0', 0, '', 0, '', 0, '']
+        ['0', 0, '', 0, '', 0, '', 0, '']
       ],
       barChartAkumulatifPDPOptions: {
         height: 450,
         orientation: 'horizontal',
-        colors: ['#FFD648', '#C99307', '#725201'],
+        colors: ['#FFD648', '#C99307', '#A68D65', '#725201'],
         legend: {
           position: 'bottom',
           alignment: 'center',
@@ -547,14 +555,16 @@ export default {
       this.barChartHarianODPData = [
         [
           'Tanggal',
-          'Proses Pemantauan',
+          'Proses',
           { type: 'string', role: 'tooltip', p: { html: true } },
-          'Selesai Pemantauan',
+          'Selesai',
+          { type: 'string', role: 'tooltip', p: { html: true } },
+          'Meninggal',
           { type: 'string', role: 'tooltip', p: { html: true } },
           'Rata-rata 7 Hari',
           { type: 'string', role: 'tooltip', p: { html: true } }
         ],
-        ['0', 0, '', 0, '', 0, '']
+        ['0', 0, '', 0, '', 0, '', 0, '']
       ]
 
       // filter date
@@ -579,6 +589,7 @@ export default {
           tooltipODP += '<tr><td style="font-size: larger;">' + self.formatDate(date) + '</td><td></td></tr>'
           tooltipODP += '<tr><td>Proses Pemantauan </td><td><b style="margin-left: 10px;">' + self.ifNegativeReturnZero(self.jsonDataProvinsiHarian[i].odp_aktif) + '</b></td></tr>'
           tooltipODP += '<tr><td>Selesai Pemantauan </td><td><b style="margin-left: 10px;">' + self.jsonDataProvinsiHarian[i].odp_selesai + '</b></td></tr>'
+          tooltipODP += '<tr><td>Meninggal </td><td><b style="margin-left: 10px;">' + self.jsonDataProvinsiHarian[i].odp_meninggal + '</b></td></tr>'
           tooltipODP += '<tr><td>Total ODP</td><td><b style="margin-left: 10px;">' + self.jsonDataProvinsiHarian[i].odp_total + '</b></td></tr>'
           tooltipODP += '<tr><td>Rata-rata 7 Hari</td><td><b style="margin-left: 10px;">' + self.jsonDataProvinsiHarian[i].odp_ratarata + '</b></td></tr>'
           tooltipODP += '</table>'
@@ -586,6 +597,7 @@ export default {
             self.formatDateNoYear(date),
             self.ifNegativeReturnZero(self.jsonDataProvinsiHarian[i].odp_aktif), tooltipODP,
             self.jsonDataProvinsiHarian[i].odp_selesai, tooltipODP,
+            self.jsonDataProvinsiHarian[i].odp_meninggal, tooltipODP,
             self.jsonDataProvinsiHarian[i].odp_ratarata, tooltipODP
           ])
         }
@@ -606,14 +618,16 @@ export default {
       this.barChartHarianPDPData = [
         [
           'Tanggal',
-          'Proses Pengawasan',
+          'Proses',
           { type: 'string', role: 'tooltip', p: { html: true } },
-          'Selesai Pengawasan',
+          'Selesai',
+          { type: 'string', role: 'tooltip', p: { html: true } },
+          'Meninggal',
           { type: 'string', role: 'tooltip', p: { html: true } },
           'Rata-rata 7 Hari',
           { type: 'string', role: 'tooltip', p: { html: true } }
         ],
-        ['0', 0, '', 0, '', 0, '']
+        ['0', 0, '', 0, '', 0, '', 0, '']
       ]
 
       // filter date
@@ -638,6 +652,7 @@ export default {
           tooltipPDP += '<tr><td style="font-size: larger;">' + self.formatDate(date) + '</td><td></td></tr>'
           tooltipPDP += '<tr><td>Proses Pengawasan </td><td><b style="margin-left: 10px;">' + self.ifNegativeReturnZero(self.jsonDataProvinsiHarian[i].pdp_aktif) + '</b></td></tr>'
           tooltipPDP += '<tr><td>Selesai Pengawasan </td><td><b style="margin-left: 10px;">' + self.jsonDataProvinsiHarian[i].pdp_selesai + '</b></td></tr>'
+          tooltipPDP += '<tr><td>Meninggal </td><td><b style="margin-left: 10px;">' + self.jsonDataProvinsiHarian[i].pdp_meninggal + '</b></td></tr>'
           tooltipPDP += '<tr><td>Total PDP</td><td><b style="margin-left: 10px;">' + self.jsonDataProvinsiHarian[i].pdp_total + '</b></td></tr>'
           tooltipPDP += '<tr><td>Rata-rata 7 Hari</td><td><b style="margin-left: 10px;">' + self.jsonDataProvinsiHarian[i].pdp_ratarata + '</b></td></tr>'
           tooltipPDP += '</table>'
@@ -645,6 +660,7 @@ export default {
             self.formatDateNoYear(date),
             self.ifNegativeReturnZero(self.jsonDataProvinsiHarian[i].pdp_aktif), tooltipPDP,
             self.jsonDataProvinsiHarian[i].pdp_selesai, tooltipPDP,
+            self.jsonDataProvinsiHarian[i].pdp_meninggal, tooltipPDP,
             self.jsonDataProvinsiHarian[i].pdp_ratarata, tooltipPDP
           ])
         }
@@ -665,14 +681,16 @@ export default {
       this.barChartAkumulatifODPData = [
         [
           'Tanggal',
-          'Proses Pemantauan',
+          'Proses',
           { type: 'string', role: 'tooltip', p: { html: true } },
-          'Selesai Pemantauan',
+          'Selesai',
+          { type: 'string', role: 'tooltip', p: { html: true } },
+          'Meninggal',
           { type: 'string', role: 'tooltip', p: { html: true } },
           'Total ODP',
           { type: 'string', role: 'tooltip', p: { html: true } }
         ],
-        ['0', 0, '', 0, '', 0, '']
+        ['0', 0, '', 0, '', 0, '', 0, '']
       ]
 
       // filter date
@@ -697,9 +715,16 @@ export default {
           tooltipODP += '<tr><td style="font-size: larger;">' + self.formatDate(date) + '</td><td></td></tr>'
           tooltipODP += '<tr><td>Proses Pemantauan </td><td><b style="margin-left: 10px;">' + self.jsonDataProvinsiKumulatif[i].odp_aktif + '</b></td></tr>'
           tooltipODP += '<tr><td>Selesai Pemantauan </td><td><b style="margin-left: 10px;">' + self.jsonDataProvinsiKumulatif[i].odp_selesai + '</b></td></tr>'
+          tooltipODP += '<tr><td>Meninggal </td><td><b style="margin-left: 10px;">' + self.jsonDataProvinsiKumulatif[i].odp_meninggal + '</b></td></tr>'
           tooltipODP += '<tr><td style="font-size: larger;">Total ODP</td><td><b style="margin-left: 10px;">' + self.jsonDataProvinsiKumulatif[i].odp_total + '</b></td></tr>'
           tooltipODP += '</table>'
-          self.barChartAkumulatifODPData.push([self.formatDateNoYear(date), self.jsonDataProvinsiKumulatif[i].odp_aktif, tooltipODP, self.jsonDataProvinsiKumulatif[i].odp_selesai, tooltipODP, self.jsonDataProvinsiKumulatif[i].odp_total, tooltipODP])
+          self.barChartAkumulatifODPData.push([
+            self.formatDateNoYear(date),
+            self.jsonDataProvinsiKumulatif[i].odp_aktif, tooltipODP,
+            self.jsonDataProvinsiKumulatif[i].odp_selesai, tooltipODP,
+            self.jsonDataProvinsiKumulatif[i].odp_meninggal, tooltipODP,
+            self.jsonDataProvinsiKumulatif[i].odp_total, tooltipODP
+          ])
         }
         if (self.formatDate(date) === strToday) {
           stop = true
@@ -718,14 +743,16 @@ export default {
       this.barChartAkumulatifPDPData = [
         [
           'Tanggal',
-          'Proses Pengawasan',
+          'Proses',
           { type: 'string', role: 'tooltip', p: { html: true } },
-          'Selesai Pengawasan',
+          'Selesai',
+          { type: 'string', role: 'tooltip', p: { html: true } },
+          'Meninggal',
           { type: 'string', role: 'tooltip', p: { html: true } },
           'Total PDP',
           { type: 'string', role: 'tooltip', p: { html: true } }
         ],
-        ['0', 0, '', 0, '', 0, '']
+        ['0', 0, '', 0, '', 0, '', 0, '']
       ]
 
       // filter date
@@ -750,9 +777,16 @@ export default {
           tooltipPDP += '<tr><td style="font-size: larger;">' + self.formatDate(date) + '</td><td></td></tr>'
           tooltipPDP += '<tr><td>Proses Pengawasan </td><td><b style="margin-left: 10px;">' + self.jsonDataProvinsiKumulatif[i].pdp_aktif + '</b></td></tr>'
           tooltipPDP += '<tr><td>Selesai Pengawasan </td><td><b style="margin-left: 10px;">' + self.jsonDataProvinsiKumulatif[i].pdp_selesai + '</b></td></tr>'
+          tooltipPDP += '<tr><td>Meninggal </td><td><b style="margin-left: 10px;">' + self.jsonDataProvinsiKumulatif[i].pdp_meninggal + '</b></td></tr>'
           tooltipPDP += '<tr><td style="font-size: larger;">Total PDP</td><td><b style="margin-left: 10px;">' + self.jsonDataProvinsiKumulatif[i].pdp_total + '</b></td></tr>'
           tooltipPDP += '</table>'
-          self.barChartAkumulatifPDPData.push([self.formatDateNoYear(date), self.jsonDataProvinsiKumulatif[i].pdp_aktif, tooltipPDP, self.jsonDataProvinsiKumulatif[i].pdp_selesai, tooltipPDP, self.jsonDataProvinsiKumulatif[i].pdp_total, tooltipPDP])
+          self.barChartAkumulatifPDPData.push([
+            self.formatDateNoYear(date),
+            self.jsonDataProvinsiKumulatif[i].pdp_aktif, tooltipPDP,
+            self.jsonDataProvinsiKumulatif[i].pdp_selesai, tooltipPDP,
+            self.jsonDataProvinsiKumulatif[i].pdp_meninggal, tooltipPDP,
+            self.jsonDataProvinsiKumulatif[i].pdp_total, tooltipPDP
+          ])
         }
         if (self.formatDate(date) === strToday) {
           stop = true
