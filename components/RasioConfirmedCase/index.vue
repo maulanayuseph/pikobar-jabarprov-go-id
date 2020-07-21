@@ -33,17 +33,6 @@
         Data yang ditampilkan berdasarkan: <b>{{ parentLabel[activeRegionCategory].label }} di {{ activeParentRegionName }}</b>
       </p>
       <div class="p-3">
-        <ul class="ml-32 mb-5 overflow-x-auto flex">
-          <li class="text-sm mr-5 leading-tight">
-            <i class="legend-rasio-box" style="background:#a03733;" /> Meninggal
-          </li>
-          <li class="text-sm mr-5 leading-tight">
-            <i class="legend-rasio-box" style="background:#3bb46d;" /> Sembuh
-          </li>
-          <li class="text-sm mr-5 leading-tight">
-            <i class="legend-rasio-box" style="background:#ef6464;" /> Aktif
-          </li>
-        </ul>
         <GChart
           id="chart_div"
           class="chart-area"
@@ -106,8 +95,8 @@ export default {
           { id: 'Sembuh', label: 'Sembuh', type: 'number' },
           { type: 'string', role: 'tooltip', p: { html: true } },
           { id: 'Aktif', label: 'Aktif', type: 'number' },
-          { type: 'string', role: 'tooltip', p: { html: true } },
-          { id: 'annot', type: 'string', role: 'annotation' }
+          { type: 'string', role: 'tooltip', p: { html: true } }
+          // { id: 'annot', type: 'string', role: 'annotation' }
         ],
         rows: []
       },
@@ -135,7 +124,7 @@ export default {
       return {
         chartArea: {
           width: '60%',
-          top: -20,
+          top: 40,
           left: 140,
           height: this.rowHeight
         },
@@ -143,13 +132,10 @@ export default {
         height: this.rowHeight + 60,
         isStacked: true,
         legend: {
-          position: 'none',
+          position: 'top',
           textStyle: {
             fontName: 'Arial',
             fontSize: 12,
-            // The color of the text.
-            // The color of the text outline.
-            // The transparency of the text.
             opacity: 1
           }
         },
@@ -180,15 +166,15 @@ export default {
           },
           isHtml: true
         },
-        annotations: {
-          textStyle: {
-            fontSize: 10,
-            bold: true,
-            color: '#000000',
-            opacity: 0.8
-          },
-          alwaysOutside: true
-        },
+        // annotations: {
+        //   textStyle: {
+        //     fontSize: 10,
+        //     bold: true,
+        //     color: '#000000',
+        //     opacity: 0.8
+        //   },
+        //   alwaysOutside: true
+        // },
         vAxis: {
           html: true,
           textStyle: {
@@ -276,8 +262,8 @@ export default {
             { v: el.pdp_selesai, f: el.pdp_selesai },
             { v: '', f: tooltip },
             { v: el.pdp_aktif, f: el.pdp_aktif },
-            { v: '', f: tooltip },
-            { v: el.pdp_total, f: el.pdp_total }
+            { v: '', f: tooltip }
+            // { v: el.pdp_total, f: el.pdp_total }
           ]
         }
       } else if (category === 'odp') {
@@ -299,8 +285,8 @@ export default {
             { v: el.odp_selesai, f: el.odp_selesai },
             { v: '', f: tooltip },
             { v: el.odp_aktif, f: el.odp_aktif },
-            { v: '', f: tooltip },
-            { v: el.odp_total, f: el.odp_total }
+            { v: '', f: tooltip }
+            // { v: el.odp_total, f: el.odp_total }
           ]
         }
       } else {
@@ -322,8 +308,8 @@ export default {
             { v: el.positif_sembuh, f: el.positif_sembuh },
             { v: '', f: tooltip },
             { v: el.positif_aktif, f: el.positif_aktif },
-            { v: '', f: tooltip },
-            { v: el.positif_total, f: el.positif_total }
+            { v: '', f: tooltip }
+            // { v: el.positif_total, f: el.positif_total }
           ]
         }
       }
@@ -354,8 +340,8 @@ export default {
           { id: 'Proses', label: 'Selesai', type: 'number' },
           { type: 'string', role: 'tooltip', p: { html: true } },
           { id: 'Selesai', label: 'Proses', type: 'number' },
-          { type: 'string', role: 'tooltip', p: { html: true } },
-          { id: 'annot', type: 'string', role: 'annotation' }
+          { type: 'string', role: 'tooltip', p: { html: true } }
+          // { id: 'annot', type: 'string', role: 'annotation' }
         ]
       } else {
         this.chartData.cols = [
@@ -365,8 +351,8 @@ export default {
           { id: 'Sembuh', label: 'Sembuh', type: 'number' },
           { type: 'string', role: 'tooltip', p: { html: true } },
           { id: 'Aktif', label: 'Aktif', type: 'number' },
-          { type: 'string', role: 'tooltip', p: { html: true } },
-          { id: 'annot', type: 'string', role: 'annotation' }
+          { type: 'string', role: 'tooltip', p: { html: true } }
+          // { id: 'annot', type: 'string', role: 'annotation' }
         ]
       }
     }
