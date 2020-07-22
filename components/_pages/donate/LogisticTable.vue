@@ -124,11 +124,15 @@ export default {
         {
           prop: 'sisa',
           label: 'Jumlah Dibutuhkan'
+        },
+        {
+          prop: 'unit',
+          label: 'Satuan'
+        },
+        {
+          prop: 'spec',
+          label: 'Keterangan'
         }
-        // {
-        //   prop: 'masuk',
-        //   label: 'Jumlah Terpenuhi'
-        // }
       ],
       isLoading: true,
       tableData: [],
