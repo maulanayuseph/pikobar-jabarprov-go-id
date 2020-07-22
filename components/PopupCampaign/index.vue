@@ -4,7 +4,10 @@
     @click.self="isActive = false"
   >
     <template v-if="isActive">
-      <div class="popup-campaign__container">
+      <div
+        class="popup-campaign__container"
+        :style="campaignStyle"
+      >
         <img
           :src="campaign.imageURL"
           :alt="campaign.imageAlt"
@@ -37,7 +40,17 @@ export default {
   computed: {
     ...mapState('remote-config', {
       campaign: state => state.config ? state.config.pikobarWebPopupCampaign : {}
-    })
+    }),
+    campaignStyle () {
+      if (this.campaign) {
+        const { width, height } = this.campaign
+        return {
+          width: width ? `${width}px` : 'unset',
+          height: height ? `${height}px` : 'unset'
+        }
+      }
+      return {}
+    }
   },
   watch: {
     campaign: {
@@ -91,6 +104,7 @@ export default {
   &__container {
     width: 75%;
     max-width: 720px;
+    max-height: 720px;
     @apply relative shadow-lg;
   }
 
