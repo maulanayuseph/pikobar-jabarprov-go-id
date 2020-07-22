@@ -103,8 +103,8 @@ export default {
 
   &__container {
     width: 75%;
-    max-width: 720px;
-    max-height: 720px;
+    max-width: 80vw;
+    max-height: 80vh;
     @apply relative shadow-lg;
   }
 
