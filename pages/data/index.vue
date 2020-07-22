@@ -3,7 +3,7 @@
     <br>
     <header class="m-4 mb-8 md:m-8">
       <h3 class="text-3xl text-gray-900 font-bold text-left leading-none" style="margin-bottom: 10px; ">
-        Dashboard Kasus COVID-19 Provinsi Jawa Barat
+        Dashboard Statistik Kasus Covid-19 Provinsi Jawa Barat
       </h3>
       <small class="text-xl opacity-75">*Update Terakhir: {{ lastUpdatedAt }}</small>
     </header>
@@ -17,45 +17,13 @@
       <DataPCR />
     </section>
     <section class="m-4 mb-8 md:m-8">
-      <div class="items-stretch flex flex-col xl:flex-row xl:flex-no-wrap">
-        <button
-          class="button-selector m-1 w-full xl:w-auto "
-          style="display: flex;"
-          :active="stat.isActiveHeatmap"
-          @click="enableHeatmap"
-        >
-          <img v-if="stat.isActiveHeatmap" src="/img/icon-sebaran-active.svg" style="margin-top: 2px; margin-right:5px;">
-          <img v-if="!stat.isActiveHeatmap" src="/img/icon-sebaran-inactive.svg" style="margin-top: 2px; margin-right:5px;">
-          Sebaran Titik
-        </button>
-        <button
-          class="button-selector m-1 w-full xl:w-auto "
-          style="display: flex;"
-          :active="stat.isActiveFaskes"
-          @click="enableFaskes"
-        >
-          <img v-if="stat.isActiveFaskes" src="/img/icon-faskes-active.svg" style="margin-top: 2px; margin-right:5px;">
-          <img v-if="!stat.isActiveFaskes" src="/img/icon-faskes-inactive.svg" style="margin-top: 2px; margin-right:5px;">
-          Fasilitas Kesehatan
-        </button>
-      </div>
-      <div class="mt-4">
-        <MapSebaranHeatmap
-          v-if="stat.isActiveHeatmap"
-          :activeId="activeTabId"
-        />
-        <MapV2SebaranFaskes
-          v-if="stat.isActiveFaskes"
-        />
-      </div>
-      <div class="link-hover-warning rounded-lg border border-solid mt-5 p-5" style="background-color: #FBEADF; border-color: #FED1B1;">
+      <div class="div-banner-distribution-case">
         <a
           class="px-4 py-2 font-bold text-lg"
           href="/distribution-case"
         >
-          <FontAwesomeIcon class="ml-2 mr-2 warning" :style="{ color: '#FFA800' }" :icon="faInfo" />
-          Informasi lebih lengkap mengenai Sebaran COVID-19 di Jawa Barat
-          <FontAwesomeIcon class="ml-2 mr-2" :icon="faArrowRight" :style="{ float: 'right' }" />
+          <img class="banner-distribution-case" style="width: 100%;" src="~assets/Banner_sebaran_kasus.png">
+          <img class="hidden banner-distribution-case-hover" style="width: 100%;" src="~assets/Banner_sebaran_kasus_hover.png">
         </a>
       </div>
     </section>
@@ -109,6 +77,14 @@
   box-shadow: 0 0 10px #FED1B1;
   text-decoration: underline;
   cursor: pointer;
+}
+
+.div-banner-distribution-case:hover .banner-distribution-case-hover {
+  display: block;
+}
+
+.div-banner-distribution-case:hover .banner-distribution-case {
+  display: none;
 }
 </style>
 <script>
