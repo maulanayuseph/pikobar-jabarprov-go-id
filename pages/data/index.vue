@@ -16,8 +16,25 @@
     <section class="m-4 mb-8 md:m-8">
       <DataPCR />
     </section>
-    <section class="m-4 mb-8 md:m-8">
-      <div class="div-banner-distribution-case">
+    <section>
+      <a
+        href="/distribution-case"
+      >
+        <div class="m-4 mb-8 md:m-8 h-48 bg-orange-600 rounded-lg shadow-md" style="background-color: #FEC52E;">
+          <div class="float-left py-6 px-10">
+            <div class="text-2xl font-bold">
+              Ketahui informasi lebih lengkap mengenai <br>
+              Sebaran Kasus COVID-19 di Provinsi Jawa Barat
+            </div>
+
+            <button class="bg-white py-2 px-4 rounded font-semibold mt-5 hover:shadow">
+              Lihat Selengkapnya <FontAwesomeIcon :icon="faAngleRight" class="ml-2 text-xl align-middle" />
+            </button>
+          </div>
+          <img class="float-right h-full" src="~assets/banner-sebaran-ilustrasi.png">
+        </div>
+      </a>
+      <!-- <div class="div-banner-distribution-case">
         <a
           class="px-4 py-2 font-bold text-lg"
           href="/distribution-case"
@@ -25,7 +42,7 @@
           <img class="banner-distribution-case" style="width: 100%;" src="~assets/Banner_sebaran_kasus.png">
           <img class="hidden banner-distribution-case-hover" style="width: 100%;" src="~assets/Banner_sebaran_kasus_hover.png">
         </a>
-      </div>
+      </div> -->
     </section>
 
     <section class="m-4 mb-8 md:m-8">
@@ -92,7 +109,7 @@
 import axios from 'axios'
 import { mapState } from 'vuex'
 import DataSummary from '~/components/_pages/index/DataSummary'
-import { faFirstAid, faBug, faMap, faCalendarMinus, faArrowRight, faChevronRight, faInfo, faCircle } from '@fortawesome/free-solid-svg-icons'
+import { faFirstAid, faBug, faMap, faCalendarMinus, faArrowRight, faChevronRight, faInfo, faCircle, faAngleRight } from '@fortawesome/free-solid-svg-icons'
 import { formatDateTimeShort } from '~/lib/date'
 import { analytics } from '~/lib/firebase'
 
@@ -123,6 +140,7 @@ export default {
       faChevronRight,
       faInfo,
       faCircle,
+      faAngleRight,
 
       jsonDataRekapitulasiJabarProv: {},
       jsonDataRekapitulasiJabarKab: [],
