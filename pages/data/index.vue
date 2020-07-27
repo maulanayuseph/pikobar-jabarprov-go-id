@@ -21,14 +21,14 @@
         href="/distribution-case"
       >
         <div class="m-4 mb-8 md:m-8 h-48 bg-orange-600 rounded-lg shadow-md" style="background-color: #FEC52E;">
-          <div class="float-left py-6 px-10">
-            <div class="text-2xl font-bold">
+          <div class="float-left py-6 px-10" style="position: absolute;">
+            <div class="w-text xl:text-2xl font-bold">
               Ketahui informasi lebih lengkap mengenai <br>
               Sebaran Kasus COVID-19 di Provinsi Jawa Barat
             </div>
 
             <button class="bg-white py-2 px-4 rounded font-semibold mt-5 hover:shadow">
-              Lihat Selengkapnya <FontAwesomeIcon :icon="faAngleRight" class="ml-2 text-xl align-middle" />
+              Lihat Selengkapnya <FontAwesomeIcon :icon="faAngleRight" class="ml-2 w-text xl:text-xl align-middle" />
             </button>
           </div>
           <img class="float-right h-full" src="~assets/banner-sebaran-ilustrasi.png">
