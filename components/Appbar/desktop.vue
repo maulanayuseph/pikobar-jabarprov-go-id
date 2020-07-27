@@ -22,19 +22,42 @@
             Menu
           </ul> -->
       <ul class="flex flex-row items-center">
-        <a
-          v-for="item in menus"
-          :key="item.to"
-          tag="li"
-          :href="item.to"
-          :exact="item.exact"
-          class="hidden lg:flex appbar-menu-item cursor-pointer mx-2 px-2 py-2 hover:bg-gray-200"
-          @click.prevent.stop="onMenuItemClicked(item)"
-        >
-          <span>
-            {{ item.label }}
-          </span>
-        </a>
+        <li v-for="item in menus" :key="item.to">
+          <nuxt-link
+            v-if="item.children === undefined"
+            :to="item.to"
+            :exact="item.exact"
+            class="hidden lg:flex appbar-menu-item cursor-pointer mx-2 px-2 py-2 hover:bg-gray-200"
+          >
+            <a>
+              {{ item.label }}
+            </a>
+          </nuxt-link>
+
+          <nuxt-link
+            v-if="item.children"
+            to="#"
+            :exact="item.exact"
+            class="hidden lg:flex appbar-menu-item cursor-pointer mx-2 px-2 py-2 hover:bg-gray-200"
+          >
+            <a>
+              {{ item.label }}
+            </a>
+          </nuxt-link>
+          <ul v-if="item.children" :class="['hidden absolute rounded bg-white pb-3']">
+            <li v-for="itemSub in item.children" :key="itemSub.to">
+              <nuxt-link
+                :to="itemSub.to"
+                :exact="itemSub.exact"
+                class="hidden lg:flex appbar-menu-item cursor-pointer mx-2 px-2 py-2 hover:bg-gray-200"
+              >
+                <a>
+                  {{ itemSub.label }}
+                </a>
+              </nuxt-link>
+            </li>
+          </ul>
+        </li>
         <nuxt-link
           tag="li"
           to="/notifications"
@@ -72,7 +95,14 @@ export default {
       },
       menus: [
         { to: '/', label: 'Home', exact: true },
-        { to: '/data', label: 'Data' },
+        {
+          to: '#',
+          label: 'Data',
+          children: [
+            { to: '/data', label: 'Statisik' },
+            { to: '/distribution-case', label: 'Sebaran Kasus' }
+          ]
+        },
         { to: '/articles?tab=jabar', label: 'Berita' },
         { to: '/faq', label: 'FAQ' },
         { to: '/contact', label: 'Kontak' },
@@ -109,5 +139,9 @@ export default {
   > * {
     @apply text-brand-green font-bold;
   }
+}
+
+ul li:hover ul {
+  display: block;
 }
 </style>

@@ -25,7 +25,7 @@
       </ContentLoader>
     </div>
     <div class="my-custom-scrollbar" :class="isLoading?'hidden':''">
-      <table class="table w-full border-t border-solid border-gray-300 tableFixHead" :class="isLoading?'hidden':''">
+      <table class="table w-full border-t border-solid border-gray-300" :class="isLoading?'hidden':''">
         <thead class="select-none">
           <tr>
             <th rowspan="2" class="px-2 py-1 hover:opacity-75 region-col" @click="onClickSort('region')">
@@ -215,86 +215,88 @@
               </p>
             </th>
           </tr>
+          <tr style="line-height: 51px;">
+            <th class="table-col border-b border-solid px-2 py-1 bg-white">
+              <b>TOTAL SELURUH KOTA/KAB</b>
+            </th>
+            <th class="table-col border-b border-solid px-2 py-1 textright bg-white">
+              <b>{{ total.suspectNow.toLocaleString('id') }}</b>
+            </th>
+            <th class="table-col border-b border-solid px-2 py-1 textright bg-white">
+              <b>{{ total.suspectAverage.toLocaleString('id') }}</b>
+            </th>
+            <th class="table-col border-b border-solid px-2 py-1 textright bg-white">
+              <b>{{ total.suspectTotal.toLocaleString('id') }}</b>
+            </th>
+            <th class="table-col border-b border-solid px-2 py-1 textright bg-white">
+              <b>{{ total.processNow.toLocaleString('id') }}</b>
+            </th>
+            <th class="table-col border-b border-solid px-2 py-1 textright bg-white">
+              <b>{{ total.processAverage.toLocaleString('id') }}</b>
+            </th>
+            <th class="table-col border-b border-solid px-2 py-1 textright bg-white">
+              <b>{{ total.processTotal.toLocaleString('id') }}</b>
+            </th>
+            <th class="table-col border-b border-solid px-2 py-1 textright bg-white">
+              <b>{{ total.finishedNow.toLocaleString('id') }}</b>
+            </th>
+            <th class="table-col border-b border-solid px-2 py-1 textright bg-white">
+              <b>{{ total.finishedAverage.toLocaleString('id') }}</b>
+            </th>
+            <th class="table-col border-b border-solid px-2 py-1 textright bg-white">
+              <b>{{ total.finishedTotal.toLocaleString('id') }}</b>
+            </th>
+            <th class="table-col border-b border-solid px-2 py-1 textright bg-white">
+              <b>{{ total.diedNow.toLocaleString('id') }}</b>
+            </th>
+            <th class="table-col border-b border-solid px-2 py-1 textright bg-white">
+              <b>{{ total.diedAverage.toLocaleString('id') }}</b>
+            </th>
+            <th class="table-col border-b border-solid px-2 py-1 textright bg-white">
+              <b>{{ total.diedTotal.toLocaleString('id') }}</b>
+            </th>
+          </tr>
         </thead>
         <tbody>
-          <tr>
-            <td class="table-col border-b border-solid px-2 py-1" />
-            <td class="table-col border-b border-solid px-2 py-1 textright">
-              <b>{{ total.suspectNow.toLocaleString('id') }}</b>
-            </td>
-            <td class="table-col border-b border-solid px-2 py-1 textright">
-              <b>{{ total.suspectAverage.toLocaleString('id') }}</b>
-            </td>
-            <td class="table-col border-b border-solid px-2 py-1 textright">
-              <b>{{ total.suspectTotal.toLocaleString('id') }}</b>
-            </td>
-            <td class="table-col border-b border-solid px-2 py-1 textright">
-              <b>{{ total.processNow.toLocaleString('id') }}</b>
-            </td>
-            <td class="table-col border-b border-solid px-2 py-1 textright">
-              <b>{{ total.processAverage.toLocaleString('id') }}</b>
-            </td>
-            <td class="table-col border-b border-solid px-2 py-1 textright">
-              <b>{{ total.processTotal.toLocaleString('id') }}</b>
-            </td>
-            <td class="table-col border-b border-solid px-2 py-1 textright">
-              <b>{{ total.finishedNow.toLocaleString('id') }}</b>
-            </td>
-            <td class="table-col border-b border-solid px-2 py-1 textright">
-              <b>{{ total.finishedAverage.toLocaleString('id') }}</b>
-            </td>
-            <td class="table-col border-b border-solid px-2 py-1 textright">
-              <b>{{ total.finishedTotal.toLocaleString('id') }}</b>
-            </td>
-            <td class="table-col border-b border-solid px-2 py-1 textright">
-              <b>{{ total.diedNow.toLocaleString('id') }}</b>
-            </td>
-            <td class="table-col border-b border-solid px-2 py-1 textright">
-              <b>{{ total.diedAverage.toLocaleString('id') }}</b>
-            </td>
-            <td class="table-col border-b border-solid px-2 py-1 textright">
-              <b>{{ total.diedTotal.toLocaleString('id') }}</b>
-            </td>
-          </tr>
           <tr v-for="(row, rowIndex) in dataCase" :key="rowIndex">
             <td class="table-col border-b border-solid px-2 py-1">
               {{ row.region }}
             </td>
             <td class="table-col border-b border-solid px-2 py-1 textright">
-              {{ row.suspectNow }}
+              {{ row.suspectNow.toLocaleString('id') }}
             </td>
             <td class="table-col border-b border-solid px-2 py-1 textright">
-              {{ row.suspectAverage }}
+              {{ row.suspectAverage.toLocaleString('id') }}
             </td>
             <td class="table-col border-b border-solid px-2 py-1 textright">
-              {{ row.suspectTotal }}
+              {{ row.suspectTotal.toLocaleString('id') }}
             </td>
             <td class="table-col border-b border-solid px-2 py-1 textright">
-              {{ row.processNow }}
+              {{ row.processNow.toLocaleString('id') }}
             </td>
             <td class="table-col border-b border-solid px-2 py-1 textright">
-              {{ row.processAverage }}
+              {{ row.processAverage.toLocaleString('id') }}
             </td>
             <td class="table-col border-b border-solid px-2 py-1 textright">
-              {{ row.processTotal }}
+              {{ row.processTotal.toLocaleString('id') }}
             </td>
             <td class="table-col border-b border-solid px-2 py-1 textright">
-              {{ row.finishedNow }}
+              {{ row.finishedNow.toLocaleString('id') }}
             </td>
             <td class="table-col border-b border-solid px-2 py-1 textright">
-              {{ row.finishedAverage }}
+              {{ row.finishedAverage.toLocaleString('id') }}
             </td>
             <td class="table-col border-b border-solid px-2 py-1 textright">
-              {{ row.finishedTotal }}
+              {{ row.finishedTotal.toLocaleString('id') }}
             </td>
             <td class="table-col border-b border-solid px-2 py-1 textright">
-              {{ row.diedNow }}
+              {{ row.diedNow.toLocaleString('id') }}
             </td>
             <td class="table-col border-b border-solid px-2 py-1 textright">
-              {{ row.diedAverage }}
+              {{ row.diedAverage.toLocaleString('id') }}
             </td>
             <td class="table-col border-b border-solid px-2 py-1 textright">
-              {{ row.diedTotal }}
+              {{ row.diedTotal.toLocaleString('id') }}
             </td>
           </tr>
         </tbody>
@@ -428,13 +430,13 @@ export default {
         // total
         total.suspectNow += element.pdp.pdp_total_h1
         total.suspectAverage += element.pdp.pdp_total_h7
-        total.suspectTotal = element.pdp.pdp_total
+        total.suspectTotal += element.pdp.pdp_total
         total.processNow += element.pdp.pdp_aktif_h1
         total.processAverage += element.pdp.pdp_aktif_h7
-        total.processTotal = element.pdp.pdp_aktif
+        total.processTotal += element.pdp.pdp_aktif
         total.finishedNow += element.pdp.pdp_selesai_h1
         total.finishedAverage += element.pdp.pdp_selesai_h7
-        total.finishedTotal = element.pdp.pdp_selesai
+        total.finishedTotal += element.pdp.pdp_selesai
         total.diedNow += element.pdp.pdp_meninggal_h1
         total.diedAverage += element.pdp.pdp_meninggal_h7
         total.diedTotal += element.pdp.pdp_meninggal
@@ -547,6 +549,7 @@ export default {
 
   thead tr:nth-child(1) th { position: sticky; top: 0; }
   thead tr:nth-child(2) th { position: sticky; top: 29px; }
+  thead tr:nth-child(3) th { position: sticky; top: 79px; }
 
   .textright {
     text-align: right;

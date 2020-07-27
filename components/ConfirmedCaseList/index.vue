@@ -226,86 +226,88 @@
               </p>
             </th>
           </tr>
+          <tr style="line-height: 51px;">
+            <th class="table-col border-b border-solid px-2 py-1 total-row bg-white">
+              <b>TOTAL SELURUH KOTA/KAB</b>
+            </th>
+            <th class="table-col border-b border-solid px-2 py-1 textright bg-white">
+              <b>{{ total.confirmedNow.toLocaleString('id') }}</b>
+            </th>
+            <th class="table-col border-b border-solid px-2 py-1 textright bg-white">
+              <b>{{ total.confirmedAverage.toLocaleString('id') }}</b>
+            </th>
+            <th class="table-col border-b border-solid px-2 py-1 textright bg-white">
+              <b>{{ total.confirmedTotal.toLocaleString('id') }}</b>
+            </th>
+            <th class="table-col border-b border-solid px-2 py-1 textright bg-white">
+              <b>{{ total.positiveNow.toLocaleString('id') }}</b>
+            </th>
+            <th class="table-col border-b border-solid px-2 py-1 textright bg-white">
+              <b>{{ total.positiveAverage.toLocaleString('id') }}</b>
+            </th>
+            <th class="table-col border-b border-solid px-2 py-1 textright bg-white">
+              <b>{{ total.positiveTotal.toLocaleString('id') }}</b>
+            </th>
+            <th class="table-col border-b border-solid px-2 py-1 textright bg-white">
+              <b>{{ total.recoverNow.toLocaleString('id') }}</b>
+            </th>
+            <th class="table-col border-b border-solid px-2 py-1 textright bg-white">
+              <b>{{ total.recoverAverage.toLocaleString('id') }}</b>
+            </th>
+            <th class="table-col border-b border-solid px-2 py-1 textright bg-white">
+              <b>{{ total.recoverTotal.toLocaleString('id') }}</b>
+            </th>
+            <th class="table-col border-b border-solid px-2 py-1 textright bg-white">
+              <b>{{ total.dieNow.toLocaleString('id') }}</b>
+            </th>
+            <th class="table-col border-b border-solid px-2 py-1 textright bg-white">
+              <b>{{ total.dieAverage.toLocaleString('id') }}</b>
+            </th>
+            <th class="table-col border-b border-solid px-2 py-1 textright bg-white">
+              <b>{{ total.dieTotal.toLocaleString('id') }}</b>
+            </th>
+          </tr>
         </thead>
         <tbody>
-          <tr>
-            <td class="table-col border-b border-solid px-2 py-1" />
-            <td class="table-col border-b border-solid px-2 py-1 textright">
-              <b>{{ total.confirmedNow.toLocaleString('id') }}</b>
-            </td>
-            <td class="table-col border-b border-solid px-2 py-1 textright">
-              <b>{{ total.confirmedAverage.toLocaleString('id') }}</b>
-            </td>
-            <td class="table-col border-b border-solid px-2 py-1 textright">
-              <b>{{ total.confirmedTotal.toLocaleString('id') }}</b>
-            </td>
-            <td class="table-col border-b border-solid px-2 py-1 textright">
-              <b>{{ total.positiveNow.toLocaleString('id') }}</b>
-            </td>
-            <td class="table-col border-b border-solid px-2 py-1 textright">
-              <b>{{ total.positiveAverage.toLocaleString('id') }}</b>
-            </td>
-            <td class="table-col border-b border-solid px-2 py-1 textright">
-              <b>{{ total.positiveTotal.toLocaleString('id') }}</b>
-            </td>
-            <td class="table-col border-b border-solid px-2 py-1 textright">
-              <b>{{ total.recoverNow.toLocaleString('id') }}</b>
-            </td>
-            <td class="table-col border-b border-solid px-2 py-1 textright">
-              <b>{{ total.recoverAverage.toLocaleString('id') }}</b>
-            </td>
-            <td class="table-col border-b border-solid px-2 py-1 textright">
-              <b>{{ total.recoverTotal.toLocaleString('id') }}</b>
-            </td>
-            <td class="table-col border-b border-solid px-2 py-1 textright">
-              <b>{{ total.dieNow.toLocaleString('id') }}</b>
-            </td>
-            <td class="table-col border-b border-solid px-2 py-1 textright">
-              <b>{{ total.dieAverage.toLocaleString('id') }}</b>
-            </td>
-            <td class="table-col border-b border-solid px-2 py-1 textright">
-              <b>{{ total.dieTotal.toLocaleString('id') }}</b>
-            </td>
-          </tr>
           <tr v-for="(row, rowIndex) in dataCase" :key="rowIndex">
             <td class="table-col border-b border-solid px-2 py-1">
               {{ row.region }}
             </td>
             <td class="table-col border-b border-solid px-2 py-1 textright">
-              {{ row.confirmedNow }}
+              {{ row.confirmedNow.toLocaleString('id') }}
             </td>
             <td class="table-col border-b border-solid px-2 py-1 textright">
-              {{ row.confirmedAverage }}
+              {{ row.confirmedAverage.toLocaleString('id') }}
             </td>
             <td class="table-col border-b border-solid px-2 py-1 textright">
-              {{ row.confirmedTotal }}
+              {{ row.confirmedTotal.toLocaleString('id') }}
             </td>
             <td class="table-col border-b border-solid px-2 py-1 textright">
-              {{ row.positiveNow }}
+              {{ row.positiveNow.toLocaleString('id') }}
             </td>
             <td class="table-col border-b border-solid px-2 py-1 textright">
-              {{ row.positiveAverage }}
+              {{ row.positiveAverage.toLocaleString('id') }}
             </td>
             <td class="table-col border-b border-solid px-2 py-1 textright">
-              {{ row.positiveTotal }}
+              {{ row.positiveTotal.toLocaleString('id') }}
             </td>
             <td class="table-col border-b border-solid px-2 py-1 textright">
-              {{ row.recoverNow }}
+              {{ row.recoverNow.toLocaleString('id') }}
             </td>
             <td class="table-col border-b border-solid px-2 py-1 textright">
-              {{ row.recoverAverage }}
+              {{ row.recoverAverage.toLocaleString('id') }}
             </td>
             <td class="table-col border-b border-solid px-2 py-1 textright">
-              {{ row.recoverTotal }}
+              {{ row.recoverTotal.toLocaleString('id') }}
             </td>
             <td class="table-col border-b border-solid px-2 py-1 textright">
-              {{ row.dieNow }}
+              {{ row.dieNow.toLocaleString('id') }}
             </td>
             <td class="table-col border-b border-solid px-2 py-1 textright">
-              {{ row.dieAverage }}
+              {{ row.dieAverage.toLocaleString('id') }}
             </td>
             <td class="table-col border-b border-solid px-2 py-1 textright">
-              {{ row.dieTotal }}
+              {{ row.dieTotal.toLocaleString('id') }}
             </td>
           </tr>
         </tbody>
@@ -499,7 +501,6 @@ export default {
       }
     },
     onClickSort (field) {
-      console.log(this.metadataSebaranPertumbuhan)
       const currentSorting = this.currentSorting
       let sorting = 'desc'
       if (this.currentSorting[field] === 'desc') {
@@ -559,6 +560,7 @@ export default {
 
   thead tr:nth-child(1) th { position: sticky; top: 0; }
   thead tr:nth-child(2) th { position: sticky; top: 29px; }
+  thead tr:nth-child(3) th { position: sticky; top: 79px; }
 
   tr:nth-child(even) {background: #dfdfdf6e}
   tr:nth-child(odd) {background: #FFF}

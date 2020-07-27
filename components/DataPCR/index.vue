@@ -7,30 +7,55 @@
         primaryColor="#67b6e3"
         secondaryColor="rgba(255,255,255,1)"
         height="80"
-        >
+        width="500"
+      >
         <rect
           x="0"
           y="0"
-          rx="8"
-          ry="6"
+          rx="3"
+          ry="3"
+          width="30%"
+          height="6"
+        />
+        <rect
+          x="0"
+          y="15"
+          rx="3"
+          ry="3"
+          width="50%"
+          height="6"
+        />
+        <rect
+          x="0"
+          y="25"
+          rx="3"
+          ry="3"
+          width="50%"
+          height="6"
+        />
+        <rect
+          x="0"
+          y="35"
+          rx="3"
+          ry="3"
+          width="50%"
+          height="6"
+        />
+        <rect
+          x="0"
+          y="50"
+          rx="3"
+          ry="3"
           width="40%"
-          height="16"
+          height="6"
         />
         <rect
           x="0"
-          y="30"
-          rx="8"
-          ry="6"
-          width="60%"
-          height="16"
-        />
-        <rect
-          x="0"
-          y="64"
-          rx="8"
-          ry="6"
-          width="100%"
-          height="16"
+          y="70"
+          rx="3"
+          ry="3"
+          width="30%"
+          height="6"
         />
       </ContentLoader>
     </div>
@@ -102,7 +127,7 @@
             </div>
           </div>
         </div>
-    </div>
+      </div>
     </div>
   </div>
 </template>
@@ -116,23 +141,11 @@ export default {
   components: {
     ContentLoader
   },
-  props: {
-    propsDataRekapitulasiJabar: {
-      type: Object,
-      default: () => ({
-        pcr: {
-          positif: 0,
-          negatif: 0,
-          jumlah_sampling: 0,
-          tanggal: 0
-        }
-      })
-    }
-  },
   data () {
     return {
+      jsonDataKasusTotal: {},
+      metadata: {},
       date_update: '',
-      isLoading: true,
       data: {
         pcr: {
           total: 0,
@@ -152,33 +165,35 @@ export default {
     }
   },
   computed: {
-    dataRekapitulasiJabarProv () {
-      return this.$store.getters['data-rekapitulasi-jabar-prov/itemsMap']
+    dataKasusTotal () {
+      return this.$store.getters['data-kasus-total/itemsMap']
+    },
+    dataKasusTotalMetadata () {
+      return this.$store.getters['data-kasus-total/metadataMap']
+    },
+    isLoading () {
+      return this.$store.getters['data-kasus-total/isLoading']
     }
   },
   watch: {
-    // propsDataRekapitulasiJabar () {
-    //   this.data.pcr = this.propsDataRekapitulasiJabar.pcr
-    //   this.countPersentage()
-    // }
-    dataRekapitulasiJabarProv (val) {
-      const self = this
-      self.data.pcr = val.pcr
-      self.date_update = moment(self.data.pcr.tanggal, 'DD/MM/YYYY').lang('id').format('dddd, DD MMM YYYY')
-      self.countPersentage()
-      if (val.rdt) {
-        self.isLoading = false
-      }
+    dataKasusTotal (val) {
+      this.jsonDataKasusTotal = val[0]
+      this.data.pcr.total = this.jsonDataKasusTotal.pcr_total
+      this.data.pcr.positif = this.jsonDataKasusTotal.pcr_positif
+      this.data.pcr.negatif = this.jsonDataKasusTotal.pcr_negatif
+      this.data.pcr.invalid = this.jsonDataKasusTotal.pcr_invalid
+      this.data.pcr_persentase_by_total.positif = this.data.pcr.positif / this.data.pcr.total * 100
+      this.data.pcr_persentase_by_total.negatif = this.data.pcr.negatif / this.data.pcr.total * 100
+      this.data.pcr_persentase_by_total.invalid = this.data.pcr.invalid / this.data.pcr.total * 100
+    },
+    dataKasusTotalMetadata (val) {
+      this.metadata = val
+      this.date_update = moment(this.metadata.last_update, 'YYYY-MM-DD').lang('id').format('dddd, DD MMM YYYY')
     }
   },
+  mounted () {
+  },
   methods: {
-    countPersentage () {
-      const self = this
-      self.data.pcr.total = self.data.pcr.jumlah_sampling
-      self.data.pcr_persentase_by_total.positif = self.data.pcr.positif / self.data.pcr.total * 100
-      self.data.pcr_persentase_by_total.negatif = self.data.pcr.negatif / self.data.pcr.total * 100
-      self.data.pcr_persentase_by_total.invalid = self.data.pcr.invalid / self.data.pcr.total * 100
-    },
     clickShowMore () {
       this.showMore = !this.showMore
     }

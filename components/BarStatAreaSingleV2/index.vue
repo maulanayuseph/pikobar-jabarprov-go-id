@@ -182,36 +182,6 @@ export default {
     FontAwesomeIcon
     // DateRangePicker
   },
-  props: {
-    propsDataNasionalHarianKumulatif: {
-      type: Array,
-      default: () => ([])
-    },
-    propsDataRekapitulasiJabarProv: {
-      type: Object,
-      default: () => ({})
-    },
-    propsDataRekapitulasiJabarKab: {
-      type: Array,
-      default: () => ([])
-    },
-    propsDataRekapitulasiJabarHarianProv: {
-      type: Array,
-      default: () => ([])
-    },
-    propsDataRekapitulasiJabarKumulatifProv: {
-      type: Array,
-      default: () => ([])
-    },
-    propsDataRekapitulasiJabarHarianKab: {
-      type: Array,
-      default: () => ([])
-    },
-    propsDataRekapitulasiJabarKumulatifKab: {
-      type: Array,
-      default: () => ([])
-    }
-  },
   data () {
     return {
       stat: {
@@ -220,441 +190,171 @@ export default {
       },
       fontChartBar: faChartBar,
       fontChartLine: faChartLine,
+      jsonDataKasusHarianProvinsi: [],
+      jsonDataKasusHarianKota: [],
       jsonDataNasionalHarianKumulatif: [],
       jsonDataProvinsiHarian: [],
       jsonDataProvinsiKumulatif: [],
-      jsonDataKabupatenHarian: [],
-      jsonDataKabupatenKumulatif: [],
       jsonDataKota: [
         {
           kode: '3204',
           nama: 'Kab. Bandung',
-          odp_proses: 0,
-          odp_selesai: 0,
-          odp_total: 0,
-          pdp_proses: 0,
-          pdp_selesai: 0,
-          pdp_total: 0,
-          positif: 0,
-          positif_persentase: 0,
-          sembuh: 0,
-          meninggal: 0,
           dataHarian: [],
           dataAkumulatif: []
         },
         {
           kode: '3217',
           nama: 'Kab. Bandung Barat',
-          odp_proses: 0,
-          odp_selesai: 0,
-          odp_total: 0,
-          pdp_proses: 0,
-          pdp_selesai: 0,
-          pdp_total: 0,
-          positif: 0,
-          positif_persentase: 0,
-          sembuh: 0,
-          meninggal: 0,
           dataHarian: [],
           dataAkumulatif: []
         },
         {
           kode: '3216',
           nama: 'Kab. Bekasi',
-          odp_proses: 0,
-          odp_selesai: 0,
-          odp_total: 0,
-          pdp_proses: 0,
-          pdp_selesai: 0,
-          pdp_total: 0,
-          positif: 0,
-          positif_persentase: 0,
-          sembuh: 0,
-          meninggal: 0,
           dataHarian: [],
           dataAkumulatif: []
         },
         {
           kode: '3201',
           nama: 'Kab. Bogor',
-          odp_proses: 0,
-          odp_selesai: 0,
-          odp_total: 0,
-          pdp_proses: 0,
-          pdp_selesai: 0,
-          pdp_total: 0,
-          positif: 0,
-          positif_persentase: 0,
-          sembuh: 0,
-          meninggal: 0,
           dataHarian: [],
           dataAkumulatif: []
         },
         {
           kode: '3207',
           nama: 'Kab. Ciamis',
-          odp_proses: 0,
-          odp_selesai: 0,
-          odp_total: 0,
-          pdp_proses: 0,
-          pdp_selesai: 0,
-          pdp_total: 0,
-          positif: 0,
-          positif_persentase: 0,
-          sembuh: 0,
-          meninggal: 0,
           dataHarian: [],
           dataAkumulatif: []
         },
         {
           kode: '3203',
           nama: 'Kab. Cianjur',
-          odp_proses: 0,
-          odp_selesai: 0,
-          odp_total: 0,
-          pdp_proses: 0,
-          pdp_selesai: 0,
-          pdp_total: 0,
-          positif: 0,
-          positif_persentase: 0,
-          sembuh: 0,
-          meninggal: 0,
           dataHarian: [],
           dataAkumulatif: []
         },
         {
           kode: '3209',
           nama: 'Kab. Cirebon',
-          odp_proses: 0,
-          odp_selesai: 0,
-          odp_total: 0,
-          pdp_proses: 0,
-          pdp_selesai: 0,
-          pdp_total: 0,
-          positif: 0,
-          positif_persentase: 0,
-          sembuh: 0,
-          meninggal: 0,
           dataHarian: [],
           dataAkumulatif: []
         },
         {
           kode: '3205',
           nama: 'Kab. Garut',
-          odp_proses: 0,
-          odp_selesai: 0,
-          odp_total: 0,
-          pdp_proses: 0,
-          pdp_selesai: 0,
-          pdp_total: 0,
-          positif: 0,
-          positif_persentase: 0,
-          sembuh: 0,
-          meninggal: 0,
           dataHarian: [],
           dataAkumulatif: []
         },
         {
           kode: '3212',
           nama: 'Kab. Indramayu',
-          odp_proses: 0,
-          odp_selesai: 0,
-          odp_total: 0,
-          pdp_proses: 0,
-          pdp_selesai: 0,
-          pdp_total: 0,
-          positif: 0,
-          positif_persentase: 0,
-          sembuh: 0,
-          meninggal: 0,
           dataHarian: [],
           dataAkumulatif: []
         },
         {
           kode: '3215',
           nama: 'Kab. Karawang',
-          odp_proses: 0,
-          odp_selesai: 0,
-          odp_total: 0,
-          pdp_proses: 0,
-          pdp_selesai: 0,
-          pdp_total: 0,
-          positif: 0,
-          positif_persentase: 0,
-          sembuh: 0,
-          meninggal: 0,
           dataHarian: [],
           dataAkumulatif: []
         },
         {
           kode: '3208',
           nama: 'Kab. Kuningan',
-          odp_proses: 0,
-          odp_selesai: 0,
-          odp_total: 0,
-          pdp_proses: 0,
-          pdp_selesai: 0,
-          pdp_total: 0,
-          positif: 0,
-          positif_persentase: 0,
-          sembuh: 0,
-          meninggal: 0,
           dataHarian: [],
           dataAkumulatif: []
         },
         {
           kode: '3210',
           nama: 'Kab. Majalengka',
-          odp_proses: 0,
-          odp_selesai: 0,
-          odp_total: 0,
-          pdp_proses: 0,
-          pdp_selesai: 0,
-          pdp_total: 0,
-          positif: 0,
-          positif_persentase: 0,
-          sembuh: 0,
-          meninggal: 0,
           dataHarian: [],
           dataAkumulatif: []
         },
         {
           kode: '3218',
           nama: 'Kab. Pangandaran',
-          odp_proses: 0,
-          odp_selesai: 0,
-          odp_total: 0,
-          pdp_proses: 0,
-          pdp_selesai: 0,
-          pdp_total: 0,
-          positif: 0,
-          positif_persentase: 0,
-          sembuh: 0,
-          meninggal: 0,
           dataHarian: [],
           dataAkumulatif: []
         },
         {
           kode: '3214',
           nama: 'Kab. Purwarkarta',
-          odp_proses: 0,
-          odp_selesai: 0,
-          odp_total: 0,
-          pdp_proses: 0,
-          pdp_selesai: 0,
-          pdp_total: 0,
-          positif: 0,
-          positif_persentase: 0,
-          sembuh: 0,
-          meninggal: 0,
           dataHarian: [],
           dataAkumulatif: []
         },
         {
           kode: '3213',
           nama: 'Kab. Subang',
-          odp_proses: 0,
-          odp_selesai: 0,
-          odp_total: 0,
-          pdp_proses: 0,
-          pdp_selesai: 0,
-          pdp_total: 0,
-          positif: 0,
-          positif_persentase: 0,
-          sembuh: 0,
-          meninggal: 0,
           dataHarian: [],
           dataAkumulatif: []
         },
         {
           kode: '3202',
           nama: 'Kab. Sukabumi',
-          odp_proses: 0,
-          odp_selesai: 0,
-          odp_total: 0,
-          pdp_proses: 0,
-          pdp_selesai: 0,
-          pdp_total: 0,
-          positif: 0,
-          positif_persentase: 0,
-          sembuh: 0,
-          meninggal: 0,
           dataHarian: [],
           dataAkumulatif: []
         },
         {
           kode: '3211',
           nama: 'Kab. Sumedang',
-          odp_proses: 0,
-          odp_selesai: 0,
-          odp_total: 0,
-          pdp_proses: 0,
-          pdp_selesai: 0,
-          pdp_total: 0,
-          positif: 0,
-          positif_persentase: 0,
-          sembuh: 0,
-          meninggal: 0,
           dataHarian: [],
           dataAkumulatif: []
         },
         {
           kode: '3206',
           nama: 'Kab. Tasikmalaya',
-          odp_proses: 0,
-          odp_selesai: 0,
-          odp_total: 0,
-          pdp_proses: 0,
-          pdp_selesai: 0,
-          pdp_total: 0,
-          positif: 0,
-          positif_persentase: 0,
-          sembuh: 0,
-          meninggal: 0,
           dataHarian: [],
           dataAkumulatif: []
         },
         {
           kode: '3273',
           nama: 'Kota Bandung',
-          odp_proses: 0,
-          odp_selesai: 0,
-          odp_total: 0,
-          pdp_proses: 0,
-          pdp_selesai: 0,
-          pdp_total: 0,
-          positif: 0,
-          positif_persentase: 0,
-          sembuh: 0,
-          meninggal: 0,
           dataHarian: [],
           dataAkumulatif: []
         },
         {
           kode: '3279',
           nama: 'Kota Banjar',
-          odp_proses: 0,
-          odp_selesai: 0,
-          odp_total: 0,
-          pdp_proses: 0,
-          pdp_selesai: 0,
-          pdp_total: 0,
-          positif: 0,
-          positif_persentase: 0,
-          sembuh: 0,
-          meninggal: 0,
           dataHarian: [],
           dataAkumulatif: []
         },
         {
           kode: '3275',
           nama: 'Kota Bekasi',
-          odp_proses: 0,
-          odp_selesai: 0,
-          odp_total: 0,
-          pdp_proses: 0,
-          pdp_selesai: 0,
-          pdp_total: 0,
-          positif: 0,
-          positif_persentase: 0,
-          sembuh: 0,
-          meninggal: 0,
           dataHarian: [],
           dataAkumulatif: []
         },
         {
           kode: '3271',
           nama: 'Kota Bogor',
-          odp_proses: 0,
-          odp_selesai: 0,
-          odp_total: 0,
-          pdp_proses: 0,
-          pdp_selesai: 0,
-          pdp_total: 0,
-          positif: 0,
-          positif_persentase: 0,
-          sembuh: 0,
-          meninggal: 0,
           dataHarian: [],
           dataAkumulatif: []
         },
         {
           kode: '3277',
           nama: 'Kota Cimahi',
-          odp_proses: 0,
-          odp_selesai: 0,
-          odp_total: 0,
-          pdp_proses: 0,
-          pdp_selesai: 0,
-          pdp_total: 0,
-          positif: 0,
-          positif_persentase: 0,
-          sembuh: 0,
-          meninggal: 0,
           dataHarian: [],
           dataAkumulatif: []
         },
         {
           kode: '3274',
           nama: 'Kota Cirebon',
-          odp_proses: 0,
-          odp_selesai: 0,
-          odp_total: 0,
-          pdp_proses: 0,
-          pdp_selesai: 0,
-          pdp_total: 0,
-          positif: 0,
-          positif_persentase: 0,
-          sembuh: 0,
-          meninggal: 0,
           dataHarian: [],
           dataAkumulatif: []
         },
         {
           kode: '3276',
           nama: 'Kota Depok',
-          odp_proses: 0,
-          odp_selesai: 0,
-          odp_total: 0,
-          pdp_proses: 0,
-          pdp_selesai: 0,
-          pdp_total: 0,
-          positif: 0,
-          positif_persentase: 0,
-          sembuh: 0,
-          meninggal: 0,
           dataHarian: [],
           dataAkumulatif: []
         },
         {
           kode: '3272',
           nama: 'Kota Sukabumi',
-          odp_proses: 0,
-          odp_selesai: 0,
-          odp_total: 0,
-          pdp_proses: 0,
-          pdp_selesai: 0,
-          pdp_total: 0,
-          positif: 0,
-          positif_persentase: 0,
-          sembuh: 0,
-          meninggal: 0,
           dataHarian: [],
           dataAkumulatif: []
         },
         {
           kode: '3278',
           nama: 'Kota Tasikmalaya',
-          odp_proses: 0,
-          odp_selesai: 0,
-          odp_total: 0,
-          pdp_proses: 0,
-          pdp_selesai: 0,
-          pdp_total: 0,
-          positif: 0,
-          positif_persentase: 0,
-          sembuh: 0,
-          meninggal: 0,
           dataHarian: [],
           dataAkumulatif: []
         }
@@ -833,236 +533,43 @@ export default {
     }
   },
   computed: {
-    dataRekapitulasiJabarProv () {
-      return this.$store.getters['data-rekapitulasi-jabar-prov/itemsMap']
+    dataKasusHarianProvinsi () {
+      return this.$store.getters['data-kasus-harian/itemsMap']
     },
-    dataRekapitulasiJabarKab () {
-      return this.$store.getters['data-rekapitulasi-jabar-kab/itemsMap']
-    },
-    dataRekapitulasiJabarHarianProv () {
-      return this.$store.getters['data-rekapitulasi-jabar-harian-prov/itemsMap']
-    },
-    dataRekapitulasiJabarHarianKab () {
-      return this.$store.getters['data-rekapitulasi-jabar-harian-kab/itemsMap']
-    },
-    dataRekapitulasiJabarKumulatifProv () {
-      return this.$store.getters['data-rekapitulasi-jabar-kumulatif-prov/itemsMap']
-    },
-    dataRekapitulasiJabarKumulatifKab () {
-      return this.$store.getters['data-rekapitulasi-jabar-kumulatif-kab/itemsMap']
+    dataKasusHarianKota () {
+      return this.$store.getters['data-kasus-harian-kota/itemsMap']
     },
     dataNasionalHarian () {
       return this.$store.getters['data-nasional-harian/itemsMap']
     }
   },
   watch: {
-    // propsDataNasionalHarianKumulatif () {
-    //   // this.jsonDataNasionalHarianKumulatif = this.propsDataNasionalHarianKumulatif
-    //   for (let i = 0; i < this.propsDataNasionalHarianKumulatif.length; i++) {
-    //     const temp1 = this.propsDataNasionalHarianKumulatif[i]
-    //     let jmlHarian = 0
-    //     let ratarataHarian = 0
-    //     // let jmlKumulatif = 0
-    //     // let ratarataKumulatif = 0
-    //     if (i === 0) {
-    //       jmlHarian = this.propsDataNasionalHarianKumulatif[i].jumlahKasusBaruperHari
-    //       ratarataHarian = jmlHarian / 1
-    //       // jmlKumulatif = this.propsDataNasionalHarianKumulatif[i].jumlahKasusKumulatif
-    //       // ratarataKumulatif = jmlKumulatif / 1
-    //     } else if (i === 1) {
-    //       jmlHarian = this.propsDataNasionalHarianKumulatif[i].jumlahKasusBaruperHari + this.propsDataNasionalHarianKumulatif[i - 1].jumlahKasusBaruperHari
-    //       ratarataHarian = jmlHarian / 2
-    //       // jmlKumulatif = this.propsDataNasionalHarianKumulatif[i].jumlahKasusKumulatif + this.propsDataNasionalHarianKumulatif[i - 1].jumlahKasusKumulatif
-    //       // ratarataKumulatif = jmlKumulatif / 2
-    //     } else if (i === 2) {
-    //       jmlHarian = this.propsDataNasionalHarianKumulatif[i].jumlahKasusBaruperHari + this.propsDataNasionalHarianKumulatif[i - 1].jumlahKasusBaruperHari + this.propsDataNasionalHarianKumulatif[i - 2].jumlahKasusBaruperHari
-    //       ratarataHarian = jmlHarian / 3
-    //       // jmlKumulatif = this.propsDataNasionalHarianKumulatif[i].jumlahKasusKumulatif + this.propsDataNasionalHarianKumulatif[i - 1].jumlahKasusKumulatif + this.propsDataNasionalHarianKumulatif[i - 2].jumlahKasusKumulatif
-    //       // ratarataKumulatif = jmlKumulatif / 3
-    //     } else if (i === 3) {
-    //       jmlHarian = this.propsDataNasionalHarianKumulatif[i].jumlahKasusBaruperHari + this.propsDataNasionalHarianKumulatif[i - 1].jumlahKasusBaruperHari + this.propsDataNasionalHarianKumulatif[i - 2].jumlahKasusBaruperHari +
-    //         this.propsDataNasionalHarianKumulatif[i - 3].jumlahKasusBaruperHari
-    //       ratarataHarian = jmlHarian / 4
-    //       // jmlKumulatif = this.propsDataNasionalHarianKumulatif[i].jumlahKasusKumulatif + this.propsDataNasionalHarianKumulatif[i - 1].jumlahKasusKumulatif + this.propsDataNasionalHarianKumulatif[i - 2].jumlahKasusKumulatif +
-    //       //   this.propsDataNasionalHarianKumulatif[i - 3].jumlahKasusKumulatif
-    //       // ratarataKumulatif = jmlKumulatif / 4
-    //     } else if (i === 4) {
-    //       jmlHarian = this.propsDataNasionalHarianKumulatif[i].jumlahKasusBaruperHari + this.propsDataNasionalHarianKumulatif[i - 1].jumlahKasusBaruperHari + this.propsDataNasionalHarianKumulatif[i - 2].jumlahKasusBaruperHari +
-    //         this.propsDataNasionalHarianKumulatif[i - 3].jumlahKasusBaruperHari + this.propsDataNasionalHarianKumulatif[i - 4].jumlahKasusBaruperHari
-    //       ratarataHarian = jmlHarian / 5
-    //       // jmlKumulatif = this.propsDataNasionalHarianKumulatif[i].jumlahKasusKumulatif + this.propsDataNasionalHarianKumulatif[i - 1].jumlahKasusKumulatif + this.propsDataNasionalHarianKumulatif[i - 2].jumlahKasusKumulatif +
-    //       //   this.propsDataNasionalHarianKumulatif[i - 3].jumlahKasusKumulatif + this.propsDataNasionalHarianKumulatif[i - 4].jumlahKasusKumulatif
-    //       // ratarataKumulatif = jmlKumulatif / 5
-    //     } else if (i === 5) {
-    //       jmlHarian = this.propsDataNasionalHarianKumulatif[i].jumlahKasusBaruperHari + this.propsDataNasionalHarianKumulatif[i - 1].jumlahKasusBaruperHari + this.propsDataNasionalHarianKumulatif[i - 2].jumlahKasusBaruperHari +
-    //         this.propsDataNasionalHarianKumulatif[i - 3].jumlahKasusBaruperHari + this.propsDataNasionalHarianKumulatif[i - 4].jumlahKasusBaruperHari + this.propsDataNasionalHarianKumulatif[i - 5].jumlahKasusBaruperHari
-    //       ratarataHarian = jmlHarian / 6
-    //       // jmlKumulatif = this.propsDataNasionalHarianKumulatif[i].jumlahKasusKumulatif + this.propsDataNasionalHarianKumulatif[i - 1].jumlahKasusKumulatif + this.propsDataNasionalHarianKumulatif[i - 2].jumlahKasusKumulatif +
-    //       //   this.propsDataNasionalHarianKumulatif[i - 3].jumlahKasusKumulatif + this.propsDataNasionalHarianKumulatif[i - 4].jumlahKasusKumulatif + this.propsDataNasionalHarianKumulatif[i - 5].jumlahKasusKumulatif
-    //       // ratarataKumulatif = jmlKumulatif / 6
-    //     } else if (i > 6) {
-    //       jmlHarian = this.propsDataNasionalHarianKumulatif[i].jumlahKasusBaruperHari + this.propsDataNasionalHarianKumulatif[i - 1].jumlahKasusBaruperHari + this.propsDataNasionalHarianKumulatif[i - 2].jumlahKasusBaruperHari +
-    //         this.propsDataNasionalHarianKumulatif[i - 3].jumlahKasusBaruperHari + this.propsDataNasionalHarianKumulatif[i - 4].jumlahKasusBaruperHari + this.propsDataNasionalHarianKumulatif[i - 5].jumlahKasusBaruperHari +
-    //         this.propsDataNasionalHarianKumulatif[i - 6].jumlahKasusBaruperHari
-    //       ratarataHarian = jmlHarian / 7
-    //       // jmlKumulatif = this.propsDataNasionalHarianKumulatif[i].jumlahKasusKumulatif + this.propsDataNasionalHarianKumulatif[i - 1].jumlahKasusKumulatif + this.propsDataNasionalHarianKumulatif[i - 2].jumlahKasusKumulatif +
-    //       //   this.propsDataNasionalHarianKumulatif[i - 3].jumlahKasusKumulatif + this.propsDataNasionalHarianKumulatif[i - 4].jumlahKasusKumulatif + this.propsDataNasionalHarianKumulatif[i - 5].jumlahKasusKumulatif +
-    //       //   this.propsDataNasionalHarianKumulatif[i - 6].jumlahKasusKumulatif
-    //       // ratarataKumulatif = jmlKumulatif / 7
-    //     } else {
-    //       jmlHarian = 0
-    //       ratarataHarian = 0
-    //       // jmlKumulatif = 0
-    //       // ratarataKumulatif = 0
-    //     }
-    //     const temp2 = { jumlahKasusBaruperHari_ratarata: parseInt(ratarataHarian.toFixed(2)) }
-    //     const temp3 = { ...temp1, ...temp2 }
-    //     this.jsonDataNasionalHarianKumulatif.push(temp3)
-    //   }
-    // },
-    // propsDataRekapitulasiJabarHarianProv () {
-    //   // this.jsonDataProvinsiHarian = this.propsDataRekapitulasiJabarHarianProv
-    //   for (let i = 0; i < this.propsDataRekapitulasiJabarHarianProv.length; i++) {
-    //     const temp1 = this.propsDataRekapitulasiJabarHarianProv[i]
-    //     let jml = 0
-    //     let ratarata = 0
-    //     if (i === 0) {
-    //       jml = this.propsDataRekapitulasiJabarHarianProv[i].positif
-    //       ratarata = jml / 1
-    //     } else if (i === 1) {
-    //       jml = this.propsDataRekapitulasiJabarHarianProv[i].positif + this.propsDataRekapitulasiJabarHarianProv[i - 1].positif
-    //       ratarata = jml / 2
-    //     } else if (i === 2) {
-    //       jml = this.propsDataRekapitulasiJabarHarianProv[i].positif + this.propsDataRekapitulasiJabarHarianProv[i - 1].positif + this.propsDataRekapitulasiJabarHarianProv[i - 2].positif
-    //       ratarata = jml / 3
-    //     } else if (i === 3) {
-    //       jml = this.propsDataRekapitulasiJabarHarianProv[i].positif + this.propsDataRekapitulasiJabarHarianProv[i - 1].positif + this.propsDataRekapitulasiJabarHarianProv[i - 2].positif +
-    //         this.propsDataRekapitulasiJabarHarianProv[i - 3].positif
-    //       ratarata = jml / 4
-    //     } else if (i === 4) {
-    //       jml = this.propsDataRekapitulasiJabarHarianProv[i].positif + this.propsDataRekapitulasiJabarHarianProv[i - 1].positif + this.propsDataRekapitulasiJabarHarianProv[i - 2].positif +
-    //         this.propsDataRekapitulasiJabarHarianProv[i - 3].positif + this.propsDataRekapitulasiJabarHarianProv[i - 4].positif
-    //       ratarata = jml / 5
-    //     } else if (i === 5) {
-    //       jml = this.propsDataRekapitulasiJabarHarianProv[i].positif + this.propsDataRekapitulasiJabarHarianProv[i - 1].positif + this.propsDataRekapitulasiJabarHarianProv[i - 2].positif +
-    //       this.propsDataRekapitulasiJabarHarianProv[i - 3].positif + this.propsDataRekapitulasiJabarHarianProv[i - 4].positif + this.propsDataRekapitulasiJabarHarianProv[i - 5].positif
-    //       ratarata = jml / 6
-    //     } else if (i > 6) {
-    //       jml = this.propsDataRekapitulasiJabarHarianProv[i].positif + this.propsDataRekapitulasiJabarHarianProv[i - 1].positif + this.propsDataRekapitulasiJabarHarianProv[i - 2].positif +
-    //         this.propsDataRekapitulasiJabarHarianProv[i - 3].positif + this.propsDataRekapitulasiJabarHarianProv[i - 4].positif + this.propsDataRekapitulasiJabarHarianProv[i - 5].positif +
-    //         this.propsDataRekapitulasiJabarHarianProv[i - 6].positif
-    //       ratarata = jml / 7
-    //     } else {
-    //       jml = 0
-    //       ratarata = 0
-    //     }
-    //     const temp2 = { positif_ratarata: parseInt(ratarata.toFixed(2)) }
-    //     const temp3 = { ...temp1, ...temp2 }
-    //     this.jsonDataProvinsiHarian.push(temp3)
-    //   }
-    //   this.changeData()
-    // },
-    // propsDataRekapitulasiJabarKumulatifProv () {
-    //   this.jsonDataProvinsiKumulatif = this.propsDataRekapitulasiJabarKumulatifProv
-    //   // for (let i = 0; i < this.propsDataRekapitulasiJabarKumulatifProv.length; i++) {
-    //   //   const temp1 = this.propsDataRekapitulasiJabarKumulatifProv[i]
-    //   //   let jml = 0
-    //   //   let ratarata = 0
-    //   //   if (i === 0) {
-    //   //     jml = this.propsDataRekapitulasiJabarKumulatifProv[i].positif
-    //   //     ratarata = jml / 1
-    //   //   } else if (i === 1) {
-    //   //     jml = this.propsDataRekapitulasiJabarKumulatifProv[i].positif + this.propsDataRekapitulasiJabarKumulatifProv[i - 1].positif
-    //   //     ratarata = jml / 2
-    //   //   } else if (i === 2) {
-    //   //     jml = this.propsDataRekapitulasiJabarKumulatifProv[i].positif + this.propsDataRekapitulasiJabarKumulatifProv[i - 1].positif + this.propsDataRekapitulasiJabarKumulatifProv[i - 2].positif
-    //   //     ratarata = jml / 3
-    //   //   } else if (i === 3) {
-    //   //     jml = this.propsDataRekapitulasiJabarKumulatifProv[i].positif + this.propsDataRekapitulasiJabarKumulatifProv[i - 1].positif + this.propsDataRekapitulasiJabarKumulatifProv[i - 2].positif +
-    //   //       this.propsDataRekapitulasiJabarKumulatifProv[i - 3].positif
-    //   //     ratarata = jml / 4
-    //   //   } else if (i === 4) {
-    //   //     jml = this.propsDataRekapitulasiJabarKumulatifProv[i].positif + this.propsDataRekapitulasiJabarKumulatifProv[i - 1].positif + this.propsDataRekapitulasiJabarKumulatifProv[i - 2].positif +
-    //   //       this.propsDataRekapitulasiJabarKumulatifProv[i - 3].positif + this.propsDataRekapitulasiJabarKumulatifProv[i - 4].positif
-    //   //     ratarata = jml / 5
-    //   //   } else if (i === 5) {
-    //   //     jml = this.propsDataRekapitulasiJabarKumulatifProv[i].positif + this.propsDataRekapitulasiJabarKumulatifProv[i - 1].positif + this.propsDataRekapitulasiJabarKumulatifProv[i - 2].positif +
-    //   //     this.propsDataRekapitulasiJabarKumulatifProv[i - 3].positif + this.propsDataRekapitulasiJabarKumulatifProv[i - 4].positif + this.propsDataRekapitulasiJabarKumulatifProv[i - 5].positif
-    //   //     ratarata = jml / 6
-    //   //   } else if (i > 6) {
-    //   //     jml = this.propsDataRekapitulasiJabarKumulatifProv[i].positif + this.propsDataRekapitulasiJabarKumulatifProv[i - 1].positif + this.propsDataRekapitulasiJabarKumulatifProv[i - 2].positif +
-    //   //       this.propsDataRekapitulasiJabarKumulatifProv[i - 3].positif + this.propsDataRekapitulasiJabarKumulatifProv[i - 4].positif + this.propsDataRekapitulasiJabarKumulatifProv[i - 5].positif +
-    //   //       this.propsDataRekapitulasiJabarKumulatifProv[i - 6].positif
-    //   //     ratarata = jml / 7
-    //   //   } else {
-    //   //     jml = 0
-    //   //     ratarata = 0
-    //   //   }
-    //   //   const temp2 = { positif_ratarata: parseInt(ratarata.toFixed(2)) }
-    //   //   const temp3 = { ...temp1, ...temp2 }
-    //   //   this.jsonDataProvinsiKumulatif.push(temp3)
-    //   // }
-    // },
-    // propsDataRekapitulasiJabarHarianKab () {
-    //   this.jsonDataKabupatenHarian = this.propsDataRekapitulasiJabarHarianKab
-    //   this.groupDataKabupatenHarian()
-    // },
-    // propsDataRekapitulasiJabarKumulatifKab () {
-    //   this.jsonDataKabupatenKumulatif = this.propsDataRekapitulasiJabarKumulatifKab
-    //   this.groupDataKabupatenKumulatif()
-    // }
-    dataRekapitulasiJabarHarianProv (val) {
-      // this.jsonDataProvinsiHarian = this.propsDataRekapitulasiJabarHarianProv
-      for (let i = 0; i < val.length; i++) {
-        const temp1 = val[i]
-        let jml = 0
-        let ratarata = 0
-        if (i === 0) {
-          jml = val[i].positif
-          ratarata = jml / 1
-        } else if (i === 1) {
-          jml = val[i].positif + val[i - 1].positif
-          ratarata = jml / 2
-        } else if (i === 2) {
-          jml = val[i].positif + val[i - 1].positif + val[i - 2].positif
-          ratarata = jml / 3
-        } else if (i === 3) {
-          jml = val[i].positif + val[i - 1].positif + val[i - 2].positif +
-            val[i - 3].positif
-          ratarata = jml / 4
-        } else if (i === 4) {
-          jml = val[i].positif + val[i - 1].positif + val[i - 2].positif +
-            val[i - 3].positif + val[i - 4].positif
-          ratarata = jml / 5
-        } else if (i === 5) {
-          jml = val[i].positif + val[i - 1].positif + val[i - 2].positif +
-          val[i - 3].positif + val[i - 4].positif + val[i - 5].positif
-          ratarata = jml / 6
-        } else if (i >= 6) {
-          jml = val[i].positif + val[i - 1].positif + val[i - 2].positif +
-            val[i - 3].positif + val[i - 4].positif + val[i - 5].positif +
-            val[i - 6].positif
-          ratarata = jml / 7
-        } else {
-          jml = 0
-          ratarata = 0
+    dataKasusHarianProvinsi (val) {
+      this.jsonDataKasusHarianProvinsi = val
+      this.jsonDataKasusHarianProvinsi.forEach((element) => {
+        const temp1 = { tanggal: element.tanggal }
+        const temp2 = { ...temp1, ...element.harian }
+        const temp3 = { ...temp1, ...element.kumulatif }
+        this.jsonDataProvinsiHarian.push(temp2)
+        this.jsonDataProvinsiKumulatif.push(temp3)
+      })
+      this.fetchDataProvinsiHarian()
+    },
+    dataKasusHarianKota (val) {
+      this.jsonDataKasusHarianKota = val
+      for (let j = 0; j < this.jsonDataKota.length; j++) {
+        for (let i = 0; i < this.jsonDataKasusHarianKota.length; i++) {
+          if (this.jsonDataKasusHarianKota[i].kode_kab === this.jsonDataKota[j].kode) {
+            this.jsonDataKasusHarianKota[i].series.forEach((element) => {
+              const temp1 = { tanggal: element.tanggal }
+              const temp2 = { ...temp1, ...element.harian }
+              const temp3 = { ...temp1, ...element.kumulatif }
+              this.jsonDataKota[j].dataHarian.push(temp2)
+              this.jsonDataKota[j].dataAkumulatif.push(temp3)
+            })
+          }
         }
-        const temp2 = { positif_ratarata: parseInt(ratarata.toFixed(2)) }
-        const temp3 = { ...temp1, ...temp2 }
-        this.jsonDataProvinsiHarian.push(temp3)
       }
-      this.changeData()
-    },
-    dataRekapitulasiJabarHarianKab (val) {
-      this.jsonDataKabupatenHarian = val
-      this.groupDataKabupatenHarian()
-    },
-    dataRekapitulasiJabarKumulatifProv (val) {
-      this.jsonDataProvinsiKumulatif = val
-    },
-    dataRekapitulasiJabarKumulatifKab (val) {
-      this.jsonDataKabupatenKumulatif = val
-      this.groupDataKabupatenKumulatif()
     },
     dataNasionalHarian (val) {
       // this.jsonDataNasionalHarianKumulatif = this.propsDataNasionalHarianKumulatif
@@ -1144,6 +651,13 @@ export default {
         return str
       }
     },
+    ifNegativeReturnZero (str) {
+      if (str <= 0) {
+        return 0
+      } else {
+        return str
+      }
+    },
     formatThousand (number) {
       return parseInt(number).toLocaleString('id-ID')
     },
@@ -1214,10 +728,6 @@ export default {
       this.selectedListWilayah = stat
       this.changeData()
     },
-    // changeFilterWaktu (stat) {
-    //   this.selectedListWaktu = stat
-    //   this.changeData()
-    // },
     changeData () {
       this.ChartHarianData = [
         [
@@ -1263,113 +773,6 @@ export default {
           this.fetchDataKabupatenKumulatif()
         }
       }
-    },
-    groupDataKabupatenHarian () {
-      const self = this
-      let max = 0
-      for (let j = 0; j < self.jsonDataKota.length; j++) {
-        for (let i = 0; i < self.jsonDataKabupatenHarian.length; i++) {
-          if (self.jsonDataKabupatenHarian[i].kode_kab === self.jsonDataKota[j].kode) {
-            // self.jsonDataKota[j].dataHarian.push(self.jsonDataKabupatenHarian[i])
-            const temp1 = self.jsonDataKabupatenHarian[i]
-            let jml = 0
-            let ratarata = 0
-            if (i === 0 * 27) {
-              jml = this.jsonDataKabupatenHarian[i].positif
-              ratarata = jml / 1
-            } else if (i === 1 * 27) {
-              jml = this.jsonDataKabupatenHarian[i].positif + this.jsonDataKabupatenHarian[i - (1 * 27)].positif
-              ratarata = jml / 2
-            } else if (i === 2 * 27) {
-              jml = this.jsonDataKabupatenHarian[i].positif + this.jsonDataKabupatenHarian[i - (1 * 27)].positif + this.jsonDataKabupatenHarian[i - (2 * 27)].positif
-              ratarata = jml / 3
-            } else if (i === 3 * 27) {
-              jml = this.jsonDataKabupatenHarian[i].positif + this.jsonDataKabupatenHarian[i - (1 * 27)].positif + this.jsonDataKabupatenHarian[i - (2 * 27)].positif +
-                this.jsonDataKabupatenHarian[i - (3 * 27)].positif
-              ratarata = jml / 4
-            } else if (i === 4 * 27) {
-              jml = this.jsonDataKabupatenHarian[i].positif + this.jsonDataKabupatenHarian[i - (1 * 27)].positif + this.jsonDataKabupatenHarian[i - (2 * 27)].positif +
-                this.jsonDataKabupatenHarian[i - (3 * 27)].positif + this.jsonDataKabupatenHarian[i - (4 * 27)].positif
-              ratarata = jml / 5
-            } else if (i === 5 * 27) {
-              jml = this.jsonDataKabupatenHarian[i].positif + this.jsonDataKabupatenHarian[i - (1 * 27)].positif + this.jsonDataKabupatenHarian[i - (2 * 27)].positif +
-              this.jsonDataKabupatenHarian[i - (3 * 27)].positif + this.jsonDataKabupatenHarian[i - (4 * 27)].positif + this.jsonDataKabupatenHarian[i - (5 * 27)].positif
-              ratarata = jml / 6
-            } else if (i >= 6 * 27) {
-              jml = this.jsonDataKabupatenHarian[i].positif + this.jsonDataKabupatenHarian[i - (1 * 27)].positif + this.jsonDataKabupatenHarian[i - (2 * 27)].positif +
-                this.jsonDataKabupatenHarian[i - (3 * 27)].positif + this.jsonDataKabupatenHarian[i - (4 * 27)].positif + this.jsonDataKabupatenHarian[i - (5 * 27)].positif +
-                this.jsonDataKabupatenHarian[i - (6 * 27)].positif
-              ratarata = jml / 7
-            } else {
-              jml = 0
-              ratarata = 0
-            }
-            const temp2 = { positif_ratarata: parseInt(ratarata.toFixed(2)) }
-            const temp3 = { ...temp1, ...temp2 }
-            self.jsonDataKota[j].dataHarian.push(temp3)
-          }
-          if (i === self.jsonDataKabupatenHarian.length - 1) {
-            self.jsonDataKota[j].dataHarian.splice(1, 1)
-          }
-          if (self.jsonDataKabupatenHarian[i].positif > max) {
-            max = self.jsonDataKabupatenHarian[i].positif
-          }
-        }
-      }
-    },
-    groupDataKabupatenKumulatif () {
-      const self = this
-      let max = 0
-      for (let j = 0; j < self.jsonDataKota.length; j++) {
-        for (let i = 0; i < self.jsonDataKabupatenKumulatif.length; i++) {
-          if (self.jsonDataKabupatenKumulatif[i].kode_kab === self.jsonDataKota[j].kode) {
-            self.jsonDataKota[j].dataAkumulatif.push(self.jsonDataKabupatenKumulatif[i])
-            // const temp1 = self.jsonDataKabupatenKumulatif[i]
-            // let jml = 0
-            // let ratarata = 0
-            // if (i === 0 * 27) {
-            //   jml = this.jsonDataKabupatenKumulatif[i].positif
-            //   ratarata = jml / 1
-            // } else if (i === 1 * 27) {
-            //   jml = this.jsonDataKabupatenKumulatif[i].positif + this.jsonDataKabupatenKumulatif[i - (1 * 27)].positif
-            //   ratarata = jml / 2
-            // } else if (i === 2 * 27) {
-            //   jml = this.jsonDataKabupatenKumulatif[i].positif + this.jsonDataKabupatenKumulatif[i - (1 * 27)].positif + this.jsonDataKabupatenKumulatif[i - (2 * 27)].positif
-            //   ratarata = jml / 3
-            // } else if (i === 3 * 27) {
-            //   jml = this.jsonDataKabupatenKumulatif[i].positif + this.jsonDataKabupatenKumulatif[i - (1 * 27)].positif + this.jsonDataKabupatenKumulatif[i - (2 * 27)].positif +
-            //     this.jsonDataKabupatenKumulatif[i - (3 * 27)].positif
-            //   ratarata = jml / 4
-            // } else if (i === 4 * 27) {
-            //   jml = this.jsonDataKabupatenKumulatif[i].positif + this.jsonDataKabupatenKumulatif[i - (1 * 27)].positif + this.jsonDataKabupatenKumulatif[i - (2 * 27)].positif +
-            //     this.jsonDataKabupatenKumulatif[i - (3 * 27)].positif + this.jsonDataKabupatenKumulatif[i - (4 * 27)].positif
-            //   ratarata = jml / 5
-            // } else if (i === 5 * 27) {
-            //   jml = this.jsonDataKabupatenKumulatif[i].positif + this.jsonDataKabupatenKumulatif[i - (1 * 27)].positif + this.jsonDataKabupatenKumulatif[i - (2 * 27)].positif +
-            //   this.jsonDataKabupatenKumulatif[i - (3 * 27)].positif + this.jsonDataKabupatenKumulatif[i - (4 * 27)].positif + this.jsonDataKabupatenKumulatif[i - (5 * 27)].positif
-            //   ratarata = jml / 6
-            // } else if (i > 6 * 27) {
-            //   jml = this.jsonDataKabupatenKumulatif[i].positif + this.jsonDataKabupatenKumulatif[i - (1 * 27)].positif + this.jsonDataKabupatenKumulatif[i - (2 * 27)].positif +
-            //     this.jsonDataKabupatenKumulatif[i - (3 * 27)].positif + this.jsonDataKabupatenKumulatif[i - (4 * 27)].positif + this.jsonDataKabupatenKumulatif[i - (5 * 27)].positif +
-            //     this.jsonDataKabupatenKumulatif[i - (6 * 27)].positif
-            //   ratarata = jml / 7
-            // } else {
-            //   jml = 0
-            //   ratarata = 0
-            // }
-            // const temp2 = { positif_ratarata: parseInt(ratarata.toFixed(2)) }
-            // const temp3 = { ...temp1, ...temp2 }
-            // self.jsonDataKota[j].dataAkumulatif.push(temp3)
-          }
-          if (i === self.jsonDataKabupatenKumulatif.length - 1) {
-            self.jsonDataKota[j].dataAkumulatif.splice(1, 1)
-          }
-          if (self.jsonDataKabupatenKumulatif[i].positif > max) {
-            max = self.jsonDataKabupatenKumulatif[i].positif
-          }
-        }
-      }
-      // self.lineChartKotaOptions.vAxis.viewWindow.max = max + (Math.ceil(max / 5))
     },
     fetchDataNasionalHarian () {
       const self = this
@@ -1477,13 +880,13 @@ export default {
         if (stop === false) {
           let tooltipHarian = '<table style="white-space: nowrap; margin: 10px;">'
           tooltipHarian += '<tr><td style="font-size: larger;">' + self.formatDate(date) + '</td><td></td></tr>'
-          tooltipHarian += '<tr><td>Terkonfirmasi </td><td style="text-align:right;"><b style="margin-left: 10px;">: ' + self.formatThousand(self.jsonDataProvinsiHarian[i].positif) + '</b></td></tr>'
+          tooltipHarian += '<tr><td>Terkonfirmasi </td><td style="text-align:right;"><b style="margin-left: 10px;">: ' + self.formatThousand(self.jsonDataProvinsiHarian[i].positif_total) + '</b></td></tr>'
           tooltipHarian += '<tr><td>Rata-rata 7 Hari </td><td style="text-align:right;"><b style="margin-left: 10px;">: ' + self.formatThousand(self.jsonDataProvinsiHarian[i].positif_ratarata) + '</b></td></tr>'
           tooltipHarian += '</table>'
           self.ChartHarianData.push([
             self.formatDateNoYear(date),
-            self.jsonDataProvinsiHarian[i].positif, tooltipHarian,
-            self.jsonDataProvinsiHarian[i].positif,
+            self.jsonDataProvinsiHarian[i].positif_total, tooltipHarian,
+            self.jsonDataProvinsiHarian[i].positif_total,
             self.jsonDataProvinsiHarian[i].positif_ratarata, tooltipHarian
           ])
         }
@@ -1519,21 +922,21 @@ export default {
       let stop = false
       for (let i = startNum; i <= endNum; i++) {
         const date = new Date(self.jsonDataProvinsiKumulatif[i].tanggal)
-        const positifAktif = self.jsonDataProvinsiKumulatif[i].positif - self.jsonDataProvinsiKumulatif[i].sembuh - self.jsonDataProvinsiKumulatif[i].meninggal
+        // const positifAktif = self.jsonDataProvinsiKumulatif[i].positif - self.jsonDataProvinsiKumulatif[i].sembuh - self.jsonDataProvinsiKumulatif[i].meninggal
         if (stop === false) {
           let tooltipKumulatif = '<table style="white-space: nowrap; margin: 10px;">'
           tooltipKumulatif += '<tr><td style="font-size: larger;">' + self.formatDate(date) + '</td><td></td></tr>'
-          tooltipKumulatif += '<tr><td>Total Terkonfirmasi </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataProvinsiKumulatif[i].positif) + '</b></td></tr>'
-          tooltipKumulatif += '<tr><td>Aktif </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(positifAktif) + '</b></td></tr>'
-          tooltipKumulatif += '<tr><td>Sembuh </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataProvinsiKumulatif[i].sembuh) + '</b></td></tr>'
-          tooltipKumulatif += '<tr><td>Meninggal </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataProvinsiKumulatif[i].meninggal) + '</b></td></tr>'
+          tooltipKumulatif += '<tr><td>Total Terkonfirmasi </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataProvinsiKumulatif[i].positif_total) + '</b></td></tr>'
+          tooltipKumulatif += '<tr><td>Aktif </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataProvinsiKumulatif[i].positif_aktif) + '</b></td></tr>'
+          tooltipKumulatif += '<tr><td>Sembuh </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataProvinsiKumulatif[i].positif_sembuh) + '</b></td></tr>'
+          tooltipKumulatif += '<tr><td>Meninggal </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataProvinsiKumulatif[i].positif_meninggal) + '</b></td></tr>'
           tooltipKumulatif += '</table>'
           self.ChartKumulatifData.push([
             self.formatDateNoYear(date),
-            positifAktif, tooltipKumulatif,
-            self.jsonDataProvinsiKumulatif[i].sembuh, tooltipKumulatif,
-            self.jsonDataProvinsiKumulatif[i].meninggal, tooltipKumulatif,
-            self.jsonDataProvinsiKumulatif[i].positif, tooltipKumulatif
+            self.jsonDataProvinsiKumulatif[i].positif_aktif, tooltipKumulatif,
+            self.jsonDataProvinsiKumulatif[i].positif_sembuh, tooltipKumulatif,
+            self.jsonDataProvinsiKumulatif[i].positif_meninggal, tooltipKumulatif,
+            self.jsonDataProvinsiKumulatif[i].positif_total, tooltipKumulatif
           ])
         }
         if (self.formatDate(date) === strToday) {
@@ -1578,13 +981,13 @@ export default {
         if (stop === false) {
           let tooltipHarian = '<table style="white-space: nowrap; margin: 10px;">'
           tooltipHarian += '<tr><td style="font-size: larger;">' + self.formatDate(date) + '</td><td></td></tr>'
-          tooltipHarian += '<tr><td>Terkonfirmasi </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataKota[indexKota].dataHarian[i].positif) + '</b></td></tr>'
+          tooltipHarian += '<tr><td>Terkonfirmasi </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataKota[indexKota].dataHarian[i].positif_total) + '</b></td></tr>'
           tooltipHarian += '<tr><td>Rata-rata 7 Hari </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataKota[indexKota].dataHarian[i].positif_ratarata) + '</b></td></tr>'
           tooltipHarian += '</table>'
           self.ChartHarianData.push([
             self.formatDateNoYear(date),
-            self.jsonDataKota[indexKota].dataHarian[i].positif, tooltipHarian,
-            self.jsonDataKota[indexKota].dataHarian[i].positif,
+            self.jsonDataKota[indexKota].dataHarian[i].positif_total, tooltipHarian,
+            self.jsonDataKota[indexKota].dataHarian[i].positif_total,
             self.jsonDataKota[indexKota].dataHarian[i].positif_ratarata, tooltipHarian
           ])
         }
@@ -1627,21 +1030,21 @@ export default {
       let stop = false
       for (let i = startNum; i < endNum; i++) {
         const date = new Date(self.jsonDataKota[indexKota].dataAkumulatif[i].tanggal)
-        const positifAktif = self.jsonDataKota[indexKota].dataAkumulatif[i].positif - self.jsonDataKota[indexKota].dataAkumulatif[i].sembuh - self.jsonDataKota[indexKota].dataAkumulatif[i].meninggal
+        // const positifAktif = self.jsonDataKota[indexKota].dataAkumulatif[i].positif - self.jsonDataKota[indexKota].dataAkumulatif[i].sembuh - self.jsonDataKota[indexKota].dataAkumulatif[i].meninggal
         if (stop === false) {
           let tooltipKumulatif = '<table style="white-space: nowrap; margin: 10px;">'
           tooltipKumulatif += '<tr><td style="font-size: larger;">' + self.formatDate(date) + '</td><td></td></tr>'
-          tooltipKumulatif += '<tr><td>Total Terkonfirmasi </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataKota[indexKota].dataAkumulatif[i].positif) + '</b></td></tr>'
-          tooltipKumulatif += '<tr><td>Aktif </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(positifAktif) + '</b></td></tr>'
-          tooltipKumulatif += '<tr><td>Sembuh </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataKota[indexKota].dataAkumulatif[i].sembuh) + '</b></td></tr>'
-          tooltipKumulatif += '<tr><td>Meninggal </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataKota[indexKota].dataAkumulatif[i].meninggal) + '</b></td></tr>'
+          tooltipKumulatif += '<tr><td>Total Terkonfirmasi </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataKota[indexKota].dataAkumulatif[i].positif_total) + '</b></td></tr>'
+          tooltipKumulatif += '<tr><td>Aktif </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataKota[indexKota].dataAkumulatif[i].positif_aktif) + '</b></td></tr>'
+          tooltipKumulatif += '<tr><td>Sembuh </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataKota[indexKota].dataAkumulatif[i].positif_sembuh) + '</b></td></tr>'
+          tooltipKumulatif += '<tr><td>Meninggal </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataKota[indexKota].dataAkumulatif[i].positif_meninggal) + '</b></td></tr>'
           tooltipKumulatif += '</table>'
           self.ChartKumulatifData.push([
             self.formatDateNoYear(date),
-            positifAktif, tooltipKumulatif,
-            self.jsonDataKota[indexKota].dataAkumulatif[i].sembuh, tooltipKumulatif,
-            self.jsonDataKota[indexKota].dataAkumulatif[i].meninggal, tooltipKumulatif,
-            self.jsonDataKota[indexKota].dataAkumulatif[i].positif, tooltipKumulatif
+            self.jsonDataKota[indexKota].dataAkumulatif[i].positif_aktif, tooltipKumulatif,
+            self.jsonDataKota[indexKota].dataAkumulatif[i].positif_sembuh, tooltipKumulatif,
+            self.jsonDataKota[indexKota].dataAkumulatif[i].positif_meninggal, tooltipKumulatif,
+            self.jsonDataKota[indexKota].dataAkumulatif[i].positif_total, tooltipKumulatif
           ])
         }
         if (self.formatDate(date) === strToday) {
