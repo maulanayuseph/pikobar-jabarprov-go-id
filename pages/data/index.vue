@@ -166,15 +166,12 @@ export default {
   },
   mounted () {
     this.$nextTick(() => {
-      Promise.all([
-        this.$store.dispatch('data-nasional-harian/getItems'),
-        this.$store.dispatch('data-kasus-harian/getItems'),
-        this.$store.dispatch('data-kasus-harian-kota/getItems'),
-        this.$store.dispatch('data-sebaran-jabar-faskes/getItems'),
-        this.$store.dispatch('statistics/getCases'),
-        this.$store.dispatch('data-kasus-total/getItems')
-      ]).then(() => {
-      })
+      this.$store.dispatch('data-nasional-harian/getItems')
+      this.$store.dispatch('data-kasus-harian/getItems')
+      this.$store.dispatch('data-kasus-harian-kota/getItems')
+      this.$store.dispatch('data-sebaran-jabar-faskes/getItems')
+      this.$store.dispatch('statistics/getCases')
+      this.$store.dispatch('data-kasus-total/getItems')
 
       if (process.browser) {
         analytics.logEvent('dashboard_view')
