@@ -80,8 +80,8 @@ export default {
   data () {
     return {
       optionList: [
-        'ODP',
-        'PDP',
+        // 'ODP',
+        // 'PDP',
         'Positif - Aktif',
         'Positif - Sembuh',
         'Positif - Meninggal'
@@ -211,29 +211,35 @@ export default {
 
       let tempJenisKelaminPria = 0
       let tempJenisKelaminWanita = 0
+      let tempJenisKelaminNA = 0
 
       if (stat === 'ODP') {
         tempJenisKelaminPria = parseInt(this.jsonDataKasusGender.odp_total.lakilaki)
         tempJenisKelaminWanita = parseInt(this.jsonDataKasusGender.odp_total.perempuan)
+        tempJenisKelaminNA = parseInt(this.jsonDataKasusGender.odp_total.tidakdiketahui)
       } else if (stat === 'PDP') {
         tempJenisKelaminPria = parseInt(this.jsonDataKasusGender.pdp_total.lakilaki)
         tempJenisKelaminWanita = parseInt(this.jsonDataKasusGender.pdp_total.perempuan)
+        tempJenisKelaminNA = parseInt(this.jsonDataKasusGender.pdp_total.tidakdiketahui)
       } else if (stat === 'Positif - Aktif') {
         tempJenisKelaminPria = parseInt(this.jsonDataKasusGender.positif_aktif.lakilaki)
         tempJenisKelaminWanita = parseInt(this.jsonDataKasusGender.positif_aktif.perempuan)
+        tempJenisKelaminNA = parseInt(this.jsonDataKasusGender.positif_aktif.tidakdiketahui)
       } else if (stat === 'Positif - Sembuh') {
         tempJenisKelaminPria = parseInt(this.jsonDataKasusGender.positif_sembuh.lakilaki)
         tempJenisKelaminWanita = parseInt(this.jsonDataKasusGender.positif_sembuh.perempuan)
+        tempJenisKelaminNA = parseInt(this.jsonDataKasusGender.positif_sembuh.tidakdiketahui)
       } else if (stat === 'Positif - Meninggal') {
         tempJenisKelaminPria = parseInt(this.jsonDataKasusGender.positif_meninggal.lakilaki)
         tempJenisKelaminWanita = parseInt(this.jsonDataKasusGender.positif_meninggal.perempuan)
+        tempJenisKelaminNA = parseInt(this.jsonDataKasusGender.positif_meninggal.tidakdiketahui)
       }
 
       self.pieChartJenisKelaminData = [
         ['Jenis Kelamin', 'Data'],
         ['Pria', tempJenisKelaminPria],
         ['Wanita', tempJenisKelaminWanita],
-        ['N/A', 0]
+        ['N/A', tempJenisKelaminNA]
       ]
     },
     // get data

@@ -9,7 +9,8 @@
       <ul>
         <li v-for="(m, index) in menus" :key="index">
           <a
-            :class="['app-drawer__menu-item', isMenuItemActive(m) && 'is-active']"
+            v-if="m.children === undefined"
+            :class="['app-drawer__menu-item' + ' 33', isMenuItemActive(m) && 'is-active']"
             :href="m.to"
             @click.prevent="onClickMenuItem(m)"
           >
@@ -18,6 +19,31 @@
               {{ m.label }}
             </span>
           </a>
+          <a
+            v-if="m.children"
+            :class="['app-drawer__menu-item', isMenuItemActive(m) && 'is-active']"
+            :href="m.to"
+            @click.prevent="onClickMenuItem(m, index)"
+          >
+            <FontAwesomeIcon v-if="m.icon" :icon="m.icon" class="mr-4" />
+            <span>
+              {{ m.label }}
+            </span>
+          </a>
+          <ul v-if="m.children" :class="['hidden ml-5 submenu-' + index]">
+            <li v-for="(subm, indexSub) in m.children" :key="indexSub">
+              <a
+                :class="[' ml-5 app-drawer__menu-item', isMenuItemActive(subm) && 'is-active']"
+                :href="subm.to"
+                @click.prevent="onClickMenuItem(subm)"
+              >
+                <FontAwesomeIcon v-if="subm.icon" :icon="subm.icon" class="mr-4" />
+                <span>
+                  {{ subm.label }}
+                </span>
+              </a>
+            </li>
+          </ul>
         </li>
       </ul>
     </nav>
@@ -42,7 +68,15 @@ export default {
     menus () {
       return [
         { to: '/', label: 'Home', exact: true, icon: this.icon.faHome },
-        { to: '/data', label: 'Data', icon: this.icon.faChartLine },
+        {
+          to: '#',
+          label: 'Data',
+          icon: this.icon.faTachometerAlt,
+          children: [
+            { to: '/data', label: 'Statistik', icon: this.icon.faChartLine },
+            { to: '/distribution-case', label: 'Sebaran Kasus', icon: this.icon.faMapMarked }
+          ]
+        },
         { to: '/articles?tab=jabar', label: 'Berita', icon: this.icon.faNewspaper },
         { to: '/contact', label: 'Kontak', icon: this.icon.faPhoneAlt },
         { to: '/faq', label: 'FAQ', icon: this.icon.faQuestionCircle },
@@ -75,7 +109,7 @@ export default {
         return
       }
 
-      const { faHome, faChartLine, faNewspaper, faPhoneAlt, faQuestionCircle, faComment, faWallet, faBoxOpen } = lib
+      const { faHome, faChartLine, faNewspaper, faPhoneAlt, faQuestionCircle, faComment, faWallet, faBoxOpen, faTachometerAlt, faMapMarked } = lib
       this.icon = {
         faHome,
         faChartLine,
@@ -84,7 +118,9 @@ export default {
         faQuestionCircle,
         faComment,
         faWallet,
-        faBoxOpen
+        faBoxOpen,
+        faTachometerAlt,
+        faMapMarked
       }
     },
     animate (toggled) {
@@ -125,18 +161,26 @@ export default {
         return this.$route.path.startsWith(menu.to)
       }
     },
-    onClickMenuItem (menu) {
-      if (this.isExternalLink(menu.to)) {
-        window.open(menu.to, '_blank')
-        return
+    onClickMenuItem (menu, index = 0) {
+      if (menu.children) {
+        const x = document.getElementsByClassName('submenu-' + index)
+        if (x[0].style.display === 'none') {
+          x[0].style.display = 'block'
+        } else {
+          x[0].style.display = 'none'
+        }
+      } else {
+        this.animateHide()
+        setTimeout(() => {
+          if (this.isExternalLink(menu.to)) {
+            window.open(menu.to, '_blank')
+            return
+          }
+          this.$router.push({
+            path: menu.to
+          }, null, () => {})
+        }, 350)
       }
-
-      this.animateHide()
-      setTimeout(() => {
-        this.$router.push({
-          path: menu.to
-        }, null, () => {})
-      }, 350)
     }
   }
 }
