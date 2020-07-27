@@ -324,8 +324,8 @@ export default {
         isActiveSemua: true
       },
       optionList: [
-        'ODP',
-        'PDP',
+        // 'ODP',
+        // 'PDP',
         'Positif - Aktif',
         'Positif - Sembuh',
         'Positif - Meninggal'
