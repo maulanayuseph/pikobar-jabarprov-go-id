@@ -12,10 +12,7 @@
           <FontAwesomeIcon :icon="icon.faPhoneAlt" class="text-green-500" />
         </span>
         <p>
-          <b>Hotline Donasi</b><br>
-          <small class="opacity-75">
-            Divisi Kemitraan dan Penggalangan Bantuan Masyarakat
-          </small>
+          <b>Hotline Pikobar</b><br>
         </p>
       </div>
       <div class="flex flex-row items-start">

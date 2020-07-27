@@ -2,6 +2,7 @@
 <template>
   <div class="container mx-auto">
     <client-only>
+      <PopupCampaign />
       <section class="m-4 md:m-8">
         <TopAlert />
       </section>
@@ -30,56 +31,9 @@
                 icon-class="text-4xl"
               />
               <div
-                v-show="cases"
-                class="top-grid__call-status rounded-lg"
+                class="top-grid__socmed rounded-lg"
               >
-                <h6>
-                  <strong>Pertanyaan Terlayani</strong><br>
-                  <small>
-                    Telpon & Pesan Teks
-                  </small>
-                </h6>
-                <summary class="text-5xl text-yellopx-40 font-bold">
-                  {{ cases ? formatNumber(cases.pertanyaan_terlayani) : '' }}
-                </summary>
-              </div>
-              <div
-                v-show="!cases"
-                class="top-grid__call-status rounded-lg"
-              >
-                <ContentLoader
-                  :speed="2"
-                  :height="100"
-                  primary-color="rgba(255,255,255,0.3)"
-                  secondary-color="rgba(255,255,255,0.1)"
-                  class="w-full h-full max-w-xs"
-                  style="grid-column-end: span 2;"
-                >
-                  <rect
-                    x="0"
-                    y="0"
-                    rx="8"
-                    ry="6"
-                    width="50%"
-                    height="16"
-                  />
-                  <rect
-                    x="0"
-                    y="30"
-                    rx="8"
-                    ry="6"
-                    width="66%"
-                    height="16"
-                  />
-                  <rect
-                    x="0"
-                    y="64"
-                    rx="8"
-                    ry="6"
-                    width="20%"
-                    height="16"
-                  />
-                </ContentLoader>
+                <PikobarSocmed />
               </div>
             </div>
           </div>
@@ -428,7 +382,6 @@
   </div>
 </template>
 <script>
-import { ContentLoader } from 'vue-content-loader'
 import { mapState } from 'vuex'
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons'
 import { formatDateTimeShort } from '~/lib/date'
@@ -443,10 +396,12 @@ import BlogPostPreview from '~/components/Blog/BlogPostPreview'
 import DataTabs from '~/components/_pages/index/DataTabs'
 import ShareableItems from '~/components/ShareableItems'
 import ShareableItemTable from '~/components/ShareableItemTable'
+import PopupCampaign from '~/components/PopupCampaign'
+import PikobarSocmed from '~/components/PikobarSocmed'
 
 export default {
   components: {
-    ContentLoader,
+    PopupCampaign,
     TopAlert,
     ImageCarousel,
     CallCard,
@@ -455,7 +410,8 @@ export default {
     CallCenter,
     DataTabs,
     ShareableItems,
-    ShareableItemTable
+    ShareableItemTable,
+    PikobarSocmed
   },
   async fetch () {
     await this.$store.dispatch('hospitals/getItems')
@@ -592,11 +548,10 @@ export default {
     @apply shadow-md;
   }
 
-  &__call-status {
+  &__socmed {
     grid-column: span 2;
-    @apply p-5 flex items-center justify-between
-    text-xl text-white
-    bg-brand-green-dark
+    @apply p-5
+    bg-white
     shadow-md;
   }
 }
