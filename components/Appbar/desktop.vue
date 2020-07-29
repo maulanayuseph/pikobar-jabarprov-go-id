@@ -23,16 +23,17 @@
           </ul> -->
       <ul class="flex flex-row items-center">
         <li v-for="item in menus" :key="item.to">
-          <nuxt-link
+          <a
             v-if="item.children === undefined"
-            :to="item.to"
+            :href="item.to"
             :exact="item.exact"
             class="hidden lg:flex appbar-menu-item cursor-pointer mx-2 px-2 py-2 hover:bg-gray-200"
+            @click.prevent.stop="onMenuItemClicked(item)"
           >
             <a>
               {{ item.label }}
             </a>
-          </nuxt-link>
+          </a>
 
           <nuxt-link
             v-if="item.children"
