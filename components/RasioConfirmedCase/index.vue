@@ -86,7 +86,6 @@ export default {
   data () {
     return {
       titleCase: 'Rasio Kasus Terkonfirmasi',
-      chartsLib: null,
       chartData: {
         cols: [
           { id: 'Kasus', label: 'Jumlah Kasus', type: 'string' },
@@ -118,9 +117,6 @@ export default {
   },
   computed: {
     chartOptions () {
-      if (!this.chartsLib) {
-        return null
-      }
       return {
         chartArea: {
           width: '60%',
@@ -206,7 +202,6 @@ export default {
   },
   methods: {
     onChartReady (chart, google) {
-      this.chartsLib = google
       const data = new google.visualization.DataTable(this.chartData)
       const view = new google.visualization.DataView(data)
       return chart.draw(view)
