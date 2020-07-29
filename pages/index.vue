@@ -502,6 +502,7 @@ export default {
   mounted () {
     this.$nextTick(() => {
       this.$store.dispatch('statistics/getCases')
+      this.$store.dispatch('data-kasus-total/getItems')
       this.$store.dispatch('data-sebaran-jabar/getItems')
       this.$store.dispatch('banners/getItems')
       this.$store.dispatch('news/getItems')
