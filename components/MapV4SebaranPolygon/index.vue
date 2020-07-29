@@ -374,10 +374,10 @@ export default {
           }
         }
         dataSebaranPolygon.range.forEach((element, index) => {
-          detailLabel = '<li style="margin-right: 20px;"><i class="legend-data-box" style="background:' + element.color + '; ' +
+          detailLabel = '<li style="margin-right: 20px;"><i class="legend-data-box" style="border: #000 1px solid; background:' + element.color + '; ' +
               'opacity: 1;"></i>' +
               element.from + ' - ' + element.to
-          detailLabel += ' <br> <span style="font-size: 0.6rem">' + element.total_cluster + ' ' + region + '</span></li>'
+          detailLabel += ' (' + element.total_cluster + ' ' + region + ')</li>'
           labels.push(
             detailLabel
           )
