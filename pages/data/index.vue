@@ -16,6 +16,21 @@
     <section class="m-4 mb-8 md:m-8">
       <DataPCR />
     </section>
+    <section class="m-4 md:m-8">
+      <div class="flex flex-col lg:flex-row lg:items-stretch">
+        <div class="w-full mb-6 lg:mb-0 bg-white rounded-lg mb-8 shadow-lg">
+          <div>
+            <h3 class="p-5 text-lg md:text">
+              <b>Peta Kasus Covid-19 di Jawa Barat</b>
+            </h3>
+            <hr>
+          </div>
+          <div class="p-6">
+            <MapV4SebaranPolygon />
+          </div>
+        </div>
+      </div>
+    </section>
     <section>
       <a
         href="/distribution-case"
@@ -34,15 +49,6 @@
           <img class="float-right h-full" src="~assets/banner-sebaran-ilustrasi.png">
         </div>
       </a>
-      <!-- <div class="div-banner-distribution-case">
-        <a
-          class="px-4 py-2 font-bold text-lg"
-          href="/distribution-case"
-        >
-          <img class="banner-distribution-case" style="width: 100%;" src="~assets/Banner_sebaran_kasus.png">
-          <img class="hidden banner-distribution-case-hover" style="width: 100%;" src="~assets/Banner_sebaran_kasus_hover.png">
-        </a>
-      </div> -->
     </section>
 
     <section class="m-4 mb-8 md:m-8">
@@ -118,6 +124,7 @@ export default {
     DataSummary,
     DataRDT: () => import('~/components/DataRDT'),
     DataPCR: () => import('~/components/DataPCR'),
+    MapV4SebaranPolygon: () => import('~/components/MapV4SebaranPolygon'),
     BarStatAreaSingleV2: () => import('~/components/BarStatAreaSingleV2'),
     BarStatJenisKelamin: () => import('~/components/BarStatJenisKelamin'),
     BarStatUsia: () => import('~/components/BarStatUsia'),
@@ -516,19 +523,6 @@ export default {
   background: #f5f5f5;
 }
 
-.btn-fullscreen {
-  position: absolute;
-  bottom: 0px;
-  left: 10px;
-  font-size: 1.3em;
-  padding: 2px 6px;
-  box-shadow: 0 1px 5px rgba(0,0,0,0.65);
-  z-index: 401;
-}
-
-.btn-fullscreen:hover {
-  cursor: pointer;
-}
 
 .title-map {
   position: absolute;
