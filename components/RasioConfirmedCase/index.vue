@@ -85,7 +85,7 @@ export default {
   },
   data () {
     return {
-      titleCase: 'Rasio Kasus Terkonfirmasi',
+      titleCase: 'Rasio Kasus Positif Aktif',
       chartsLib: null,
       chartData: {
         cols: [
@@ -101,6 +101,38 @@ export default {
         rows: []
       },
       rowHeight: 500,
+
+      title: {
+        gabungan_aktif: 'Gabungan Kasus Aktif',
+        positif_total: 'Terkonfirmasi',
+        positif_aktif: 'Positif Aktif',
+        positif_meninggal: 'Positif Meninggal',
+        positif_sembuh: 'Positif Sembuh',
+        pdp_total: 'PDP Total',
+        pdp_aktif: 'PDP Proses',
+        pdp_selesai: 'PDP Selesai',
+        pdp_meninggal: 'PDP Meninggal',
+        odp_total: 'ODP Total',
+        odp_aktif: 'ODP Proses',
+        odp_selesai: 'ODP Selesai',
+        odp_meninggal: 'ODP Meninggal'
+      },
+
+      color: {
+        gabungan_aktif: '#C25302',
+        positif_total: '#eb5757',
+        positif_aktif: '#eb5757',
+        positif_meninggal: '#a51212',
+        positif_sembuh: '#3CB670',
+        pdp_total: '#f2c94c',
+        pdp_aktif: '#f2c94c',
+        pdp_selesai: '#ffdb6f',
+        pdp_meninggal: '#a51212',
+        odp_total: '#2d9cdb',
+        odp_aktif: '#2d9cdb',
+        odp_selesai: '#73ccff',
+        odp_meninggal: '#a51212'
+      },
 
       // data
       parentLabel: {
@@ -199,9 +231,10 @@ export default {
     activeRegionId (newVal, oldVal) {
     },
     dataSebaranPolygon (val) {
-      let category = this.activeCaseCategory
-      category = category.split('_')
-      this.setChartData(val, category[0])
+      // let category = this.activeCaseCategory
+      // category = category.split('_')
+      // this.setChartData(val, category[0])
+      this.setChartData(val, this.activeCaseCategory)
     }
   },
   methods: {
@@ -226,7 +259,7 @@ export default {
 
       sortedData = _orderBy(
         data.wilayah,
-        [category + '_total'],
+        [category],
         ['desc']
       )
 
@@ -243,60 +276,43 @@ export default {
     setData (el, category, nameApiRegion) {
       let tooltip = ''
       let data = ''
-      if (category === 'pdp') {
-        this.titleCase = 'Rasio Kasus PDP'
+      if (category === 'gabungan_aktif') {
+        this.titleCase = 'Rasio Gabungan Kasus Aktif'
         tooltip = `
         <div class="p-3" style="font-size: 0.7rem; border-radius: 0.5rem; width: 8rem;">
           <b>${el[nameApiRegion]}</b> <br>
-          Meninggal : ${el.pdp_meninggal} <br>
-          Selesai : ${el.pdp_selesai} <br>
-          Proses : ${el.pdp_aktif} <br>
-          Total : ${el.pdp_total} <br>
+          Positif Aktif : ${el.positif_aktif} <br>
+          PDP Proses : ${el.pdp_aktif} <br>
+          ODP Proses : ${el.odp_aktif} <br>
+          Gabungan Kasus : ${el.gabungan_aktif} <br>
         </div>
         `
         data = {
           c: [
             { v: '0', f: el[nameApiRegion] },
-            { v: el.pdp_meninggal, f: el.pdp_meninggal },
-            { v: '', f: tooltip },
-            { v: el.pdp_selesai, f: el.pdp_selesai },
+            { v: el.odp_aktif, f: el.odp_aktif },
             { v: '', f: tooltip },
             { v: el.pdp_aktif, f: el.pdp_aktif },
+            { v: '', f: tooltip },
+            { v: el.positif_aktif, f: el.positif_aktif },
             { v: '', f: tooltip }
-            // { v: el.pdp_total, f: el.pdp_total }
+            // { v: el.positif_total, f: el.positif_total }
           ]
         }
-      } else if (category === 'odp') {
-        this.titleCase = 'Rasio Kasus ODP'
-        tooltip = `
-        <div class="p-3" style="font-size: 0.7rem; border-radius: 0.5rem; width: 8rem;">
-          <b>${el[nameApiRegion]}</b> <br>
-          Meninggal : ${el.odp_meninggal} <br>
-          Selesai : ${el.odp_selesai} <br>
-          Proses : ${el.odp_aktif} <br>
-          Total : ${el.odp_total} <br>
-        </div>
-        `
-        data = {
-          c: [
-            { v: '0', f: el[nameApiRegion] },
-            { v: el.odp_meninggal, f: el.odp_meninggal },
-            { v: '', f: tooltip },
-            { v: el.odp_selesai, f: el.odp_selesai },
-            { v: '', f: tooltip },
-            { v: el.odp_aktif, f: el.odp_aktif },
-            { v: '', f: tooltip }
-            // { v: el.odp_total, f: el.odp_total }
-          ]
+        this.series = {
+          0: { color: this.color.odp_aktif },
+          1: { color: this.color.pdp_aktif },
+          2: { color: this.color.positif_aktif },
+          3: { color: '#000000' }
         }
-      } else {
+      } else if (category === 'positif_total') {
         this.titleCase = 'Rasio Kasus Terkonfirmasi'
         tooltip = `
         <div class="p-3" style="font-size: 0.7rem; border-radius: 0.5rem; width: 8rem;">
           <b>${el[nameApiRegion]}</b> <br>
           Aktif : ${el.positif_aktif} <br>
-          Meninggal : ${el.positif_meninggal} <br>
           Sembuh : ${el.positif_sembuh} <br>
+          Meninggal : ${el.positif_meninggal} <br>
           Terkonfirmasi : ${el.positif_total} <br>
         </div>
         `
@@ -312,38 +328,60 @@ export default {
             // { v: el.positif_total, f: el.positif_total }
           ]
         }
+        this.series = {
+          0: { color: this.color.positif_meninggal },
+          1: { color: this.color.positif_sembuh },
+          2: { color: this.color.positif_aktif },
+          3: { color: '#000000' }
+        }
+      } else {
+        this.titleCase = 'Rasio Kasus ' + this.title[category]
+        tooltip = `
+        <div class="p-3" style="font-size: 0.7rem; border-radius: 0.5rem; width: 8rem;">
+          <b>${el[nameApiRegion]}</b> <br>
+          ` + category + ` : ${el[category]} <br>
+        </div>
+        `
+        data = {
+          c: [
+            { v: '0', f: el[nameApiRegion] },
+            { v: el[category], f: el[category] },
+            { v: '', f: tooltip }
+          ]
+        }
+        this.series = {
+          0: { color: this.color[category] }
+        }
       }
 
       return data
     },
     setColorSeries (category) {
-      if (category === 'pdp') {
-        this.chartOptions.series[0].color = '#ae2929'
-        this.chartOptions.series[1].color = '#3bb46d'
-        this.chartOptions.series[2].color = '#f3ce5e'
-      } else if (category === 'odp') {
-        this.chartOptions.series[0].color = '#ae2929'
-        this.chartOptions.series[1].color = '#3bb46d'
-        this.chartOptions.series[2].color = '#42a6df'
+      if (category === 'gabungan_aktif') {
+        this.chartOptions.series[0].color = this.color.odp_aktif
+        this.chartOptions.series[1].color = this.color.pdp_aktif
+        this.chartOptions.series[2].color = this.color.positif_aktif
+      } else if (category === 'positif_total') {
+        this.chartOptions.series[0].color = this.color.positif_meninggal
+        this.chartOptions.series[1].color = this.color.positif_sembuh
+        this.chartOptions.series[2].color = this.color.positif_aktif
       } else {
-        this.chartOptions.series[0].color = '#a6241f'
-        this.chartOptions.series[1].color = '#3bb46d'
-        this.chartOptions.series[2].color = '#ef6464'
+        this.chartOptions.series[0].color = this.color[category]
       }
     },
     setCols (category) {
-      if (category === 'pdp' || category === 'odp') {
+      if (category === 'gabungan_aktif') {
         this.chartData.cols = [
           { id: 'Kasus', label: 'Jumlah Kasus', type: 'string' },
-          { id: 'Meninggal', label: 'Meninggal', type: 'number' },
+          { id: 'ODP Proses', label: 'ODP Proses', type: 'number' },
           { type: 'string', role: 'tooltip', p: { html: true } },
-          { id: 'Proses', label: 'Selesai', type: 'number' },
+          { id: 'PDP Proses', label: 'PDP Proses', type: 'number' },
           { type: 'string', role: 'tooltip', p: { html: true } },
-          { id: 'Selesai', label: 'Proses', type: 'number' },
+          { id: 'Positif Aktif', label: 'Positif Aktif', type: 'number' },
           { type: 'string', role: 'tooltip', p: { html: true } }
           // { id: 'annot', type: 'string', role: 'annotation' }
         ]
-      } else {
+      } else if (category === 'positif_total') {
         this.chartData.cols = [
           { id: 'Kasus', label: 'Jumlah Kasus', type: 'string' },
           { id: 'Meninggal', label: 'Meninggal', type: 'number' },
@@ -352,6 +390,12 @@ export default {
           { type: 'string', role: 'tooltip', p: { html: true } },
           { id: 'Aktif', label: 'Aktif', type: 'number' },
           { type: 'string', role: 'tooltip', p: { html: true } }
+          // { id: 'annot', type: 'string', role: 'annotation' }
+        ]
+      } else {
+        this.chartData.cols = [
+          { id: 'Kasus', label: 'Jumlah Kasus', type: 'string' },
+          { id: this.title[category], label: this.title[category], type: 'number' }
           // { id: 'annot', type: 'string', role: 'annotation' }
         ]
       }
