@@ -12,13 +12,17 @@
           <div class="flex flex-row text-white text-center mt-3 font-bold">
             <div class="w-1/2">
               <b class="text-md">Jawa Barat</b>
-              <div class="text-3xl"> 5000 </div>
-              <div><span class="rounded-full bg-white px-custom-1 mr-1" style=""><FontAwesomeIcon class="text-xs cursor-pointer" style="color:#2C347C" :icon="iconPlusMinus(73)" /></span> 73</div>
+              <div class="text-3xl">
+                {{ data.jawabarat.positif_total }}
+              </div>
+              <div><span class="rounded-full bg-white px-custom-1 mr-1" style=""><FontAwesomeIcon class="text-xs cursor-pointer" style="color:#2C347C" :icon="iconPlusMinus(data.jawabarat.positif_total_pertumbuhan)" /></span>{{ data.jawabarat.positif_total_pertumbuhan }}</div>
             </div>
             <div class="w-1/2">
               <b class="text-md">Indonesia</b>
-              <div class="text-3xl"> 5000 </div>
-              <div><span class="rounded-full bg-white px-custom-1 mr-1" style=""><FontAwesomeIcon class="text-xs cursor-pointer" style="color:#2C347C" :icon="iconPlusMinus(73)" /></span> 73</div>
+              <div class="text-3xl">
+                {{ data.nasional.positif_total }}
+              </div>
+              <div><span class="rounded-full bg-white px-custom-1 mr-1" style=""><FontAwesomeIcon class="text-xs cursor-pointer" style="color:#2C347C" :icon="iconPlusMinus(data.nasional.positif_total_pertumbuhan)" /></span>{{ data.nasional.positif_total_pertumbuhan }}</div>
             </div>
           </div>
         </CounterCardLoader>
@@ -32,13 +36,17 @@
           <div class="flex flex-row text-red-500 text-center mt-3 font-bold">
             <div class="w-1/2">
               <b class="text-md text-black">Jawa Barat</b>
-              <div class="text-3xl"> 5000 </div>
-              <div><span class="rounded-full bg-red-500 px-custom-1 mr-1" style=""><FontAwesomeIcon class="text-xs cursor-pointer text-white" :icon="iconPlusMinus(73)" /></span> 73</div>
+              <div class="text-3xl">
+                {{ data.jawabarat.positif_aktif }}
+              </div>
+              <div><span class="rounded-full bg-red-500 px-custom-1 mr-1" style=""><FontAwesomeIcon class="text-xs cursor-pointer text-white" :icon="iconPlusMinus(data.jawabarat.positif_aktif_pertumbuhan)" /></span> {{ data.jawabarat.positif_aktif_pertumbuhan }}</div>
             </div>
             <div class="w-1/2">
               <b class="text-md  text-black">Indonesia</b>
-              <div class="text-3xl"> 5000 </div>
-              <div><span class="rounded-full bg-red-500 px-custom-1 mr-1" style=""><FontAwesomeIcon class="text-xs cursor-pointer text-white" :icon="iconPlusMinus(73)" /></span> 73</div>
+              <div class="text-3xl">
+                {{ data.nasional.positif_aktif }}
+              </div>
+              <div><span class="rounded-full bg-red-500 px-custom-1 mr-1" style=""><FontAwesomeIcon class="text-xs cursor-pointer text-white" :icon="iconPlusMinus(data.nasional.positif_aktif_pertumbuhan)" /></span> {{ data.nasional.positif_aktif_pertumbuhan }} </div>
             </div>
           </div>
         </CounterCardLoader>
@@ -52,13 +60,17 @@
           <div class="flex flex-row text-green-500 text-center mt-3 font-bold">
             <div class="w-1/2">
               <b class="text-md text-black">Jawa Barat</b>
-              <div class="text-3xl"> 5000 </div>
-              <div><span class="rounded-full bg-green-500 px-custom-1 mr-1" style=""><FontAwesomeIcon class="text-xs cursor-pointer text-white" :icon="iconPlusMinus(73)" /></span> 73</div>
+              <div class="text-3xl">
+                {{ data.jawabarat.positif_sembuh }}
+              </div>
+              <div><span class="rounded-full bg-green-500 px-custom-1 mr-1" style=""><FontAwesomeIcon class="text-xs cursor-pointer text-white" :icon="iconPlusMinus(data.jawabarat.positif_sembuh_pertumbuhan)" /></span> {{ data.jawabarat.positif_sembuh_pertumbuhan }}</div>
             </div>
             <div class="w-1/2">
               <b class="text-md  text-black">Indonesia</b>
-              <div class="text-3xl"> 5000 </div>
-              <div><span class="rounded-full bg-green-500 px-custom-1 mr-1" style=""><FontAwesomeIcon class="text-xs cursor-pointer text-white" :icon="iconPlusMinus(73)" /></span> 73</div>
+              <div class="text-3xl">
+                {{ data.nasional.positif_sembuh }}
+              </div>
+              <div><span class="rounded-full bg-green-500 px-custom-1 mr-1" style=""><FontAwesomeIcon class="text-xs cursor-pointer text-white" :icon="iconPlusMinus(data.nasional.positif_sembuh_pertumbuhan)" /></span> {{ data.nasional.positif_sembuh_pertumbuhan }}</div>
             </div>
           </div>
         </CounterCardLoader>
@@ -72,13 +84,17 @@
           <div class="flex flex-row text-red-700 text-center mt-3 font-bold">
             <div class="w-1/2">
               <b class="text-md text-black">Jawa Barat</b>
-              <div class="text-3xl"> 7000 </div>
-              <div><span class="rounded-full bg-red-700 px-custom-1 mr-1" style=""><FontAwesomeIcon class="text-xs cursor-pointer text-white" :icon="iconPlusMinus(73)" /></span> 73</div>
+              <div class="text-3xl">
+                {{ data.jawabarat.positif_meninggal }}
+              </div>
+              <div><span class="rounded-full bg-red-700 px-custom-1 mr-1" style=""><FontAwesomeIcon class="text-xs cursor-pointer text-white" :icon="iconPlusMinus(data.jawabarat.positif_meninggal_pertumbuhan)" /></span> {{ data.jawabarat.positif_meninggal_pertumbuhan }}</div>
             </div>
             <div class="w-1/2">
               <b class="text-md  text-black">Indonesia</b>
-              <div class="text-3xl"> 7000 </div>
-              <div><span class="rounded-full bg-red-700 px-custom-1 mr-1" style=""><FontAwesomeIcon class="text-xs cursor-pointer text-white" :icon="iconPlusMinus(73)" /></span> 73</div>
+              <div class="text-3xl">
+                {{ data.nasional.positif_meninggal }}
+              </div>
+              <div><span class="rounded-full bg-red-700 px-custom-1 mr-1" style=""><FontAwesomeIcon class="text-xs cursor-pointer text-white" :icon="iconPlusMinus(data.nasional.positif_meninggal_pertumbuhan)" /></span> {{ data.nasional.positif_meninggal_pertumbuhan }}</div>
             </div>
           </div>
         </CounterCardLoader>
@@ -94,13 +110,13 @@
           finished-label="Selesai Pemantauan"
           died-label="Meninggal"
           total-label="Total ODP"
-          :processed="400"
-          :processed-percentage="_round(30, 2)"
-          :finished="500"
-          :finished-percentage="_round(40, 2)"
-          :died="800"
-          :died-percentage="_round(30, 2)"
-          :total="3000"
+          :processed="data.jawabarat.odp_aktif"
+          :processed-percentage="_round(data.jawabarat.odp_aktif / data.jawabarat.odp_total * 100, 2)"
+          :finished="data.jawabarat.odp_selesai"
+          :finished-percentage="_round(data.jawabarat.odp_selesai / data.jawabarat.odp_total * 100, 2)"
+          :died="data.jawabarat.odp_meninggal"
+          :died-percentage="_round(data.jawabarat.odp_meninggal / data.jawabarat.odp_total * 100, 2)"
+          :total="data.jawabarat.odp_total"
         >
           <template #footnote>
             <footer class="p-5">
@@ -124,13 +140,13 @@
           finished-label="Selesai Pengawasan"
           died-label="Meninggal"
           total-label="Total PDP"
-          :processed="300"
-          :processed-percentage="_round(40, 2)"
-          :finished="400"
-          :finished-percentage="_round(30, 2)"
-          :died="800"
-          :died-percentage="_round(30, 2)"
-          :total="4000"
+          :processed="data.jawabarat.pdp_aktif"
+          :processed-percentage="_round(data.jawabarat.pdp_aktif / data.jawabarat.pdp_total * 100, 2)"
+          :finished="data.jawabarat.pdp_selesai"
+          :finished-percentage="_round(data.jawabarat.pdp_selesai / data.jawabarat.pdp_total * 100, 2)"
+          :died="data.jawabarat.pdp_meninggal"
+          :died-percentage="_round(data.jawabarat.pdp_meninggal / data.jawabarat.pdp_total * 100, 2)"
+          :total="data.jawabarat.pdp_total"
         >
           <template #footnote>
             <footer class="p-5">
@@ -162,6 +178,59 @@ export default {
   },
   data () {
     return {
+      data: {
+        nasional: {
+          positif_total: 0,
+          positif_total_pertumbuhan: 0,
+          positif_aktif: 0,
+          positif_aktif_pertumbuhan: 0,
+          positif_sembuh: 0,
+          positif_sembuh_pertumbuhan: 0,
+          positif_meninggal: 0,
+          positif_meninggal_pertumbuhan: 0,
+          last_update: '2020-08-02'
+        },
+        jawabarat: {
+          kode_prov: 32,
+          nama_prov: 'Provinsi Jawa Barat',
+          odp_aktif: 0,
+          odp_aktif_pertumbuhan: 0,
+          odp_meninggal: 0,
+          odp_meninggal_pertumbuhan: 0,
+          odp_selesai: 0,
+          odp_selesai_pertumbuhan: 0,
+          odp_total: 0,
+          odp_total_pertumbuhan: 0,
+          pcr_invalid: 0,
+          pcr_negatif: 0,
+          pcr_positif: 0,
+          pcr_total: 0,
+          pdp_aktif: 0,
+          pdp_aktif_pertumbuhan: 0,
+          pdp_meninggal: 0,
+          pdp_meninggal_pertumbuhan: 0,
+          pdp_selesai: 0,
+          pdp_selesai_pertumbuhan: 0,
+          pdp_total: 0,
+          pdp_total_pertumbuhan: 0,
+          positif_aktif: 0,
+          positif_aktif_pertumbuhan: 0,
+          positif_meninggal: 0,
+          positif_meninggal_pertumbuhan: 0,
+          positif_sembuh: 0,
+          positif_sembuh_pertumbuhan: 0,
+          positif_total: 0,
+          positif_total_pertumbuhan: 0,
+          rdt_invalid: 0,
+          rdt_negatif: 0,
+          rdt_positif: 0,
+          rdt_total: 0,
+          last_update: '2020-08-02'
+        },
+        meta: {
+          last_update: '2020-08-03T07:00:08.000000Z'
+        }
+      },
       jsonDataKasusTotal: {},
       jsonDataRekapitulasiJabarKumulatifProv: [],
       jsonDataNasionalHarianKumulatif: [],
@@ -186,8 +255,7 @@ export default {
   },
   watch: {
     covidCases (val) {
-      console.log(val)
-      this.covidCases = val
+      this.data = val
     }
   },
   mounted () {

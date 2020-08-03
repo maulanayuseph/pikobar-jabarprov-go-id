@@ -19,7 +19,6 @@ export const actions = {
     commit('setIsLoading', true)
     const { data } = await axios.get('https://pikobar-api-static.digitalservice.id/v2/covid-cases', {
       headers: {
-        'Access-Control-Allow-Origin': '*'
       }
     })
     commit('setItems', data)
