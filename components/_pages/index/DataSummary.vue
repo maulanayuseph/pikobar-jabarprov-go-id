@@ -4,7 +4,7 @@
       <section class="flex flex-row flex-wrap">
         <!-- Terkonfirmasi -->
         <CounterCardLoader
-          :is-pending="false"
+          :is-pending="isLoading"
           class="mb-8 border border-solid digital-signage"
           style="background: linear-gradient(90deg, #2C347C, #424CA6);"
           label="Total Terkonfirmasi"
@@ -29,7 +29,7 @@
 
         <!-- Isolasi -->
         <CounterCardLoader
-          :is-pending="false"
+          :is-pending="isLoading"
           class="mb-8 border border-solid digital-signage bg-white"
           label="Aktif"
         >
@@ -53,7 +53,7 @@
 
         <!-- Selesai -->
         <CounterCardLoader
-          :is-pending="false"
+          :is-pending="isLoading"
           class="mb-8 border border-solid digital-signage bg-white"
           label="Sembuh"
         >
@@ -77,7 +77,7 @@
 
         <!-- Meninggal -->
         <CounterCardLoader
-          :is-pending="false"
+          :is-pending="isLoading"
           class="mb-8 border border-solid digital-signage bg-white"
           label="Meninggal"
         >
@@ -104,7 +104,7 @@
         <!-- ODP -->
         <StatisticLoader
           class="w-full xl:w-auto xl:mr-8"
-          :is-pending="false"
+          :is-pending="isLoading"
           label="ODP (Orang Dalam Pemantauan)"
           processed-label="Proses Pemantauan"
           finished-label="Selesai Pemantauan"
@@ -134,7 +134,7 @@
         <!-- PDP -->
         <StatisticLoader
           class="w-full xl:w-auto"
-          :is-pending="false"
+          :is-pending="isLoading"
           label="PDP (Pasien Dalam Pengawasan)"
           processed-label="Proses Pengawasan"
           finished-label="Selesai Pengawasan"
