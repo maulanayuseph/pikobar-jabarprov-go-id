@@ -65,10 +65,7 @@
         <div class="w-full md:w-3/6 lg:w-3/6 h-auto text-sm mr-10 mt-2">
           Polymerase Chain Reaction atau PCR merupakan pemeriksaan diagnostik yang dianggap paling akurat untuk memastikan apakah seseorang menderita COVID-19 atau tidak.<br>
           <br><b style="font-size: larger;">Disclaimer :</b><br>
-          <span style="opacity: 0.6;">Jumlah tes PCR yang ditampilkan adalah hasil pengujian di Labkes Jabar.</span>
-          <span v-if="showMore" style="opacity: 0.6;">Angka Positif hasil tes PCR tidak merepresentasikan seluruh kasus terkonfirmasi dan jumlah pengujian massal di Jawa Barat, tim Pikobar sedang dalam proses pengumpulan dan integrasi data dari lab-lab satelit se-Jawa Barat.  </span>
-          <!-- <b><a v-if="!showMore" style="color: #17689D; cursor:pointer;" @click="clickShowMore"> Selengkapnya</a></b> -->
-          <!-- <b><a v-if="showMore" style="color: #17689D; cursor:pointer;" @click="clickShowMore"> Sembunyikan</a></b> -->
+          <span>Jumlah tes PCR yang ditampilkan adalah hasil pengujian di Labkes Jabar dan lab-lab satelit dalam lingkup jejaring manajemen lab di Jawa Barat. Angka belum sepenuhnya merefleksikan jumlah sampling dan orang di Jawa Barat secara <i>real-time</i>. Tim Pikobar tengah melakukan proses integrasi data dengan Allrecords TC-19 dari Pusdatin Kemenkes.</span>
           <span>
             <br>
             <br>

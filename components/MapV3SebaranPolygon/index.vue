@@ -71,6 +71,24 @@
           class="filter-data"
         >
           <li
+            :class="filter.gabungan_aktif?'filter-active':''"
+            @click="setFilter('gabungan_aktif')"
+          >
+            <div
+              class="legend-color cluster-gabungan-aktif"
+              style="margin-right: 0.5em;"
+            />Gabungan Kasus Aktif
+          </li>
+          <li
+            :class="filter.positif_total?'filter-active':''"
+            @click="setFilter('positif_total')"
+          >
+            <div
+              class="legend-color cluster-positif-total"
+              style="margin-right: 0.5em;"
+            />Terkonfirmasi
+          </li>
+          <li
             :class="filter.positif_aktif?'filter-active':''"
             @click="setFilter('positif_aktif')"
           >
@@ -193,6 +211,8 @@ export default {
       },
       isShowFilter: false,
       filter: {
+        gabungan_aktif: false,
+        positif_total: false,
         positif_aktif: true,
         positif_meninggal: false,
         positif_sembuh: false,
@@ -672,6 +692,16 @@ export default {
     border-radius: 0.3rem;
   }
 
+  .cluster-gabungan-aktif {
+    /* box-shadow: 0 0 5px 0 rgb(45, 156, 219, 0.9); */
+    border: 2px solid rgb(194,83,2, 0.9);
+    background: rgb(194,83,2, 0.9);
+  }
+  .cluster-positif-total {
+    /* box-shadow: 0 0 5px 0 rgb(45, 156, 219, 0.9); */
+    border: 2px solid rgb(44,52,124, 0.9);
+    background: rgb(44,52,124, 0.9);
+  }
   .cluster-odp-proses {
     /* box-shadow: 0 0 5px 0 rgb(45, 156, 219, 0.9); */
     border: 2px solid rgb(45, 156, 219, 0.9);

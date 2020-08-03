@@ -902,7 +902,7 @@ export default {
         },
         hAxis: {
           format: ';',
-          title: 'Umur',
+          title: '',
           viewWindowMode: 'explicit',
           viewWindow: {
             min: -150,
@@ -975,7 +975,7 @@ export default {
         },
         hAxis: {
           format: ';',
-          title: 'Umur',
+          title: '',
           viewWindowMode: 'explicit',
           viewWindow: {
             min: 150,
