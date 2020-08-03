@@ -2,11 +2,10 @@
   <div>
     <div
       class="w-full p-5"
-      style="min-height: 300px; max-height: 600px;"
       :class="isLoading?'':'hidden'"
     >
       <ContentLoader
-        class="w-full hidden lg:block"
+        class="w-full block"
         :speed="3"
         :width="400"
         :height="200"
@@ -403,11 +402,11 @@ export default {
     toggleSearch () {
     },
     toggleBackToHome () {
-      this.activeRegion = 'kota'
-      this.activeLayer = 'kota'
+      this.activeRegion = 'kecamatan'
+      this.activeLayer = 'kecamatan'
       this.map.flyTo([-6.932694, 107.627449], 8)
 
-      this.setLayer('kota')
+      this.setLayer('kecamatan')
       this.getDataSebaranPolygon(this.activeRegion, this.activeDataCategory)
       this.removeLayer()
       this.createPolygonRegion()
