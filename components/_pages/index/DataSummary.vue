@@ -31,7 +31,7 @@
         <CounterCardLoader
           :is-pending="false"
           class="mb-8 border border-solid digital-signage bg-white"
-          label="Isolasi/Masih Sakit"
+          label="Aktif"
         >
           <div class="flex flex-row text-red-500 text-center mt-3 font-bold">
             <div class="w-1/2">
@@ -55,7 +55,7 @@
         <CounterCardLoader
           :is-pending="false"
           class="mb-8 border border-solid digital-signage bg-white"
-          label="Selesai Isolasi/Sembuh"
+          label="Sembuh"
         >
           <div class="flex flex-row text-green-500 text-center mt-3 font-bold">
             <div class="w-1/2">
