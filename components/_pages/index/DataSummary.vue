@@ -13,14 +13,14 @@
             <div class="w-1/2">
               <b class="text-md">Jawa Barat</b>
               <div class="text-3xl">
-                {{ data.jawabarat.positif_total }}
+                {{ formatNumber(data.jawabarat.positif_total) }}
               </div>
               <div><span class="rounded-full bg-white px-custom-1 mr-1" style=""><FontAwesomeIcon class="text-xs cursor-pointer" style="color:#2C347C" :icon="iconPlusMinus(data.jawabarat.positif_total_pertumbuhan)" /></span>{{ data.jawabarat.positif_total_pertumbuhan }}</div>
             </div>
             <div class="w-1/2">
               <b class="text-md">Indonesia</b>
               <div class="text-3xl">
-                {{ data.nasional.positif_total }}
+                {{ formatNumber(data.nasional.positif_total) }}
               </div>
               <div><span class="rounded-full bg-white px-custom-1 mr-1" style=""><FontAwesomeIcon class="text-xs cursor-pointer" style="color:#2C347C" :icon="iconPlusMinus(data.nasional.positif_total_pertumbuhan)" /></span>{{ data.nasional.positif_total_pertumbuhan }}</div>
             </div>
@@ -37,14 +37,14 @@
             <div class="w-1/2">
               <b class="text-md text-black">Jawa Barat</b>
               <div class="text-3xl">
-                {{ data.jawabarat.positif_aktif }}
+                {{ formatNumber(data.jawabarat.positif_aktif) }}
               </div>
               <div><span class="rounded-full bg-red-500 px-custom-1 mr-1" style=""><FontAwesomeIcon class="text-xs cursor-pointer text-white" :icon="iconPlusMinus(data.jawabarat.positif_aktif_pertumbuhan)" /></span> {{ data.jawabarat.positif_aktif_pertumbuhan }}</div>
             </div>
             <div class="w-1/2">
               <b class="text-md  text-black">Indonesia</b>
               <div class="text-3xl">
-                {{ data.nasional.positif_aktif }}
+                {{ formatNumber(data.nasional.positif_aktif) }}
               </div>
               <div><span class="rounded-full bg-red-500 px-custom-1 mr-1" style=""><FontAwesomeIcon class="text-xs cursor-pointer text-white" :icon="iconPlusMinus(data.nasional.positif_aktif_pertumbuhan)" /></span> {{ data.nasional.positif_aktif_pertumbuhan }} </div>
             </div>
@@ -61,14 +61,14 @@
             <div class="w-1/2">
               <b class="text-md text-black">Jawa Barat</b>
               <div class="text-3xl">
-                {{ data.jawabarat.positif_sembuh }}
+                {{ formatNumber(data.jawabarat.positif_sembuh) }}
               </div>
               <div><span class="rounded-full bg-green-500 px-custom-1 mr-1" style=""><FontAwesomeIcon class="text-xs cursor-pointer text-white" :icon="iconPlusMinus(data.jawabarat.positif_sembuh_pertumbuhan)" /></span> {{ data.jawabarat.positif_sembuh_pertumbuhan }}</div>
             </div>
             <div class="w-1/2">
               <b class="text-md  text-black">Indonesia</b>
               <div class="text-3xl">
-                {{ data.nasional.positif_sembuh }}
+                {{ formatNumber(data.nasional.positif_sembuh) }}
               </div>
               <div><span class="rounded-full bg-green-500 px-custom-1 mr-1" style=""><FontAwesomeIcon class="text-xs cursor-pointer text-white" :icon="iconPlusMinus(data.nasional.positif_sembuh_pertumbuhan)" /></span> {{ data.nasional.positif_sembuh_pertumbuhan }}</div>
             </div>
@@ -85,14 +85,14 @@
             <div class="w-1/2">
               <b class="text-md text-black">Jawa Barat</b>
               <div class="text-3xl">
-                {{ data.jawabarat.positif_meninggal }}
+                {{ formatNumber(data.jawabarat.positif_meninggal) }}
               </div>
               <div><span class="rounded-full bg-red-700 px-custom-1 mr-1" style=""><FontAwesomeIcon class="text-xs cursor-pointer text-white" :icon="iconPlusMinus(data.jawabarat.positif_meninggal_pertumbuhan)" /></span> {{ data.jawabarat.positif_meninggal_pertumbuhan }}</div>
             </div>
             <div class="w-1/2">
               <b class="text-md  text-black">Indonesia</b>
               <div class="text-3xl">
-                {{ data.nasional.positif_meninggal }}
+                {{ formatNumber(data.nasional.positif_meninggal) }}
               </div>
               <div><span class="rounded-full bg-red-700 px-custom-1 mr-1" style=""><FontAwesomeIcon class="text-xs cursor-pointer text-white" :icon="iconPlusMinus(data.nasional.positif_meninggal_pertumbuhan)" /></span> {{ data.nasional.positif_meninggal_pertumbuhan }}</div>
             </div>
@@ -164,7 +164,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 import _round from 'lodash/round'
 import { faAngleDoubleUp, faAngleDoubleDown } from '@fortawesome/free-solid-svg-icons'
 import CounterCardLoader from './CounterCardLoader'
@@ -266,27 +265,6 @@ export default {
     formatNumber,
     formatNumberPlusMinus,
     formatNumberOnlyPlus,
-    fetchDataNasionalHarian () {
-      const self = this
-      axios
-        .get('https://indonesia-covid-19.mathdro.id/api/harian')
-        .then(function (response) {
-          self.jsonDataNasionalHarianKumulatif = response.data.data
-          const numArr = self.jsonDataNasionalHarianKumulatif.length
-          if (self.jsonDataNasionalHarianKumulatif[numArr - 1].jumlahKasusBaruperHari !== null) {
-            self.pertumbuhan.nasionalPositif = self.jsonDataNasionalHarianKumulatif[numArr - 1].jumlahKasusBaruperHari
-            self.pertumbuhan.nasionalSembuh = self.jsonDataNasionalHarianKumulatif[numArr - 1].jumlahKasusSembuhperHari
-            self.pertumbuhan.nasionalMeninggal = self.jsonDataNasionalHarianKumulatif[numArr - 1].jumlahKasusMeninggalperHari
-          } else {
-            self.pertumbuhan.nasionalPositif = self.jsonDataNasionalHarianKumulatif[numArr - 2].jumlahKasusBaruperHari
-            self.pertumbuhan.nasionalSembuh = self.jsonDataNasionalHarianKumulatif[numArr - 2].jumlahKasusSembuhperHari
-            self.pertumbuhan.nasionalMeninggal = self.jsonDataNasionalHarianKumulatif[numArr - 2].jumlahKasusMeninggalperHari
-          }
-        })
-        .catch(function (error) {
-          console.log(error)
-        })
-    },
     iconPlusMinus (val) {
       if (val > 0) {
         return this.icons.faAngleDoubleUp
