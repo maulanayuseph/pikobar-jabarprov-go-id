@@ -133,6 +133,10 @@
         <!-- eslint-disable-next-line vue/no-v-html -->
         <div class="mb-1" v-html="infolegend" />
       </div>
+      <div class="m-1 mb-0 p-2" style="background:#e6e6e6">
+        <b>Disclaimer :</b>
+        <p>Peta di atas merupakan Peta Sebaran Kasus Covid-19 di Jawa Barat dan bukan merupakan Peta Level Kewaspadaan Covid-19 Jawa Barat.</p>
+      </div>
     </div>
   </div>
 </template>
