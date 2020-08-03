@@ -90,12 +90,7 @@ export default {
       chartData: {
         cols: [
           { id: 'Kasus', label: 'Jumlah Kasus', type: 'string' },
-          { id: 'Meninggal', label: 'Meninggal', type: 'number' },
-          { type: 'string', role: 'tooltip', p: { html: true } },
-          { id: 'Sembuh', label: 'Sembuh', type: 'number' },
-          { type: 'string', role: 'tooltip', p: { html: true } },
-          { id: 'Aktif', label: 'Aktif', type: 'number' },
-          { type: 'string', role: 'tooltip', p: { html: true } }
+          { id: 'Positif Aktif', label: 'Positif Aktif', type: 'number' }
           // { id: 'annot', type: 'string', role: 'annotation' }
         ],
         rows: []
@@ -174,18 +169,9 @@ export default {
         bar: { groupWidth: '50%' },
         series: {
           0: {
-            color: '#a6241f'
+            color: '#eb5757'
           },
           1: {
-            color: '#3bb46d'
-          },
-          2: {
-            color: '#ef6464'
-          },
-          3: {
-            color: '#000000'
-          },
-          4: {
             color: 'grey',
             lineWidth: 0,
             pointSize: 0,
