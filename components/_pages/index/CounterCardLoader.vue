@@ -18,8 +18,8 @@ export default {
             speed={2}
             width={400}
             height={80}
-            primaryColor="rgba(255,255,255,0.6)"
-            secondaryColor="rgba(255,255,255,1)"
+            primaryColor="rgba(214, 210, 210,0.6)"
+            secondaryColor="rgba(214, 210, 210,1)"
             style="max-width: 400px;">
             <rect x={0} y={0} rx={8} ry={6} width="50%" height="16"></rect>
             <rect x={0} y={30} rx={8} ry={6} width="66%" height="16"></rect>
@@ -28,7 +28,7 @@ export default {
         </div>
         <div
           style={`display: ${context.props.isPending ? 'none' : 'block'}`}>
-          <h4 class="text-black opacity-50">
+          <h4 class="text-gray-500 text-center">
             <b class="uppercase">{ context.props.label }</b>
           </h4>
           { context.children }
