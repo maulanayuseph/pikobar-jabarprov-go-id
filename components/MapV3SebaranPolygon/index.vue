@@ -323,12 +323,13 @@ export default {
       let keyParentRegion = ''
       let nameParentRegion = ''
 
+      let activeRegion = 'kota'
       if (featureProperties.bps_kecamatan_kode !== undefined) {
-        this.activeRegion = 'kelurahan'
+        activeRegion = 'kelurahan'
         keyParentRegion = 'bps_kecamatan_kode'
         nameParentRegion = 'kemendagri_kecamatan_nama'
       } else if (featureProperties.bps_kabupaten_kode !== undefined) {
-        this.activeRegion = 'kecamatan'
+        activeRegion = 'kecamatan'
         keyParentRegion = 'bps_kabupaten_kode'
         nameParentRegion = 'kemendagri_kabupaten_nama'
       }
@@ -341,11 +342,11 @@ export default {
       // create polygon region
       this.createPolygonRegion()
 
-      this.getDataSebaranPolygon(this.activeRegion, this.activeDataCategory, this.activeParentCode)
+      this.getDataSebaranPolygon(activeRegion, this.activeDataCategory, this.activeParentCode)
 
       // update props region
       this.$emit('update:activeRegionId', this.activeParentCode)
-      this.$emit('update:activeRegionCategory', this.activeRegion)
+      this.$emit('update:activeRegionCategory', activeRegion)
       this.$emit('update:activeParentRegionName', this.capitalizeFirstLetter(featureProperties[nameParentRegion]))
     },
     createPolygonRegion () {
@@ -359,13 +360,13 @@ export default {
       let keyApiRegion = 'kode_kab'
       let nameRegion = 'kemendagri_kabupaten_nama'
 
-      if (this.activeRegion === 'kelurahan') {
+      if (this.activeRegionCategory === 'kelurahan') {
         keyParentRegion = 'bps_kecamatan_kode'
         keyRegion = 'bps_desa_kode'
         keyApiRegion = 'kode_kel'
         geojson = jsonKelurahan
         nameRegion = 'kemendagri_desa_nama'
-      } else if (this.activeRegion === 'kecamatan') {
+      } else if (this.activeRegionCategory === 'kecamatan') {
         keyParentRegion = 'bps_kabupaten_kode'
         keyRegion = 'bps_kecamatan_kode'
         keyApiRegion = 'kode_kec'
@@ -377,9 +378,9 @@ export default {
         geojson = jsonKota
       }
 
-      if (this.activeRegion !== 'kota') {
+      if (this.activeRegionCategory !== 'kota') {
         for (let i = 0; i < geojson.features.length; i++) {
-          if (geojson.features[i].properties[keyParentRegion] === this.activeParentCode) {
+          if (geojson.features[i].properties[keyParentRegion] === this.activeRegionId) {
             jsonRegion.features.push(geojson.features[i])
           }
         }
@@ -443,7 +444,7 @@ export default {
         const labels = ['<b>Jumlah Kasus: </b>', '<br>', '<ul style="display: flex; margin-top: 10px;overflow-x:auto">']
 
         let region = ''
-        switch (this.activeRegion) {
+        switch (this.activeRegionCategory) {
           case 'kecamatan': {
             region = 'Kecamatan'
             break
@@ -515,7 +516,7 @@ export default {
       this.filter[category] = !this.filter[category]
       this.activeDataCategory = category
       this.removeLayer()
-      this.getDataSebaranPolygon(this.activeRegion, this.activeDataCategory, this.activeParentCode)
+      this.getDataSebaranPolygon(this.activeRegionCategory, this.activeDataCategory, this.activeParentCode)
       this.createPolygonRegion()
       this.$emit('update:activeCaseCategory', category)
     },
