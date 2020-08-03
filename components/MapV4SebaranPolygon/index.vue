@@ -2,11 +2,10 @@
   <div>
     <div
       class="w-full p-5"
-      style="min-height: 300px; max-height: 600px;"
       :class="isLoading?'':'hidden'"
     >
       <ContentLoader
-        class="w-full hidden lg:block"
+        class="w-full block"
         :speed="3"
         :width="400"
         :height="200"
@@ -133,6 +132,10 @@
       <div class="legend-data info-legend p-3">
         <!-- eslint-disable-next-line vue/no-v-html -->
         <div class="mb-1" v-html="infolegend" />
+      </div>
+      <div class="m-1 mb-0 p-2" style="background:#e6e6e6">
+        <b>Disclaimer :</b>
+        <p>Peta di atas merupakan Peta Sebaran Kasus Covid-19 di Jawa Barat dan bukan merupakan Peta Level Kewaspadaan Covid-19 Jawa Barat.</p>
       </div>
     </div>
   </div>
@@ -403,11 +406,11 @@ export default {
     toggleSearch () {
     },
     toggleBackToHome () {
-      this.activeRegion = 'kota'
-      this.activeLayer = 'kota'
+      this.activeRegion = 'kecamatan'
+      this.activeLayer = 'kecamatan'
       this.map.flyTo([-6.932694, 107.627449], 8)
 
-      this.setLayer('kota')
+      this.setLayer('kecamatan')
       this.getDataSebaranPolygon(this.activeRegion, this.activeDataCategory)
       this.removeLayer()
       this.createPolygonRegion()

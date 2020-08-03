@@ -6,91 +6,96 @@
         <CounterCardLoader
           :is-pending="isLoading"
           class="mb-8 border border-solid digital-signage"
-          style="background-color: #E0E6F6; border-color: #747BAD; padding: 1rem;"
-          label="Terkonfirmasi"
+          style="background: linear-gradient(90deg, #2C347C, #424CA6);"
+          label="Total Terkonfirmasi"
         >
-          <div class="flex justify-between items-baseline text-2xl">
-            <h4><b>Jawa Barat</b></h4>
-            <span>
-              <b>{{ formatNumber(jsonDataKasusTotal.positif_total) }}</b>
-              <b><span class="text-xl tag-purple-100 py-0 px-1 rounded text-white align-middle">{{ formatNumberPlusMinus(jsonDataKasusTotal.positif_total_pertumbuhan) }}</span></b>
-            </span>
-          </div>
-          <div class="flex justify-between items-baseline text-xl">
-            <h4><b>Indonesia</b></h4>
-            <span>
-              <b>{{ formatNumber(positifNasional) }}</b>
-              <b><span class="text-base tag-purple-100 py-0 px-1 rounded text-white align-middle">{{ formatNumberPlusMinus(pertumbuhan.nasionalPositif) }}</span></b>
-            </span>
+          <div class="flex flex-row text-white text-center mt-3 font-bold">
+            <div class="w-1/2">
+              <b class="text-md">Jawa Barat</b>
+              <div class="text-3xl">
+                {{ formatNumber(data.jawabarat.positif_total) }}
+              </div>
+              <div><span class="rounded-full bg-white px-custom-1 mr-1" style=""><FontAwesomeIcon class="text-xs cursor-pointer" style="color:#2C347C" :icon="iconPlusMinus(data.jawabarat.positif_total_pertumbuhan)" /></span>{{ data.jawabarat.positif_total_pertumbuhan }}</div>
+            </div>
+            <div class="w-1/2">
+              <b class="text-md">Indonesia</b>
+              <div class="text-3xl">
+                {{ formatNumber(data.nasional.positif_total) }}
+              </div>
+              <div><span class="rounded-full bg-white px-custom-1 mr-1" style=""><FontAwesomeIcon class="text-xs cursor-pointer" style="color:#2C347C" :icon="iconPlusMinus(data.nasional.positif_total_pertumbuhan)" /></span>{{ data.nasional.positif_total_pertumbuhan }}</div>
+            </div>
           </div>
         </CounterCardLoader>
 
-        <!-- Positif AKtif -->
+        <!-- Isolasi -->
         <CounterCardLoader
           :is-pending="isLoading"
-          class="mb-8 border border-solid digital-signage"
-          style="background-color: #FCDFE0; border-color: #FFB4B5; padding: 1rem;"
-          label="Positif Aktif"
+          class="mb-8 border border-solid digital-signage bg-white"
+          label="Aktif"
         >
-          <div class="flex justify-between items-baseline text-2xl">
-            <h4><b>Jawa Barat</b></h4>
-            <span>
-              <b>{{ formatNumber(jsonDataKasusTotal.positif_aktif) }}</b>
-              <b><span class="text-xl tag-red-100 py-0 px-1 rounded text-white align-middle">{{ formatNumberPlusMinus(jsonDataKasusTotal.positif_aktif_pertumbuhan) }}</span></b>
-            </span>
-          </div>
-          <div class="flex justify-between items-baseline text-xl">
-            <h4><b>Indonesia</b></h4>
-            <span>
-              <b>{{ formatNumber(positifNasional - sembuhNasional - meninggalNasional) }}</b>
-              <b><span class="text-base tag-red-100 py-0 px-1 rounded text-white align-middle">{{ formatNumberPlusMinus(pertumbuhan.nasionalPositif - pertumbuhan.nasionalSembuh - pertumbuhan.nasionalMeninggal) }}</span></b>
-            </span>
+          <div class="flex flex-row text-red-500 text-center mt-3 font-bold">
+            <div class="w-1/2">
+              <b class="text-md text-black">Jawa Barat</b>
+              <div class="text-3xl">
+                {{ formatNumber(data.jawabarat.positif_aktif) }}
+              </div>
+              <div><span class="rounded-full bg-red-500 px-custom-1 mr-1" style=""><FontAwesomeIcon class="text-xs cursor-pointer text-white" :icon="iconPlusMinus(data.jawabarat.positif_aktif_pertumbuhan)" /></span> {{ data.jawabarat.positif_aktif_pertumbuhan }}</div>
+            </div>
+            <div class="w-1/2">
+              <b class="text-md  text-black">Indonesia</b>
+              <div class="text-3xl">
+                {{ formatNumber(data.nasional.positif_aktif) }}
+              </div>
+              <div><span class="rounded-full bg-red-500 px-custom-1 mr-1" style=""><FontAwesomeIcon class="text-xs cursor-pointer text-white" :icon="iconPlusMinus(data.nasional.positif_aktif_pertumbuhan)" /></span> {{ data.nasional.positif_aktif_pertumbuhan }} </div>
+            </div>
           </div>
         </CounterCardLoader>
 
-        <!-- Positif Sembuh -->
+        <!-- Selesai -->
         <CounterCardLoader
           :is-pending="isLoading"
-          class="mb-8 border border-solid digital-signage"
-          style="background-color: #D3EEE3; border-color: #91DCBD; padding: 1rem;"
+          class="mb-8 border border-solid digital-signage bg-white"
           label="Sembuh"
         >
-          <div class="flex justify-between items-baseline text-2xl">
-            <h4><b>Jawa Barat</b></h4>
-            <span>
-              <b>{{ formatNumber(jsonDataKasusTotal.positif_sembuh) }}</b>
-              <b><span class="text-xl tag-green-100 py-0 px-1 rounded text-white align-middle">{{ formatNumberPlusMinus(jsonDataKasusTotal.positif_sembuh_pertumbuhan) }}</span></b>
-            </span>
-          </div>
-          <div class="flex justify-between items-baseline text-xl">
-            <h4><b>Indonesia</b></h4>
-            <span>
-              <b>{{ formatNumber(sembuhNasional) }}</b>
-              <b><span class="text-base tag-green-100 py-0 px-1 rounded text-white align-middle">{{ formatNumberPlusMinus(pertumbuhan.nasionalSembuh) }}</span></b>
-            </span>
+          <div class="flex flex-row text-green-500 text-center mt-3 font-bold">
+            <div class="w-1/2">
+              <b class="text-md text-black">Jawa Barat</b>
+              <div class="text-3xl">
+                {{ formatNumber(data.jawabarat.positif_sembuh) }}
+              </div>
+              <div><span class="rounded-full bg-green-500 px-custom-1 mr-1" style=""><FontAwesomeIcon class="text-xs cursor-pointer text-white" :icon="iconPlusMinus(data.jawabarat.positif_sembuh_pertumbuhan)" /></span> {{ data.jawabarat.positif_sembuh_pertumbuhan }}</div>
+            </div>
+            <div class="w-1/2">
+              <b class="text-md  text-black">Indonesia</b>
+              <div class="text-3xl">
+                {{ formatNumber(data.nasional.positif_sembuh) }}
+              </div>
+              <div><span class="rounded-full bg-green-500 px-custom-1 mr-1" style=""><FontAwesomeIcon class="text-xs cursor-pointer text-white" :icon="iconPlusMinus(data.nasional.positif_sembuh_pertumbuhan)" /></span> {{ data.nasional.positif_sembuh_pertumbuhan }}</div>
+            </div>
           </div>
         </CounterCardLoader>
 
-        <!-- Positif Meninggal -->
+        <!-- Meninggal -->
         <CounterCardLoader
           :is-pending="isLoading"
-          class="mb-8 border order-solid digital-signage"
-          style="background-color: #FBEADF; border-color: #FED1B1; padding: 1rem;"
+          class="mb-8 border border-solid digital-signage bg-white"
           label="Meninggal"
         >
-          <div class="flex justify-between items-baseline text-2xl">
-            <h4><b>Jawa Barat</b></h4>
-            <span>
-              <b>{{ formatNumber(jsonDataKasusTotal.positif_meninggal) }}</b>
-              <b><span class="text-xl tag-orange-100 py-0 px-1 rounded text-white align-middle">{{ formatNumberPlusMinus(jsonDataKasusTotal.positif_meninggal_pertumbuhan) }}</span></b>
-            </span>
-          </div>
-          <div class="flex justify-between items-baseline text-xl">
-            <h4><b>Indonesia</b></h4>
-            <span>
-              <b>{{ formatNumber(meninggalNasional) }}</b>
-              <b><span class="text-base tag-orange-100 py-0 px-1 rounded text-white align-middle">{{ formatNumberPlusMinus(pertumbuhan.nasionalMeninggal) }}</span></b>
-            </span>
+          <div class="flex flex-row text-red-700 text-center mt-3 font-bold">
+            <div class="w-1/2">
+              <b class="text-md text-black">Jawa Barat</b>
+              <div class="text-3xl">
+                {{ formatNumber(data.jawabarat.positif_meninggal) }}
+              </div>
+              <div><span class="rounded-full bg-red-700 px-custom-1 mr-1" style=""><FontAwesomeIcon class="text-xs cursor-pointer text-white" :icon="iconPlusMinus(data.jawabarat.positif_meninggal_pertumbuhan)" /></span> {{ data.jawabarat.positif_meninggal_pertumbuhan }}</div>
+            </div>
+            <div class="w-1/2">
+              <b class="text-md  text-black">Indonesia</b>
+              <div class="text-3xl">
+                {{ formatNumber(data.nasional.positif_meninggal) }}
+              </div>
+              <div><span class="rounded-full bg-red-700 px-custom-1 mr-1" style=""><FontAwesomeIcon class="text-xs cursor-pointer text-white" :icon="iconPlusMinus(data.nasional.positif_meninggal_pertumbuhan)" /></span> {{ data.nasional.positif_meninggal_pertumbuhan }}</div>
+            </div>
           </div>
         </CounterCardLoader>
       </section>
@@ -105,13 +110,13 @@
           finished-label="Selesai Pemantauan"
           died-label="Meninggal"
           total-label="Total ODP"
-          :processed="jsonDataKasusTotal.odp_aktif"
-          :processed-percentage="_round(jsonDataKasusTotal.odp_aktif * 100 / jsonDataKasusTotal.odp_total, 2)"
-          :finished="jsonDataKasusTotal.odp_selesai"
-          :finished-percentage="_round(jsonDataKasusTotal.odp_selesai * 100 / jsonDataKasusTotal.odp_total, 2)"
-          :died="jsonDataKasusTotal.odp_meninggal"
-          :died-percentage="_round(jsonDataKasusTotal.odp_meninggal * 100 / jsonDataKasusTotal.odp_total, 2)"
-          :total="jsonDataKasusTotal.odp_total"
+          :processed="data.jawabarat.odp_aktif"
+          :processed-percentage="_round(data.jawabarat.odp_aktif / data.jawabarat.odp_total * 100, 2)"
+          :finished="data.jawabarat.odp_selesai"
+          :finished-percentage="_round(data.jawabarat.odp_selesai / data.jawabarat.odp_total * 100, 2)"
+          :died="data.jawabarat.odp_meninggal"
+          :died-percentage="_round(data.jawabarat.odp_meninggal / data.jawabarat.odp_total * 100, 2)"
+          :total="data.jawabarat.odp_total"
         >
           <template #footnote>
             <footer class="p-5">
@@ -135,13 +140,13 @@
           finished-label="Selesai Pengawasan"
           died-label="Meninggal"
           total-label="Total PDP"
-          :processed="jsonDataKasusTotal.pdp_aktif"
-          :processed-percentage="_round(jsonDataKasusTotal.pdp_aktif * 100 / jsonDataKasusTotal.pdp_total, 2)"
-          :finished="jsonDataKasusTotal.pdp_selesai"
-          :finished-percentage="_round(jsonDataKasusTotal.pdp_selesai * 100 / jsonDataKasusTotal.pdp_total, 2)"
-          :died="jsonDataKasusTotal.pdp_meninggal"
-          :died-percentage="_round(jsonDataKasusTotal.pdp_meninggal * 100 / jsonDataKasusTotal.pdp_total, 2)"
-          :total="jsonDataKasusTotal.pdp_total"
+          :processed="data.jawabarat.pdp_aktif"
+          :processed-percentage="_round(data.jawabarat.pdp_aktif / data.jawabarat.pdp_total * 100, 2)"
+          :finished="data.jawabarat.pdp_selesai"
+          :finished-percentage="_round(data.jawabarat.pdp_selesai / data.jawabarat.pdp_total * 100, 2)"
+          :died="data.jawabarat.pdp_meninggal"
+          :died-percentage="_round(data.jawabarat.pdp_meninggal / data.jawabarat.pdp_total * 100, 2)"
+          :total="data.jawabarat.pdp_total"
         >
           <template #footnote>
             <footer class="p-5">
@@ -159,9 +164,8 @@
 </template>
 
 <script>
-import axios from 'axios'
-import _get from 'lodash/get'
 import _round from 'lodash/round'
+import { faAngleDoubleUp, faAngleDoubleDown } from '@fortawesome/free-solid-svg-icons'
 import CounterCardLoader from './CounterCardLoader'
 import StatisticLoader from './StatisticLoader'
 import { formatNumber, formatNumberPlusMinus, formatNumberOnlyPlus } from '~/lib/number'
@@ -173,6 +177,59 @@ export default {
   },
   data () {
     return {
+      data: {
+        nasional: {
+          positif_total: 0,
+          positif_total_pertumbuhan: 0,
+          positif_aktif: 0,
+          positif_aktif_pertumbuhan: 0,
+          positif_sembuh: 0,
+          positif_sembuh_pertumbuhan: 0,
+          positif_meninggal: 0,
+          positif_meninggal_pertumbuhan: 0,
+          last_update: '2020-08-02'
+        },
+        jawabarat: {
+          kode_prov: 32,
+          nama_prov: 'Provinsi Jawa Barat',
+          odp_aktif: 0,
+          odp_aktif_pertumbuhan: 0,
+          odp_meninggal: 0,
+          odp_meninggal_pertumbuhan: 0,
+          odp_selesai: 0,
+          odp_selesai_pertumbuhan: 0,
+          odp_total: 0,
+          odp_total_pertumbuhan: 0,
+          pcr_invalid: 0,
+          pcr_negatif: 0,
+          pcr_positif: 0,
+          pcr_total: 0,
+          pdp_aktif: 0,
+          pdp_aktif_pertumbuhan: 0,
+          pdp_meninggal: 0,
+          pdp_meninggal_pertumbuhan: 0,
+          pdp_selesai: 0,
+          pdp_selesai_pertumbuhan: 0,
+          pdp_total: 0,
+          pdp_total_pertumbuhan: 0,
+          positif_aktif: 0,
+          positif_aktif_pertumbuhan: 0,
+          positif_meninggal: 0,
+          positif_meninggal_pertumbuhan: 0,
+          positif_sembuh: 0,
+          positif_sembuh_pertumbuhan: 0,
+          positif_total: 0,
+          positif_total_pertumbuhan: 0,
+          rdt_invalid: 0,
+          rdt_negatif: 0,
+          rdt_positif: 0,
+          rdt_total: 0,
+          last_update: '2020-08-02'
+        },
+        meta: {
+          last_update: '2020-08-03T07:00:08.000000Z'
+        }
+      },
       jsonDataKasusTotal: {},
       jsonDataRekapitulasiJabarKumulatifProv: [],
       jsonDataNasionalHarianKumulatif: [],
@@ -180,70 +237,54 @@ export default {
         nasionalPositif: 0,
         nasionalSembuh: 0,
         nasionalMeninggal: 0
+      },
+      icons: {
+        faAngleDoubleUp,
+        faAngleDoubleDown
       }
     }
   },
   computed: {
-    cases () {
-      return this.$store.state.statistics.cases
-    },
-    positifNasional () {
-      return _get(this.cases, 'aktif.nasional')
-    },
-    sembuhNasional () {
-      return _get(this.cases, 'sembuh.nasional')
-    },
-    meninggalNasional () {
-      return _get(this.cases, 'meninggal.nasional')
-    },
-    isPending () {
-      return this.$store.state.statistics.cases === null
-    },
-    dataKasusTotal () {
-      return this.$store.getters['data-kasus-total/itemsMap']
+    covidCases () {
+      return this.$store.getters['covid-cases/itemsMap']
     },
     isLoading () {
-      return this.$store.getters['data-kasus-total/isLoading']
+      return this.$store.getters['covid-cases/isLoading']
     }
   },
   watch: {
-    dataKasusTotal (val) {
-      this.jsonDataKasusTotal = val[0]
+    covidCases (val) {
+      this.data = val
     }
   },
   mounted () {
-    this.fetchDataNasionalHarian()
+    this.getCovidCases()
   },
   methods: {
     _round,
     formatNumber,
     formatNumberPlusMinus,
     formatNumberOnlyPlus,
-    fetchDataNasionalHarian () {
-      const self = this
-      axios
-        .get('https://indonesia-covid-19.mathdro.id/api/harian')
-        .then(function (response) {
-          self.jsonDataNasionalHarianKumulatif = response.data.data
-          const numArr = self.jsonDataNasionalHarianKumulatif.length
-          if (self.jsonDataNasionalHarianKumulatif[numArr - 1].jumlahKasusBaruperHari !== null) {
-            self.pertumbuhan.nasionalPositif = self.jsonDataNasionalHarianKumulatif[numArr - 1].jumlahKasusBaruperHari
-            self.pertumbuhan.nasionalSembuh = self.jsonDataNasionalHarianKumulatif[numArr - 1].jumlahKasusSembuhperHari
-            self.pertumbuhan.nasionalMeninggal = self.jsonDataNasionalHarianKumulatif[numArr - 1].jumlahKasusMeninggalperHari
-          } else {
-            self.pertumbuhan.nasionalPositif = self.jsonDataNasionalHarianKumulatif[numArr - 2].jumlahKasusBaruperHari
-            self.pertumbuhan.nasionalSembuh = self.jsonDataNasionalHarianKumulatif[numArr - 2].jumlahKasusSembuhperHari
-            self.pertumbuhan.nasionalMeninggal = self.jsonDataNasionalHarianKumulatif[numArr - 2].jumlahKasusMeninggalperHari
-          }
-        })
-        .catch(function (error) {
-          console.log(error)
-        })
+    iconPlusMinus (val) {
+      if (val > 0) {
+        return this.icons.faAngleDoubleUp
+      } else {
+        return this.icons.faAngleDoubleDown
+      }
+    },
+
+    // GET
+    getCovidCases () {
+      this.$store.dispatch('covid-cases/getItems')
     }
   }
 }
 </script>
 <style lang="scss" scoped>
+.px-custom-1 {
+  padding-left:0.325rem;
+  padding-right:0.325rem
+}
 .text-white {
   color: white;
 }

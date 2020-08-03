@@ -71,6 +71,24 @@
           class="filter-data"
         >
           <li
+            :class="filter.gabungan_aktif?'filter-active':''"
+            @click="setFilter('gabungan_aktif')"
+          >
+            <div
+              class="legend-color cluster-gabungan-aktif"
+              style="margin-right: 0.5em;"
+            />Gabungan Kasus Aktif
+          </li>
+          <li
+            :class="filter.positif_total?'filter-active':''"
+            @click="setFilter('positif_total')"
+          >
+            <div
+              class="legend-color cluster-positif-total"
+              style="margin-right: 0.5em;"
+            />Terkonfirmasi
+          </li>
+          <li
             :class="filter.positif_aktif?'filter-active':''"
             @click="setFilter('positif_aktif')"
           >
@@ -193,6 +211,8 @@ export default {
       },
       isShowFilter: false,
       filter: {
+        gabungan_aktif: false,
+        positif_total: false,
         positif_aktif: true,
         positif_meninggal: false,
         positif_sembuh: false,
@@ -303,12 +323,13 @@ export default {
       let keyParentRegion = ''
       let nameParentRegion = ''
 
+      let activeRegion = 'kota'
       if (featureProperties.bps_kecamatan_kode !== undefined) {
-        this.activeRegion = 'kelurahan'
+        activeRegion = 'kelurahan'
         keyParentRegion = 'bps_kecamatan_kode'
         nameParentRegion = 'kemendagri_kecamatan_nama'
       } else if (featureProperties.bps_kabupaten_kode !== undefined) {
-        this.activeRegion = 'kecamatan'
+        activeRegion = 'kecamatan'
         keyParentRegion = 'bps_kabupaten_kode'
         nameParentRegion = 'kemendagri_kabupaten_nama'
       }
@@ -321,11 +342,11 @@ export default {
       // create polygon region
       this.createPolygonRegion()
 
-      this.getDataSebaranPolygon(this.activeRegion, this.activeDataCategory, this.activeParentCode)
+      this.getDataSebaranPolygon(activeRegion, this.activeDataCategory, this.activeParentCode)
 
       // update props region
       this.$emit('update:activeRegionId', this.activeParentCode)
-      this.$emit('update:activeRegionCategory', this.activeRegion)
+      this.$emit('update:activeRegionCategory', activeRegion)
       this.$emit('update:activeParentRegionName', this.capitalizeFirstLetter(featureProperties[nameParentRegion]))
     },
     createPolygonRegion () {
@@ -339,13 +360,13 @@ export default {
       let keyApiRegion = 'kode_kab'
       let nameRegion = 'kemendagri_kabupaten_nama'
 
-      if (this.activeRegion === 'kelurahan') {
+      if (this.activeRegionCategory === 'kelurahan') {
         keyParentRegion = 'bps_kecamatan_kode'
         keyRegion = 'bps_desa_kode'
         keyApiRegion = 'kode_kel'
         geojson = jsonKelurahan
         nameRegion = 'kemendagri_desa_nama'
-      } else if (this.activeRegion === 'kecamatan') {
+      } else if (this.activeRegionCategory === 'kecamatan') {
         keyParentRegion = 'bps_kabupaten_kode'
         keyRegion = 'bps_kecamatan_kode'
         keyApiRegion = 'kode_kec'
@@ -357,9 +378,9 @@ export default {
         geojson = jsonKota
       }
 
-      if (this.activeRegion !== 'kota') {
+      if (this.activeRegionCategory !== 'kota') {
         for (let i = 0; i < geojson.features.length; i++) {
-          if (geojson.features[i].properties[keyParentRegion] === this.activeParentCode) {
+          if (geojson.features[i].properties[keyParentRegion] === this.activeRegionId) {
             jsonRegion.features.push(geojson.features[i])
           }
         }
@@ -423,7 +444,7 @@ export default {
         const labels = ['<b>Jumlah Kasus: </b>', '<br>', '<ul style="display: flex; margin-top: 10px;overflow-x:auto">']
 
         let region = ''
-        switch (this.activeRegion) {
+        switch (this.activeRegionCategory) {
           case 'kecamatan': {
             region = 'Kecamatan'
             break
@@ -495,7 +516,7 @@ export default {
       this.filter[category] = !this.filter[category]
       this.activeDataCategory = category
       this.removeLayer()
-      this.getDataSebaranPolygon(this.activeRegion, this.activeDataCategory, this.activeParentCode)
+      this.getDataSebaranPolygon(this.activeRegionCategory, this.activeDataCategory, this.activeParentCode)
       this.createPolygonRegion()
       this.$emit('update:activeCaseCategory', category)
     },
@@ -671,6 +692,16 @@ export default {
     border-radius: 0.3rem;
   }
 
+  .cluster-gabungan-aktif {
+    /* box-shadow: 0 0 5px 0 rgb(45, 156, 219, 0.9); */
+    border: 2px solid rgb(194,83,2, 0.9);
+    background: rgb(194,83,2, 0.9);
+  }
+  .cluster-positif-total {
+    /* box-shadow: 0 0 5px 0 rgb(45, 156, 219, 0.9); */
+    border: 2px solid rgb(44,52,124, 0.9);
+    background: rgb(44,52,124, 0.9);
+  }
   .cluster-odp-proses {
     /* box-shadow: 0 0 5px 0 rgb(45, 156, 219, 0.9); */
     border: 2px solid rgb(45, 156, 219, 0.9);
