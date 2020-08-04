@@ -260,7 +260,10 @@ export default {
     }
   },
   watch: {
+    activeRegionId (newVal, oldVal) {
+    },
     dataSebaranPolygon (val) {
+      this.removeLayer()
       this.createPolygonRegion()
       this.createLegend()
     }
@@ -338,9 +341,6 @@ export default {
       // move map
       this.map.fitBounds(e.target.getBounds())
       this.map.flyTo(e.target.getCenter())
-
-      // create polygon region
-      this.createPolygonRegion()
 
       this.getDataSebaranPolygon(activeRegion, this.activeDataCategory, this.activeParentCode)
 
@@ -472,7 +472,7 @@ export default {
     },
     onLayerClicked (e) {
       this.changeRegionMap(e)
-      this.removeLayer()
+      // this.removeLayer()
     },
     onFullscreenChange (fullscreen) {
       this.fullscreen = fullscreen
@@ -496,8 +496,6 @@ export default {
       this.map.flyTo([-6.932694, 107.627449], 8)
 
       this.getDataSebaranPolygon(this.activeRegion, this.activeDataCategory)
-      this.removeLayer()
-      this.createPolygonRegion()
 
       // update props region
       this.$emit('update:activeRegionId', this.activeParentCode)
@@ -515,9 +513,9 @@ export default {
       }
       this.filter[category] = !this.filter[category]
       this.activeDataCategory = category
-      this.removeLayer()
+      // this.removeLayer()
       this.getDataSebaranPolygon(this.activeRegionCategory, this.activeDataCategory, this.activeParentCode)
-      this.createPolygonRegion()
+      // this.createPolygonRegion()
       this.$emit('update:activeCaseCategory', category)
     },
     setTitle (category) {
