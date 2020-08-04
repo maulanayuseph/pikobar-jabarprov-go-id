@@ -89,5 +89,8 @@ sw.*
 
 # Vim swap files
 *.swp
+
+# Firestore migration
 config.firebase.sdk.js
 config.firebase.service-account.js
+migration/export.json
