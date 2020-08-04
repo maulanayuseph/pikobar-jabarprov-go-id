@@ -393,6 +393,11 @@ export default {
         onEachFeature: (feature, layer, element) => {
           const dataSebaranPolygon = this.dataSebaranPolygon
           let jumlahKasus = 0
+          let jumlahKasusPositifMeninggal = 0
+          let jumlahKasusPositifSembuh = 0
+          let jumlahKasusPositifAktif = 0
+          let jumlahKasusPDPAktif = 0
+          let jumlahKasusODPAktif = 0
           let styleBatasWilayah = {
             fillOpacity: Number,
             fillColor: String,
@@ -406,6 +411,15 @@ export default {
             if (feature.properties[keyRegion] === dataSebaranPolygon.wilayah[i][keyApiRegion]) {
               color = dataSebaranPolygon.wilayah[i].color
               jumlahKasus = dataSebaranPolygon.wilayah[i].value
+              if (this.activeDataCategory === 'gabungan_aktif') {
+                jumlahKasusPositifAktif = dataSebaranPolygon.wilayah[i].positif_aktif
+                jumlahKasusPDPAktif = dataSebaranPolygon.wilayah[i].pdp_aktif
+                jumlahKasusODPAktif = dataSebaranPolygon.wilayah[i].odp_aktif
+              } else if (this.activeDataCategory === 'positif_total') {
+                jumlahKasusPositifAktif = dataSebaranPolygon.wilayah[i].positif_aktif
+                jumlahKasusPositifSembuh = dataSebaranPolygon.wilayah[i].positif_sembuh
+                jumlahKasusPositifMeninggal = dataSebaranPolygon.wilayah[i].positif_meninggal
+              }
               styleBatasWilayah = {
                 fillOpacity: 1,
                 fillColor: color,
@@ -429,8 +443,19 @@ export default {
 
           // add tooltip
           let popup = feature.properties[nameRegion]
-
-          popup += '<br>Jumlah Kasus : ' + jumlahKasus
+          if (this.activeDataCategory === 'gabungan_aktif') {
+            popup += '<br>Positif Aktif : ' + jumlahKasusPositifAktif
+            popup += '<br>PDP Proses : ' + jumlahKasusPDPAktif
+            popup += '<br>ODP Proses : ' + jumlahKasusODPAktif
+            popup += '<br>Gabungan Kasus Aktif : ' + jumlahKasus
+          } else if (this.activeDataCategory === 'positif_total') {
+            popup += '<br>Aktif : ' + jumlahKasusPositifAktif
+            popup += '<br>Sembuh : ' + jumlahKasusPositifSembuh
+            popup += '<br>Meninggal : ' + jumlahKasusPositifMeninggal
+            popup += '<br>Terkonfirmasi : ' + jumlahKasus
+          } else {
+            popup += '<br>Jumlah Kasus : ' + jumlahKasus
+          }
           layer.bindTooltip(popup)
         }
       })
@@ -520,6 +545,20 @@ export default {
     },
     setTitle (category) {
       switch (category) {
+        case 'gabungan_aktif': {
+          this.activeTitle = {
+            name: 'Gabungan Kasus Aktif',
+            className: 'cluster-gabungan-aktif'
+          }
+          break
+        }
+        case 'positif_total': {
+          this.activeTitle = {
+            name: 'Terkonfimasi',
+            className: 'cluster-positif-total'
+          }
+          break
+        }
         case 'positif_sembuh': {
           this.activeTitle = {
             name: 'Positif - Sembuh',
