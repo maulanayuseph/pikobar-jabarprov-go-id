@@ -2,9 +2,30 @@
   <div class="container mx-auto">
     <br>
     <header class="m-4 mb-8 md:m-8">
-      <h3 class="text-3xl text-gray-900 font-bold text-left leading-none" style="margin-bottom: 10px; ">
-        Sebaran Kasus Covid-19 di Jawa Barat
-      </h3>
+      <div class="flex flex-col lg:flex-row lg:items-stretch">
+        <div class="w-2/3">
+          <h3 class="text-3xl text-gray-900 font-bold text-left leading-none" style="margin-bottom: 10px; ">
+            Sebaran Kasus Covid-19 di Jawa Barat
+          </h3>
+        </div>
+        <div class="w-1/3">
+          <div class="flex flex-col lg:flex-row">
+            <div class="w-1/2 mr-2">
+              <v-select v-model="selectedKota" :options="optionsKota" :reduce="kota => kota.value" label="label" @input="setSelectedKota" />
+            </div>
+            <div class="w-1/2">
+              <v-select
+                v-model="selectedKecamatan"
+                :options="optionsKecamatan"
+                :reduce="kecamatan => kecamatan.value"
+                label="label"
+                :disabled="selectedKota === '32' ? true : false"
+                @input="setSelectedKecamatan"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
     </header>
     <section class="m-4 md:m-8">
       <div class="flex flex-col lg:flex-row lg:items-stretch">
@@ -112,7 +133,6 @@
 // import { mapState, mapActions } from 'vuex'
 // import { faChevronUp, faChevronDown, faSearch, faTimes } from '@fortawesome/free-solid-svg-icons'
 // import { analytics } from '~/lib/firebase'
-
 export default {
   components: {
     MapV3SebaranPolygon: () => import('~/components/MapV3SebaranPolygon'),
@@ -126,6 +146,7 @@ export default {
   },
   data () {
     return {
+      options: [{ code: 'CA', country: 'Canada' }],
       activeRegionId: '32',
       activeRegionCategory: 'kota',
       activeParentRegionName: 'Jawa Barat',
@@ -144,14 +165,89 @@ export default {
         kelurahan: {
           label: 'Kelurahan/Desa'
         }
-      }
+      },
+
+      optionsKota: [
+        { value: '32', label: 'JAWA BARAT' },
+        { value: '3201', label: 'KAB. BOGOR' },
+        { value: '3202', label: 'KAB. SUKABUMI' },
+        { value: '3203', label: 'KAB. CIANJUR' },
+        { value: '3204', label: 'KAB. BANDUNG' },
+        { value: '3205', label: 'KAB. GARUT' },
+        { value: '3206', label: 'KAB. TASIKMALAYA' },
+        { value: '3207', label: 'KAB. CIAMIS' },
+        { value: '3208', label: 'KAB. KUNINGAN' },
+        { value: '3209', label: 'KAB. CIREBON' },
+        { value: '3210', label: 'KAB. MAJALENGKA' },
+        { value: '3211', label: 'KAB. SUMEDANG' },
+        { value: '3212', label: 'KAB. INDRAMAYU' },
+        { value: '3213', label: 'KAB. SUBANG' },
+        { value: '3214', label: 'KAB. PURWAKARTA' },
+        { value: '3215', label: 'KAB. KARAWANG' },
+        { value: '3216', label: 'KAB. BEKASI' },
+        { value: '3217', label: 'KAB. BANDUNG BARAT' },
+        { value: '3218', label: 'KAB. PANGANDARAN' },
+        { value: '3271', label: 'KOTA BOGOR' },
+        { value: '3272', label: 'KOTA SUKABUMI' },
+        { value: '3273', label: 'KOTA BANDUNG' },
+        { value: '3274', label: 'KOTA CIREBON' },
+        { value: '3275', label: 'KOTA BEKASI' },
+        { value: '3276', label: 'KOTA DEPOK' },
+        { value: '3277', label: 'KOTA CIMAHI' },
+        { value: '3278', label: 'KOTA TASIKMALAYA' },
+        { value: '3279', label: 'KOTA BANJAR' }
+      ],
+      selectedKota: '32',
+
+      optionsKecamatan: [{
+        label: 'Pilih Kecamatan',
+        value: ''
+      }],
+      selectedKecamatan: ''
     }
   },
   computed: {
+    dataKecamatan () {
+      return this.$store.getters['data-kecamatan/itemsMap']
+    }
   },
   watch: {
+    activeRegionId (newVal, oldVal) {
+      if (this.activeRegionCategory === 'kelurahan') {
+        this.selectedKecamatan = parseInt(newVal)
+      } else if (this.activeRegionCategory === 'kecamatan') {
+        this.selectedKota = newVal
+        this.selectedKecamatan = ''
+        this.getDataKecamatan(newVal)
+      } else {
+        this.selectedKota = '32'
+        this.selectedKecamatan = ''
+      }
+    },
+    dataKecamatan (val) {
+      const optionsKecamatan = [{
+        label: 'Pilih Kecamatan',
+        value: ''
+      }]
+      val.forEach((element) => {
+        optionsKecamatan.push({
+          label: element.bps_kecamatan_nama,
+          value: element.bps_kecamatan_kode
+        })
+      })
+
+      this.optionsKecamatan = optionsKecamatan
+    }
   },
   mounted () {
+    this.$nextTick(() => {
+      Promise.all([
+        this.$store.dispatch('data-kasus-total/getItems')
+      ]).then(() => {
+      })
+    })
+
+    this.getDataKecamatan()
   },
   methods: {
     enableMap (type) {
@@ -160,6 +256,73 @@ export default {
     },
     enableTable (type) {
       this.activeTable = type
+    },
+    setSelectedKota (val) {
+      if (val === '32') {
+        this.getDataSebaranPolygon('kota', this.activeCaseCategory)
+        this.activeRegionId = val
+        this.activeRegionCategory = 'kota'
+      } else {
+        this.selectedKecamatan = ''
+        this.getDataKecamatan(val)
+
+        this.getDataSebaranPolygon('kecamatan', this.activeCaseCategory, val)
+
+        this.activeRegionId = val
+        this.activeRegionCategory = 'kecamatan'
+      }
+    },
+    setSelectedKecamatan (val) {
+      console.log(val)
+      const kodeKec = val.toString()
+      this.selectedKecamatan = ''
+      this.getDataSebaranPolygon('kelurahan', this.activeCaseCategory, kodeKec)
+
+      this.activeRegionId = kodeKec
+      this.activeRegionCategory = 'kelurahan'
+    },
+
+    // GET
+    getDataKecamatan (kodeKab = '') {
+      let where = {
+        bps_provinsi_kode: '32'
+      }
+
+      if (kodeKab) {
+        where = {
+          bps_kabupaten_kode: kodeKab
+        }
+      }
+
+      const params = {
+        where,
+        exclude: 'polygon_json'
+      }
+      this.$store.dispatch('data-kecamatan/getItems', params)
+    },
+    getDataSebaranPolygon (region, category, regionCode = '') {
+      let parentKeyCode = ''
+      let query = 'wilayah=' + region
+
+      if (category) {
+        query += '&category=' + category
+      }
+
+      switch (region) {
+        case 'kecamatan' : {
+          parentKeyCode = 'kode_kab'
+          break
+        }
+        case 'kelurahan' : {
+          parentKeyCode = 'kode_kec'
+          break
+        }
+        default : parentKeyCode = ''
+      }
+
+      query += `&${parentKeyCode}=${regionCode}`
+
+      this.$store.dispatch('data-sebaran-polygon/getItem', query)
     }
   },
   head () {
