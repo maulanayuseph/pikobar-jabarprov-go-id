@@ -17,7 +17,7 @@ export const mutations = {
 export const actions = {
   async getItems ({ commit }, params, options) {
     commit('setIsLoading', true)
-    const { data } = await axios.get('http://coredata.digitalservice.id/master/wilayah_merge_kemendagri_2017_bps_2018_kecamatan', {
+    const { data } = await axios.get('https://coredata.digitalservice.id/master/wilayah_merge_kemendagri_2017_bps_2018_kecamatan', {
       params
     })
     commit('setItems', data.data)
