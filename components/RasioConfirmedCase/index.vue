@@ -168,6 +168,12 @@ export default {
             color: '#eb5757'
           },
           1: {
+            color: '#eb5757'
+          },
+          2: {
+            color: '#eb5757'
+          },
+          3: {
             color: 'grey',
             lineWidth: 0,
             pointSize: 0,
