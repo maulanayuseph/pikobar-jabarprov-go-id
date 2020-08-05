@@ -127,7 +127,8 @@ export default {
     whitelistPatterns: [
       /(^|\.)fa-/, /-fa($|\.)/,
       /(^|\.)leaflet-/,
-      /(^|\.)vue-slider-/
+      /(^|\.)vue-slider-/,
+      /(^|\.)v-select/, /(^|\.)vs-/, /(^|\.)vs_/
     ]
   },
   /*
