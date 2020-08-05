@@ -47,6 +47,9 @@
       <div :class="activeTitle.className" class="title-map mt-2 ml-2 p-2 rounded">
         Peta Sebaran {{ activeTitle.name }}
       </div>
+      <div class="sub-title-map bg-gray-700 text-white absolute mt-2 ml-2 p-2 rounded">
+        Total Kasus : {{ totalCase.toLocaleString('id') }}
+      </div>
       <div class="filter-layer">
         <div class="text-right">
           <button
@@ -231,6 +234,7 @@ export default {
       },
       range: [],
       infolegend: '',
+      totalCase: 0,
 
       // json
       jsonKota,
@@ -350,6 +354,7 @@ export default {
       this.$emit('update:activeParentRegionName', this.capitalizeFirstLetter(featureProperties[nameParentRegion]))
     },
     createPolygonRegion () {
+      let totalCase = 0
       let jsonRegion = {
         type: 'FeatureCollection',
         features: []
@@ -415,10 +420,16 @@ export default {
                 jumlahKasusPositifAktif = dataSebaranPolygon.wilayah[i].positif_aktif
                 jumlahKasusPDPAktif = dataSebaranPolygon.wilayah[i].pdp_aktif
                 jumlahKasusODPAktif = dataSebaranPolygon.wilayah[i].odp_aktif
+
+                totalCase += jumlahKasusPositifAktif + jumlahKasusPDPAktif + jumlahKasusODPAktif
               } else if (this.activeDataCategory === 'positif_total') {
                 jumlahKasusPositifAktif = dataSebaranPolygon.wilayah[i].positif_aktif
                 jumlahKasusPositifSembuh = dataSebaranPolygon.wilayah[i].positif_sembuh
                 jumlahKasusPositifMeninggal = dataSebaranPolygon.wilayah[i].positif_meninggal
+
+                totalCase += jumlahKasusPositifAktif + jumlahKasusPositifSembuh + jumlahKasusPositifMeninggal
+              } else {
+                totalCase += dataSebaranPolygon.wilayah[i][this.activeDataCategory]
               }
               styleBatasWilayah = {
                 fillOpacity: 1,
@@ -430,6 +441,8 @@ export default {
               break
             }
           }
+
+          this.totalCase = totalCase
 
           // add layer to map
           layer.setStyle(styleBatasWilayah)
@@ -797,6 +810,10 @@ export default {
     position: absolute;
     top: 0;
     color: #ffffff;
+  }
+
+  .sub-title-map{
+    top: 50px;
   }
 
   .legend-color {

@@ -130,6 +130,7 @@
 </template>
 
 <script>
+import 'vue-select/dist/vue-select.css'
 // import { mapState, mapActions } from 'vuex'
 // import { faChevronUp, faChevronDown, faSearch, faTimes } from '@fortawesome/free-solid-svg-icons'
 // import { analytics } from '~/lib/firebase'
