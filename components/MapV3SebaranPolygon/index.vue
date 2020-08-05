@@ -354,6 +354,8 @@ export default {
       this.$emit('update:activeParentRegionName', this.capitalizeFirstLetter(featureProperties[nameParentRegion]))
     },
     createPolygonRegion () {
+      const self = this
+      const dataSebaranPolygon = this.dataSebaranPolygon
       let totalCase = 0
       let jsonRegion = {
         type: 'FeatureCollection',
@@ -393,10 +395,17 @@ export default {
         jsonRegion = geojson
       }
 
-      const self = this
+      // total case kota belum teridentifikasi
+      if (this.activeDataCategory === 'gabungan_aktif') {
+        totalCase += dataSebaranPolygon.wilayah[0].positif_aktif + dataSebaranPolygon.wilayah[0].pdp_aktif + dataSebaranPolygon.wilayah[0].odp_aktif
+      } else if (this.activeDataCategory === 'positif_total') {
+        totalCase += dataSebaranPolygon.wilayah[0].positif_aktif + dataSebaranPolygon.wilayah[0].positif_sembuh + dataSebaranPolygon.wilayah[0].positif_meninggal
+      } else {
+        totalCase += dataSebaranPolygon.wilayah[0][this.activeDataCategory]
+      }
+
       this.$L.geoJSON(jsonRegion, {
         onEachFeature: (feature, layer, element) => {
-          const dataSebaranPolygon = this.dataSebaranPolygon
           let jumlahKasus = 0
           let jumlahKasusPositifMeninggal = 0
           let jumlahKasusPositifSembuh = 0
