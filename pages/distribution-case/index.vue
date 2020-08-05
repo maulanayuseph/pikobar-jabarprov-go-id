@@ -11,11 +11,19 @@
         <div class="w-1/3">
           <div class="flex flex-col lg:flex-row">
             <div class="w-1/2 mr-2">
-              <v-select v-model="selectedKota" :options="optionsKota" :reduce="kota => kota.value" label="label" @input="setSelectedKota" />
+              <v-select
+                v-model="selectedKota"
+                :clearable="false"
+                :options="optionsKota"
+                :reduce="kota => kota.value"
+                label="label"
+                @input="setSelectedKota"
+              />
             </div>
             <div class="w-1/2">
               <v-select
                 v-model="selectedKecamatan"
+                :clearable="false"
                 :options="optionsKecamatan"
                 :reduce="kecamatan => kecamatan.value"
                 label="label"
@@ -273,13 +281,18 @@ export default {
       }
     },
     setSelectedKecamatan (val) {
-      console.log(val)
       const kodeKec = val.toString()
-      this.selectedKecamatan = ''
-      this.getDataSebaranPolygon('kelurahan', this.activeCaseCategory, kodeKec)
+      if (val === '') {
+        this.getDataKecamatan(this.selectedKota)
+        this.getDataSebaranPolygon('kecamatan', this.activeCaseCategory, this.selectedKota)
+        this.activeRegionId = this.selectedKota
+        this.activeRegionCategory = 'kecamatan'
+      } else {
+        this.getDataSebaranPolygon('kelurahan', this.activeCaseCategory, kodeKec)
 
-      this.activeRegionId = kodeKec
-      this.activeRegionCategory = 'kelurahan'
+        this.activeRegionId = kodeKec
+        this.activeRegionCategory = 'kelurahan'
+      }
     },
 
     // GET
