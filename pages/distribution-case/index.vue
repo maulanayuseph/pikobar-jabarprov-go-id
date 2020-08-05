@@ -357,6 +357,8 @@ export default {
 }
 </style>
 <style>
+  @import "vue-select/dist/vue-select.css";
+
   /* @import "leaflet-geosearch/assets/css/leaflet.css"; */
 
 </style>

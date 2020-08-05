@@ -72,8 +72,7 @@ export default {
   ** Global CSS
   */
   css: [
-    '~/assets/stylesheet/main.scss',
-    'vue-select/dist/vue-select.css'
+    '~/assets/stylesheet/main.scss'
   ],
   /*
   ** Plugins to load before mounting the App
