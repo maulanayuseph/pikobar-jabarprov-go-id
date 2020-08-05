@@ -1,135 +1,139 @@
 <template>
-  <div
-    class="rdt-main text-white overflow-hidden rounded-lg shadow-md p-5"
-  >
-    <div :class="isLoading ? 'block' : 'hidden'">
-      <ContentLoader
-        primaryColor="#70aa67"
-        secondaryColor="rgba(255,255,255,1)"
-        height="80"
-        width="500"
-      >
-        <rect
-          x="0"
-          y="0"
-          rx="3"
-          ry="3"
-          width="30%"
-          height="6"
-        />
-        <rect
-          x="0"
-          y="15"
-          rx="3"
-          ry="3"
-          width="50%"
-          height="6"
-        />
-        <rect
-          x="0"
-          y="25"
-          rx="3"
-          ry="3"
-          width="50%"
-          height="6"
-        />
-        <rect
-          x="0"
-          y="35"
-          rx="3"
-          ry="3"
-          width="50%"
-          height="6"
-        />
-        <rect
-          x="0"
-          y="50"
-          rx="3"
-          ry="3"
-          width="40%"
-          height="6"
-        />
-        <rect
-          x="0"
-          y="70"
-          rx="3"
-          ry="3"
-          width="30%"
-          height="6"
-        />
-      </ContentLoader>
-    </div>
-    <div :class="!isLoading ? 'block' : 'hidden'">
-      <b class="text-lg">RDT (Rapid Diagnostic Test)</b>
-      <div class="flex flex-col md:flex-row mb-2 mt-2">
-        <div class="w-full md:w-3/6 lg:w-3/6 h-auto text-sm mr-10 mt-2">
+  <div class="flex-row lg:flex xl:flex">
+    <div class="w-full xl:w-3/4 rdt-main text-white overflow-hidden rounded-lg shadow-md p-5 mr-5 mt-5">
+      <div :class="isLoading ? 'block' : 'hidden'">
+        <ContentLoader
+          primaryColor="#70aa67"
+          secondaryColor="rgba(255,255,255,1)"
+          height="80"
+          width="500"
+        >
+          <rect
+            x="0"
+            y="0"
+            rx="3"
+            ry="3"
+            width="30%"
+            height="6"
+          />
+          <rect
+            x="0"
+            y="15"
+            rx="3"
+            ry="3"
+            width="50%"
+            height="6"
+          />
+          <rect
+            x="0"
+            y="25"
+            rx="3"
+            ry="3"
+            width="50%"
+            height="6"
+          />
+          <rect
+            x="0"
+            y="35"
+            rx="3"
+            ry="3"
+            width="50%"
+            height="6"
+          />
+          <rect
+            x="0"
+            y="50"
+            rx="3"
+            ry="3"
+            width="40%"
+            height="6"
+          />
+          <rect
+            x="0"
+            y="70"
+            rx="3"
+            ry="3"
+            width="30%"
+            height="6"
+          />
+        </ContentLoader>
+      </div>
+      <div :class="!isLoading ? 'block' : 'hidden'">
+        <b class="text-lg">RDT (Rapid Diagnostic Test)</b>
+        <div class="w-full h-auto text-sm mr-10 mt-2">
           Rapid Diagnostic Test (RDT) atau test diagnostik cepat merupakan test yang digunakan sebagai skrining medis awal untuk mendeteksi COVID-19. Pada hasil RDT yang Reaktif akan dilakukan pemeriksaan konfirmasi lebih lanjut dengan metode Polymerase Chain Reaction (PCR).
-          <span>
-            <br><br>
-          </span>
-          <span>
-            <b>
-              Jika Anda ingin mengikuti Tes Masif COVID-19,
-              daftarkan diri Anda di sini <br><a class="text-sm bg-red-100 py-0 px-1 rounded text-green-500 align-middle" href="https://pikobar.jabarprov.go.id/temp/disclaimer/rdt/?uid=_userUID">Daftar RDT</a>
-              <br><br>
-            </b>
-          </span>
+        </div>
+        <div class="w-full h-auto text-sm mr-10 mt-5 row flex-row lg:flex xl:flex">
+          <div class="w-full md:w-1/2 lg:w-1/4 pl-2 h-auto text-left">
+            <div class="text-4xl">
+              {{ Number(data.rdt.total).toLocaleString('id-ID') }}
+            </div>
+            <div class="text-sm">
+              Jumlah RDT
+              <div class="tooltip pl-1">
+                &#9432;
+                <span class="tooltiptext text-xs">Jumlah Rapid Diagnostic Test (RDT) yang telah dilakukan</span>
+              </div>
+            </div>
+          </div>
+          <div class="w-full md:w-1/2 lg:w-1/4 pl-2 h-auto text-left">
+            <div class="h-20 pt-3">
+              <div class="mb-1">
+                <span class="text-2xl">{{ Number(data.rdt.positif).toLocaleString('id-ID') }}</span>
+                <span class="text-sm">({{ Number(data.rdt_persentase_by_total.positif.toFixed(2)).toLocaleString('id-ID') }}%)</span>
+              </div>
+              <div class="text-sm">
+                Reaktif
+              </div>
+            </div>
+          </div>
+          <div class="w-full md:w-1/2 lg:w-1/4 pl-2 h-auto text-left">
+            <div class="h-20 pt-3">
+              <div class="mb-1">
+                <span class="text-2xl">{{ Number(data.rdt.negatif).toLocaleString('id-ID') }}</span>
+                <span class="text-sm">({{ Number(data.rdt_persentase_by_total.negatif.toFixed(2)).toLocaleString('id-ID') }}%)</span>
+              </div>
+              <div class="text-sm">
+                Non Reaktif
+              </div>
+            </div>
+          </div>
+          <div class="w-full md:w-1/2 lg:w-1/4 pl-2 h-auto text-left">
+            <div class="h-20 pt-3">
+              <div class="mb-1">
+                <span class="text-2xl">{{ Number(data.rdt.invalid).toLocaleString('id-ID') }}</span>
+                <span class="text-sm">({{ Number(data.rdt_persentase_by_total.invalid.toFixed(2)).toLocaleString('id-ID') }}%)</span>
+              </div>
+              <div class="text-sm">
+                Invalid
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="mt-5 text-sm">
           <span>
             Update Terakhir: {{ date_update }}
           </span>
         </div>
-        <div class="w-full md:w-3/6 lg:w-3/6 h-auto text-sm mr-10 row">
-          <div class="flex flex-col md:flex-row h-auto text-left">
-            <div class="w-full md:w-1/3 lg:w-1/3 pl-2 h-auto text-left">
-              <div class="text-4xl">
-                {{ Number(data.rdt.total).toLocaleString('id-ID') }}
-              </div>
-              <div class="text-sm">
-                Jumlah RDT
-                <div class="tooltip pl-1">
-                  &#9432;
-                  <span class="tooltiptext text-xs">Jumlah Rapid Diagnostic Test (RDT) yang telah dilakukan</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="flex flex-col md:flex-row h-auto text-left">
-            <div class="w-full md:w-1/3 lg:w-1/3 pl-2 h-auto text-left">
-              <div class="h-20 pt-3">
-                <div class="mb-1">
-                  <span class="text-2xl">{{ Number(data.rdt.positif).toLocaleString('id-ID') }}</span>
-                  <span class="text-sm">({{ Number(data.rdt_persentase_by_total.positif.toFixed(2)).toLocaleString('id-ID') }}%)</span>
-                </div>
-                <div class="text-sm">
-                  Reaktif
-                </div>
-              </div>
-            </div>
-            <div class="w-full md:w-1/3 lg:w-1/3 pl-2 h-auto text-left">
-              <div class="h-20 pt-3">
-                <div class="mb-1">
-                  <span class="text-2xl">{{ Number(data.rdt.negatif).toLocaleString('id-ID') }}</span>
-                  <span class="text-sm">({{ Number(data.rdt_persentase_by_total.negatif.toFixed(2)).toLocaleString('id-ID') }}%)</span>
-                </div>
-                <div class="text-sm">
-                  Non Reaktif
-                </div>
-              </div>
-            </div>
-            <div class="w-full md:w-1/3 lg:w-1/3 pl-2 h-auto text-left">
-              <div class="h-20 pt-3">
-                <div class="mb-1">
-                  <span class="text-2xl">{{ Number(data.rdt.invalid).toLocaleString('id-ID') }}</span>
-                  <span class="text-sm">({{ Number(data.rdt_persentase_by_total.invalid.toFixed(2)).toLocaleString('id-ID') }}%)</span>
-                </div>
-                <div class="text-sm">
-                  Invalid
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
+    </div>
+    <div class="w-full xl:w-1/4 bg-white overflow-hidden rounded-lg shadow-md flex-row mt-5">
+      <div class="float-left py-5 px-5" style="position: absolute;">
+        <div class="text-xl font-bold">
+          Jika Anda ingin mengikuti <br>
+          Tes Masif Covid-19, <br>
+          daftarkan diri Anda di sini
+        </div>
+        <br><br><br><br>
+        <a
+          class="cursor-pointer px-2 py-2 text-center rounded-md bg-brand-green hover:bg-brand-green-light text-white"
+          style="align-items: flex-end;"
+          href="https://pikobar.jabarprov.go.id/temp/disclaimer/rdt/?uid=_userUID"
+        >
+          Daftar Tes Masif
+        </a>
+      </div>
+      <img class="float-right lg:mt-10" src="/img/illustrasi-tes-masif.png" style="align-items: flex-end;">
     </div>
   </div>
 </template>
