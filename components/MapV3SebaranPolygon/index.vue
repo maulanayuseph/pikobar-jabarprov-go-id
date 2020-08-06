@@ -47,6 +47,9 @@
       <div :class="activeTitle.className" class="title-map mt-2 ml-2 p-2 rounded">
         Peta Sebaran {{ activeTitle.name }}
       </div>
+      <div class="sub-title-map bg-gray-700 text-white absolute mt-2 ml-2 p-2 rounded">
+        Total Kasus : {{ totalCase.toLocaleString('id') }}
+      </div>
       <div class="filter-layer">
         <div class="text-right">
           <button
@@ -231,6 +234,7 @@ export default {
       },
       range: [],
       infolegend: '',
+      totalCase: 0,
 
       // json
       jsonKota,
@@ -260,7 +264,10 @@ export default {
     }
   },
   watch: {
+    activeRegionId (newVal, oldVal) {
+    },
     dataSebaranPolygon (val) {
+      this.removeLayer()
       this.createPolygonRegion()
       this.createLegend()
     }
@@ -339,9 +346,6 @@ export default {
       this.map.fitBounds(e.target.getBounds())
       this.map.flyTo(e.target.getCenter())
 
-      // create polygon region
-      this.createPolygonRegion()
-
       this.getDataSebaranPolygon(activeRegion, this.activeDataCategory, this.activeParentCode)
 
       // update props region
@@ -350,6 +354,9 @@ export default {
       this.$emit('update:activeParentRegionName', this.capitalizeFirstLetter(featureProperties[nameParentRegion]))
     },
     createPolygonRegion () {
+      const self = this
+      const dataSebaranPolygon = this.dataSebaranPolygon
+      let totalCase = 0
       let jsonRegion = {
         type: 'FeatureCollection',
         features: []
@@ -388,11 +395,23 @@ export default {
         jsonRegion = geojson
       }
 
-      const self = this
+      // total case kota belum teridentifikasi
+      if (this.activeDataCategory === 'gabungan_aktif') {
+        totalCase += dataSebaranPolygon.wilayah[0].positif_aktif + dataSebaranPolygon.wilayah[0].pdp_aktif + dataSebaranPolygon.wilayah[0].odp_aktif
+      } else if (this.activeDataCategory === 'positif_total') {
+        totalCase += dataSebaranPolygon.wilayah[0].positif_aktif + dataSebaranPolygon.wilayah[0].positif_sembuh + dataSebaranPolygon.wilayah[0].positif_meninggal
+      } else {
+        totalCase += dataSebaranPolygon.wilayah[0][this.activeDataCategory]
+      }
+
       this.$L.geoJSON(jsonRegion, {
         onEachFeature: (feature, layer, element) => {
-          const dataSebaranPolygon = this.dataSebaranPolygon
           let jumlahKasus = 0
+          let jumlahKasusPositifMeninggal = 0
+          let jumlahKasusPositifSembuh = 0
+          let jumlahKasusPositifAktif = 0
+          let jumlahKasusPDPAktif = 0
+          let jumlahKasusODPAktif = 0
           let styleBatasWilayah = {
             fillOpacity: Number,
             fillColor: String,
@@ -406,6 +425,21 @@ export default {
             if (feature.properties[keyRegion] === dataSebaranPolygon.wilayah[i][keyApiRegion]) {
               color = dataSebaranPolygon.wilayah[i].color
               jumlahKasus = dataSebaranPolygon.wilayah[i].value
+              if (this.activeDataCategory === 'gabungan_aktif') {
+                jumlahKasusPositifAktif = dataSebaranPolygon.wilayah[i].positif_aktif
+                jumlahKasusPDPAktif = dataSebaranPolygon.wilayah[i].pdp_aktif
+                jumlahKasusODPAktif = dataSebaranPolygon.wilayah[i].odp_aktif
+
+                totalCase += jumlahKasusPositifAktif + jumlahKasusPDPAktif + jumlahKasusODPAktif
+              } else if (this.activeDataCategory === 'positif_total') {
+                jumlahKasusPositifAktif = dataSebaranPolygon.wilayah[i].positif_aktif
+                jumlahKasusPositifSembuh = dataSebaranPolygon.wilayah[i].positif_sembuh
+                jumlahKasusPositifMeninggal = dataSebaranPolygon.wilayah[i].positif_meninggal
+
+                totalCase += jumlahKasusPositifAktif + jumlahKasusPositifSembuh + jumlahKasusPositifMeninggal
+              } else {
+                totalCase += dataSebaranPolygon.wilayah[i][this.activeDataCategory]
+              }
               styleBatasWilayah = {
                 fillOpacity: 1,
                 fillColor: color,
@@ -416,6 +450,8 @@ export default {
               break
             }
           }
+
+          this.totalCase = totalCase
 
           // add layer to map
           layer.setStyle(styleBatasWilayah)
@@ -429,8 +465,19 @@ export default {
 
           // add tooltip
           let popup = feature.properties[nameRegion]
-
-          popup += '<br>Jumlah Kasus : ' + jumlahKasus
+          if (this.activeDataCategory === 'gabungan_aktif') {
+            popup += '<br>Positif Aktif : ' + jumlahKasusPositifAktif
+            popup += '<br>PDP Proses : ' + jumlahKasusPDPAktif
+            popup += '<br>ODP Proses : ' + jumlahKasusODPAktif
+            popup += '<br>Gabungan Kasus Aktif : ' + jumlahKasus
+          } else if (this.activeDataCategory === 'positif_total') {
+            popup += '<br>Aktif : ' + jumlahKasusPositifAktif
+            popup += '<br>Sembuh : ' + jumlahKasusPositifSembuh
+            popup += '<br>Meninggal : ' + jumlahKasusPositifMeninggal
+            popup += '<br>Terkonfirmasi : ' + jumlahKasus
+          } else {
+            popup += '<br>Jumlah Kasus : ' + jumlahKasus
+          }
           layer.bindTooltip(popup)
         }
       })
@@ -472,7 +519,7 @@ export default {
     },
     onLayerClicked (e) {
       this.changeRegionMap(e)
-      this.removeLayer()
+      // this.removeLayer()
     },
     onFullscreenChange (fullscreen) {
       this.fullscreen = fullscreen
@@ -496,8 +543,6 @@ export default {
       this.map.flyTo([-6.932694, 107.627449], 8)
 
       this.getDataSebaranPolygon(this.activeRegion, this.activeDataCategory)
-      this.removeLayer()
-      this.createPolygonRegion()
 
       // update props region
       this.$emit('update:activeRegionId', this.activeParentCode)
@@ -515,13 +560,27 @@ export default {
       }
       this.filter[category] = !this.filter[category]
       this.activeDataCategory = category
-      this.removeLayer()
+      // this.removeLayer()
       this.getDataSebaranPolygon(this.activeRegionCategory, this.activeDataCategory, this.activeParentCode)
-      this.createPolygonRegion()
+      // this.createPolygonRegion()
       this.$emit('update:activeCaseCategory', category)
     },
     setTitle (category) {
       switch (category) {
+        case 'gabungan_aktif': {
+          this.activeTitle = {
+            name: 'Gabungan Kasus Aktif',
+            className: 'cluster-gabungan-aktif'
+          }
+          break
+        }
+        case 'positif_total': {
+          this.activeTitle = {
+            name: 'Terkonfimasi',
+            className: 'cluster-positif-total'
+          }
+          break
+        }
         case 'positif_sembuh': {
           this.activeTitle = {
             name: 'Positif - Sembuh',
@@ -760,6 +819,10 @@ export default {
     position: absolute;
     top: 0;
     color: #ffffff;
+  }
+
+  .sub-title-map{
+    top: 50px;
   }
 
   .legend-color {

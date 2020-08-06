@@ -217,7 +217,7 @@
           </tr>
           <tr style="line-height: 51px;">
             <th class="table-col border-b border-solid px-2 py-1 bg-white">
-              <b>TOTAL SELURUH KOTA/KAB</b>
+              <b>TOTAL KESELURUHAN</b>
             </th>
             <th class="table-col border-b border-solid px-2 py-1 textright bg-white">
               <b>{{ total.suspectNow.toLocaleString('id') }}</b>
