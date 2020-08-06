@@ -87,6 +87,7 @@ export default {
     { src: '~/plugins/vue-carousel.js', mode: 'client' },
     { src: '~/plugins/vue-rangedate-picker', mode: 'client' },
     { src: '~/plugins/vue-fullscreen', mode: 'client' },
+    { src: '~/plugins/vue-select', mode: 'client' },
     { src: '~/plugins/custom', mode: 'client' }
   ],
   /*
@@ -126,7 +127,8 @@ export default {
     whitelistPatterns: [
       /(^|\.)fa-/, /-fa($|\.)/,
       /(^|\.)leaflet-/,
-      /(^|\.)vue-slider-/
+      /(^|\.)vue-slider-/,
+      /(^|\.)v-select/, /(^|\.)vs-/, /(^|\.)vs_/
     ]
   },
   /*
