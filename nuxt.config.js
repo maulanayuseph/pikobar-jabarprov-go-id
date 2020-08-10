@@ -87,7 +87,7 @@ export default {
     { src: '~/plugins/vue-carousel.js', mode: 'client' },
     { src: '~/plugins/vue-rangedate-picker', mode: 'client' },
     { src: '~/plugins/vue-fullscreen', mode: 'client' },
-    { src: '~/plugins/vue-select', mode: 'client' },
+    { src: '~/plugins/vue-multiselect', mode: 'client' },
     { src: '~/plugins/custom', mode: 'client' }
   ],
   /*
@@ -128,7 +128,7 @@ export default {
       /(^|\.)fa-/, /-fa($|\.)/,
       /(^|\.)leaflet-/,
       /(^|\.)vue-slider-/,
-      /(^|\.)v-select/, /(^|\.)vs-/, /(^|\.)vs_/
+      /(^|\.)multiselect_/
     ]
   },
   /*

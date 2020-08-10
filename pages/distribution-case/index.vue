@@ -3,31 +3,35 @@
     <br>
     <header class="m-4 mb-8 md:m-8">
       <div class="flex flex-col lg:flex-row lg:items-stretch">
-        <div class="w-2/3">
+        <div class="lg:w-2/3 md:auto sm:w-auto">
           <h3 class="text-3xl text-gray-900 font-bold text-left leading-none" style="margin-bottom: 10px; ">
             Sebaran Kasus Covid-19 di Jawa Barat
           </h3>
         </div>
-        <div class="w-1/3">
-          <div class="flex flex-col lg:flex-row">
-            <div class="w-1/2 mr-2">
-              <v-select
+        <div class="lg:w-1/3 md:auto sm:w-auto">
+          <div class="flex">
+            <div class="w-full mr-2">
+              <multiselect
                 v-model="selectedKota"
-                :clearable="false"
                 :options="optionsKota"
-                :reduce="kota => kota.value"
+                track-by="value"
                 label="label"
+                select-label=""
+                deselect-label=""
+                selected-label=""
                 @input="setSelectedKota"
               />
             </div>
-            <div class="w-1/2">
-              <v-select
+            <div class="w-full">
+              <multiselect
                 v-model="selectedKecamatan"
-                :clearable="false"
                 :options="optionsKecamatan"
-                :reduce="kecamatan => kecamatan.value"
+                track-by="value"
                 label="label"
-                :disabled="selectedKota === '32' ? true : false"
+                select-label=""
+                deselect-label=""
+                selected-label=""
+                :disabled="selectedKota.value === '32' ? true : false"
                 @input="setSelectedKecamatan"
               />
             </div>
@@ -154,7 +158,6 @@ export default {
   },
   data () {
     return {
-      options: [{ code: 'CA', country: 'Canada' }],
       activeRegionId: '32',
       activeRegionCategory: 'kota',
       activeParentRegionName: 'Jawa Barat',
@@ -205,13 +208,10 @@ export default {
         { value: '3278', label: 'KOTA TASIKMALAYA' },
         { value: '3279', label: 'KOTA BANJAR' }
       ],
-      selectedKota: '32',
+      selectedKota: { value: '32', label: 'JAWA BARAT' },
 
-      optionsKecamatan: [{
-        label: 'Pilih Kecamatan',
-        value: ''
-      }],
-      selectedKecamatan: ''
+      optionsKecamatan: [{ label: 'Pilih Kecamatan', value: '' }],
+      selectedKecamatan: { label: 'Pilih Kecamatan', value: '' }
     }
   },
   computed: {
@@ -222,14 +222,14 @@ export default {
   watch: {
     activeRegionId (newVal, oldVal) {
       if (this.activeRegionCategory === 'kelurahan') {
-        this.selectedKecamatan = parseInt(newVal)
+        this.selectedKecamatan = this.optionsKecamatan.find(x => x.value === parseInt(newVal))
       } else if (this.activeRegionCategory === 'kecamatan') {
-        this.selectedKota = newVal
-        this.selectedKecamatan = ''
+        this.selectedKota = this.optionsKota.find(x => x.value === newVal)
+        this.selectedKecamatan = { label: 'Pilih Kecamatan', value: '' }
         this.getDataKecamatan(newVal)
       } else {
-        this.selectedKota = '32'
-        this.selectedKecamatan = ''
+        this.selectedKota = { value: '32', label: 'JAWA BARAT' }
+        this.selectedKecamatan = { label: 'Pilih Kecamatan', value: '' }
       }
     },
     dataKecamatan (val) {
@@ -265,7 +265,8 @@ export default {
     enableTable (type) {
       this.activeTable = type
     },
-    setSelectedKota (val) {
+    setSelectedKota () {
+      const val = this.selectedKota.value
       if (val === '32') {
         this.getDataSebaranPolygon('kota', this.activeCaseCategory)
         this.activeRegionId = val
@@ -280,16 +281,16 @@ export default {
         this.activeRegionCategory = 'kecamatan'
       }
     },
-    setSelectedKecamatan (val) {
+    setSelectedKecamatan () {
+      const val = this.selectedKecamatan.value
       const kodeKec = val.toString()
       if (val === '') {
-        this.getDataKecamatan(this.selectedKota)
-        this.getDataSebaranPolygon('kecamatan', this.activeCaseCategory, this.selectedKota)
-        this.activeRegionId = this.selectedKota
+        this.getDataKecamatan(this.selectedKota.value)
+        this.getDataSebaranPolygon('kecamatan', this.activeCaseCategory, this.selectedKota.value)
+        this.activeRegionId = this.selectedKota.value
         this.activeRegionCategory = 'kecamatan'
       } else {
         this.getDataSebaranPolygon('kelurahan', this.activeCaseCategory, kodeKec)
-
         this.activeRegionId = kodeKec
         this.activeRegionCategory = 'kelurahan'
       }
@@ -360,6 +361,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+$vs-dropdown-z-index: -1 !default;
 .button-selector {
   @apply px-6 py-2 rounded-md border border-solid border-brand-green
   text-brand-green bg-white;
@@ -368,10 +370,9 @@ export default {
     @apply text-white bg-brand-green;
   }
 }
-</style>
-<style>
-  @import "vue-select/dist/vue-select.css";
 
-  /* @import "leaflet-geosearch/assets/css/leaflet.css"; */
-
+  .style-chooser .vs__dropdown-menu {
+    z-index: -10000 !important;
+  }
 </style>
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
