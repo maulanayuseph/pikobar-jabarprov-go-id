@@ -269,6 +269,7 @@ export default {
     dataSebaranPolygon (val) {
       this.removeLayer()
       this.createPolygonRegion()
+      this.countTotalCase()
       this.createLegend()
     }
   },
@@ -356,7 +357,6 @@ export default {
     createPolygonRegion () {
       const self = this
       const dataSebaranPolygon = this.dataSebaranPolygon
-      let totalCase = 0
       let jsonRegion = {
         type: 'FeatureCollection',
         features: []
@@ -395,15 +395,6 @@ export default {
         jsonRegion = geojson
       }
 
-      // total case kota belum teridentifikasi
-      if (this.activeDataCategory === 'gabungan_aktif') {
-        totalCase += dataSebaranPolygon.wilayah[0].positif_aktif + dataSebaranPolygon.wilayah[0].pdp_aktif + dataSebaranPolygon.wilayah[0].odp_aktif
-      } else if (this.activeDataCategory === 'positif_total') {
-        totalCase += dataSebaranPolygon.wilayah[0].positif_aktif + dataSebaranPolygon.wilayah[0].positif_sembuh + dataSebaranPolygon.wilayah[0].positif_meninggal
-      } else if (parseInt(dataSebaranPolygon.wilayah[0][keyApiRegion]) === 0) {
-        totalCase += dataSebaranPolygon.wilayah[0][this.activeDataCategory]
-      }
-
       this.$L.geoJSON(jsonRegion, {
         onEachFeature: (feature, layer, element) => {
           let jumlahKasus = 0
@@ -429,16 +420,10 @@ export default {
                 jumlahKasusPositifAktif = dataSebaranPolygon.wilayah[i].positif_aktif
                 jumlahKasusPDPAktif = dataSebaranPolygon.wilayah[i].pdp_aktif
                 jumlahKasusODPAktif = dataSebaranPolygon.wilayah[i].odp_aktif
-
-                totalCase += jumlahKasusPositifAktif + jumlahKasusPDPAktif + jumlahKasusODPAktif
               } else if (this.activeDataCategory === 'positif_total') {
                 jumlahKasusPositifAktif = dataSebaranPolygon.wilayah[i].positif_aktif
                 jumlahKasusPositifSembuh = dataSebaranPolygon.wilayah[i].positif_sembuh
                 jumlahKasusPositifMeninggal = dataSebaranPolygon.wilayah[i].positif_meninggal
-
-                totalCase += jumlahKasusPositifAktif + jumlahKasusPositifSembuh + jumlahKasusPositifMeninggal
-              } else {
-                totalCase += dataSebaranPolygon.wilayah[i][this.activeDataCategory]
               }
               styleBatasWilayah = {
                 fillOpacity: 1,
@@ -450,8 +435,6 @@ export default {
               break
             }
           }
-
-          this.totalCase = totalCase
 
           // add layer to map
           layer.setStyle(styleBatasWilayah)
@@ -516,6 +499,34 @@ export default {
         labels.push('</ul>')
         this.infolegend = labels.join('')
       }
+    },
+    countTotalCase () {
+      const dataSebaranPolygon = this.dataSebaranPolygon
+      let totalCase = 0
+      let jumlahKasusPositifMeninggal = 0
+      let jumlahKasusPositifSembuh = 0
+      let jumlahKasusPositifAktif = 0
+      let jumlahKasusPDPAktif = 0
+      let jumlahKasusODPAktif = 0
+      for (let i = 0; i < dataSebaranPolygon.wilayah.length; i++) {
+        if (this.activeDataCategory === 'gabungan_aktif') {
+          jumlahKasusPositifAktif = dataSebaranPolygon.wilayah[i].positif_aktif
+          jumlahKasusPDPAktif = dataSebaranPolygon.wilayah[i].pdp_aktif
+          jumlahKasusODPAktif = dataSebaranPolygon.wilayah[i].odp_aktif
+
+          totalCase += jumlahKasusPositifAktif + jumlahKasusPDPAktif + jumlahKasusODPAktif
+        } else if (this.activeDataCategory === 'positif_total') {
+          jumlahKasusPositifAktif = dataSebaranPolygon.wilayah[i].positif_aktif
+          jumlahKasusPositifSembuh = dataSebaranPolygon.wilayah[i].positif_sembuh
+          jumlahKasusPositifMeninggal = dataSebaranPolygon.wilayah[i].positif_meninggal
+
+          totalCase += jumlahKasusPositifAktif + jumlahKasusPositifSembuh + jumlahKasusPositifMeninggal
+        } else {
+          totalCase += dataSebaranPolygon.wilayah[i][this.activeDataCategory]
+        }
+      }
+
+      this.totalCase = totalCase
     },
     onLayerClicked (e) {
       this.changeRegionMap(e)
