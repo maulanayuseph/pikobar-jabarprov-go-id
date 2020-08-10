@@ -400,7 +400,7 @@ export default {
         totalCase += dataSebaranPolygon.wilayah[0].positif_aktif + dataSebaranPolygon.wilayah[0].pdp_aktif + dataSebaranPolygon.wilayah[0].odp_aktif
       } else if (this.activeDataCategory === 'positif_total') {
         totalCase += dataSebaranPolygon.wilayah[0].positif_aktif + dataSebaranPolygon.wilayah[0].positif_sembuh + dataSebaranPolygon.wilayah[0].positif_meninggal
-      } else {
+      } else if (parseInt(dataSebaranPolygon.wilayah[0].kode_kab) === 0) {
         totalCase += dataSebaranPolygon.wilayah[0][this.activeDataCategory]
       }
 
