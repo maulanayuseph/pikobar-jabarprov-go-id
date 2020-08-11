@@ -172,13 +172,13 @@ export default {
   },
   computed: {
     dataKasusTotal () {
-      return this.$store.getters['data-kasus-total/itemsMap']
+      return this.$store.getters['data-kasus-total-v2/itemsMap']
     },
     dataKasusTotalMetadata () {
-      return this.$store.getters['data-kasus-total/metadataMap']
+      return this.$store.getters['data-kasus-total-v2/metadataMap']
     },
     isLoading () {
-      return this.$store.getters['data-kasus-total/isLoading']
+      return this.$store.getters['data-kasus-total-v2/isLoading']
     }
   },
   watch: {

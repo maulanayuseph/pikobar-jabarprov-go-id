@@ -62,7 +62,7 @@
     <section class="m-4 mb-8 md:m-8">
       <div class="chart-container w-full">
         <BarStatJenisKelaminIstilahBaru />
-        <BarStatUsia />
+        <BarStatUsiaIstilahBaru />
       </div>
     </section>
 
@@ -128,7 +128,7 @@ export default {
     BarStatAreaSingleV2IstilahBaru: () => import('~/components/BarStatAreaSingleV2IstilahBaru'),
     BarStatHarianAkumulatifV2IstilahBaru: () => import('~/components/BarStatHarianAkumulatifV2IstilahBaru'),
     BarStatJenisKelaminIstilahBaru: () => import('~/components/BarStatJenisKelaminIstilahBaru'),
-    BarStatUsia: () => import('~/components/BarStatUsia')
+    BarStatUsiaIstilahBaru: () => import('~/components/BarStatUsiaIstilahBaru')
   },
   data () {
     return {
@@ -162,11 +162,10 @@ export default {
   mounted () {
     this.$nextTick(() => {
       Promise.all([
+        this.$store.dispatch('data-kasus-total-v2/getItems'),
         this.$store.dispatch('data-nasional-harian/getItems'),
         this.$store.dispatch('data-kasus-harian-v2/getItems'),
-        this.$store.dispatch('data-kasus-harian-kota-v2/getItems'),
-        this.$store.dispatch('statistics/getCases'),
-        this.$store.dispatch('data-kasus-total/getItems')
+        this.$store.dispatch('data-kasus-harian-kota-v2/getItems')
       ]).then(() => {
       })
 
