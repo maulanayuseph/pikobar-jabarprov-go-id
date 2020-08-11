@@ -8,7 +8,7 @@
       <small class="text-xl opacity-75">*Update Terakhir: {{ lastUpdatedAt }}</small>
     </header>
     <section class="m-4 mb-8 md:m-8">
-      <DataSummary />
+      <DataSummaryIstilahBaru />
     </section>
     <section class="m-4 mb-8 md:m-8">
       <DataRDT />
@@ -55,15 +55,15 @@
       <BarStatAreaSingleV2 />
     </section>
 
+    <section class="m-4 md:m-8">
+      <BarStatHarianAkumulatifV2 />
+    </section>
+
     <section class="m-4 mb-8 md:m-8">
       <div class="chart-container w-full">
         <BarStatJenisKelamin />
         <BarStatUsia />
       </div>
-    </section>
-
-    <section class="m-4 md:m-8">
-      <BarStatHarianAkumulatifV2 />
     </section>
 
     <section class="m-4 md:m-8 flex">
@@ -114,14 +114,14 @@
 /* eslint-disable */
 import axios from 'axios'
 import { mapState } from 'vuex'
-import DataSummary from '~/components/_pages/index/DataSummary'
+import DataSummaryIstilahBaru from '~/components/_pages/index/DataSummaryIstilahBaru'
 import { faFirstAid, faBug, faMap, faCalendarMinus, faArrowRight, faChevronRight, faInfo, faCircle, faAngleRight } from '@fortawesome/free-solid-svg-icons'
 import { formatDateTimeShort } from '~/lib/date'
 import { analytics } from '~/lib/firebase'
 
 export default {
   components: {
-    DataSummary,
+    DataSummaryIstilahBaru,
     DataRDT: () => import('~/components/DataRDT'),
     DataPCR: () => import('~/components/DataPCR'),
     MapV4SebaranPolygon: () => import('~/components/MapV4SebaranPolygon'),
