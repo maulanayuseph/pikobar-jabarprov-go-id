@@ -80,8 +80,7 @@ export default {
   data () {
     return {
       optionList: [
-        // 'ODP',
-        // 'PDP',
+        'Terkonfirmasi',
         'Isolasi/ Dalam Perawatan',
         'Selesai Isolasi/ Sembuh',
         'Meninggal'
@@ -181,7 +180,11 @@ export default {
       let tempJenisKelaminWanita = 0
       let tempJenisKelaminNA = 0
 
-      if (stat === 'Isolasi/ Dalam Perawatan') {
+      if (stat === 'Terkonfirmasi') {
+        tempJenisKelaminPria = parseInt(this.jsonDataKasusGender.confirmation_total.lakilaki)
+        tempJenisKelaminWanita = parseInt(this.jsonDataKasusGender.confirmation_total.perempuan)
+        tempJenisKelaminNA = parseInt(this.jsonDataKasusGender.confirmation_total.tidakdiketahui)
+      } else if (stat === 'Isolasi/ Dalam Perawatan') {
         tempJenisKelaminPria = parseInt(this.jsonDataKasusGender.confirmation_diisolasi.lakilaki)
         tempJenisKelaminWanita = parseInt(this.jsonDataKasusGender.confirmation_diisolasi.perempuan)
         tempJenisKelaminNA = parseInt(this.jsonDataKasusGender.confirmation_diisolasi.tidakdiketahui)
