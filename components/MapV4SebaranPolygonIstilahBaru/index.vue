@@ -582,8 +582,8 @@ export default {
 
   .cluster-confirmation-diisolasi {
     /* box-shadow: 0 0 5px 0 rgb(235, 87, 87, 0.9); */
-    border: 2px solid rgb(235, 87, 87, 0.9);
-    background: rgb(235, 87, 87, 0.9);
+    border: 2px solid rgb(206, 181, 28, 0.9);
+    background: rgb(206, 181, 70, 0.9);
   }
 
   .cluster-confirmation-selesai {
