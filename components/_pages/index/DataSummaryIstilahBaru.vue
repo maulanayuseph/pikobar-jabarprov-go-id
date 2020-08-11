@@ -160,7 +160,7 @@
                 <div class="text-sm">
                   ({{ formatNumberPercent((dataIstilahBaru.closecontact_dikarantina / dataIstilahBaru.closecontact_total) * 100) }}%)
                 </div>
-                <span class="text-sm color-title">Masih Karantina</span>
+                <span class="text-sm color-title">Masih Dikarantina</span>
               </div>
               <div class="w-1/2 color-closecontact-discarded">
                 <div class="text-2xl">
