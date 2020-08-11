@@ -11,7 +11,8 @@
     "generate": "nuxt generate",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
     "write:env": "node ./script/write-env.js",
-    "migrate": "node ./script/firestore-import.js"
+    "migrate": "node ./script/firestore-import.js",
+    "export": "node ./script/firestore-export.js"
   },
   "dependencies": {
     "@fortawesome/free-regular-svg-icons": "^5.13.0",

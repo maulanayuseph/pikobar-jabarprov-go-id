@@ -1,15 +1,18 @@
 <template>
   <div class="relative overflow-x-auto">
     <client-only>
-      <Pagination :page-range="3" :page-count="totalPages" :initial-page="currentPage" :click-handler="onPaginationClick" />
+      <Pagination
+        :page-range="3"
+        :page-count="totalPages"
+        :initial-page="currentPage"
+        :click-handler="onPaginationClick"
+      />
     </client-only>
     <a
       v-if="this.$store.state.donate.selectedLogistics.length"
       href="#donate-now"
       class="btn-donate-action"
-    >
-      ({{ this.$store.state.donate.selectedLogistics.length }}) Partisipasi Sekarang
-    </a>
+    >({{ this.$store.state.donate.selectedLogistics.length }}) Partisipasi Sekarang</a>
     <table class="mt-4 w-full text-left">
       <thead>
         <tr>
@@ -19,7 +22,11 @@
             class="bg-gray-300 uppercase text-gray-600 text-sm px-4 py-2 border-t-2 border-b-2 border-solid border-gray-400"
           >
             <template v-if="col.prop === 'matg_id'">
-              <FontAwesomeIcon class="inline-block mr-2 cursor-pointer" :icon="icons.faSearch" @click="searchInput = !searchInput" />
+              <FontAwesomeIcon
+                class="inline-block mr-2 cursor-pointer"
+                :icon="icons.faSearch"
+                @click="searchInput = !searchInput"
+              />
               <input
                 v-if="searchInput"
                 v-model="searchInputQuery"
@@ -30,13 +37,20 @@
                 @keydown="triggerSearch()"
               >
               <b v-else>
-                <FontAwesomeIcon class="float-right cursor-pointer" :icon="icons.faSort" @click="getTableData(true)" />
+                <FontAwesomeIcon
+                  class="float-right cursor-pointer"
+                  :icon="icons.faSort"
+                  @click="getTableData(true)"
+                />
                 {{ col.label }}
               </b>
             </template>
-            <b v-if="col.prop !== 'matg_id'">
-              {{ col.label }}
-            </b>
+            <b v-if="col.prop !== 'matg_id'">{{ col.label }}</b>
+          </th>
+          <th
+            class="bg-gray-300 uppercase text-gray-600 text-sm px-4 py-2 border-t-2 border-b-2 border-solid border-gray-400"
+          >
+            <span>Aksi</span>
           </th>
         </tr>
       </thead>
@@ -44,7 +58,7 @@
         <template v-if="isLoading">
           <tr v-for="j in perPage" :key="j">
             <th
-              v-for="i in columns.length"
+              v-for="i in columns.length + 1"
               :key="i"
               class="bg-white uppercase text-gray-600 text-sm px-4 py-2 border-t-2 border-b-2 border-solid border-gray-400"
             >
@@ -72,8 +86,22 @@
               :key="col.prop"
               class="td-row px-4 py-2 text-gray-800 border-b-2 border-solid border-gray-300"
             >
-              <input v-if="colIndex === 0" :checked="areSelected(row.id)" type="checkbox" class="inline-block mr-2 cursor-pointer">
+              <input
+                v-if="colIndex === 0"
+                :checked="areSelected(row.id)"
+                type="checkbox"
+                class="inline-block mr-2 cursor-pointer"
+              >
               {{ col.prop === 'sisa' ? $convertToLocalNumber(getCellValue(col, row, colIndex, rowIndex)) : getCellValue(col, row, colIndex, rowIndex) }}
+            </td>
+            <td class="td-row px-4 py-2 text-gray-800 border-b-2 border-solid border-gray-300">
+              <button
+                class="flex justify-center items-center px-3 py-1 bg-brand-blue text-white rounded"
+                @click.stop.prevent="onViewSpec(row, rowIndex)"
+              >
+                <FontAwesomeIcon :icon="icons.faEye" class="mr-2" />
+                <span>Spesifikasi</span>
+              </button>
             </td>
           </tr>
         </template>
@@ -88,11 +116,12 @@
         </template>
       </tbody>
     </table>
+    <LogisticTableSpecPopup :is-active.sync="isShowingSpecPopup" :logistic="logisticSpecToShow"/>
   </div>
 </template>
 
 <script>
-import { faSearch, faSort } from '@fortawesome/free-solid-svg-icons'
+import { faEye, faSearch, faSort } from '@fortawesome/free-solid-svg-icons'
 import { ContentLoader } from 'vue-content-loader'
 import { getLogistics } from '../../../api/donation'
 let searchQueryTimeout = null
@@ -100,6 +129,7 @@ let searchQueryTimeout = null
 export default {
   components: {
     Pagination: () => import('../../Pagination'),
+    LogisticTableSpecPopup: () => import('./LogisticTableSpecPopup'),
     ContentLoader
   },
   props: {
@@ -111,6 +141,7 @@ export default {
   data () {
     return {
       icons: {
+        faEye,
         faSearch,
         faSort
       },
@@ -124,11 +155,11 @@ export default {
         {
           prop: 'sisa',
           label: 'Jumlah Dibutuhkan'
+        },
+        {
+          prop: 'unit',
+          label: 'Satuan'
         }
-        // {
-        //   prop: 'masuk',
-        //   label: 'Jumlah Terpenuhi'
-        // }
       ],
       isLoading: true,
       tableData: [],
@@ -136,7 +167,10 @@ export default {
       perPage: 16,
       currentPage: 1,
       totalItems: 0,
-      totalPages: 0
+      totalPages: 0,
+
+      logisticSpecToShow: null,
+      isShowingSpecPopup: false
     }
   },
   computed: {
@@ -169,7 +203,9 @@ export default {
   },
   methods: {
     triggerSearch () {
-      if (searchQueryTimeout) { clearTimeout(searchQueryTimeout) }
+      if (searchQueryTimeout) {
+        clearTimeout(searchQueryTimeout)
+      }
       if (this.searchInputQuery.length > 2) {
         searchQueryTimeout = setTimeout(() => {
           this.currentPage = 1
@@ -199,51 +235,66 @@ export default {
           where: '{}',
           sort: this.tableSorting
         }
-      }).then(({ total, data }) => {
-        this.totalItems = total || data.length
-        this.totalPages = Math.ceil(this.totalItems / this.perPage)
-        this.tableData = data
-      }).finally(() => {
-        this.isLoading = false
       })
+        .then(({ total, data }) => {
+          this.totalItems = total || data.length
+          this.totalPages = Math.ceil(this.totalItems / this.perPage)
+          this.tableData = data
+        })
+        .finally(() => {
+          this.isLoading = false
+        })
     },
     onPaginationClick (page) {
       this.currentPage = page
     },
     areSelected (rid) {
-      return this.$store.state.donate.selectedLogistics.find(result => result.id === rid) ? 'checked' : ''
+      return this.$store.state.donate.selectedLogistics.find(
+        result => result.id === rid
+      )
+        ? 'checked'
+        : ''
     },
     selectRow (row) {
-      const foundRow = this.$store.state.donate.selectedLogistics.find(result => result.id === row.id)
+      const foundRow = this.$store.state.donate.selectedLogistics.find(
+        result => result.id === row.id
+      )
       if (!foundRow) {
-        this.$store.commit('donate/ADD_SELECTED_LOGISTIC', Object.assign({ quantity: 10 }, row))
+        this.$store.commit(
+          'donate/ADD_SELECTED_LOGISTIC',
+          Object.assign({ quantity: 10 }, row)
+        )
       } else {
         this.$store.commit('donate/REMOVE_SELECTED_LOGISTIC', foundRow)
       }
+    },
+    onViewSpec (row, rowIndex) {
+      this.isShowingSpecPopup = true
+      this.logisticSpecToShow = row
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-  .input-text {
-    @apply min-w-0 px-2 py-0 rounded outline-none
+.input-text {
+  @apply min-w-0 px-2 py-0 rounded outline-none
     border border-solid border-gray-300;
+}
+tr {
+  &.checked {
+    background: #f3fcf2;
   }
-  tr {
-    &.checked {
-      background: #f3fcf2;
-    }
-    &:hover {
-      background: #f0f0f0;
-    }
+  &:hover {
+    background: #f0f0f0;
   }
-  .btn-donate-action {
-    @apply absolute bg-brand-green text-white rounded-lg px-6 py-2;
-    top: 0px;
-    right: 0px;
-    @media (max-width: 768px) {
-      @apply relative block w-full mt-4 text-center;
-    }
+}
+.btn-donate-action {
+  @apply absolute bg-brand-green text-white rounded-lg px-6 py-2;
+  top: 0px;
+  right: 0px;
+  @media (max-width: 768px) {
+    @apply relative block w-full mt-4 text-center;
   }
+}
 </style>
