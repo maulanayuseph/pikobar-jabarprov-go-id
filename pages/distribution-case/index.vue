@@ -56,8 +56,8 @@
                 :active="activeMap === 'polygon'"
                 @click="enableMap('polygon')"
               >
-                <img v-if="activeMap === 'polygon'" src="/img/icon-sebaran-active.svg" style="margin-top: 2px; margin-right:5px;">
-                <img v-if="activeMap !== 'polygon'" src="/img/icon-sebaran-inactive.svg" style="margin-top: 2px; margin-right:5px;">
+                <img v-if="activeMap === 'polygon'" src="/img/icon-sebaran-active.svg" style="margin-top: 2px; margin-right:5px; margin:auto;">
+                <img v-if="activeMap !== 'polygon'" src="/img/icon-sebaran-inactive.svg" style="margin-top: 2px; margin-right:5px; margin:auto;">
                 Sebaran Polygon
               </button>
               <button
@@ -66,8 +66,8 @@
                 :active="activeMap === 'titik'"
                 @click="enableMap('titik')"
               >
-                <img v-if="activeMap === 'titik'" src="/img/icon-sebaran-active.svg" style="margin-top: 2px; margin-right:5px;">
-                <img v-if="activeMap !== 'titik'" src="/img/icon-sebaran-inactive.svg" style="margin-top: 2px; margin-right:5px;">
+                <img v-if="activeMap === 'titik'" src="/img/icon-sebaran-active.svg" style="margin-top: 2px; margin-right:5px; margin:auto;">
+                <img v-if="activeMap !== 'titik'" src="/img/icon-sebaran-inactive.svg" style="margin-top: 2px; margin-right:5px; margin:auto;">
                 Sebaran Titik
               </button>
               <button
@@ -76,14 +76,14 @@
                 :active="activeMap === 'timeslider'"
                 @click="enableMap('timeslider')"
               >
-                <img v-if="activeMap === 'timeslider'" src="/img/icon-data-positif-active.svg" style="margin-top: 2px; margin-right:5px;">
-                <img v-if="activeMap !== 'timeslider'" src="/img/icon-data-positif-inactive.svg" style="margin-top: 2px; margin-right:5px;">
-                Timeslider - Data Positif
+                <img v-if="activeMap === 'timeslider'" src="/img/icon-data-positif-active.svg" style="margin-top: 2px; margin-right:5px; margin:auto;">
+                <img v-if="activeMap !== 'timeslider'" src="/img/icon-data-positif-inactive.svg" style="margin-top: 2px; margin-right:5px; margin:auto;">
+                Timeslider - Data Terkonfirmasi
               </button>
             </div>
-            <MapV3SebaranPolygon v-if="activeMap === 'polygon'" :active-region-id.sync="activeRegionId" :active-region-category.sync="activeRegionCategory" :active-parent-region-name.sync="activeParentRegionName" :active-case-category.sync="activeCaseCategory" />
-            <MapV3SebaranTitik v-if="activeMap === 'titik'" :active-region-id.sync="activeRegionId" :active-region-category.sync="activeRegionCategory" :active-parent-region-name.sync="activeParentRegionName" :active-case-category.sync="activeCaseCategory" />
-            <MapV3SebaranTimeSlider v-if="activeMap === 'timeslider'" :active-region-id.sync="activeRegionId" :active-region-category.sync="activeRegionCategory" :active-parent-region-name.sync="activeParentRegionName" :active-case-category.sync="activeCaseCategory" />
+            <MapV3SebaranPolygonIstilahBaru v-if="activeMap === 'polygon'" :active-region-id.sync="activeRegionId" :active-region-category.sync="activeRegionCategory" :active-parent-region-name.sync="activeParentRegionName" :active-case-category.sync="activeCaseCategory" />
+            <MapV3SebaranTitikIstilahBaru v-if="activeMap === 'titik'" :active-region-id.sync="activeRegionId" :active-region-category.sync="activeRegionCategory" :active-parent-region-name.sync="activeParentRegionName" :active-case-category.sync="activeCaseCategory" />
+            <MapV3SebaranTimeSliderIstilahBaru v-if="activeMap === 'timeslider'" :active-region-id.sync="activeRegionId" :active-region-category.sync="activeRegionCategory" :active-parent-region-name.sync="activeParentRegionName" :active-case-category.sync="activeCaseCategory" />
           </div>
         </div>
         <div class="w-full mb-6 lg:w-2/5 lg:mb-0 bg-white rounded-lg mb-8 shadow-lg">
@@ -119,7 +119,7 @@
                 :active="activeTable === 'undermonitoring'"
                 @click="enableTable('undermonitoring')"
               >
-                ODP
+                Kontak Erat
               </button>
               <button
                 class="button-selector m-1 w-full xl:w-auto "
@@ -127,7 +127,7 @@
                 :active="activeTable === 'underinvestigation'"
                 @click="enableTable('underinvestigation')"
               >
-                PDP
+                Suspek
               </button>
             </div>
           </div>
@@ -147,9 +147,9 @@
 // import { analytics } from '~/lib/firebase'
 export default {
   components: {
-    MapV3SebaranPolygon: () => import('~/components/MapV3SebaranPolygon'),
-    MapV3SebaranTitik: () => import('~/components/MapV3SebaranTitik'),
-    MapV3SebaranTimeSlider: () => import('~/components/MapV3SebaranTimeSlider'),
+    MapV3SebaranPolygonIstilahBaru: () => import('~/components/MapV3SebaranPolygonIstilahBaru'),
+    MapV3SebaranTitikIstilahBaru: () => import('~/components/MapV3SebaranTitikIstilahBaru'),
+    MapV3SebaranTimeSliderIstilahBaru: () => import('~/components/MapV3SebaranTimeSliderIstilahBaru'),
     RasioConfirmedCase: () => import('~/components/RasioConfirmedCase'),
     ConfirmedCaseList: () => import('~/components/ConfirmedCaseList'),
     UnconfirmedCaseList: () => import('~/components/UnconfirmedCaseList'),
@@ -163,7 +163,7 @@ export default {
       activeParentRegionName: 'Jawa Barat',
       activeMap: 'polygon',
       activeTable: 'confirmed',
-      activeCaseCategory: 'positif_aktif',
+      activeCaseCategory: 'confirmation_diisolasi',
 
       // data
       parentLabel: {
@@ -250,7 +250,7 @@ export default {
   mounted () {
     this.$nextTick(() => {
       Promise.all([
-        this.$store.dispatch('data-kasus-total/getItems')
+        this.$store.dispatch('data-kasus-total-v2/getItems')
       ]).then(() => {
       })
     })
@@ -260,7 +260,7 @@ export default {
   methods: {
     enableMap (type) {
       this.activeMap = type
-      this.activeCaseCategory = 'positif_aktif'
+      this.activeCaseCategory = 'confirmation_diisolasi'
     },
     enableTable (type) {
       this.activeTable = type
@@ -336,7 +336,7 @@ export default {
 
       query += `&${parentKeyCode}=${regionCode}`
 
-      this.$store.dispatch('data-sebaran-polygon/getItem', query)
+      this.$store.dispatch('data-sebaran-polygon-v2/getItem', query)
     }
   },
   head () {
