@@ -52,7 +52,7 @@
     </section>
 
     <section class="m-4 mb-8 md:m-8">
-      <BarStatAreaSingleV2 />
+      <BarStatAreaSingleV2IstilahBaru />
     </section>
 
     <section class="m-4 md:m-8">
@@ -125,7 +125,7 @@ export default {
     DataRDT: () => import('~/components/DataRDT'),
     DataPCR: () => import('~/components/DataPCR'),
     MapV4SebaranPolygonIstilahBaru: () => import('~/components/MapV4SebaranPolygonIstilahBaru'),
-    BarStatAreaSingleV2: () => import('~/components/BarStatAreaSingleV2'),
+    BarStatAreaSingleV2IstilahBaru: () => import('~/components/BarStatAreaSingleV2IstilahBaru'),
     BarStatHarianAkumulatifV2: () => import('~/components/BarStatHarianAkumulatifV2'),
     BarStatJenisKelamin: () => import('~/components/BarStatJenisKelamin'),
     BarStatUsia: () => import('~/components/BarStatUsia')
@@ -145,17 +145,7 @@ export default {
       faChevronRight,
       faInfo,
       faCircle,
-      faAngleRight,
-
-      jsonDataRekapitulasiJabarProv: {},
-      jsonDataRekapitulasiJabarKab: [],
-      jsonDataRekapitulasiJabarHarianProv: [],
-      jsonDataRekapitulasiJabarHarianKab: [],
-      jsonDataRekapitulasiJabarKumulatifProv: [],
-      jsonDataRekapitulasiJabarKumulatifKab: [],
-      jsonDataNasionalHarianKumulatif: [],
-      jsonDataSebaranJabar: [],
-      jsonDataSebaranJabarFaskes: []
+      faAngleRight
     }
   },
   computed: {
@@ -173,8 +163,8 @@ export default {
     this.$nextTick(() => {
       Promise.all([
         this.$store.dispatch('data-nasional-harian/getItems'),
-        this.$store.dispatch('data-kasus-harian/getItems'),
-        this.$store.dispatch('data-kasus-harian-kota/getItems'),
+        this.$store.dispatch('data-kasus-harian-v2/getItems'),
+        this.$store.dispatch('data-kasus-harian-kota-v2/getItems'),
         this.$store.dispatch('data-sebaran-jabar-faskes/getItems'),
         this.$store.dispatch('statistics/getCases'),
         this.$store.dispatch('data-kasus-total/getItems')
