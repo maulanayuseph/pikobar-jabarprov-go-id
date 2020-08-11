@@ -87,7 +87,7 @@
           </div>
         </div>
         <div class="w-full mb-6 lg:w-2/5 lg:mb-0 bg-white rounded-lg mb-8 shadow-lg">
-          <RasioConfirmedCase :active-region-id="activeRegionId" :active-region-category="activeRegionCategory" :active-parent-region-name.sync="activeParentRegionName" :active-case-category.sync="activeCaseCategory" />
+          <RasioConfirmedCaseIstilahBaru :active-region-id="activeRegionId" :active-region-category="activeRegionCategory" :active-parent-region-name.sync="activeParentRegionName" :active-case-category.sync="activeCaseCategory" />
         </div>
       </div>
     </section>
@@ -150,7 +150,7 @@ export default {
     MapV3SebaranPolygonIstilahBaru: () => import('~/components/MapV3SebaranPolygonIstilahBaru'),
     MapV3SebaranTitikIstilahBaru: () => import('~/components/MapV3SebaranTitikIstilahBaru'),
     MapV3SebaranTimeSliderIstilahBaru: () => import('~/components/MapV3SebaranTimeSliderIstilahBaru'),
-    RasioConfirmedCase: () => import('~/components/RasioConfirmedCase'),
+    RasioConfirmedCaseIstilahBaru: () => import('~/components/RasioConfirmedCaseIstilahBaru'),
     ConfirmedCaseList: () => import('~/components/ConfirmedCaseList'),
     UnconfirmedCaseList: () => import('~/components/UnconfirmedCaseList'),
     UnderMonitoringCaseList: () => import('~/components/UnderMonitoringCaseList'),
