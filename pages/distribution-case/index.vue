@@ -116,25 +116,24 @@
               <button
                 class="button-selector m-1 w-full xl:w-auto "
                 style="display: flex;"
-                :active="activeTable === 'undermonitoring'"
-                @click="enableTable('undermonitoring')"
+                :active="activeTable === 'suspect'"
+                @click="enableTable('suspect')"
               >
-                Kontak Erat
+                Suspek
               </button>
               <button
                 class="button-selector m-1 w-full xl:w-auto "
                 style="display: flex;"
-                :active="activeTable === 'underinvestigation'"
-                @click="enableTable('underinvestigation')"
+                :active="activeTable === 'closecontact'"
+                @click="enableTable('closecontact')"
               >
-                Suspek
+                Kontak Erat
               </button>
             </div>
           </div>
-          <ConfirmedCaseList v-if="activeTable === 'confirmed'" :active-region-id.sync="activeRegionId" :active-region-category.sync="activeRegionCategory" :active-parent-region-name.sync="activeParentRegionName" />
-          <UnconfirmedCaseList v-if="activeTable === 'unconfirmed'" :active-region-id.sync="activeRegionId" :active-region-category.sync="activeRegionCategory" :active-parent-region-name.sync="activeParentRegionName" />
-          <UnderMonitoringCaseList v-if="activeTable === 'undermonitoring'" :active-region-id.sync="activeRegionId" :active-region-category.sync="activeRegionCategory" :active-parent-region-name.sync="activeParentRegionName" />
-          <UnderInvestigationCaseList v-if="activeTable === 'underinvestigation'" :active-region-id.sync="activeRegionId" :active-region-category.sync="activeRegionCategory" :active-parent-region-name.sync="activeParentRegionName" />
+          <ConfirmedCaseListIstilahBaru v-if="activeTable === 'confirmed'" :active-region-id.sync="activeRegionId" :active-region-category.sync="activeRegionCategory" :active-parent-region-name.sync="activeParentRegionName" />
+          <SuspectCaseListIstilahBaru v-if="activeTable === 'suspect'" :active-region-id.sync="activeRegionId" :active-region-category.sync="activeRegionCategory" :active-parent-region-name.sync="activeParentRegionName" />
+          <CloseContactCaseListIstilahBaru v-if="activeTable === 'closecontact'" :active-region-id.sync="activeRegionId" :active-region-category.sync="activeRegionCategory" :active-parent-region-name.sync="activeParentRegionName" />
         </div>
       </div>
     </section>
@@ -151,10 +150,9 @@ export default {
     MapV3SebaranTitikIstilahBaru: () => import('~/components/MapV3SebaranTitikIstilahBaru'),
     MapV3SebaranTimeSliderIstilahBaru: () => import('~/components/MapV3SebaranTimeSliderIstilahBaru'),
     RasioConfirmedCaseIstilahBaru: () => import('~/components/RasioConfirmedCaseIstilahBaru'),
-    ConfirmedCaseList: () => import('~/components/ConfirmedCaseList'),
-    UnconfirmedCaseList: () => import('~/components/UnconfirmedCaseList'),
-    UnderMonitoringCaseList: () => import('~/components/UnderMonitoringCaseList'),
-    UnderInvestigationCaseList: () => import('~/components/UnderInvestigationCaseList')
+    ConfirmedCaseListIstilahBaru: () => import('~/components/ConfirmedCaseListIstilahBaru'),
+    SuspectCaseListIstilahBaru: () => import('~/components/SuspectCaseListIstilahBaru'),
+    CloseContactCaseListIstilahBaru: () => import('~/components/CloseContactCaseListIstilahBaru')
   },
   data () {
     return {
