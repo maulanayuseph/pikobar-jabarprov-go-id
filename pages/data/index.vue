@@ -61,7 +61,7 @@
 
     <section class="m-4 mb-8 md:m-8">
       <div class="chart-container w-full">
-        <BarStatJenisKelamin />
+        <BarStatJenisKelaminIstilahBaru />
         <BarStatUsia />
       </div>
     </section>
@@ -127,7 +127,7 @@ export default {
     MapV4SebaranPolygonIstilahBaru: () => import('~/components/MapV4SebaranPolygonIstilahBaru'),
     BarStatAreaSingleV2IstilahBaru: () => import('~/components/BarStatAreaSingleV2IstilahBaru'),
     BarStatHarianAkumulatifV2IstilahBaru: () => import('~/components/BarStatHarianAkumulatifV2IstilahBaru'),
-    BarStatJenisKelamin: () => import('~/components/BarStatJenisKelamin'),
+    BarStatJenisKelaminIstilahBaru: () => import('~/components/BarStatJenisKelaminIstilahBaru'),
     BarStatUsia: () => import('~/components/BarStatUsia')
   },
   data () {
