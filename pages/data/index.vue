@@ -26,7 +26,7 @@
             <hr>
           </div>
           <div class="p-6">
-            <MapV4SebaranPolygon />
+            <MapV4SebaranPolygonIstilahBaru />
           </div>
         </div>
       </div>
@@ -124,13 +124,11 @@ export default {
     DataSummaryIstilahBaru,
     DataRDT: () => import('~/components/DataRDT'),
     DataPCR: () => import('~/components/DataPCR'),
-    MapV4SebaranPolygon: () => import('~/components/MapV4SebaranPolygon'),
+    MapV4SebaranPolygonIstilahBaru: () => import('~/components/MapV4SebaranPolygonIstilahBaru'),
     BarStatAreaSingleV2: () => import('~/components/BarStatAreaSingleV2'),
-    BarStatJenisKelamin: () => import('~/components/BarStatJenisKelamin'),
-    BarStatUsia: () => import('~/components/BarStatUsia'),
     BarStatHarianAkumulatifV2: () => import('~/components/BarStatHarianAkumulatifV2'),
-    MapSebaranHeatmap: () => import('~/components/MapSebaranHeatmap'),
-    MapV2SebaranFaskes: () => import('~/components/MapV2SebaranFaskes')
+    BarStatJenisKelamin: () => import('~/components/BarStatJenisKelamin'),
+    BarStatUsia: () => import('~/components/BarStatUsia')
   },
   data () {
     return {
