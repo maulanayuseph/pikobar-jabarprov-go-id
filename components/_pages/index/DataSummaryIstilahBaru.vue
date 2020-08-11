@@ -301,9 +301,9 @@ export default {
       },
       tooltipCloseContact: 'Orang yang memiliki riwayat kontak dengan kasus probable atau konfirmasi COVID-19',
       tooltipCloseSuspect: `Seseorang yang memiliki salah satu dari kriteria berikut :
-        <br/>i. Orang dengan Infeksi Saluran Pernapasan Akut (ISPA)* DAN pada 14 hari terakhir sebelum timbul gejala memiliki riwayat perjalanan atau tinggal di negara/wilayah Indonesia yang melaporkan transmisi lokal**
-        <br/>ii. Orang dengan salah satu gejala/tanda ISPA* DAN pada 14 hari terakhir sebelum timbul gejala memiliki riwayat kontak dengan kasus terkonfirmasi/probable COVID-19
-        <br/>iii. Orang dengan ISPA berat/pneumoniia berat*** yang membutuhkan perawatan di rumah sakit DAN tidak ada penyebab lain berdasarkan gambaran klinik yang meyakinkan.`
+        <br/>i. Orang dengan Infeksi Saluran Pernapasan Akut (ISPA) DAN pada 14 hari terakhir sebelum timbul gejala memiliki riwayat perjalanan atau tinggal di negara/wilayah Indonesia yang melaporkan transmisi lokal
+        <br/>ii. Orang dengan salah satu gejala/tanda ISPA DAN pada 14 hari terakhir sebelum timbul gejala memiliki riwayat kontak dengan kasus terkonfirmasi/probable COVID-19
+        <br/>iii. Orang dengan ISPA berat/pneumoniia berat yang membutuhkan perawatan di rumah sakit DAN tidak ada penyebab lain berdasarkan gambaran klinik yang meyakinkan.`
     }
   },
   computed: {
