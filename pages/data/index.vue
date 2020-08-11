@@ -56,7 +56,7 @@
     </section>
 
     <section class="m-4 md:m-8">
-      <BarStatHarianAkumulatifV2 />
+      <BarStatHarianAkumulatifV2IstilahBaru />
     </section>
 
     <section class="m-4 mb-8 md:m-8">
@@ -126,7 +126,7 @@ export default {
     DataPCR: () => import('~/components/DataPCR'),
     MapV4SebaranPolygonIstilahBaru: () => import('~/components/MapV4SebaranPolygonIstilahBaru'),
     BarStatAreaSingleV2IstilahBaru: () => import('~/components/BarStatAreaSingleV2IstilahBaru'),
-    BarStatHarianAkumulatifV2: () => import('~/components/BarStatHarianAkumulatifV2'),
+    BarStatHarianAkumulatifV2IstilahBaru: () => import('~/components/BarStatHarianAkumulatifV2IstilahBaru'),
     BarStatJenisKelamin: () => import('~/components/BarStatJenisKelamin'),
     BarStatUsia: () => import('~/components/BarStatUsia')
   },
@@ -165,7 +165,6 @@ export default {
         this.$store.dispatch('data-nasional-harian/getItems'),
         this.$store.dispatch('data-kasus-harian-v2/getItems'),
         this.$store.dispatch('data-kasus-harian-kota-v2/getItems'),
-        this.$store.dispatch('data-sebaran-jabar-faskes/getItems'),
         this.$store.dispatch('statistics/getCases'),
         this.$store.dispatch('data-kasus-total/getItems')
       ]).then(() => {
