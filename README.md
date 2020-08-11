@@ -9,6 +9,7 @@
   - [Environment Variable Setup](#environment-variable-setup)
   - [Firestore Setup](#firestore-setup)
 - [Build Setup](#build-setup)
+- [Export Collection](#export-collection)
 - [Pedoman Kontributor](#pedoman-kontributor)
 
 ## Firebase Setup
@@ -63,7 +64,7 @@ Pikobar menggunakan [Firebase](https://firebase.google.com/) sebagai _backend_.
     }
     ```
 7. Untuk mendapatkan nilai dari `publicVapidKey`, klik menu :gear: pada _sidebar_. Pilih `Project settings`. Pilih tab `Cloud Messaging`.
-8. Pada bagian `Web configuration > Web Push certificates`, klik `Generate Key Pair`. Salin nilai yang muncul ke dalam variabel `publicVapidKey` pada _file_ di langkah (6). 
+8. Pada bagian `Web configuration > Web Push certificates`, klik `Generate Key Pair`. Salin nilai yang muncul ke dalam variabel `publicVapidKey` pada _file_ di langkah (6).
 ![Cloud Messaging generate key pair](https://user-images.githubusercontent.com/4391973/78129695-2ecbe780-7442-11ea-9197-7e55bd284380.png)
 
 #### Membuat file `.env`
@@ -104,6 +105,15 @@ $ npm run generate
 ```
 
 For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
+
+## Export Collection
+Fitur ini digunakan untuk meng-export sebuah Firestore collection ke dalam file json.
+1. Pastikan langkah yang ada di [Environment Variable Setup](#environment-variable-setup) sudah dilakukan.
+2. Jalankan command berikut dari _root folder_ project
+```
+npm run export collection-name
+```
+3. Jika berhasil, file hasil export akan dibuat di `migration/export.json`
 
 ## Pedoman Kontributor
 
