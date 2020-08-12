@@ -103,7 +103,7 @@ export default {
         confirmation_meninggal: 'Positif - Meninggal',
         confirmation_selesai: 'Positif - Selesai Isolasi/ Sembuh',
         suspect_diisolasi: 'Suspek - Isolasi/ Dalam Perawatan',
-        suspect_meninggal: 'PSuspek - Meninggal',
+        suspect_meninggal: 'Suspek - Meninggal',
         closecontact_dikarantina: 'Kontak Erat - Masih Dikarantina'
       },
 
