@@ -2,7 +2,7 @@
 import { ContentLoader } from 'vue-content-loader'
 export default {
   functional: true,
-  props: ['size', 'isPending', 'label', 'isMain', 'isTooltipClosecontact', 'isTooltipSuspect', 'tooltip'],
+  props: ['size', 'isPending', 'label', 'isMain', 'isTooltipClosecontact', 'isTooltipSuspect'],
   render (h, context) {
     const staticClass = context.data.staticClass || ''
     const staticStyle = context.data.staticStyle || {}
@@ -38,9 +38,9 @@ export default {
               &#9432;
               <span class="tooltiptext text-xs">
                 Seseorang yang memiliki salah satu dari kriteria berikut :
-                <br/>i. Orang dengan Infeksi Saluran Pernapasan Akut (ISPA)* DAN pada 14 hari terakhir sebelum timbul gejala memiliki riwayat perjalanan atau tinggal di negara/wilayah Indonesia yang melaporkan transmisi lokal**
-                <br/>ii. Orang dengan salah satu gejala/tanda ISPA* DAN pada 14 hari terakhir sebelum timbul gejala memiliki riwayat kontak dengan kasus terkonfirmasi/probable COVID-19
-                <br/>iii. Orang dengan ISPA berat/pneumoniia berat*** yang membutuhkan perawatan di rumah sakit DAN tidak ada penyebab lain berdasarkan gambaran klinik yang meyakinkan.
+                <br/>i. Orang dengan Infeksi Saluran Pernapasan Akut (ISPA) DAN pada 14 hari terakhir sebelum timbul gejala memiliki riwayat perjalanan atau tinggal di negara/wilayah Indonesia yang melaporkan transmisi lokal
+                <br/>ii. Orang dengan salah satu gejala/tanda ISPA DAN pada 14 hari terakhir sebelum timbul gejala memiliki riwayat kontak dengan kasus terkonfirmasi/probable COVID-19
+                <br/>iii. Orang dengan ISPA berat/pneumoniia berat yang membutuhkan perawatan di rumah sakit DAN tidak ada penyebab lain berdasarkan gambaran klinik yang meyakinkan.
               </span>
             </div>
           </h4>
@@ -62,7 +62,7 @@ export default {
   /* Tooltip text */
   .tooltip .tooltiptext {
     visibility: hidden;
-    width: 420px;
+    width: 300px;
     background-color: white;
     color:#000;
     text-align: left;
@@ -73,7 +73,7 @@ export default {
     z-index: 1;
     top: 100%;
     left: 50%;
-    margin-left: -60px; /* Use half of the width (120/2 = 60), to center the tooltip */
+    margin-left: -150px; /* Use half of the width (120/2 = 60), to center the tooltip */
     box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14)
   }
 
