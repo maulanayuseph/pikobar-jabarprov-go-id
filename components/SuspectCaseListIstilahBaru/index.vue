@@ -41,9 +41,9 @@
             <th colspan="3" class="px-2 py-1 hover:opacity-75 text-white" style="background-color: #a8a8a8;">
               Discarded
             </th>
-            <th colspan="3" class="px-2 py-1 hover:opacity-75 text-white" style="background-color: #B80000;">
+            <!-- <th colspan="3" class="px-2 py-1 hover:opacity-75 text-white" style="background-color: #B80000;">
               Meninggal
-            </th>
+            </th> -->
           </tr>
           <tr>
             <th
@@ -172,7 +172,7 @@
                 </span>
               </p>
             </th>
-            <th
+            <!-- <th
               :key="9"
               ref="tableHeaders"
               class="px-2 py-1 hover:opacity-75 text-white"
@@ -213,7 +213,7 @@
                   <font-awesome-icon :icon="getSortIcon('diedTotal')" />
                 </span>
               </p>
-            </th>
+            </th> -->
           </tr>
           <tr style="line-height: 51px;">
             <th class="table-col border-b border-solid px-2 py-1 bg-white">
@@ -246,7 +246,7 @@
             <th class="table-col border-b border-solid px-2 py-1 textright bg-white">
               <b>{{ total.finishedTotal.toLocaleString('id') }}</b>
             </th>
-            <th class="table-col border-b border-solid px-2 py-1 textright bg-white">
+            <!-- <th class="table-col border-b border-solid px-2 py-1 textright bg-white">
               <b>{{ total.diedNow.toLocaleString('id') }}</b>
             </th>
             <th class="table-col border-b border-solid px-2 py-1 textright bg-white">
@@ -254,7 +254,7 @@
             </th>
             <th class="table-col border-b border-solid px-2 py-1 textright bg-white">
               <b>{{ total.diedTotal.toLocaleString('id') }}</b>
-            </th>
+            </th> -->
           </tr>
         </thead>
         <tbody>
@@ -289,7 +289,7 @@
             <td class="table-col border-b border-solid px-2 py-1 textright">
               {{ row.finishedTotal.toLocaleString('id') }}
             </td>
-            <td class="table-col border-b border-solid px-2 py-1 textright">
+            <!-- <td class="table-col border-b border-solid px-2 py-1 textright">
               {{ row.diedNow.toLocaleString('id') }}
             </td>
             <td class="table-col border-b border-solid px-2 py-1 textright">
@@ -297,7 +297,7 @@
             </td>
             <td class="table-col border-b border-solid px-2 py-1 textright">
               {{ row.diedTotal.toLocaleString('id') }}
-            </td>
+            </td> -->
           </tr>
         </tbody>
       </table>
@@ -350,10 +350,10 @@ export default {
         processTotal: 'none',
         finishedNow: 'none',
         finishedAverage: 'none',
-        finishedTotal: 'none',
-        diedNow: 'none',
-        diedAverage: 'none',
-        diedTotal: 'none'
+        finishedTotal: 'none'
+        // diedNow: 'none',
+        // diedAverage: 'none',
+        // diedTotal: 'none'
       },
       total: {
         suspectNow: 0,
@@ -364,10 +364,10 @@ export default {
         processTotal: 0,
         finishedNow: 0,
         finishedAverage: 0,
-        finishedTotal: 0,
-        diedNow: 0,
-        diedAverage: 0,
-        diedTotal: 0
+        finishedTotal: 0
+        // diedNow: 0,
+        // diedAverage: 0,
+        // diedTotal: 0
       },
       dataCase: [],
       dateH1: '',
@@ -412,10 +412,10 @@ export default {
         processTotal: 0,
         finishedNow: 0,
         finishedAverage: 0,
-        finishedTotal: 0,
-        diedNow: 0,
-        diedAverage: 0,
-        diedTotal: 0
+        finishedTotal: 0
+        // diedNow: 0,
+        // diedAverage: 0,
+        // diedTotal: 0
       }
 
       if (this.activeRegionCategory === 'kelurahan') {
@@ -437,9 +437,9 @@ export default {
         total.finishedNow += element.suspect.suspect_discarded_h1
         total.finishedAverage += element.suspect.suspect_discarded_h7
         total.finishedTotal += element.suspect.suspect_discarded
-        total.diedNow += element.suspect.suspect_meninggal_h1
-        total.diedAverage += element.suspect.suspect_meninggal_h7
-        total.diedTotal += element.suspect.suspect_meninggal
+        // total.diedNow += element.suspect.suspect_meninggal_h1
+        // total.diedAverage += element.suspect.suspect_meninggal_h7
+        // total.diedTotal += element.suspect.suspect_meninggal
 
         dataCase.push({
           region: element[nameApiRegion],
@@ -451,10 +451,10 @@ export default {
           processTotal: element.suspect.suspect_diisolasi,
           finishedNow: element.suspect.suspect_discarded_h1,
           finishedAverage: element.suspect.suspect_discarded_h7,
-          finishedTotal: element.suspect.suspect_discarded,
-          diedNow: element.suspect.suspect_meninggal_h1,
-          diedAverage: element.suspect.suspect_meninggal_h7,
-          diedTotal: element.suspect.suspect_meninggal
+          finishedTotal: element.suspect.suspect_discarded
+          // diedNow: element.suspect.suspect_meninggal_h1,
+          // diedAverage: element.suspect.suspect_meninggal_h7,
+          // diedTotal: element.suspect.suspect_meninggal
         })
       })
 

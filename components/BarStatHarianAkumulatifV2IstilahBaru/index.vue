@@ -249,23 +249,25 @@ export default {
           { type: 'string', role: 'tooltip', p: { html: true } },
           'Discarded',
           { type: 'string', role: 'tooltip', p: { html: true } },
-          'Meninggal',
-          { type: 'string', role: 'tooltip', p: { html: true } },
+          // 'Meninggal',
+          // { type: 'string', role: 'tooltip', p: { html: true } },
           'Rata-rata 7 Hari',
           { type: 'string', role: 'tooltip', p: { html: true } }
         ],
-        ['0', 0, '', 0, '', 0, '', 0, '']
+        ['0', 0, '', 0, '', 0, '']
+        // ['0', 0, '', 0, '', 0, '', 0, '']
       ],
       barChartHarianSuspectOptions: {
         height: 450,
         orientation: 'horizontal',
-        colors: ['#CEB546', '#828282', '#9C0000', '#EB5757'],
+        colors: ['#CEB546', '#828282', '#EB5757'],
+        // colors: ['#CEB546', '#828282', '#9C0000', '#EB5757'],
         legend: {
           position: 'bottom'
         },
         isStacked: true,
         seriesType: 'bars',
-        series: { 3: { type: 'line' } },
+        series: { 2: { type: 'line' } },
         hAxis: {
           slantedText: true,
           slantedTextAngle: -90
@@ -320,17 +322,19 @@ export default {
           { type: 'string', role: 'tooltip', p: { html: true } },
           'Discarded',
           { type: 'string', role: 'tooltip', p: { html: true } },
-          'Meninggal',
-          { type: 'string', role: 'tooltip', p: { html: true } },
+          // 'Meninggal',
+          // { type: 'string', role: 'tooltip', p: { html: true } },
           'Rata-rata 7 Hari',
           { type: 'string', role: 'tooltip', p: { html: true } }
         ],
-        ['0', 0, '', 0, '', 0, '', 0, '']
+        ['0', 0, '', 0, '', 0, '']
+        // ['0', 0, '', 0, '', 0, '', 0, '']
       ],
       barChartAkumulatifSuspectOptions: {
         height: 450,
         orientation: 'horizontal',
-        colors: ['#CEB546', '#828282', '#9C0000', '#786203'],
+        colors: ['#CEB546', '#828282', '#786203'],
+        // colors: ['#CEB546', '#828282', '#9C0000', '#786203'],
         legend: {
           position: 'bottom',
           alignment: 'center',
@@ -613,12 +617,13 @@ export default {
           { type: 'string', role: 'tooltip', p: { html: true } },
           'Discarded',
           { type: 'string', role: 'tooltip', p: { html: true } },
-          'Meninggal',
-          { type: 'string', role: 'tooltip', p: { html: true } },
+          // 'Meninggal',
+          // { type: 'string', role: 'tooltip', p: { html: true } },
           'Rata-rata 7 Hari',
           { type: 'string', role: 'tooltip', p: { html: true } }
         ],
-        ['0', 0, '', 0, '', 0, '', 0, '']
+        ['0', 0, '', 0, '', 0, '']
+        // ['0', 0, '', 0, '', 0, '', 0, '']
       ]
 
       // filter date
@@ -643,7 +648,7 @@ export default {
           tooltipSuspect += '<tr><td style="font-size: larger;">' + self.formatDate(date) + '</td><td></td></tr>'
           tooltipSuspect += '<tr><td>Isolasi/Dalam Perawatan </td><td><b style="margin-left: 10px;">' + self.formatThousand(self.ifNegativeReturnZero(self.jsonDataProvinsiHarian[i].suspect_diisolasi)) + '</b></td></tr>'
           tooltipSuspect += '<tr><td>Discarded </td><td><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataProvinsiHarian[i].suspect_discarded) + '</b></td></tr>'
-          tooltipSuspect += '<tr><td>Meninggal </td><td><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataProvinsiHarian[i].suspect_meninggal) + '</b></td></tr>'
+          // tooltipSuspect += '<tr><td>Meninggal </td><td><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataProvinsiHarian[i].suspect_meninggal) + '</b></td></tr>'
           tooltipSuspect += '<tr><td>Total Suspek</td><td><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataProvinsiHarian[i].suspect_total) + '</b></td></tr>'
           tooltipSuspect += '<tr><td>Rata-rata 7 Hari</td><td><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataProvinsiHarian[i].suspect_ratarata) + '</b></td></tr>'
           tooltipSuspect += '</table>'
@@ -651,7 +656,7 @@ export default {
             self.formatDateNoYear(date),
             self.ifNegativeReturnZero(self.jsonDataProvinsiHarian[i].suspect_diisolasi), tooltipSuspect,
             self.jsonDataProvinsiHarian[i].suspect_discarded, tooltipSuspect,
-            self.jsonDataProvinsiHarian[i].suspect_meninggal, tooltipSuspect,
+            // self.jsonDataProvinsiHarian[i].suspect_meninggal, tooltipSuspect,
             self.jsonDataProvinsiHarian[i].suspect_ratarata, tooltipSuspect
           ])
         }
@@ -734,12 +739,13 @@ export default {
           { type: 'string', role: 'tooltip', p: { html: true } },
           'Discarded',
           { type: 'string', role: 'tooltip', p: { html: true } },
-          'Meninggal',
-          { type: 'string', role: 'tooltip', p: { html: true } },
+          // 'Meninggal',
+          // { type: 'string', role: 'tooltip', p: { html: true } },
           'Total Suspek',
           { type: 'string', role: 'tooltip', p: { html: true } }
         ],
-        ['0', 0, '', 0, '', 0, '', 0, '']
+        ['0', 0, '', 0, '', 0, '']
+        // ['0', 0, '', 0, '', 0, '', 0, '']
       ]
 
       // filter date
@@ -764,14 +770,14 @@ export default {
           tooltipSuspect += '<tr><td style="font-size: larger;">' + self.formatDate(date) + '</td><td></td></tr>'
           tooltipSuspect += '<tr><td>Isolasi/Dalam Perawatan </td><td><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataProvinsiKumulatif[i].suspect_diisolasi) + '</b></td></tr>'
           tooltipSuspect += '<tr><td>Discarded </td><td><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataProvinsiKumulatif[i].suspect_discarded) + '</b></td></tr>'
-          tooltipSuspect += '<tr><td>Meninggal </td><td><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataProvinsiKumulatif[i].suspect_meninggal) + '</b></td></tr>'
+          // tooltipSuspect += '<tr><td>Meninggal </td><td><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataProvinsiKumulatif[i].suspect_meninggal) + '</b></td></tr>'
           tooltipSuspect += '<tr><td style="font-size: larger;">Total Suspek</td><td><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataProvinsiKumulatif[i].suspect_total) + '</b></td></tr>'
           tooltipSuspect += '</table>'
           self.barChartAkumulatifSuspectData.push([
             self.formatDateNoYear(date),
             self.jsonDataProvinsiKumulatif[i].suspect_diisolasi, tooltipSuspect,
             self.jsonDataProvinsiKumulatif[i].suspect_discarded, tooltipSuspect,
-            self.jsonDataProvinsiKumulatif[i].suspect_meninggal, tooltipSuspect,
+            // self.jsonDataProvinsiKumulatif[i].suspect_meninggal, tooltipSuspect,
             self.jsonDataProvinsiKumulatif[i].suspect_total, tooltipSuspect
           ])
         }

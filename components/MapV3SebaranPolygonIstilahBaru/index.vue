@@ -127,7 +127,7 @@
               style="margin-right: 0.5em;"
             />Suspek - Isolasi/ Dalam Perawatan
           </li>
-          <li
+          <!-- <li
             :class="filter.suspect_meninggal?'filter-active':''"
             @click="setFilter('suspect_meninggal')"
           >
@@ -135,7 +135,7 @@
               class="legend-color cluster-suspect-meninggal"
               style="margin-right: 0.5em;"
             />Suspek - Meninggal
-          </li>
+          </li> -->
           <li
             :class="filter.closecontact_dikarantina?'filter-active':''"
             @click="setFilter('closecontact_dikarantina')"
@@ -211,7 +211,7 @@ export default {
         confirmation_meninggal: false,
         confirmation_selesai: false,
         suspect_diisolasi: false,
-        suspect_meninggal: false,
+        // suspect_meninggal: false,
         closecontact_dikarantina: false
       },
       stat: {
@@ -608,13 +608,13 @@ export default {
           }
           break
         }
-        case 'suspect_meninggal': {
-          this.activeTitle = {
-            name: 'Suspek - Meninggal',
-            className: 'cluster-suspect-meninggal'
-          }
-          break
-        }
+        // case 'suspect_meninggal': {
+        //   this.activeTitle = {
+        //     name: 'Suspek - Meninggal',
+        //     className: 'cluster-suspect-meninggal'
+        //   }
+        //   break
+        // }
         case 'closecontact_dikarantina': {
           this.activeTitle = {
             name: 'Kontak Erat - Masih Dikarantina',
