@@ -14,7 +14,7 @@
       <DataRDT />
     </section>
     <section class="m-4 mb-8 md:m-8">
-      <DataPCR />
+      <DataPCRIstilahBaru />
     </section>
     <section class="m-4 md:m-8">
       <div class="flex flex-col lg:flex-row lg:items-stretch">
@@ -138,7 +138,7 @@ export default {
   components: {
     DataSummaryIstilahBaru,
     DataRDT: () => import('~/components/DataRDT'),
-    DataPCR: () => import('~/components/DataPCR'),
+    DataPCRIstilahBaru: () => import('~/components/DataPCRIstilahBaru'),
     MapV4SebaranPolygonIstilahBaru: () => import('~/components/MapV4SebaranPolygonIstilahBaru'),
     BarStatAreaSingleV2IstilahBaru: () => import('~/components/BarStatAreaSingleV2IstilahBaru'),
     BarStatHarianAkumulatifV2IstilahBaru: () => import('~/components/BarStatHarianAkumulatifV2IstilahBaru'),
