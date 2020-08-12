@@ -142,110 +142,111 @@ export default {
           sortable: true
         },
         {
-          name: "odp",
-          label: "Kumulatif -- Jumlah Pemantauan (ODP)",
+          name: "closecontact",
+          label: "Total Kontak Erat",
+          sortable: true,
+          format: formatThousand,
+          width: '50px'
+        },
+        {
+          name: "closecontact_discarded",
+          label: "Kontak Erat Discarded",
           sortable: true,
           format: formatThousand
         },
         {
-          name: "odp_selesai",
-          label: "Kumulatif -- Selesai Pemantauan",
+          name: "closecontact_dikarantina",
+          label: "Kontak Erat Dikarantina",
           sortable: true,
           format: formatThousand
         },
         {
-          name: "odp_proses",
-          label: "Kumulatif -- Proses Pemantauan",
+          name: "suspect",
+          label: "Total Suspek",
           sortable: true,
           format: formatThousand
         },
         {
-          name: "pdp",
-          label: "Kumulatif -- Jumlah Pengawasan (PDP)",
+          name: "suspect_discarded",
+          label: "Suspek Discarded",
           sortable: true,
           format: formatThousand
         },
         {
-          name: "pdp_selesai",
-          label: "Kumulatif -- Selesai Pengawasan",
+          name: "suspect_diisolasi",
+          label: "Suspek Diisolasi",
           sortable: true,
           format: formatThousand
         },
         {
-          name: "pdp_proses",
-          label: "Kumulatif -- Proses Pengawasan",
+          name: "confirmation",
+          label: "Total Positif",
           sortable: true,
           format: formatThousand
         },
         {
-          name: "positif",
-          label: "Kumulatif -- Positif",
+          name: "confirmation_selesai",
+          label: "Positif Sembuh",
           sortable: true,
           format: formatThousand
         },
         {
-          name: "sembuh",
-          label: "Kumulatif -- Sembuh",
+          name: "confirmation_meninggal",
+          label: "Positif Meninggal",
           sortable: true,
           format: formatThousand
         },
         {
-          name: "meninggal",
-          label: "Kumulatif -- Meninggal",
+          name: "pertumbuhan_closecontact",
+          label: "Pertumbuhan Total Kontak Erat",
           sortable: true,
           format: formatThousand
         },
         {
-          name: "pertumbuhan_odp",
-          label: "Pertumbuhan -- Jumlah Pemantauan (ODP)",
+          name: "pertumbuhan_closecontact_discarded",
+          label: "Pertumbuhan Kontak Erat Discarded",
           sortable: true,
           format: formatThousand
         },
         {
-          name: "pertumbuhan_odp_selesai",
-          label: "Pertumbuhan -- Selesai Pemantauan",
+          name: "pertumbuhan_closecontact_dikarantina",
+          label: "Pertumbuhan Kontak Erat Dikarantina",
           sortable: true,
           format: formatThousand
         },
         {
-          name: "pertumbuhan_odp_proses",
-          label: "Pertumbuhan -- Proses Pemantauan",
+          name: "pertumbuhan_suspect",
+          label: "Pertumbuhan Total Suspek",
           sortable: true,
           format: formatThousand
         },
         {
-          name: "pertumbuhan_pdp",
-          label: "Pertumbuhan -- Jumlah Pengawasan (PDP)",
+          name: "pertumbuhan_suspect_discarded",
+          label: "Pertumbuhan Suspek Discarded",
           sortable: true,
           format: formatThousand
         },
         {
-          name: "pertumbuhan_pdp_selesai",
-          label: "Pertumbuhan -- Selesai Pengawasan",
+          name: "pertumbuhan_suspect_diisolasi",
+          label: "Pertumbuhan Suspek Diisolasi",
           sortable: true,
           format: formatThousand
         },
         {
-          name: "pertumbuhan_pdp_proses",
-          label: "Pertumbuhan -- Proses Pengawasan",
+          name: "pertumbuhan_confirmation",
+          label: "Pertumbuhan Total Positif",
           sortable: true,
           format: formatThousand
         },
         {
-          name: "pertumbuhan_positif",
-          label: "Pertumbuhan -- Positif",
+          name: "pertumbuhan_confirmation_selesai",
+          label: "Pertumbuhan Sembuh",
           sortable: true,
           format: formatThousand
         },
         {
-          name: "pertumbuhan_sembuh",
-          label: "Pertumbuhan -- Sembuh",
-          sortable: true,
-          format: formatThousand
-        },
-        {
-          name: "pertumbuhan_meninggal",
-          label: "Pertumbuhan -- Meninggal",
+          name: "pertumbuhan_confirmation_meninggal",
+          label: "Pertumbuhan Meninggal",
           sortable: true,
           format: formatThousand
         },
@@ -287,44 +288,65 @@ export default {
   },
   methods: {
     formatDateTimeShort,
+    keysToLowerCase(obj) {
+      if(obj instanceof Array) {
+          for (var i in obj) {
+              obj[i] = this.keysToLowerCase(obj[i]);
+          }
+      }
+      if (!typeof(obj) === "object" || typeof(obj) === "string" || typeof(obj) === "number" || typeof(obj) === "boolean") {
+          return obj;
+      }
+      var keys = Object.keys(obj);
+      var n = keys.length;
+      var lowKey;
+      while (n--) {
+          var key = keys[n];
+          if (key === (lowKey = key.toLowerCase()))
+              continue;
+          obj[lowKey] = this.keysToLowerCase(obj[key]);
+          delete obj[key];
+      }
+      return (obj);
+    },
     fetchDataRekapitulasiJabarKumulatifKab () {
       const self = this
       axios
-        .get('https://covid19-public.digitalservice.id/api/v1/rekapitulasi/jabar/kumulatif?level=kab')
+        .get('https://covid19-public.digitalservice.id/api/v1/rekapitulasi_v2/jabar/kumulatif?level=kab')
         .then(function (response) {
-          let temp = response.data.data.content
+          let temp = self.keysToLowerCase(response.data.data.content)
           for (let i=0; i<temp.length; i++){
             let temp2 = {
-              pertumbuhan_odp: 0,
-              pertumbuhan_odp_selesai: 0,
-              pertumbuhan_odp_proses: 0,
-              pertumbuhan_pdp: 0,
-              pertumbuhan_pdp_selesai: 0,
-              pertumbuhan_pdp_proses: 0,
-              pertumbuhan_positif: 0,
-              pertumbuhan_sembuh: 0,
-              pertumbuhan_meninggal: 0,
+              pertumbuhan_closecontact: 0,
+              pertumbuhan_closecontact_discarded: 0,
+              pertumbuhan_closecontact_dikarantina: 0,
+              pertumbuhan_suspect: 0,
+              pertumbuhan_suspect_discarded: 0,
+              pertumbuhan_suspect_diisolasi: 0,
+              pertumbuhan_confirmation: 0,
+              pertumbuhan_confirmation_selesai: 0,
+              pertumbuhan_confirmation_meninggal: 0,
             }
-            if (i < 28) {
-              temp2.pertumbuhan_odp = temp[i].odp
-              temp2.pertumbuhan_odp_selesai = temp[i].odp_selesai
-              temp2.pertumbuhan_odp_proses = temp[i].odp_proses
-              temp2.pertumbuhan_pdp = temp[i].pdp
-              temp2.pertumbuhan_pdp_selesai = temp[i].pdp_selesai
-              temp2.pertumbuhan_pdp_proses = temp[i].pdp_proses
-              temp2.pertumbuhan_positif = temp[i].positif
-              temp2.pertumbuhan_sembuh = temp[i].sembuh
-              temp2.pertumbuhan_meninggal = temp[i].meninggal
+            if (i < 27) {
+              temp2.pertumbuhan_closecontact = temp[i].closecontact
+              temp2.pertumbuhan_closecontact_discarded = temp[i].closecontact_discarded
+              temp2.pertumbuhan_closecontact_dikarantina = temp[i].closecontact_dikarantina
+              temp2.pertumbuhan_suspect = temp[i].suspect
+              temp2.pertumbuhan_suspect_discarded = temp[i].suspect_discarded
+              temp2.pertumbuhan_suspect_diisolasi = temp[i].suspect_diisolasi
+              temp2.pertumbuhan_confirmation = temp[i].confirmation
+              temp2.pertumbuhan_confirmation_selesai = temp[i].confirmation_selesai
+              temp2.pertumbuhan_confirmation_meninggal = temp[i].confirmation_meninggal
             } else {
-              temp2.pertumbuhan_odp = temp[i].odp - temp[i-28].odp
-              temp2.pertumbuhan_odp_selesai = temp[i].odp_selesai - temp[i-28].odp_selesai
-              temp2.pertumbuhan_odp_proses = temp[i].odp_proses - temp[i-28].odp_proses
-              temp2.pertumbuhan_pdp = temp[i].pdp - temp[i-28].pdp
-              temp2.pertumbuhan_pdp_selesai = temp[i].pdp_selesai - temp[i-28].pdp_selesai
-              temp2.pertumbuhan_pdp_proses = temp[i].pdp_proses - temp[i-28].pdp_proses
-              temp2.pertumbuhan_positif = temp[i].positif - temp[i-28].positif
-              temp2.pertumbuhan_sembuh = temp[i].sembuh - temp[i-28].sembuh
-              temp2.pertumbuhan_meninggal = temp[i].meninggal - temp[i-28].meninggal
+              temp2.pertumbuhan_closecontact = temp[i].closecontact - temp[i-27].closecontact
+              temp2.pertumbuhan_closecontact_discarded = temp[i].closecontact_discarded - temp[i-27].closecontact_discarded
+              temp2.pertumbuhan_closecontact_dikarantina = temp[i].closecontact_dikarantina - temp[i-27].closecontact_dikarantina
+              temp2.pertumbuhan_suspect = temp[i].suspect - temp[i-27].suspect
+              temp2.pertumbuhan_suspect_discarded = temp[i].suspect_discarded - temp[i-27].suspect_discarded
+              temp2.pertumbuhan_suspect_diisolasi = temp[i].suspect_diisolasi - temp[i-27].suspect_diisolasi
+              temp2.pertumbuhan_confirmation = temp[i].confirmation - temp[i-27].confirmation
+              temp2.pertumbuhan_confirmation_selesai = temp[i].confirmation_selesai - temp[i-27].confirmation_selesai
+              temp2.pertumbuhan_confirmation_meninggal = temp[i].confirmation_meninggal - temp[i-27].confirmation_meninggal
             }
             self.jsonDataRekapitulasiJabarKumulatifKab.push({...temp[i], ...temp2})
           }
@@ -385,7 +407,7 @@ export default {
       return d.toLocaleString('id-ID', options)
     },
     downloadCSV () {
-      const col = ['tanggal','kode_prov','nama_prov','kode_kab','nama_kab','odp','odp_proses','odp_selesai','pdp','pdp_proses','pdp_selesai','positif','sembuh','meninggal']
+      const col = ['tanggal','kode_prov','nama_prov','kode_kab','nama_kab','closecontact','closecontact_dikarantina','closecontact_discarded','suspect','suspect_diisolasi','suspect_discarded','confirmation','confirmation_selesai','confirmation_meninggal', 'pertumbuhan_closecontact', 'pertumbuhan_closecontact_discarded', 'pertumbuhan_closecontact_dikarantina', 'pertumbuhan_suspect', 'pertumbuhan_suspect_discarded', 'pertumbuhan_suspect_diisolasi', 'pertumbuhan_confirmation', 'pertumbuhan_confirmation_selesai', 'pertumbuhan_confirmation_meninggal']
       let csvString = ''
       col.forEach((row) => {
         csvString += row + ','
@@ -674,17 +696,76 @@ thead th:nth-child(2){
 
 .header-column-2 {
   width: 140px !important;
+  text-decoration: underline;
+}
+.header-column-3 {
+  width: 100px !important;
+}
+.header-column-4 {
+  width: 100px !important;
 }
 .header-column-5 {
   width: 140px !important;
+  text-decoration: underline;
+}
+.header-column-6 {
+  width: 100px !important;
+}
+.header-column-7 {
+  width: 100px !important;
+}
+.header-column-8 {
+  width: 140px !important;
+  text-decoration: underline;
+}
+.header-column-9 {
+  width: 100px !important;
+}
+.header-column-10 {
+  width: 100px !important;
 }
 
 .header-column-11 {
   width: 140px !important;
+  text-decoration: underline;
+}
+.header-column-12 {
+  width: 100px !important;
+}
+.header-column-13 {
+  width: 100px !important;
 }
 .header-column-14 {
   width: 140px !important;
+  text-decoration: underline;
 }
+.header-column-15 {
+  width: 100px !important;
+}
+.header-column-16 {
+  width: 100px !important;
+}
+.header-column-17 {
+  width: 140px !important;
+  text-decoration: underline;
+}
+.header-column-18 {
+  width: 100px !important;
+}
+.header-column-19 {
+  width: 100px !important;
+}
+.header-column-20 {
+  width: 140px !important;
+  text-decoration: underline;
+}
+.header-column-21 {
+  width: 100px !important;
+}
+.header-column-22 {
+  width: 100px !important;
+}
+
 
 
 /* Datatable CSS */
