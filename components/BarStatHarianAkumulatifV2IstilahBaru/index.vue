@@ -64,11 +64,6 @@
           :data="barChartHarianCloseContactData"
           :options="barChartHarianCloseContactOptions"
         />
-        <div class="m-1 p-2" style="background:#e6e6e6">
-          <b>Disclaimer :</b>
-          <p>Sumber Data : Laporan Harian Dinas Kesehatan Kabupaten/Kota di Jawa Barat</p>
-          <p>Data Menyesuaikan Perubahan Istilah Pelaporan, Sejak Tanggal 5 Agustus 2020</p>
-        </div>
       </div>
       <div class="overflow-hidden bg-white rounded-lg shadow-md">
         <div class="flex flex-wrap">
@@ -107,11 +102,6 @@
           :data="barChartHarianSuspectData"
           :options="barChartHarianSuspectOptions"
         />
-        <div class="m-1 p-2" style="background:#e6e6e6">
-          <b>Disclaimer :</b>
-          <p>Sumber Data : Laporan Harian Dinas Kesehatan Kabupaten/Kota di Jawa Barat</p>
-          <p>Data Menyesuaikan Perubahan Istilah Pelaporan, Sejak Tanggal 5 Agustus 2020</p>
-        </div>
       </div>
     </section>
 
@@ -155,11 +145,6 @@
           :data="barChartAkumulatifCloseContactData"
           :options="barChartAkumulatifCloseContactOptions"
         />
-        <div class="m-1 p-2" style="background:#e6e6e6">
-          <b>Disclaimer :</b>
-          <p>Sumber Data : Laporan Harian Dinas Kesehatan Kabupaten/Kota di Jawa Barat</p>
-          <p>Data Menyesuaikan Perubahan Istilah Pelaporan, Sejak Tanggal 5 Agustus 2020</p>
-        </div>
       </div>
       <div class="overflow-hidden bg-white rounded-lg shadow-md">
         <div class="flex flex-wrap">
@@ -197,11 +182,6 @@
           :data="barChartAkumulatifSuspectData"
           :options="barChartAkumulatifSuspectOptions"
         />
-        <div class="m-1 p-2" style="background:#e6e6e6">
-          <b>Disclaimer :</b>
-          <p>Sumber Data : Laporan Harian Dinas Kesehatan Kabupaten/Kota di Jawa Barat</p>
-          <p>Data Menyesuaikan Perubahan Istilah Pelaporan, Sejak Tanggal 5 Agustus 2020</p>
-        </div>
       </div>
     </section>
   </div>

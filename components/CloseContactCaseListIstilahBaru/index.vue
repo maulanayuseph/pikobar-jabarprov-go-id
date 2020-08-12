@@ -239,11 +239,6 @@
         </tbody>
       </table>
     </div>
-    <div class="m-1 p-2" style="background:#e6e6e6">
-      <b>Disclaimer :</b>
-      <p>Sumber Data Terkonfirmasi Positif : Kementerian Kesehatan Republik Indonesia</p>
-      <p>Sumber Data Suspek & Kontak Erat : Laporan Harian Dinas Kesehatan Kabupaten/Kota di Jawa Barat</p>
-    </div>
   </div>
 </template>
 

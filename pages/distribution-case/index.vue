@@ -137,6 +137,21 @@
         </div>
       </div>
     </section>
+    <section class="m-4 md:m-8 flex rounded-lg overflow-hidden shadow-md" style="background:#e6e6e6">
+      <div class="w-1/2 m-1 p-5">
+        <b>Disclaimer :</b>
+        <p>Data Suspek dan Kontak Erat mulai Pikobar terima berdasarkan laporan harian Dinkes Kab/kota per tgl 5 Agustus 2020.</p>
+      </div>
+      <div class="w-1/2 m-1 p-5">
+        <b>&#9432; Sumber Data :</b>
+        <ul style="list-style: inherit; margin-left: 20px;">
+          <li>Konfirmasi (Total, Aktif, Sembuh, Meninggal) = Laporan Harian Kemenkes</li>
+          <li>Suspek (Total, Aktif, Selesai) = Laporan Harian Dinkes Kab/kota di Jawa Barat</li>
+          <li>Kontak Erat (Total, Aktif, Selesai) = Laporan Harian Dinkes Kab/kota di Jawa Barat</li>
+          <li>Suspek (Meninggal) & Kontak Erat (Meninggal) = RS Online Kemenkes</li>
+        </ul>
+      </div>
+    </section>
   </div>
 </template>
 
