@@ -165,7 +165,8 @@ export default {
         this.$store.dispatch('data-kasus-total-v2/getItems'),
         this.$store.dispatch('data-nasional-harian/getItems'),
         this.$store.dispatch('data-kasus-harian-v2/getItems'),
-        this.$store.dispatch('data-kasus-harian-kota-v2/getItems')
+        this.$store.dispatch('data-kasus-harian-kota-v2/getItems'),
+        this.$store.dispatch('statistics/getCases'),
       ]).then(() => {
       })
 
