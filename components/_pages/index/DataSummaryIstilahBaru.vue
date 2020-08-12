@@ -375,13 +375,13 @@ export default {
   color: #A20E0E;
 }
 .color-closecontact-dikarantina {
-  color: #F2994A;
+  color: #BE8228;
 }
 .color-closecontact-discarded {
   color: #828282;
 }
 .color-suspect-diisolasi {
-  color: #CEB546;
+  color: #BEAB8D;
 }
 .color-suspect-discarded {
   color: #828282;

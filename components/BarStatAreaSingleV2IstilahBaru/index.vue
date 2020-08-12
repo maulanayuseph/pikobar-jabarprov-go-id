@@ -414,7 +414,7 @@ export default {
       ChartKumulatifOptions: {
         height: 500,
         orientation: 'horizontal',
-        colors: ['#CEB546', '#03B167', '#9c0000', '#7E7E7E'],
+        colors: ['#CEB546', '#03B167', '#9c0000', '#3D4486'],
         legend: {
           position: 'bottom'
         },

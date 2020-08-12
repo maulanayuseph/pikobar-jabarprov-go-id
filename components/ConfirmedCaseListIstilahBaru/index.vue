@@ -34,7 +34,7 @@
             <th colspan="3" class="px-2 py-1 hover:opacity-75" style="background-color: #4b56b2; color: #ffffff;">
               Terkonfirmasi
             </th>
-            <th colspan="3" class="px-2 py-1 hover:opacity-75" style="background-color: #FFD935; color: #ffffff;">
+            <th colspan="3" class="px-2 py-1 hover:opacity-75" style="background-color: #e4cb59; color: #ffffff;">
               Isolasi/ Dalam Perawatan
             </th>
             <th colspan="3" class="px-2 py-1 hover:opacity-75" style="background-color: #03B167; color: #ffffff;">
@@ -95,7 +95,7 @@
               ref="tableHeaders"
               class="px-2 py-1 hover:opacity-75"
               style="padding-left: 0.5em !important; width: 7%;"
-              :style="{backgroundColor: '#FECF03' || '', color: '#ffffff' || ''}"
+              :style="{backgroundColor: '#CEB546' || '', color: '#ffffff' || ''}"
               @click="onClickSort('positiveNow')"
             >
               <p class="pointer-events-none flex justify-between items-center" style="float: right;">
@@ -110,7 +110,7 @@
               ref="tableHeaders"
               class="px-2 py-1 hover:opacity-75"
               style="padding-left: 0.5em !important; width: 6%;"
-              :style="{backgroundColor: '#FECF03' || '', color: '#ffffff' || ''}"
+              :style="{backgroundColor: '#CEB546' || '', color: '#ffffff' || ''}"
               @click="onClickSort('positiveAverage')"
             >
               <p class="pointer-events-none flex justify-between items-center" style="float: right;">
@@ -125,7 +125,7 @@
               ref="tableHeaders"
               class="px-2 py-1 hover:opacity-75"
               style="padding-left: 0.5em !important; width: 6%;"
-              :style="{backgroundColor: '#FECF03' || '', color: '#ffffff' || ''}"
+              :style="{backgroundColor: '#CEB546' || '', color: '#ffffff' || ''}"
               @click="onClickSort('positiveTotal')"
             >
               <p class="pointer-events-none flex justify-between items-center" style="float: right;">

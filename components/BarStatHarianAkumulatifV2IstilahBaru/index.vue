@@ -225,7 +225,7 @@ export default {
       barChartHarianCloseContactOptions: {
         height: 450,
         orientation: 'horizontal',
-        colors: ['#F2994A', '#828282', '#EB5757'],
+        colors: ['#BE8228', '#828282', '#EB5757'],
         legend: {
           position: 'bottom'
         },
@@ -260,7 +260,7 @@ export default {
       barChartHarianSuspectOptions: {
         height: 450,
         orientation: 'horizontal',
-        colors: ['#CEB546', '#828282', '#EB5757'],
+        colors: ['#BEAB8D', '#828282', '#EB5757'],
         // colors: ['#CEB546', '#828282', '#9C0000', '#EB5757'],
         legend: {
           position: 'bottom'
@@ -290,7 +290,7 @@ export default {
           { type: 'string', role: 'tooltip', p: { html: true } },
           'Discarded',
           { type: 'string', role: 'tooltip', p: { html: true } },
-          'Rata-rata 7 Hari',
+          'Total Kontak Erat',
           { type: 'string', role: 'tooltip', p: { html: true } }
         ],
         ['0', 0, '', 0, '', 0, '']
@@ -298,7 +298,7 @@ export default {
       barChartAkumulatifCloseContactOptions: {
         height: 450,
         orientation: 'horizontal',
-        colors: ['#F2994A', '#828282', '#af5200'],
+        colors: ['#BE8228', '#828282', '#A93D00'],
         legend: {
           position: 'bottom',
           alignment: 'center',
@@ -324,7 +324,7 @@ export default {
           { type: 'string', role: 'tooltip', p: { html: true } },
           // 'Meninggal',
           // { type: 'string', role: 'tooltip', p: { html: true } },
-          'Rata-rata 7 Hari',
+          'Total Suspek',
           { type: 'string', role: 'tooltip', p: { html: true } }
         ],
         ['0', 0, '', 0, '', 0, '']
@@ -333,7 +333,7 @@ export default {
       barChartAkumulatifSuspectOptions: {
         height: 450,
         orientation: 'horizontal',
-        colors: ['#CEB546', '#828282', '#786203'],
+        colors: ['#BEAB8D', '#828282', '#EDAD08'],
         // colors: ['#CEB546', '#828282', '#9C0000', '#786203'],
         legend: {
           position: 'bottom',

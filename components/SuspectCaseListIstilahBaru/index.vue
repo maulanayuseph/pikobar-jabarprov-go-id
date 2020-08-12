@@ -32,10 +32,10 @@
               Nama {{ parentLabel[activeRegionCategory].label }}
               <font-awesome-icon :icon="getSortIcon('region')" />
             </th>
-            <th colspan="3" class="px-2 py-1 hover:opacity-75 text-white" style="background-color: #d4ad00;">
+            <th colspan="3" class="px-2 py-1 hover:opacity-75 text-white" style="background-color: #f1b720;">
               Suspek
             </th>
-            <th colspan="3" class="px-2 py-1 hover:opacity-75 text-white" style="background-color: #e5bb02;">
+            <th colspan="3" class="px-2 py-1 hover:opacity-75 text-white" style="background-color: #d7c2a2;">
               Isolasi/ Dalam Perawatan
             </th>
             <th colspan="3" class="px-2 py-1 hover:opacity-75 text-white" style="background-color: #a8a8a8;">
@@ -50,7 +50,7 @@
               :key="0"
               ref="tableHeaders"
               class="px-2 py-1 hover:opacity-75 text-white"
-              style="padding-left: 0.5em !important; width: 7%; background-color: #a88900;"
+              style="padding-left: 0.5em !important; width: 7%; background-color: #EDAD08;"
               @click="onClickSort('suspectNow')"
             >
               <p class="pointer-events-none flex justify-between items-center" style="float: right;">
@@ -64,7 +64,7 @@
               :key="1"
               ref="tableHeaders"
               class="px-2 py-1 hover:opacity-75 text-white"
-              style="padding-left: 0.5em !important; width: 6%; background-color: #a88900;"
+              style="padding-left: 0.5em !important; width: 6%; background-color: #EDAD08;"
               @click="onClickSort('suspectAverage')"
             >
               <p class="pointer-events-none flex justify-between items-center" style="float: right;">
@@ -78,7 +78,7 @@
               :key="2"
               ref="tableHeaders"
               class="px-2 py-1 hover:opacity-75 text-white"
-              style="padding-left: 0.5em !important; width: 6%; background-color: #a88900;"
+              style="padding-left: 0.5em !important; width: 6%; background-color: #EDAD08;"
               @click="onClickSort('suspectTotal')"
             >
               <p class="pointer-events-none flex justify-between items-center" style="float: right;">
@@ -92,7 +92,7 @@
               :key="3"
               ref="tableHeaders"
               class="px-2 py-1 hover:opacity-75 text-white"
-              style="padding-left: 0.5em !important; width: 7%; background-color: #cfa902;"
+              style="padding-left: 0.5em !important; width: 7%; background-color: #BEAB8D;"
               @click="onClickSort('processNow')"
             >
               <p class="pointer-events-none flex justify-between items-center" style="float: right;">
@@ -106,7 +106,7 @@
               :key="4"
               ref="tableHeaders"
               class="px-2 py-1 hover:opacity-75 text-white"
-              style="padding-left: 0.5em !important; width: 6%; background-color: #cfa902;"
+              style="padding-left: 0.5em !important; width: 6%; background-color: #BEAB8D;"
               @click="onClickSort('processAverage')"
             >
               <p class="pointer-events-none flex justify-between items-center" style="float: right;">
@@ -120,7 +120,7 @@
               :key="5"
               ref="tableHeaders"
               class="px-2 py-1 hover:opacity-75 text-white"
-              style="padding-left: 0.5em !important; width: 6%; background-color: #cfa902;"
+              style="padding-left: 0.5em !important; width: 6%; background-color: #BEAB8D;"
               @click="onClickSort('processTotal')"
             >
               <p class="pointer-events-none flex justify-between items-center" style="float: right;">
