@@ -1,7 +1,10 @@
 import axios from 'axios'
 
 const DashboardPikobarAPI = axios.create({
-  baseURL: 'https://dashboard-pikobar-api.digitalservice.id ',
+  baseURL: 'https://dashboard-pikobar-api.digitalservice.id',
+  headers: {
+    'api-key': process.env.DASHBOARD_API_KEY
+  }
 })
 
 const Covid19PublicAPI = axios.create({
@@ -12,7 +15,7 @@ const CoreDataAPI = axios.create({
   baseURL: 'https://coredata.digitalservice.id'
 })
 
-export default function(_, inject) {
+export default function (_, inject) {
   inject('dashboardPikobarApi', DashboardPikobarAPI)
   inject('covid19PublicApi', Covid19PublicAPI)
   inject('coreDataApi', CoreDataAPI)

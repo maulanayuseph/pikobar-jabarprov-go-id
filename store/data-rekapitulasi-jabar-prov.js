@@ -1,4 +1,3 @@
-import axios from 'axios'
 
 function ifNegatifReturnZero (number) {
   if (number < 0) {
