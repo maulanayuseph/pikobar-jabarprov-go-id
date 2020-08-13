@@ -30,18 +30,18 @@ export default {
             <b class="uppercase">{ context.props.label }</b>
             <div style={`display: ${context.props.isTooltipClosecontact ? 'inline-block' : 'none'}`} class="tooltip pl-1">
               &#9432;
-              <span class="tooltiptext text-xs">
-                Orang yang memiliki riwayat kontak dengan kasus probable atau konfirmasi COVID-19
-              </span>
+            <span class="tooltiptext text-xs">
+              Orang yang memiliki riwayat kontak dengan kasus probable atau konfirmasi COVID-19
+            </span>
             </div>
             <div style={`display: ${context.props.isTooltipSuspect ? 'inline-block' : 'none'}`} class="tooltip pl-1">
-              &#9432;
-              <span class="tooltiptext text-xs">
-                Seseorang yang memiliki salah satu dari kriteria berikut :
-                <br/>i. Orang dengan Infeksi Saluran Pernapasan Akut (ISPA) DAN pada 14 hari terakhir sebelum timbul gejala memiliki riwayat perjalanan atau tinggal di negara/wilayah Indonesia yang melaporkan transmisi lokal
-                <br/>ii. Orang dengan salah satu gejala/tanda ISPA DAN pada 14 hari terakhir sebelum timbul gejala memiliki riwayat kontak dengan kasus terkonfirmasi/probable COVID-19
-                <br/>iii. Orang dengan ISPA berat/pneumoniia berat yang membutuhkan perawatan di rumah sakit DAN tidak ada penyebab lain berdasarkan gambaran klinik yang meyakinkan.
-              </span>
+            &#9432;
+            <span class="tooltiptext text-xs">
+              Seseorang yang memiliki salah satu dari kriteria berikut :
+            <br/>i. Orang dengan Infeksi Saluran Pernapasan Akut (ISPA) DAN pada 14 hari terakhir sebelum timbul gejala memiliki riwayat perjalanan atau tinggal di negara/wilayah Indonesia yang melaporkan transmisi lokal
+            <br/>ii. Orang dengan salah satu gejala/tanda ISPA DAN pada 14 hari terakhir sebelum timbul gejala memiliki riwayat kontak dengan kasus terkonfirmasi/probable COVID-19
+            <br/>iii. Orang dengan ISPA berat/pneumoniia berat yang membutuhkan perawatan di rumah sakit DAN tidak ada penyebab lain berdasarkan gambaran klinik yang meyakinkan.
+            </span>
             </div>
           </h4>
           { context.children }

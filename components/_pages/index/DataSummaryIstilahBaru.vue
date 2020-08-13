@@ -191,7 +191,7 @@
               <span class="text-md">Total Suspek</span>
             </div>
             <div class="w-full flex mt-3">
-              <div class="w-1/3 color-suspect-diisolasi">
+              <div class="w-1/2 color-suspect-diisolasi">
                 <div class="text-2xl">
                   {{ formatNumber(dataIstilahBaru.suspect_diisolasi) }}
                 </div>
@@ -200,7 +200,7 @@
                 </div>
                 <span class="text-sm color-title">Isolasi/Dalam Perawatan</span>
               </div>
-              <div class="w-1/3 color-suspect-discarded">
+              <div class="w-1/2 color-suspect-discarded">
                 <div class="text-2xl">
                   {{ formatNumber(dataIstilahBaru.suspect_discarded) }}
                 </div>
@@ -209,7 +209,7 @@
                 </div>
                 <span class="text-sm color-title">Discarded</span>
               </div>
-              <div class="w-1/3 color-suspect-meninggal">
+              <!-- <div class="w-1/3 color-suspect-meninggal">
                 <div class="text-2xl">
                   {{ formatNumber(dataIstilahBaru.suspect_meninggal) }}
                 </div>
@@ -217,7 +217,7 @@
                   ({{ formatNumberPercent((dataIstilahBaru.suspect_meninggal / dataIstilahBaru.suspect_total) * 100) }}%)
                 </div>
                 <span class="text-sm color-title">Meninggal</span>
-              </div>
+              </div> -->
             </div>
           </div>
         </CounterCardLoader>
