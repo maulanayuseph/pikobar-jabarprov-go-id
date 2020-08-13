@@ -311,8 +311,8 @@ export default {
     },
     fetchDataRekapitulasiJabarKumulatifKab () {
       const self = this
-      axios
-        .get('https://covid19-public.digitalservice.id/api/v1/rekapitulasi_v2/jabar/kumulatif?level=kab')
+      this.$covid19PublicApi
+        .get('v1/rekapitulasi_v2/jabar/kumulatif?level=kab')
         .then(function (response) {
           let temp = self.keysToLowerCase(response.data.data.content)
           for (let i=0; i<temp.length; i++){

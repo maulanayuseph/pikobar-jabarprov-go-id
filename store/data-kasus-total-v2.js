@@ -25,11 +25,7 @@ export const mutations = {
 export const actions = {
   async getItems ({ commit }, options) {
     commit('setIsLoading', true)
-    const { data } = await axios.get('https://dashboard-pikobar-api.digitalservice.id/v2/kasus/total', {
-      headers: {
-        'api-key': process.env.DASHBOARD_API_KEY
-      }
-    })
+    const { data } = await this.$dashboardPikobarApi.get('v2/kasus/total')
     commit('setItems', data.data)
     commit('setMetadata', data.metadata)
     commit('setIsLoading', false)
@@ -37,11 +33,7 @@ export const actions = {
 
   async getItem ({ commit }, query, options) {
     commit('setIsLoading', true)
-    const { data } = await axios.get('https://dashboard-pikobar-api.digitalservice.id/v2/kasus/total?' + query, {
-      headers: {
-        'api-key': process.env.DASHBOARD_API_KEY
-      }
-    })
+    const { data } = await this.$dashboardPikobarApi.get('v2/kasus/total?' + query)
     commit('setItem', data.data)
     commit('setIsLoading', false)
   }

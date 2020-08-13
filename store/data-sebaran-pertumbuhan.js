@@ -23,21 +23,13 @@ export const mutations = {
 
 export const actions = {
   async getItems ({ commit }, options) {
-    const { data } = await axios.get('https://dashboard-pikobar-api.digitalservice.id/sebaran/pertumbuhan', {
-      headers: {
-        'api-key': process.env.DASHBOARD_API_KEY
-      }
-    })
+    const { data } = await this.$dashboardPikobarApi.get('sebaran/pertumbuhan')
     commit('setItems', data.data)
   },
 
   async getItem ({ commit }, query, options) {
     commit('setIsLoading', true)
-    const { data } = await axios.get('https://dashboard-pikobar-api.digitalservice.id/sebaran/pertumbuhan?' + query, {
-      headers: {
-        'api-key': process.env.DASHBOARD_API_KEY
-      }
-    })
+    const { data } = await this.$dashboardPikobarApi.get('sebaran/pertumbuhan?' + query)
     commit('setItem', data.data)
     commit('setIsLoading', false)
     commit('setMetaData', data.metadata)

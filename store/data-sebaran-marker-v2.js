@@ -20,21 +20,13 @@ export const mutations = {
 
 export const actions = {
   async getItems ({ commit }, options) {
-    const { data } = await axios.get('https://dashboard-pikobar-api.digitalservice.id/v2/sebaran/marker', {
-      headers: {
-        'api-key': process.env.DASHBOARD_API_KEY
-      }
-    })
+    const { data } = await this.$dashboardPikobarApi.get('v2/sebaran/marker')
     commit('setItems', data.data)
   },
 
   async getItem ({ commit }, query, options) {
     commit('setIsLoading', true)
-    const { data } = await axios.get('https://dashboard-pikobar-api.digitalservice.id/v2/sebaran/marker?' + query, {
-      headers: {
-        'api-key': process.env.DASHBOARD_API_KEY
-      }
-    })
+    const { data } = await this.$dashboardPikobarApi.get('v2/sebaran/marker?' + query)
     commit('setItem', data.data)
     commit('setIsLoading', false)
   }

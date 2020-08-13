@@ -52,7 +52,7 @@ export const mutations = {
 
 export const actions = {
   async getItems ({ commit }, options) {
-    const { data } = await axios.get('https://covid19-public.digitalservice.id/api/v1/rekapitulasi/jabar?level=prov')
+    const { data } = await this.$covid19PublicApi.get('v1/rekapitulasi/jabar?level=prov')
     commit('setItems', data.data.content)
     commit('changePositifAktifUsia', data.data.content)
   }
