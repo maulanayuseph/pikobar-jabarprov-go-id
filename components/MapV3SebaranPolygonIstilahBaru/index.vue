@@ -745,8 +745,8 @@ export default {
 
   .cluster-gabungan-aktif {
     /* box-shadow: 0 0 5px 0 rgb(45, 156, 219, 0.9); */
-    border: 2px solid rgb(194,83,2, 0.9);
-    background: rgb(194,83,2, 0.9);
+    border: 2px solid #c8641b;
+    background: #c8641b;
   }
   .cluster-confirmation-total {
     /* box-shadow: 0 0 5px 0 rgb(45, 156, 219, 0.9); */
