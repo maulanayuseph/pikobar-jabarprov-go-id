@@ -1,4 +1,3 @@
-import axios from 'axios'
 
 export const state = () => ({
   items: null,
@@ -20,21 +19,13 @@ export const mutations = {
 
 export const actions = {
   async getItems ({ commit }, options) {
-    const { data } = await axios.get('https://dashboard-pikobar-api.digitalservice.id/v2/sebaran/marker_cluster', {
-      headers: {
-        'api-key': process.env.DASHBOARD_API_KEY
-      }
-    })
+    const { data } = await this.$dashboardPikobarApi.get('v2/sebaran/marker_cluster')
     commit('setItems', data.data)
   },
 
   async getItem ({ commit }, query, options) {
     commit('setIsLoading', true)
-    const { data } = await axios.get('https://dashboard-pikobar-api.digitalservice.id/v2/sebaran/marker_cluster?' + query, {
-      headers: {
-        'api-key': process.env.DASHBOARD_API_KEY
-      }
-    })
+    const { data } = await this.$dashboardPikobarApi.get('v2/sebaran/marker_cluster?' + query)
     commit('setItem', data.data)
     commit('setIsLoading', false)
   }

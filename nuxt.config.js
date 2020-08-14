@@ -78,6 +78,7 @@ export default {
   ** Plugins to load before mounting the App
   */
   plugins: [
+    { src: '~/plugins/axios.js' },
     { src: '~/plugins/numbro.js' },
     { src: '~/plugins/initial-data.js', mode: 'client' },
     { src: '~/plugins/service-worker.js', mode: 'client' },
