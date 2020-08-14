@@ -184,6 +184,24 @@ export default {
           format: formatThousand
         },
         {
+          name: "probable",
+          label: "Total Probable",
+          sortable: true,
+          format: formatThousand
+        },
+        {
+          name: "probable_discarded",
+          label: "Probable Selesai",
+          sortable: true,
+          format: formatThousand
+        },
+        {
+          name: "probable_diisolasi",
+          label: "Probable Diisolasi",
+          sortable: true,
+          format: formatThousand
+        },
+        {
           name: "confirmation",
           label: "Total Positif",
           sortable: true,
@@ -234,6 +252,24 @@ export default {
         {
           name: "pertumbuhan_suspect_diisolasi",
           label: "Pertumbuhan Suspek Diisolasi",
+          sortable: true,
+          format: formatThousand
+        },
+        {
+          name: "pertumbuhan_probable",
+          label: "Pertumbuhan Total Probable",
+          sortable: true,
+          format: formatThousand
+        },
+        {
+          name: "pertumbuhan_probable_discarded",
+          label: "Pertumbuhan Probable Selesai",
+          sortable: true,
+          format: formatThousand
+        },
+        {
+          name: "pertumbuhan_probable_diisolasi",
+          label: "Pertumbuhan Probable Diisolasi",
           sortable: true,
           format: formatThousand
         },
@@ -328,6 +364,9 @@ export default {
               pertumbuhan_suspect: 0,
               pertumbuhan_suspect_discarded: 0,
               pertumbuhan_suspect_diisolasi: 0,
+              pertumbuhan_probable: 0,
+              pertumbuhan_probable_discarded: 0,
+              pertumbuhan_probable_diisolasi: 0,
               pertumbuhan_confirmation: 0,
               pertumbuhan_confirmation_selesai: 0,
               pertumbuhan_confirmation_meninggal: 0,
@@ -339,6 +378,9 @@ export default {
               temp2.pertumbuhan_suspect = temp[i].suspect
               temp2.pertumbuhan_suspect_discarded = temp[i].suspect_discarded
               temp2.pertumbuhan_suspect_diisolasi = temp[i].suspect_diisolasi
+              temp2.pertumbuhan_probable = temp[i].probable
+              temp2.pertumbuhan_probable_discarded = temp[i].probable_discarded
+              temp2.pertumbuhan_probable_diisolasi = temp[i].probable_diisolasi
               temp2.pertumbuhan_confirmation = temp[i].confirmation
               temp2.pertumbuhan_confirmation_selesai = temp[i].confirmation_selesai
               temp2.pertumbuhan_confirmation_meninggal = temp[i].confirmation_meninggal
@@ -349,6 +391,9 @@ export default {
               temp2.pertumbuhan_suspect = temp[i].suspect - temp[i-27].suspect
               temp2.pertumbuhan_suspect_discarded = temp[i].suspect_discarded - temp[i-27].suspect_discarded
               temp2.pertumbuhan_suspect_diisolasi = temp[i].suspect_diisolasi - temp[i-27].suspect_diisolasi
+              temp2.pertumbuhan_probable = temp[i].probable - temp[i-27].probable
+              temp2.pertumbuhan_probable_discarded = temp[i].probable_discarded - temp[i-27].probable_discarded
+              temp2.pertumbuhan_probable_diisolasi = temp[i].probable_diisolasi - temp[i-27].probable_diisolasi
               temp2.pertumbuhan_confirmation = temp[i].confirmation - temp[i-27].confirmation
               temp2.pertumbuhan_confirmation_selesai = temp[i].confirmation_selesai - temp[i-27].confirmation_selesai
               temp2.pertumbuhan_confirmation_meninggal = temp[i].confirmation_meninggal - temp[i-27].confirmation_meninggal
@@ -412,7 +457,7 @@ export default {
       return d.toLocaleString('id-ID', options)
     },
     downloadCSV () {
-      const col = ['tanggal','kode_prov','nama_prov','kode_kab','nama_kab','closecontact','closecontact_dikarantina','closecontact_discarded','suspect','suspect_diisolasi','suspect_discarded','confirmation','confirmation_selesai','confirmation_meninggal', 'pertumbuhan_closecontact', 'pertumbuhan_closecontact_discarded', 'pertumbuhan_closecontact_dikarantina', 'pertumbuhan_suspect', 'pertumbuhan_suspect_discarded', 'pertumbuhan_suspect_diisolasi', 'pertumbuhan_confirmation', 'pertumbuhan_confirmation_selesai', 'pertumbuhan_confirmation_meninggal']
+      const col = ['tanggal','kode_prov','nama_prov','kode_kab','nama_kab','closecontact','closecontact_dikarantina','closecontact_discarded','suspect','suspect_diisolasi','suspect_discarded','probable','probable_diisolasi','probable_discarded','confirmation','confirmation_selesai','confirmation_meninggal', 'pertumbuhan_closecontact', 'pertumbuhan_closecontact_discarded', 'pertumbuhan_closecontact_dikarantina', 'pertumbuhan_suspect', 'pertumbuhan_suspect_discarded', 'pertumbuhan_suspect_diisolasi','pertumbuhan_probable', 'pertumbuhan_probable_discarded', 'pertumbuhan_probable_diisolasi', 'pertumbuhan_confirmation', 'pertumbuhan_confirmation_selesai', 'pertumbuhan_confirmation_meninggal']
       let csvString = ''
       col.forEach((row) => {
         csvString += row + ','
