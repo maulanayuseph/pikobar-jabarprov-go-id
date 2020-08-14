@@ -233,7 +233,7 @@
         </CounterCardLoader>
 
         <!-- Probable -->
-        <!-- <CounterCardLoader
+        <CounterCardLoader
           :is-pending="isLoading2"
           :is-main="false"
           :is-tooltip-closecontact="false"
@@ -279,7 +279,7 @@
               </div>
             </div>
           </div>
-        </CounterCardLoader> -->
+        </CounterCardLoader>
       </section>
     </div>
   </div>
@@ -534,11 +534,9 @@ export default {
     margin-bottom: 20px;
   }
   .digital-signage2 {
-    /* width: 31% !important;
+    width: 31% !important;
     margin-left: auto;
-    margin-right: auto; */
-    width: 48% !important;
-    margin: 1%;
+    margin-right: auto;
     margin-bottom: 20px;
   }
 }
@@ -549,11 +547,9 @@ export default {
     margin-bottom: 20px;
   }
   .digital-signage2 {
-    /* width: 31% !important;
+    width: 31% !important;
     margin-left: auto;
-    margin-right: auto; */
-    width: 48% !important;
-    margin: 1%;
+    margin-right: auto;
     margin-bottom: 20px;
   }
 }
