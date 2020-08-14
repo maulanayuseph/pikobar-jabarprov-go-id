@@ -3,7 +3,7 @@
     <br>
     <header class="m-4 mb-8 md:m-8">
       <h3 class="text-3xl text-gray-900 font-bold text-left leading-none" style="margin-bottom: 10px; ">
-        Data ODP PDP COVID-19 Jawa Barat (Public Version): DATA
+        Data Kasus Covid-19 Jawa Barat (Public Version)
       </h3>
     </header>
 
@@ -73,15 +73,20 @@
     <section class="m-4 md:m-8 flex flex-col xl:flex-row rounded-lg overflow-hidden shadow-md" style="background:#e6e6e6">
       <div class="w-full xl:w-1/2 m-1 p-5">
         <b>Disclaimer :</b>
-        <p>Data Suspek dan Kontak Erat mulai Pikobar terima berdasarkan laporan harian Dinas Kesehatan Kab/Kota per tgl 5 Agustus 2020.</p>
+        <p>
+          Data Suspek, Probable dan Kontak Erat diterima Pikobar berdasarkan laporan harian Dinas Kesehatan Kab/Kota per 5 Agustus 2020,
+          sehingga terlihat penumpukan kasus pada Chart Harian dan Kumulatif untuk Suspek, Probable, dan Kontak Erat pada tanggal tersebut.
+          <br><br>
+          Saat ini data kasus Probable sedang dalam proses untuk divisualisasikan.
+        </p>
       </div>
       <div class="w-full xl:w-1/2 m-1 p-5">
         <b>&#9432; Sumber Data :</b>
         <ul style="list-style: inherit; margin-left: 20px;">
-          <li>Konfirmasi (Total, Dalam Perawatan, Sembuh, Meninggal) = Laporan Harian Kemenkes</li>
-          <li>Suspek (Total, Dalam Perawatan, Discarded) = Laporan Harian Dinkes Kab/kota di Jawa Barat</li>
-          <li>Kontak Erat (Total, Karantina, Discarded) = Laporan Harian Dinkes Kab/kota di Jawa Barat</li>
-          <li>Probable (Total, Dalam Perawatan, Sembuh, Meninggal) = Laporan Harian Dinkes Kab/Kota di Jawa Barat</li>
+          <li>Konfirmasi (Total, Dalam Perawatan, Sembuh, Meninggal): Laporan Harian Kemenkes</li>
+          <li>Suspek (Total, Dalam Perawatan, Discarded): Laporan Harian Dinkes Kab/Kota di Jawa Barat</li>
+          <li>Kontak Erat (Total, Karantina, Discarded): Laporan Harian Dinkes Kab/Kota di Jawa Barat</li>
+          <li>Probable (Total, Dalam Perawatan, Sembuh, Meninggal): Laporan Harian Dinkes Kab/Kota di Jawa Barat</li>
         </ul>
       </div>
     </section>

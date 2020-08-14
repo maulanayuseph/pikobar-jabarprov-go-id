@@ -141,6 +141,7 @@
           :is-main="false"
           :is-tooltip-closecontact="true"
           :is-tooltip-suspect="false"
+          :is-tooltip-probable="false"
           class="border border-solid digital-signage2 bg-white text-title"
           label="Kontak Erat"
         >
@@ -169,6 +170,10 @@
                   ({{ formatNumberPercent((dataIstilahBaru.closecontact_discarded / dataIstilahBaru.closecontact_total) * 100) }}%)
                 </div>
                 <span class="text-sm color-title">Discarded</span>
+                <div class="tooltip pl-1">
+                  &#9432;
+                  <span class="tooltiptext text-xs">Kasus dikatakan discarded apabila orang dengan status kontak erat telah menyelesaikan masa karantina selama 14 hari.</span>
+                </div>
               </div>
             </div>
           </div>
@@ -180,6 +185,7 @@
           :is-main="false"
           :is-tooltip-closecontact="false"
           :is-tooltip-suspect="true"
+          :is-tooltip-probable="false"
           class="mb-8 border border-solid digital-signage2 bg-white text-title"
           label="Suspek"
         >
@@ -208,6 +214,10 @@
                   ({{ formatNumberPercent((dataIstilahBaru.suspect_discarded / dataIstilahBaru.suspect_total) * 100) }}%)
                 </div>
                 <span class="text-sm color-title">Discarded</span>
+                <div class="tooltip pl-1">
+                  &#9432;
+                  <span class="tooltiptext text-xs">Kasus dikatakan discarded apabila orang dengan status kasus suspek memiliki hasil pemeriksaan RT-PCR 2 kali negatif selama 2 hari berturut-turut dengan selang waktu > 24 jam.</span>
+                </div>
               </div>
               <!-- <div class="w-1/3 color-suspect-meninggal">
                 <div class="text-2xl">
@@ -221,6 +231,55 @@
             </div>
           </div>
         </CounterCardLoader>
+
+        <!-- Probable -->
+        <!-- <CounterCardLoader
+          :is-pending="isLoading2"
+          :is-main="false"
+          :is-tooltip-closecontact="false"
+          :is-tooltip-suspect="false"
+          :is-tooltip-probable="true"
+          class="mb-8 border border-solid digital-signage2 bg-white text-title"
+          label="Probable"
+        >
+          <div class="flex flex-col text-white text-center mt-3 font-bold">
+            <div class="w-full color-title">
+              <div class="text-3xl">
+                {{ formatNumber(dataIstilahBaru.probable_total) }}
+              </div>
+              <span class="text-md">Total Probable</span>
+            </div>
+            <div class="w-full flex mt-3">
+              <div class="w-1/2 color-probable-diisolasi">
+                <div class="text-2xl">
+                  {{ formatNumber(dataIstilahBaru.probable_diisolasi) }}
+                </div>
+                <div class="text-sm">
+                  ({{ formatNumberPercent((dataIstilahBaru.probable_diisolasi / dataIstilahBaru.probable_total) * 100) }}%)
+                </div>
+                <span class="text-sm color-title">Isolasi/Dalam Perawatan</span>
+              </div>
+              <div class="w-1/2 color-probable-discarded">
+                <div class="text-2xl">
+                  {{ formatNumber(dataIstilahBaru.probable_discarded) }}
+                </div>
+                <div class="text-sm">
+                  ({{ formatNumberPercent((dataIstilahBaru.probable_discarded / dataIstilahBaru.probable_total) * 100) }}%)
+                </div>
+                <span class="text-sm color-title">Selesai Isolasi/Sembuh</span>
+              </div>
+              <div class="w-1/3 color-probable-meninggal">
+                <div class="text-2xl">
+                  {{ formatNumber(dataIstilahBaru.probable_meninggal) }}
+                </div>
+                <div class="text-sm">
+                  ({{ formatNumberPercent((dataIstilahBaru.probable_meninggal / dataIstilahBaru.probable_total) * 100) }}%)
+                </div>
+                <span class="text-sm color-title">Meninggal</span>
+              </div>
+            </div>
+          </div>
+        </CounterCardLoader> -->
       </section>
     </div>
   </div>
@@ -291,7 +350,15 @@ export default {
         suspect_discarded: 0,
         suspect_discarded_pertumbuhan: 0,
         suspect_meninggal: 0,
-        suspect_meninggal_pertumbuhan: 0
+        suspect_meninggal_pertumbuhan: 0,
+        probable_total: 0,
+        probable_total_pertumbuhan: 0,
+        probable_diisolasi: 0,
+        probable_diisolasi_pertumbuhan: 0,
+        probable_discarded: 0,
+        probable_discarded_pertumbuhan: 0,
+        probable_meninggal: 0,
+        probable_meninggal_pertumbuhan: 0
       },
       icons: {
         faAngleDoubleUp,
@@ -389,6 +456,15 @@ export default {
 .color-suspect-meninggal {
   color: #A20E0E;
 }
+.color-probable-diisolasi {
+  color: #D7C368;
+}
+.color-probable-discarded {
+  color: #27AE60;
+}
+.color-probable-meninggal {
+  color: #A20E0E;
+}
 
 .bg-confirmation-diisolasi {
   background: #CEB546;
@@ -412,6 +488,15 @@ export default {
   background: #828282;
 }
 .bg-suspect-meninggal {
+  background: #A20E0E;
+}
+.bg-probable-diisolasi {
+  background: #D7C368;
+}
+.bg-probable-discarded {
+  background: #27AE60;
+}
+.bg-probable-meninggal {
   background: #A20E0E;
 }
 
@@ -449,6 +534,9 @@ export default {
     margin-bottom: 20px;
   }
   .digital-signage2 {
+    /* width: 31% !important;
+    margin-left: auto;
+    margin-right: auto; */
     width: 48% !important;
     margin: 1%;
     margin-bottom: 20px;
@@ -461,6 +549,9 @@ export default {
     margin-bottom: 20px;
   }
   .digital-signage2 {
+    /* width: 31% !important;
+    margin-left: auto;
+    margin-right: auto; */
     width: 48% !important;
     margin: 1%;
     margin-bottom: 20px;
@@ -475,5 +566,49 @@ export default {
     width: 100% !important;
     margin-bottom: 20px;
   }
+}
+</style>
+
+<style scoped>
+  /* Tooltip container */
+  .tooltip {
+    position: absolute;
+    display: inline-block;
+    font-weight: normal !important;
+  }
+
+  /* Tooltip text */
+  .tooltip .tooltiptext {
+    visibility: hidden;
+    width: 280px;
+    background-color: white;
+    color:#000;
+    text-align: left;
+    padding: 10px;
+    border-radius: 6px;
+    /* Position the tooltip text - see examples below! */
+    position: absolute;
+    z-index: 1;
+    top: 100%;
+    left: 50%;
+    margin-left: -150px; /* Use half of the width (120/2 = 60), to center the tooltip */
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14);
+    font-weight: normal;
+  }
+
+  .tooltip .tooltiptext::after {
+    content: " ";
+    position: absolute;
+    bottom: 100%;  /* At the top of the tooltip */
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent white transparent;
+  }
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltiptext {
+  visibility: visible;
 }
 </style>
