@@ -39,7 +39,7 @@ export default {
         {
           id: 'stat',
           title: 'Statistik',
-          component: () => import('./DataSummary')
+          component: () => import('./DataSummaryIstilahBaru')
         },
         // {
         //   id: 'map-area',

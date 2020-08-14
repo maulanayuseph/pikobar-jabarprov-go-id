@@ -229,8 +229,8 @@ export default {
     },
     fetchData () {
       const self = this
-      axios
-        .get('https://covid19-public.digitalservice.id/api/v1/sebaran/jabar/faskes')
+      this.$covid19PublicApi
+        .get('v1/sebaran/jabar/faskes')
         .then(function (response) {
           self.jsonData = response.data.data
           self.geoJSONData = self.createGeoJSON(response.data.data)

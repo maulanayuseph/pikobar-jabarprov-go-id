@@ -3,31 +3,35 @@
     <br>
     <header class="m-4 mb-8 md:m-8">
       <div class="flex flex-col lg:flex-row lg:items-stretch">
-        <div class="w-2/3">
+        <div class="lg:w-2/3 md:auto sm:w-auto">
           <h3 class="text-3xl text-gray-900 font-bold text-left leading-none" style="margin-bottom: 10px; ">
             Sebaran Kasus Covid-19 di Jawa Barat
           </h3>
         </div>
-        <div class="w-1/3">
-          <div class="flex flex-col lg:flex-row">
-            <div class="w-1/2 mr-2">
-              <v-select
+        <div class="lg:w-1/3 md:auto sm:w-auto">
+          <div class="flex">
+            <div class="w-full mr-2">
+              <multiselect
                 v-model="selectedKota"
-                :clearable="false"
                 :options="optionsKota"
-                :reduce="kota => kota.value"
+                track-by="value"
                 label="label"
+                select-label=""
+                deselect-label=""
+                selected-label=""
                 @input="setSelectedKota"
               />
             </div>
-            <div class="w-1/2">
-              <v-select
+            <div class="w-full">
+              <multiselect
                 v-model="selectedKecamatan"
-                :clearable="false"
                 :options="optionsKecamatan"
-                :reduce="kecamatan => kecamatan.value"
+                track-by="value"
                 label="label"
-                :disabled="selectedKota === '32' ? true : false"
+                select-label=""
+                deselect-label=""
+                selected-label=""
+                :disabled="selectedKota.value === '32' ? true : false"
                 @input="setSelectedKecamatan"
               />
             </div>
@@ -52,8 +56,8 @@
                 :active="activeMap === 'polygon'"
                 @click="enableMap('polygon')"
               >
-                <img v-if="activeMap === 'polygon'" src="/img/icon-sebaran-active.svg" style="margin-top: 2px; margin-right:5px;">
-                <img v-if="activeMap !== 'polygon'" src="/img/icon-sebaran-inactive.svg" style="margin-top: 2px; margin-right:5px;">
+                <img v-if="activeMap === 'polygon'" src="/img/icon-sebaran-active.svg" style="margin-top: 2px; margin-right:5px; margin:auto;">
+                <img v-if="activeMap !== 'polygon'" src="/img/icon-sebaran-inactive.svg" style="margin-top: 2px; margin-right:5px; margin:auto;">
                 Sebaran Polygon
               </button>
               <button
@@ -62,8 +66,8 @@
                 :active="activeMap === 'titik'"
                 @click="enableMap('titik')"
               >
-                <img v-if="activeMap === 'titik'" src="/img/icon-sebaran-active.svg" style="margin-top: 2px; margin-right:5px;">
-                <img v-if="activeMap !== 'titik'" src="/img/icon-sebaran-inactive.svg" style="margin-top: 2px; margin-right:5px;">
+                <img v-if="activeMap === 'titik'" src="/img/icon-sebaran-active.svg" style="margin-top: 2px; margin-right:5px; margin:auto;">
+                <img v-if="activeMap !== 'titik'" src="/img/icon-sebaran-inactive.svg" style="margin-top: 2px; margin-right:5px; margin:auto;">
                 Sebaran Titik
               </button>
               <button
@@ -72,18 +76,18 @@
                 :active="activeMap === 'timeslider'"
                 @click="enableMap('timeslider')"
               >
-                <img v-if="activeMap === 'timeslider'" src="/img/icon-data-positif-active.svg" style="margin-top: 2px; margin-right:5px;">
-                <img v-if="activeMap !== 'timeslider'" src="/img/icon-data-positif-inactive.svg" style="margin-top: 2px; margin-right:5px;">
-                Timeslider - Data Positif
+                <img v-if="activeMap === 'timeslider'" src="/img/icon-data-positif-active.svg" style="margin-top: 2px; margin-right:5px; margin:auto;">
+                <img v-if="activeMap !== 'timeslider'" src="/img/icon-data-positif-inactive.svg" style="margin-top: 2px; margin-right:5px; margin:auto;">
+                Timeslider - Data Terkonfirmasi
               </button>
             </div>
-            <MapV3SebaranPolygon v-if="activeMap === 'polygon'" :active-region-id.sync="activeRegionId" :active-region-category.sync="activeRegionCategory" :active-parent-region-name.sync="activeParentRegionName" :active-case-category.sync="activeCaseCategory" />
-            <MapV3SebaranTitik v-if="activeMap === 'titik'" :active-region-id.sync="activeRegionId" :active-region-category.sync="activeRegionCategory" :active-parent-region-name.sync="activeParentRegionName" :active-case-category.sync="activeCaseCategory" />
-            <MapV3SebaranTimeSlider v-if="activeMap === 'timeslider'" :active-region-id.sync="activeRegionId" :active-region-category.sync="activeRegionCategory" :active-parent-region-name.sync="activeParentRegionName" :active-case-category.sync="activeCaseCategory" />
+            <MapV3SebaranPolygonIstilahBaru v-if="activeMap === 'polygon'" :active-region-id.sync="activeRegionId" :active-region-category.sync="activeRegionCategory" :active-parent-region-name.sync="activeParentRegionName" :active-case-category.sync="activeCaseCategory" />
+            <MapV3SebaranTitikIstilahBaru v-if="activeMap === 'titik'" :active-region-id.sync="activeRegionId" :active-region-category.sync="activeRegionCategory" :active-parent-region-name.sync="activeParentRegionName" :active-case-category.sync="activeCaseCategory" />
+            <MapV3SebaranTimeSliderIstilahBaru v-if="activeMap === 'timeslider'" :active-region-id.sync="activeRegionId" :active-region-category.sync="activeRegionCategory" :active-parent-region-name.sync="activeParentRegionName" :active-case-category.sync="activeCaseCategory" />
           </div>
         </div>
         <div class="w-full mb-6 lg:w-2/5 lg:mb-0 bg-white rounded-lg mb-8 shadow-lg">
-          <RasioConfirmedCase :active-region-id="activeRegionId" :active-region-category="activeRegionCategory" :active-parent-region-name.sync="activeParentRegionName" :active-case-category.sync="activeCaseCategory" />
+          <RasioConfirmedCaseIstilahBaru :active-region-id="activeRegionId" :active-region-category="activeRegionCategory" :active-parent-region-name.sync="activeParentRegionName" :active-case-category.sync="activeCaseCategory" />
         </div>
       </div>
     </section>
@@ -112,26 +116,45 @@
               <button
                 class="button-selector m-1 w-full xl:w-auto "
                 style="display: flex;"
-                :active="activeTable === 'undermonitoring'"
-                @click="enableTable('undermonitoring')"
+                :active="activeTable === 'suspect'"
+                @click="enableTable('suspect')"
               >
-                ODP
+                Suspek
               </button>
               <button
                 class="button-selector m-1 w-full xl:w-auto "
                 style="display: flex;"
-                :active="activeTable === 'underinvestigation'"
-                @click="enableTable('underinvestigation')"
+                :active="activeTable === 'closecontact'"
+                @click="enableTable('closecontact')"
               >
-                PDP
+                Kontak Erat
               </button>
             </div>
           </div>
-          <ConfirmedCaseList v-if="activeTable === 'confirmed'" :active-region-id.sync="activeRegionId" :active-region-category.sync="activeRegionCategory" :active-parent-region-name.sync="activeParentRegionName" />
-          <UnconfirmedCaseList v-if="activeTable === 'unconfirmed'" :active-region-id.sync="activeRegionId" :active-region-category.sync="activeRegionCategory" :active-parent-region-name.sync="activeParentRegionName" />
-          <UnderMonitoringCaseList v-if="activeTable === 'undermonitoring'" :active-region-id.sync="activeRegionId" :active-region-category.sync="activeRegionCategory" :active-parent-region-name.sync="activeParentRegionName" />
-          <UnderInvestigationCaseList v-if="activeTable === 'underinvestigation'" :active-region-id.sync="activeRegionId" :active-region-category.sync="activeRegionCategory" :active-parent-region-name.sync="activeParentRegionName" />
+          <ConfirmedCaseListIstilahBaru v-if="activeTable === 'confirmed'" :active-region-id.sync="activeRegionId" :active-region-category.sync="activeRegionCategory" :active-parent-region-name.sync="activeParentRegionName" />
+          <SuspectCaseListIstilahBaru v-if="activeTable === 'suspect'" :active-region-id.sync="activeRegionId" :active-region-category.sync="activeRegionCategory" :active-parent-region-name.sync="activeParentRegionName" />
+          <CloseContactCaseListIstilahBaru v-if="activeTable === 'closecontact'" :active-region-id.sync="activeRegionId" :active-region-category.sync="activeRegionCategory" :active-parent-region-name.sync="activeParentRegionName" />
         </div>
+      </div>
+    </section>
+    <section class="m-4 md:m-8 flex flex-col xl:flex-row rounded-lg overflow-hidden shadow-md" style="background:#e6e6e6">
+      <div class="w-full xl:w-1/2 m-1 p-5">
+        <b>Disclaimer :</b>
+        <p>
+          Data Suspek, Probable dan Kontak Erat diterima Pikobar berdasarkan laporan harian Dinas Kesehatan Kab/Kota per 5 Agustus 2020,
+          sehingga terlihat penumpukan kasus pada Chart Harian dan Kumulatif untuk Suspek, Probable, dan Kontak Erat pada tanggal tersebut.
+          <br><br>
+          Saat ini data kasus Probable sedang dalam proses untuk divisualisasikan.
+        </p>
+      </div>
+      <div class="w-full xl:w-1/2 m-1 p-5">
+        <b>&#9432; Sumber Data :</b>
+        <ul style="list-style: inherit; margin-left: 20px;">
+          <li>Konfirmasi (Total, Dalam Perawatan, Sembuh, Meninggal): Laporan Harian Kemenkes</li>
+          <li>Suspek (Total, Dalam Perawatan, Discarded): Laporan Harian Dinkes Kab/Kota di Jawa Barat</li>
+          <li>Kontak Erat (Total, Karantina, Discarded): Laporan Harian Dinkes Kab/Kota di Jawa Barat</li>
+          <li>Probable (Total, Dalam Perawatan, Sembuh, Meninggal): Laporan Harian Dinkes Kab/Kota di Jawa Barat</li>
+        </ul>
       </div>
     </section>
   </div>
@@ -143,24 +166,22 @@
 // import { analytics } from '~/lib/firebase'
 export default {
   components: {
-    MapV3SebaranPolygon: () => import('~/components/MapV3SebaranPolygon'),
-    MapV3SebaranTitik: () => import('~/components/MapV3SebaranTitik'),
-    MapV3SebaranTimeSlider: () => import('~/components/MapV3SebaranTimeSlider'),
-    RasioConfirmedCase: () => import('~/components/RasioConfirmedCase'),
-    ConfirmedCaseList: () => import('~/components/ConfirmedCaseList'),
-    UnconfirmedCaseList: () => import('~/components/UnconfirmedCaseList'),
-    UnderMonitoringCaseList: () => import('~/components/UnderMonitoringCaseList'),
-    UnderInvestigationCaseList: () => import('~/components/UnderInvestigationCaseList')
+    MapV3SebaranPolygonIstilahBaru: () => import('~/components/MapV3SebaranPolygonIstilahBaru'),
+    MapV3SebaranTitikIstilahBaru: () => import('~/components/MapV3SebaranTitikIstilahBaru'),
+    MapV3SebaranTimeSliderIstilahBaru: () => import('~/components/MapV3SebaranTimeSliderIstilahBaru'),
+    RasioConfirmedCaseIstilahBaru: () => import('~/components/RasioConfirmedCaseIstilahBaru'),
+    ConfirmedCaseListIstilahBaru: () => import('~/components/ConfirmedCaseListIstilahBaru'),
+    SuspectCaseListIstilahBaru: () => import('~/components/SuspectCaseListIstilahBaru'),
+    CloseContactCaseListIstilahBaru: () => import('~/components/CloseContactCaseListIstilahBaru')
   },
   data () {
     return {
-      options: [{ code: 'CA', country: 'Canada' }],
       activeRegionId: '32',
       activeRegionCategory: 'kota',
       activeParentRegionName: 'Jawa Barat',
       activeMap: 'polygon',
       activeTable: 'confirmed',
-      activeCaseCategory: 'positif_aktif',
+      activeCaseCategory: 'confirmation_diisolasi',
 
       // data
       parentLabel: {
@@ -205,13 +226,10 @@ export default {
         { value: '3278', label: 'KOTA TASIKMALAYA' },
         { value: '3279', label: 'KOTA BANJAR' }
       ],
-      selectedKota: '32',
+      selectedKota: { value: '32', label: 'JAWA BARAT' },
 
-      optionsKecamatan: [{
-        label: 'Pilih Kecamatan',
-        value: ''
-      }],
-      selectedKecamatan: ''
+      optionsKecamatan: [{ label: 'Pilih Kecamatan', value: '' }],
+      selectedKecamatan: { label: 'Pilih Kecamatan', value: '' }
     }
   },
   computed: {
@@ -222,14 +240,14 @@ export default {
   watch: {
     activeRegionId (newVal, oldVal) {
       if (this.activeRegionCategory === 'kelurahan') {
-        this.selectedKecamatan = parseInt(newVal)
+        this.selectedKecamatan = this.optionsKecamatan.find(x => x.value === parseInt(newVal))
       } else if (this.activeRegionCategory === 'kecamatan') {
-        this.selectedKota = newVal
-        this.selectedKecamatan = ''
+        this.selectedKota = this.optionsKota.find(x => x.value === newVal)
+        this.selectedKecamatan = { label: 'Pilih Kecamatan', value: '' }
         this.getDataKecamatan(newVal)
       } else {
-        this.selectedKota = '32'
-        this.selectedKecamatan = ''
+        this.selectedKota = { value: '32', label: 'JAWA BARAT' }
+        this.selectedKecamatan = { label: 'Pilih Kecamatan', value: '' }
       }
     },
     dataKecamatan (val) {
@@ -250,7 +268,7 @@ export default {
   mounted () {
     this.$nextTick(() => {
       Promise.all([
-        this.$store.dispatch('data-kasus-total/getItems')
+        this.$store.dispatch('data-kasus-total-v2/getItems')
       ]).then(() => {
       })
     })
@@ -260,12 +278,13 @@ export default {
   methods: {
     enableMap (type) {
       this.activeMap = type
-      this.activeCaseCategory = 'positif_aktif'
+      this.activeCaseCategory = 'confirmation_diisolasi'
     },
     enableTable (type) {
       this.activeTable = type
     },
-    setSelectedKota (val) {
+    setSelectedKota () {
+      const val = this.selectedKota.value
       if (val === '32') {
         this.getDataSebaranPolygon('kota', this.activeCaseCategory)
         this.activeRegionId = val
@@ -280,16 +299,16 @@ export default {
         this.activeRegionCategory = 'kecamatan'
       }
     },
-    setSelectedKecamatan (val) {
+    setSelectedKecamatan () {
+      const val = this.selectedKecamatan.value
       const kodeKec = val.toString()
       if (val === '') {
-        this.getDataKecamatan(this.selectedKota)
-        this.getDataSebaranPolygon('kecamatan', this.activeCaseCategory, this.selectedKota)
-        this.activeRegionId = this.selectedKota
+        this.getDataKecamatan(this.selectedKota.value)
+        this.getDataSebaranPolygon('kecamatan', this.activeCaseCategory, this.selectedKota.value)
+        this.activeRegionId = this.selectedKota.value
         this.activeRegionCategory = 'kecamatan'
       } else {
         this.getDataSebaranPolygon('kelurahan', this.activeCaseCategory, kodeKec)
-
         this.activeRegionId = kodeKec
         this.activeRegionCategory = 'kelurahan'
       }
@@ -335,7 +354,7 @@ export default {
 
       query += `&${parentKeyCode}=${regionCode}`
 
-      this.$store.dispatch('data-sebaran-polygon/getItem', query)
+      this.$store.dispatch('data-sebaran-polygon-v2/getItem', query)
     }
   },
   head () {
@@ -360,6 +379,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+$vs-dropdown-z-index: -1 !default;
 .button-selector {
   @apply px-6 py-2 rounded-md border border-solid border-brand-green
   text-brand-green bg-white;
@@ -368,10 +388,9 @@ export default {
     @apply text-white bg-brand-green;
   }
 }
-</style>
-<style>
-  @import "vue-select/dist/vue-select.css";
 
-  /* @import "leaflet-geosearch/assets/css/leaflet.css"; */
-
+  .style-chooser .vs__dropdown-menu {
+    z-index: -10000 !important;
+  }
 </style>
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
