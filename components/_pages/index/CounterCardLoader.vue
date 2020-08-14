@@ -2,7 +2,7 @@
 import { ContentLoader } from 'vue-content-loader'
 export default {
   functional: true,
-  props: ['size', 'isPending', 'label', 'isMain', 'isTooltipClosecontact', 'isTooltipSuspect'],
+  props: ['size', 'isPending', 'label', 'isMain', 'isTooltipClosecontact', 'isTooltipSuspect', 'isTooltipProbable'],
   render (h, context) {
     const staticClass = context.data.staticClass || ''
     const staticStyle = context.data.staticStyle || {}
@@ -31,16 +31,22 @@ export default {
             <div style={`display: ${context.props.isTooltipClosecontact ? 'inline-block' : 'none'}`} class="tooltip pl-1">
               &#9432;
               <span class="tooltiptext text-xs">
-                Orang yang memiliki riwayat kontak dengan kasus probable atau konfirmasi COVID-19.
+                Orang yang memiliki riwayat kontak dengan kasus probable atau terkonfirmasi COVID-19.
               </span>
             </div>
             <div style={`display: ${context.props.isTooltipSuspect ? 'inline-block' : 'none'}`} class="tooltip pl-1">
             &#9432;
               <span class="tooltiptext text-xs">
-                Seseorang yang memiliki salah satu dari kriteria berikut :
+                Orang yang memiliki salah satu dari kriteria berikut :
                 <br/>i. Mengalami Infeksi Saluran Pernapasan Akut (ISPA) DAN pada 14 hari terakhir sebelum timbul gejala memiliki riwayat perjalanan atau tinggal di negara/wilayah Indonesia yang melaporkan transmisi lokal.
                 <br/>ii. Mengalami salah satu gejala/tanda ISPA DAN pada 14 hari terakhir sebelum timbul gejala memiliki riwayat kontak dengan kasus terkonfirmasi/probable COVID-19.
                 <br/>iii. Mengalami ISPA berat/pneumonia berat yang membutuhkan perawatan di rumah sakit DAN tidak ada penyebab lain berdasarkan gambaran klinik yang meyakinkan.
+              </span>
+            </div>
+            <div style={`display: ${context.props.isTooltipProbable ? 'inline-block' : 'none'}`} class="tooltip pl-1">
+            &#9432;
+              <span class="tooltiptext text-xs">
+                Kasus suspek dengan ISPA Berat/ARDS/meninggal dengan gambaran klinis yang meyakinkan COVID-19 dan belum ada hasil pemeriksaan laboratorium RT-PCR.
               </span>
             </div>
           </h4>
