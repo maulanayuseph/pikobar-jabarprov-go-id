@@ -103,7 +103,9 @@ export default {
         confirmation_meninggal: 'Positif - Meninggal',
         confirmation_selesai: 'Positif - Selesai Isolasi/ Sembuh',
         suspect_diisolasi: 'Suspek - Isolasi/ Dalam Perawatan',
-        suspect_meninggal: 'Suspek - Meninggal',
+        // suspect_meninggal: 'Suspek - Meninggal',
+        probable_diisolasi: 'Probable - Isolasi/ Dalam Perawatan',
+        probable_meninggal: 'Probable - Meninggal',
         closecontact_dikarantina: 'Kontak Erat - Masih Dikarantina'
       },
 
@@ -114,7 +116,9 @@ export default {
         confirmation_meninggal: '#a51212',
         confirmation_selesai: '#3CB670',
         suspect_diisolasi: '#EFCA5B',
-        suspect_meninggal: '#a51212',
+        // suspect_meninggal: '#a51212',
+        probable_diisolasi: '#c5bd97',
+        probable_meninggal: '#a51212',
         closecontact_dikarantina: '#FBA252'
       },
 
@@ -164,6 +168,9 @@ export default {
             color: '#eb5757'
           },
           3: {
+            color: '#eb5757'
+          },
+          4: {
             color: 'grey',
             lineWidth: 0,
             pointSize: 0,
@@ -256,11 +263,12 @@ export default {
       if (category === 'gabungan_aktif') {
         this.titleCase = 'Rasio Gabungan Kasus Aktif'
         tooltip = `
-        <div class="p-3" style="font-size: 0.7rem; border-radius: 0.5rem; width: 8rem;">
+        <div class="p-3" style="font-size: 0.7rem; border-radius: 0.5rem; width: 250px;">
           <b>${el[nameApiRegion]}</b> <br>
           Positif - Isolasi/ Dalam Perawatan : ${el.confirmation_diisolasi} <br>
           Suspek - Isolasi/ Dalam Perawatan : ${el.suspect_diisolasi} <br>
           Kontak Erat - Masih Dikarantina : ${el.closecontact_dikarantina} <br>
+          Probable - Isolasi/ Dalam Perawatan : ${el.probable_diisolasi} <br>
           Gabungan Kasus : ${el.gabungan_aktif} <br>
         </div>
         `
@@ -271,6 +279,8 @@ export default {
             { v: '', f: tooltip },
             { v: el.suspect_diisolasi, f: el.suspect_diisolasi },
             { v: '', f: tooltip },
+            { v: el.probable_diisolasi, f: el.probable_diisolasi },
+            { v: '', f: tooltip },
             { v: el.confirmation_diisolasi, f: el.confirmation_diisolasi },
             { v: '', f: tooltip }
             // { v: el.confirmation_total, f: el.confirmation_total }
@@ -279,8 +289,9 @@ export default {
         this.series = {
           0: { color: this.color.closecontact_dikarantina },
           1: { color: this.color.suspect_diisolasi },
-          2: { color: this.color.confirmation_diisolasi },
-          3: { color: '#000000' }
+          2: { color: this.color.probable_diisolasi },
+          3: { color: this.color.confirmation_diisolasi },
+          4: { color: '#000000' }
         }
       } else if (category === 'confirmation_total') {
         this.titleCase = 'Rasio Kasus Terkonfirmasi'
@@ -337,7 +348,8 @@ export default {
       if (category === 'gabungan_aktif') {
         this.chartOptions.series[0].color = this.color.closecontact_dikarantina
         this.chartOptions.series[1].color = this.color.suspect_diisolasi
-        this.chartOptions.series[2].color = this.color.confirmation_diisolasi
+        this.chartOptions.series[2].color = this.color.probable_diisolasi
+        this.chartOptions.series[3].color = this.color.confirmation_diisolasi
       } else if (category === 'confirmation_total') {
         this.chartOptions.series[0].color = this.color.confirmation_meninggal
         this.chartOptions.series[1].color = this.color.confirmation_selesai
@@ -353,6 +365,8 @@ export default {
           { id: 'Kontak Erat - Masih Dikarantina', label: 'Kontak Erat - Masih Dikarantina', type: 'number' },
           { type: 'string', role: 'tooltip', p: { html: true } },
           { id: 'Suspek - Isolasi/ Dalam Perawatan', label: 'Suspek - Isolasi/ Dalam Perawatan', type: 'number' },
+          { type: 'string', role: 'tooltip', p: { html: true } },
+          { id: 'Probable - Isolasi/ Dalam Perawatan', label: 'Probable - Isolasi/ Dalam Perawatan', type: 'number' },
           { type: 'string', role: 'tooltip', p: { html: true } },
           { id: 'Positif - Isolasi/ Dalam Perawatan', label: 'Positif - Isolasi/ Dalam Perawatan', type: 'number' },
           { type: 'string', role: 'tooltip', p: { html: true } }
