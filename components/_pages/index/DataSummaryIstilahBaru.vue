@@ -169,6 +169,10 @@
                   ({{ formatNumberPercent((dataIstilahBaru.closecontact_discarded / dataIstilahBaru.closecontact_total) * 100) }}%)
                 </div>
                 <span class="text-sm color-title">Discarded</span>
+                <div class="tooltip pl-1">
+                  &#9432;
+                  <span class="tooltiptext text-xs">Kasus dikatakan discarded apabila orang dengan status kontak erat telah menyelesaikan masa karantina selama 14 hari.</span>
+                </div>
               </div>
             </div>
           </div>
@@ -208,6 +212,10 @@
                   ({{ formatNumberPercent((dataIstilahBaru.suspect_discarded / dataIstilahBaru.suspect_total) * 100) }}%)
                 </div>
                 <span class="text-sm color-title">Discarded</span>
+                <div class="tooltip pl-1">
+                  &#9432;
+                  <span class="tooltiptext text-xs">Kasus dikatakan discarded apabila orang dengan status suspek memiliki hasil pemeriksaan RT-PCR 2 kali negatif selama 2 hari berturut-turut dengan selang waktu > 24 jam.</span>
+                </div>
               </div>
               <!-- <div class="w-1/3 color-suspect-meninggal">
                 <div class="text-2xl">
@@ -475,5 +483,49 @@ export default {
     width: 100% !important;
     margin-bottom: 20px;
   }
+}
+</style>
+
+<style scoped>
+  /* Tooltip container */
+  .tooltip {
+    position: absolute;
+    display: inline-block;
+    font-weight: normal !important;
+  }
+
+  /* Tooltip text */
+  .tooltip .tooltiptext {
+    visibility: hidden;
+    width: 280px;
+    background-color: white;
+    color:#000;
+    text-align: left;
+    padding: 10px;
+    border-radius: 6px;
+    /* Position the tooltip text - see examples below! */
+    position: absolute;
+    z-index: 1;
+    top: 100%;
+    left: 50%;
+    margin-left: -150px; /* Use half of the width (120/2 = 60), to center the tooltip */
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14);
+    font-weight: normal;
+  }
+
+  .tooltip .tooltiptext::after {
+    content: " ";
+    position: absolute;
+    bottom: 100%;  /* At the top of the tooltip */
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent white transparent;
+  }
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltiptext {
+  visibility: visible;
 }
 </style>
