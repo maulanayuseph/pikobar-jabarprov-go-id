@@ -403,8 +403,8 @@ export default {
     },
     fetchData () {
       const self = this
-      axios
-        .get('https://covid19-public.digitalservice.id/api/v1/sebaran/jabar')
+      this.$covid19PublicApi
+        .get('v1/sebaran/jabar')
         .then(function (response) {
           self.jsonData = response.data.data.content
           self.createMap('kota')

@@ -138,8 +138,8 @@ export default {
     fetchDataProvinsi () {
       const self = this
 
-      axios
-        .get('https://covid19-public.digitalservice.id/api/v1/rekapitulasi/jabar?level=prov')
+      this.$covid19PublicApi
+        .get('v1/rekapitulasi/jabar?level=prov')
         .then(function (response) {
           self.jsonDataProvinsi = response.data.data.content
 

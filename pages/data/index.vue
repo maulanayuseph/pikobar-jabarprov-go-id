@@ -8,13 +8,13 @@
       <small class="text-xl opacity-75">*Update Terakhir: {{ lastUpdatedAt }}</small>
     </header>
     <section class="m-4 mb-8 md:m-8">
-      <DataSummary />
+      <DataSummaryIstilahBaru />
     </section>
     <section class="m-4 mb-8 md:m-8">
       <DataRDT />
     </section>
     <section class="m-4 mb-8 md:m-8">
-      <DataPCR />
+      <DataPCRIstilahBaru />
     </section>
     <section class="m-4 md:m-8">
       <div class="flex flex-col lg:flex-row lg:items-stretch">
@@ -26,7 +26,7 @@
             <hr>
           </div>
           <div class="p-6">
-            <MapV4SebaranPolygon />
+            <MapV4SebaranPolygonIstilahBaru />
           </div>
         </div>
       </div>
@@ -52,18 +52,18 @@
     </section>
 
     <section class="m-4 mb-8 md:m-8">
-      <BarStatAreaSingleV2 />
+      <BarStatAreaSingleV2IstilahBaru />
+    </section>
+
+    <section class="m-4 md:m-8">
+      <BarStatHarianAkumulatifV2IstilahBaru />
     </section>
 
     <section class="m-4 mb-8 md:m-8">
       <div class="chart-container w-full">
-        <BarStatJenisKelamin />
-        <BarStatUsia />
+        <BarStatJenisKelaminIstilahBaru />
+        <BarStatUsiaIstilahBaru />
       </div>
-    </section>
-
-    <section class="m-4 md:m-8">
-      <BarStatHarianAkumulatifV2 />
     </section>
 
     <section class="m-4 md:m-8 flex">
@@ -87,6 +87,21 @@
           </div>
         </div>
       </a>
+    </section>
+    <section class="m-4 md:m-8 flex flex-col xl:flex-row rounded-lg overflow-hidden shadow-md" style="background:#e6e6e6">
+      <div class="w-full xl:w-1/2 m-1 p-5">
+        <b>Disclaimer :</b>
+        <p>Data Suspek dan Kontak Erat mulai Pikobar terima berdasarkan laporan harian Dinas Kesehatan Kab/Kota per tgl 5 Agustus 2020.</p>
+      </div>
+      <div class="w-full xl:w-1/2 m-1 p-5">
+        <b>&#9432; Sumber Data :</b>
+        <ul style="list-style: inherit; margin-left: 20px;">
+          <li>Konfirmasi (Total, Dalam Perawatan, Sembuh, Meninggal) = Laporan Harian Kemenkes</li>
+          <li>Suspek (Total, Dalam Perawatan, Discarded) = Laporan Harian Dinkes Kab/kota di Jawa Barat</li>
+          <li>Kontak Erat (Total, Karantina, Discarded) = Laporan Harian Dinkes Kab/kota di Jawa Barat</li>
+          <li>Probable (Total, Dalam Perawatan, Sembuh, Meninggal) = Laporan Harian Dinkes Kab/Kota di Jawa Barat</li>
+        </ul>
+      </div>
     </section>
   </div>
 </template>
@@ -114,23 +129,21 @@
 /* eslint-disable */
 import axios from 'axios'
 import { mapState } from 'vuex'
-import DataSummary from '~/components/_pages/index/DataSummary'
+import DataSummaryIstilahBaru from '~/components/_pages/index/DataSummaryIstilahBaru'
 import { faFirstAid, faBug, faMap, faCalendarMinus, faArrowRight, faChevronRight, faInfo, faCircle, faAngleRight } from '@fortawesome/free-solid-svg-icons'
 import { formatDateTimeShort } from '~/lib/date'
 import { analytics } from '~/lib/firebase'
 
 export default {
   components: {
-    DataSummary,
+    DataSummaryIstilahBaru,
     DataRDT: () => import('~/components/DataRDT'),
-    DataPCR: () => import('~/components/DataPCR'),
-    MapV4SebaranPolygon: () => import('~/components/MapV4SebaranPolygon'),
-    BarStatAreaSingleV2: () => import('~/components/BarStatAreaSingleV2'),
-    BarStatJenisKelamin: () => import('~/components/BarStatJenisKelamin'),
-    BarStatUsia: () => import('~/components/BarStatUsia'),
-    BarStatHarianAkumulatifV2: () => import('~/components/BarStatHarianAkumulatifV2'),
-    MapSebaranHeatmap: () => import('~/components/MapSebaranHeatmap'),
-    MapV2SebaranFaskes: () => import('~/components/MapV2SebaranFaskes')
+    DataPCRIstilahBaru: () => import('~/components/DataPCRIstilahBaru'),
+    MapV4SebaranPolygonIstilahBaru: () => import('~/components/MapV4SebaranPolygonIstilahBaru'),
+    BarStatAreaSingleV2IstilahBaru: () => import('~/components/BarStatAreaSingleV2IstilahBaru'),
+    BarStatHarianAkumulatifV2IstilahBaru: () => import('~/components/BarStatHarianAkumulatifV2IstilahBaru'),
+    BarStatJenisKelaminIstilahBaru: () => import('~/components/BarStatJenisKelaminIstilahBaru'),
+    BarStatUsiaIstilahBaru: () => import('~/components/BarStatUsiaIstilahBaru')
   },
   data () {
     return {
@@ -147,17 +160,7 @@ export default {
       faChevronRight,
       faInfo,
       faCircle,
-      faAngleRight,
-
-      jsonDataRekapitulasiJabarProv: {},
-      jsonDataRekapitulasiJabarKab: [],
-      jsonDataRekapitulasiJabarHarianProv: [],
-      jsonDataRekapitulasiJabarHarianKab: [],
-      jsonDataRekapitulasiJabarKumulatifProv: [],
-      jsonDataRekapitulasiJabarKumulatifKab: [],
-      jsonDataNasionalHarianKumulatif: [],
-      jsonDataSebaranJabar: [],
-      jsonDataSebaranJabarFaskes: []
+      faAngleRight
     }
   },
   computed: {
@@ -173,12 +176,14 @@ export default {
   },
   mounted () {
     this.$nextTick(() => {
-      this.$store.dispatch('data-nasional-harian/getItems')
-      this.$store.dispatch('data-kasus-harian/getItems')
-      this.$store.dispatch('data-kasus-harian-kota/getItems')
-      this.$store.dispatch('data-sebaran-jabar-faskes/getItems')
-      this.$store.dispatch('statistics/getCases')
-      this.$store.dispatch('data-kasus-total/getItems')
+      Promise.all([
+        this.$store.dispatch('data-kasus-total-v2/getItems'),
+        this.$store.dispatch('data-nasional-harian/getItems'),
+        this.$store.dispatch('data-kasus-harian-v2/getItems'),
+        this.$store.dispatch('data-kasus-harian-kota-v2/getItems'),
+        this.$store.dispatch('statistics/getCases'),
+      ]).then(() => {
+      })
 
       if (process.browser) {
         analytics.logEvent('dashboard_view')

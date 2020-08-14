@@ -3,58 +3,52 @@
     <div class="w-full xl:w-3/4 rdt-main text-white overflow-hidden rounded-lg shadow-md p-5 mr-5 mt-5">
       <div :class="isLoading ? 'block' : 'hidden'">
         <ContentLoader
-          primaryColor="#70aa67"
-          secondaryColor="rgba(255,255,255,1)"
-          height="80"
-          width="500"
+          :speed="2"
+          width="400"
+          height="150"
+          primary-color="rgba(214, 210, 210,0.6)"
+          secondary-color="rgba(214, 210, 210,1)"
+          style="max-width: 400px;"
         >
           <rect
             x="0"
             y="0"
-            rx="3"
-            ry="3"
-            width="30%"
-            height="6"
-          />
-          <rect
-            x="0"
-            y="15"
-            rx="3"
-            ry="3"
+            rx="8"
+            ry="6"
             width="50%"
-            height="6"
+            height="16"
           />
           <rect
             x="0"
-            y="25"
-            rx="3"
-            ry="3"
+            y="30"
+            rx="8"
+            ry="6"
+            width="66%"
+            height="16"
+          />
+          <rect
+            x="0"
+            y="60"
+            rx="8"
+            ry="6"
+            width="20%"
+            height="16"
+          />
+          <rect
+            x="0"
+            y="90"
+            rx="8"
+            ry="6"
             width="50%"
-            height="6"
+            height="16"
           />
           <rect
             x="0"
-            y="35"
-            rx="3"
-            ry="3"
-            width="50%"
-            height="6"
-          />
-          <rect
-            x="0"
-            y="50"
-            rx="3"
-            ry="3"
-            width="40%"
-            height="6"
-          />
-          <rect
-            x="0"
-            y="70"
-            rx="3"
-            ry="3"
-            width="30%"
-            height="6"
+            y="120"
+            rx="8"
+            ry="6"
+            width="66%"
+            height="16"
           />
         </ContentLoader>
       </div>
@@ -172,13 +166,13 @@ export default {
   },
   computed: {
     dataKasusTotal () {
-      return this.$store.getters['data-kasus-total/itemsMap']
+      return this.$store.getters['data-kasus-total-v2/itemsMap']
     },
     dataKasusTotalMetadata () {
-      return this.$store.getters['data-kasus-total/metadataMap']
+      return this.$store.getters['data-kasus-total-v2/metadataMap']
     },
     isLoading () {
-      return this.$store.getters['data-kasus-total/isLoading']
+      return this.$store.getters['data-kasus-total-v2/isLoading']
     }
   },
   watch: {
