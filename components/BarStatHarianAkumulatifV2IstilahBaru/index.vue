@@ -25,9 +25,10 @@
 
     <section
       v-if="stat.isActiveHarian"
-      class="chart-container w-full mt-4"
+      class="chart-container w-full mt-4 overflow-hidden pb-3"
+      style="display:flex; overflow-x: scroll; width:100%"
     >
-      <div class="bg-white rounded-lg overflow-hidden shadow-md">
+      <div class="bg-white rounded-lg shadow-md">
         <div class="flex flex-wrap">
           <h4 class="p-5 text-xl">
             <b>Angka Harian Kontak Erat</b><br>
@@ -65,7 +66,7 @@
           :options="barChartHarianCloseContactOptions"
         />
       </div>
-      <div class="overflow-hidden bg-white rounded-lg shadow-md">
+      <div class="bg-white rounded-lg shadow-md">
         <div class="flex flex-wrap">
           <h4 class="p-5 text-xl">
             <b>Angka Harian Suspek</b><br>
@@ -103,18 +104,57 @@
           :options="barChartHarianSuspectOptions"
         />
       </div>
+      <div class="bg-white rounded-lg shadow-md">
+        <div class="flex flex-wrap">
+          <h4 class="p-5 text-xl">
+            <b>Angka Harian Probable</b><br>
+          </h4>
+          <div v-if="!isMobile" class="card-content pt-2 pb-2" style="margin: auto; margin-right: 0px; padding-right: 20px;">
+            <div class="daterange-wrapper">
+              <client-only>
+                <vue-rangedate-picker
+                  righttoleft="true"
+                  :captions="rangedateProbable.captions"
+                  :preset-ranges="rangedateProbable.presetRanges"
+                  @selected="onDateSelectedProbable"
+                />
+              </client-only>
+            </div>
+          </div>
+          <div v-if="isMobile" class="card-content pt-2 pb-2" style="margin: auto; margin-left: auto; margin-right: auto; padding-bottom:300px;">
+            <div class="daterange-wrapper">
+              <client-only>
+                <vue-rangedate-picker
+                  compact="true"
+                  :captions="rangedateProbable.captions"
+                  :preset-ranges="rangedateProbable.presetRanges"
+                  @selected="onDateSelectedProbable"
+                />
+              </client-only>
+            </div>
+          </div>
+        </div>
+        <hr>
+        <GChart
+          class="p-5"
+          type="ComboChart"
+          :data="barChartHarianProbableData"
+          :options="barChartHarianProbableOptions"
+        />
+      </div>
     </section>
 
     <section
       v-if="stat.isActiveAkumulatif"
-      class="chart-container w-full mt-4"
+      class="chart-container w-full mt-4 overflow-hidden pb-3"
+      style="display:flex; overflow-x: scroll; width:100%"
     >
-      <div class="overflow-hidden bg-white rounded-lg shadow-md">
+      <div class="bg-white rounded-lg shadow-md">
         <div class="flex flex-wrap">
           <h4 class="p-5 text-xl">
             <b>Kumulatif Kontak Erat</b><br>
           </h4>
-          <div v-if="!isMobile" class="card-content pt-2 pb-2" style="margin: auto; margin-right: 0px; padding-right: 20px;">
+          <div v-if="!isMobile" class="card-content pt-2 pb-2" style="margin: auto; margin-right: 0px; padding-right: 10px;">
             <div class="daterange-wrapper">
               <client-only>
                 <vue-rangedate-picker
@@ -146,12 +186,12 @@
           :options="barChartAkumulatifCloseContactOptions"
         />
       </div>
-      <div class="overflow-hidden bg-white rounded-lg shadow-md">
+      <div class="bg-white rounded-lg shadow-md">
         <div class="flex flex-wrap">
           <h4 class="p-5 text-xl">
             <b>Kumulatif Suspek</b><br>
           </h4>
-          <div v-if="!isMobile" class="card-content pt-2 pb-2" style="margin: auto; margin-right: 0px; padding-right: 20px;">
+          <div v-if="!isMobile" class="card-content pt-2 pb-2" style="margin: auto; margin-right: 0px; padding-right: 10px;">
             <div class="daterange-wrapper">
               <client-only>
                 <vue-rangedate-picker
@@ -181,6 +221,43 @@
           type="LineChart"
           :data="barChartAkumulatifSuspectData"
           :options="barChartAkumulatifSuspectOptions"
+        />
+      </div>
+      <div class="bg-white rounded-lg shadow-md">
+        <div class="flex flex-wrap">
+          <h4 class="p-5 text-xl">
+            <b>Kumulatif Probable</b><br>
+          </h4>
+          <div v-if="!isMobile" class="card-content pt-2 pb-2" style="margin: auto; margin-right: 0px; padding-right: 10px;">
+            <div class="daterange-wrapper">
+              <client-only>
+                <vue-rangedate-picker
+                  righttoleft="true"
+                  :captions="rangedateProbable.captions"
+                  :preset-ranges="rangedateProbable.presetRanges"
+                  @selected="onDateSelectedProbable"
+                />
+              </client-only>
+            </div>
+          </div>
+          <div v-if="isMobile" class="card-content pt-2 pb-2" style="margin: auto; margin-left: auto; margin-right: auto; padding-bottom:300px;">
+            <div class="daterange-wrapper">
+              <client-only>
+                <vue-rangedate-picker
+                  compact="true"
+                  :captions="rangedateProbable.captions"
+                  :preset-ranges="rangedateProbable.presetRanges"
+                  @selected="onDateSelectedProbable"
+                />
+              </client-only>
+            </div>
+          </div>
+        </div>
+        <hr>
+        <GChart
+          type="LineChart"
+          :data="barChartAkumulatifProbableData"
+          :options="barChartAkumulatifProbableOptions"
         />
       </div>
     </section>
@@ -223,7 +300,8 @@ export default {
         ['0', 0, '', 0, '', 0, '']
       ],
       barChartHarianCloseContactOptions: {
-        height: 450,
+        height: 350,
+        width: 490,
         orientation: 'horizontal',
         colors: ['#BE8228', '#828282', '#EB5757'],
         legend: {
@@ -237,7 +315,7 @@ export default {
           slantedTextAngle: -90
         },
         chartArea: {
-          width: '80%',
+          width: '100%',
           bottom: 100
         },
         tooltip: { isHtml: true }
@@ -258,7 +336,8 @@ export default {
         // ['0', 0, '', 0, '', 0, '', 0, '']
       ],
       barChartHarianSuspectOptions: {
-        height: 450,
+        height: 350,
+        width: 490,
         orientation: 'horizontal',
         colors: ['#BEAB8D', '#828282', '#EB5757'],
         // colors: ['#CEB546', '#828282', '#9C0000', '#EB5757'],
@@ -278,7 +357,47 @@ export default {
           }
         },
         chartArea: {
-          width: '80%',
+          width: '100%',
+          bottom: 100
+        },
+        tooltip: { isHtml: true }
+      },
+      barChartHarianProbableData: [
+        [
+          'Tanggal',
+          'Isolasi/Dalam Perawatan',
+          { type: 'string', role: 'tooltip', p: { html: true } },
+          'Selesai Isolasi/Sembuh',
+          { type: 'string', role: 'tooltip', p: { html: true } },
+          'Meninggal',
+          { type: 'string', role: 'tooltip', p: { html: true } },
+          'Rata-rata 7 Hari',
+          { type: 'string', role: 'tooltip', p: { html: true } }
+        ],
+        ['0', 0, '', 0, '', 0, '', 0, '']
+      ],
+      barChartHarianProbableOptions: {
+        height: 350,
+        width: 490,
+        orientation: 'horizontal',
+        colors: ['#D7C368', '#27AE60', '#A20E0E', '#EB5757'],
+        legend: {
+          position: 'bottom'
+        },
+        isStacked: true,
+        seriesType: 'bars',
+        series: { 3: { type: 'line' } },
+        hAxis: {
+          slantedText: true,
+          slantedTextAngle: -90
+        },
+        vAxis: {
+          viewWindow: {
+            min: 0
+          }
+        },
+        chartArea: {
+          width: '100%',
           bottom: 100
         },
         tooltip: { isHtml: true }
@@ -296,7 +415,8 @@ export default {
         ['0', 0, '', 0, '', 0, '']
       ],
       barChartAkumulatifCloseContactOptions: {
-        height: 450,
+        height: 350,
+        width: 510,
         orientation: 'horizontal',
         colors: ['#BE8228', '#828282', '#A93D00'],
         legend: {
@@ -310,7 +430,7 @@ export default {
           slantedTextAngle: -90
         },
         chartArea: {
-          width: '80%',
+          width: '100%',
           bottom: 100
         },
         tooltip: { isHtml: true }
@@ -331,7 +451,8 @@ export default {
         // ['0', 0, '', 0, '', 0, '', 0, '']
       ],
       barChartAkumulatifSuspectOptions: {
-        height: 450,
+        height: 350,
+        width: 510,
         orientation: 'horizontal',
         colors: ['#BEAB8D', '#828282', '#EDAD08'],
         // colors: ['#CEB546', '#828282', '#9C0000', '#786203'],
@@ -351,7 +472,47 @@ export default {
           }
         },
         chartArea: {
-          width: '80%',
+          width: '100%',
+          bottom: 100
+        },
+        tooltip: { isHtml: true }
+      },
+      barChartAkumulatifProbableData: [
+        [
+          'Tanggal',
+          'Isolasi/Dalam Perawatan',
+          { type: 'string', role: 'tooltip', p: { html: true } },
+          'Selesai Isolasi/Sembuh',
+          { type: 'string', role: 'tooltip', p: { html: true } },
+          'Meninggal',
+          { type: 'string', role: 'tooltip', p: { html: true } },
+          'Total Suspek',
+          { type: 'string', role: 'tooltip', p: { html: true } }
+        ],
+        ['0', 0, '', 0, '', 0, '', 0, '']
+      ],
+      barChartAkumulatifProbableOptions: {
+        height: 350,
+        width: 510,
+        orientation: 'horizontal',
+        colors: ['#D7C368', '#27AE60', '#A20E0E', '#B0640B'],
+        legend: {
+          position: 'bottom',
+          alignment: 'center',
+          maxLines: 5
+        },
+        // curveType: 'function',
+        hAxis: {
+          slantedText: true,
+          slantedTextAngle: -90
+        },
+        vAxis: {
+          viewWindow: {
+            min: 0
+          }
+        },
+        chartArea: {
+          width: '100%',
           bottom: 100
         },
         tooltip: { isHtml: true }
@@ -361,6 +522,10 @@ export default {
         end: ''
       },
       selectedDateSuspect: {
+        start: '',
+        end: ''
+      },
+      selectedDateProbable: {
         start: '',
         end: ''
       },
@@ -451,6 +616,50 @@ export default {
             }
           }
         }
+      },
+      rangedateProbable: {
+        captions: {
+          title: 'Pilih Tanggal',
+          ok_button: 'Terapkan'
+        },
+        presetRanges: {
+          all () {
+            return {
+              label: 'Semua Waktu',
+              active: true,
+              dateRange: {
+                start: new Date('2020-03-01'),
+                end: new Date()
+              }
+            }
+          },
+          seminggu () {
+            const n = new Date()
+            const tanggalmulai = new Date(n.getFullYear(), n.getMonth(), n.getDate() - 8, 0, 0)
+            const tanggalselesai = new Date(n.getFullYear(), n.getMonth(), n.getDate(), 23, 59)
+            return {
+              label: '1 Minggu Terakhir',
+              active: false,
+              dateRange: {
+                start: tanggalmulai,
+                end: tanggalselesai
+              }
+            }
+          },
+          sebulan () {
+            const n = new Date()
+            const tanggalmulai = new Date(n.getFullYear(), n.getMonth(), n.getDate() - 31, 0, 0)
+            const tanggalselesai = new Date(n.getFullYear(), n.getMonth(), n.getDate(), 23, 59)
+            return {
+              label: '1 Bulan Terakhir',
+              active: false,
+              dateRange: {
+                start: tanggalmulai,
+                end: tanggalselesai
+              }
+            }
+          }
+        }
       }
     }
   },
@@ -474,6 +683,7 @@ export default {
       })
       this.fetchDataCloseContactProvinsiHarian()
       this.fetchDataSuspectProvinsiHarian()
+      this.fetchDataProbableProvinsiHarian()
     }
   },
   mounted () {
@@ -481,6 +691,8 @@ export default {
     this.selectedDateCloseContact.end = new Date()
     this.selectedDateSuspect.start = new Date('2020-08-01')
     this.selectedDateSuspect.end = new Date()
+    this.selectedDateProbable.start = new Date('2020-08-01')
+    this.selectedDateProbable.end = new Date()
     this.checkIsMobile()
   },
   methods: {
@@ -536,12 +748,14 @@ export default {
       this.stat.isActiveAkumulatif = false
       this.fetchDataCloseContactProvinsiHarian()
       this.fetchDataSuspectProvinsiHarian()
+      this.fetchDataProbableProvinsiHarian()
     },
     enableAkumulatif () {
       this.stat.isActiveHarian = false
       this.stat.isActiveAkumulatif = true
       this.fetchDataCloseContactProvinsiKumulatif()
       this.fetchDataSuspectProvinsiKumulatif()
+      this.fetchDataProbableProvinsiKumulatif()
     },
     fetchDataCloseContactProvinsiHarian () {
       const self = this
@@ -666,6 +880,69 @@ export default {
       }
       self.barChartHarianSuspectData.splice(1, 1)
     },
+    fetchDataProbableProvinsiHarian () {
+      const self = this
+      const today = new Date()
+      const strToday = self.formatDate(today)
+      let startNum = 0
+      let endNum = 0
+
+      // clear
+      this.barChartHarianProbableData = [
+        [
+          'Tanggal',
+          'Isolasi/Dalam Perawatan',
+          { type: 'string', role: 'tooltip', p: { html: true } },
+          'Selesai Isolasi/Sembuh',
+          { type: 'string', role: 'tooltip', p: { html: true } },
+          'Meninggal',
+          { type: 'string', role: 'tooltip', p: { html: true } },
+          'Rata-rata 7 Hari',
+          { type: 'string', role: 'tooltip', p: { html: true } }
+        ],
+        ['0', 0, '', 0, '', 0, '', 0, '']
+      ]
+
+      // filter date
+      this.jsonDataProvinsiHarian.forEach((element, index) => {
+        if (element.tanggal === this.formatDateYMD(this.selectedDateProbable.start)) {
+          startNum = index
+        }
+        if (element.tanggal === this.formatDateYMD(this.selectedDateProbable.end)) {
+          endNum = index
+        }
+      })
+      if (endNum === 0) {
+        endNum = this.jsonDataProvinsiHarian.length - 1
+      }
+
+      // get data
+      let stop = false
+      for (let i = startNum; i <= endNum; i++) {
+        const date = new Date(self.jsonDataProvinsiHarian[i].tanggal)
+        if (stop === false) {
+          let tooltipProbable = '<table style="white-space: nowrap; margin: 10px;">'
+          tooltipProbable += '<tr><td style="font-size: larger;">' + self.formatDate(date) + '</td><td></td></tr>'
+          tooltipProbable += '<tr><td>Isolasi/Dalam Perawatan </td><td><b style="margin-left: 10px;">' + self.formatThousand(self.ifNegativeReturnZero(self.jsonDataProvinsiHarian[i].probable_diisolasi)) + '</b></td></tr>'
+          tooltipProbable += '<tr><td>Selesai Isolasi/Sembuh </td><td><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataProvinsiHarian[i].probable_discarded) + '</b></td></tr>'
+          tooltipProbable += '<tr><td>Meninggal </td><td><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataProvinsiHarian[i].probable_meninggal) + '</b></td></tr>'
+          tooltipProbable += '<tr><td>Total Suspek</td><td><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataProvinsiHarian[i].probable_total) + '</b></td></tr>'
+          tooltipProbable += '<tr><td>Rata-rata 7 Hari</td><td><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataProvinsiHarian[i].probable_ratarata) + '</b></td></tr>'
+          tooltipProbable += '</table>'
+          self.barChartHarianProbableData.push([
+            self.formatDateNoYear(date),
+            self.ifNegativeReturnZero(self.jsonDataProvinsiHarian[i].probable_diisolasi), tooltipProbable,
+            self.jsonDataProvinsiHarian[i].probable_discarded, tooltipProbable,
+            self.jsonDataProvinsiHarian[i].probable_meninggal, tooltipProbable,
+            self.jsonDataProvinsiHarian[i].probable_ratarata, tooltipProbable
+          ])
+        }
+        if (self.formatDate(date) === strToday) {
+          stop = true
+        }
+      }
+      self.barChartHarianProbableData.splice(1, 1)
+    },
     fetchDataCloseContactProvinsiKumulatif () {
       const self = this
       const today = new Date()
@@ -787,6 +1064,69 @@ export default {
       }
       self.barChartAkumulatifSuspectData.splice(1, 1)
     },
+    fetchDataProbableProvinsiKumulatif () {
+      const self = this
+      const today = new Date()
+      const strToday = self.formatDate(today)
+      let startNum = 0
+      let endNum = 0
+
+      // clear
+      this.barChartAkumulatifProbableData = [
+        [
+          'Tanggal',
+          'Isolasi/Dalam Perawatan',
+          { type: 'string', role: 'tooltip', p: { html: true } },
+          'Selesai Isolasi/Sembuh',
+          { type: 'string', role: 'tooltip', p: { html: true } },
+          'Meninggal',
+          { type: 'string', role: 'tooltip', p: { html: true } },
+          'Total Suspek',
+          { type: 'string', role: 'tooltip', p: { html: true } }
+        ],
+        ['0', 0, '', 0, '', 0, '']
+        // ['0', 0, '', 0, '', 0, '', 0, '']
+      ]
+
+      // filter date
+      this.jsonDataProvinsiKumulatif.forEach((element, index) => {
+        if (element.tanggal === this.formatDateYMD(this.selectedDateProbable.start)) {
+          startNum = index
+        }
+        if (element.tanggal === this.formatDateYMD(this.selectedDateProbable.end)) {
+          endNum = index
+        }
+      })
+      if (endNum === 0) {
+        endNum = this.jsonDataProvinsiKumulatif.length - 1
+      }
+
+      // get data
+      let stop = false
+      for (let i = startNum; i <= endNum; i++) {
+        const date = new Date(self.jsonDataProvinsiKumulatif[i].tanggal)
+        if (stop === false) {
+          let tooltipProbable = '<table style="white-space: nowrap; margin: 10px;">'
+          tooltipProbable += '<tr><td style="font-size: larger;">' + self.formatDate(date) + '</td><td></td></tr>'
+          tooltipProbable += '<tr><td>Isolasi/Dalam Perawatan </td><td><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataProvinsiKumulatif[i].probable_diisolasi) + '</b></td></tr>'
+          tooltipProbable += '<tr><td>Selesai Isolasi/Sembuh </td><td><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataProvinsiKumulatif[i].probable_discarded) + '</b></td></tr>'
+          tooltipProbable += '<tr><td>Meninggal </td><td><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataProvinsiKumulatif[i].probable_meninggal) + '</b></td></tr>'
+          tooltipProbable += '<tr><td style="font-size: larger;">Total Suspek</td><td><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataProvinsiKumulatif[i].probable_total) + '</b></td></tr>'
+          tooltipProbable += '</table>'
+          self.barChartAkumulatifProbableData.push([
+            self.formatDateNoYear(date),
+            self.jsonDataProvinsiKumulatif[i].probable_diisolasi, tooltipProbable,
+            self.jsonDataProvinsiKumulatif[i].probable_discarded, tooltipProbable,
+            self.jsonDataProvinsiKumulatif[i].probable_meninggal, tooltipProbable,
+            self.jsonDataProvinsiKumulatif[i].probable_total, tooltipProbable
+          ])
+        }
+        if (self.formatDate(date) === strToday) {
+          stop = true
+        }
+      }
+      self.barChartAkumulatifProbableData.splice(1, 1)
+    },
     onDateSelectedCloseContact (daterange) {
       this.selectedDateCloseContact = daterange
       if (this.stat.isActiveHarian === true) {
@@ -801,6 +1141,14 @@ export default {
         this.fetchDataSuspectProvinsiHarian()
       } else if (this.stat.isActiveAkumulatif === true) {
         this.fetchDataSuspectProvinsiKumulatif()
+      }
+    },
+    onDateSelectedProbable (daterange) {
+      this.selectedDateProbable = daterange
+      if (this.stat.isActiveHarian === true) {
+        this.fetchDataProbableProvinsiHarian()
+      } else if (this.stat.isActiveAkumulatif === true) {
+        this.fetchDataProbableProvinsiKumulatif()
       }
     },
     checkIsMobile () {
