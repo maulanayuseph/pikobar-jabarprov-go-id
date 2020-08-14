@@ -3,7 +3,7 @@
     <br>
     <header class="m-4 mb-8 md:m-8">
       <h3 class="text-3xl text-gray-900 font-bold text-left leading-none" style="margin-bottom: 10px; ">
-        Data ODP PDP COVID-19 Jawa Barat (Public Version): DATA
+        Data Kasus Covid-19 Jawa Barat (Public Version)
       </h3>
     </header>
 
