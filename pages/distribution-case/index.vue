@@ -129,11 +129,20 @@
               >
                 Kontak Erat
               </button>
+              <button
+                class="button-selector m-1 w-full xl:w-auto "
+                style="display: flex;"
+                :active="activeTable === 'probable'"
+                @click="enableTable('probable')"
+              >
+                Probable
+              </button>
             </div>
           </div>
           <ConfirmedCaseListIstilahBaru v-if="activeTable === 'confirmed'" :active-region-id.sync="activeRegionId" :active-region-category.sync="activeRegionCategory" :active-parent-region-name.sync="activeParentRegionName" />
           <SuspectCaseListIstilahBaru v-if="activeTable === 'suspect'" :active-region-id.sync="activeRegionId" :active-region-category.sync="activeRegionCategory" :active-parent-region-name.sync="activeParentRegionName" />
           <CloseContactCaseListIstilahBaru v-if="activeTable === 'closecontact'" :active-region-id.sync="activeRegionId" :active-region-category.sync="activeRegionCategory" :active-parent-region-name.sync="activeParentRegionName" />
+          <ProbableCaseListIstilahBaru v-if="activeTable === 'probable'" :active-region-id.sync="activeRegionId" :active-region-category.sync="activeRegionCategory" :active-parent-region-name.sync="activeParentRegionName" />
         </div>
       </div>
     </section>
@@ -172,7 +181,8 @@ export default {
     RasioConfirmedCaseIstilahBaru: () => import('~/components/RasioConfirmedCaseIstilahBaru'),
     ConfirmedCaseListIstilahBaru: () => import('~/components/ConfirmedCaseListIstilahBaru'),
     SuspectCaseListIstilahBaru: () => import('~/components/SuspectCaseListIstilahBaru'),
-    CloseContactCaseListIstilahBaru: () => import('~/components/CloseContactCaseListIstilahBaru')
+    CloseContactCaseListIstilahBaru: () => import('~/components/CloseContactCaseListIstilahBaru'),
+    ProbableCaseListIstilahBaru: () => import('~/components/ProbableCaseListIstilahBaru')
   },
   data () {
     return {
