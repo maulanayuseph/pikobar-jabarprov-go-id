@@ -554,7 +554,7 @@ export default {
               label: 'Semua Waktu',
               active: true,
               dateRange: {
-                start: new Date('2020-03-01'),
+                start: new Date('2020-08-01'),
                 end: new Date()
               }
             }
@@ -598,7 +598,7 @@ export default {
               label: 'Semua Waktu',
               active: true,
               dateRange: {
-                start: new Date('2020-03-01'),
+                start: new Date('2020-08-01'),
                 end: new Date()
               }
             }
@@ -642,7 +642,7 @@ export default {
               label: 'Semua Waktu',
               active: true,
               dateRange: {
-                start: new Date('2020-03-01'),
+                start: new Date('2020-08-01'),
                 end: new Date()
               }
             }
