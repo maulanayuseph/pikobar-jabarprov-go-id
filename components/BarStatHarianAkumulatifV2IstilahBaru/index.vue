@@ -26,10 +26,11 @@
     <section
       v-if="stat.isActiveHarian"
       class="chart-container w-full mt-4 overflow-hidden pb-3"
-      style="display:flex; overflow-x: scroll; width:100%"
+      style="overflow-x: auto; width:100%;"
+      :style="isMobile ? '': 'display:flex;'"
     >
       <div class="bg-white rounded-lg shadow-md">
-        <div class="flex flex-wrap">
+        <div class="flex-wrap md:flex">
           <h4 class="p-5 text-xl">
             <b>Angka Harian Kontak Erat</b><br>
           </h4>
@@ -45,16 +46,18 @@
               </client-only>
             </div>
           </div>
-          <div v-if="isMobile" class="card-content pt-2 pb-2" style="margin: auto; margin-left: auto; margin-right: auto; padding-bottom:300px;">
-            <div class="daterange-wrapper">
-              <client-only>
-                <vue-rangedate-picker
-                  compact="true"
-                  :captions="rangedateCloseContact.captions"
-                  :preset-ranges="rangedateCloseContact.presetRanges"
-                  @selected="onDateSelectedCloseContact"
-                />
-              </client-only>
+          <div v-if="isMobile" class="flex flex-wrap items-stretch pt-2 pb-2 pr-2 md:w-1/2 mt-2" style="margin: auto; padding-bottom: 300px;">
+            <div class="card-content pt-2 pb-2" style="margin: auto;">
+              <div class="daterange-wrapper">
+                <client-only>
+                  <vue-rangedate-picker
+                    compact="true"
+                    :captions="rangedateCloseContact.captions"
+                    :preset-ranges="rangedateCloseContact.presetRanges"
+                    @selected="onDateSelectedCloseContact"
+                  />
+                </client-only>
+              </div>
             </div>
           </div>
         </div>
@@ -67,7 +70,7 @@
         />
       </div>
       <div class="bg-white rounded-lg shadow-md">
-        <div class="flex flex-wrap">
+        <div class="flex-wrap md:flex">
           <h4 class="p-5 text-xl">
             <b>Angka Harian Suspek</b><br>
           </h4>
@@ -83,16 +86,18 @@
               </client-only>
             </div>
           </div>
-          <div v-if="isMobile" class="card-content pt-2 pb-2" style="margin: auto; margin-left: auto; margin-right: auto; padding-bottom:300px;">
-            <div class="daterange-wrapper">
-              <client-only>
-                <vue-rangedate-picker
-                  compact="true"
-                  :captions="rangedateSuspect.captions"
-                  :preset-ranges="rangedateSuspect.presetRanges"
-                  @selected="onDateSelectedSuspect"
-                />
-              </client-only>
+          <div v-if="isMobile" class="flex flex-wrap items-stretch pt-2 pb-2 pr-2 md:w-1/2 mt-2" style="margin: auto; padding-bottom: 300px;">
+            <div class="card-content pt-2 pb-2" style="margin: auto;">
+              <div class="daterange-wrapper">
+                <client-only>
+                  <vue-rangedate-picker
+                    compact="true"
+                    :captions="rangedateSuspect.captions"
+                    :preset-ranges="rangedateSuspect.presetRanges"
+                    @selected="onDateSelectedSuspect"
+                  />
+                </client-only>
+              </div>
             </div>
           </div>
         </div>
@@ -105,7 +110,7 @@
         />
       </div>
       <div class="bg-white rounded-lg shadow-md">
-        <div class="flex flex-wrap">
+        <div class="flex-wrap md:flex">
           <h4 class="p-5 text-xl">
             <b>Angka Harian Probable</b><br>
           </h4>
@@ -121,16 +126,18 @@
               </client-only>
             </div>
           </div>
-          <div v-if="isMobile" class="card-content pt-2 pb-2" style="margin: auto; margin-left: auto; margin-right: auto; padding-bottom:300px;">
-            <div class="daterange-wrapper">
-              <client-only>
-                <vue-rangedate-picker
-                  compact="true"
-                  :captions="rangedateProbable.captions"
-                  :preset-ranges="rangedateProbable.presetRanges"
-                  @selected="onDateSelectedProbable"
-                />
-              </client-only>
+          <div v-if="isMobile" class="flex flex-wrap items-stretch pt-2 pb-2 pr-2 md:w-1/2 mt-2" style="margin: auto; padding-bottom: 300px;">
+            <div class="card-content pt-2 pb-2" style="margin: auto;">
+              <div class="daterange-wrapper">
+                <client-only>
+                  <vue-rangedate-picker
+                    compact="true"
+                    :captions="rangedateProbable.captions"
+                    :preset-ranges="rangedateProbable.presetRanges"
+                    @selected="onDateSelectedProbable"
+                  />
+                </client-only>
+              </div>
             </div>
           </div>
         </div>
@@ -147,10 +154,11 @@
     <section
       v-if="stat.isActiveAkumulatif"
       class="chart-container w-full mt-4 overflow-hidden pb-3"
-      style="display:flex; overflow-x: scroll; width:100%"
+      style="overflow-x: auto; width:100%;"
+      :style="isMobile ? '': 'display:flex;'"
     >
       <div class="bg-white rounded-lg shadow-md">
-        <div class="flex flex-wrap">
+        <div class="flex-wrap md:flex">
           <h4 class="p-5 text-xl">
             <b>Kumulatif Kontak Erat</b><br>
           </h4>
@@ -166,16 +174,18 @@
               </client-only>
             </div>
           </div>
-          <div v-if="isMobile" class="card-content pt-2 pb-2" style="margin: auto; margin-left: auto; margin-right: auto; padding-bottom:300px;">
-            <div class="daterange-wrapper">
-              <client-only>
-                <vue-rangedate-picker
-                  compact="true"
-                  :captions="rangedateCloseContact.captions"
-                  :preset-ranges="rangedateCloseContact.presetRanges"
-                  @selected="onDateSelectedCloseContact"
-                />
-              </client-only>
+          <div v-if="isMobile" class="flex flex-wrap items-stretch pt-2 pb-2 pr-2 md:w-1/2 mt-2" style="margin: auto; padding-bottom: 300px;">
+            <div class="card-content pt-2 pb-2" style="margin: auto;">
+              <div class="daterange-wrapper">
+                <client-only>
+                  <vue-rangedate-picker
+                    compact="true"
+                    :captions="rangedateCloseContact.captions"
+                    :preset-ranges="rangedateCloseContact.presetRanges"
+                    @selected="onDateSelectedCloseContact"
+                  />
+                </client-only>
+              </div>
             </div>
           </div>
         </div>
@@ -187,7 +197,7 @@
         />
       </div>
       <div class="bg-white rounded-lg shadow-md">
-        <div class="flex flex-wrap">
+        <div class="flex-wrap md:flex">
           <h4 class="p-5 text-xl">
             <b>Kumulatif Suspek</b><br>
           </h4>
@@ -203,16 +213,18 @@
               </client-only>
             </div>
           </div>
-          <div v-if="isMobile" class="card-content pt-2 pb-2" style="margin: auto; margin-left: auto; margin-right: auto; padding-bottom:300px;">
-            <div class="daterange-wrapper">
-              <client-only>
-                <vue-rangedate-picker
-                  compact="true"
-                  :captions="rangedateSuspect.captions"
-                  :preset-ranges="rangedateSuspect.presetRanges"
-                  @selected="onDateSelectedSuspect"
-                />
-              </client-only>
+          <div v-if="isMobile" class="flex flex-wrap items-stretch pt-2 pb-2 pr-2 md:w-1/2 mt-2" style="margin: auto; padding-bottom: 300px;">
+            <div class="card-content pt-2 pb-2" style="margin: auto;">
+              <div class="daterange-wrapper">
+                <client-only>
+                  <vue-rangedate-picker
+                    compact="true"
+                    :captions="rangedateSuspect.captions"
+                    :preset-ranges="rangedateSuspect.presetRanges"
+                    @selected="onDateSelectedSuspect"
+                  />
+                </client-only>
+              </div>
             </div>
           </div>
         </div>
@@ -224,7 +236,7 @@
         />
       </div>
       <div class="bg-white rounded-lg shadow-md">
-        <div class="flex flex-wrap">
+        <div class="flex-wrap md:flex">
           <h4 class="p-5 text-xl">
             <b>Kumulatif Probable</b><br>
           </h4>
@@ -240,16 +252,18 @@
               </client-only>
             </div>
           </div>
-          <div v-if="isMobile" class="card-content pt-2 pb-2" style="margin: auto; margin-left: auto; margin-right: auto; padding-bottom:300px;">
-            <div class="daterange-wrapper">
-              <client-only>
-                <vue-rangedate-picker
-                  compact="true"
-                  :captions="rangedateProbable.captions"
-                  :preset-ranges="rangedateProbable.presetRanges"
-                  @selected="onDateSelectedProbable"
-                />
-              </client-only>
+          <div v-if="isMobile" class="flex flex-wrap items-stretch pt-2 pb-2 pr-2 md:w-1/2 mt-2" style="margin: auto; padding-bottom: 300px;">
+            <div class="card-content pt-2 pb-2" style="margin: auto;">
+              <div class="daterange-wrapper">
+                <client-only>
+                  <vue-rangedate-picker
+                    compact="true"
+                    :captions="rangedateProbable.captions"
+                    :preset-ranges="rangedateProbable.presetRanges"
+                    @selected="onDateSelectedProbable"
+                  />
+                </client-only>
+              </div>
             </div>
           </div>
         </div>
@@ -1154,8 +1168,20 @@ export default {
     checkIsMobile () {
       if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
         this.isMobile = true
+        this.barChartHarianCloseContactOptions.width = 0
+        this.barChartHarianSuspectOptions.width = 0
+        this.barChartHarianProbableOptions.width = 0
+        this.barChartAkumulatifCloseContactOptions.width = 0
+        this.barChartAkumulatifSuspectOptions.width = 0
+        this.barChartAkumulatifProbableOptions.width = 0
       } else {
         this.isMobile = false
+        this.barChartHarianCloseContactOptions.width = 0
+        this.barChartHarianSuspectOptions.width = 0
+        this.barChartHarianProbableOptions.width = 0
+        this.barChartAkumulatifCloseContactOptions.width = 0
+        this.barChartAkumulatifSuspectOptions.width = 0
+        this.barChartAkumulatifProbableOptions.width = 0
       }
     }
   }
