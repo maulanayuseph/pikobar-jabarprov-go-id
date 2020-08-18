@@ -587,7 +587,7 @@ export default {
     z-index: 1;
     top: 100%;
     left: 50%;
-    margin-left: -150px; /* Use half of the width (120/2 = 60), to center the tooltip */
+    margin-left: -230px; /* Use half of the width (120/2 = 60), to center the tooltip */
     box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14);
     font-weight: normal;
   }
