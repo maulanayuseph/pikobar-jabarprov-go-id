@@ -152,8 +152,6 @@
         <p>
           Data Suspek, Probable dan Kontak Erat diterima Pikobar berdasarkan laporan harian Dinas Kesehatan Kab/Kota per 5 Agustus 2020,
           sehingga terlihat penumpukan kasus pada Chart Harian dan Kumulatif untuk Suspek, Probable, dan Kontak Erat pada tanggal tersebut.
-          <br><br>
-          Saat ini data kasus Probable sedang dalam proses untuk divisualisasikan.
         </p>
       </div>
       <div class="w-full xl:w-1/2 m-1 p-5">
