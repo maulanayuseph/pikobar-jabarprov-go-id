@@ -68,7 +68,7 @@ export default {
   /* Tooltip text */
   .tooltip .tooltiptext {
     visibility: hidden;
-    width: 300px;
+    width: 280px;
     background-color: white;
     color:#000;
     text-align: left;

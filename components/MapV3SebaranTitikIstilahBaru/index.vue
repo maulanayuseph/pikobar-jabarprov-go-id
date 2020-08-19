@@ -139,12 +139,34 @@
               style="margin-right: 0.5em;"
             />Kontak Erat - Masih Dikarantina
           </li>
+          <li
+            :class="filter.probable_diisolasi?'filter-active':''"
+            @click="setFilter('probable_diisolasi')"
+          >
+            <div
+              class="legend-color cluster-probable-diisolasi"
+              style="margin-right: 0.5em;"
+            />Probable - Isolasi/ Dalam Perawatan
+          </li>
+          <li
+            :class="filter.probable_meninggal?'filter-active':''"
+            @click="setFilter('probable_meninggal')"
+          >
+            <div
+              class="legend-color cluster-probable-meninggal"
+              style="margin-right: 0.5em;"
+            />Probable - Meninggal
+          </li>
         </div>
       </div>
       <div class="info-legend p-3">
         <b>Keterangan: </b>
         <div class="flex mb-1">
           <div class="w-1/2 h-auto">
+            <div
+              class="legend-color cluster-gabungan-aktif"
+              style="margin-right: 0.5em;"
+            />Gabungan Kasus <br>
             <div
               class="legend-color cluster-confirmation-total"
               style="margin-right: 0.5em;"
@@ -164,10 +186,6 @@
           </div>
           <div class="w-1/2 h-auto">
             <div
-              class="legend-color cluster-gabungan-aktif"
-              style="margin-right: 0.5em;"
-            />Gabungan Kasus <br>
-            <div
               class="legend-color cluster-suspect-diisolasi"
               style="margin-right: 0.5em;"
             />Suspek - Isolasi/ Dalam Perawatan <br>
@@ -179,6 +197,14 @@
               class="legend-color cluster-closecontact-dikarantina"
               style="margin-right: 0.5em;"
             />Kontak Erat - Masih Dikarantina <br>
+            <div
+              class="legend-color cluster-probable-diisolasi"
+              style="margin-right: 0.5em;"
+            />Probable - Isolasi/ Dalam Perawatan <br>
+            <div
+              class="legend-color cluster-probable-meninggal"
+              style="margin-right: 0.5em;"
+            />Probable - Meninggal <br>
           </div>
         </div>
       </div>
@@ -231,7 +257,9 @@ export default {
         confirmation_selesai: false,
         suspect_diisolasi: false,
         // suspect_meninggal: false,
-        closecontact_dikarantina: false
+        closecontact_dikarantina: false,
+        probable_diisolasi: false,
+        probable_meninggal: false
       },
       stat: {
         isActivePolygon: true,
@@ -627,6 +655,20 @@ export default {
           }
           break
         }
+        case 'probable_diisolasi': {
+          classMarker = {
+            name: 'Probable - Isolasi/ Dalam Perawatan',
+            className: 'cluster-probable-diisolasi'
+          }
+          break
+        }
+        case 'probable_meninggal': {
+          classMarker = {
+            name: 'Probable - Meninggal',
+            className: 'cluster-probable-meninggal'
+          }
+          break
+        }
         default: {
           classMarker = {
             name: 'Positif - Isolasi/ Dalam Perawatan',
@@ -914,6 +956,24 @@ export default {
   }
 
   .cluster-suspect-meninggal {
+    /* box-shadow: 0 0 5px 0 rgb(242, 201, 76, 0.9); */
+    border: 2px solid rgb(165,18,18, 0.9);
+    background: rgb(165,18,18, 0.9);
+  }
+
+  .cluster-probable-diisolasi {
+    /* box-shadow: 0 0 5px 0 rgb(242, 201, 76, 0.9); */
+    border: 2px solid rgb(210,188,87, 76, 0.9);
+    background: rgb(210,188,87, 0.9);
+  }
+
+  .cluster-probable-discarded {
+    /* box-shadow: 0 0 5px 0 rgb(242, 201, 76, 0.9); */
+    border: 2px solid rgb(39, 174, 96, 0.9);
+    background: rgb(39, 174, 96, 0.9);
+  }
+
+  .cluster-probable-meninggal {
     /* box-shadow: 0 0 5px 0 rgb(242, 201, 76, 0.9); */
     border: 2px solid rgb(165,18,18, 0.9);
     background: rgb(165,18,18, 0.9);
