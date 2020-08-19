@@ -76,8 +76,6 @@
         <p>
           Data Suspek, Probable dan Kontak Erat diterima Pikobar berdasarkan laporan harian Dinas Kesehatan Kab/Kota per 5 Agustus 2020,
           sehingga terlihat penumpukan kasus pada Chart Harian dan Kumulatif untuk Suspek, Probable, dan Kontak Erat pada tanggal tersebut.
-          <br><br>
-          Saat ini data kasus Probable sedang dalam proses untuk divisualisasikan.
         </p>
       </div>
       <div class="w-full xl:w-1/2 m-1 p-5">
@@ -184,6 +182,30 @@ export default {
           format: formatThousand
         },
         {
+          name: "probable",
+          label: "Total Probable",
+          sortable: true,
+          format: formatThousand
+        },
+        {
+          name: "probable_discarded",
+          label: "Probable Selesai",
+          sortable: true,
+          format: formatThousand
+        },
+        {
+          name: "probable_diisolasi",
+          label: "Probable Diisolasi",
+          sortable: true,
+          format: formatThousand
+        },
+        {
+          name: "probable_meninggal",
+          label: "Probable Meninggal",
+          sortable: true,
+          format: formatThousand
+        },
+        {
           name: "confirmation",
           label: "Total Positif",
           sortable: true,
@@ -234,6 +256,30 @@ export default {
         {
           name: "pertumbuhan_suspect_diisolasi",
           label: "Pertumbuhan Suspek Diisolasi",
+          sortable: true,
+          format: formatThousand
+        },
+        {
+          name: "pertumbuhan_probable",
+          label: "Pertumbuhan Total Probable",
+          sortable: true,
+          format: formatThousand
+        },
+        {
+          name: "pertumbuhan_probable_discarded",
+          label: "Pertumbuhan Probable Selesai",
+          sortable: true,
+          format: formatThousand
+        },
+        {
+          name: "pertumbuhan_probable_diisolasi",
+          label: "Pertumbuhan Probable Diisolasi",
+          sortable: true,
+          format: formatThousand
+        },
+        {
+          name: "pertumbuhan_probable_meninggal",
+          label: "Pertumbuhan Probable Meninggal",
           sortable: true,
           format: formatThousand
         },
@@ -328,30 +374,42 @@ export default {
               pertumbuhan_suspect: 0,
               pertumbuhan_suspect_discarded: 0,
               pertumbuhan_suspect_diisolasi: 0,
+              pertumbuhan_probable: 0,
+              pertumbuhan_probable_discarded: 0,
+              pertumbuhan_probable_diisolasi: 0,
+              pertumbuhan_probable_meninggal: 0,
               pertumbuhan_confirmation: 0,
               pertumbuhan_confirmation_selesai: 0,
               pertumbuhan_confirmation_meninggal: 0,
             }
-            if (i < 27) {
+            if (i < 29) {
               temp2.pertumbuhan_closecontact = temp[i].closecontact
               temp2.pertumbuhan_closecontact_discarded = temp[i].closecontact_discarded
               temp2.pertumbuhan_closecontact_dikarantina = temp[i].closecontact_dikarantina
               temp2.pertumbuhan_suspect = temp[i].suspect
               temp2.pertumbuhan_suspect_discarded = temp[i].suspect_discarded
               temp2.pertumbuhan_suspect_diisolasi = temp[i].suspect_diisolasi
+              temp2.pertumbuhan_probable = temp[i].probable
+              temp2.pertumbuhan_probable_discarded = temp[i].probable_discarded
+              temp2.pertumbuhan_probable_diisolasi = temp[i].probable_diisolasi
+              temp2.pertumbuhan_probable_meninggal = temp[i].probable_meninggal
               temp2.pertumbuhan_confirmation = temp[i].confirmation
               temp2.pertumbuhan_confirmation_selesai = temp[i].confirmation_selesai
               temp2.pertumbuhan_confirmation_meninggal = temp[i].confirmation_meninggal
             } else {
-              temp2.pertumbuhan_closecontact = temp[i].closecontact - temp[i-27].closecontact
-              temp2.pertumbuhan_closecontact_discarded = temp[i].closecontact_discarded - temp[i-27].closecontact_discarded
-              temp2.pertumbuhan_closecontact_dikarantina = temp[i].closecontact_dikarantina - temp[i-27].closecontact_dikarantina
-              temp2.pertumbuhan_suspect = temp[i].suspect - temp[i-27].suspect
-              temp2.pertumbuhan_suspect_discarded = temp[i].suspect_discarded - temp[i-27].suspect_discarded
-              temp2.pertumbuhan_suspect_diisolasi = temp[i].suspect_diisolasi - temp[i-27].suspect_diisolasi
-              temp2.pertumbuhan_confirmation = temp[i].confirmation - temp[i-27].confirmation
-              temp2.pertumbuhan_confirmation_selesai = temp[i].confirmation_selesai - temp[i-27].confirmation_selesai
-              temp2.pertumbuhan_confirmation_meninggal = temp[i].confirmation_meninggal - temp[i-27].confirmation_meninggal
+              temp2.pertumbuhan_closecontact = temp[i].closecontact - temp[i-29].closecontact
+              temp2.pertumbuhan_closecontact_discarded = temp[i].closecontact_discarded - temp[i-29].closecontact_discarded
+              temp2.pertumbuhan_closecontact_dikarantina = temp[i].closecontact_dikarantina - temp[i-29].closecontact_dikarantina
+              temp2.pertumbuhan_suspect = temp[i].suspect - temp[i-29].suspect
+              temp2.pertumbuhan_suspect_discarded = temp[i].suspect_discarded - temp[i-29].suspect_discarded
+              temp2.pertumbuhan_suspect_diisolasi = temp[i].suspect_diisolasi - temp[i-29].suspect_diisolasi
+              temp2.pertumbuhan_probable = temp[i].probable - temp[i-29].probable
+              temp2.pertumbuhan_probable_discarded = temp[i].probable_discarded - temp[i-29].probable_discarded
+              temp2.pertumbuhan_probable_diisolasi = temp[i].probable_diisolasi - temp[i-29].probable_diisolasi
+              temp2.pertumbuhan_probable_meninggal = temp[i].probable_meninggal - temp[i-29].probable_meninggal
+              temp2.pertumbuhan_confirmation = temp[i].confirmation - temp[i-29].confirmation
+              temp2.pertumbuhan_confirmation_selesai = temp[i].confirmation_selesai - temp[i-29].confirmation_selesai
+              temp2.pertumbuhan_confirmation_meninggal = temp[i].confirmation_meninggal - temp[i-29].confirmation_meninggal
             }
             self.jsonDataRekapitulasiJabarKumulatifKab.push({...temp[i], ...temp2})
           }
@@ -412,7 +470,7 @@ export default {
       return d.toLocaleString('id-ID', options)
     },
     downloadCSV () {
-      const col = ['tanggal','kode_prov','nama_prov','kode_kab','nama_kab','closecontact','closecontact_dikarantina','closecontact_discarded','suspect','suspect_diisolasi','suspect_discarded','confirmation','confirmation_selesai','confirmation_meninggal', 'pertumbuhan_closecontact', 'pertumbuhan_closecontact_discarded', 'pertumbuhan_closecontact_dikarantina', 'pertumbuhan_suspect', 'pertumbuhan_suspect_discarded', 'pertumbuhan_suspect_diisolasi', 'pertumbuhan_confirmation', 'pertumbuhan_confirmation_selesai', 'pertumbuhan_confirmation_meninggal']
+      const col = ['tanggal','kode_prov','nama_prov','kode_kab','nama_kab','closecontact','closecontact_dikarantina','closecontact_discarded','suspect','suspect_diisolasi','suspect_discarded','probable','probable_diisolasi','probable_discarded','probable_meninggal','confirmation','confirmation_selesai','confirmation_meninggal', 'pertumbuhan_closecontact', 'pertumbuhan_closecontact_discarded', 'pertumbuhan_closecontact_dikarantina', 'pertumbuhan_suspect', 'pertumbuhan_suspect_discarded', 'pertumbuhan_suspect_diisolasi','pertumbuhan_probable', 'pertumbuhan_probable_discarded', 'pertumbuhan_probable_diisolasi', 'pertumbuhan_probable_meninggal', 'pertumbuhan_confirmation', 'pertumbuhan_confirmation_selesai', 'pertumbuhan_confirmation_meninggal']
       let csvString = ''
       col.forEach((row) => {
         csvString += row + ','
@@ -420,7 +478,9 @@ export default {
       csvString += '\n'
       this.jsonDataRekapitulasiJabarKumulatifKab.forEach((obj) => {
         Object.keys(obj).forEach((key) => {
-          csvString += obj[key] + ','
+          if (key != 'closecontact_meninggal' && key != 'suspect_meninggal') {
+            csvString += obj[key] + ','
+          }
         })
         csvString += '\n'
       })
@@ -729,45 +789,65 @@ thead th:nth-child(2){
 .header-column-10 {
   width: 100px !important;
 }
-
 .header-column-11 {
+  width: 100px !important;
+}
+
+.header-column-12 {
   width: 140px !important;
   text-decoration: underline;
-}
-.header-column-12 {
-  width: 100px !important;
 }
 .header-column-13 {
   width: 100px !important;
 }
 .header-column-14 {
-  width: 140px !important;
-  text-decoration: underline;
+  width: 100px !important;
 }
 .header-column-15 {
-  width: 100px !important;
+  width: 140px !important;
+  text-decoration: underline;
 }
 .header-column-16 {
   width: 100px !important;
 }
 .header-column-17 {
-  width: 140px !important;
-  text-decoration: underline;
+  width: 100px !important;
 }
 .header-column-18 {
-  width: 100px !important;
+  width: 140px !important;
+  text-decoration: underline;
 }
 .header-column-19 {
   width: 100px !important;
 }
 .header-column-20 {
+  width: 100px !important;
+}
+.header-column-21 {
   width: 140px !important;
   text-decoration: underline;
 }
-.header-column-21 {
+.header-column-22 {
   width: 100px !important;
 }
-.header-column-22 {
+.header-column-23 {
+  width: 100px !important;
+}
+.header-column-24 {
+  width: 100px !important;
+}
+
+.header-column-25 {
+  width: 140px !important;
+  text-decoration: underline;
+}
+.header-column-26 {
+  width: 100px !important;
+}
+.header-column-27 {
+  width: 100px !important;
+}
+.header-column-28 {
   width: 100px !important;
 }
 

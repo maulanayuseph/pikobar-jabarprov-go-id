@@ -145,6 +145,24 @@
               style="margin-right: 0.5em;"
             />Kontak Erat - Masih Dikarantina
           </li>
+          <li
+            :class="filter.probable_diisolasi?'filter-active':''"
+            @click="setFilter('probable_diisolasi')"
+          >
+            <div
+              class="legend-color cluster-probable-diisolasi"
+              style="margin-right: 0.5em;"
+            />Probable - Isolasi/ Dalam Perawatan
+          </li>
+          <li
+            :class="filter.probable_meninggal?'filter-active':''"
+            @click="setFilter('probable_meninggal')"
+          >
+            <div
+              class="legend-color cluster-probable-meninggal"
+              style="margin-right: 0.5em;"
+            />Probable - Meninggal
+          </li>
         </div>
       </div>
       <div class="hint-map mt-2 p-2 text-center text-sm font-bold">
@@ -212,7 +230,9 @@ export default {
         confirmation_selesai: false,
         suspect_diisolasi: false,
         // suspect_meninggal: false,
-        closecontact_dikarantina: false
+        closecontact_dikarantina: false,
+        probable_diisolasi: false,
+        probable_meninggal: false
       },
       stat: {
         isActivePolygon: true,
@@ -391,6 +411,7 @@ export default {
           let jumlahKasusConfirmationDiisolasi = 0
           let jumlahKasusSuspectDiisolasi = 0
           let jumlahKasusClosecontactDikarantina = 0
+          let jumlahKasusProbableDiisolasi = 0
           let styleBatasWilayah = {
             fillOpacity: Number,
             fillColor: String,
@@ -408,6 +429,7 @@ export default {
                 jumlahKasusConfirmationDiisolasi = dataSebaranPolygon.wilayah[i].confirmation_diisolasi
                 jumlahKasusSuspectDiisolasi = dataSebaranPolygon.wilayah[i].suspect_diisolasi
                 jumlahKasusClosecontactDikarantina = dataSebaranPolygon.wilayah[i].closecontact_dikarantina
+                jumlahKasusProbableDiisolasi = dataSebaranPolygon.wilayah[i].probable_diisolasi
               } else if (this.activeDataCategory === 'confirmation_total') {
                 jumlahKasusConfirmationDiisolasi = dataSebaranPolygon.wilayah[i].confirmation_diisolasi
                 jumlahKasusConfirmationSelesai = dataSebaranPolygon.wilayah[i].confirmation_selesai
@@ -440,6 +462,7 @@ export default {
             popup += '<br>Positif - Isolasi/ Dalam Perawatan : ' + jumlahKasusConfirmationDiisolasi
             popup += '<br>Suspek - Isolasi/ Dalam Perawatan : ' + jumlahKasusSuspectDiisolasi
             popup += '<br>Kontak Erat - Masih Dikarantina : ' + jumlahKasusClosecontactDikarantina
+            popup += '<br>Probable - Isolasi/ Dalam Perawatan : ' + jumlahKasusProbableDiisolasi
             popup += '<br>Gabungan Kasus Aktif : ' + jumlahKasus
           } else if (this.activeDataCategory === 'confirmation_total') {
             popup += '<br>Positif - Isolasi/ Dalam Perawatan : ' + jumlahKasusConfirmationDiisolasi
@@ -496,13 +519,15 @@ export default {
       let jumlahKasusConfirmationDiisolasi = 0
       let jumlahKasusSuspectDiisolasi = 0
       let jumlahKasusClosecontactDikarantina = 0
+      let jumlahKasusProbableDiisolasi = 0
       for (let i = 0; i < dataSebaranPolygon.wilayah.length; i++) {
         if (this.activeDataCategory === 'gabungan_aktif') {
           jumlahKasusConfirmationDiisolasi = dataSebaranPolygon.wilayah[i].confirmation_diisolasi
           jumlahKasusSuspectDiisolasi = dataSebaranPolygon.wilayah[i].suspect_diisolasi
           jumlahKasusClosecontactDikarantina = dataSebaranPolygon.wilayah[i].closecontact_dikarantina
+          jumlahKasusProbableDiisolasi = dataSebaranPolygon.wilayah[i].probable_diisolasi
 
-          totalCase += jumlahKasusConfirmationDiisolasi + jumlahKasusSuspectDiisolasi + jumlahKasusClosecontactDikarantina
+          totalCase += jumlahKasusConfirmationDiisolasi + jumlahKasusSuspectDiisolasi + jumlahKasusClosecontactDikarantina + jumlahKasusProbableDiisolasi
         } else if (this.activeDataCategory === 'confirmation_total') {
           jumlahKasusConfirmationDiisolasi = dataSebaranPolygon.wilayah[i].confirmation_diisolasi
           jumlahKasusConfirmationSelesai = dataSebaranPolygon.wilayah[i].confirmation_selesai
@@ -619,6 +644,20 @@ export default {
           this.activeTitle = {
             name: 'Kontak Erat - Masih Dikarantina',
             className: 'cluster-closecontact-dikarantina'
+          }
+          break
+        }
+        case 'probable_diisolasi': {
+          this.activeTitle = {
+            name: 'Probable - Isolasi/ Dalam Perawatan',
+            className: 'cluster-probable-diisolasi'
+          }
+          break
+        }
+        case 'probable_meninggal': {
+          this.activeTitle = {
+            name: 'Probable - Meninggal',
+            className: 'cluster-probable-meninggal'
           }
           break
         }
@@ -795,6 +834,23 @@ export default {
     background: rgb(165,18,18, 0.9);
   }
 
+  .cluster-probable-diisolasi {
+    /* box-shadow: 0 0 5px 0 rgb(242, 201, 76, 0.9); */
+    border: 2px solid rgb(210,188,87, 76, 0.9);
+    background: rgb(210,188,87, 0.9);
+  }
+
+  .cluster-probable-discarded {
+    /* box-shadow: 0 0 5px 0 rgb(242, 201, 76, 0.9); */
+    border: 2px solid rgb(39, 174, 96, 0.9);
+    background: rgb(39, 174, 96, 0.9);
+  }
+
+  .cluster-probable-meninggal {
+    /* box-shadow: 0 0 5px 0 rgb(242, 201, 76, 0.9); */
+    border: 2px solid rgb(165,18,18, 0.9);
+    background: rgb(165,18,18, 0.9);
+  }
   .title-map {
     position: absolute;
     top: 0;

@@ -568,17 +568,31 @@ export default {
           }
           break
         }
-        case 'suspect_meninggal': {
-          classMarker = {
-            name: 'Suspek - Meninggal',
-            className: 'cluster-suspect-meninggal'
-          }
-          break
-        }
+        // case 'suspect_meninggal': {
+        //   classMarker = {
+        //     name: 'Suspek - Meninggal',
+        //     className: 'cluster-suspect-meninggal'
+        //   }
+        //   break
+        // }
         case 'closecontact_dikarantina': {
           classMarker = {
             name: 'Kontak Erat - Masih Dikarantina',
             className: 'cluster-closecontact-dikarantina'
+          }
+          break
+        }
+        case 'probable_diisolasi': {
+          classMarker = {
+            name: 'Probable - Isolasi/ Dalam Perawatan',
+            className: 'cluster-probable-diisolasi'
+          }
+          break
+        }
+        case 'probable_meninggal': {
+          classMarker = {
+            name: 'Probable - Meninggal',
+            className: 'cluster-probable-meninggal'
           }
           break
         }
@@ -628,7 +642,9 @@ export default {
         confirmation_meninggal: this.$L.markerClusterGroup(this.configCluster('cluster-confirmation-meninggal')),
         confirmation_selesai: this.$L.markerClusterGroup(this.configCluster('cluster-confirmation-selesai')),
         suspect_diisolasi: this.$L.markerClusterGroup(this.configCluster('cluster-suspect-diisolasi')),
-        suspect_meninggal: this.$L.markerClusterGroup(this.configCluster('cluster-suspect-meninggal')),
+        // suspect_meninggal: this.$L.markerClusterGroup(this.configCluster('cluster-suspect-meninggal')),
+        probable_diisolasi: this.$L.markerClusterGroup(this.configCluster('cluster-probable-diisolasi')),
+        probable_meninggal: this.$L.markerClusterGroup(this.configCluster('cluster-probable-meninggal')),
         closecontact_dikarantina: this.$L.markerClusterGroup(this.configCluster('cluster-closecontact-dikarantina'))
       }
     },
@@ -958,6 +974,24 @@ export default {
   }
 
   .cluster-suspect-meninggal {
+    /* box-shadow: 0 0 5px 0 rgb(242, 201, 76, 0.9); */
+    border: 2px solid rgb(165,18,18, 0.9);
+    background: rgb(165,18,18, 0.9);
+  }
+
+  .cluster-probable-diisolasi {
+    /* box-shadow: 0 0 5px 0 rgb(242, 201, 76, 0.9); */
+    border: 2px solid rgb(210,188,87, 76, 0.9);
+    background: rgb(210,188,87, 0.9);
+  }
+
+  .cluster-probable-discarded {
+    /* box-shadow: 0 0 5px 0 rgb(242, 201, 76, 0.9); */
+    border: 2px solid rgb(39, 174, 96, 0.9);
+    background: rgb(39, 174, 96, 0.9);
+  }
+
+  .cluster-probable-meninggal {
     /* box-shadow: 0 0 5px 0 rgb(242, 201, 76, 0.9); */
     border: 2px solid rgb(165,18,18, 0.9);
     background: rgb(165,18,18, 0.9);

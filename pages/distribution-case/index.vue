@@ -129,11 +129,20 @@
               >
                 Kontak Erat
               </button>
+              <button
+                class="button-selector m-1 w-full xl:w-auto "
+                style="display: flex;"
+                :active="activeTable === 'probable'"
+                @click="enableTable('probable')"
+              >
+                Probable
+              </button>
             </div>
           </div>
           <ConfirmedCaseListIstilahBaru v-if="activeTable === 'confirmed'" :active-region-id.sync="activeRegionId" :active-region-category.sync="activeRegionCategory" :active-parent-region-name.sync="activeParentRegionName" />
           <SuspectCaseListIstilahBaru v-if="activeTable === 'suspect'" :active-region-id.sync="activeRegionId" :active-region-category.sync="activeRegionCategory" :active-parent-region-name.sync="activeParentRegionName" />
           <CloseContactCaseListIstilahBaru v-if="activeTable === 'closecontact'" :active-region-id.sync="activeRegionId" :active-region-category.sync="activeRegionCategory" :active-parent-region-name.sync="activeParentRegionName" />
+          <ProbableCaseListIstilahBaru v-if="activeTable === 'probable'" :active-region-id.sync="activeRegionId" :active-region-category.sync="activeRegionCategory" :active-parent-region-name.sync="activeParentRegionName" />
         </div>
       </div>
     </section>
@@ -143,8 +152,6 @@
         <p>
           Data Suspek, Probable dan Kontak Erat diterima Pikobar berdasarkan laporan harian Dinas Kesehatan Kab/Kota per 5 Agustus 2020,
           sehingga terlihat penumpukan kasus pada Chart Harian dan Kumulatif untuk Suspek, Probable, dan Kontak Erat pada tanggal tersebut.
-          <br><br>
-          Saat ini data kasus Probable sedang dalam proses untuk divisualisasikan.
         </p>
       </div>
       <div class="w-full xl:w-1/2 m-1 p-5">
@@ -172,7 +179,8 @@ export default {
     RasioConfirmedCaseIstilahBaru: () => import('~/components/RasioConfirmedCaseIstilahBaru'),
     ConfirmedCaseListIstilahBaru: () => import('~/components/ConfirmedCaseListIstilahBaru'),
     SuspectCaseListIstilahBaru: () => import('~/components/SuspectCaseListIstilahBaru'),
-    CloseContactCaseListIstilahBaru: () => import('~/components/CloseContactCaseListIstilahBaru')
+    CloseContactCaseListIstilahBaru: () => import('~/components/CloseContactCaseListIstilahBaru'),
+    ProbableCaseListIstilahBaru: () => import('~/components/ProbableCaseListIstilahBaru')
   },
   data () {
     return {
