@@ -38,9 +38,11 @@ export default {
             &#9432;
               <span class="tooltiptext text-xs">
                 Orang yang memiliki salah satu dari kriteria berikut :
-                <br/>i. Mengalami Infeksi Saluran Pernapasan Akut (ISPA) DAN pada 14 hari terakhir sebelum timbul gejala memiliki riwayat perjalanan atau tinggal di negara/wilayah Indonesia yang melaporkan transmisi lokal.
-                <br/>ii. Mengalami salah satu gejala/tanda ISPA DAN pada 14 hari terakhir sebelum timbul gejala memiliki riwayat kontak dengan kasus terkonfirmasi/probable COVID-19.
-                <br/>iii. Mengalami ISPA berat/pneumonia berat yang membutuhkan perawatan di rumah sakit DAN tidak ada penyebab lain berdasarkan gambaran klinik yang meyakinkan.
+                <ol style="list-style: lower-roman; margin-left:10px;">
+                  <li>Mengalami Infeksi Saluran Pernapasan Akut (ISPA) DAN pada 14 hari terakhir sebelum timbul gejala memiliki riwayat perjalanan atau tinggal di negara/wilayah Indonesia yang melaporkan transmisi lokal.</li>
+                  <li>Mengalami salah satu gejala/tanda ISPA DAN pada 14 hari terakhir sebelum timbul gejala memiliki riwayat kontak dengan kasus terkonfirmasi/probable COVID-19.</li>
+                  <li>Mengalami ISPA berat/pneumonia berat yang membutuhkan perawatan di rumah sakit DAN tidak ada penyebab lain berdasarkan gambaran klinik yang meyakinkan.</li>
+                </ol>
               </span>
             </div>
             <div style={`display: ${context.props.isTooltipProbable ? 'inline-block' : 'none'}`} class="tooltip pl-1">
