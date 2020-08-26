@@ -169,47 +169,73 @@
       </div>
     </section>
     <section class="md:flex flex-row flex-no-wrap mt-8 m-4 md:m-8 rounded-lg bg-white shadow-md p-5 md:p-8">
-      <div class="lg:w-1/2">
+      <div class="lg:w-1/2 order-2">
         <header class="lg:max-w-2xl">
           <h2 class="mb-4 md:mb-8 text-left text-xl md:text-2xl">
-            <b>Lindungi Diri dan Orang Lain</b>
+            <b>Tetap Waspada dengan AKB30</b>
           </h2>
           <p>
-            Sampai saat ini COVID-19 belum memiliki vaksin, sehingga cara terbaik untuk tidak terinfeksi adalah dengan menghindari terekspos virus.
+            Selama vaksin belum ditemukan, cara terbaik untuk kembali beraktivitas adalah dengan menerapkan ADAPTASI KEBIASAAN BARU di tengah pandemi.
           </p>
         </header>
         <br>
         <div class="flex flex-col items-stretch lg:max-w-2xl">
           <article class="text-gray-800">
             <h3 class="text-lg text-black">
-              <b>COVID-19 dapat menyebar dari orang ke orang melalui tetesan kecil (droplet) saat batuk atau bersin.
-                Maka yang bisa Anda lakukan adalah:
-              </b>
+              Berdasarkan Peraturan Gubernur No.46 tahun 2020,
+              Adaptasi Kebiasaan Baru dapat diterapkan di 30 bidang kegiatan (maka selanjutnya disebut AKB30)
+              yang diatur menurut 5 LEVEL KEWASPADAAN yang telah ditentukan di masing-masing wilayah di Jawa Barat, yaitu:
             </h3>
             <br>
-            <ul style="list-style-type: none;">
-              <li class="li-check-mark">
-                Sering cuci tangan dengan sabun atau hand-sanitizer
+            <ul class="list-disc list-inside">
+              <li>
+                Level 1 <strong class="text-green-600">Rendah (Hijau)</strong>
               </li>
-              <li class="li-check-mark">
-                Hindari menyentuh wajah, terutama hidung, mulut, dan mata
+              <li>
+                Level 2 <strong class="text-blue-600">Moderat (Biru)</strong>
               </li>
-              <li class="li-check-mark">
-                Bersihkan permukaan benda yang disentuh banyak orang
+              <li>
+                Level 3 <strong class="text-yellow-600">Cukup Berat (Kuning)</strong>
               </li>
-              <li class="li-check-mark">
-                Physical Distancing! Minimalisir kontak fisik dengan sesama
+              <li>
+                Level 4 <strong class="text-red-600">Berat (Merah)</strong>
               </li>
-              <li class="li-check-mark">
-                Jaga jarak 1-3 meter dengan sesama
-              </li>
-              <li class="li-check-mark">
-                Tetap tinggal di rumah, hindari bepergian ke tempat umum bila tidak perlu
-              </li>
-              <li class="li-check-mark">
-                Selalu gunakan masker jika harus keluar rumah dan berinteraksi langsung dengan orang lain
+              <li>
+                Level 5 <strong class="text-black">Kritis (Hitam)</strong>
               </li>
             </ul>
+            <br>
+            <p>
+              Dari 5 Level Kewaspadaan tersebut hanya Level 1 dan 2 yang dapat menerapkan Adaptasi Kebiasaan Baru.
+              Level yang lebih berat akan kembali melakukan PSBB secara proporsional.
+            </p>
+            <br>
+            <p>
+              Lalu, apa saja yang harus wargi Jabar perhatikan saat mulai beraktivitas kembali?
+            </p>
+            <br>
+            <p>
+              Hal mendasar yang perlu wargi terapkan adalah protokol kesehatan dalam setiap akan melakukan kegiatan seperti:
+              <br>
+              <br>
+              <ul class="list-none">
+                <li class="li-check-mark">
+                  Mencuci tangan secara berkala
+                </li>
+                <li class="li-check-mark">
+                  Gunakan masker saat keluar rumah
+                </li>
+                <li class="li-check-mark">
+                  Selalu menjaga jarak min. 1 meter dan hindari kontak fisik dengan orang lain
+                </li>
+                <li class="li-check-mark">
+                  Membawa hand sanitizer/tisu basah untuk kebersihan darurat (jika tidak ada fasilitas cuci tangan)
+                </li>
+                <li class="li-check-mark">
+                  Membawa peralatan makan sendiri
+                </li>
+              </ul>
+            </p>
           </article>
           <nuxt-link
             v-show="false"
@@ -221,10 +247,10 @@
           </nuxt-link>
         </div>
       </div>
-      <div class="hidden lg:block w-1/2">
+      <div class="hidden lg:block w-1/2 order-1 mr-4">
         <img
-          src="https://firebasestorage.googleapis.com/v0/b/jabarprov-covid19.appspot.com/o/public%2Flindungi-diri.jpeg?alt=media&token=e407e115-c82a-4159-b247-6976caab8051"
-          class="w-full h-full object-contain object-center"
+          src="https://firebasestorage.googleapis.com/v0/b/jabarprov-covid19.appspot.com/o/public%2Fakb.jpeg?alt=media&token=6455e6ee-2edc-457e-ab73-d4ce2468ca19"
+          class="w-full h-full object-contain object-top"
         >
       </div>
     </section>
