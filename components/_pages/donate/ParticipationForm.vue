@@ -5,6 +5,7 @@
     </h4>
     <form
       class="block max-w-3xl mx-auto"
+      @keydown.enter.prevent="() => {}"
       @submit.prevent="beforeSubmit"
     >
       <div class="mb-4">
@@ -189,6 +190,7 @@
         </label>
         <div class="relative">
           <button
+            type="button"
             class="border rounded-lg px-4 text-sm py-1 mr-2"
             :class="[documentFile ? 'border-green-400 text-green-600' : 'border-red-400 text-red-600']"
             @click.prevent="uploadDocument()"
@@ -198,6 +200,7 @@
             Upload Dokumen
           </button>
           <button
+            type="button"
             class="border border-gray-400 text-gray-600 rounded-lg px-4 text-sm py-1"
             @click.prevent="downloadDocument()"
           >
@@ -258,7 +261,7 @@
 import { faCheckCircle, faTrash, faFileDownload, faFileUpload } from '@fortawesome/free-solid-svg-icons'
 import VueRecaptcha from 'vue-recaptcha'
 import Swal from 'sweetalert2'
-import { getLogistics } from '../../../api/donation'
+import { getAllLogisticsNeeds } from '../../../api/donation'
 import { storage, db, Timestamp } from '@/lib/firebase'
 
 const emptyPayload = {
@@ -308,7 +311,8 @@ export default {
         show: false,
         search: '',
         data: []
-      }
+      },
+      allLogisticsNeeds: []
     }
   },
   computed: {
@@ -335,9 +339,6 @@ export default {
     /* eslint-disable-next-line */
     'fieldLogistic.search': function (v) {
       if (fieldSearchTimeout) { clearTimeout(fieldSearchTimeout) }
-      if (v.length < 3) {
-        return
-      }
       fieldSearchTimeout = setTimeout(() => {
         this.searchFieldLogistic()
         clearTimeout(fieldSearchTimeout)
@@ -350,18 +351,15 @@ export default {
     })
   },
   methods: {
-    searchFieldLogistic () {
+    async searchFieldLogistic () {
       this.fieldLogistic.show = true
-      return getLogistics({
-        params: {
-          limit: 15,
-          skip: 0,
-          search: this.fieldLogistic.search,
-          where: '{}',
-          sort: 'matg_id:asc'
-        }
-      }).then(({ total, data }) => {
-        this.fieldLogistic.data = data
+      if (!this.allLogisticsNeeds.length) {
+        this.allLogisticsNeeds = await getAllLogisticsNeeds()
+      }
+      this.fieldLogistic.data = this.allLogisticsNeeds.filter((x) => {
+        const name = x.name.toLowerCase()
+        const search = this.fieldLogistic.search.toLowerCase()
+        return name.includes(search)
       })
     },
     addLogisticItem (logistic) {

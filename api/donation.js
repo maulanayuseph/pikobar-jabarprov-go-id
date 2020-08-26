@@ -34,12 +34,25 @@ export async function getCollectedDonations (config = {}) {
   }
 }
 
-export async function getLogistics (config = {}) {
-  const data = await db.collection('logistic-donation-needs')
+export async function getLogistics ({ perPage = 10, currentPage, newPage, firstSnapshot, lastSnapshot } = {}) {
+  const count = await db.doc('counters/logistic-donation-needs').get().then(doc => doc.get('count'))
+  let query = db.collection('logistic-donation-needs').orderBy('name', 'asc')
+  if (!firstSnapshot && !lastSnapshot) {
+    query = query.limit(perPage)
+  } else if (newPage < currentPage && firstSnapshot) {
+    query = query.endBefore(firstSnapshot).limitToLast(perPage)
+  } else if (newPage > currentPage && lastSnapshot) {
+    query = query.startAfter(lastSnapshot).limit(perPage)
+  }
+  const [first, last, data] = await query
     .get()
-    .then((docs) => {
-      if (!docs.empty) {
-        return docs.docs.map((doc) => {
+    .then((snapshots) => {
+      let first = null
+      let last = null
+      let data = []
+      if (!snapshots.empty) {
+        [first, last] = [snapshots.docs[0], snapshots.docs[snapshots.docs.length - 1]]
+        data = snapshots.docs.map((doc) => {
           const data = doc.data()
           return {
             ...data,
@@ -50,11 +63,29 @@ export async function getLogistics (config = {}) {
           }
         })
       }
-      return []
+      return [first, last, data]
     })
-  const total = data.length
   return {
-    total,
-    data
+    total: count,
+    data,
+    first,
+    last
   }
+}
+
+export function getAllLogisticsNeeds () {
+  return db.collection('logistic-donation-needs')
+    .get()
+    .then((snapshots) => {
+      return snapshots.docs.map((doc) => {
+        const data = doc.data()
+        return {
+          ...data,
+          id: doc.id,
+          matg_id: data.name,
+          label: data.name,
+          sisa: data.amount
+        }
+      })
+    })
 }
