@@ -52,6 +52,15 @@
           </caption>
         </figure>
       </div>
+      <br>
+      <div class="flex justify-center">
+        <button
+          class="w-full lg:w-1/3 px-6 py-2 rounded-lg bg-brand-blue hover:bg-blue-400 text-white font-bold uppercase tracking-wider"
+          @click="onLoadMore"
+        >
+          Load More
+        </button>
+      </div>
     </section>
   </div>
 </template>
@@ -77,19 +86,25 @@ export default {
     })
   },
   mounted () {
-    this.isPending = true
-    this.getItems({ perPage: 8, fresh: true })
-      .finally(() => {
-        if (process.browser) {
-          analytics.logEvent('infographic_list_view')
-        }
-        this.isPending = false
-      })
+    this.loadData({ sendAnalytics: true })
   },
   methods: {
     ...mapActions('infographics', {
       getItems: 'getItems'
     }),
+    loadData ({ sendAnalytics = false } = {}) {
+      this.isPending = true
+      this.getItems({ perPage: 9, fresh: true })
+        .finally(() => {
+          if (sendAnalytics && process.browser) {
+            analytics.logEvent('infographic_list_view')
+          }
+          this.isPending = false
+        })
+    },
+    onLoadMore () {
+      this.loadData()
+    },
     beforeDownload (item) {
       onDownload(item.downloadURL, item.title)
     },
