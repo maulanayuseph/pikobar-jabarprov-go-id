@@ -7,12 +7,12 @@
     <ul class="socmed-list">
       <li class="mr-4">
         <a href="https://instagram.com/pikobar_jabar" target="_blank">
-          <FontAwesomeIcon :icon="faInstagram" class="text-4xl text-gray-600" />
+          <FontAwesomeIcon :icon="faInstagram" class="text-4xl text-green-500" />
         </a>
       </li>
       <li class="mr-4">
         <a href="https://twitter.com/pikobar" target="_blank">
-          <img :src="iconTwitter" class="text-4xl text-gray-600 w-10 h-10 object-contain object-center">
+          <img :src="iconTwitter" class="w-10 h-10 object-contain object-center">
         </a>
       </li>
     </ul>
@@ -40,7 +40,7 @@ export default {
 }
 
 .socmed-cta {
-  @apply flex-initial text-lg text-gray-600 mb-4 flex items-center;
+  @apply flex-initial text-lg text-gray-900 mb-4 flex items-center;
 
   @screen sm {
     @apply w-1/2 mb-0;
