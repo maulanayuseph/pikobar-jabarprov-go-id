@@ -21,31 +21,7 @@
             :key="col.prop"
             class="bg-gray-300 uppercase text-gray-600 text-sm px-4 py-2 border-t-2 border-b-2 border-solid border-gray-400"
           >
-            <template v-if="col.prop === 'matg_id'">
-              <FontAwesomeIcon
-                class="inline-block mr-2 cursor-pointer"
-                :icon="icons.faSearch"
-                @click="searchInput = !searchInput"
-              />
-              <input
-                v-if="searchInput"
-                v-model="searchInputQuery"
-                name="search"
-                autocomplete="search"
-                class="input-text"
-                placeholder="Cari Data ..."
-                @keydown="triggerSearch()"
-              >
-              <b v-else>
-                <FontAwesomeIcon
-                  class="float-right cursor-pointer"
-                  :icon="icons.faSort"
-                  @click="getTableData(true)"
-                />
-                {{ col.label }}
-              </b>
-            </template>
-            <b v-if="col.prop !== 'matg_id'">{{ col.label }}</b>
+            <b>{{ col.label }}</b>
           </th>
           <th
             class="bg-gray-300 uppercase text-gray-600 text-sm px-4 py-2 border-t-2 border-b-2 border-solid border-gray-400"
@@ -168,6 +144,8 @@ export default {
       currentPage: 1,
       totalItems: 0,
       totalPages: 0,
+      firstSnapshot: null,
+      lastSnapshot: null,
 
       logisticSpecToShow: null,
       isShowingSpecPopup: false
@@ -181,20 +159,6 @@ export default {
   mounted () {
     this.$store.commit('donate/SET_SELECTED_LOGISTICS', [])
     this.getTableData()
-    this.$watch(
-      'currentPage',
-      function handler (newVal, oldVal) {
-        if (newVal !== oldVal) {
-          this.getTableData()
-        }
-      },
-      { immediate: false }
-    )
-    this.$watch('tabSelected', () => {
-      this.searchInput = false
-      this.searchInputQuery = ''
-      this.getTableData()
-    })
     this.$watch('searchInput', (v) => {
       if (!v) {
         this.searchInputQuery = ''
@@ -218,25 +182,19 @@ export default {
     getCellValue (column, row, columnIndex, rowIndex) {
       return row[column.prop]
     },
-    getTableData (sort) {
+    getTableData (newPage = 1) {
       this.isLoading = true
-      if (sort) {
-        if (this.tableSorting === 'matg_id:asc') {
-          this.tableSorting = 'matg_id:desc'
-        } else {
-          this.tableSorting = 'matg_id:asc'
-        }
-      }
       return getLogistics({
-        params: {
-          limit: this.perPage,
-          skip: this.skipCount,
-          search: this.searchInputQuery || '',
-          where: '{}',
-          sort: this.tableSorting
-        }
+        newPage,
+        currentPage: this.currentPage,
+        perPage: this.perPage,
+        firstSnapshot: this.firstSnapshot,
+        lastSnapshot: this.lastSnapshot
       })
-        .then(({ total, data }) => {
+        .then(({ total, data, first, last }) => {
+          this.currentPage = newPage
+          this.firstSnapshot = first
+          this.lastSnapshot = last
           this.totalItems = total || data.length
           this.totalPages = Math.ceil(this.totalItems / this.perPage)
           this.tableData = data
@@ -246,7 +204,7 @@ export default {
         })
     },
     onPaginationClick (page) {
-      this.currentPage = page
+      this.getTableData(page)
     },
     areSelected (rid) {
       return this.$store.state.donate.selectedLogistics.find(
