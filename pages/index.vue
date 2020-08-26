@@ -181,11 +181,11 @@
         <br>
         <div class="flex flex-col items-stretch lg:max-w-2xl">
           <article class="text-gray-800">
-            <h3 class="text-lg text-black">
+            <p>
               Berdasarkan Peraturan Gubernur No.46 tahun 2020,
               Adaptasi Kebiasaan Baru dapat diterapkan di 30 bidang kegiatan (maka selanjutnya disebut AKB30)
               yang diatur menurut 5 LEVEL KEWASPADAAN yang telah ditentukan di masing-masing wilayah di Jawa Barat, yaitu:
-            </h3>
+            </p>
             <br>
             <ul class="list-disc list-inside">
               <li>
@@ -235,6 +235,16 @@
                   Membawa peralatan makan sendiri
                 </li>
               </ul>
+              <br>
+              <br>
+              Protokol harus selalu wargi terapkan di mana saja dan kapan saja. Saat sedang berbelanja di pasar,
+              mulai kembali masuk kantor, ataupun sedang di area publik seperti halte dan taman. Jangan lupa
+              untuk selalu pakai masker segera mandi dan ganti pakaian saat sampai di rumah.
+              <br>
+              <br>
+              Jika merasa tidak sehat atau memiliki gejala demam,  maka wargi sebaiknya tetap berkegiatan dari rumah.
+              Karena di setiap kebiasaan baru, selalu ada harapan untuk keluarga dan kerabat agar tetap aman.
+              Terus waspada dan jaga diri jaga sesama dengan AKB30.
             </p>
           </article>
           <nuxt-link
