@@ -258,6 +258,7 @@
 </template>
 
 <script>
+import _throttle from 'lodash/throttle'
 import { faCheckCircle, faTrash, faFileDownload, faFileUpload } from '@fortawesome/free-solid-svg-icons'
 import VueRecaptcha from 'vue-recaptcha'
 import Swal from 'sweetalert2'
@@ -279,7 +280,6 @@ const emptyPayload = {
   agreed_to_be_mentioned: true
 }
 
-let fieldSearchTimeout = null
 export default {
   components: { VueRecaptcha },
   data () {
@@ -338,11 +338,11 @@ export default {
   watch: {
     /* eslint-disable-next-line */
     'fieldLogistic.search': function (v) {
-      if (fieldSearchTimeout) { clearTimeout(fieldSearchTimeout) }
-      fieldSearchTimeout = setTimeout(() => {
+      if (v.length) {
         this.searchFieldLogistic()
-        clearTimeout(fieldSearchTimeout)
-      }, 500)
+      } else {
+        this.$set(this.fieldLogistic, 'show', false)
+      }
     }
   },
   mounted () {
@@ -351,7 +351,7 @@ export default {
     })
   },
   methods: {
-    async searchFieldLogistic () {
+    searchFieldLogistic: _throttle(async function () {
       this.fieldLogistic.show = true
       if (!this.allLogisticsNeeds.length) {
         this.allLogisticsNeeds = await getAllLogisticsNeeds()
@@ -361,7 +361,7 @@ export default {
         const search = this.fieldLogistic.search.toLowerCase()
         return name.includes(search)
       })
-    },
+    }, 500, { trailing: true, leading: false }),
     addLogisticItem (logistic) {
       const foundRow = this.$store.state.donate.selectedLogistics.find(result => result.id === logistic.id)
       if (!foundRow) {
