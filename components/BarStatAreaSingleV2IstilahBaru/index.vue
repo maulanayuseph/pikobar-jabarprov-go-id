@@ -794,7 +794,7 @@ export default {
 
       // get data
       for (let i = startNum; i <= endNum; i++) {
-        const date = new Date(self.jsonDataNasionalHarianKumulatif[i].tanggal)
+        const date = new Date(self.jsonDataNasionalHarianKumulatif[i].key_as_string)
         // by Harian
         let tooltipHarian = '<table style="white-space: nowrap; margin: 10px;">'
         tooltipHarian += '<tr><td style="font-size: larger;">' + self.formatDate(date) + '</td><td></td></tr>'
@@ -832,7 +832,7 @@ export default {
 
       // get data
       for (let i = startNum; i <= endNum; i++) {
-        const date = new Date(self.jsonDataNasionalHarianKumulatif[i].tanggal)
+        const date = new Date(self.jsonDataNasionalHarianKumulatif[i].key_as_string)
         // by Akumulatif
         let tooltipKumulatif = '<table style="white-space: nowrap; margin: 10px;">'
         tooltipKumulatif += '<tr><td style="font-size: larger;">' + self.formatDate(date) + '</td><td></td></tr>'
