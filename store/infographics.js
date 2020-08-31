@@ -1,9 +1,11 @@
+// import _cloneDeep from 'lodash/cloneDeep'
 import _uniqBy from 'lodash/uniqBy'
 import _orderBy from 'lodash/orderBy'
 import { get, getById, ORDER_INDEX, ORDER_TYPE } from '~/api/infographic'
 
 export const state = () => ({
-  items: []
+  items: [],
+  lastSnapshot: null
 })
 
 export const getters = {
@@ -29,15 +31,22 @@ export const mutations = {
   },
   prependItems (state, items) {
     state.items = [...items, ...state.items]
+  },
+  setLastSnapshot (state, lastSnapshot) {
+    state.lastSnapshot = lastSnapshot
   }
 }
 
 export const actions = {
   getItems ({ state, commit }, options = { perPage: 6, fresh: false }) {
     if (!state.items || !state.items.length || options.fresh) {
-      return get(options)
-        .then((arr) => {
-          commit('setItems', arr)
+      return get({
+        ...options,
+        lastSnapshot: state.lastSnapshot
+      })
+        .then(({ data, lastSnapshot }) => {
+          commit('appendItems', data)
+          commit('setLastSnapshot', lastSnapshot)
           return state.items
         })
     }

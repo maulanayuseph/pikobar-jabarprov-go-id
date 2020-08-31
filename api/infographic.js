@@ -4,14 +4,21 @@ import { slugifyInfographicRoute } from '../lib/slugify'
 export const ORDER_INDEX = 'published_date'
 export const ORDER_TYPE = 'desc'
 
-export function get (options = { perPage: 3 }) {
-  return db.collection('infographics')
+export async function get (options = { lastSnapshot: null, perPage: 3 }) {
+  let query = db.collection('infographics')
     .orderBy(ORDER_INDEX, 'desc')
+  if (options.lastSnapshot) {
+    query = query.startAfter(options.lastSnapshot)
+  }
+  const [data, lastSnapshot] = await query
     .limit(options.perPage)
     .get()
-    .then((docs) => {
-      if (!docs.empty) {
-        return docs.docs.map((doc) => {
+    .then((snapshots) => {
+      let data = []
+      let lastSnapshot = null
+      if (!snapshots.empty) {
+        lastSnapshot = snapshots.docs[snapshots.docs.length - 1].data().published_date
+        data = snapshots.docs.map((doc) => {
           const data = doc.data()
           const route = slugifyInfographicRoute(doc.id, data.title)
           return {
@@ -24,8 +31,12 @@ export function get (options = { perPage: 3 }) {
           }
         })
       }
-      return []
+      return [data, lastSnapshot]
     })
+  return {
+    data,
+    lastSnapshot
+  }
 }
 
 export function getById (id) {
