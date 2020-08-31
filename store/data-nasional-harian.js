@@ -1,4 +1,4 @@
-import axios from 'axios'
+// import axios from 'axios'
 
 export const state = () => ({
   items: null
@@ -12,8 +12,8 @@ export const mutations = {
 
 export const actions = {
   async getItems ({ commit }, options) {
-    const { data } = await axios.get('https://indonesia-covid-19.mathdro.id/api/harian')
-    commit('setItems', data.data)
+    const { data } = await this.$dashboardPikobarApi.get('v2/kasus/nasional')
+    commit('setItems', data.data.update.harian)
   }
 }
 

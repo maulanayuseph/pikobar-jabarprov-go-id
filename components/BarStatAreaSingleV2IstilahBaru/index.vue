@@ -580,45 +580,45 @@ export default {
         // let jmlKumulatif = 0
         // let ratarataKumulatif = 0
         if (i === 0) {
-          jmlHarian = val[i].jumlahKasusBaruperHari
+          jmlHarian = val[i].jumlah_positif.value
           ratarataHarian = jmlHarian / 1
           // jmlKumulatif = val[i].jumlahKasusKumulatif
           // ratarataKumulatif = jmlKumulatif / 1
         } else if (i === 1) {
-          jmlHarian = val[i].jumlahKasusBaruperHari + val[i - 1].jumlahKasusBaruperHari
+          jmlHarian = val[i].jumlah_positif.value + val[i - 1].jumlah_positif.value
           ratarataHarian = jmlHarian / 2
           // jmlKumulatif = val[i].jumlahKasusKumulatif + val[i - 1].jumlahKasusKumulatif
           // ratarataKumulatif = jmlKumulatif / 2
         } else if (i === 2) {
-          jmlHarian = val[i].jumlahKasusBaruperHari + val[i - 1].jumlahKasusBaruperHari + val[i - 2].jumlahKasusBaruperHari
+          jmlHarian = val[i].jumlah_positif.value + val[i - 1].jumlah_positif.value + val[i - 2].jumlah_positif.value
           ratarataHarian = jmlHarian / 3
           // jmlKumulatif = val[i].jumlahKasusKumulatif + val[i - 1].jumlahKasusKumulatif + val[i - 2].jumlahKasusKumulatif
           // ratarataKumulatif = jmlKumulatif / 3
         } else if (i === 3) {
-          jmlHarian = val[i].jumlahKasusBaruperHari + val[i - 1].jumlahKasusBaruperHari + val[i - 2].jumlahKasusBaruperHari +
-            val[i - 3].jumlahKasusBaruperHari
+          jmlHarian = val[i].jumlah_positif.value + val[i - 1].jumlah_positif.value + val[i - 2].jumlah_positif.value +
+            val[i - 3].jumlah_positif.value
           ratarataHarian = jmlHarian / 4
           // jmlKumulatif = val[i].jumlahKasusKumulatif + val[i - 1].jumlahKasusKumulatif + val[i - 2].jumlahKasusKumulatif +
           //   val[i - 3].jumlahKasusKumulatif
           // ratarataKumulatif = jmlKumulatif / 4
         } else if (i === 4) {
-          jmlHarian = val[i].jumlahKasusBaruperHari + val[i - 1].jumlahKasusBaruperHari + val[i - 2].jumlahKasusBaruperHari +
-            val[i - 3].jumlahKasusBaruperHari + val[i - 4].jumlahKasusBaruperHari
+          jmlHarian = val[i].jumlah_positif.value + val[i - 1].jumlah_positif.value + val[i - 2].jumlah_positif.value +
+            val[i - 3].jumlah_positif.value + val[i - 4].jumlah_positif.value
           ratarataHarian = jmlHarian / 5
           // jmlKumulatif = val[i].jumlahKasusKumulatif + val[i - 1].jumlahKasusKumulatif + val[i - 2].jumlahKasusKumulatif +
           //   val[i - 3].jumlahKasusKumulatif + val[i - 4].jumlahKasusKumulatif
           // ratarataKumulatif = jmlKumulatif / 5
         } else if (i === 5) {
-          jmlHarian = val[i].jumlahKasusBaruperHari + val[i - 1].jumlahKasusBaruperHari + val[i - 2].jumlahKasusBaruperHari +
-            val[i - 3].jumlahKasusBaruperHari + val[i - 4].jumlahKasusBaruperHari + val[i - 5].jumlahKasusBaruperHari
+          jmlHarian = val[i].jumlah_positif.value + val[i - 1].jumlah_positif.value + val[i - 2].jumlah_positif.value +
+            val[i - 3].jumlah_positif.value + val[i - 4].jumlah_positif.value + val[i - 5].jumlah_positif.value
           ratarataHarian = jmlHarian / 6
           // jmlKumulatif = val[i].jumlahKasusKumulatif + val[i - 1].jumlahKasusKumulatif + val[i - 2].jumlahKasusKumulatif +
           //   val[i - 3].jumlahKasusKumulatif + val[i - 4].jumlahKasusKumulatif + val[i - 5].jumlahKasusKumulatif
           // ratarataKumulatif = jmlKumulatif / 6
         } else if (i >= 6) {
-          jmlHarian = val[i].jumlahKasusBaruperHari + val[i - 1].jumlahKasusBaruperHari + val[i - 2].jumlahKasusBaruperHari +
-            val[i - 3].jumlahKasusBaruperHari + val[i - 4].jumlahKasusBaruperHari + val[i - 5].jumlahKasusBaruperHari +
-            val[i - 6].jumlahKasusBaruperHari
+          jmlHarian = val[i].jumlah_positif.value + val[i - 1].jumlah_positif.value + val[i - 2].jumlah_positif.value +
+            val[i - 3].jumlah_positif.value + val[i - 4].jumlah_positif.value + val[i - 5].jumlah_positif.value +
+            val[i - 6].jumlah_positif.value
           ratarataHarian = jmlHarian / 7
           // jmlKumulatif = val[i].jumlahKasusKumulatif + val[i - 1].jumlahKasusKumulatif + val[i - 2].jumlahKasusKumulatif +
           //   val[i - 3].jumlahKasusKumulatif + val[i - 4].jumlahKasusKumulatif + val[i - 5].jumlahKasusKumulatif +
@@ -630,7 +630,7 @@ export default {
           // jmlKumulatif = 0
           // ratarataKumulatif = 0
         }
-        const temp2 = { jumlahKasusBaruperHari_ratarata: parseInt(ratarataHarian.toFixed(2)) }
+        const temp2 = { jumlah_positif_ratarata: { value: parseInt(ratarataHarian.toFixed(2)) } }
         const temp3 = { ...temp1, ...temp2 }
         this.jsonDataNasionalHarianKumulatif.push(temp3)
       }
@@ -794,18 +794,18 @@ export default {
 
       // get data
       for (let i = startNum; i <= endNum; i++) {
-        const date = new Date(self.jsonDataNasionalHarianKumulatif[i].tanggal)
+        const date = new Date(self.jsonDataNasionalHarianKumulatif[i].key_as_string)
         // by Harian
         let tooltipHarian = '<table style="white-space: nowrap; margin: 10px;">'
         tooltipHarian += '<tr><td style="font-size: larger;">' + self.formatDate(date) + '</td><td></td></tr>'
-        tooltipHarian += '<tr><td>Terkonfirmasi </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataNasionalHarianKumulatif[i].jumlahKasusBaruperHari) + '</b></td></tr>'
-        tooltipHarian += '<tr><td>Rata-rata 7 Hari </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataNasionalHarianKumulatif[i].jumlahKasusBaruperHari_ratarata) + '</b></td></tr>'
+        tooltipHarian += '<tr><td>Terkonfirmasi </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataNasionalHarianKumulatif[i].jumlah_positif.value) + '</b></td></tr>'
+        tooltipHarian += '<tr><td>Rata-rata 7 Hari </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataNasionalHarianKumulatif[i].jumlah_positif_ratarata.value) + '</b></td></tr>'
         tooltipHarian += '</table>'
         self.ChartHarianData.push([
           self.formatDateNoYear(date),
-          self.jsonDataNasionalHarianKumulatif[i].jumlahKasusBaruperHari, tooltipHarian,
-          self.jsonDataNasionalHarianKumulatif[i].jumlahKasusBaruperHari,
-          self.jsonDataNasionalHarianKumulatif[i].jumlahKasusBaruperHari_ratarata, tooltipHarian
+          self.jsonDataNasionalHarianKumulatif[i].jumlah_positif.value, tooltipHarian,
+          self.jsonDataNasionalHarianKumulatif[i].jumlah_positif.value,
+          self.jsonDataNasionalHarianKumulatif[i].jumlah_positif_ratarata.value, tooltipHarian
         ])
       }
       if (self.jsonDataNasionalHarianKumulatif.length > 0) {
@@ -832,21 +832,21 @@ export default {
 
       // get data
       for (let i = startNum; i <= endNum; i++) {
-        const date = new Date(self.jsonDataNasionalHarianKumulatif[i].tanggal)
+        const date = new Date(self.jsonDataNasionalHarianKumulatif[i].key_as_string)
         // by Akumulatif
         let tooltipKumulatif = '<table style="white-space: nowrap; margin: 10px;">'
         tooltipKumulatif += '<tr><td style="font-size: larger;">' + self.formatDate(date) + '</td><td></td></tr>'
-        tooltipKumulatif += '<tr><td>Total Terkonfirmasi </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataNasionalHarianKumulatif[i].jumlahKasusKumulatif) + '</b></td></tr>'
-        tooltipKumulatif += '<tr><td>Isolasi/ Dalam Perawatan </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataNasionalHarianKumulatif[i].jumlahpasiendalamperawatan) + '</b></td></tr>'
-        tooltipKumulatif += '<tr><td>Selesai Isolasi/ Sembuh </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataNasionalHarianKumulatif[i].jumlahPasienSembuh) + '</b></td></tr>'
-        tooltipKumulatif += '<tr><td>Meninggal </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataNasionalHarianKumulatif[i].jumlahPasienMeninggal) + '</b></td></tr>'
+        tooltipKumulatif += '<tr><td>Total Terkonfirmasi </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataNasionalHarianKumulatif[i].jumlah_positif_kum.value) + '</b></td></tr>'
+        tooltipKumulatif += '<tr><td>Isolasi/ Dalam Perawatan </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataNasionalHarianKumulatif[i].jumlah_dirawat_kum.value) + '</b></td></tr>'
+        tooltipKumulatif += '<tr><td>Selesai Isolasi/ Sembuh </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataNasionalHarianKumulatif[i].jumlah_sembuh_kum.value) + '</b></td></tr>'
+        tooltipKumulatif += '<tr><td>Meninggal </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataNasionalHarianKumulatif[i].jumlah_meninggal_kum.value) + '</b></td></tr>'
         tooltipKumulatif += '</table>'
         self.ChartKumulatifData.push([
           self.formatDateNoYear(date),
-          self.jsonDataNasionalHarianKumulatif[i].jumlahpasiendalamperawatan, tooltipKumulatif,
-          self.jsonDataNasionalHarianKumulatif[i].jumlahPasienSembuh, tooltipKumulatif,
-          self.jsonDataNasionalHarianKumulatif[i].jumlahPasienMeninggal, tooltipKumulatif,
-          self.jsonDataNasionalHarianKumulatif[i].jumlahKasusKumulatif, tooltipKumulatif
+          self.jsonDataNasionalHarianKumulatif[i].jumlah_dirawat_kum.value, tooltipKumulatif,
+          self.jsonDataNasionalHarianKumulatif[i].jumlah_sembuh_kum.value, tooltipKumulatif,
+          self.jsonDataNasionalHarianKumulatif[i].jumlah_meninggal_kum.value, tooltipKumulatif,
+          self.jsonDataNasionalHarianKumulatif[i].jumlah_positif_kum.value, tooltipKumulatif
         ])
       }
       if (self.jsonDataNasionalHarianKumulatif.length > 0) {
