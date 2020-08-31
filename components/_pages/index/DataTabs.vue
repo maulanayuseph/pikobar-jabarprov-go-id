@@ -40,17 +40,17 @@ export default {
           id: 'stat',
           title: 'Statistik',
           component: () => import('./DataSummaryIstilahBaru')
-        },
+        }
         // {
         //   id: 'map-area',
         //   title: 'Peta Sebaran Kota/Kab',
         //   component: () => import('../../MapV2SebaranPolygon')
         // },
-        {
-          id: 'map-kel',
-          title: 'Peta Titik Sebaran Kasus',
-          component: () => import('../../MapSebaranHeatmap')
-        }
+        // {
+        //   id: 'map-kel',
+        //   title: 'Peta Titik Sebaran Kasus',
+        //   component: () => import('../../MapSebaranHeatmap')
+        // }
       ],
       activeTabId: 'stat',
       currentX: null
