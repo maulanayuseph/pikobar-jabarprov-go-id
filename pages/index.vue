@@ -172,42 +172,37 @@
       <div class="lg:w-1/2 order-2">
         <header class="lg:max-w-2xl">
           <h2 class="mb-4 md:mb-8 text-left text-xl md:text-2xl">
-            <b>Tetap Waspada dengan AKB30</b>
+            <b>Tetap Waspada dengan menerapkan AKB</b>
           </h2>
           <p>
-            Selama vaksin belum ditemukan, cara terbaik untuk kembali beraktivitas adalah dengan menerapkan ADAPTASI KEBIASAAN BARU di tengah pandemi.
+            Selama vaksin belum ditemukan, cara terbaik untuk kembali beraktivitas adalah dengan menerapkan ADAPTASI KEBIASAAN BARU (AKB) di tengah pandemi.
           </p>
         </header>
         <br>
         <div class="flex flex-col items-stretch lg:max-w-2xl">
-          <article class="text-gray-800">
+          <article class="text-black">
             <p>
-              Berdasarkan Peraturan Gubernur No.46 tahun 2020,
-              Adaptasi Kebiasaan Baru dapat diterapkan di 30 bidang kegiatan (maka selanjutnya disebut AKB30)
-              yang diatur menurut 5 LEVEL KEWASPADAAN yang telah ditentukan di masing-masing wilayah di Jawa Barat, yaitu:
+              Berdasarkan Peraturan Gubernur No.63 tahun 2020, penentuan risiko kesehatan masyarakat di Daerah Kabupaten/Kota yang dikeluarkan oleh Satuan Tugas Penanganan Covid-19 Nasional secara berkala setiap minggu, diatur meliputi 4 ZONA RISIKO, yaitu:
             </p>
             <br>
             <ul class="list-disc list-inside">
               <li>
-                Level 1 <strong class="text-green-600">Rendah (Hijau)</strong>
+                Level 1 <strong class="text-green-600">Tidak terdampak/tidak ada kasus (Hijau)</strong>
               </li>
               <li>
-                Level 2 <strong class="text-blue-600">Moderat (Biru)</strong>
+                Level 2 <strong class="text-yellow-500">Risiko rendah (Kuning)</strong>
               </li>
               <li>
-                Level 3 <strong class="text-yellow-600">Cukup Berat (Kuning)</strong>
+                Level 3 <strong class="text-orange-600">Risiko sedang (Oranye)</strong>
               </li>
               <li>
-                Level 4 <strong class="text-red-600">Berat (Merah)</strong>
-              </li>
-              <li>
-                Level 5 <strong class="text-black">Kritis (Hitam)</strong>
+                Level 4 <strong class="text-red-600">Risiko tinggi (Merah)</strong>
               </li>
             </ul>
             <br>
             <p>
-              Dari 5 Level Kewaspadaan tersebut hanya Level 1 dan 2 yang dapat menerapkan Adaptasi Kebiasaan Baru.
-              Level yang lebih berat akan kembali melakukan PSBB secara proporsional.
+              Wargi dapat melihat peta sebaran berdasarkan zona risiko
+              <a href="https://covid19.go.id/peta-risiko" target="blank" class="text-blue-600 underline">di sini</a>
             </p>
             <br>
             <p>
@@ -244,7 +239,7 @@
               <br>
               Jika merasa tidak sehat atau memiliki gejala demam,  maka wargi sebaiknya tetap berkegiatan dari rumah.
               Karena di setiap kebiasaan baru, selalu ada harapan untuk keluarga dan kerabat agar tetap aman.
-              Terus waspada dan jaga diri jaga sesama dengan AKB30.
+              Terus waspada dan jaga diri jaga sesama dengan AKB.
             </p>
           </article>
           <nuxt-link
