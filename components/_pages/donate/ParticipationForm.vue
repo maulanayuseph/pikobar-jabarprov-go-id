@@ -450,7 +450,7 @@ export default {
         .then(() => {
           this.postPayloadToFirestore()
           Swal.fire({
-            title: 'Data Berhasil Disimpan. Terima Kasih Atas Donasi Yang Telah Anda Berikan',
+            title: 'Data berhasil disimpan. Terima kasih atas donasi yang telah Anda berikan',
             icon: 'success'
           })
           this.payload = JSON.parse(JSON.stringify(emptyPayload))
