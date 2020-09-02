@@ -179,9 +179,10 @@
 import { faCheckCircle, faTrash, faFileDownload, faFileUpload } from '@fortawesome/free-solid-svg-icons'
 import VueRecaptcha from 'vue-recaptcha'
 import Swal from 'sweetalert2'
-import { storage, db } from '@/lib/firebase'
+import { storage, db, Timestamp } from '@/lib/firebase'
 
 const emptyPayload = {
+  created_at: Timestamp.fromDate(new Date()),
   entity_type: '', // 'personal' | 'organization' | 'company'
   name: null,
   address: null,
