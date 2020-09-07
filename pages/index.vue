@@ -520,7 +520,6 @@ export default {
     },
     shareableDocuments () {
       return this.documents
-        .filter((_, index) => index < 6)
         .map((item) => {
           return {
             ...item,
