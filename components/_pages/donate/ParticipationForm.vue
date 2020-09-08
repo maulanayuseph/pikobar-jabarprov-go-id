@@ -101,8 +101,8 @@
               @keypress="$FieldNumberOnly($event)"
               @keyup="updateQuantity($event, logistic)"
               @blur="updateQuantity($event, logistic)"
-            >
-            <span class="inline-block text-xs">PCS</span>
+            >            
+            <span class="inline-block text-xs">{{logistic.unit}}</span>
           </div>
           <FontAwesomeIcon class="inline-block mr-2 text-green-600 cursor-pointer" :icon="icons.faCheckCircle" />
           {{ logistic.matg_id }}
@@ -162,7 +162,7 @@
           </div>
         </div>
         <div v-for="(prov, iProv) in provisionsOther" :key="iProv" class="logistic-selected">
-          <div class="float-right">
+          <div class="align-right">
             <FontAwesomeIcon
               class="text-red-400 hover:text-red-600 cursor-pointer mr-2"
               :icon="icons.faTrash"
@@ -174,9 +174,9 @@
               @keypress="$FieldNumberOnly($event)"
               @keyup="provisionsOtherUpdate($event, iProv)"
               @blur="provisionsOtherUpdate($event, iProv)"
-            >
-            <span class="inline-block text-xs">{{ prov.unit }}</span>
-          </div>
+            >                  
+            <span class="text-xs">{{ prov.unit }}</span>      
+          </div>          
           <FontAwesomeIcon class="inline-block mr-2 text-green-600 cursor-pointer" :icon="icons.faCheckCircle" />
           {{ prov.name }}
         </div>
