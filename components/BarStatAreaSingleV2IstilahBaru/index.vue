@@ -33,7 +33,7 @@
               v-if="selectedListWilayah !== 'Indonesia'"
               v-model="selectedListGroupWaktu"
               class="select-option-selector my-2 mx-1 ml-auto"
-              @change="changeData()"
+              @change="changeFilterGroupWaktu()"
             >
               <option
                 v-for="list in optionListGroupWaktu"
@@ -47,7 +47,7 @@
               v-model="selectedListWilayah"
               :class="{ 'ml-auto': selectedListWilayah === 'Indonesia' }"
               class="select-option-selector my-2 mx-1 "
-              @change="changeFilterWilayah($event.target.value)"
+              @change="changeData()"
             >
               <option
                 v-for="list in optionListWilayah"
@@ -79,7 +79,7 @@
               v-if="selectedListWilayah !== 'Indonesia'"
               v-model="selectedListGroupWaktu"
               class="select-option-selector my-2 mx-1 ml-auto"
-              @change="changeData()"
+              @change="changeFilterGroupWaktu($event)"
             >
               <option
                 v-for="list in optionListGroupWaktu"
@@ -910,7 +910,8 @@ export default {
           value: 'dwimingguan'
         }
       ],
-      selectedListGroupWaktu: 'harian'
+      selectedListGroupWaktu: 'harian',
+      selectedListGroupWaktuLabel: 'Harian'
 
     }
   },
@@ -1205,6 +1206,14 @@ export default {
       this.selectedListWilayah = stat
       this.changeData()
     },
+    changeFilterGroupWaktu () {
+      for (let i = 0; i < this.optionListGroupWaktu.length; i++) {
+        if (this.optionListGroupWaktu[i].value === this.selectedListGroupWaktu) {
+          this.selectedListGroupWaktuLabel = this.optionListGroupWaktu[i].label
+        }
+      }
+      this.changeData()
+    },
     changeData () {
       this.ChartHarianData = [
         [
@@ -1232,7 +1241,7 @@ export default {
         ['0', 0, '', 0, '', 0, '', 0, '']
       ]
       if (this.stat.isActiveHarian === true) {
-        this.judul = 'Chart Harian Terkonfirmasi ' + this.selectedListWilayah
+        this.judul = 'Chart ' + this.selectedListGroupWaktuLabel + ' Terkonfirmasi ' + this.selectedListWilayah
         if (this.selectedListWilayah === 'Jawa Barat') {
           this.fetchDataProvinsiSatuan()
         } else if (this.selectedListWilayah === 'Indonesia') {
