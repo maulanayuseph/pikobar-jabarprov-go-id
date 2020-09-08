@@ -162,7 +162,7 @@
           </div>
         </div>
         <div v-for="(prov, iProv) in provisionsOther" :key="iProv" class="logistic-selected">
-          <div class="align-right">
+          <div class="float-right">
             <FontAwesomeIcon
               class="text-red-400 hover:text-red-600 cursor-pointer mr-2"
               :icon="icons.faTrash"
@@ -175,7 +175,7 @@
               @keyup="provisionsOtherUpdate($event, iProv)"
               @blur="provisionsOtherUpdate($event, iProv)"
             >                  
-            <span class="text-xs">{{ prov.unit }}</span>      
+            <span class="inline-block text-xs">{{ prov.unit }}</span>      
           </div>          
           <FontAwesomeIcon class="inline-block mr-2 text-green-600 cursor-pointer" :icon="icons.faCheckCircle" />
           {{ prov.name }}
