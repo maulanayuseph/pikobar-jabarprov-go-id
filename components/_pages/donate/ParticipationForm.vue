@@ -100,9 +100,8 @@
               class="quantity-logistic"
               @keypress="$FieldNumberOnly($event)"
               @keyup="updateQuantity($event, logistic)"
-              @blur="updateQuantity($event, logistic)"
-            >
-            <span class="inline-block text-xs">PCS</span>
+              @blur="updateQuantity($event, logistic)">            
+            <span class="inline-block text-xs">{{logistic.unit}}</span>
           </div>
           <FontAwesomeIcon class="inline-block mr-2 text-green-600 cursor-pointer" :icon="icons.faCheckCircle" />
           {{ logistic.matg_id }}
@@ -173,10 +172,9 @@
               class="quantity-logistic"
               @keypress="$FieldNumberOnly($event)"
               @keyup="provisionsOtherUpdate($event, iProv)"
-              @blur="provisionsOtherUpdate($event, iProv)"
-            >
-            <span class="inline-block text-xs">{{ prov.unit }}</span>
-          </div>
+              @blur="provisionsOtherUpdate($event, iProv)">                  
+            <span class="inline-block text-xs">{{ prov.unit }}</span>      
+          </div>          
           <FontAwesomeIcon class="inline-block mr-2 text-green-600 cursor-pointer" :icon="icons.faCheckCircle" />
           {{ prov.name }}
         </div>
