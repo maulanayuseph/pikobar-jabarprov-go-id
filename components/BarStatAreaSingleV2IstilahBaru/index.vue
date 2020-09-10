@@ -1048,7 +1048,11 @@ export default {
         kumulatif: []
       }
       val.forEach((element) => {
-        const temp1 = { tanggal: element.minggu }
+        const temp1 = {
+          tanggal: element.minggu,
+          tanggal_awal: element.tanggal_awal,
+          tanggal_akhir: element.tanggal_akhir
+        }
         const temp2 = { ...temp1, ...element.mingguan }
         const temp3 = { ...temp1, ...element.kumulatif }
         data.mingguan.push(temp2)
@@ -1066,7 +1070,11 @@ export default {
         kumulatif: []
       }
       val.forEach((element) => {
-        const temp1 = { tanggal: element.dwiminggu }
+        const temp1 = {
+          tanggal: element.dwiminggu,
+          tanggal_awal: element.tanggal_awal,
+          tanggal_akhir: element.tanggal_akhir
+        }
         const temp2 = { ...temp1, ...element.dwimingguan }
         const temp3 = { ...temp1, ...element.kumulatif }
         data.dwimingguan.push(temp2)
@@ -1083,7 +1091,11 @@ export default {
         for (let i = 0; i < val.length; i++) {
           if (val[i].kode_kab === this.jsonDataKasus.kota[j].kode) {
             val[i].series.forEach((element) => {
-              const temp1 = { tanggal: element.minggu }
+              const temp1 = {
+                tanggal: element.minggu,
+                tanggal_awal: element.tanggal_awal,
+                tanggal_akhir: element.tanggal_akhir
+              }
               const temp2 = { ...temp1, ...element.mingguan }
               const temp3 = { ...temp1, ...element.kumulatif }
 
@@ -1101,7 +1113,11 @@ export default {
         for (let i = 0; i < val.length; i++) {
           if (val[i].kode_kab === this.jsonDataKasus.kota[j].kode) {
             val[i].series.forEach((element) => {
-              const temp1 = { tanggal: element.dwiminggu }
+              const temp1 = {
+                tanggal: element.dwiminggu,
+                tanggal_awal: element.tanggal_awal,
+                tanggal_akhir: element.tanggal_akhir
+              }
               const temp2 = { ...temp1, ...element.dwimingguan }
               const temp3 = { ...temp1, ...element.kumulatif }
 
@@ -1224,8 +1240,22 @@ export default {
     },
     changeData () {
       if (this.selectedListGroupWaktu !== 'harian') {
-        this.legendAverageChart = 'Rata-rata Bulanan'
+        const hAxisOptions = {
+          slantedText: true,
+          textStyle: {
+            fontSize: 12
+          }
+        }
+        this.ChartHarianOptions.hAxis = hAxisOptions
+        this.ChartKumulatifOptions.hAxis = hAxisOptions
+        this.legendAverageChart = 'Rata-rata Per Bulan'
       } else {
+        const hAxisOptions = {
+          slantedText: true,
+          slantedTextAngle: -90
+        }
+        this.ChartHarianOptions.hAxis = hAxisOptions
+        this.ChartKumulatifOptions.hAxis = hAxisOptions
         this.legendAverageChart = 'Rata-rata 7 Hari'
       }
 
@@ -1275,6 +1305,10 @@ export default {
       }
     },
     fetchDataNasionalHarian () {
+      this.ChartHarianOptions.hAxis = {
+        slantedText: true,
+        slantedTextAngle: -90
+      }
       const self = this
       let startNum = 0
       let endNum = 0
@@ -1354,24 +1388,25 @@ export default {
       }
     },
     fetchDataProvinsiSatuan () {
-      const data = this.jsonDataKasus.provinsi.satuan[this.selectedListGroupWaktu]
       const self = this
+      const data = this.jsonDataKasus.provinsi.satuan[this.selectedListGroupWaktu]
       const today = new Date()
       const strToday = self.formatDate(today)
       let startNum = 0
       let endNum = 0
 
-      // filter date
-      data.forEach((element, index) => {
-        if (this.selectedListGroupWaktu === 'harian') {
+      if (this.selectedListGroupWaktu === 'harian') {
+        // filter date
+        data.forEach((element, index) => {
           if (element.tanggal === this.formatDateYMD(this.selectedDate.start)) {
             startNum = index
           }
           if (element.tanggal === this.formatDateYMD(this.selectedDate.end)) {
             endNum = index
           }
-        }
-      })
+        })
+      }
+
       if (endNum === 0) {
         endNum = data.length - 1
       }
@@ -1381,17 +1416,15 @@ export default {
       for (let i = startNum; i <= endNum; i++) {
         const date = new Date(data[i].tanggal)
         if (stop === false) {
-          let tooltipHarian = '<table style="white-space: nowrap; margin: 10px;">'
-          tooltipHarian += '<tr><td style="font-size: larger;">' + self.formatDate(date) + '</td><td></td></tr>'
-          tooltipHarian += '<tr><td>Terkonfirmasi </td><td style="text-align:right;"><b style="margin-left: 10px;">: ' + self.formatThousand(data[i].confirmation_total) + '</b></td></tr>'
-          tooltipHarian += '<tr><td>' + this.legendAverageChart + ' </td><td style="text-align:right;"><b style="margin-left: 10px;">: ' + self.formatThousand(data[i].confirmation_ratarata) + '</b></td></tr>'
-          tooltipHarian += '</table>'
-          self.ChartHarianData.push([
-            self.formatDateNoYear(date),
-            data[i].confirmation_total, tooltipHarian,
-            data[i].confirmation_total,
-            data[i].confirmation_ratarata, tooltipHarian
-          ])
+          let tooltipDate = self.formatDate(date)
+          let xAxisLabel = self.formatDateNoYear(date)
+          if (this.selectedListGroupWaktu !== 'harian') {
+            const dateNextWeek = new Date(data[i].tanggal_akhir)
+            tooltipDate = self.formatDate(date) + ' - ' + self.formatDate(dateNextWeek)
+            xAxisLabel = self.formatDateNoYear(date) + ' - ' + self.formatDateNoYear(dateNextWeek)
+          }
+
+          this.generateChartSatuan(data[i], tooltipDate, xAxisLabel)
         }
         if (self.formatDate(date) === strToday) {
           stop = true
@@ -1403,24 +1436,25 @@ export default {
       }
     },
     fetchDataProvinsiKumulatif () {
-      const data = this.jsonDataKasus.provinsi.kumulatif[this.selectedListGroupWaktu]
       const self = this
+      const data = this.jsonDataKasus.provinsi.kumulatif[this.selectedListGroupWaktu]
       const today = new Date()
       const strToday = self.formatDate(today)
       let startNum = 0
       let endNum = 0
 
-      // filter date
-      data.forEach((element, index) => {
-        if (this.selectedListGroupWaktu === 'harian') {
+      if (this.selectedListGroupWaktu === 'harian') {
+        // filter date
+        data.forEach((element, index) => {
           if (element.tanggal === this.formatDateYMD(this.selectedDate.start)) {
             startNum = index
           }
           if (element.tanggal === this.formatDateYMD(this.selectedDate.end)) {
             endNum = index
           }
-        }
-      })
+        })
+      }
+
       if (endNum === 0) {
         endNum = data.length - 1
       }
@@ -1429,22 +1463,16 @@ export default {
       let stop = false
       for (let i = startNum; i <= endNum; i++) {
         const date = new Date(data[i].tanggal)
-        // const positifAktif = data[i].positif - data[i].sembuh - data[i].meninggal
         if (stop === false) {
-          let tooltipKumulatif = '<table style="white-space: nowrap; margin: 10px;">'
-          tooltipKumulatif += '<tr><td style="font-size: larger;">' + self.formatDate(date) + '</td><td></td></tr>'
-          tooltipKumulatif += '<tr><td>Total Terkonfirmasi </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(data[i].confirmation_total) + '</b></td></tr>'
-          tooltipKumulatif += '<tr><td>Isolasi/ Dalam Perawatan </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(data[i].confirmation_diisolasi) + '</b></td></tr>'
-          tooltipKumulatif += '<tr><td>Selesai Isolasi/ Sembuh </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(data[i].confirmation_selesai) + '</b></td></tr>'
-          tooltipKumulatif += '<tr><td>Meninggal </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(data[i].confirmation_meninggal) + '</b></td></tr>'
-          tooltipKumulatif += '</table>'
-          self.ChartKumulatifData.push([
-            self.formatDateNoYear(date),
-            data[i].confirmation_diisolasi, tooltipKumulatif,
-            data[i].confirmation_selesai, tooltipKumulatif,
-            data[i].confirmation_meninggal, tooltipKumulatif,
-            data[i].confirmation_total, tooltipKumulatif
-          ])
+          let tooltipDate = self.formatDate(date)
+          let xAxisLabel = self.formatDateNoYear(date)
+          if (this.selectedListGroupWaktu !== 'harian') {
+            const dateNextWeek = new Date(data[i].tanggal_akhir)
+            tooltipDate = self.formatDate(date) + ' - ' + self.formatDate(dateNextWeek)
+            xAxisLabel = self.formatDateNoYear(date) + ' - ' + self.formatDateNoYear(dateNextWeek)
+          }
+
+          this.generateChartKumulatif(data[i], tooltipDate, xAxisLabel)
         }
         if (self.formatDate(date) === strToday) {
           stop = true
@@ -1456,34 +1484,26 @@ export default {
     },
     fetchDataKabupatenHarian () {
       const self = this
+      const groupWaktu = this.selectedListGroupWaktu
+      const firstData = self.jsonDataKasus.kota[0].satuan[groupWaktu]
       const today = new Date()
       const strToday = self.formatDate(today)
       let startNum = 0
       let endNum = 0
       let indexKota = 0
-      let groupWaktu = 'harian'
-
-      switch (this.selectedListGroupWaktu) {
-        case 'mingguan':
-          groupWaktu = 'mingguan'
-          break
-        case 'dwimingguan':
-          groupWaktu = 'dwimingguan'
-          break
-        default:
-          groupWaktu = 'harian'
-          break
-      }
 
       // filter date
-      self.jsonDataKasus.kota[0].satuan[groupWaktu].forEach((element, index) => {
-        if (this.selectedListGroupWaktu === 'harian') {
-          if (element.tanggal === this.formatDateYMD(this.selectedDate.start)) {
-            startNum = index
-          }
-          if (element.tanggal === this.formatDateYMD(this.selectedDate.end)) {
-            endNum = index
-          }
+      firstData.forEach((element, index) => {
+        if (groupWaktu === 'harian') {
+        // filter date
+          firstData.forEach((element, index) => {
+            if (element.tanggal === this.formatDateYMD(this.selectedDate.start)) {
+              startNum = index
+            }
+            if (element.tanggal === this.formatDateYMD(this.selectedDate.end)) {
+              endNum = index
+            }
+          })
         }
         // find kota
         this.jsonDataKota.forEach((element, index) => {
@@ -1493,58 +1513,45 @@ export default {
         })
       })
       if (endNum === 0) {
-        endNum = self.jsonDataKasus.kota[0].satuan[groupWaktu].length - 1
+        endNum = self.jsonDataKasus.kota[indexKota].satuan[groupWaktu].length - 1
       }
 
       // get data
       let stop = false
       for (let i = startNum; i <= endNum; i++) {
-        const date = new Date(self.jsonDataKasus.kota[indexKota].satuan[groupWaktu][i].tanggal)
+        const data = self.jsonDataKasus.kota[indexKota].satuan[groupWaktu]
+        const date = new Date(data[i].tanggal)
         if (stop === false) {
-          let tooltipHarian = '<table style="white-space: nowrap; margin: 10px;">'
-          tooltipHarian += '<tr><td style="font-size: larger;">' + self.formatDate(date) + '</td><td></td></tr>'
-          tooltipHarian += '<tr><td>Terkonfirmasi </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataKasus.kota[indexKota].satuan[groupWaktu][i].confirmation_total) + '</b></td></tr>'
-          tooltipHarian += '<tr><td>' + this.legendAverageChart + ' </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataKasus.kota[indexKota].satuan[groupWaktu][i].confirmation_ratarata) + '</b></td></tr>'
-          tooltipHarian += '</table>'
-          self.ChartHarianData.push([
-            self.formatDateNoYear(date),
-            self.jsonDataKasus.kota[indexKota].satuan[groupWaktu][i].confirmation_total, tooltipHarian,
-            self.jsonDataKasus.kota[indexKota].satuan[groupWaktu][i].confirmation_total,
-            self.jsonDataKasus.kota[indexKota].satuan[groupWaktu][i].confirmation_ratarata, tooltipHarian
-          ])
+          let tooltipDate = self.formatDate(date)
+          let xAxisLabel = self.formatDateNoYear(date)
+          if (groupWaktu !== 'harian') {
+            const dateNextWeek = new Date(data[i].tanggal_akhir)
+            tooltipDate = self.formatDate(date) + ' - ' + self.formatDate(dateNextWeek)
+            xAxisLabel = self.formatDateNoYear(date) + ' - ' + self.formatDateNoYear(dateNextWeek)
+          }
+          this.generateChartSatuan(data[i], tooltipDate, xAxisLabel)
         }
         if (self.formatDate(date) === strToday) {
           stop = true
         }
       }
-      if (self.jsonDataKasus.kota[indexKota].satuan[groupWaktu].length > 0) {
+      if (firstData.length > 0) {
         self.ChartHarianData.splice(1, 1)
       }
     },
     fetchDataKabupatenKumulatif () {
       const self = this
+      const groupWaktu = this.selectedListGroupWaktu
+      const firstData = self.jsonDataKasus.kota[0].satuan[groupWaktu]
       const today = new Date()
       const strToday = self.formatDate(today)
       let startNum = 0
       let endNum = 0
       let indexKota = 0
-      let groupWaktu = 'harian'
-
-      switch (this.selectedListGroupWaktu) {
-        case 'mingguan':
-          groupWaktu = 'mingguan'
-          break
-        case 'dwimingguan':
-          groupWaktu = 'dwimingguan'
-          break
-        default:
-          groupWaktu = 'harian'
-          break
-      }
 
       // filter date
-      self.jsonDataKasus.kota[0].kumulatif[groupWaktu].forEach((element, index) => {
-        if (this.selectedListGroupWaktu === 'harian') {
+      firstData.forEach((element, index) => {
+        if (groupWaktu === 'harian') {
           if (element.tanggal === this.formatDateYMD(this.selectedDate.start)) {
             startNum = index
           }
@@ -1552,9 +1559,16 @@ export default {
             endNum = index
           }
         }
+
+        // find kota
+        this.jsonDataKota.forEach((element, index) => {
+          if (element.nama === this.selectedListWilayah) {
+            indexKota = index
+          }
+        })
       })
       if (endNum === 0) {
-        endNum = self.jsonDataKasus.kota[0].kumulatif[groupWaktu].length - 1
+        endNum = firstData.length - 1
       }
 
       // find kota
@@ -1566,23 +1580,18 @@ export default {
       // get data
       let stop = false
       for (let i = startNum; i < endNum; i++) {
-        const date = new Date(self.jsonDataKasus.kota[indexKota].kumulatif[groupWaktu][i].tanggal)
-        // const positifAktif = self.jsonDataKasus.kota[indexKota].kumulatif[groupWaktu][i].positif - self.jsonDataKasus.kota[indexKota].kumulatif[groupWaktu][i].sembuh - self.jsonDataKasus.kota[indexKota].kumulatif[groupWaktu][i].meninggal
+        const data = self.jsonDataKasus.kota[indexKota].kumulatif[groupWaktu]
+        const date = new Date(data[i].tanggal)
+
         if (stop === false) {
-          let tooltipKumulatif = '<table style="white-space: nowrap; margin: 10px;">'
-          tooltipKumulatif += '<tr><td style="font-size: larger;">' + self.formatDate(date) + '</td><td></td></tr>'
-          tooltipKumulatif += '<tr><td>Total Terkonfirmasi </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataKasus.kota[indexKota].kumulatif[groupWaktu][i].confirmation_total) + '</b></td></tr>'
-          tooltipKumulatif += '<tr><td>Isolasi/ Dalam Perawatan </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataKasus.kota[indexKota].kumulatif[groupWaktu][i].confirmation_diisolasi) + '</b></td></tr>'
-          tooltipKumulatif += '<tr><td>Selesai Isolasi/ Sembuh </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataKasus.kota[indexKota].kumulatif[groupWaktu][i].confirmation_selesai) + '</b></td></tr>'
-          tooltipKumulatif += '<tr><td>Meninggal </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataKasus.kota[indexKota].kumulatif[groupWaktu][i].confirmation_meninggal) + '</b></td></tr>'
-          tooltipKumulatif += '</table>'
-          self.ChartKumulatifData.push([
-            self.formatDateNoYear(date),
-            self.jsonDataKasus.kota[indexKota].kumulatif[groupWaktu][i].confirmation_diisolasi, tooltipKumulatif,
-            self.jsonDataKasus.kota[indexKota].kumulatif[groupWaktu][i].confirmation_selesai, tooltipKumulatif,
-            self.jsonDataKasus.kota[indexKota].kumulatif[groupWaktu][i].confirmation_meninggal, tooltipKumulatif,
-            self.jsonDataKasus.kota[indexKota].kumulatif[groupWaktu][i].confirmation_total, tooltipKumulatif
-          ])
+          let tooltipDate = self.formatDate(date)
+          let xAxisLabel = self.formatDateNoYear(date)
+          if (groupWaktu !== 'harian') {
+            const dateNextWeek = new Date(data[i].tanggal_akhir)
+            tooltipDate = self.formatDate(date) + ' - ' + self.formatDate(dateNextWeek)
+            xAxisLabel = self.formatDateNoYear(date) + ' - ' + self.formatDateNoYear(dateNextWeek)
+          }
+          this.generateChartKumulatif(data[i], tooltipDate, xAxisLabel)
         }
         if (self.formatDate(date) === strToday) {
           stop = true
@@ -1602,6 +1611,37 @@ export default {
       } else {
         this.isMobile = false
       }
+    },
+    generateChartSatuan (data, tooltipDate, xAxisLabel) {
+      const self = this
+      let tooltipHarian = '<table style="white-space: nowrap; margin: 10px;">'
+      tooltipHarian += '<tr><td style="font-size: larger;">' + tooltipDate + '</td><td></td></tr>'
+      tooltipHarian += '<tr><td>Terkonfirmasi </td><td style="text-align:right;"><b style="margin-left: 10px;">: ' + self.formatThousand(data.confirmation_total) + '</b></td></tr>'
+      tooltipHarian += '<tr><td>' + this.legendAverageChart + ' </td><td style="text-align:right;"><b style="margin-left: 10px;">: ' + self.formatThousand(data.confirmation_ratarata) + '</b></td></tr>'
+      tooltipHarian += '</table>'
+      self.ChartHarianData.push([
+        xAxisLabel,
+        data.confirmation_total, tooltipHarian,
+        data.confirmation_total,
+        data.confirmation_ratarata, tooltipHarian
+      ])
+    },
+    generateChartKumulatif (data, tooltipDate, xAxisLabel) {
+      const self = this
+      let tooltipKumulatif = '<table style="white-space: nowrap; margin: 10px;">'
+      tooltipKumulatif += '<tr><td style="font-size: larger;">' + tooltipDate + '</td><td></td></tr>'
+      tooltipKumulatif += '<tr><td>Total Terkonfirmasi </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(data.confirmation_total) + '</b></td></tr>'
+      tooltipKumulatif += '<tr><td>Isolasi/ Dalam Perawatan </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(data.confirmation_diisolasi) + '</b></td></tr>'
+      tooltipKumulatif += '<tr><td>Selesai Isolasi/ Sembuh </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(data.confirmation_selesai) + '</b></td></tr>'
+      tooltipKumulatif += '<tr><td>Meninggal </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(data.confirmation_meninggal) + '</b></td></tr>'
+      tooltipKumulatif += '</table>'
+      self.ChartKumulatifData.push([
+        xAxisLabel,
+        data.confirmation_diisolasi, tooltipKumulatif,
+        data.confirmation_selesai, tooltipKumulatif,
+        data.confirmation_meninggal, tooltipKumulatif,
+        data.confirmation_total, tooltipKumulatif
+      ])
     }
   }
 }
