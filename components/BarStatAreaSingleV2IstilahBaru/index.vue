@@ -47,7 +47,7 @@
               v-model="selectedListWilayah"
               :class="{ 'ml-auto': selectedListWilayah === 'Indonesia' }"
               class="select-option-selector my-2 mx-1 "
-              @change="changeData()"
+              @change="changeFilterWilayah($event.target.value)"
             >
               <option
                 v-for="list in optionListWilayah"
@@ -57,7 +57,7 @@
                 {{ list }}
               </option>
             </select>
-            <div class="card-content pt-2 pb-2 mx-1">
+            <div v-if="selectedListGroupWaktu === 'harian'" class="card-content pt-2 pb-2 mx-1">
               <div class="daterange-wrapper">
                 <client-only>
                   <vue-rangedate-picker
@@ -108,7 +108,7 @@
               class="card-content pt-2 pb-2"
               style="margin: auto"
             >
-              <div class="daterange-wrapper">
+              <div v-if="selectedListGroupWaktu === 'harian'" class="daterange-wrapper">
                 <client-only>
                   <vue-rangedate-picker
                     compact="true"
@@ -911,7 +911,8 @@ export default {
         }
       ],
       selectedListGroupWaktu: 'harian',
-      selectedListGroupWaktuLabel: 'Harian'
+      selectedListGroupWaktuLabel: 'Harian',
+      legendAverageChart: 'Rata-rata 7 Hari'
 
     }
   },
@@ -1203,10 +1204,17 @@ export default {
       this.changeData()
     },
     changeFilterWilayah (stat) {
+      if (stat === 'Indonesia') {
+        this.selectedListGroupWaktu = 'harian'
+      }
       this.selectedListWilayah = stat
       this.changeData()
     },
     changeFilterGroupWaktu () {
+      if (this.selectedListGroupWaktu !== 'harian') {
+        this.selectedDate.start = new Date('2020-03-01')
+        this.selectedDate.end = new Date()
+      }
       for (let i = 0; i < this.optionListGroupWaktu.length; i++) {
         if (this.optionListGroupWaktu[i].value === this.selectedListGroupWaktu) {
           this.selectedListGroupWaktuLabel = this.optionListGroupWaktu[i].label
@@ -1215,13 +1223,19 @@ export default {
       this.changeData()
     },
     changeData () {
+      if (this.selectedListGroupWaktu !== 'harian') {
+        this.legendAverageChart = 'Rata-rata Bulanan'
+      } else {
+        this.legendAverageChart = 'Rata-rata 7 Hari'
+      }
+
       this.ChartHarianData = [
         [
           'Tanggal',
           'Harian',
           { type: 'string', role: 'tooltip', p: { html: true } },
           { type: 'number', role: 'annotation' },
-          'Rata-rata 7 Hari',
+          this.legendAverageChart,
           { type: 'string', role: 'tooltip', p: { html: true } }
         ],
         ['0', 0, '', 0, 0, '']
@@ -1285,7 +1299,7 @@ export default {
         let tooltipHarian = '<table style="white-space: nowrap; margin: 10px;">'
         tooltipHarian += '<tr><td style="font-size: larger;">' + self.formatDate(date) + '</td><td></td></tr>'
         tooltipHarian += '<tr><td>Terkonfirmasi </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataNasionalHarianKumulatif[i].jumlah_positif.value) + '</b></td></tr>'
-        tooltipHarian += '<tr><td>Rata-rata 7 Hari </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataNasionalHarianKumulatif[i].jumlah_positif_ratarata.value) + '</b></td></tr>'
+        tooltipHarian += '<tr><td>Rata-rata 7 Hari</td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataNasionalHarianKumulatif[i].jumlah_positif_ratarata.value) + '</b></td></tr>'
         tooltipHarian += '</table>'
         self.ChartHarianData.push([
           self.formatDateNoYear(date),
@@ -1349,11 +1363,13 @@ export default {
 
       // filter date
       data.forEach((element, index) => {
-        if (element.tanggal === this.formatDateYMD(this.selectedDate.start)) {
-          startNum = index
-        }
-        if (element.tanggal === this.formatDateYMD(this.selectedDate.end)) {
-          endNum = index
+        if (this.selectedListGroupWaktu === 'harian') {
+          if (element.tanggal === this.formatDateYMD(this.selectedDate.start)) {
+            startNum = index
+          }
+          if (element.tanggal === this.formatDateYMD(this.selectedDate.end)) {
+            endNum = index
+          }
         }
       })
       if (endNum === 0) {
@@ -1368,7 +1384,7 @@ export default {
           let tooltipHarian = '<table style="white-space: nowrap; margin: 10px;">'
           tooltipHarian += '<tr><td style="font-size: larger;">' + self.formatDate(date) + '</td><td></td></tr>'
           tooltipHarian += '<tr><td>Terkonfirmasi </td><td style="text-align:right;"><b style="margin-left: 10px;">: ' + self.formatThousand(data[i].confirmation_total) + '</b></td></tr>'
-          tooltipHarian += '<tr><td>Rata-rata 7 Hari </td><td style="text-align:right;"><b style="margin-left: 10px;">: ' + self.formatThousand(data[i].confirmation_ratarata) + '</b></td></tr>'
+          tooltipHarian += '<tr><td>' + this.legendAverageChart + ' </td><td style="text-align:right;"><b style="margin-left: 10px;">: ' + self.formatThousand(data[i].confirmation_ratarata) + '</b></td></tr>'
           tooltipHarian += '</table>'
           self.ChartHarianData.push([
             self.formatDateNoYear(date),
@@ -1396,11 +1412,13 @@ export default {
 
       // filter date
       data.forEach((element, index) => {
-        if (element.tanggal === this.formatDateYMD(this.selectedDate.start)) {
-          startNum = index
-        }
-        if (element.tanggal === this.formatDateYMD(this.selectedDate.end)) {
-          endNum = index
+        if (this.selectedListGroupWaktu === 'harian') {
+          if (element.tanggal === this.formatDateYMD(this.selectedDate.start)) {
+            startNum = index
+          }
+          if (element.tanggal === this.formatDateYMD(this.selectedDate.end)) {
+            endNum = index
+          }
         }
       })
       if (endNum === 0) {
@@ -1459,11 +1477,13 @@ export default {
 
       // filter date
       self.jsonDataKasus.kota[0].satuan[groupWaktu].forEach((element, index) => {
-        if (element.tanggal === this.formatDateYMD(this.selectedDate.start)) {
-          startNum = index
-        }
-        if (element.tanggal === this.formatDateYMD(this.selectedDate.end)) {
-          endNum = index
+        if (this.selectedListGroupWaktu === 'harian') {
+          if (element.tanggal === this.formatDateYMD(this.selectedDate.start)) {
+            startNum = index
+          }
+          if (element.tanggal === this.formatDateYMD(this.selectedDate.end)) {
+            endNum = index
+          }
         }
         // find kota
         this.jsonDataKota.forEach((element, index) => {
@@ -1484,7 +1504,7 @@ export default {
           let tooltipHarian = '<table style="white-space: nowrap; margin: 10px;">'
           tooltipHarian += '<tr><td style="font-size: larger;">' + self.formatDate(date) + '</td><td></td></tr>'
           tooltipHarian += '<tr><td>Terkonfirmasi </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataKasus.kota[indexKota].satuan[groupWaktu][i].confirmation_total) + '</b></td></tr>'
-          tooltipHarian += '<tr><td>Rata-rata 7 Hari </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataKasus.kota[indexKota].satuan[groupWaktu][i].confirmation_ratarata) + '</b></td></tr>'
+          tooltipHarian += '<tr><td>' + this.legendAverageChart + ' </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataKasus.kota[indexKota].satuan[groupWaktu][i].confirmation_ratarata) + '</b></td></tr>'
           tooltipHarian += '</table>'
           self.ChartHarianData.push([
             self.formatDateNoYear(date),
@@ -1524,11 +1544,13 @@ export default {
 
       // filter date
       self.jsonDataKasus.kota[0].kumulatif[groupWaktu].forEach((element, index) => {
-        if (element.tanggal === this.formatDateYMD(this.selectedDate.start)) {
-          startNum = index
-        }
-        if (element.tanggal === this.formatDateYMD(this.selectedDate.end)) {
-          endNum = index
+        if (this.selectedListGroupWaktu === 'harian') {
+          if (element.tanggal === this.formatDateYMD(this.selectedDate.start)) {
+            startNum = index
+          }
+          if (element.tanggal === this.formatDateYMD(this.selectedDate.end)) {
+            endNum = index
+          }
         }
       })
       if (endNum === 0) {
