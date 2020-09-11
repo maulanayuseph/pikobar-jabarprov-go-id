@@ -806,9 +806,9 @@ export default {
       } else if (stat === 'Isolasi/ Dalam Perawatan') {
         filter = 'confirmation_diisolasi'
       } else if (stat === 'Selesai Isolasi/ Sembuh') {
-        filter = 'confirmation_meninggal'
-      } else if (stat === 'Meninggal') {
         filter = 'confirmation_selesai'
+      } else if (stat === 'Meninggal') {
+        filter = 'confirmation_meninggal'
       }
 
       if (this.jsonDataKasusUmur[filter] !== undefined) {
