@@ -906,7 +906,7 @@ export default {
           value: 'mingguan'
         },
         {
-          label: 'Dua Mingguan',
+          label: 'Dwi Mingguan',
           value: 'dwimingguan'
         }
       ],
