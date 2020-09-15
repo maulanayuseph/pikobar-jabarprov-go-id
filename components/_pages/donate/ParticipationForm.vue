@@ -100,9 +100,8 @@
               class="quantity-logistic"
               @keypress="$FieldNumberOnly($event)"
               @keyup="updateQuantity($event, logistic)"
-              @blur="updateQuantity($event, logistic)"
-            >
-            <span class="inline-block text-xs">PCS</span>
+              @blur="updateQuantity($event, logistic)">            
+            <span class="inline-block text-xs">{{logistic.unit}}</span>
           </div>
           <FontAwesomeIcon class="inline-block mr-2 text-green-600 cursor-pointer" :icon="icons.faCheckCircle" />
           {{ logistic.matg_id }}
@@ -173,10 +172,9 @@
               class="quantity-logistic"
               @keypress="$FieldNumberOnly($event)"
               @keyup="provisionsOtherUpdate($event, iProv)"
-              @blur="provisionsOtherUpdate($event, iProv)"
-            >
-            <span class="inline-block text-xs">{{ prov.unit }}</span>
-          </div>
+              @blur="provisionsOtherUpdate($event, iProv)">                  
+            <span class="inline-block text-xs">{{ prov.unit }}</span>      
+          </div>          
           <FontAwesomeIcon class="inline-block mr-2 text-green-600 cursor-pointer" :icon="icons.faCheckCircle" />
           {{ prov.name }}
         </div>
@@ -447,8 +445,8 @@ export default {
       this.$set(this.payload, 'provisions', JSON.parse(JSON.stringify(selectedLogistics)))
       this.$set(this.payload, 'provisions_other', JSON.parse(JSON.stringify(provisionsOther)))
       this.uploadFileToFirebaseStorage()
-        .then(() => {
-          this.postPayloadToFirestore()
+        .then(async () => {
+          await this.postPayloadToFirestore()
           Swal.fire({
             title: 'Data berhasil disimpan. \nTerima kasih atas donasi yang telah Anda berikan.',
             icon: 'success'
@@ -482,12 +480,17 @@ export default {
         })
       })
     },
-    postPayloadToFirestore () {
+    async postPayloadToFirestore () {
       // console.log('uploading to firestore')
-      return db.collection('donation').add(this.payload)
-        .then((docRef) => {
-          // console.log(docRef.id)
+      await db.runTransaction(async (t) => {
+        const newDoc = db.collection('donation').doc()
+        const counter = db.doc('counters/donation')
+        const count = await t.get(counter).then(doc => doc.get('count'))
+        await t.set(newDoc, this.payload)
+        await t.update(counter, {
+          count: count + 1
         })
+      })
     },
     validate (field) {
       if (field === 'statement_letter_url') {
