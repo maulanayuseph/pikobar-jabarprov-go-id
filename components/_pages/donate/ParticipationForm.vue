@@ -100,7 +100,7 @@
               class="quantity-logistic"
               @keypress="$FieldNumberOnly($event)"
               @keyup="updateQuantity($event, logistic)"
-              @blur="updateQuantity($event, logistic)">            
+              @blur="updateQuantity($event, logistic)">
             <span class="inline-block text-xs">{{logistic.unit}}</span>
           </div>
           <FontAwesomeIcon class="inline-block mr-2 text-green-600 cursor-pointer" :icon="icons.faCheckCircle" />
@@ -172,9 +172,9 @@
               class="quantity-logistic"
               @keypress="$FieldNumberOnly($event)"
               @keyup="provisionsOtherUpdate($event, iProv)"
-              @blur="provisionsOtherUpdate($event, iProv)">                  
-            <span class="inline-block text-xs">{{ prov.unit }}</span>      
-          </div>          
+              @blur="provisionsOtherUpdate($event, iProv)">
+            <span class="inline-block text-xs">{{ prov.unit }}</span>
+          </div>
           <FontAwesomeIcon class="inline-block mr-2 text-green-600 cursor-pointer" :icon="icons.faCheckCircle" />
           {{ prov.name }}
         </div>
@@ -550,9 +550,9 @@ export default {
   @apply font-bold text-gray-700 leading-loose;
 }
 .input-text {
+  appearance: none;
   @apply w-full min-w-0 px-4 py-2 rounded
   border border-solid border-gray-300;
-  appearance: none;
 }
 .logistic-selected {
   @apply border border-green-200 rounded mb-2 pt-2 pb-2 px-4 text-sm;
@@ -561,8 +561,8 @@ export default {
   }
 }
 .quantity-logistic {
-  @apply outline-none bg-gray-200 px-2 text-center;
   width: 75px;
+  @apply outline-none bg-gray-200 px-2 text-center;
 }
 .autocomplete-data {
   position: absolute;
