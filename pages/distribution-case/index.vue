@@ -52,32 +52,32 @@
             <div class="flex flex-col lg:flex-row lg:items-stretch mb-3">
               <button
                 class="button-selector m-1 w-full xl:w-auto "
-                style="display: flex; margin: auto;"
+                style="display: flex;"
                 :active="activeMap === 'polygon'"
                 @click="enableMap('polygon')"
               >
-                <img v-if="activeMap === 'polygon'" src="/img/icon-sebaran-active.svg" style="margin-top: 2px; margin-right:5px;">
-                <img v-if="activeMap !== 'polygon'" src="/img/icon-sebaran-inactive.svg" style="margin-top: 2px; margin-right:5px;">
+                <img v-if="activeMap === 'polygon'" src="/img/icon-sebaran-active.svg" style="margin-top: 2px; margin-right:5px; margin:auto;">
+                <img v-if="activeMap !== 'polygon'" src="/img/icon-sebaran-inactive.svg" style="margin-top: 2px; margin-right:5px; margin:auto;">
                 Sebaran Polygon
               </button>
               <button
                 class="button-selector m-1 w-full xl:w-auto "
-                style="display: flex; margin: auto;"
+                style="display: flex;"
                 :active="activeMap === 'titik'"
                 @click="enableMap('titik')"
               >
-                <img v-if="activeMap === 'titik'" src="/img/icon-sebaran-active.svg" style="margin-top: 2px; margin-right:5px;">
-                <img v-if="activeMap !== 'titik'" src="/img/icon-sebaran-inactive.svg" style="margin-top: 2px; margin-right:5px;">
+                <img v-if="activeMap === 'titik'" src="/img/icon-sebaran-active.svg" style="margin-top: 2px; margin-right:5px; margin:auto;">
+                <img v-if="activeMap !== 'titik'" src="/img/icon-sebaran-inactive.svg" style="margin-top: 2px; margin-right:5px; margin:auto;">
                 Sebaran Titik
               </button>
               <button
                 class="button-selector m-1 w-full xl:w-auto "
-                style="display: flex; margin: auto;"
+                style="display: flex;"
                 :active="activeMap === 'timeslider'"
                 @click="enableMap('timeslider')"
               >
-                <img v-if="activeMap === 'timeslider'" src="/img/icon-data-positif-active.svg" style="margin-top: 2px; margin-right:5px;">
-                <img v-if="activeMap !== 'timeslider'" src="/img/icon-data-positif-inactive.svg" style="margin-top: 2px; margin-right:5px;">
+                <img v-if="activeMap === 'timeslider'" src="/img/icon-data-positif-active.svg" style="margin-top: 2px; margin-right:5px; margin:auto;">
+                <img v-if="activeMap !== 'timeslider'" src="/img/icon-data-positif-inactive.svg" style="margin-top: 2px; margin-right:5px; margin:auto;">
                 Timeslider - Data Terkonfirmasi
               </button>
             </div>
@@ -293,6 +293,7 @@ export default {
     },
     setSelectedKota () {
       const val = this.selectedKota.value
+      this.activeParentRegionName = this.selectedKota.label
       if (val === '32') {
         this.getDataSebaranPolygon('kota', this.activeCaseCategory)
         this.activeRegionId = val
@@ -310,6 +311,7 @@ export default {
     setSelectedKecamatan () {
       const val = this.selectedKecamatan.value
       const kodeKec = val.toString()
+      this.activeParentRegionName = this.selectedKecamatan.label
       if (val === '') {
         this.getDataKecamatan(this.selectedKota.value)
         this.getDataSebaranPolygon('kecamatan', this.activeCaseCategory, this.selectedKota.value)
