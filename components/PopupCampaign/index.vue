@@ -45,8 +45,8 @@ export default {
       if (this.campaign) {
         const { width, height } = this.campaign
         return {
-          width: width ? `${width}px` : 'unset',
-          height: height ? `${height}px` : 'unset'
+          maxWidth: width ? `${width}px` : 'unset',
+          maxHeight: height ? `${height}px` : 'unset'
         }
       }
       return {}
