@@ -14,9 +14,13 @@
             <div class="w-1/2">
               <b class="text-md">Jawa Barat</b>
               <div class="text-3xl">
-                {{ formatNumber(data.jawabarat.positif_total) }}
+                {{ formatNumber(data.jawabarat.confirmation_total) }}
               </div>
-              <div><span class="rounded-full bg-white px-custom-1 mr-1" style=""><FontAwesomeIcon class="text-xs cursor-pointer" style="color:#2C347C" :icon="iconPlusMinus(data.jawabarat.positif_total_pertumbuhan)" /></span>{{ data.jawabarat.positif_total_pertumbuhan }}</div>
+              <div>
+                <span class="rounded-full bg-white px-custom-1 mr-1" style="">
+                  <FontAwesomeIcon class="text-xs cursor-pointer" style="color:#2C347C" :icon="iconPlusMinus(data.jawabarat.confirmation_total_pertumbuhan)" />
+                </span>
+                {{ data.jawabarat.confirmation_total_pertumbuhan }}</div>
             </div>
             <div class="w-1/2">
               <b class="text-md">Indonesia</b>
@@ -39,13 +43,13 @@
             <div class="w-1/2">
               <b class="text-md text-black">Jawa Barat</b>
               <div class="text-3xl">
-                {{ formatNumber(data.jawabarat.positif_aktif) }}
+                {{ formatNumber(data.jawabarat.confirmation_diisolasi) }}
               </div>
               <div>
                 <span class="rounded-full bg-confirmation-diisolasi px-custom-1 mr-1" style="">
-                  <FontAwesomeIcon class="text-xs cursor-pointer text-white" :icon="iconPlusMinus(data.jawabarat.positif_aktif_pertumbuhan)" />
+                  <FontAwesomeIcon class="text-xs cursor-pointer text-white" :icon="iconPlusMinus(data.jawabarat.confirmation_diisolasi_pertumbuhan)" />
                 </span>
-                {{ data.jawabarat.positif_aktif_pertumbuhan }}
+                {{ data.jawabarat.confirmation_diisolasi_pertumbuhan }}
               </div>
             </div>
             <div class="w-1/2">
@@ -74,13 +78,13 @@
             <div class="w-1/2">
               <b class="text-md text-black">Jawa Barat</b>
               <div class="text-3xl">
-                {{ formatNumber(data.jawabarat.positif_sembuh) }}
+                {{ formatNumber(data.jawabarat.confirmation_selesai) }}
               </div>
               <div>
                 <span class="rounded-full bg-confirmation-selesai px-custom-1 mr-1" style="">
-                  <FontAwesomeIcon class="text-xs cursor-pointer text-white" :icon="iconPlusMinus(data.jawabarat.positif_sembuh_pertumbuhan)" />
+                  <FontAwesomeIcon class="text-xs cursor-pointer text-white" :icon="iconPlusMinus(data.jawabarat.confirmation_selesai_pertumbuhan)" />
                 </span>
-                {{ data.jawabarat.positif_sembuh_pertumbuhan }}
+                {{ data.jawabarat.confirmation_selesai_pertumbuhan }}
               </div>
             </div>
             <div class="w-1/2">
@@ -109,13 +113,13 @@
             <div class="w-1/2">
               <b class="text-md text-black">Jawa Barat</b>
               <div class="text-3xl">
-                {{ formatNumber(data.jawabarat.positif_meninggal) }}
+                {{ formatNumber(data.jawabarat.confirmation_meninggal) }}
               </div>
               <div>
                 <span class="rounded-full bg-confirmation-meninggal px-custom-1 mr-1" style="">
-                  <FontAwesomeIcon class="text-xs cursor-pointer text-white" :icon="iconPlusMinus(data.jawabarat.positif_meninggal_pertumbuhan)" />
+                  <FontAwesomeIcon class="text-xs cursor-pointer text-white" :icon="iconPlusMinus(data.jawabarat.confirmation_meninggal_pertumbuhan)" />
                 </span>
-                {{ data.jawabarat.positif_meninggal_pertumbuhan }}
+                {{ data.jawabarat.confirmation_meninggal_pertumbuhan }}
               </div>
             </div>
             <div class="w-1/2">
@@ -312,14 +316,14 @@ export default {
         jawabarat: {
           kode_prov: 32,
           nama_prov: 'Provinsi Jawa Barat',
-          positif_aktif: 0,
-          positif_aktif_pertumbuhan: 0,
-          positif_meninggal: 0,
-          positif_meninggal_pertumbuhan: 0,
-          positif_sembuh: 0,
-          positif_sembuh_pertumbuhan: 0,
-          positif_total: 0,
-          positif_total_pertumbuhan: 0,
+          confirmation_diisolasi: 0,
+          confirmation_diisolasi_pertumbuhan: 0,
+          confirmation_meninggal: 0,
+          confirmation_meninggal_pertumbuhan: 0,
+          confirmation_selesai: 0,
+          confirmation_selesai_pertumbuhan: 0,
+          confirmation_total: 0,
+          confirmation_total_pertumbuhan: 0,
           last_update: '2020-08-02'
         },
         meta: {
@@ -368,10 +372,10 @@ export default {
   },
   computed: {
     covidCases () {
-      return this.$store.getters['covid-cases/itemsMap']
+      return this.$store.getters['covid-cases-new/itemsMap']
     },
     isLoading () {
-      return this.$store.getters['covid-cases/isLoading']
+      return this.$store.getters['covid-cases-new/isLoading']
     },
     dataKasusTotalV2 () {
       return this.$store.getters['data-kasus-total-v2/itemsMap']
@@ -406,7 +410,7 @@ export default {
 
     // GET
     getCovidCases () {
-      this.$store.dispatch('covid-cases/getItems')
+      this.$store.dispatch('covid-cases-new/getItems')
     },
     getDataKasusTotalV2 () {
       this.$store.dispatch('data-kasus-total-v2/getItems')
