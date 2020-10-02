@@ -109,7 +109,7 @@ export default {
   }
 
   &__image {
-    @apply object-center object-contain
+    @apply w-full h-auto object-center object-contain
     rounded-lg
     cursor-pointer;
   }
