@@ -145,7 +145,7 @@ export default {
   watch: {
     dataKasusGender (val) {
       this.jsonDataKasusGender = val
-      this.changeGroupJenisKelamin('Isolasi/ Dalam Perawatan')
+      this.changeGroupJenisKelamin('Terkonfirmasi')
     }
   },
   mounted () {
@@ -215,8 +215,13 @@ export default {
         ['N/A', tempJenisKelaminNA]
       ]
 
-      self.angkaNone = tempJenisKelaminNA
-      self.angkaTotal = tempJenisKelaminPria + tempJenisKelaminWanita + tempJenisKelaminNA
+      if (tempJenisKelaminNA) {
+        self.angkaNone = tempJenisKelaminNA
+        self.angkaTotal = tempJenisKelaminPria + tempJenisKelaminWanita + tempJenisKelaminNA
+      } else {
+        self.angkaNone = 0
+        self.angkaTotal = tempJenisKelaminPria + tempJenisKelaminWanita + 0
+      }
       self.persenNone = (self.angkaNone / self.angkaTotal) * 100
     },
     // get data
