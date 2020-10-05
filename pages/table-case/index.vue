@@ -145,7 +145,7 @@ export default {
           sortable: true
         },
         {
-          name: "closecontact",
+          name: "closecontact_total",
           label: "Total Kontak Erat",
           sortable: true,
           format: formatThousand,
@@ -164,7 +164,7 @@ export default {
           format: formatThousand
         },
         {
-          name: "suspect",
+          name: "suspect_total",
           label: "Total Suspek",
           sortable: true,
           format: formatThousand
@@ -182,7 +182,7 @@ export default {
           format: formatThousand
         },
         {
-          name: "probable",
+          name: "probable_total",
           label: "Total Probable",
           sortable: true,
           format: formatThousand
@@ -206,7 +206,7 @@ export default {
           format: formatThousand
         },
         {
-          name: "confirmation",
+          name: "confirmation_total",
           label: "Total Positif",
           sortable: true,
           format: formatThousand
@@ -224,7 +224,7 @@ export default {
           format: formatThousand
         },
         {
-          name: "pertumbuhan_closecontact",
+          name: "pertumbuhan_closecontact_total",
           label: "Pertumbuhan Total Kontak Erat",
           sortable: true,
           format: formatThousand
@@ -242,7 +242,7 @@ export default {
           format: formatThousand
         },
         {
-          name: "pertumbuhan_suspect",
+          name: "pertumbuhan_suspect_total",
           label: "Pertumbuhan Total Suspek",
           sortable: true,
           format: formatThousand
@@ -260,7 +260,7 @@ export default {
           format: formatThousand
         },
         {
-          name: "pertumbuhan_probable",
+          name: "pertumbuhan_probable_total",
           label: "Pertumbuhan Total Probable",
           sortable: true,
           format: formatThousand
@@ -284,7 +284,7 @@ export default {
           format: formatThousand
         },
         {
-          name: "pertumbuhan_confirmation",
+          name: "pertumbuhan_confirmation_total",
           label: "Pertumbuhan Total Positif",
           sortable: true,
           format: formatThousand
@@ -335,7 +335,105 @@ export default {
     }
   },
   created () {
-    this.fetchDataRekapitulasiJabarKumulatifKab()
+    // this.fetchDataRekapitulasiJabarKumulatifKab()
+  },
+  computed: {
+    dataKasusHarianKota () {
+      return this.$store.getters['data-kasus-harian-kota-v2/itemsMap']
+    },
+  },
+  mounted () {
+    this.$nextTick(() => {
+      Promise.all([
+        this.$store.dispatch('data-kasus-harian-kota-v2/getItems'),
+      ]).then(() => {
+      })
+
+      if (process.browser) {
+        analytics.logEvent('dashboard_view')
+      }
+    })
+  },
+  watch: {
+    dataKasusHarianKota (val) {
+
+      let temp = []
+      val.forEach(element => {
+        element.series.forEach(row => {
+          temp.push(row)
+        });
+      });
+
+      let hari = temp/28
+      let dateAgustus = '2020-08-01'
+      for (let i=0; i<temp.length; i++){
+        let temp1 = temp[i].kumulatif
+        temp1.tanggal = temp[i].tanggal
+        temp1.kode_kab = temp[i].kode_kab
+        temp1.nama_kab = temp[i].nama_kab
+        let temp2 = {
+          pertumbuhan_closecontact_total: 0,
+          pertumbuhan_closecontact_discarded: 0,
+          pertumbuhan_closecontact_dikarantina: 0,
+          pertumbuhan_suspect_total: 0,
+          pertumbuhan_suspect_discarded: 0,
+          pertumbuhan_suspect_diisolasi: 0,
+          pertumbuhan_probable_total: 0,
+          pertumbuhan_probable_discarded: 0,
+          pertumbuhan_probable_diisolasi: 0,
+          pertumbuhan_probable_meninggal: 0,
+          pertumbuhan_confirmation_total: 0,
+          pertumbuhan_confirmation_selesai: 0,
+          pertumbuhan_confirmation_meninggal: 0
+        }
+        let temp3 = {...temp1, ...temp2}
+
+        if (i == 0 || i/hari == 0) {
+          temp3.pertumbuhan_closecontact_total = temp[i].kumulatif.closecontact_total
+          temp3.pertumbuhan_closecontact_discarded = temp[i].kumulatif.closecontact_discarded
+          temp3.pertumbuhan_closecontact_dikarantina = temp[i].kumulatif.closecontact_dikarantina
+          temp3.pertumbuhan_suspect_total = temp[i].kumulatif.suspect_total
+          temp3.pertumbuhan_suspect_discarded = temp[i].kumulatif.suspect_discarded
+          temp3.pertumbuhan_suspect_diisolasi = temp[i].kumulatif.suspect_diisolasi
+          temp3.pertumbuhan_probable_total = temp[i].kumulatif.probable_total
+          temp3.pertumbuhan_probable_discarded = temp[i].kumulatif.probable_discarded
+          temp3.pertumbuhan_probable_diisolasi = temp[i].kumulatif.probable_diisolasi
+          temp3.pertumbuhan_probable_meninggal = temp[i].kumulatif.probable_meninggal
+          temp3.pertumbuhan_confirmation_total = temp[i].kumulatif.confirmation_total
+          temp3.pertumbuhan_confirmation_selesai = temp[i].kumulatif.confirmation_selesai
+          temp3.pertumbuhan_confirmation_meninggal = temp[i].kumulatif.confirmation_meninggal
+        } else {
+          temp3.pertumbuhan_closecontact_total = temp[i].kumulatif.closecontact_total - temp[i-1].kumulatif.closecontact_total
+          temp3.pertumbuhan_closecontact_discarded = temp[i].kumulatif.closecontact_discarded - temp[i-1].kumulatif.closecontact_discarded
+          temp3.pertumbuhan_closecontact_dikarantina = temp[i].kumulatif.closecontact_dikarantina - temp[i-1].kumulatif.closecontact_dikarantina
+          temp3.pertumbuhan_suspect_total = temp[i].kumulatif.suspect_total - temp[i-1].kumulatif.suspect_total
+          temp3.pertumbuhan_suspect_discarded = temp[i].kumulatif.suspect_discarded - temp[i-1].kumulatif.suspect_discarded
+          temp3.pertumbuhan_suspect_diisolasi = temp[i].kumulatif.suspect_diisolasi - temp[i-1].kumulatif.suspect_diisolasi
+          temp3.pertumbuhan_probable_total = temp[i].kumulatif.probable_total - temp[i-1].kumulatif.probable_total
+          temp3.pertumbuhan_probable_discarded = temp[i].kumulatif.probable_discarded - temp[i-1].kumulatif.probable_discarded
+          temp3.pertumbuhan_probable_diisolasi = temp[i].kumulatif.probable_diisolasi - temp[i-1].kumulatif.probable_diisolasi
+          temp3.pertumbuhan_probable_meninggal = temp[i].kumulatif.probable_meninggal - temp[i-1].kumulatif.probable_meninggal
+          temp3.pertumbuhan_confirmation_total = temp[i].kumulatif.confirmation_total - temp[i-1].kumulatif.confirmation_total
+          temp3.pertumbuhan_confirmation_selesai = temp[i].kumulatif.confirmation_selesai - temp[i-1].kumulatif.confirmation_selesai
+          temp3.pertumbuhan_confirmation_meninggal = temp[i].kumulatif.confirmation_meninggal - temp[i-1].kumulatif.confirmation_meninggal
+        }
+
+        delete temp3['harian']
+        delete temp3['kumulatif']
+
+        if (temp3.nama_kab == 'KOTA/KAB BELUM TERIDENTIFIKASI') {
+          temp3.nama_kab = 'BELUM TERIDENTIFIKASI'
+        }
+
+        if(new Date(temp3.tanggal) >= new Date(dateAgustus)){
+          this.jsonDataRekapitulasiJabarKumulatifKab.push(temp3)
+        }
+      }
+
+      this.data = this.jsonDataRekapitulasiJabarKumulatifKab.slice(0, this.itemsPerPage)
+      this.totalItems = this.jsonDataRekapitulasiJabarKumulatifKab.length
+      this.isLoading = false
+    },
   },
   methods: {
     formatDateTimeShort,
@@ -360,67 +458,69 @@ export default {
       }
       return (obj);
     },
-    fetchDataRekapitulasiJabarKumulatifKab () {
-      const self = this
-      this.$covid19PublicApi
-        .get('v1/rekapitulasi_v2/jabar/kumulatif?level=kab')
-        .then(function (response) {
-          let temp = self.keysToLowerCase(response.data.data.content)
-          for (let i=0; i<temp.length; i++){
-            let temp2 = {
-              pertumbuhan_closecontact: 0,
-              pertumbuhan_closecontact_discarded: 0,
-              pertumbuhan_closecontact_dikarantina: 0,
-              pertumbuhan_suspect: 0,
-              pertumbuhan_suspect_discarded: 0,
-              pertumbuhan_suspect_diisolasi: 0,
-              pertumbuhan_probable: 0,
-              pertumbuhan_probable_discarded: 0,
-              pertumbuhan_probable_diisolasi: 0,
-              pertumbuhan_probable_meninggal: 0,
-              pertumbuhan_confirmation: 0,
-              pertumbuhan_confirmation_selesai: 0,
-              pertumbuhan_confirmation_meninggal: 0,
-            }
-            if (i < 29) {
-              temp2.pertumbuhan_closecontact = temp[i].closecontact
-              temp2.pertumbuhan_closecontact_discarded = temp[i].closecontact_discarded
-              temp2.pertumbuhan_closecontact_dikarantina = temp[i].closecontact_dikarantina
-              temp2.pertumbuhan_suspect = temp[i].suspect
-              temp2.pertumbuhan_suspect_discarded = temp[i].suspect_discarded
-              temp2.pertumbuhan_suspect_diisolasi = temp[i].suspect_diisolasi
-              temp2.pertumbuhan_probable = temp[i].probable
-              temp2.pertumbuhan_probable_discarded = temp[i].probable_discarded
-              temp2.pertumbuhan_probable_diisolasi = temp[i].probable_diisolasi
-              temp2.pertumbuhan_probable_meninggal = temp[i].probable_meninggal
-              temp2.pertumbuhan_confirmation = temp[i].confirmation
-              temp2.pertumbuhan_confirmation_selesai = temp[i].confirmation_selesai
-              temp2.pertumbuhan_confirmation_meninggal = temp[i].confirmation_meninggal
-            } else {
-              temp2.pertumbuhan_closecontact = temp[i].closecontact - temp[i-29].closecontact
-              temp2.pertumbuhan_closecontact_discarded = temp[i].closecontact_discarded - temp[i-29].closecontact_discarded
-              temp2.pertumbuhan_closecontact_dikarantina = temp[i].closecontact_dikarantina - temp[i-29].closecontact_dikarantina
-              temp2.pertumbuhan_suspect = temp[i].suspect - temp[i-29].suspect
-              temp2.pertumbuhan_suspect_discarded = temp[i].suspect_discarded - temp[i-29].suspect_discarded
-              temp2.pertumbuhan_suspect_diisolasi = temp[i].suspect_diisolasi - temp[i-29].suspect_diisolasi
-              temp2.pertumbuhan_probable = temp[i].probable - temp[i-29].probable
-              temp2.pertumbuhan_probable_discarded = temp[i].probable_discarded - temp[i-29].probable_discarded
-              temp2.pertumbuhan_probable_diisolasi = temp[i].probable_diisolasi - temp[i-29].probable_diisolasi
-              temp2.pertumbuhan_probable_meninggal = temp[i].probable_meninggal - temp[i-29].probable_meninggal
-              temp2.pertumbuhan_confirmation = temp[i].confirmation - temp[i-29].confirmation
-              temp2.pertumbuhan_confirmation_selesai = temp[i].confirmation_selesai - temp[i-29].confirmation_selesai
-              temp2.pertumbuhan_confirmation_meninggal = temp[i].confirmation_meninggal - temp[i-29].confirmation_meninggal
-            }
-            self.jsonDataRekapitulasiJabarKumulatifKab.push({...temp[i], ...temp2})
-          }
-          self.data = self.jsonDataRekapitulasiJabarKumulatifKab.slice(0, self.itemsPerPage)
-          self.totalItems = self.jsonDataRekapitulasiJabarKumulatifKab.length
-          self.isLoading = false
-        })
-        .catch(function (error) {
-          console.log(error)
-        })
-    },
+
+    // fetchDataRekapitulasiJabarKumulatifKab () {
+    //   const self = this
+    //   this.$covid19PublicApi
+    //     .get('v1/rekapitulasi_v2/jabar/kumulatif?level=kab')
+    //     .then(function (response) {
+    //       let temp = self.keysToLowerCase(response.data.data.content)
+    //       for (let i=0; i<temp.length; i++){
+    //         let temp2 = {
+    //           pertumbuhan_closecontact: 0,
+    //           pertumbuhan_closecontact_discarded: 0,
+    //           pertumbuhan_closecontact_dikarantina: 0,
+    //           pertumbuhan_suspect: 0,
+    //           pertumbuhan_suspect_discarded: 0,
+    //           pertumbuhan_suspect_diisolasi: 0,
+    //           pertumbuhan_probable: 0,
+    //           pertumbuhan_probable_discarded: 0,
+    //           pertumbuhan_probable_diisolasi: 0,
+    //           pertumbuhan_probable_meninggal: 0,
+    //           pertumbuhan_confirmation: 0,
+    //           pertumbuhan_confirmation_selesai: 0,
+    //           pertumbuhan_confirmation_meninggal: 0,
+    //         }
+    //         if (i < 29) {
+    //           temp2.pertumbuhan_closecontact = temp[i].closecontact
+    //           temp2.pertumbuhan_closecontact_discarded = temp[i].closecontact_discarded
+    //           temp2.pertumbuhan_closecontact_dikarantina = temp[i].closecontact_dikarantina
+    //           temp2.pertumbuhan_suspect = temp[i].suspect
+    //           temp2.pertumbuhan_suspect_discarded = temp[i].suspect_discarded
+    //           temp2.pertumbuhan_suspect_diisolasi = temp[i].suspect_diisolasi
+    //           temp2.pertumbuhan_probable = temp[i].probable
+    //           temp2.pertumbuhan_probable_discarded = temp[i].probable_discarded
+    //           temp2.pertumbuhan_probable_diisolasi = temp[i].probable_diisolasi
+    //           temp2.pertumbuhan_probable_meninggal = temp[i].probable_meninggal
+    //           temp2.pertumbuhan_confirmation = temp[i].confirmation
+    //           temp2.pertumbuhan_confirmation_selesai = temp[i].confirmation_selesai
+    //           temp2.pertumbuhan_confirmation_meninggal = temp[i].confirmation_meninggal
+    //         } else {
+    //           temp2.pertumbuhan_closecontact = temp[i].closecontact - temp[i-29].closecontact
+    //           temp2.pertumbuhan_closecontact_discarded = temp[i].closecontact_discarded - temp[i-29].closecontact_discarded
+    //           temp2.pertumbuhan_closecontact_dikarantina = temp[i].closecontact_dikarantina - temp[i-29].closecontact_dikarantina
+    //           temp2.pertumbuhan_suspect = temp[i].suspect - temp[i-29].suspect
+    //           temp2.pertumbuhan_suspect_discarded = temp[i].suspect_discarded - temp[i-29].suspect_discarded
+    //           temp2.pertumbuhan_suspect_diisolasi = temp[i].suspect_diisolasi - temp[i-29].suspect_diisolasi
+    //           temp2.pertumbuhan_probable = temp[i].probable - temp[i-29].probable
+    //           temp2.pertumbuhan_probable_discarded = temp[i].probable_discarded - temp[i-29].probable_discarded
+    //           temp2.pertumbuhan_probable_diisolasi = temp[i].probable_diisolasi - temp[i-29].probable_diisolasi
+    //           temp2.pertumbuhan_probable_meninggal = temp[i].probable_meninggal - temp[i-29].probable_meninggal
+    //           temp2.pertumbuhan_confirmation = temp[i].confirmation - temp[i-29].confirmation
+    //           temp2.pertumbuhan_confirmation_selesai = temp[i].confirmation_selesai - temp[i-29].confirmation_selesai
+    //           temp2.pertumbuhan_confirmation_meninggal = temp[i].confirmation_meninggal - temp[i-29].confirmation_meninggal
+    //         }
+    //         self.jsonDataRekapitulasiJabarKumulatifKab.push({...temp[i], ...temp2})
+    //       }
+    //       self.data = self.jsonDataRekapitulasiJabarKumulatifKab.slice(0, self.itemsPerPage)
+    //       self.totalItems = self.jsonDataRekapitulasiJabarKumulatifKab.length
+    //       self.isLoading = false
+    //     })
+    //     .catch(function (error) {
+    //       console.log(error)
+    //     })
+    // },
+
     dtEditClick: props => alert("Click props:" + JSON.stringify(props)),
 
     dtUpdateSort: function({ sortField, sort }) {
