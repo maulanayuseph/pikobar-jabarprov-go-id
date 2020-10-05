@@ -21,9 +21,9 @@
       </select>
     </div>
     <hr>
-    <div class="m-5 mb-0 p-2" style="background:#e6e6e6">
+    <div v-if="messageNone" class="m-5 mb-0 p-2" style="background:#e6e6e6">
       <b>Disclaimer :</b>
-      <p>Terdapat {{ formatNumber(angkaNone) }} ({{ formatNumberPercent(persenNone) }}%) dari total {{ formatNumber(angkaTotal) }} belum dilengkapi dengan keterangan Jenis Kelamin sehingga tidak dapat divisualisasikan.</p>
+      <p>{{ messageNone }}</p>
     </div>
     <div
       class="w-full p-5"
@@ -112,6 +112,7 @@ export default {
       angkaNone: 0,
       angkaTotal: 0,
       persenNone: 0,
+      messageNone: '',
       pieChartJenisKelaminData: [
         ['Jenis Kelamin', 'Data'],
         ['Pria', 0],
@@ -218,11 +219,14 @@ export default {
       if (tempJenisKelaminNA) {
         self.angkaNone = tempJenisKelaminNA
         self.angkaTotal = tempJenisKelaminPria + tempJenisKelaminWanita + tempJenisKelaminNA
+        self.persenNone = (self.angkaNone / self.angkaTotal) * 100
+        self.messageNone = 'Terdapat ' + self.formatNumber(self.angkaNone) + '(' + formatNumberPercent(self.persenNone) + '%) dari total ' + formatNumber(self.angkaTotal) + ' belum dilengkapi dengan keterangan Jenis Kelamin sehingga tidak dapat divisualisasikan.'
       } else {
         self.angkaNone = 0
         self.angkaTotal = tempJenisKelaminPria + tempJenisKelaminWanita + 0
+        self.persenNone = (self.angkaNone / self.angkaTotal) * 100
+        self.messageNone = ''
       }
-      self.persenNone = (self.angkaNone / self.angkaTotal) * 100
     },
     // get data
     getDataKasusGender () {
