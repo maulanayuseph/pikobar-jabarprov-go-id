@@ -367,10 +367,27 @@ export default {
       let hari = temp/28
       let dateAgustus = '2020-08-01'
       for (let i=0; i<temp.length; i++){
-        let temp1 = temp[i].kumulatif
-        temp1.tanggal = temp[i].tanggal
-        temp1.kode_kab = temp[i].kode_kab
-        temp1.nama_kab = temp[i].nama_kab
+        let temp1 = {
+          tanggal: temp[i].tanggal,
+          kode_prov: '32',
+          nama_prov: 'Provinsi Jawa Barat',
+          kode_kab: temp[i].kode_kab,
+          nama_kab: temp[i].nama_kab,
+          closecontact_total: temp[i].kumulatif.closecontact_total,
+          closecontact_discarded: temp[i].kumulatif.closecontact_discarded,
+          closecontact_dikarantina: temp[i].kumulatif.closecontact_dikarantina,
+          suspect_total: temp[i].kumulatif.suspect_total,
+          suspect_discarded: temp[i].kumulatif.suspect_discarded,
+          suspect_diisolasi: temp[i].kumulatif.suspect_diisolasi,
+          probable_total: temp[i].kumulatif.probable_total,
+          probable_discarded: temp[i].kumulatif.probable_discarded,
+          probable_diisolasi: temp[i].kumulatif.probable_diisolasi,
+          probable_meninggal: temp[i].kumulatif.probable_meninggal,
+          confirmation_total: temp[i].kumulatif.confirmation_total,
+          confirmation_selesai: temp[i].kumulatif.confirmation_selesai,
+          confirmation_meninggal: temp[i].kumulatif.confirmation_meninggal
+        }
+
         let temp2 = {
           pertumbuhan_closecontact_total: 0,
           pertumbuhan_closecontact_discarded: 0,
@@ -386,6 +403,7 @@ export default {
           pertumbuhan_confirmation_selesai: 0,
           pertumbuhan_confirmation_meninggal: 0
         }
+
         let temp3 = {...temp1, ...temp2}
 
         if (i == 0 || i/hari == 0) {
@@ -430,6 +448,7 @@ export default {
         }
       }
 
+      this.jsonDataRekapitulasiJabarKumulatifKab.sort(this.compareValues('tanggal', 'asc'))
       this.data = this.jsonDataRekapitulasiJabarKumulatifKab.slice(0, this.itemsPerPage)
       this.totalItems = this.jsonDataRekapitulasiJabarKumulatifKab.length
       this.isLoading = false
@@ -520,6 +539,30 @@ export default {
     //       console.log(error)
     //     })
     // },
+
+    compareValues (key, order = 'asc') {
+      return function innerSort (a, b) {
+        // eslint-disable-next-line no-prototype-builtins
+        if (!a.hasOwnProperty(key) || !b.hasOwnProperty(key)) {
+          return 0
+        }
+
+        const varA = (typeof a[key] === 'string')
+          ? a[key].toUpperCase() : a[key]
+        const varB = (typeof b[key] === 'string')
+          ? b[key].toUpperCase() : b[key]
+
+        let comparison = 0
+        if (varA > varB) {
+          comparison = 1
+        } else if (varA < varB) {
+          comparison = -1
+        }
+        return (
+          (order === 'desc') ? (comparison * -1) : comparison
+        )
+      }
+    },
 
     dtEditClick: props => alert("Click props:" + JSON.stringify(props)),
 
