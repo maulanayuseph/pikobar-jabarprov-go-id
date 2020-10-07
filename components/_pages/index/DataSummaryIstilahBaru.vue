@@ -4,7 +4,7 @@
       <section class="flex flex-row flex-wrap">
         <!-- Terkonfirmasi -->
         <CounterCardLoader
-          :is-pending="isLoading2"
+          :is-pending="isLoadingJabar || isLoadingNasional"
           :is-main="true"
           class="mb-8 border border-solid digital-signage"
           style="background: linear-gradient(90deg, #2C347C, #424CA6);"
@@ -40,7 +40,7 @@
 
         <!-- Isolasi -->
         <CounterCardLoader
-          :is-pending="isLoading2"
+          :is-pending="isLoadingJabar || isLoadingNasional"
           :is-main="false"
           class="mb-8 border border-solid digital-signage bg-white text-title"
           label="Isolasi/Dalam Perawatan"
@@ -75,7 +75,7 @@
 
         <!-- Selesai -->
         <CounterCardLoader
-          :is-pending="isLoading2"
+          :is-pending="isLoadingJabar || isLoadingNasional"
           :is-main="false"
           class="mb-8 border border-solid digital-signage bg-white text-title"
           label="Selesai Isolasi/Sembuh"
@@ -110,7 +110,7 @@
 
         <!-- Meninggal -->
         <CounterCardLoader
-          :is-pending="isLoading2"
+          :is-pending="isLoadingJabar || isLoadingNasional"
           :is-main="false"
           class="mb-8 border border-solid digital-signage bg-white text-title"
           label="Meninggal"
@@ -147,7 +147,7 @@
       <section class="flex flex-row flex-wrap">
         <!-- Kontak Erat -->
         <CounterCardLoader
-          :is-pending="isLoading2"
+          :is-pending="isLoadingJabar"
           :is-main="false"
           :is-tooltip-closecontact="true"
           :is-tooltip-suspect="false"
@@ -191,7 +191,7 @@
 
         <!-- Suspect -->
         <CounterCardLoader
-          :is-pending="isLoading2"
+          :is-pending="isLoadingJabar"
           :is-main="false"
           :is-tooltip-closecontact="false"
           :is-tooltip-suspect="true"
@@ -244,7 +244,7 @@
 
         <!-- Probable -->
         <CounterCardLoader
-          :is-pending="isLoading2"
+          :is-pending="isLoadingJabar"
           :is-main="false"
           :is-tooltip-closecontact="false"
           :is-tooltip-suspect="false"
@@ -369,13 +369,13 @@ export default {
     covidCasesNational () {
       return this.$store.getters['covid-cases-national/itemsMap']
     },
-    isLoading () {
+    isLoadingNasional () {
       return this.$store.getters['covid-cases-national/isLoading']
     },
     dataKasusTotalV2 () {
       return this.$store.getters['data-kasus-total-v2/itemsMap']
     },
-    isLoading2 () {
+    isLoadingJabar () {
       return this.$store.getters['data-kasus-total-v2/isLoading']
     }
   },
