@@ -284,7 +284,7 @@ export default {
         'Selesai Isolasi/ Sembuh',
         'Meninggal'
       ],
-      optionSelected: 'Isolasi/ Dalam Perawatan',
+      optionSelected: 'Terkonfirmasi',
       jsonDataKasusUmur: {
         confirmation_total: {
           anak: {
@@ -640,7 +640,7 @@ export default {
   watch: {
     dataKasusUmur (val) {
       this.jsonDataKasusUmur = val
-      this.changeGroupUsia('Isolasi/ Dalam Perawatan')
+      this.changeGroupUsia('Terkonfirmasi')
     }
   },
   mounted () {
