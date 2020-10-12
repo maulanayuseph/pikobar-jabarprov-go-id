@@ -237,7 +237,6 @@ export default {
       this.removeMarker()
       // load data
       this.createMarker('lini1_rujukan')
-      this.createMarker('lini1_non')
       this.createLayerKota()
       this.setZoomLevel()
     },
@@ -351,7 +350,7 @@ export default {
             tipefaskes = 'Puskesmas'
           }
           let rujukan = ''
-          if (row.nomor_rujukan === true) {
+          if (row.rujukan === true) {
             rujukan = 'Ya'
           } else {
             rujukan = 'Tidak'
