@@ -334,9 +334,6 @@ export default {
       createHeaderName: "created:header"
     }
   },
-  created () {
-    // this.fetchDataRekapitulasiJabarKumulatifKab()
-  },
   computed: {
     dataKasusHarianKota () {
       return this.$store.getters['data-kasus-harian-kota-v2/itemsMap']
@@ -477,68 +474,6 @@ export default {
       }
       return (obj);
     },
-
-    // fetchDataRekapitulasiJabarKumulatifKab () {
-    //   const self = this
-    //   this.$covid19PublicApi
-    //     .get('v1/rekapitulasi_v2/jabar/kumulatif?level=kab')
-    //     .then(function (response) {
-    //       let temp = self.keysToLowerCase(response.data.data.content)
-    //       for (let i=0; i<temp.length; i++){
-    //         let temp2 = {
-    //           pertumbuhan_closecontact: 0,
-    //           pertumbuhan_closecontact_discarded: 0,
-    //           pertumbuhan_closecontact_dikarantina: 0,
-    //           pertumbuhan_suspect: 0,
-    //           pertumbuhan_suspect_discarded: 0,
-    //           pertumbuhan_suspect_diisolasi: 0,
-    //           pertumbuhan_probable: 0,
-    //           pertumbuhan_probable_discarded: 0,
-    //           pertumbuhan_probable_diisolasi: 0,
-    //           pertumbuhan_probable_meninggal: 0,
-    //           pertumbuhan_confirmation: 0,
-    //           pertumbuhan_confirmation_selesai: 0,
-    //           pertumbuhan_confirmation_meninggal: 0,
-    //         }
-    //         if (i < 29) {
-    //           temp2.pertumbuhan_closecontact = temp[i].closecontact
-    //           temp2.pertumbuhan_closecontact_discarded = temp[i].closecontact_discarded
-    //           temp2.pertumbuhan_closecontact_dikarantina = temp[i].closecontact_dikarantina
-    //           temp2.pertumbuhan_suspect = temp[i].suspect
-    //           temp2.pertumbuhan_suspect_discarded = temp[i].suspect_discarded
-    //           temp2.pertumbuhan_suspect_diisolasi = temp[i].suspect_diisolasi
-    //           temp2.pertumbuhan_probable = temp[i].probable
-    //           temp2.pertumbuhan_probable_discarded = temp[i].probable_discarded
-    //           temp2.pertumbuhan_probable_diisolasi = temp[i].probable_diisolasi
-    //           temp2.pertumbuhan_probable_meninggal = temp[i].probable_meninggal
-    //           temp2.pertumbuhan_confirmation = temp[i].confirmation
-    //           temp2.pertumbuhan_confirmation_selesai = temp[i].confirmation_selesai
-    //           temp2.pertumbuhan_confirmation_meninggal = temp[i].confirmation_meninggal
-    //         } else {
-    //           temp2.pertumbuhan_closecontact = temp[i].closecontact - temp[i-29].closecontact
-    //           temp2.pertumbuhan_closecontact_discarded = temp[i].closecontact_discarded - temp[i-29].closecontact_discarded
-    //           temp2.pertumbuhan_closecontact_dikarantina = temp[i].closecontact_dikarantina - temp[i-29].closecontact_dikarantina
-    //           temp2.pertumbuhan_suspect = temp[i].suspect - temp[i-29].suspect
-    //           temp2.pertumbuhan_suspect_discarded = temp[i].suspect_discarded - temp[i-29].suspect_discarded
-    //           temp2.pertumbuhan_suspect_diisolasi = temp[i].suspect_diisolasi - temp[i-29].suspect_diisolasi
-    //           temp2.pertumbuhan_probable = temp[i].probable - temp[i-29].probable
-    //           temp2.pertumbuhan_probable_discarded = temp[i].probable_discarded - temp[i-29].probable_discarded
-    //           temp2.pertumbuhan_probable_diisolasi = temp[i].probable_diisolasi - temp[i-29].probable_diisolasi
-    //           temp2.pertumbuhan_probable_meninggal = temp[i].probable_meninggal - temp[i-29].probable_meninggal
-    //           temp2.pertumbuhan_confirmation = temp[i].confirmation - temp[i-29].confirmation
-    //           temp2.pertumbuhan_confirmation_selesai = temp[i].confirmation_selesai - temp[i-29].confirmation_selesai
-    //           temp2.pertumbuhan_confirmation_meninggal = temp[i].confirmation_meninggal - temp[i-29].confirmation_meninggal
-    //         }
-    //         self.jsonDataRekapitulasiJabarKumulatifKab.push({...temp[i], ...temp2})
-    //       }
-    //       self.data = self.jsonDataRekapitulasiJabarKumulatifKab.slice(0, self.itemsPerPage)
-    //       self.totalItems = self.jsonDataRekapitulasiJabarKumulatifKab.length
-    //       self.isLoading = false
-    //     })
-    //     .catch(function (error) {
-    //       console.log(error)
-    //     })
-    // },
 
     compareValues (key, order = 'asc') {
       return function innerSort (a, b) {
@@ -840,10 +775,6 @@ export default {
     overflow-y: scroll;
   }
 
-/* thead tr:nth-child(1) th { position: sticky; top: 0; background-color: white;}
-tbody td:nth-child(1) { position: sticky; left: 0; background-color: white; }
-head th:nth-child(1) { position: sticky; left: 0; top:0; background-color: white; } */
-
 thead th {
   position: -webkit-sticky;
   position: sticky;
@@ -1073,31 +1004,6 @@ thead th:nth-child(2){
 .v-datatable-light tbody {
   font-size: small;
 }
-
-/* #app .v-datatable-light .row-7 .column-4 {
-  color: steelblue;
-}
-
-#app .v-datatable-light .row-1 .column-2 {
-  color: green;
-}
-
-#app .v-datatable-light .row-2 .column-1 {
-  color: red;
-}
-
-#app .v-datatable-light .row-3 {
-  color: pink;
-}
-
-#app .v-datatable-light .column-5 {
-  color: goldenrod;
-}
-
-#app .v-datatable-light .row-3 .column-5 {
-  color: purple;
-} */
-
 
 /* End Datatable CSS */
 

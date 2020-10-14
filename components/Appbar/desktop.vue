@@ -101,7 +101,8 @@ export default {
           label: 'Data',
           children: [
             { to: '/data', label: 'Statisik' },
-            { to: '/distribution-case', label: 'Sebaran Kasus' }
+            { to: '/distribution-case', label: 'Sebaran Kasus' },
+            { to: '/distribution-healthcare', label: 'Sebaran Faskes' }
           ]
         },
         { to: '/articles?tab=jabar', label: 'Berita' },
