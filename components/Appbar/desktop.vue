@@ -108,7 +108,7 @@ export default {
         { to: '/articles?tab=jabar', label: 'Berita' },
         { to: '/faq', label: 'FAQ' },
         { to: '/contact', label: 'Kontak' },
-        { to: '/donate', label: 'Donasi' },
+        { to: '/donate/logistic', label: 'Donasi' },
         { to: 'https://bansos.pikobar.jabarprov.go.id/', label: 'Bantuan Sosial' }
       ]
     }
