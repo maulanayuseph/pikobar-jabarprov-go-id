@@ -29,6 +29,9 @@ import { faArrowCircleRight } from '@fortawesome/free-solid-svg-icons'
 import { analytics } from '~/lib/firebase'
 
 export default {
+  validate ({ redirect }) {
+    return redirect('/')
+  },
   components: {
     DonationBanners: () => import('../../components/_pages/donate/Banner'),
     KPBMContact: () => import('../../components/_pages/donate/KPBMContact'),
