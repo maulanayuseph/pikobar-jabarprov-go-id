@@ -135,7 +135,17 @@
       </div>
       <div class="m-1 mb-0 p-2" style="background:#e6e6e6">
         <b>Disclaimer :</b>
-        <p>Peta di atas merupakan Peta Sebaran Kasus Covid-19 di Jawa Barat dan bukan merupakan Peta Level Kewaspadaan Covid-19 Jawa Barat.</p>
+        <ul style="margin-left: 20px; list-style-type: initial;">
+          <li>
+            Peta di atas merupakan Peta Sebaran Kasus Covid-19 di Jawa Barat dan bukan merupakan Peta Level Kewaspadaan Covid-19 Jawa Barat.
+          </li>
+          <li>
+            Tidak seluruh data kasus memiliki kelengkapan alamat Kota/Kab, Kecamatan dan Kelurahan/Desa (butuh proses verifikasi) sehingga tidak seluruhnya dapat divisualisasikan.
+          </li>
+          <li>
+            Data kasus diatas diupdate setiap hari, dan silahkan cek kembali secara reguler untuk mendapatkan informasi terbaru.
+          </li>
+        </ul>
       </div>
     </div>
   </div>
