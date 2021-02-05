@@ -7,7 +7,7 @@
           :is-pending="isLoadingJabar || isLoadingNasional"
           :is-main="true"
           class="mb-8 border border-solid digital-signage"
-          style="background: linear-gradient(90deg, #2C347C, #424CA6);"
+          style="background: #2C347C;"
           label="Total Terkonfirmasi"
         >
           <div class="flex flex-row text-white text-center mt-3 font-bold">
