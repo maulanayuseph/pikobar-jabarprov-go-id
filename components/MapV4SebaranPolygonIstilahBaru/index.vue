@@ -176,20 +176,20 @@ export default {
       activeLayer: this.activeRegion,
       activeFilter: this.activeDataCategory,
       activeTitle: {
-        className: 'cluster-confirmation-total',
-        name: 'Terkonfirmasi'
+        name: 'Isolasi/ Dalam Perawatan',
+        className: 'cluster-confirmation-diisolasi'
       },
       isShowFilter: false,
       isShowLayer: false,
       filter: {
-        confirmation_total: true,
-        confirmation_diisolasi: false,
+        confirmation_total: false,
+        confirmation_diisolasi: true,
         confirmation_meninggal: false,
         confirmation_selesai: false
       },
       layer: {
-        kota: false,
-        kecamatan: true,
+        kota: true,
+        kecamatan: false,
         kelurahan: false
       },
       stat: {
@@ -215,8 +215,8 @@ export default {
 
       // data
       distributionPolygonData: [],
-      activeRegion: 'kecamatan',
-      activeDataCategory: 'confirmation_total'
+      activeRegion: 'kota',
+      activeDataCategory: 'confirmation_diisolasi'
     }
   },
   computed: {
@@ -416,11 +416,11 @@ export default {
     toggleSearch () {
     },
     toggleBackToHome () {
-      this.activeRegion = 'kecamatan'
-      this.activeLayer = 'kecamatan'
+      this.activeRegion = 'kota'
+      this.activeLayer = 'kota'
       this.map.flyTo([-6.932694, 107.627449], 8)
 
-      this.setLayer('kecamatan')
+      this.setLayer('kota')
       this.getDataSebaranPolygon(this.activeRegion, this.activeDataCategory)
       this.removeLayer()
       this.createPolygonRegion()
