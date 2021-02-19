@@ -1,6 +1,6 @@
 export const state = () => ({
   items: null,
-  isLoading: false
+  isLoading: true
 })
 
 export const mutations = {

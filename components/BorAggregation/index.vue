@@ -1,55 +1,65 @@
 <template>
-  <div class="md:flex md:flex-row flex-nowrap mx-1">
-    <div class="total-bor md:flex-1 mx-2 my-3 rounded-lg p-6 shadow-lg text-white">
-      <h4 class="text-center font-bold">
-        TOTAL BOR
-      </h4>
-      <div class="w-full mt-3 text-center">
-        <div class="text-3xl font-bold">
-          {{ dataIsolate.total_persentase }}%
+  <div>
+    <template v-if="!isLoading">
+      <div class="md:flex md:flex-row flex-nowrap mx-1">
+        <div class="total-bor md:flex-1 mx-2 my-3 rounded-lg p-6 shadow-lg text-white">
+          <h4 class="text-center font-bold">
+            TOTAL BOR
+          </h4>
+          <div class="w-full mt-3 text-center">
+            <div class="text-3xl font-bold">
+              {{ dataIsolate.total_persentase }}%
+            </div>
+            <span class="text-sm">{{ dataIsolate.total_terisi }} dari {{ dataIsolate.total_tersedia }} TT Terisi</span>
+          </div>
         </div>
-        <span class="text-sm">7.602 dari 13.359 TT Terisi</span>
-      </div>
-    </div>
-    <div class="md:flex-1 mx-2 my-3 rounded-lg p-6 bg-white shadow-lg">
-      <h4 class="text-center font-bold">
-        TOTAL RS
-      </h4>
-      <div class="w-full mt-3 text-center">
-        <div class="text-3xl font-bold">
-          {{ dataIsolate.total_rs }}
+        <div class="md:flex-1 mx-2 my-3 rounded-lg p-6 bg-white shadow-lg">
+          <h4 class="text-center font-bold">
+            TOTAL RS
+          </h4>
+          <div class="w-full mt-3 text-center">
+            <div class="text-3xl font-bold">
+              {{ dataIsolate.total_rs }}
+            </div>
+            <span class="text-sm">Total RS menangani COVID-19 di Jabar</span>
+          </div>
         </div>
-        <span class="text-sm">Total RS menangani COVID-19 di Jabar</span>
-      </div>
-    </div>
-    <div class="md:flex-1 mx-2 my-3 rounded-lg p-6 bg-white shadow-lg">
-      <h4 class="text-center font-bold">
-        TOTAL RS RUJUKAN
-      </h4>
-      <div class="w-full mt-3 text-center">
-        <div class="text-3xl font-bold">
-          {{ dataIsolate.total_rs_rujukan }}
+        <div class="md:flex-1 mx-2 my-3 rounded-lg p-6 bg-white shadow-lg">
+          <h4 class="text-center font-bold">
+            TOTAL RS RUJUKAN
+          </h4>
+          <div class="w-full mt-3 text-center">
+            <div class="text-3xl font-bold">
+              {{ dataIsolate.total_rs_rujukan }}
+            </div>
+            <span class="text-sm">{{ dataIsolate.total_rs_rujukan_persentase }}% dari Total RS</span>
+          </div>
         </div>
-        <span class="text-sm">{{ dataIsolate.total_rs_rujukan_persentase }}% dari Total RS</span>
-      </div>
-    </div>
-    <div class="md:flex-1 mx-2 my-3 rounded-lg p-6 bg-white shadow-lg">
-      <h4 class="text-center font-bold">
-        TOTAL RS NON RUJUKAN
-      </h4>
-      <div class="w-full mt-3 text-center">
-        <div class="text-3xl font-bold">
-          {{ dataIsolate.total_rs_nonrujukan }}
+        <div class="md:flex-1 mx-2 my-3 rounded-lg p-6 bg-white shadow-lg">
+          <h4 class="text-center font-bold">
+            TOTAL RS NON RUJUKAN
+          </h4>
+          <div class="w-full mt-3 text-center">
+            <div class="text-3xl font-bold">
+              {{ dataIsolate.total_rs_nonrujukan }}
+            </div>
+            <span class="text-sm">{{ dataIsolate.total_rs_nonrujukan_persentase }}% dari Total RS</span>
+          </div>
         </div>
-        <span class="text-sm">{{ dataIsolate.total_rs_nonrujukan_persentase }}% dari Total RS</span>
       </div>
-    </div>
+    </template>
+    <template v-if="isLoading">
+      <CardLoader />
+    </template>
   </div>
 </template>
 
 <script>
 export default {
   name: 'BorAggregation',
+  components: {
+    CardLoader: () => import('./CardLoader')
+  },
   props: {
     propsDataIsolateTotal: {
       type: Array,
@@ -91,6 +101,9 @@ export default {
   computed: {
     dataIsolateTotal () {
       return this.$store.getters['data-isolasi-total-kemenkes-v2/itemsMap']
+    },
+    isLoading () {
+      return this.$store.getters['data-isolasi-total-kemenkes-v2/isLoading']
     }
   },
   watch: {
