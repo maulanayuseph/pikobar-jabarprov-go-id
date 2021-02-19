@@ -5,14 +5,17 @@
       <div class="flex flex-col lg:flex-row lg:items-stretch">
         <div class="lg md:auto sm:w-auto">
           <h3 class="text-3xl text-gray-900 font-bold text-left leading-none" style="margin-bottom: 10px; ">
-            Sebaran Faskes di Jawa Barat
+            Ketersediaan Tempat Tidur (TT) RS Menangani Covid-19 di Jawa Barat
           </h3>
         </div>
       </div>
     </header>
+    <section class="m-1 md:m-4">
+      <BorAggregation />
+    </section>
     <section class="m-4 md:m-8">
       <div class="flex flex-col lg:flex-row lg:items-stretch">
-        <div class="w-full mb-6 lg lg:mr-6 lg:mb-0 bg-white rounded-lg mb-8 shadow-lg">
+        <div class="w-full mb-6 lg lg:mb-0 bg-white rounded-lg mb-8 shadow-lg">
           <div>
             <h3 class="p-5 text-lg md:text">
               <b>Peta Sebaran Faskes di Jawa Barat</b>
@@ -32,7 +35,8 @@
 import { analytics } from '~/lib/firebase'
 export default {
   components: {
-    MapV4SebaranFaskes: () => import('~/components/MapV4SebaranFaskes')
+    MapV4SebaranFaskes: () => import('~/components/MapV4SebaranFaskes'),
+    BorAggregation: () => import('~/components/BorAggregation')
   },
   mounted () {
     this.$nextTick(() => {
@@ -41,10 +45,10 @@ export default {
       }
     })
   },
-  methods: {
-  },
+  methods: {},
   head () {
-    const title = 'Sebaran Faskes - Pikobar [Pusat Informasi dan Koordinasi COVID-19 Jawa Barat]'
+    const title =
+      'Sebaran Faskes - Pikobar [Pusat Informasi dan Koordinasi COVID-19 Jawa Barat]'
     return {
       title,
       meta: [
@@ -65,9 +69,9 @@ export default {
 </script>
 
 <style>
-@import "leaflet-geosearch/assets/css/leaflet.css";
-@import "leaflet.markercluster/dist/MarkerCluster.css";
-@import "leaflet.markercluster/dist/MarkerCluster.Default.css";
+@import 'leaflet-geosearch/assets/css/leaflet.css';
+@import 'leaflet.markercluster/dist/MarkerCluster.css';
+@import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
 .bg-green-100 {
   background-color: #5aaa4e;
 }
