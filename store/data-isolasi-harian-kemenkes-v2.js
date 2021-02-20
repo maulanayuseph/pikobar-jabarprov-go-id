@@ -13,7 +13,7 @@ export const mutations = {
 
 export const actions = {
   async getItems ({ commit }, options) {
-    const { data } = await this.$dashboardPikobarPtPosApi.get('isolasi/total_kemenkes_v2')
+    const { data } = await this.$dashboardPikobarPtPosApi.get('isolasi/harian_kemenkes_v2')
     commit('setItems', data.data)
   }
 }

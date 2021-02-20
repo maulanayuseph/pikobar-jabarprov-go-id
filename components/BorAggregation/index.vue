@@ -1,60 +1,70 @@
 <template>
   <div>
-    <template v-if="!isLoading">
-      <div class="md:flex md:flex-row flex-nowrap mx-1">
-        <div class="total-bor md:flex-1 mx-2 my-3 rounded-lg p-6 shadow-lg text-white">
-          <h4 class="text-center font-bold">
-            TOTAL BOR
-          </h4>
-          <div class="w-full mt-3 text-center">
+    <div :class="!isLoading ? 'md:flex md:flex-row flex-nowrap mx-1' : 'hidden'">
+      <div class="total-bor md:flex-1 mx-2 my-3 rounded-lg p-6 shadow-lg text-white">
+        <h4 class="text-center font-bold">
+          TOTAL BOR
+        </h4>
+        <div class="w-full mt-3 text-center">
+          <div class="flex items-center justify-center">
             <div class="text-3xl font-bold">
-              {{ dataIsolate.total_persentase }}%
+              {{ dataIsolateTotal.total_persentase }}%
             </div>
-            <span class="text-sm">{{ dataIsolate.total_terisi }} dari {{ dataIsolate.total_tersedia }} TT Terisi</span>
-          </div>
-        </div>
-        <div class="md:flex-1 mx-2 my-3 rounded-lg p-6 bg-white shadow-lg">
-          <h4 class="text-center font-bold">
-            TOTAL RS
-          </h4>
-          <div class="w-full mt-3 text-center">
-            <div class="text-3xl font-bold">
-              {{ dataIsolate.total_rs }}
+            <div class="growth ml-2 p-2 flex items-center" :class="borGrowth < 0 ? 'uptrend' : 'downtrend'">
+              <FontAwesomeIcon
+                class="inline-block text-sm"
+                :icon="icons.faPlayCircle"
+              />
+              <div class="ml-1 text-md">
+                {{ Math.abs(borGrowth) }}%
+              </div>
             </div>
-            <span class="text-sm">Total RS menangani COVID-19 di Jabar</span>
           </div>
-        </div>
-        <div class="md:flex-1 mx-2 my-3 rounded-lg p-6 bg-white shadow-lg">
-          <h4 class="text-center font-bold">
-            TOTAL RS RUJUKAN
-          </h4>
-          <div class="w-full mt-3 text-center">
-            <div class="text-3xl font-bold">
-              {{ dataIsolate.total_rs_rujukan }}
-            </div>
-            <span class="text-sm">{{ dataIsolate.total_rs_rujukan_persentase }}% dari Total RS</span>
-          </div>
-        </div>
-        <div class="md:flex-1 mx-2 my-3 rounded-lg p-6 bg-white shadow-lg">
-          <h4 class="text-center font-bold">
-            TOTAL RS NON RUJUKAN
-          </h4>
-          <div class="w-full mt-3 text-center">
-            <div class="text-3xl font-bold">
-              {{ dataIsolate.total_rs_nonrujukan }}
-            </div>
-            <span class="text-sm">{{ dataIsolate.total_rs_nonrujukan_persentase }}% dari Total RS</span>
-          </div>
+          <span class="text-sm">{{ dataIsolateTotal.total_terisi }} dari {{ dataIsolateTotal.total_tersedia }} TT Terisi</span>
         </div>
       </div>
-    </template>
-    <template v-if="isLoading">
+      <div class="md:flex-1 mx-2 my-3 rounded-lg p-6 bg-white shadow-lg">
+        <h4 class="text-center font-bold">
+          TOTAL RS
+        </h4>
+        <div class="w-full mt-3 text-center">
+          <div class="text-3xl font-bold">
+            {{ dataIsolateTotal.total_rs }}
+          </div>
+          <span class="text-sm">Total RS menangani COVID-19 di Jabar</span>
+        </div>
+      </div>
+      <div class="md:flex-1 mx-2 my-3 rounded-lg p-6 bg-white shadow-lg">
+        <h4 class="text-center font-bold">
+          TOTAL RS RUJUKAN
+        </h4>
+        <div class="w-full mt-3 text-center">
+          <div class="text-3xl font-bold">
+            {{ dataIsolateTotal.total_rs_rujukan }}
+          </div>
+          <span class="text-sm">{{ dataIsolateTotal.total_rs_rujukan_persentase }}% dari Total RS</span>
+        </div>
+      </div>
+      <div class="md:flex-1 mx-2 my-3 rounded-lg p-6 bg-white shadow-lg">
+        <h4 class="text-center font-bold">
+          TOTAL RS NON RUJUKAN
+        </h4>
+        <div class="w-full mt-3 text-center">
+          <div class="text-3xl font-bold">
+            {{ dataIsolateTotal.total_rs_nonrujukan }}
+          </div>
+          <span class="text-sm">{{ dataIsolateTotal.total_rs_nonrujukan_persentase }}% dari Total RS</span>
+        </div>
+      </div>
+    </div>
+    <div :class="{hidden: !isLoading }">
       <CardLoader />
-    </template>
+    </div>
   </div>
 </template>
 
 <script>
+import { faPlayCircle, faAngleDoubleUp } from '@fortawesome/free-solid-svg-icons'
 export default {
   name: 'BorAggregation',
   components: {
@@ -68,7 +78,8 @@ export default {
   },
   data () {
     return {
-      dataIsolate: {
+      isLoading: true,
+      dataIsolateTotal: {
         hijau_persentase: 0,
         hijau_terisi: 0,
         hijau_tersedia: 0,
@@ -95,34 +106,83 @@ export default {
         total_rs_rujukan_persentase: 0,
         total_terisi: 0,
         total_tersedia: 0
+      },
+      borGrowth: 0,
+      dataIsolateDaily: [],
+      icons: {
+        faPlayCircle,
+        faAngleDoubleUp
       }
     }
   },
   computed: {
-    dataIsolateTotal () {
+    getIsolateTotal () {
       return this.$store.getters['data-isolasi-total-kemenkes-v2/itemsMap']
     },
-    isLoading () {
-      return this.$store.getters['data-isolasi-total-kemenkes-v2/isLoading']
+    getIsolateDaily () {
+      return this.$store.getters['data-isolasi-harian-kemenkes-v2/itemsMap']
     }
   },
   watch: {
-    dataIsolateTotal (val) {
-      this.dataIsolate = val
+    getIsolateTotal (val) {
+      this.dataIsolateTotal = val
+    },
+    getIsolateDaily (val) {
+      this.setGrowthBor(val)
     }
   },
   mounted () {
     this.$nextTick(() => {
       Promise.all([
-        this.$store.dispatch('data-isolasi-total-kemenkes-v2/getItems')
-      ]).then(() => {})
+        this.$store.dispatch('data-isolasi-total-kemenkes-v2/getItems'),
+        this.$store.dispatch('data-isolasi-harian-kemenkes-v2/getItems')
+      ]).then(() => {
+        this.isLoading = false
+      }).catch((error) => {
+        console.log(error)
+        this.isLoading = false
+      })
     })
   },
-  methods: {}
+  methods: {
+    setGrowthBor (data) {
+      if (data.length > 0) {
+        let lastData = {}
+        let beforeLastData = {}
+        let growth = 0
+        const length = data.length
+
+        lastData = data[length - 1]
+        beforeLastData = data[length - 2]
+        growth = beforeLastData.total_persentase - lastData.total_persentase
+        this.borGrowth = growth.toFixed(2)
+      }
+    }
+  }
 }
 </script>
 <style scoped>
  .total-bor {
    background-color: #f09b78;
  }
+ .growth {
+    background: #f7fafc;
+    border-radius: 5px;
+ }
+
+  .growth.uptrend {
+    color: #e54949;
+  }
+
+  .growth.downtrend {
+    color: #27ae60;
+  }
+
+  .growth.downtrend .fa-play-circle {
+    transform: rotate(90deg);
+  }
+
+  .growth.uptrend .fa-play-circle {
+    transform: rotate(30deg);
+  }
 </style>
