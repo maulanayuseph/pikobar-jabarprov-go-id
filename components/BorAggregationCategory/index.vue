@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="md:flex md:flex-row flex-wrap mx-1">
+    <div :class="!isLoading ? 'md:flex md:flex-row flex-wrap mx-1' : 'hidden'">
       <div class="md:flex-1 mx-1 my-1">
         <CardBor :bor="dataBor[0]" />
       </div>
@@ -11,7 +11,7 @@
         <CardBor :bor="dataBor[2]" />
       </div>
     </div>
-    <div class="md:flex md:flex-row flex-wrap mx-1">
+    <div :class="!isLoading ? 'md:flex md:flex-row flex-wrap mx-1' : 'hidden'">
       <div class="md:flex-1 mx-1 my-1">
         <CardBor :bor="dataBor[3]" />
       </div>
@@ -22,6 +22,9 @@
         <CardBor :bor="dataBor[5]" />
       </div>
     </div>
+    <div :class="{hidden: !isLoading }">
+      <CardLoader />
+    </div>
   </div>
 </template>
 
@@ -29,7 +32,7 @@
 export default {
   name: 'BorAggregationCategory',
   components: {
-    // CardLoader: () => import('./CardLoader')
+    CardLoader: () => import('./CardLoader'),
     CardBor: () => import('./CardBor')
   },
   data () {
