@@ -1,7 +1,7 @@
 <template>
   <div class="container mx-auto">
     <br>
-    <header class="m-4 mb-8 md:m-8">
+    <div class="m-4 mb-8 md:m-8">
       <div class="flex flex-col lg:flex-row lg:items-stretch">
         <div class="lg md:auto sm:w-auto">
           <h3 class="text-3xl text-gray-900 font-bold text-left leading-none" style="margin-bottom: 10px; ">
@@ -9,14 +9,24 @@
           </h3>
         </div>
       </div>
-    </header>
-    <section class="m-1 md:m-4">
+    </div>
+    <div class="m-1 md:m-4">
       <BorAggregation />
-    </section>
-    <section class="m-1 md:m-4">
+    </div>
+    <div class="m-1 md:m-4">
       <BorAggregationCategory />
-    </section>
-    <section class="m-4 md:m-8">
+    </div>
+    <div class="m-1 md:m-4">
+      <div class="flex flex-col lg:flex-row lg:items-stretch">
+        <div class="md:flex-1 mx-1 my-1">
+          <ChartBorZone />
+        </div>
+        <!-- <div class="md:flex-1 mx-1 my-1">
+          <ChartBorZone />
+        </div> -->
+      </div>
+    </div>
+    <div class="m-4 md:m-8">
       <div class="flex flex-col lg:flex-row lg:items-stretch">
         <div class="w-full mb-6 lg lg:mb-0 bg-white rounded-lg mb-8 shadow-lg">
           <div>
@@ -30,7 +40,7 @@
           </div>
         </div>
       </div>
-    </section>
+    </div>
   </div>
 </template>
 
@@ -40,13 +50,22 @@ export default {
   components: {
     MapV4SebaranFaskes: () => import('~/components/MapV4SebaranFaskes'),
     BorAggregation: () => import('~/components/BorAggregation'),
-    BorAggregationCategory: () => import('~/components/BorAggregationCategory')
+    BorAggregationCategory: () => import('~/components/BorAggregationCategory'),
+    ChartBorZone: () => import('~/components/ChartBorZone')
   },
   mounted () {
     this.$nextTick(() => {
       if (process.browser) {
         analytics.logEvent('dashboard_view')
       }
+      Promise.all([
+        this.$store.dispatch('data-isolasi-total-kemenkes-v2/getItems'),
+        this.$store.dispatch('data-isolasi-harian-kemenkes-v2/getItems'),
+        this.$store.dispatch('data-isolasi-lastdata-kemenkes-v2/getItems')
+      ]).then(() => {
+      }).catch((error) => {
+        console.log(error)
+      })
     })
   },
   methods: {},
