@@ -78,7 +78,6 @@ export default {
   },
   data () {
     return {
-      isLoading: true,
       dataIsolateTotal: {
         hijau_persentase: 0,
         hijau_terisi: 0,
@@ -121,6 +120,9 @@ export default {
     },
     getIsolateDaily () {
       return this.$store.getters['data-isolasi-harian-kemenkes-v2/itemsMap']
+    },
+    isLoading () {
+      return this.$store.getters['data-isolasi-harian-kemenkes-v2/isLoading']
     }
   },
   watch: {
@@ -132,17 +134,6 @@ export default {
     }
   },
   mounted () {
-    this.$nextTick(() => {
-      Promise.all([
-        this.$store.dispatch('data-isolasi-total-kemenkes-v2/getItems'),
-        this.$store.dispatch('data-isolasi-harian-kemenkes-v2/getItems')
-      ]).then(() => {
-        this.isLoading = false
-      }).catch((error) => {
-        console.log(error)
-        this.isLoading = false
-      })
-    })
   },
   methods: {
     setGrowthBor (data) {
