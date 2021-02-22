@@ -13,6 +13,9 @@
     <section class="m-1 md:m-4">
       <BorAggregation />
     </section>
+    <section class="m-1 md:m-4">
+      <BorAggregationCategory />
+    </section>
     <section class="m-4 md:m-8">
       <div class="flex flex-col lg:flex-row lg:items-stretch">
         <div class="w-full mb-6 lg lg:mb-0 bg-white rounded-lg mb-8 shadow-lg">
@@ -36,7 +39,8 @@ import { analytics } from '~/lib/firebase'
 export default {
   components: {
     MapV4SebaranFaskes: () => import('~/components/MapV4SebaranFaskes'),
-    BorAggregation: () => import('~/components/BorAggregation')
+    BorAggregation: () => import('~/components/BorAggregation'),
+    BorAggregationCategory: () => import('~/components/BorAggregationCategory')
   },
   mounted () {
     this.$nextTick(() => {
