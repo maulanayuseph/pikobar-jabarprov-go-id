@@ -18,12 +18,12 @@
     </div>
     <div class="m-1 md:m-4">
       <div class="flex flex-col lg:flex-row lg:items-stretch">
-        <div class="md:flex-1 mx-1 my-1">
+        <div class="md:flex-1 mx-3 my-1">
           <ChartBorZone />
         </div>
-        <!-- <div class="md:flex-1 mx-1 my-1">
-          <ChartBorZone />
-        </div> -->
+        <div class="md:flex-1 mx-3 my-1">
+          <ChartBorCity />
+        </div>
       </div>
     </div>
     <div class="m-4 md:m-8">
@@ -51,7 +51,8 @@ export default {
     MapV4SebaranFaskes: () => import('~/components/MapV4SebaranFaskes'),
     BorAggregation: () => import('~/components/BorAggregation'),
     BorAggregationCategory: () => import('~/components/BorAggregationCategory'),
-    ChartBorZone: () => import('~/components/ChartBorZone')
+    ChartBorZone: () => import('~/components/ChartBorZone'),
+    ChartBorCity: () => import('~/components/ChartBorCity')
   },
   mounted () {
     this.$nextTick(() => {

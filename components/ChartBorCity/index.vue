@@ -2,23 +2,36 @@
   <div>
     <div :class="!isLoading ? 'md:flex md:flex-row flex-nowrap' : 'hidden'">
       <div class="total-bor md:flex-1 my-3 bg-white rounded-lg shadow-lg">
-        <div class="md:flex md:flex-row items-center border-b-2 px-4 pt-8 pb-10">
+        <div class="md:flex md:flex-row items-center border-b-2  p-4">
           <h4 class="font-bold text-lg">
-            Ketersediaan Tempat Tidur berdasarkan Zonasi
+            Ketersediaan Tempat Tidur (TT) RS Menangani Covid-19 di Jawa Barat
           </h4>
-          <multiselect
-            v-model="selectedCategory"
-            class="optCategory justify-self-right ml-auto"
-            :options="optionsCategory"
-            track-by="value"
-            label="label"
-            select-label=""
-            deselect-label=""
-            selected-label=""
-            @input="setSelectedCategory"
-          />
+          <div class="ml-auto flex flex-col">
+            <multiselect
+              v-model="selectedZone"
+              class="optZone mx-1"
+              :options="optionsZone"
+              track-by="value"
+              label="label"
+              select-label=""
+              deselect-label=""
+              selected-label=""
+              @input="setSelectedZone"
+            />
+            <multiselect
+              v-model="selectedCategory"
+              class="optCategory mx-1 mt-2"
+              :options="optionsCategory"
+              track-by="value"
+              label="label"
+              select-label=""
+              deselect-label=""
+              selected-label=""
+              @input="setSelectedCategory"
+            />
+          </div>
         </div>
-        <div class="p-4">
+        <div class="p-4 overflow-y-auto" style="height: 485px">
           <GChart
             id="chart_div"
             class="chart-area"
@@ -85,7 +98,7 @@ import _foreach from 'lodash/foreach'
 import _orderBy from 'lodash/orderBy'
 
 export default {
-  name: 'ChartBorZone',
+  name: 'ChartBorCity',
   components: {
     GChart,
     ContentLoader
@@ -93,6 +106,7 @@ export default {
   data () {
     return {
       dataZone: [],
+      rowHeight: 500,
       optionsCategory: [
         { value: 'bor', label: 'Total BOR' },
         { value: 'green', label: 'Hijau' },
@@ -103,6 +117,16 @@ export default {
         { value: 'birth', label: 'Ruang Bersalin' }
       ],
       selectedCategory: { value: 'bor', label: 'Total BOR' },
+      optionsZone: [
+        { value: 'all', label: 'Seluruh Kota/Kab' },
+        { value: 'bodebek', label: 'Bodebek' },
+        { value: 'bandungraya', label: 'Bandung Raya' },
+        { value: 'purwasuka', label: 'Purwasuka' },
+        { value: 'ciayumajakuning', label: 'Ciayumajakuning' },
+        { value: 'prianganbarat', label: 'Priangan Barat' },
+        { value: 'priangantimur', label: 'Priangan Timur' }
+      ],
+      selectedZone: { value: 'all', label: 'Seluruh Kota/Kab' },
       icons: {
       },
       chartData: {
@@ -120,6 +144,14 @@ export default {
         filled: 'total_terisi',
         color: '#f19b78',
         colorCenter: '#a36d56'
+      },
+      groupZone: {
+        bodebek: ['3275', '3276', '3216', '3201', '3271'],
+        bandungraya: ['3273', '3277', '3204', '3217', '3211'],
+        purwasuka: ['3214', '3213', '3215'],
+        ciayumajakuning: ['3209', '3274', '3210', '3212', '3208'],
+        prianganbarat: ['3203', '3272', '3202'],
+        priangantimur: ['3205', '3278', '3206', '3207', '3218', '3279']
       }
     }
   },
@@ -136,20 +168,23 @@ export default {
           alwaysOutside: true,
           textStyle: {
             fontSize: 14,
-            color: '#000',
+            color: 'red',
             auraColor: 'none'
           }
         },
         chartArea: {
-          height: '85%',
           width: '60%',
           top: 40,
-          left: 140
+          left: 140,
+          height: this.rowHeight
         },
         orientation: 'vertical',
-        height: 450,
+        height: this.rowHeight + 60,
         legend: { position: 'none' },
         bar: { groupWidth: '50%' },
+        explorer: {
+          axis: 'vertical'
+        },
         tooltip: {
           textStyle: {
             fontSize: 10
@@ -166,6 +201,19 @@ export default {
         hAxis: {
           format: ';',
           viewWindowMode: 'explicit'
+        },
+        series: {
+          0: {
+            annotations: {
+              stem: {
+                color: 'cyan',
+                length: 5
+              },
+              textStyle: {
+                color: 'cyan'
+              }
+            }
+          }
         }
       }
     }
@@ -230,10 +278,13 @@ export default {
 
       this.setDataBor()
     },
+    setSelectedZone () {
+      this.setDataBor()
+    },
     setDataBor () {
       const data = this.isolateLastData
+      const activeZone = this.selectedZone.value
       const zona = [
-        '32',
         'Bodebek',
         'Bandung Raya',
         'Ciayumajakuning',
@@ -243,10 +294,19 @@ export default {
       ]
 
       const dataZone = _filter(data, (o) => {
-        if (zona.includes(o.kode_wilayah)) {
-          return o
+        if (!zona.includes(o.kode_wilayah)) {
+          if (activeZone !== 'all') {
+            const groupZone = this.groupZone[activeZone]
+            if (groupZone.includes(o.kode_wilayah)) {
+              return o
+            }
+          } else {
+            return o
+          }
         }
       })
+
+      this.rowHeight = dataZone.length * 40
 
       this.dataZone = dataZone
       this.renderChart()
@@ -313,8 +373,13 @@ export default {
 }
 </script>
 <style scoped>
+  .optZone {
+    width: 200px;
+    font-size: 14px;
+  }
   .optCategory {
-    width: 180px;
+    width: 140px;
+    font-size: 14px;
   }
 </style>
 <style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
