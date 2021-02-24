@@ -10,11 +10,10 @@
             <div class="text-3xl font-bold">
               {{ dataIsolateTotal.total_persentase }}%
             </div>
-            <div class="growth ml-2 p-2 flex items-center" :class="borGrowth < 0 ? 'uptrend' : 'downtrend'">
-              <FontAwesomeIcon
-                class="inline-block text-sm"
-                :icon="icons.faPlayCircle"
-              />
+            <div class="growth ml-2 p-2 flex items-center" :class="borGrowth <= 0 ? 'downtrend' : 'uptrend'">
+              <div class="growth-icon rounded-full mt-1">
+                <FontAwesomeIcon class="inline-block text-white cursor-pointer text-gray-500" :icon="borGrowth <= 0 ? icons.faAngleDoubleDown : icons.faAngleDoubleUp" />
+              </div>
               <div class="ml-1 text-md">
                 {{ Math.abs(borGrowth) }}%
               </div>
@@ -64,7 +63,7 @@
 </template>
 
 <script>
-import { faPlayCircle, faAngleDoubleUp } from '@fortawesome/free-solid-svg-icons'
+import { faPlayCircle, faAngleDoubleUp, faAngleDoubleDown } from '@fortawesome/free-solid-svg-icons'
 export default {
   name: 'BorAggregation',
   components: {
@@ -110,7 +109,8 @@ export default {
       dataIsolateDaily: [],
       icons: {
         faPlayCircle,
-        faAngleDoubleUp
+        faAngleDoubleUp,
+        faAngleDoubleDown
       }
     }
   },
@@ -145,7 +145,7 @@ export default {
 
         lastData = data[length - 1]
         beforeLastData = data[length - 2]
-        growth = beforeLastData.total_persentase - lastData.total_persentase
+        growth = lastData.total_persentase - beforeLastData.total_persentase
         this.borGrowth = growth.toFixed(2)
       }
     }
@@ -156,9 +156,19 @@ export default {
  .total-bor {
    background-color: #f09b78;
  }
+ .growth .growth-icon {
+   height: 12.5px;
+   width: 12.5px;
+   color: white;
+ }
  .growth {
     background: #f7fafc;
     border-radius: 5px;
+ }
+ .growth .growth-icon svg {
+   font-size: 11px;
+   margin-top: 1px;
+   margin-bottom: 15px;
  }
 
   .growth.uptrend {
@@ -167,6 +177,18 @@ export default {
 
   .growth.downtrend {
     color: #27ae60;
+  }
+
+  .growth.uptrend {
+    color: #e54949;
+  }
+
+  .growth.uptrend .growth-icon{
+    background: #e54949;
+  }
+
+  .growth.downtrend .growth-icon{
+    background: #27ae60;
   }
 
   .growth.downtrend .fa-play-circle {

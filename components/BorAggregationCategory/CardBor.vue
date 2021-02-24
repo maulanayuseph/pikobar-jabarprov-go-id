@@ -18,7 +18,7 @@
             <div class="text-3xl">
               {{ bor.bor }}<span class="smaller">%</span>
             </div>
-            <div class="growth flex flex-row align-items-center justify-center" :class="[bor.growth <= 0 ? 'down' : 'up']">
+            <div class="growth flex flex-row align-items-center justify-center" :class="bor.growth <= 0 ? 'down' : 'up'">
               <div class="growth-icon rounded-full mt-1">
                 <FontAwesomeIcon class="inline-block text-white mb-1 cursor-pointer text-gray-500" :icon="bor.growth <= 0 ? icons.faAngleDoubleDown : icons.faAngleDoubleUp" />
               </div>
