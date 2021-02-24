@@ -178,19 +178,6 @@ export default {
   mounted () {
   },
   methods: {
-    setGrowthBor (data) {
-      if (data.length > 0) {
-        let lastData = {}
-        let beforeLastData = {}
-        let growth = 0
-        const length = data.length
-
-        lastData = data[length - 1]
-        beforeLastData = data[length - 2]
-        growth = beforeLastData.total_persentase - lastData.total_persentase
-        this.borGrowth = growth.toFixed(2)
-      }
-    },
     setSelectedCategory () {
       const val = this.selectedCategory.value
       const category = { bor: 'total', green: 'hijau', yellow: 'kuning', red: 'merah', icu: 'icu', igd: 'igd', birth: 'ruang_bersalin' }
