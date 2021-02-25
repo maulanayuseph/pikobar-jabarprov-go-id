@@ -16,12 +16,15 @@
     <div class="m-1 md:m-4">
       <BorAggregationCategory />
     </div>
+    <div class="m-2 md:m-8">
+      <TrendBor />
+    </div>
     <div class="m-1 md:m-4">
-      <div class="flex flex-col lg:flex-row lg:items-stretch">
-        <div class="md:flex-1 mx-3 my-1">
+      <div class="flex flex-row flex-wrap">
+        <div class="flex-1 mx-2 my-1">
           <ChartBorZone />
         </div>
-        <div class="md:flex-1 mx-3 my-1">
+        <div class="flex-1 mx-2 my-1">
           <ChartBorCity />
         </div>
       </div>
@@ -52,7 +55,8 @@ export default {
     BorAggregation: () => import('~/components/BorAggregation'),
     BorAggregationCategory: () => import('~/components/BorAggregationCategory'),
     ChartBorZone: () => import('~/components/ChartBorZone'),
-    ChartBorCity: () => import('~/components/ChartBorCity')
+    ChartBorCity: () => import('~/components/ChartBorCity'),
+    TrendBor: () => import('~/components/TrendBor')
   },
   mounted () {
     this.$nextTick(() => {

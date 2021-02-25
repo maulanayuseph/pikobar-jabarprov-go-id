@@ -1,11 +1,11 @@
 <template>
   <div>
-    <div :class="!isLoading ? 'md:flex md:flex-row flex-nowrap' : 'hidden'">
-      <div class="total-bor md:flex-1 my-3 bg-white rounded-lg shadow-lg">
-        <div class="md:flex md:flex-row items-center border-b-2 px-4 pt-8 pb-10">
-          <h4 class="font-bold text-lg">
-            Ketersediaan Tempat Tidur berdasarkan Zonasi
-          </h4>
+    <div :class="!isLoading ? 'mx-2 my-3 bg-white rounded-lg shadow-lg' : 'hidden'">
+      <div class="flex flex-row border-b-2 px-4 pt-8 pb-10">
+        <h4 class="font-bold text-lg">
+          Ketersediaan Tempat Tidur berdasarkan Zonasi
+        </h4>
+        <client-only>
           <multiselect
             v-model="selectedCategory"
             class="optCategory justify-self-right ml-auto"
@@ -17,21 +17,21 @@
             selected-label=""
             @input="setSelectedCategory"
           />
-        </div>
-        <div class="p-4">
-          <GChart
-            id="chart_div"
-            class="chart-area"
-            :settings="{packages: ['corechart']}"
-            :data="chartData"
-            :options="chartOptions"
-            :create-chart="(el, google) => {
-              let chart = new google.visualization.BarChart(el)
-              return chart
-            }"
-            @ready="onChartReady"
-          />
-        </div>
+        </client-only>
+      </div>
+      <div class="p-4" style="max-height: 485px">
+        <GChart
+          id="chart_div"
+          class="chart-area"
+          :settings="{packages: ['corechart']}"
+          :data="chartData"
+          :options="chartOptions"
+          :create-chart="(el, google) => {
+            let chart = new google.visualization.BarChart(el)
+            return chart
+          }"
+          @ready="onChartReady"
+        />
       </div>
     </div>
     <div :class="!isLoading ? 'hidden': ''">

@@ -122,7 +122,7 @@ export default {
       return this.$store.getters['data-isolasi-harian-kemenkes-v2/itemsMap']
     },
     isLoading () {
-      return this.$store.getters['data-isolasi-harian-kemenkes-v2/isLoading']
+      return this.$store.getters['data-isolasi-total-kemenkes-v2/isLoading']
     }
   },
   watch: {

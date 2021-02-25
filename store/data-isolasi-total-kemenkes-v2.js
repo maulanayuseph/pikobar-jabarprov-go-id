@@ -1,5 +1,6 @@
 export const state = () => ({
-  items: null
+  items: null,
+  isLoading: true
 })
 
 export const mutations = {
@@ -13,13 +14,22 @@ export const mutations = {
 
 export const actions = {
   async getItems ({ commit }, options) {
-    const { data } = await this.$dashboardPikobarPtPosApi.get('isolasi/total_kemenkes_v2')
-    commit('setItems', data.data)
+    commit('setIsLoading', true)
+    await this.$dashboardPikobarPtPosApi.get('isolasi/total_kemenkes_v2').then((res) => {
+      commit('setItems', res.data.data)
+      commit('setIsLoading', false)
+    }).catch((err) => {
+      commit('setIsLoading', false)
+      console.log(err)
+    })
   }
 }
 
 export const getters = {
   itemsMap (state) {
     return state.items
+  },
+  isLoading (state) {
+    return state.isLoading
   }
 }

@@ -1,12 +1,12 @@
 <template>
   <div>
-    <div :class="!isLoading ? 'md:flex md:flex-row flex-nowrap' : 'hidden'">
-      <div class="total-bor md:flex-1 my-3 bg-white rounded-lg shadow-lg">
-        <div class="md:flex md:flex-row items-center border-b-2  p-4">
-          <h4 class="font-bold text-lg">
-            Ketersediaan Tempat Tidur (TT) RS Menangani Covid-19 di Jawa Barat
-          </h4>
-          <div class="ml-auto flex flex-col">
+    <div :class="!isLoading ? 'mx-2 my-3 bg-white rounded-lg shadow-lg' : 'hidden'">
+      <div class="flex flex-row border-b-2 p-4">
+        <h4 class="font-bold text-lg">
+          Ketersediaan Tempat Tidur (TT) RS Menangani Covid-19 di Jawa Barat
+        </h4>
+        <div class="ml-auto flex flex-col">
+          <client-only>
             <multiselect
               v-model="selectedZone"
               class="optZone mx-1"
@@ -29,22 +29,22 @@
               selected-label=""
               @input="setSelectedCategory"
             />
-          </div>
+          </client-only>
         </div>
-        <div class="p-4 overflow-y-auto" style="height: 485px">
-          <GChart
-            id="chart_div"
-            class="chart-area"
-            :settings="{packages: ['corechart']}"
-            :data="chartData"
-            :options="chartOptions"
-            :create-chart="(el, google) => {
-              let chart = new google.visualization.BarChart(el)
-              return chart
-            }"
-            @ready="onChartReady"
-          />
-        </div>
+      </div>
+      <div class="p-4 overflow-y-auto" style="max-height: 485px">
+        <GChart
+          id="chart_div"
+          class="chart-area"
+          :settings="{packages: ['corechart']}"
+          :data="chartData"
+          :options="chartOptions"
+          :create-chart="(el, google) => {
+            let chart = new google.visualization.BarChart(el)
+            return chart
+          }"
+          @ready="onChartReady"
+        />
       </div>
     </div>
     <div :class="!isLoading ? 'hidden': ''">

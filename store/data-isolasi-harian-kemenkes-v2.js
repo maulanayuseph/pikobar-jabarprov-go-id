@@ -14,10 +14,12 @@ export const mutations = {
 }
 
 export const actions = {
-  async getItems ({ commit }, options) {
+  async getItems ({ commit }, options = {}) {
     commit('setIsLoading', true)
-    await this.$dashboardPikobarPtPosApi.get('isolasi/harian_kemenkes_v2').then((data) => {
-      commit('setItems', data.data)
+    await this.$dashboardPikobarPtPosApi.get('isolasi/harian_kemenkes_v2', {
+      params: options
+    }).then((res) => {
+      commit('setItems', res.data.data)
       commit('setIsLoading', false)
     }).catch((err) => {
       commit('setIsLoading', false)
