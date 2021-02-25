@@ -80,10 +80,7 @@
 <script>
 import { GChart } from 'vue-google-charts'
 import { ContentLoader } from 'vue-content-loader'
-import _filter from 'lodash/filter'
-import _foreach from 'lodash/foreach'
-import _orderBy from 'lodash/orderBy'
-
+import _ from 'lodash'
 export default {
   name: 'ChartBorZone',
   components: {
@@ -229,7 +226,7 @@ export default {
         'Priangan Timur'
       ]
 
-      const dataZone = _filter(data, (o) => {
+      const dataZone = _.filter(data, (o) => {
         if (zona.includes(o.kode_wilayah)) {
           return o
         }
@@ -245,14 +242,14 @@ export default {
       return chart.draw(view)
     },
     renderChart () {
-      const dataZone = _orderBy(
+      const dataZone = _.orderBy(
         this.dataZone,
         this.activeCategory.bor,
         ['desc']
       )
       const rows = []
 
-      _foreach(dataZone, (res) => {
+      _.forEach(dataZone, (res) => {
         const tooltip = `
         <div class="p-3" style="font-size: 0.7rem; border-radius: 0.5rem; width: 8rem;">
           <b>${res.nama_wilayah}</b> <br>
