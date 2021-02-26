@@ -47,6 +47,31 @@
         </div>
       </div>
     </div>
+    <div class="m-4 md:m-8">
+      <div class="bg-white rounded-lg shadow-lg p-5">
+        <h3 class="text-lg md:text font-bold">
+          Disclaimer
+        </h3>
+        <p class="mt-2">
+          <ul>
+            <li>
+              Sumber Data yang digunakan pada Dashboard Fasyankes adalah Data RS Online (Kemenkes) yang disesuaikan dengan kategori yang ditetapkan oleh Dinas Kesehatan Jawa Barat
+            </li>
+            <li>
+              Pemetaan Kategori :
+              <ul class="list-disc ml-6">
+                <li>Merah: ICU Tekanan Negatif dengan Ventilator</li>
+                <li>Hijau: Isolasi Tanpa Tekanan Negatif</li>
+                <li>Kuning: Isolasi Tekanan Negatif</li>
+                <li>ICU: ICU Tanpa Tekanan Negatif Dengan Ventilator + ICU Tanpa Tekanan Negatif Tanpa Ventilator + ICU Tekanan Negatif tanpa Ventilator + NICU Covid-19 + PICU Covid-19</li>
+                <li>IGD: IGD Covid-19</li>
+                <li>Ruang Bersalin: Verlos Kamer (ruang bersalin) Covid-19</li>
+              </ul>
+            </li>
+          </ul>
+        </p>
+      </div>
+    </div>
   </div>
 </template>
 
