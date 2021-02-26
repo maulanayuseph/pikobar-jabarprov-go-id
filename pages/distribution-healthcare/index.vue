@@ -105,7 +105,7 @@ export default {
   methods: {},
   head () {
     const title =
-      'Sebaran Faskes - Pikobar [Pusat Informasi dan Koordinasi COVID-19 Jawa Barat]'
+      'Ketersediaan Tempat Tidur - Pikobar [Pusat Informasi dan Koordinasi COVID-19 Jawa Barat]'
     return {
       title,
       meta: [
