@@ -1,12 +1,12 @@
 <template>
   <div>
     <div :class="!isLoading ? 'bg-white rounded-lg shadow-lg' : 'hidden'">
-      <div class="flex flex-row items-center p-4">
+      <div class="flex flex-col md:flex-row flex-wrap items-center p-4">
         <h4 class="font-bold text-lg">
           Keterisian Tempat Tidur (BOR) RS di Jawa Barat
         </h4>
-        <div class="ml-auto flex flex-row">
-          <div class="relative rounded-md shadow-sm">
+        <div class="flex flex-col md:w-auto md:flex-row flex-wrap xl:ml-auto">
+          <div class="relative rounded-md shadow-sm m-1">
             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
               <span class="text-gray-500 sm:text-sm">
                 <FontAwesomeIcon :icon="icons.faSearch" />
@@ -25,7 +25,7 @@
           <client-only>
             <multiselect
               v-model="selectedCity"
-              class="optCity mx-1"
+              class="optCity m-1 w-full"
               :options="optionsCity"
               :allow-empty="false"
               track-by="value"
@@ -37,7 +37,7 @@
             />
             <multiselect
               v-model="selectedHospital"
-              class="optHospital mx-1"
+              class="optHospital m-1 w-full"
               :options="optionsHospital"
               :allow-empty="false"
               track-by="value"
@@ -50,7 +50,7 @@
           </client-only>
         </div>
       </div>
-      <div>
+      <div class="overflow-auto">
         <data-table
           :header-fields="headerFields"
           :sort-field="sortField"
