@@ -29,6 +29,9 @@
         </div>
       </div>
     </div>
+    <div class="m-2 md:m-8">
+      <BorHospital />
+    </div>
     <div class="m-4 md:m-8">
       <div class="flex flex-col lg:flex-row lg:items-stretch">
         <div class="w-full mb-6 lg lg:mb-0 bg-white rounded-lg mb-8 shadow-lg">
@@ -56,7 +59,8 @@ export default {
     BorAggregationCategory: () => import('~/components/BorAggregationCategory'),
     ChartBorZone: () => import('~/components/ChartBorZone'),
     ChartBorCity: () => import('~/components/ChartBorCity'),
-    TrendBor: () => import('~/components/TrendBor')
+    TrendBor: () => import('~/components/TrendBor'),
+    BorHospital: () => import('~/components/BorHospital')
   },
   mounted () {
     this.$nextTick(() => {
