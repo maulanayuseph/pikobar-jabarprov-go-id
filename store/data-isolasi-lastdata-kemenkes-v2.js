@@ -1,6 +1,7 @@
 export const state = () => ({
   items: null,
-  isLoading: true
+  isLoading: true,
+  metadata: {}
 })
 
 export const mutations = {
@@ -9,6 +10,9 @@ export const mutations = {
   },
   setIsLoading (state, item) {
     state.isLoading = item
+  },
+  setMetadata (state, item) {
+    state.metadata = item
   }
 }
 
@@ -17,6 +21,7 @@ export const actions = {
     commit('setIsLoading', true)
     await this.$dashboardPikobarPtPosApi.get('isolasi/lastdata_kemenkes_v2').then((res) => {
       commit('setItems', res.data.data)
+      commit('setMetadata', res.data.metadata)
       commit('setIsLoading', false)
     }).catch((err) => {
       commit('setIsLoading', false)
@@ -31,5 +36,8 @@ export const getters = {
   },
   isLoading (state) {
     return state.isLoading
+  },
+  metadata (state) {
+    return state.metadata
   }
 }

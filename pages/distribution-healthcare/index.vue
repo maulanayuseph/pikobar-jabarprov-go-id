@@ -7,6 +7,9 @@
           <h3 class="text-3xl text-gray-900 font-bold text-left leading-none" style="margin-bottom: 10px; ">
             Ketersediaan Tempat Tidur (TT) RS Menangani Covid-19 di Jawa Barat
           </h3>
+          <div class="">
+            Update Terakhir: {{ lastupdate }}
+          </div>
         </div>
       </div>
     </div>
@@ -52,30 +55,29 @@
         <h3 class="text-lg md:text font-bold">
           Disclaimer
         </h3>
-        <p class="mt-2">
-          <ul>
-            <li>
-              Sumber Data yang digunakan pada Dashboard Fasyankes adalah Data RS Online (Kemenkes) yang disesuaikan dengan kategori yang ditetapkan oleh Dinas Kesehatan Jawa Barat
-            </li>
-            <li>
-              Pemetaan Kategori :
-              <ul class="list-disc ml-6">
-                <li>Merah: ICU Tekanan Negatif dengan Ventilator</li>
-                <li>Hijau: Isolasi Tanpa Tekanan Negatif</li>
-                <li>Kuning: Isolasi Tekanan Negatif</li>
-                <li>ICU: ICU Tanpa Tekanan Negatif Dengan Ventilator + ICU Tanpa Tekanan Negatif Tanpa Ventilator + ICU Tekanan Negatif tanpa Ventilator + NICU Covid-19 + PICU Covid-19</li>
-                <li>IGD: IGD Covid-19</li>
-                <li>Ruang Bersalin: Verlos Kamer (ruang bersalin) Covid-19</li>
-              </ul>
-            </li>
-          </ul>
-        </p>
+        <ul class="mt-2">
+          <li>
+            Sumber Data yang digunakan pada Dashboard Fasyankes adalah Data RS Online (Kemenkes) yang disesuaikan dengan kategori yang ditetapkan oleh Dinas Kesehatan Jawa Barat
+          </li>
+          <li>
+            Pemetaan Kategori :
+            <ul class="list-disc ml-6">
+              <li>Merah: ICU Tekanan Negatif dengan Ventilator</li>
+              <li>Hijau: Isolasi Tanpa Tekanan Negatif</li>
+              <li>Kuning: Isolasi Tekanan Negatif</li>
+              <li>ICU: ICU Tanpa Tekanan Negatif Dengan Ventilator + ICU Tanpa Tekanan Negatif Tanpa Ventilator + ICU Tekanan Negatif tanpa Ventilator + NICU Covid-19 + PICU Covid-19</li>
+              <li>IGD: IGD Covid-19</li>
+              <li>Ruang Bersalin: Verlos Kamer (ruang bersalin) Covid-19</li>
+            </ul>
+          </li>
+        </ul>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import moment from 'moment'
 import { analytics } from '~/lib/firebase'
 export default {
   components: {
@@ -86,6 +88,21 @@ export default {
     ChartBorCity: () => import('~/components/ChartBorCity'),
     TrendBor: () => import('~/components/TrendBor'),
     BorHospital: () => import('~/components/BorHospital')
+  },
+  data () {
+    return {
+      lastupdate: '28 Februari 2021'
+    }
+  },
+  computed: {
+    isolateLastDataMetadata () {
+      return this.$store.getters['data-isolasi-lastdata-kemenkes-v2/metadata']
+    }
+  },
+  watch: {
+    isolateLastDataMetadata (val) {
+      this.lastupdate = moment(val.last_update).locale('id').format('DD MMMM YYYY')
+    }
   },
   mounted () {
     this.$nextTick(() => {
