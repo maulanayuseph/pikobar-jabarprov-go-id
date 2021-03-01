@@ -10,6 +10,7 @@
             v-model="selectedCategory"
             class="optCategory justify-self-right ml-auto"
             :options="optionsCategory"
+            :allow-empty="false"
             track-by="value"
             label="label"
             select-label=""
@@ -19,19 +20,8 @@
           />
         </client-only>
       </div>
-      <div class="p-4" style="max-height: 485px">
-        <GChart
-          id="chart_div"
-          class="chart-area"
-          :settings="{packages: ['corechart']}"
-          :data="chartData"
-          :options="chartOptions"
-          :create-chart="(el, google) => {
-            let chart = new google.visualization.BarChart(el)
-            return chart
-          }"
-          @ready="onChartReady"
-        />
+      <div class="p-4" style="max-height: 360px">
+        <bar-chart :chart-data="chartData" :options="chartOptions" :height="heightChart" />
       </div>
     </div>
     <div :class="!isLoading ? 'hidden': ''">
@@ -78,18 +68,19 @@
 </template>
 
 <script>
-import { GChart } from 'vue-google-charts'
 import { ContentLoader } from 'vue-content-loader'
 import _ from 'lodash'
+import BarChart from './BarChart.js'
 export default {
   name: 'ChartBorZone',
   components: {
-    GChart,
-    ContentLoader
+    ContentLoader,
+    BarChart
   },
   data () {
     return {
-      dataZone: [],
+      dataBor: [],
+      heightChart: 330,
       optionsCategory: [
         { value: 'bor', label: 'Total BOR' },
         { value: 'green', label: 'Hijau' },
@@ -103,13 +94,58 @@ export default {
       icons: {
       },
       chartData: {
-        cols: [
-          { id: 'Zone', label: 'Zonasi', type: 'string' },
-          { id: 'Total', label: 'Total', type: 'number' },
-          { type: 'string', role: 'tooltip', p: { html: true } },
-          { type: 'string', role: 'style' }
-        ],
-        rows: []
+        labels: [],
+        datasets: []
+      },
+      chartOptions: {
+        responsive: true,
+        maintainAspectRatio: false,
+        legend: {
+          display: false
+        },
+        elements: {
+          point: {
+            radius: 0
+          }
+        },
+        scales: {
+          xAxes: [
+            {
+              ticks: {
+                min: 0
+              },
+              display: true,
+              gridLines: {
+                color: '#bfbfbf'
+              },
+              scaleLabel: {
+                display: false
+              }
+            }
+          ],
+          yAxes: [
+            {
+              display: true,
+              gridLines: {
+                display: false,
+                color: '#bfbfbf'
+              },
+              scaleLabel: {
+                display: false
+              }
+            }
+          ]
+        },
+        tooltips: {
+          enabled: true,
+          displayColors: false,
+          callbacks: {
+            label: (tooltipItems, data) => {
+              const tooltipLabel = this.tooltipSet(tooltipItems.index)
+              return tooltipLabel
+            }
+          }
+        }
       },
       activeCategory: {
         bor: 'total_persentase',
@@ -126,45 +162,6 @@ export default {
     },
     isLoading () {
       return this.$store.getters['data-isolasi-lastdata-kemenkes-v2/isLoading']
-    },
-    chartOptions () {
-      return {
-        annotations: {
-          alwaysOutside: true,
-          textStyle: {
-            fontSize: 14,
-            color: '#000',
-            auraColor: 'none'
-          }
-        },
-        chartArea: {
-          height: '85%',
-          width: '60%',
-          top: 40,
-          left: 140
-        },
-        orientation: 'vertical',
-        height: 450,
-        legend: { position: 'none' },
-        bar: { groupWidth: '50%' },
-        tooltip: {
-          textStyle: {
-            fontSize: 10
-          },
-          isHtml: true
-        },
-        vAxis: {
-          html: true,
-          textStyle: {
-            fontSize: 10,
-            bold: true
-          }
-        },
-        hAxis: {
-          format: ';',
-          viewWindowMode: 'explicit'
-        }
-      }
     }
   },
   watch: {
@@ -179,6 +176,10 @@ export default {
       const val = this.selectedCategory.value
       const category = { bor: 'total', green: 'hijau', yellow: 'kuning', red: 'merah', icu: 'icu', igd: 'igd', birth: 'ruang_bersalin' }
       const colors = {
+        bor: {
+          default: '#f19b78',
+          center: '#a36d56'
+        },
         green: {
           default: '#70cd94',
           center: '#069550'
@@ -215,7 +216,6 @@ export default {
       this.setDataBor()
     },
     setDataBor () {
-      const data = this.isolateLastData
       const zona = [
         '32',
         'Bodebek',
@@ -225,73 +225,60 @@ export default {
         'Priangan Barat',
         'Priangan Timur'
       ]
-
-      const dataZone = _.filter(data, (o) => {
+      let dataBor = _.filter(this.isolateLastData, (o) => {
         if (zona.includes(o.kode_wilayah)) {
           return o
         }
       })
-
-      this.dataZone = dataZone
-      this.renderChart()
-    },
-    onChartReady (chart, google) {
-      const data = new google.visualization.DataTable(this.chartData)
-      const view = new google.visualization.DataView(data)
-
-      return chart.draw(view)
-    },
-    renderChart () {
-      const dataZone = _.orderBy(
-        this.dataZone,
+      dataBor = _.orderBy(
+        dataBor,
         this.activeCategory.bor,
         ['desc']
       )
-      const rows = []
+      this.dataBor = dataBor
+      this.renderChart()
+    },
+    tooltipSet (index) {
+      const tooltip = []
+      const available = this.dataBor[index][this.activeCategory.available]
+      const filled = this.dataBor[index][this.activeCategory.filled]
+      const bor = this.dataBor[index][this.activeCategory.bor]
 
-      _.forEach(dataZone, (res) => {
-        const tooltip = `
-        <div class="p-3" style="font-size: 0.7rem; border-radius: 0.5rem; width: 8rem;">
-          <b>${res.nama_wilayah}</b> <br>
-          Total Tersedia : ${res[this.activeCategory.available]} <br>
-          Total Terisi : ${res[this.activeCategory.filled]} <br>
-          BOR : ${res[this.activeCategory.bor]}% <br>
-        </div>
-        `
+      tooltip.push('Total TT Tersedia: ' + available)
+      tooltip.push('Total TT Terisi: ' + filled)
+      tooltip.push('BOR: ' + bor + '%')
 
-        let data = {}
-        if (res.kode_wilayah === '32') {
-          data = {
-            c: [
-              { v: '0', f: res.nama_wilayah },
-              { v: res[this.activeCategory.bor], f: res[this.activeCategory.bor] },
-              { v: '', f: tooltip },
-              { v: '', f: res[this.activeCategory.bor] + '%' },
-              { v: 'color: ' + this.activeCategory.colorCenter }
-            ]
+      return tooltip
+    },
+    renderChart () {
+      const chartData = {
+        labels: [],
+        datasets: [
+          {
+            label: 'Hijau',
+            data: [],
+            borderColor: '#87b07d',
+            backgroundColor: '#87b07d'
           }
-        } else {
-          data = {
-            c: [
-              { v: '0', f: res.nama_wilayah },
-              { v: res[this.activeCategory.bor], f: res[this.activeCategory.bor] },
-              { v: '', f: tooltip },
-              { v: '', f: res[this.activeCategory.bor] + '%' },
-              { v: 'color: ' + this.activeCategory.color }
-            ]
-          }
-        }
+        ]
+      }
+      const data = []
+      const bgColors = []
 
-        rows.push(data)
+      _.forEach(this.dataBor, (res) => {
+        const bgColor = (res.kode_wilayah === '32') ? this.activeCategory.colorCenter : this.activeCategory.color
+
+        chartData.labels.push(res.nama_wilayah)
+        data.push(res[this.activeCategory.bor])
+        bgColors.push(bgColor)
       })
-      this.chartData.rows = rows
-      this.chartData.cols = [
-        { id: 'Kasus', label: 'Jumlah Kasus', type: 'string' },
-        { id: 'Total', label: 'Total', type: 'number' },
-        { type: 'string', role: 'tooltip', p: { html: true } },
-        { type: 'string', role: 'annotation' },
-        { type: 'string', role: 'style' }
-      ]
+      chartData.datasets[0].label = this.selectedCategory.label
+      chartData.datasets[0].data = data
+      chartData.datasets[0].backgroundColor = bgColors
+      chartData.datasets[0].hoverBackgroundColor = this.activeCategory.colorCenter
+
+      this.heightChart = (data.length <= 7) ? 350 : data.length * 14 + 300
+      this.chartData = chartData
     }
   }
 }
