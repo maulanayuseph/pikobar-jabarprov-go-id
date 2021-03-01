@@ -320,37 +320,43 @@ export default {
             label: 'Hijau',
             fill: false,
             data: [],
-            borderColor: '#87b07d'
+            borderColor: '#87b07d',
+            hidden: true
           },
           {
             label: 'Kuning',
             fill: false,
             data: [],
-            borderColor: '#e1d278'
+            borderColor: '#e1d278',
+            hidden: true
           },
           {
             label: 'Merah',
             fill: false,
             data: [],
-            borderColor: '#d96574'
+            borderColor: '#d96574',
+            hidden: true
           },
           {
             label: 'ICU',
             fill: false,
             data: [],
-            borderColor: '#978bd1'
+            borderColor: '#978bd1',
+            hidden: true
           },
           {
             label: 'IGD',
             fill: false,
             data: [],
+            hidden: true,
             borderColor: '#75c9fd'
           },
           {
             label: 'R.Bersalin',
             fill: false,
             data: [],
-            borderColor: '#bf54bb'
+            borderColor: '#bf54bb',
+            hidden: true
           },
           {
             label: 'Bor Total',
