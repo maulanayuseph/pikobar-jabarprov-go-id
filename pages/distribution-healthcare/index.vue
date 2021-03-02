@@ -57,7 +57,7 @@
         </h3>
         <ul class="mt-2">
           <li>
-            Sumber Data yang digunakan pada Dashboard Fasyankes adalah Data RS Online (Kemenkes) yang disesuaikan dengan kategori yang ditetapkan oleh Dinas Kesehatan Jawa Barat
+            Sumber Data yang digunakan adalah Data RS Online (Kemenkes) yang disesuaikan dengan kategori yang ditetapkan oleh Dinas Kesehatan Jawa Barat
           </li>
           <li>
             Pemetaan Kategori :
