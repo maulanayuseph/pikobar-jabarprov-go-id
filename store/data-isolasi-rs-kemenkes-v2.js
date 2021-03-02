@@ -16,7 +16,7 @@ export const mutations = {
 export const actions = {
   async getItems ({ commit }, options = {}) {
     commit('setIsLoading', true)
-    await this.$dashboardPikobarPtPosApi.get('isolasi/rs_kemenkes_v2', {
+    await this.$dashboardPikobarApi.get('isolasi/rs_kemenkes_v2', {
       params: options
     }).then((res) => {
       commit('setItems', res.data.data)
