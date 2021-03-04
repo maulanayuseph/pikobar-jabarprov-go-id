@@ -192,7 +192,7 @@ export default {
   props: {
     activeRegionId: {
       type: String,
-      default: ''
+      default: '32'
     },
     activeRegionCategory: {
       type: String,
@@ -585,7 +585,7 @@ export default {
       this.filter[category] = !this.filter[category]
       this.activeDataCategory = category
       // this.removeLayer()
-      this.getDataSebaranPolygon(this.activeRegionCategory, this.activeDataCategory, this.activeParentCode)
+      this.getDataSebaranPolygon(this.activeRegionCategory, this.activeDataCategory, this.activeRegionId)
       // this.createPolygonRegion()
       this.$emit('update:activeCaseCategory', category)
     },
@@ -701,6 +701,7 @@ export default {
         default : parentKeyCode = ''
       }
 
+      console.log(regionCode)
       query += `&${parentKeyCode}=${regionCode}`
 
       this.$store.dispatch('data-sebaran-polygon-v2/getItem', query)
