@@ -91,7 +91,7 @@ export default {
   },
   data () {
     return {
-      lastupdate: '28 Februari 2021'
+      lastupdate: ''
     }
   },
   computed: {
