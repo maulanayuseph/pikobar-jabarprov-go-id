@@ -236,6 +236,11 @@ export default {
           name: 'total',
           label: 'Kapasitas',
           sortable: true
+        },
+        {
+          name: 'bor',
+          label: 'BOR',
+          sortable: true
         }
       ],
       sort: 'desc',
@@ -297,9 +302,8 @@ export default {
     },
     setDataHospital (data) {
       const dataTable = []
-      const sortedData = _.orderBy(data, [this.sortField], [this.sort])
       let i = 1
-      _.forEach(sortedData, (el) => {
+      _.forEach(data, (el) => {
         dataTable.push(
           {
             no: i,
@@ -313,15 +317,17 @@ export default {
             birth: `${el.ruang_bersalin_persentase}% (${el.ruang_bersalin_terisi}/${el.ruang_bersalin_tersedia})`,
             filled: el.total_terisi,
             total: el.total_tersedia,
-            bor: el.total_persentase,
+            bor: el.total_persentase + '%',
             isReference: (el.rujukan_non_rujukan !== null)
           }
         )
         i++
       })
-      this.totalItems = dataTable.length
-      this.dataTable = dataTable
-      this.dataHospital = dataTable
+      const sortedData = _.orderBy(dataTable, [this.sortField], [this.sort])
+      this.totalItems = sortedData.length
+      this.dataTable = sortedData
+      this.dataHospital = sortedData
+      this.resetNumber()
       this.changePage(this.currentPage)
     },
     changePage (currentPage) {
@@ -332,6 +338,7 @@ export default {
     },
     updateData ({ sortField, sort }) {
       this.dataTable = _.orderBy(this.dataTable, [sortField], [sort])
+      this.resetNumber()
       this.changePage(this.currentPage)
     },
     updateItemsPerPage (itemsPerPage) {
@@ -340,6 +347,13 @@ export default {
     },
     updateCurrentPage (currentPage) {
       this.currentPage = currentPage
+    },
+    resetNumber () {
+      const data = _.forEach(this.dataTable, (element, index) => {
+        element.no = index + 1
+      })
+
+      this.dataTable = data
     },
     resetDataTable () {
       const dataTable = []
@@ -570,6 +584,7 @@ export default {
   height: 100%;
   font-weight: bold;
   color: #000000;
+  white-space: nowrap;
 }
 
 .v-datatable-light .header-item .th-wrapper.checkboxes {
