@@ -1,7 +1,6 @@
 <template>
   <div class="container mx-auto">
-    <br>
-    <div class="m-4 mb-8 md:m-8">
+    <div class="m-4 mb-8 md:mx-8 md:mt-8 md:mb-4">
       <div class="flex flex-col lg:flex-row lg:items-stretch">
         <div class="lg md:auto sm:w-auto">
           <h3 class="text-3xl text-gray-900 font-bold text-left leading-none" style="margin-bottom: 10px; ">
@@ -10,6 +9,17 @@
           <div class="">
             Update Terakhir: {{ lastupdate }}
           </div>
+        </div>
+      </div>
+    </div>
+    <div class="m-4 mb-8 md:my-4 md:mx-8">
+      <div class="disclaimer flex flex-nowrap lg:flex-row items-start rounded p-3 text-sm">
+        <FontAwesomeIcon
+          class="inline-block mr-2 cursor-pointer mt-1"
+          :icon="icons.faInfoCircle"
+        />
+        <div class="ml-2">
+          Sumber Data yang digunakan adalah Data RS Online (Kemenkes) yang disesuaikan dengan kategori yang ditetapkan oleh Dinas    Kesehatan Jawa Barat. Pengkinian data dilakukan secara harian (tidak realtime).
         </div>
       </div>
     </div>
@@ -50,33 +60,11 @@
         </div>
       </div>
     </div>
-    <div class="m-4 md:m-8">
-      <div class="bg-white rounded-lg shadow-lg p-5">
-        <h3 class="text-lg md:text font-bold">
-          Disclaimer
-        </h3>
-        <ul class="mt-2">
-          <li>
-            Sumber Data yang digunakan adalah Data RS Online (Kemenkes) yang disesuaikan dengan kategori yang ditetapkan oleh Dinas Kesehatan Jawa Barat
-          </li>
-          <li>
-            Pemetaan Kategori :
-            <ul class="list-disc ml-6">
-              <li>Merah: ICU Tekanan Negatif dengan Ventilator</li>
-              <li>Hijau: Isolasi Tanpa Tekanan Negatif</li>
-              <li>Kuning: Isolasi Tekanan Negatif</li>
-              <li>ICU: ICU Tanpa Tekanan Negatif Dengan Ventilator + ICU Tanpa Tekanan Negatif Tanpa Ventilator + ICU Tekanan Negatif tanpa Ventilator + NICU Covid-19 + PICU Covid-19</li>
-              <li>IGD: IGD Covid-19</li>
-              <li>Ruang Bersalin: Verlos Kamer (ruang bersalin) Covid-19</li>
-            </ul>
-          </li>
-        </ul>
-      </div>
-    </div>
   </div>
 </template>
 
 <script>
+import { faInfoCircle } from '@fortawesome/free-solid-svg-icons'
 import moment from 'moment'
 import { analytics } from '~/lib/firebase'
 export default {
@@ -91,7 +79,10 @@ export default {
   },
   data () {
     return {
-      lastupdate: ''
+      lastupdate: '',
+      icons: {
+        faInfoCircle
+      }
     }
   },
   computed: {
@@ -141,7 +132,15 @@ export default {
   }
 }
 </script>
-
+<style scoped>
+.disclaimer {
+  background-color: #e0f2fe;
+  border: 1px solid #0166c7;
+}
+.disclaimer svg {
+  color: #0166c7
+}
+</style>
 <style>
 @import 'leaflet-geosearch/assets/css/leaflet.css';
 @import 'leaflet.markercluster/dist/MarkerCluster.css';
