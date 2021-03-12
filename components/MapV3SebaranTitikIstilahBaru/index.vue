@@ -301,6 +301,10 @@ export default {
     }
   },
   watch: {
+    activeRegionId (newVal, oldVal) {
+      this.removeLayer()
+      this.getDataSebaranMarkerCluster()
+    },
     dataSebaranPolygon (val) {
       this.createPolygonRegion()
     },
@@ -310,8 +314,8 @@ export default {
   },
   mounted () {
     this.initMap()
-    this.getDataSebaranPolygon(this.activeRegionCategory, this.activeDataCategory, this.activeRegionId)
-    this.getDataSebaranMarkerCluster(this.activeRegionCategory, this.activeDataCategory, this.activeRegionId)
+    this.getDataSebaranPolygon()
+    this.getDataSebaranMarkerCluster()
   },
   created () {
   },
@@ -385,8 +389,8 @@ export default {
       // create polygon region
       this.createPolygonRegion()
 
-      this.getDataSebaranPolygon(this.activeRegion, this.activeDataCategory, this.activeParentCode)
-      this.getDataSebaranMarkerCluster(this.activeRegion, this.activeDataCategory, this.activeParentCode)
+      this.getDataSebaranPolygon()
+      this.getDataSebaranMarkerCluster()
 
       // update props region
       this.$emit('update:activeRegionId', this.activeParentCode)
@@ -569,8 +573,8 @@ export default {
       this.activeParentCode = ''
       this.map.flyTo([-6.932694, 107.627449], 8)
 
-      this.getDataSebaranPolygon(this.activeRegion, this.activeDataCategory)
-      this.getDataSebaranMarkerCluster(this.activeRegion, this.activeDataCategory)
+      this.getDataSebaranPolygon()
+      this.getDataSebaranMarkerCluster()
 
       this.removeLayer()
       this.createPolygonRegion()
@@ -591,8 +595,8 @@ export default {
       this.filter[category] = !this.filter[category]
       this.activeDataCategory = category
       this.removeLayer()
-      this.getDataSebaranPolygon(this.activeRegion, this.activeDataCategory, this.activeParentCode)
-      this.getDataSebaranMarkerCluster(this.activeRegion, this.activeDataCategory, this.activeParentCode)
+      this.getDataSebaranPolygon()
+      this.getDataSebaranMarkerCluster()
       this.createPolygonRegion()
       this.$emit('update:activeCaseCategory', category)
     },
@@ -692,15 +696,15 @@ export default {
     },
 
     // get data
-    getDataSebaranPolygon (region, category, regionCode = '') {
+    getDataSebaranPolygon () {
       let parentKeyCode = ''
-      let query = 'wilayah=' + region
+      let query = 'wilayah=' + this.activeRegionCategory
 
-      if (category) {
-        query += '&category=' + category
+      if (this.activeCaseCategory) {
+        query += '&category=' + this.activeCaseCategory
       }
 
-      switch (region) {
+      switch (this.activeRegionCategory) {
         case 'kecamatan' : {
           parentKeyCode = 'kode_kab'
           break
@@ -712,19 +716,19 @@ export default {
         default : parentKeyCode = ''
       }
 
-      query += `&${parentKeyCode}=${regionCode}`
+      query += `&${parentKeyCode}=${this.activeRegionId}`
 
       this.$store.dispatch('data-sebaran-polygon-v2/getItem', query)
     },
-    getDataSebaranMarkerCluster (region, category, regionCode = '') {
+    getDataSebaranMarkerCluster () {
       let parentKeyCode = ''
-      let query = 'wilayah=' + region
+      let query = 'wilayah=' + this.activeRegionCategory
 
-      if (category) {
-        query += '&category=' + category
+      if (this.activeCaseCategory) {
+        query += '&category=' + this.activeCaseCategory
       }
 
-      switch (region) {
+      switch (this.activeRegionCategory) {
         case 'kecamatan' : {
           parentKeyCode = 'kode_kab'
           break
@@ -736,7 +740,7 @@ export default {
         default : parentKeyCode = ''
       }
 
-      query += `&${parentKeyCode}=${regionCode}`
+      query += `&${parentKeyCode}=${this.activeRegionId}`
 
       this.$store.dispatch('data-sebaran-marker-cluster-v2/getItem', query)
     }

@@ -311,6 +311,9 @@ export default {
         this.activeRegionId = val
         this.activeRegionCategory = 'kecamatan'
       }
+
+      this.$emit('update:activeRegionId', this.activeRegionId)
+      this.$emit('update:activeRegionCategory', this.activeRegionCategory)
     },
     setSelectedKecamatan () {
       const val = this.selectedKecamatan.value

@@ -33,32 +33,31 @@
         Data yang ditampilkan berdasarkan: <b>{{ parentLabel[activeRegionCategory].label }} di {{ activeParentRegionName }}</b>
       </p>
       <div class="p-3">
-        <GChart
-          id="chart_div"
-          class="chart-area"
-          :settings="{packages: ['corechart']}"
-          :data="chartData"
-          :options="chartOptions"
-          :create-chart="(el, google) => {
-            let chart = new google.visualization.BarChart(el)
-            return chart
-          }"
-          @ready="onChartReady"
-        />
+        <div class="chartWrapper relative p-4">
+          <div class="overflow-y-auto relative" style="height: 650px">
+            <bar-chart :chart-data="chartData" :options="chartOptions" :styles="{height: heightChart + 'px', position: 'relative'}" />
+          </div>
+          <canvas
+            id="myChartAxis"
+            class="ml-4"
+            height="900"
+            width="600"
+          />
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { GChart } from 'vue-google-charts'
 import { ContentLoader } from 'vue-content-loader'
-import _orderBy from 'lodash/orderBy'
+import _ from 'lodash'
+import BarChart from './BarChart.js'
 
 export default {
   name: 'RasioConfirmedCaseIstilahBaru',
   components: {
-    GChart,
+    BarChart,
     ContentLoader
   },
   props: {
@@ -86,16 +85,71 @@ export default {
   data () {
     return {
       titleCase: 'Rasio Kasus Terkonfirmasi',
+      heightChart: 900,
       chartData: {
-        cols: [
-          { id: 'Kasus', label: 'Jumlah Kasus', type: 'string' },
-          { id: 'Positif Aktif', label: 'Positif Aktif', type: 'number' }
-          // { id: 'annot', type: 'string', role: 'annotation' }
-        ],
-        rows: []
+        labels: [],
+        datasets: []
       },
-      rowHeight: 500,
-
+      chartOptions: {
+        responsive: true,
+        maintainAspectRatio: false,
+        legend: {
+          display: false
+        },
+        elements: {
+          point: {
+            radius: 0
+          }
+        },
+        scales: {
+          xAxes: [
+            {
+              stacked: true,
+              ticks: {
+                min: 0
+              },
+              display: true,
+              gridLines: {
+                color: '#bfbfbf'
+              },
+              scaleLabel: {
+                display: false
+              }
+            }
+          ],
+          yAxes: [
+            {
+              stacked: true,
+              display: true,
+              gridLines: {
+                display: false,
+                color: '#bfbfbf'
+              },
+              scaleLabel: {
+                display: false
+              }
+            }
+          ]
+        },
+        tooltips: {
+          enabled: true,
+          displayColors: false,
+          callbacks: {
+            label: (tooltipItems, data) => {
+              const tooltipLabel = this.tooltipSet(tooltipItems.index, tooltipItems.datasetIndex)
+              return tooltipLabel
+            }
+          }
+        },
+        layout: {
+          padding: {
+            left: 0,
+            right: 50,
+            top: 0,
+            bottom: 0
+          }
+        }
+      },
       title: {
         gabungan_aktif: 'Gabungan Kasus Aktif',
         confirmation_total: 'Terkonfirmasi Positif',
@@ -103,20 +157,17 @@ export default {
         confirmation_meninggal: 'Positif - Meninggal',
         confirmation_selesai: 'Positif - Selesai Isolasi/ Sembuh',
         suspect_diisolasi: 'Suspek - Isolasi/ Dalam Perawatan',
-        // suspect_meninggal: 'Suspek - Meninggal',
         probable_diisolasi: 'Probable - Isolasi/ Dalam Perawatan',
         probable_meninggal: 'Probable - Meninggal',
         closecontact_dikarantina: 'Kontak Erat - Masih Dikarantina'
       },
-
-      color: {
+      colors: {
         gabungan_aktif: '#C25302',
         confirmation_total: '#eb5757',
         confirmation_diisolasi: '#CFB855',
         confirmation_meninggal: '#a51212',
         confirmation_selesai: '#3CB670',
         suspect_diisolasi: '#EFCA5B',
-        // suspect_meninggal: '#a51212',
         probable_diisolasi: '#c5bd97',
         probable_meninggal: '#a51212',
         closecontact_dikarantina: '#FBA252'
@@ -137,74 +188,6 @@ export default {
     }
   },
   computed: {
-    chartOptions () {
-      return {
-        chartArea: {
-          width: '60%',
-          top: 40,
-          left: 140,
-          height: this.rowHeight
-        },
-        orientation: 'vertical',
-        height: this.rowHeight + 60,
-        isStacked: true,
-        legend: {
-          position: 'top',
-          textStyle: {
-            fontName: 'Arial',
-            fontSize: 12,
-            opacity: 1
-          }
-        },
-        bar: { groupWidth: '50%' },
-        series: {
-          0: {
-            color: '#eb5757'
-          },
-          1: {
-            color: '#eb5757'
-          },
-          2: {
-            color: '#eb5757'
-          },
-          3: {
-            color: '#eb5757'
-          },
-          4: {
-            color: 'grey',
-            lineWidth: 0,
-            pointSize: 0,
-            visibleInLegend: false
-          }
-        },
-        tooltip: {
-          textStyle: {
-            fontSize: 10
-          },
-          isHtml: true
-        },
-        // annotations: {
-        //   textStyle: {
-        //     fontSize: 10,
-        //     bold: true,
-        //     color: '#000000',
-        //     opacity: 0.8
-        //   },
-        //   alwaysOutside: true
-        // },
-        vAxis: {
-          html: true,
-          textStyle: {
-            fontSize: 10,
-            bold: true
-          }
-        },
-        hAxis: {
-          format: ';',
-          viewWindowMode: 'explicit'
-        }
-      }
-    },
     dataSebaranPolygon () {
       return this.$store.getters['data-sebaran-polygon-v2/itemMap']
     },
@@ -213,204 +196,208 @@ export default {
     }
   },
   watch: {
-    activeRegionId (newVal, oldVal) {
-    },
     dataSebaranPolygon (val) {
-      // let category = this.activeCaseCategory
-      // category = category.split('_')
-      // this.setChartData(val, category[0])
-      this.setChartData(val, this.activeCaseCategory)
+      this.setChartData(val)
     }
   },
   methods: {
-    onChartReady (chart, google) {
-      const data = new google.visualization.DataTable(this.chartData)
-      const view = new google.visualization.DataView(data)
-      return chart.draw(view)
-    },
-    setChartData (data, category) {
-      let nameApiRegion = 'nama_kab'
-      const rows = []
-      let sortedData = []
-
-      if (this.activeRegionCategory === 'kelurahan') {
-        nameApiRegion = 'nama_kel'
-      } else if (this.activeRegionCategory === 'kecamatan') {
-        nameApiRegion = 'nama_kec'
-      } else {
-        nameApiRegion = 'nama_kab'
+    setChartData (data) {
+      const category = this.activeCaseCategory
+      const colors = this.colors
+      const chartData = {
+        labels: [],
+        datasets: []
       }
-
-      sortedData = _orderBy(
+      const sortedData = _.orderBy(
         data.wilayah,
         [category],
         ['desc']
       )
+      let codeLabel = 'nama_kab'
 
-      this.rowHeight = data.wilayah.length * 30
-      sortedData.forEach((element) => {
-        const data = this.setData(element, category, nameApiRegion)
-        rows.push(data)
-      })
-
-      this.setColorSeries(category)
-      this.setCols(category)
-      this.chartData.rows = rows
-    },
-    setData (el, category, nameApiRegion) {
-      let tooltip = ''
-      let data = ''
-      if (category === 'gabungan_aktif') {
-        this.titleCase = 'Rasio Gabungan Kasus Aktif'
-        tooltip = `
-        <div class="p-3" style="font-size: 0.7rem; border-radius: 0.5rem; width: 250px;">
-          <b>${el[nameApiRegion]}</b> <br>
-          Positif - Isolasi/ Dalam Perawatan : ${el.confirmation_diisolasi} <br>
-          Suspek - Isolasi/ Dalam Perawatan : ${el.suspect_diisolasi} <br>
-          Kontak Erat - Masih Dikarantina : ${el.closecontact_dikarantina} <br>
-          Probable - Isolasi/ Dalam Perawatan : ${el.probable_diisolasi} <br>
-          Gabungan Kasus : ${el.gabungan_aktif} <br>
-        </div>
-        `
-        data = {
-          c: [
-            { v: '0', f: el[nameApiRegion] },
-            { v: el.closecontact_dikarantina, f: el.closecontact_dikarantina },
-            { v: '', f: tooltip },
-            { v: el.suspect_diisolasi, f: el.suspect_diisolasi },
-            { v: '', f: tooltip },
-            { v: el.probable_diisolasi, f: el.probable_diisolasi },
-            { v: '', f: tooltip },
-            { v: el.confirmation_diisolasi, f: el.confirmation_diisolasi },
-            { v: '', f: tooltip }
-            // { v: el.confirmation_total, f: el.confirmation_total }
-          ]
-        }
-        this.series = {
-          0: { color: this.color.closecontact_dikarantina },
-          1: { color: this.color.suspect_diisolasi },
-          2: { color: this.color.probable_diisolasi },
-          3: { color: this.color.confirmation_diisolasi },
-          4: { color: '#000000' }
-        }
-      } else if (category === 'confirmation_total') {
-        this.titleCase = 'Rasio Kasus Terkonfirmasi'
-        tooltip = `
-        <div class="p-3" style="font-size: 0.7rem; border-radius: 0.5rem; width: 8rem;">
-          <b>${el[nameApiRegion]}</b> <br>
-          Positif - Isolasi/ Dalam Perawatan : ${el.confirmation_diisolasi} <br>
-          Positif - Selesai Isolasi/ Sembuh : ${el.confirmation_selesai} <br>
-          Positif - Meninggal : ${el.confirmation_meninggal} <br>
-          Terkonfirmasi : ${el.confirmation_total} <br>
-        </div>
-        `
-        data = {
-          c: [
-            { v: '0', f: el[nameApiRegion] },
-            { v: el.confirmation_meninggal, f: el.confirmation_meninggal },
-            { v: '', f: tooltip },
-            { v: el.confirmation_selesai, f: el.confirmation_selesai },
-            { v: '', f: tooltip },
-            { v: el.confirmation_diisolasi, f: el.confirmation_diisolasi },
-            { v: '', f: tooltip }
-            // { v: el.confirmation_total, f: el.confirmation_total }
-          ]
-        }
-        this.series = {
-          0: { color: this.color.confirmation_meninggal },
-          1: { color: this.color.confirmation_selesai },
-          2: { color: this.color.confirmation_diisolasi },
-          3: { color: '#000000' }
-        }
+      if (this.activeRegionCategory === 'kecamatan') {
+        codeLabel = 'nama_kec'
+      } else if (this.activeRegionCategory === 'kelurahan') {
+        codeLabel = 'nama_kel'
       } else {
-        this.titleCase = 'Rasio Kasus ' + this.title[category]
-        tooltip = `
-        <div class="p-3" style="font-size: 0.7rem; border-radius: 0.5rem; width: 8rem;">
-          <b>${el[nameApiRegion]}</b> <br>
-          ` + category + ` : ${el[category]} <br>
-        </div>
-        `
-        data = {
-          c: [
-            { v: '0', f: el[nameApiRegion] },
-            { v: el[category], f: el[category] },
-            { v: '', f: tooltip }
-          ]
-        }
-        this.series = {
-          0: { color: this.color[category] }
-        }
+        codeLabel = 'nama_kab'
       }
 
-      return data
-    },
-    setColorSeries (category) {
       if (category === 'gabungan_aktif') {
-        this.chartOptions.series[0].color = this.color.closecontact_dikarantina
-        this.chartOptions.series[1].color = this.color.suspect_diisolasi
-        this.chartOptions.series[2].color = this.color.probable_diisolasi
-        this.chartOptions.series[3].color = this.color.confirmation_diisolasi
+        chartData.datasets = [
+          {
+            label: this.title.probable_diisolasi,
+            data: [],
+            borderColor: colors.probable_diisolasi,
+            backgroundColor: colors.probable_diisolasi,
+            categoryPercentage: 0.5,
+            barPercentage: 1
+          },
+          {
+            label: this.title.closecontact_dikarantina,
+            data: [],
+            borderColor: colors.closecontact_dikarantina,
+            backgroundColor: colors.closecontact_dikarantina,
+            categoryPercentage: 0.5,
+            barPercentage: 1
+          },
+          {
+            label: this.title.suspect_diisolasi,
+            data: [],
+            borderColor: colors.suspect_diisolasi,
+            backgroundColor: colors.suspect_diisolasi,
+            categoryPercentage: 0.5,
+            barPercentage: 1
+          },
+          {
+            label: this.title.confirmation_diisolasi,
+            data: [],
+            borderColor: colors.confirmation_diisolasi,
+            backgroundColor: colors.confirmation_diisolasi,
+            categoryPercentage: 0.5,
+            barPercentage: 1
+          }
+        ]
+
+        _.forEach(sortedData, (element) => {
+          chartData.labels.push(element[codeLabel])
+          chartData.datasets[0].data.push(element.probable_diisolasi)
+          chartData.datasets[1].data.push(element.closecontact_dikarantina)
+          chartData.datasets[2].data.push(element.suspect_diisolasi)
+          chartData.datasets[3].data.push(element.confirmation_diisolasi)
+        })
       } else if (category === 'confirmation_total') {
-        this.chartOptions.series[0].color = this.color.confirmation_meninggal
-        this.chartOptions.series[1].color = this.color.confirmation_selesai
-        this.chartOptions.series[2].color = this.color.confirmation_diisolasi
+        chartData.datasets = [
+          {
+            label: this.title.confirmation_meninggal,
+            data: [],
+            borderColor: colors.confirmation_meninggal,
+            backgroundColor: colors.confirmation_meninggal,
+            categoryPercentage: 0.5,
+            barPercentage: 1
+          },
+          {
+            label: this.title.confirmation_selesai,
+            data: [],
+            borderColor: colors.confirmation_selesai,
+            backgroundColor: colors.confirmation_selesai,
+            categoryPercentage: 0.5,
+            barPercentage: 1
+          },
+          {
+            label: this.title.confirmation_diisolasi,
+            data: [],
+            borderColor: colors.confirmation_diisolasi,
+            backgroundColor: colors.confirmation_diisolasi,
+            categoryPercentage: 0.5,
+            barPercentage: 1
+          }
+        ]
+
+        _.forEach(sortedData, (element) => {
+          chartData.labels.push(element[codeLabel])
+          chartData.datasets[0].data.push(element.confirmation_meninggal)
+          chartData.datasets[1].data.push(element.confirmation_selesai)
+          chartData.datasets[2].data.push(element.confirmation_diisolasi)
+        })
       } else {
-        this.chartOptions.series[0].color = this.color[category]
+        chartData.datasets = [
+          {
+            label: this.title[category],
+            data: [],
+            borderColor: colors[category],
+            backgroundColor: colors[category],
+            categoryPercentage: 0.5,
+            barPercentage: 1
+          }
+        ]
+        _.forEach(sortedData, (element) => {
+          chartData.labels.push(element[codeLabel])
+          chartData.datasets[0].data.push(element[category])
+        })
       }
+
+      this.chartData = chartData
+
+      this.heightChart = (sortedData.length <= 7) ? 600 : sortedData.length * 30 + 300
+
+      this.sortedData = sortedData
     },
-    setCols (category) {
+    tooltipSet (index, datasetIndex) {
+      const category = this.activeCaseCategory
+      const data = this.sortedData[index]
+      const title = this.title
+      let label = []
+
       if (category === 'gabungan_aktif') {
-        this.chartData.cols = [
-          { id: 'Kasus', label: 'Jumlah Kasus', type: 'string' },
-          { id: 'Kontak Erat - Masih Dikarantina', label: 'Kontak Erat - Masih Dikarantina', type: 'number' },
-          { type: 'string', role: 'tooltip', p: { html: true } },
-          { id: 'Suspek - Isolasi/ Dalam Perawatan', label: 'Suspek - Isolasi/ Dalam Perawatan', type: 'number' },
-          { type: 'string', role: 'tooltip', p: { html: true } },
-          { id: 'Probable - Isolasi/ Dalam Perawatan', label: 'Probable - Isolasi/ Dalam Perawatan', type: 'number' },
-          { type: 'string', role: 'tooltip', p: { html: true } },
-          { id: 'Positif - Isolasi/ Dalam Perawatan', label: 'Positif - Isolasi/ Dalam Perawatan', type: 'number' },
-          { type: 'string', role: 'tooltip', p: { html: true } }
-          // { id: 'annot', type: 'string', role: 'annotation' }
-        ]
+        switch (datasetIndex) {
+          case 0: {
+            label.push(title.probable_diisolasi + ': ' + data.probable_diisolasi)
+            break
+          }
+          case 1: {
+            label.push(title.closecontact_dikarantina + ': ' + data.closecontact_dikarantina)
+            break
+          }
+          case 2: {
+            label.push(title.suspect_diisolasi + ': ' + data.suspect_diisolasi)
+            break
+          }
+          case 3: {
+            const total = data.probable_diisolasi + data.closecontact_dikarantina + data.suspect_diisolasi + data.confirmation_diisolasi
+            label.push(title.confirmation_diisolasi + ': ' + data.confirmation_diisolasi)
+
+            label.push(title.gabungan_aktif + ': ' + total)
+            break
+          }
+          default: {
+            label.push(title.probable_diisolasi + ': ' + data.probable_diisolasi)
+            break
+          }
+        }
       } else if (category === 'confirmation_total') {
-        this.chartData.cols = [
-          { id: 'Kasus', label: 'Jumlah Kasus', type: 'string' },
-          { id: 'Positif - Meninggal', label: 'Positif - Meninggal', type: 'number' },
-          { type: 'string', role: 'tooltip', p: { html: true } },
-          { id: 'Positif - Selesai Isolasi/ Sembuh', label: 'Positif - Selesai Isolasi/ Sembuh', type: 'number' },
-          { type: 'string', role: 'tooltip', p: { html: true } },
-          { id: 'Positif - Isolasi/ Dalam Perawatan', label: 'Positif - Isolasi/ Dalam Perawatan', type: 'number' },
-          { type: 'string', role: 'tooltip', p: { html: true } }
-          // { id: 'annot', type: 'string', role: 'annotation' }
-        ]
+        switch (datasetIndex) {
+          case 0: {
+            label.push(title.confirmation_meninggal + ': ' + data.confirmation_meninggal)
+            break
+          }
+          case 1: {
+            label.push(title.confirmation_selesai + ': ' + data.confirmation_selesai)
+            break
+          }
+          case 2: {
+            const total = data.confirmation_meninggal + data.confirmation_selesai + data.confirmation_diisolasi
+            label.push(title.confirmation_diisolasi + ': ' + data.confirmation_diisolasi)
+            label.push(title.confirmation_total + ': ' + total)
+            break
+          }
+          default: {
+            label.push(title.confirmation_meninggal + ': ' + data.confirmation_meninggal)
+            break
+          }
+        }
       } else {
-        this.chartData.cols = [
-          { id: 'Kasus', label: 'Jumlah Kasus', type: 'string' },
-          { id: this.title[category], label: this.title[category], type: 'number' }
-          // { id: 'annot', type: 'string', role: 'annotation' }
-        ]
+        label = this.title[category] + ': ' + this.sortedData[index][category]
       }
+
+      return label
     }
   }
 }
 </script>
 
 <style scoped>
-  .chart-area {
-    overflow-y: auto;
-    overflow-x: hidden;
-    height: 600px;
-  }
   .hide-chart {
     width: 0;
     height: 0;
     opacity: 0;
   }
 
-  .legend-rasio-box {
-    width: 20px;
-    height: 13px;
-    float: left;
-    margin-right: 8px;
+  .chartWrapper > canvas {
+    position: absolute;
+    left: 0;
+    top: 0;
+    pointer-events: none;
   }
+
 </style>
