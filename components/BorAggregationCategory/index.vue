@@ -316,7 +316,7 @@ export default {
           available: 0,
           filled: 0,
           color: '#aa1aa4',
-          tooltip: 'Verlos Kamer (ruang bersalin) Covid-19'
+          tooltip: 'Ruang Bersalin Pasien Covid-19'
         }
       ],
       dataIsolateDaily: []
