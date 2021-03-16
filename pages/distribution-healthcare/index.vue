@@ -4,7 +4,7 @@
       <div class="flex flex-col lg:flex-row lg:items-stretch">
         <div class="lg md:auto sm:w-auto">
           <h3 class="text-3xl text-gray-900 font-bold text-left leading-none" style="margin-bottom: 10px; ">
-            Ketersediaan Tempat Tidur (TT) RS Menangani Covid-19 di Jawa Barat
+            Keterisian tempat tidur (BOR) berdasarkan gejala dan ruang perawatan di Rumah Sakit
           </h3>
           <div class="">
             Update Terakhir: {{ lastupdate }}
@@ -19,7 +19,7 @@
           :icon="icons.faInfoCircle"
         />
         <div class="ml-2">
-          Sumber Data yang digunakan adalah Data RS Online (Kemenkes) yang disesuaikan dengan kategori yang ditetapkan oleh Dinas    Kesehatan Jawa Barat. Pengkinian data dilakukan secara harian (tidak realtime).
+          Sumber data yang digunakan adalah Data RS <i>Online</i> (Kemenkes) yang disesuaikan dengan kategori yang ditetapkan Dinas Kesehatan Jawa Barat. Pembaruan data dilakukan secara harian (tidak <i>realtime</i>).
         </div>
       </div>
     </div>
