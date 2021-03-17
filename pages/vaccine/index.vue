@@ -23,7 +23,7 @@
               {{ data.title }}
             </h2>
             <p class="text-gray-700 text-lg md:text-base" v-html="data.content" />
-            <span v-if="data.source.length > 0" class="text-blue-500 italic underline">{{ data.source }}</span>
+            <span class="text-blue-500 italic underline">{{ data.source || '' }}</span>
           </div>
         </div>
         <content-loader
@@ -129,7 +129,6 @@ export default {
   },
   computed: {
     contentVaksin () {
-      console.log(this.$store.state.vaksin.items)
       return this.$store.state.vaksin.items
     }
   },
