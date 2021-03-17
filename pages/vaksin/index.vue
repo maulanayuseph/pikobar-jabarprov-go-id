@@ -17,17 +17,13 @@
     </section>
     <div class="container mx-auto">
       <div class="m-4 p-5 rounded-lg bg-white shadow">
-        <div v-if="true" class="flex flex-col gap-8">
-          <div v-for="(i, index) of 10" :key="index">
+        <div v-if="contentVaksin.length > 0" class="flex flex-col gap-8">
+          <div v-for="data of contentVaksin" :key="data.id">
             <h2 class="text-3xl md:text-2xl font-bold leading-normal text-gray-800">
-              Test {{ i }}
+              {{ data.title }}
             </h2>
-            <p class="text-gray-700 text-lg md:text-base">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi reprehenderit eaque eius voluptatibus eos non magnam aut enim cupiditate dolores ducimus at necessitatibus incidunt, error vero doloribus repellendus eligendi repudiandae.
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. At quos totam, ea adipisci culpa officia a voluptate unde, in aliquid facere laborum corrupti expedita consectetur enim asperiores ut id ex.
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Vel voluptates iure, distinctio eos eaque error, dolorem aut saepe numquam nulla soluta? Eius harum iure illo fugiat, excepturi temporibus nam exercitationem?
-            </p>
-            <span v-if="true" class="text-blue-500 italic underline">Sumber: Source.co </span>
+            <p class="text-gray-700 text-lg md:text-base" v-html="data.content" />
+            <span v-if="data.source.length > 0" class="text-blue-500 italic underline">{{ data.source }}</span>
           </div>
         </div>
         <content-loader
@@ -90,7 +86,7 @@
     <div class="container mx-auto">
       <div class="m-4 p-5 rounded-lg bg-white shadow grid grid-cols-2 gap-4">
         <div class="bg-gray-100 rounded-md col-span-2 md:col-span-1 grid grid-cols-2 p-4 gap-8">
-          <img class="m-auto col-span-2 md:col-span-1" width="80%" src="~/assets/illustrations/chatbot.svg" alt="">
+          <img class="m-auto col-span-2 md:col-span-1" width="80%" src="~/assets/illustrations/chatbot.svg" alt="illutrasi chatbot">
           <div class="flex flex-col gap-6 justify-center items-start col-span-2 md:col-span-1">
             <h3 class="font-bold text-xl">
               Ada pertanyaan seputar vaksinasi? Hubungi hotline kami di sini
@@ -106,7 +102,7 @@
           </div>
         </div>
         <div class="bg-gray-100 rounded-md col-span-2 md:col-span-1 grid grid-cols-2 p-4 gap-8">
-          <img class="m-auto col-span-2 md:col-span-1" width="80%" src="~/assets/illustrations/faq.svg" alt="">
+          <img class="m-auto col-span-2 md:col-span-1" width="80%" src="~/assets/illustrations/faq.svg" alt="illustrasi faq">
           <div class="flex flex-col gap-6 justify-center items-start col-span-2 md:col-span-1">
             <h3 class="font-bold text-xl">
               Ingin mencari pertanyaan lain seputar vaksinasi? Cek di sini
@@ -130,6 +126,15 @@ import { ContentLoader } from 'vue-content-loader'
 export default {
   components: {
     ContentLoader
+  },
+  computed: {
+    contentVaksin () {
+      console.log(this.$store.state.vaksin.items)
+      return this.$store.state.vaksin.items
+    }
+  },
+  mounted () {
+    this.$store.dispatch('vaksin/getItems')
   }
 }
 </script>
