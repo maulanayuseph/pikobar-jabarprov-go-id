@@ -1,6 +1,6 @@
 <template>
   <div>
-    <section class="bg-green-600">
+    <section class="bg-brand-green-darker">
       <div class="container mx-auto">
         <div class="mx-4 flex flex-wrap gap-8 py-8 justify-between">
           <div class="flex flex-col items-start justify-center">
@@ -85,6 +85,42 @@
             height="10"
           />
         </content-loader>
+      </div>
+    </div>
+    <div class="container mx-auto">
+      <div class="m-4 p-5 rounded-lg bg-white shadow grid grid-cols-2 gap-4">
+        <div class="bg-gray-100 rounded-md col-span-2 md:col-span-1 grid grid-cols-2 p-4 gap-8">
+          <img class="m-auto col-span-2 md:col-span-1" width="80%" src="~/assets/illustrations/chatbot.svg" alt="">
+          <div class="flex flex-col gap-6 justify-center items-start col-span-2 md:col-span-1">
+            <h3 class="font-bold text-xl">
+              Ada pertanyaan seputar vaksinasi? Hubungi hotline kami di sini
+            </h3>
+            <a href="https://api.whatsapp.com/send/?phone=6285697391854&text=Halo+Admin%21+Saya+ingin+tanya+seputar+Vaksinasi+Covid-19&app_absent=0" target="_blank" class="bg-brand-green-darker text-white text-lg px-6 py-2 rounded-lg focus:outline-none gap-3 flex flex-row items-center justify-between">
+              <span>
+                Chatbot Pikobar
+              </span>
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+              </svg>
+            </a>
+          </div>
+        </div>
+        <div class="bg-gray-100 rounded-md col-span-2 md:col-span-1 grid grid-cols-2 p-4 gap-8">
+          <img class="m-auto col-span-2 md:col-span-1" width="80%" src="~/assets/illustrations/faq.svg" alt="">
+          <div class="flex flex-col gap-6 justify-center items-start col-span-2 md:col-span-1">
+            <h3 class="font-bold text-xl">
+              Ingin mencari pertanyaan lain seputar vaksinasi? Cek di sini
+            </h3>
+            <button class="bg-brand-green-darker text-white text-lg px-6 py-2 rounded-lg focus:outline-none gap-3 flex flex-row items-center justify-between" @click="$router.push('/faq')">
+              <span>
+                Halaman FAQ
+              </span>
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+              </svg>
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
