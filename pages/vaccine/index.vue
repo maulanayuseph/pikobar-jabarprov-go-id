@@ -21,7 +21,7 @@
     </section>
     <div class="container mx-auto">
       <div class="m-4 p-5 rounded-lg bg-white shadow">
-        <!-- Do not show v-if to prevent re-hydration on client renders -->
+        <!-- Do not use v-if to prevent re-hydration on client renders -->
         <div
           v-show="contentVaksin.length > 0"
           class="flex flex-col gap-8">
@@ -43,7 +43,7 @@
             </span>
           </div>
         </div>
-        <!-- Do not show v-if to prevent re-hydration on client renders -->
+        <!-- Do not use v-if to prevent re-hydration on client renders -->
         <content-loader
           v-show="contentVaksin.length === 0"
           :speed="2"
