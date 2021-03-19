@@ -21,6 +21,7 @@
     </section>
     <div class="container mx-auto">
       <div class="m-4 p-5 rounded-lg bg-white shadow">
+        <!-- Do not show v-if to prevent re-hydration on client renders -->
         <div
           v-show="contentVaksin.length > 0"
           class="flex flex-col gap-8">
@@ -42,6 +43,7 @@
             </span>
           </div>
         </div>
+        <!-- Do not show v-if to prevent re-hydration on client renders -->
         <content-loader
           v-show="contentVaksin.length === 0"
           :speed="2"
@@ -158,8 +160,12 @@ export default {
     await this.$store.dispatch('vaksin/getItems')
   },
   asyncData () {
+    // param for whatsapp API is kept in env
     const number = process.env.NUXT_ENV_VACCINE_WHATSAPP_NUMBER
-    const encodedMsg = encodeURIComponent(process.env.NUXT_ENV_VACCINE_WHATSAPP_MSG)
+    const msg = process.env.NUXT_ENV_VACCINE_WHATSAPP_MSG
+
+    // Encode URI programmatically instead of manually
+    const encodedMsg = encodeURIComponent(msg)
     const whatsappBacklink = `https://api.whatsapp.com/send/?phone=${number}&text=${encodedMsg}&app_absent=0`
     return {
       whatsappBacklink
