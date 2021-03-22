@@ -266,7 +266,10 @@ export default {
           available: 0,
           filled: 0,
           color: '#33ad3f',
-          tooltip: 'Isolasi Tanpa Tekanan Negatif'
+          tooltip: [
+            'Kategori: Tanpa Gejala - Gejala Ringan',
+            'Isolasi Tanpa Tekanan Negatif'
+          ]
         },
         {
           name: 'Kuning',
@@ -276,7 +279,11 @@ export default {
           available: 0,
           filled: 0,
           color: '#d5c042',
-          tooltip: 'Isolasi Tekanan Negatif'
+          tooltip:
+          [
+            'Kategori: Gejala Ringan - Gejala Sedang',
+            'Isolasi Tekanan Negatif'
+          ]
         },
         {
           name: 'Merah',
@@ -286,17 +293,28 @@ export default {
           available: 0,
           filled: 0,
           color: '#cb3146',
-          tooltip: 'ICU Tekanan Negatif dengan Ventilator'
+          tooltip:
+          [
+            'Kategori: Gejala Berat',
+            'ICU Tekanan Negatif dengan Ventilator'
+          ]
         },
         {
-          name: 'ICU',
+          name: 'ICU/Ruang Intensif',
           bor: 0,
           growth: 0,
           total: 0,
           available: 0,
           filled: 0,
           color: '#6d64b6',
-          tooltip: 'ICU Tanpa Tekanan Negatif Dengan Ventilator + ICU Tanpa Tekanan Negatif Tanpa Ventilator + ICU Tekanan Negatif tanpa Ventilator + NICU Covid-19 + PICU Covid-19'
+          tooltip: [
+            'Kategori: Gejala Berat',
+            'ICU Tanpa Tekanan Negatif Dengan Ventilator',
+            'ICU Tanpa Tekanan Negatif Tanpa Ventilator',
+            'ICU Tekanan Negatif tanpa Ventilator',
+            'NICU Covid-19',
+            'PICU Covid-19'
+          ]
         },
         {
           name: 'IGD',
@@ -306,7 +324,7 @@ export default {
           available: 0,
           filled: 0,
           color: '#64b5f6',
-          tooltip: 'IGD Covid-19'
+          tooltip: ['IGD Covid-19']
         },
         {
           name: 'Ruang Bersalin',
@@ -316,7 +334,7 @@ export default {
           available: 0,
           filled: 0,
           color: '#aa1aa4',
-          tooltip: 'Ruang Bersalin Pasien Covid-19'
+          tooltip: ['Ruang Bersalin Pasien Covid-19']
         }
       ],
       dataIsolateDaily: []
@@ -380,7 +398,7 @@ export default {
       this.dataBor[2].available = data.merah_tersedia
       this.dataBor[2].filled = data.merah_terisi
 
-      this.dataBor[3].name = 'ICU'
+      this.dataBor[3].name = 'ICU/Ruang Intensif'
       this.dataBor[3].bor = data.icu_persentase
       this.dataBor[3].total = data.icu_total
       this.dataBor[3].available = data.icu_tersedia
