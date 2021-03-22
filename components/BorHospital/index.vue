@@ -174,8 +174,8 @@ export default {
       selectedCity: { value: 'all', label: 'Semua Kota/Kab' },
       optionsHospital: [
         { value: 'all', label: 'Semua RS' },
-        { value: true, label: 'RS Rujukan' },
-        { value: false, label: 'RS Non Rujukan' }
+        { value: true, label: 'RS Melayani Covid-19' },
+        { value: false, label: 'RS Tidak Melayani Covid-19' }
       ],
       selectedHospital: { value: 'all', label: 'Semua RS' },
       icons: {
@@ -391,7 +391,7 @@ export default {
     width: 200px;
   }
   .optHospital {
-    width: 180px;
+    width: 250px;
   }
 </style>
 <style>

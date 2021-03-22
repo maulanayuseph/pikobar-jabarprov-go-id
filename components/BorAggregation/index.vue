@@ -19,7 +19,7 @@
               </div>
             </div>
           </div>
-          <span class="text-sm">{{ dataIsolateTotal.total_terisi }} dari {{ dataIsolateTotal.total_tersedia }} TT Terisi</span>
+          <span class="text-sm">{{ formatThousandSeparator(dataIsolateTotal.total_terisi) }} dari {{ formatThousandSeparator(dataIsolateTotal.total_tersedia) }} TT Terisi</span>
         </div>
       </div>
       <div class="md:flex-1 mx-2 my-3 rounded-lg p-6 bg-white shadow-lg">
@@ -35,7 +35,7 @@
       </div>
       <div class="md:flex-1 mx-2 my-3 rounded-lg p-6 bg-white shadow-lg">
         <h4 class="text-center font-bold">
-          TOTAL RS RUJUKAN
+          RS MELAYANI COVID-19
         </h4>
         <div class="w-full mt-3 text-center">
           <div class="text-3xl font-bold">
@@ -46,7 +46,7 @@
       </div>
       <div class="md:flex-1 mx-2 my-3 rounded-lg p-6 bg-white shadow-lg">
         <h4 class="text-center font-bold">
-          TOTAL RS NON RUJUKAN
+          RS TIDAK MELAYANI COVID-19
         </h4>
         <div class="w-full mt-3 text-center">
           <div class="text-3xl font-bold">
@@ -148,6 +148,14 @@ export default {
         growth = lastData.total_persentase - beforeLastData.total_persentase
         this.borGrowth = growth.toFixed(2)
       }
+    },
+    formatThousandSeparator (val) {
+      let number = val
+      if (typeof number !== 'string' || number instanceof !String) {
+        number = number.toString()
+      }
+
+      return number.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.')
     }
   }
 }
