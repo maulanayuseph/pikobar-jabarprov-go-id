@@ -1,14 +1,13 @@
 <template>
   <div class="container mx-auto">
-    <div class="m-4 mb-8 md:mx-8 md:mt-8 md:mb-4">
+    <br>
+    <div class="m-4 mb-4 md:m-8 md:mb-4">
       <div class="flex flex-col lg:flex-row lg:items-stretch">
         <div class="lg md:auto sm:w-auto">
           <h3 class="text-3xl text-gray-900 font-bold text-left leading-none" style="margin-bottom: 10px; ">
-            Keterisian tempat tidur (BOR) berdasarkan gejala dan ruang perawatan di Rumah Sakit
+            Keterisian Tempat Tidur (BOR) Berdasarkan Gejala dan Ruang Perawatan di Rumah Sakit
           </h3>
-          <div class="">
-            Update Terakhir: {{ lastupdate }}
-          </div>
+          <small class="text-xl opacity-75">Update Terakhir: {{ lastupdate }}</small>
         </div>
       </div>
     </div>
