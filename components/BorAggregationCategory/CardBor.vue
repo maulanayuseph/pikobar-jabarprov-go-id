@@ -6,9 +6,11 @@
           {{ bor.name.toUpperCase() }}
           <div class="tooltip pl-1">
             <FontAwesomeIcon class="inline-block mr-2 cursor-pointer text-gray-500" :icon="icons.faInfoCircle" />
-            <span class="tooltiptext text-xs">
-              {{ bor.tooltip }}
-            </span>
+            <ul class="tooltiptext list-inside text-xs list-disc">
+              <li v-for="item in bor.tooltip" :key="item">
+                {{ item }}
+              </li>
+            </ul>
           </div>
         </div>
       </div>
@@ -27,7 +29,12 @@
               </div>
             </div>
             <div class="font-normal mt-2" style="font-size: 14px;">
-              TT {{ bor.name }} Terisi
+              <div v-if="bor.name.length <= 12">
+                TT {{ bor.name }} Terisi
+              </div>
+              <div v-if="bor.name.length > 12">
+                TT {{ bor.name }} <br> Terisi
+              </div>
             </div>
           </div>
 
