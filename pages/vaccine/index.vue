@@ -133,11 +133,13 @@ export default {
       return this.$store.state.vaksin.items
     }
   },
-  mounted () {
-    this.$store.dispatch('vaksin/getItems')
-    if (process.browser) {
+  created () {
+    if (process.client || process.browser) {
       analytics.logEvent('vaccinepage_view')
     }
+  },
+  mounted () {
+    this.$store.dispatch('vaksin/getItems')
   },
   head () {
     const title = 'Informasi Vaksinasi Covid-19 - Pikobar [Pusat Informasi dan Koordinasi COVID-19 Jawa Barat]'
