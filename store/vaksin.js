@@ -1,4 +1,4 @@
-import vaksin from '~/api/vaksin'
+import { get } from '../api/vaksin'
 
 export const state = () => ({
   items: []
@@ -11,7 +11,15 @@ export const mutations = {
 }
 
 export const actions = {
-  getItems ({ state, commit }, options) {
-    commit('setItems', vaksin)
+  async getItems ({ state, commit }) {
+    /**
+     * This checking is required to prevent re-hydration
+     * on client renders.
+     */
+    if (!Array.isArray(state.items) || !state.items.length) {
+      const items = await get()
+      commit('setItems', items)
+    }
+    return state.items
   }
 }
