@@ -123,6 +123,7 @@
 </template>
 <script>
 import { ContentLoader } from 'vue-content-loader'
+import { analytics } from '~/lib/firebase'
 export default {
   components: {
     ContentLoader
@@ -130,6 +131,11 @@ export default {
   computed: {
     contentVaksin () {
       return this.$store.state.vaksin.items
+    }
+  },
+  created () {
+    if (process.client || process.browser) {
+      analytics.logEvent('vaccinepage_view')
     }
   },
   mounted () {
