@@ -152,6 +152,7 @@
 </template>
 <script>
 import { ContentLoader } from 'vue-content-loader'
+import { analytics } from '~/lib/firebase'
 export default {
   components: {
     ContentLoader
@@ -180,6 +181,9 @@ export default {
     contentVaksin () {
       return this.$store.state.vaksin.items
     }
+  },
+  mounted () {
+    analytics.logEvent('vaccinepage_view')
   },
   head () {
     const title = 'Informasi Vaksinasi Covid-19 - Pikobar [Pusat Informasi dan Koordinasi COVID-19 Jawa Barat]'
