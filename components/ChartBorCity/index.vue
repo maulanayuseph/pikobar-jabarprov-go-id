@@ -1,15 +1,15 @@
 <template>
   <div>
     <div :class="!isLoading ? 'mx-2 my-3 bg-white rounded-lg shadow-lg' : 'hidden'">
-      <div class="flex flex-row items-center border-b-2 p-4">
-        <h4 class="font-bold text-lg">
+      <div class="flex flex-col md:flex-row items-center border-b-2 p-4">
+        <h4 class="font-bold text-lg mb-2">
           Ketersediaan Tempat Tidur (TT) RS Menangani Covid-19 di Jawa Barat
         </h4>
-        <div class="ml-auto flex flex-col">
+        <div class="md:ml-auto flex flex-col w-full md:w-56">
           <client-only>
             <multiselect
               v-model="selectedZone"
-              class="optZone mx-1"
+              class="optZone mt-2 sm:mt-0"
               :options="optionsZone"
               :allow-empty="false"
               track-by="value"
@@ -21,7 +21,7 @@
             />
             <multiselect
               v-model="selectedCategory"
-              class="optCategory mx-1 mt-2 whitespace-nowrap"
+              class="optCategory mt-2 whitespace-nowrap"
               :options="optionsCategory"
               :allow-empty="false"
               track-by="value"
@@ -41,8 +41,7 @@
         <canvas
           id="myChartAxis"
           class="ml-4"
-          height="355"
-          width="600"
+          height="335"
         />
       </div>
     </div>
@@ -350,11 +349,10 @@ export default {
 </script>
 <style scoped>
   .optZone {
-    width: 200px;
+    min-width: 200px;
     font-size: 14px;
   }
   .optCategory {
-    width: 200px;
     font-size: 14px;
   }
 

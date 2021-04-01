@@ -1,27 +1,30 @@
 <template>
   <div>
     <div :class="!isLoading ? 'mx-2 my-3 bg-white rounded-lg shadow-lg' : 'hidden'">
-      <div class="flex flex-row border-b-2 px-4 pt-8 pb-10">
-        <h4 class="font-bold text-lg">
+      <div class="flex flex-col md:flex-row border-b-2 px-4 pt-8 pb-10">
+        <h4 class="font-bold text-lg mb-2 md:mb-0">
           Ketersediaan Tempat Tidur berdasarkan Zonasi
         </h4>
-        <client-only>
-          <multiselect
-            v-model="selectedCategory"
-            class="optCategory justify-self-right ml-auto"
-            :options="optionsCategory"
-            :allow-empty="false"
-            track-by="value"
-            label="label"
-            select-label=""
-            deselect-label=""
-            selected-label=""
-            @input="setSelectedCategory"
-          />
-        </client-only>
+        <div class="md:ml-auto flex flex-col w-full md:w-56">
+          <client-only>
+            <multiselect
+              v-model="selectedCategory"
+              :options="optionsCategory"
+              :allow-empty="false"
+              track-by="value"
+              label="label"
+              select-label=""
+              deselect-label=""
+              selected-label=""
+              @input="setSelectedCategory"
+            />
+          </client-only>
+        </div>
       </div>
-      <div class="p-4" style="max-height: 360px">
-        <bar-chart :chart-data="chartData" :options="chartOptions" :height="heightChart" />
+      <div class="chartWrapper relative p-4">
+        <div class="relative" style="height: 330px">
+          <bar-chart :chart-data="chartData" :options="chartOptions" :styles="{height: heightChart + 'px', position: 'relative'}" />
+        </div>
       </div>
     </div>
     <div :class="!isLoading ? 'hidden': ''">
@@ -80,7 +83,7 @@ export default {
   data () {
     return {
       dataBor: [],
-      heightChart: 330,
+      heightChart: 300,
       optionsCategory: [
         { value: 'bor', label: 'Total BOR' },
         { value: 'green', label: 'Hijau' },
@@ -277,15 +280,18 @@ export default {
       chartData.datasets[0].backgroundColor = bgColors
       chartData.datasets[0].hoverBackgroundColor = this.activeCategory.colorCenter
 
-      this.heightChart = (data.length <= 7) ? 350 : data.length * 14 + 300
+      this.heightChart = (data.length <= 7) ? 330 : data.length * 14 + 300
       this.chartData = chartData
     }
   }
 }
 </script>
 <style scoped>
-  .optCategory {
-    width: 180px;
+.chartWrapper > canvas {
+    position: absolute;
+    left: 0;
+    top: 0;
+    pointer-events: none;
   }
 </style>
 <style src="vue-multiselect/dist/vue-multiselect.min.css"></style>

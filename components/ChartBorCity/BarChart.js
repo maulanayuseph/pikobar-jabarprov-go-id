@@ -34,7 +34,7 @@ export default {
         const copyWidth = ev.chart.width
         const copyHeight = ev.chart.height * scale
         const targetCtx = document.getElementById('myChartAxis').getContext('2d')
-        targetCtx.canvas.width = copyWidth + 80
+        targetCtx.canvas.width = copyWidth
         targetCtx.canvas.height = 360
         targetCtx.fillStyle = '#ffffff'
         targetCtx.fillRect(0, 320, copyWidth, 350)

@@ -1,20 +1,20 @@
 <template>
   <div class="md:flex-1 mx-2 my-3">
-    <div class=" rounded-lg p-6 shadow-lg bg-white">
+    <div class=" rounded-lg p-6 shadow-lg bg-white relative">
+      <ul class="tooltiptext list-inside text-xs list-disc w-3/4" :class="{['tooltip-' + bor.id]: true, ['visible']: bor.id === activeTooltip, ['invisible']: bor.id !== activeTooltip}">
+        <li v-for="item in bor.tooltip" :key="item">
+          {{ item }}
+        </li>
+      </ul>
       <div class="text-center">
-        <div class="font-bold">
+        <div class="font-bold flex justify-center">
           {{ bor.name.toUpperCase() }}
-          <div class="tooltip pl-1">
+          <div class="pl-1" @mouseover="changeActiveTooltip(bor.id)" @mouseout="activeTooltip = 0">
             <FontAwesomeIcon class="inline-block mr-2 cursor-pointer text-gray-500" :icon="icons.faInfoCircle" />
-            <ul class="tooltiptext list-inside text-xs list-disc">
-              <li v-for="item in bor.tooltip" :key="item">
-                {{ item }}
-              </li>
-            </ul>
           </div>
         </div>
       </div>
-      <div class="charts-container flex flex-wrap md:flex-row md:flex-nowrap">
+      <div class="charts-container flex flex-col items-center sm:flex-wrap md:flex-row md:flex-nowrap">
         <div class="set-size pie-wrapper style-2">
           <div class="label">
             <div class="text-3xl">
@@ -44,8 +44,8 @@
           </div>
           <div class="shadow" />
         </div>
-        <div class="bed my-auto mx-auto">
-          <FontAwesomeIcon class="inline-block mr-2 cursor-pointer text-gray-500" :icon="icons.faBed" />
+        <div class="bed my-auto mx-auto text-center sm:text-left">
+          <FontAwesomeIcon class="inline-block mr-0  sm:mr-2 cursor-pointer text-gray-500" :icon="icons.faBed" />
           <div class="text-3xl font-bold">
             {{ bor.available.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.") }}
           </div>
@@ -70,6 +70,7 @@ export default {
       type: Object,
       default: () => {
         return {
+          id: 0,
           name: '',
           bor: 0,
           growth: 0,
@@ -96,7 +97,14 @@ export default {
         faAngleDoubleDown,
         faInfoCircle,
         faBed
-      }
+      },
+      activeTooltip: 0
+    }
+  },
+  methods: {
+    changeActiveTooltip (id) {
+      this.activeTooltip = id
+      console.log(id)
     }
   }
 }
@@ -273,46 +281,25 @@ export default {
       }
   }
 
-  /* Tooltip container */
-  .tooltip {
-    position: absolute;
-    display: inline-block;
-    font-weight: normal !important;
-  }
-
   /* Tooltip text */
-  .tooltip .tooltiptext {
-    visibility: hidden;
-    width: 280px;
+  .tooltiptext {
+    position: absolute;
+    margin-top: 20px;
     background-color: #ffffff;
     color:#000;
     text-align: left;
     padding: 10px;
     border-radius: 6px;
+    left: 12%;
     /* Position the tooltip text - see examples below! */
-    position: absolute;
-    z-index: 1;
-    top: 100%;
-    left: 50%;
-    margin-left: -230px; /* Use half of the width (120/2 = 60), to center the tooltip */
+    z-index: 3;
     box-shadow: 4px 4px 4px 1px rgba(0, 0, 0, 0.14);
     font-weight: normal;
   }
 
-  .tooltip .tooltiptext::after {
-    content: " ";
-    position: absolute;
-    bottom: 100%;  /* At the top of the tooltip */
-    right: 47px;
-    margin-left: -5px;
-    border-width: 5px;
-    border-style: solid;
-    border-color: transparent transparent #f5f8fa transparent;
-  }
-
-  /* Show the tooltip text when you mouse over the tooltip container */
-  .tooltip:hover .tooltiptext {
-    visibility: visible;
+  .tooltiptext li {
+    list-style-position: outside;
+    margin-left: 1em;
   }
 
 </style>

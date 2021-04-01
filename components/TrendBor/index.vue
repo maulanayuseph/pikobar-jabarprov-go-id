@@ -2,15 +2,16 @@
   <div>
     <div :class="!isLoading ? '' : 'hidden'">
       <div class="my-3 bg-white rounded-lg shadow-lg">
-        <div class="md:flex md:flex-row items-center border-b-2 p-4">
+        <div class="flex flex-col lg:flex-row border-b-2 p-4">
           <h4 class="font-bold text-lg">
             Tren Keterisian Tempat Tidur (BOR)
           </h4>
-          <div class="ml-auto flex flex-row">
+          <div class="lg:ml-auto flex flex-col md:flex-row mt-2 md:mt-0">
             <client-only>
-              <div class="daterange-wrapper mx-1">
+              <div class="daterange-wrapper md:mx-1 my-1">
                 <vue-rangedate-picker
-                  righttoleft="true"
+                  :righttoleft="!isMobile ? 'true': 'false'"
+                  :compact="isMobile ? 'true': 'false'"
                   :captions="rangedate.captions"
                   :preset-ranges="rangedate.presetRanges"
                   @selected="onDateSelected"
@@ -18,7 +19,7 @@
               </div>
               <multiselect
                 v-model="selectedZone"
-                class="optZone mx-1"
+                class="optZone md:mx-1 my-1 w-full"
                 :options="optionsZone"
                 track-by="value"
                 :allow-empty="false"
@@ -31,7 +32,7 @@
               <multiselect
                 v-model="selectedCity"
                 :disabled="selectedZone.value === 'all'"
-                class="optCity mx-1"
+                class="optCity md:mx-1 my-1 w-full"
                 :allow-empty="false"
                 :options="optionsCity"
                 track-by="value"
@@ -45,7 +46,7 @@
           </div>
         </div>
         <div class="p-6">
-          <line-chart :chart-data="chartData" :options="chartOptions" :height="140" />
+          <line-chart :chart-data="chartData" :options="chartOptions" :height="340" />
         </div>
       </div>
     </div>
@@ -101,6 +102,7 @@ export default {
   },
   data () {
     return {
+      isMobile: false,
       activeDate: {
         start: new Date('02-20-2020'),
         end: new Date()
@@ -110,6 +112,8 @@ export default {
         datasets: []
       },
       chartOptions: {
+        responsive: true,
+        maintainAspectRatio: false,
         legend: {
           position: 'bottom'
         },
@@ -426,21 +430,35 @@ export default {
         return stops
       }
     },
+    checkIsMobile () {
+      if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+        this.isMobile = true
+      } else {
+        this.isMobile = false
+      }
+    },
     getIsolateDaily (params = {}) {
       this.$store.dispatch('data-isolasi-harian-kemenkes-v2/getItems', params)
     }
   }
 }
 </script>
-<style scoped>
-  * >>> .input-date {
-    padding: 8px !important
+<style>
+  .input-date {
+    width: 100% !important;
+    height: 39px;
+    border-radius: 4px;
+    border: 1px solid #e8e8e8;
   }
-  .optZone {
-    width: 180px;
+
+  @media (min-width: 768px) {
+    .input-date {
+      width: 250px !important;
+      height: 39px;
+      border-radius: 4px;
+      border: 1px solid #e8e8e8;
+    }
   }
-  .optCity {
-    width: 230px;
-  }
+
 </style>
 <style src="vue-multiselect/dist/vue-multiselect.min.css"></style>

@@ -28,11 +28,11 @@
     <div class="m-1 md:m-4">
       <BorAggregationCategory />
     </div>
-    <div class="m-2 md:m-8">
+    <div class="m-5 md:m-8">
       <TrendBor />
     </div>
     <div class="m-1 md:m-4">
-      <div class="flex flex-row flex-wrap">
+      <div class="flex flex-col sm:flex-row sm:flex-wrap">
         <div class="flex-1 mx-2 my-1">
           <ChartBorZone />
         </div>
@@ -41,7 +41,7 @@
         </div>
       </div>
     </div>
-    <div class="m-2 md:m-8">
+    <div class="m-5 md:m-8">
       <BorHospital />
     </div>
     <div class="m-4 md:m-8">

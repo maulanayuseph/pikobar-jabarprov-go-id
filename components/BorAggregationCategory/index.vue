@@ -259,6 +259,7 @@ export default {
     return {
       dataBor: [
         {
+          id: 1,
           name: 'Hijau',
           bor: 0,
           growth: 0,
@@ -272,6 +273,7 @@ export default {
           ]
         },
         {
+          id: 2,
           name: 'Kuning',
           bor: 0,
           growth: 0,
@@ -286,6 +288,7 @@ export default {
           ]
         },
         {
+          id: 3,
           name: 'Merah',
           bor: 0,
           growth: 0,
@@ -300,6 +303,7 @@ export default {
           ]
         },
         {
+          id: 4,
           name: 'ICU/Ruang Intensif',
           bor: 0,
           growth: 0,
@@ -317,6 +321,7 @@ export default {
           ]
         },
         {
+          id: 5,
           name: 'IGD',
           bor: 0,
           growth: 0,
@@ -327,6 +332,7 @@ export default {
           tooltip: ['IGD Covid-19']
         },
         {
+          id: 6,
           name: 'Ruang Bersalin',
           bor: 0,
           growth: 0,

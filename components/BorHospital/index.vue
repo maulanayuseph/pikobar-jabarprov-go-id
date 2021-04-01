@@ -5,7 +5,7 @@
         <h4 class="font-bold text-lg">
           Keterisian Tempat Tidur (BOR) RS di Jawa Barat
         </h4>
-        <div class="flex flex-col md:w-auto md:flex-row flex-wrap xl:ml-auto">
+        <div class="flex flex-col w-full md:w-auto md:flex-row flex-wrap xl:ml-auto">
           <div class="relative rounded-md shadow-sm m-1">
             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
               <span class="text-gray-500 sm:text-sm">
@@ -17,36 +17,40 @@
               v-model="searchHospital"
               type="text"
               name="price"
-              class="focus:ring-indigo-500 focus:border-indigo-500 block pl-8 py-2 sm:text-sm border rounded-md"
+              class="focus:ring-indigo-500 focus:border-indigo-500 block pl-8 py-2 sm:text-sm border rounded-md w-full md:w-56"
               placeholder="Pencarian Rumah Sakit"
               @input="resetDataTable"
             >
           </div>
           <client-only>
-            <multiselect
-              v-model="selectedCity"
-              class="optCity m-1 w-full"
-              :options="optionsCity"
-              :allow-empty="false"
-              track-by="value"
-              select-label=""
-              deselect-label=""
-              selected-label=""
-              label="label"
-              @input="setSelectedCity"
-            />
-            <multiselect
-              v-model="selectedHospital"
-              class="optHospital m-1 w-full"
-              :options="optionsHospital"
-              :allow-empty="false"
-              track-by="value"
-              select-label=""
-              deselect-label=""
-              selected-label=""
-              label="label"
-              @input="setSelectedHospital"
-            />
+            <div class="w-full md:w-48 m-1">
+              <multiselect
+                v-model="selectedCity"
+                class="optCity"
+                :options="optionsCity"
+                :allow-empty="false"
+                track-by="value"
+                select-label=""
+                deselect-label=""
+                selected-label=""
+                label="label"
+                @input="setSelectedCity"
+              />
+            </div>
+            <div class="w-full md:w-56 m-1">
+              <multiselect
+                v-model="selectedHospital"
+                class="optHospital w-full md:w-56"
+                :options="optionsHospital"
+                :allow-empty="false"
+                track-by="value"
+                select-label=""
+                deselect-label=""
+                selected-label=""
+                label="label"
+                @input="setSelectedHospital"
+              />
+            </div>
           </client-only>
         </div>
       </div>
@@ -62,7 +66,7 @@
           @on-update="updateData"
         />
       </div>
-      <div class="p-3 text-sm flex flex-row">
+      <div class="p-3 text-sm flex flex-col md:flex-row">
         <div>
           <items-per-page-dropdown
             :list-items-per-page="listItemsPerPage"
@@ -72,7 +76,7 @@
           />
           <label>Menampilkan <b>{{ data.length }}</b> dari <b>{{ totalItems }}</b></label>
         </div>
-        <div class="ml-auto">
+        <div class="ml-auto mt-2 md:mt-0">
           <template>
             <pagination
               :page="currentPage"
@@ -386,14 +390,6 @@ export default {
   }
 }
 </script>
-<style scoped>
-  .optCity {
-    width: 200px;
-  }
-  .optHospital {
-    width: 250px;
-  }
-</style>
 <style>
 .table {
   width: 100%;

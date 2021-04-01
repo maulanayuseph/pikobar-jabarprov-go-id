@@ -30,7 +30,7 @@
           <div class="text-3xl font-bold">
             {{ dataIsolateTotal.total_rs }}
           </div>
-          <span class="text-sm">Total RS menangani COVID-19 di Jabar</span>
+          <span class="text-sm">Total RS di Jawa Barat</span>
         </div>
       </div>
       <div class="md:flex-1 mx-2 my-3 rounded-lg p-6 bg-white shadow-lg">
