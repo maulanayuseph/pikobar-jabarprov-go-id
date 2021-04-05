@@ -102,6 +102,10 @@ export default {
         legend: {
           position: 'bottom'
         },
+        tooltips: {
+          mode: 'index',
+          intersect: false
+        },
         elements: {
           point: {
             radius: 0
