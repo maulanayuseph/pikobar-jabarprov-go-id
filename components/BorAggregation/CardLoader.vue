@@ -5,8 +5,8 @@
         :speed="2"
         width="400"
         height="120"
-        primary-color="rgba(214, 210, 210,0.6)"
-        secondary-color="rgba(214, 210, 210,1)"
+        primary-color="rgba(214, 210, 210,0.4)"
+        secondary-color="rgba(214, 210, 210,7)"
       >
         <rect
           x="0"
@@ -39,8 +39,8 @@
         :speed="2"
         width="400"
         height="120"
-        primary-color="rgba(214, 210, 210,0.6)"
-        secondary-color="rgba(214, 210, 210,1)"
+        primary-color="rgba(214, 210, 210,0.4)"
+        secondary-color="rgba(214, 210, 210,0.7)"
       >
         <rect
           x="0"
@@ -73,8 +73,8 @@
         :speed="2"
         width="400"
         height="120"
-        primary-color="rgba(214, 210, 210,0.6)"
-        secondary-color="rgba(214, 210, 210,1)"
+        primary-color="rgba(214, 210, 210,0.4)"
+        secondary-color="rgba(214, 210, 210,0.7)"
       >
         <rect
           x="0"
@@ -107,8 +107,8 @@
         :speed="2"
         width="400"
         height="120"
-        primary-color="rgba(214, 210, 210,0.6)"
-        secondary-color="rgba(214, 210, 210,1)"
+        primary-color="rgba(214, 210, 210,0.4)"
+        secondary-color="rgba(214, 210, 210,0.7)"
       >
         <rect
           x="0"

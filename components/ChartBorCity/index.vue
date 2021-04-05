@@ -53,32 +53,16 @@
               :speed="2"
               width="400"
               height="120"
-              primary-color="rgba(214, 210, 210,0.6)"
-              secondary-color="rgba(214, 210, 210,1)"
+              primary-color="rgba(214, 210, 210, 0.4)"
+              secondary-color="rgba(214, 210, 210, 0.7)"
             >
               <rect
                 x="0"
                 y="0"
                 rx="8"
                 ry="6"
-                width="50%"
-                height="17"
-              />
-              <rect
-                x="0"
-                y="50"
-                rx="8"
-                ry="6"
-                width="66%"
-                height="17"
-              />
-              <rect
-                x="0"
-                y="94"
-                rx="8"
-                ry="6"
-                width="20%"
-                height="17"
+                width="100%"
+                height="120"
               />
             </ContentLoader>
           </div>

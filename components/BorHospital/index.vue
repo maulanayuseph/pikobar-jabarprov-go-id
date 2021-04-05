@@ -93,9 +93,10 @@
     <div :class="isLoading ? 'bg-white rounded-lg shadow-lg p-4' : 'hidden'">
       <ContentLoader
         :speed="2"
-        height="50"
-        primary-color="rgba(214, 210, 210,0.6)"
-        secondary-color="rgba(214, 210, 210,1)"
+        width="400"
+        height="120"
+        primary-color="rgba(214, 210, 210, 0.4)"
+        secondary-color="rgba(214, 210, 210, 0.7)"
       >
         <rect
           x="0"
@@ -103,23 +104,7 @@
           rx="8"
           ry="6"
           width="100%"
-          height="8"
-        />
-        <rect
-          x="0"
-          y="20"
-          rx="8"
-          ry="6"
-          width="100%"
-          height="8"
-        />
-        <rect
-          x="0"
-          y="40"
-          rx="8"
-          ry="6"
-          width="100%"
-          height="8"
+          height="120"
         />
       </ContentLoader>
     </div>
