@@ -17,31 +17,35 @@
                   @selected="onDateSelected"
                 />
               </div>
-              <multiselect
-                v-model="selectedZone"
-                class="optZone md:mx-1 my-1 w-full"
-                :options="optionsZone"
-                track-by="value"
-                :allow-empty="false"
-                label="label"
-                select-label=""
-                deselect-label=""
-                selected-label=""
-                @input="setSelectedZone"
-              />
-              <multiselect
-                v-model="selectedCity"
-                :disabled="selectedZone.value === 'all'"
-                class="optCity md:mx-1 my-1 w-full"
-                :allow-empty="false"
-                :options="optionsCity"
-                track-by="value"
-                label="label"
-                select-label=""
-                deselect-label=""
-                selected-label=""
-                @input="setSelectedCity"
-              />
+              <div class="optZone md:mx-1 ">
+                <multiselect
+                  v-model="selectedZone"
+                  class="my-1 w-full"
+                  :options="optionsZone"
+                  track-by="value"
+                  :allow-empty="false"
+                  label="label"
+                  select-label=""
+                  deselect-label=""
+                  selected-label=""
+                  @input="setSelectedZone"
+                />
+              </div>
+              <div class="optCity md:mx-1 ">
+                <multiselect
+                  v-model="selectedCity"
+                  :disabled="selectedZone.value === 'all'"
+                  class="my-1 w-full"
+                  :allow-empty="false"
+                  :options="optionsCity"
+                  track-by="value"
+                  label="label"
+                  select-label=""
+                  deselect-label=""
+                  selected-label=""
+                  @input="setSelectedCity"
+                />
+              </div>
             </client-only>
           </div>
         </div>
@@ -447,6 +451,10 @@ export default {
       border-radius: 4px;
       border: 1px solid #e8e8e8;
     }
+  }
+
+  .optZone, .optCity {
+    min-width: 120px;
   }
 
 </style>
