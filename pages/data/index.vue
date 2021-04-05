@@ -7,7 +7,7 @@
       </h3>
       <small class="text-xl opacity-75">*Update Terakhir: {{ lastUpdatedAt }}</small>
     </header>
-    <section class="m-4 mb-8 md:m-8">
+    <section class="m-4 mb-8 md:m-5">
       <DataSummaryIstilahBaru />
     </section>
     <section class="m-4 mb-8 md:m-8">
