@@ -58,9 +58,7 @@
             <div class="banner-healthcare bg-no-repeat bg-right-bottom m-4 mb-8 md:m-8 h-48 rounded-lg shadow-md relative" style="height: 320px;background-color: #69b85d;">
               <div class="float-left py-6 px-10">
                 <div class="w-text xl:text-2xl font-bold">
-                  Ketahui informasi lebih lengkap mengenai <br>
-                  Ketersediaan Tempat Tidur (TT)<br>
-                  RS Menangani Covid-19 Jawa Barat
+                  Keterisian Tempat Tidur (BOR) Berdasarkan Gejala dan Ruang Perawatan di Rumah Sakit <br><br>
                 </div>
                 <button class="bg-white py-2 px-4 rounded font-semibold mt-5 hover:shadow">
                   Lihat Selengkapnya <FontAwesomeIcon :icon="faAngleRight" class="ml-2 w-text xl:text-xl align-middle" />

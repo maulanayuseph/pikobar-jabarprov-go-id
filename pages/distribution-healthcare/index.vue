@@ -112,7 +112,7 @@ export default {
   methods: {},
   head () {
     const title =
-      'Ketersediaan Tempat Tidur - Pikobar [Pusat Informasi dan Koordinasi COVID-19 Jawa Barat]'
+      'Keterisian Tempat Tidur - Pikobar [Pusat Informasi dan Koordinasi COVID-19 Jawa Barat]'
     return {
       title,
       meta: [
