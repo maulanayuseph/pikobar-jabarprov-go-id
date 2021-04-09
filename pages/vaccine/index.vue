@@ -19,84 +19,170 @@
         </div>
       </div>
     </section>
-    <div class="container mx-auto">
-      <div class="m-4 p-5 rounded-lg bg-white shadow">
-        <!-- Do not use v-if to prevent re-hydration on client renders -->
-        <div
-          v-show="contentVaksin.length > 0"
-          class="flex flex-col gap-8">
+    <div class="container mx-auto grid grid-cols-6">
+      <div class="container mx-auto col-span-6 lg:col-span-4">
+        <div class="m-4 p-5 rounded-lg bg-white shadow">
+          <!-- Do not use v-if to prevent re-hydration on client renders -->
           <div
-            v-for="data of contentVaksin"
-            :key="data.id"
-          >
-            <h2 class="text-3xl md:text-2xl font-bold leading-normal text-gray-800">
-              {{ data.title }}
-            </h2>
-            <!-- eslint-disable vue/no-v-html -->
-            <p
-              class="text-gray-700 text-lg md:text-base"
-              v-html="data.content"
+            v-show="contentVaksin.length > 0"
+            class="flex flex-col gap-8">
+            <div
+              v-for="data of contentVaksin"
+              :key="data.id"
+            >
+              <h2 class="text-3xl md:text-2xl font-bold leading-normal text-gray-800">
+                {{ data.title }}
+              </h2>
+              <!-- eslint-disable vue/no-v-html -->
+              <p
+                class="text-gray-700 text-lg md:text-base"
+                v-html="data.content"
+              />
+              <!-- eslint-enable vue/no-v-html -->
+              <span class="text-blue-500 italic underline">
+                Sumber: {{ data.source || '' }}
+              </span>
+            </div>
+          </div>
+          <!-- Do not use v-if to prevent re-hydration on client renders -->
+          <content-loader
+            v-show="contentVaksin.length === 0"
+            :speed="2"
+            primary-color="#f3f3f3"
+            secondary-color="#ecebeb">
+            <rect
+              x="0"
+              y="0"
+              rx="0"
+              ry="0"
+              width="15%"
+              height="10" />
+            <rect
+              x="0"
+              y="12"
+              rx="0"
+              ry="0"
+              width="100%"
+              height="8"
             />
-            <!-- eslint-enable vue/no-v-html -->
-            <span class="text-blue-500 italic underline">
-              Sumber: {{ data.source || '' }}
-            </span>
+            <rect
+              x="0"
+              y="22"
+              rx="0"
+              ry="0"
+              width="100%"
+              height="8"
+            />
+            <rect
+              x="0"
+              y="32"
+              rx="0"
+              ry="0"
+              width="100%"
+              height="8"
+            />
+            <rect
+              x="0"
+              y="42"
+              rx="0"
+              ry="0"
+              width="100%"
+              height="8"
+            />
+            <rect
+              x="0"
+              y="52"
+              rx="0"
+              ry="0"
+              width="25%"
+              height="10"
+            />
+          </content-loader>
+        </div>
+      </div>
+      <div class="container mx-auto col-span-6 lg:col-span-2">
+        <div class="m-4 p-5 rounded-lg bg-white shadow">
+          <!-- Do not use v-if to prevent re-hydration on client renders -->
+          <h3 class="text-lg lg:text-2xl mb-4">
+            <strong>Anti Hoax</strong>
+          </h3>
+          <HoaxNews
+            :data="hoaxData"
+          />
+          <HoaxNews
+            :data="hoaxData"
+          />
+          <HoaxNews
+            :data="hoaxData"
+          />
+          <HoaxNews
+            :data="hoaxData"
+          />
+          <!-- Do not use v-if to prevent re-hydration on client renders -->
+          <content-loader
+            v-show="contentVaksin.length === 0"
+            :speed="2"
+            primary-color="#f3f3f3"
+            secondary-color="#ecebeb">
+            <rect
+              x="0"
+              y="0"
+              rx="0"
+              ry="0"
+              width="15%"
+              height="10" />
+            <rect
+              x="0"
+              y="12"
+              rx="0"
+              ry="0"
+              width="100%"
+              height="8"
+            />
+            <rect
+              x="0"
+              y="22"
+              rx="0"
+              ry="0"
+              width="100%"
+              height="8"
+            />
+            <rect
+              x="0"
+              y="32"
+              rx="0"
+              ry="0"
+              width="100%"
+              height="8"
+            />
+            <rect
+              x="0"
+              y="42"
+              rx="0"
+              ry="0"
+              width="100%"
+              height="8"
+            />
+            <rect
+              x="0"
+              y="52"
+              rx="0"
+              ry="0"
+              width="25%"
+              height="10"
+            />
+          </content-loader>
+          <div class="text-center md:self-center mb-2 xl:mt-8 py-2 rounded-lg border-grey-50 border-2 border-solid">
+            <a
+              target="_blank"
+              class="px-4 py-2 font-bold text-lg text-gray-600 hover:text-gray-500"
+              href="https://saberhoaks.jabarprov.go.id/v2/klarifikasi?key=vaksin"
+            >
+              Lihat Selengkapnya
+              <FontAwesomeIcon class="ml-2" :icon="icon.faArrowRight" />
+            </a>
           </div>
         </div>
-        <!-- Do not use v-if to prevent re-hydration on client renders -->
-        <content-loader
-          v-show="contentVaksin.length === 0"
-          :speed="2"
-          primary-color="#f3f3f3"
-          secondary-color="#ecebeb">
-          <rect
-            x="0"
-            y="0"
-            rx="0"
-            ry="0"
-            width="15%"
-            height="10" />
-          <rect
-            x="0"
-            y="12"
-            rx="0"
-            ry="0"
-            width="100%"
-            height="8"
-          />
-          <rect
-            x="0"
-            y="22"
-            rx="0"
-            ry="0"
-            width="100%"
-            height="8"
-          />
-          <rect
-            x="0"
-            y="32"
-            rx="0"
-            ry="0"
-            width="100%"
-            height="8"
-          />
-          <rect
-            x="0"
-            y="42"
-            rx="0"
-            ry="0"
-            width="100%"
-            height="8"
-          />
-          <rect
-            x="0"
-            y="52"
-            rx="0"
-            ry="0"
-            width="25%"
-            height="10"
-          />
-        </content-loader>
       </div>
     </div>
     <div class="container mx-auto">
@@ -151,11 +237,15 @@
   </div>
 </template>
 <script>
+import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
 import { ContentLoader } from 'vue-content-loader'
 import { analytics } from '~/lib/firebase'
+import HoaxNews from '~/components/Vaccine/HoaxNews.vue'
+
 export default {
   components: {
-    ContentLoader
+    ContentLoader,
+    HoaxNews
   },
   async fetch () {
     await this.$store.dispatch('vaksin/getItems')
@@ -174,7 +264,15 @@ export default {
   },
   data () {
     return {
-      whatsappBacklink: '#'
+      whatsappBacklink: '#',
+      hoaxData: {
+        title: '10 Orang Di Jerman Meninggal Dunia Guyss Tau Gak sih Guyss Tau Gak sih Guyss Tau Gak sih',
+        date: '31 Feb 2021',
+        image: '/img/hoax.jpg'
+      },
+      icon: {
+        faArrowRight
+      }
     }
   },
   computed: {

@@ -78,6 +78,16 @@ html {
   }
 }
 
+.news-source {
+  font-size: 10px;
+  @apply bg-brand-blue-darker text-white py-1 px-3 rounded-full text-center;
+}
+
+.news-date {
+  color: #757575;
+  @apply text-xs;
+}
+
 /* purgecss end ignore */
 // .calendar-right-to-left{
 //   margin-left: -650px !important;
