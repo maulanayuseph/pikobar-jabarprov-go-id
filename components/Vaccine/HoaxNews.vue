@@ -8,7 +8,7 @@
         <span class="news-source">
           Jabar Saber Hoax
         </span>
-        <strong class="text-md">{{ title }}</strong>
+        <strong class="text-md wrap-title">{{ title }}</strong>
         <div class="news-date">
           <strong>{{ data.date }}</strong>
         </div>
@@ -49,5 +49,11 @@ export default {
   &__content {
     @apply flex flex-col justify-between items-start;
   }
+}
+.wrap-title {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 </style>
