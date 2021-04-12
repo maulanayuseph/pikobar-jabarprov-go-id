@@ -178,7 +178,7 @@
         </div>
       </div>
     </div>
-    <div class="my-6 py-6">
+    <div class="mt-6 mb-12 py-6">
       <div class="container flex flex-row mx-auto items-end mb-4">
         <h3 class="text-lg lg:text-2xl ml-4 mr-8">
           <strong>Berita</strong>
