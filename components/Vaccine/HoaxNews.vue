@@ -26,19 +26,6 @@ export default {
       default: null
     }
   },
-  data () {
-    return {
-      // TODO: remove this
-      maxLength: 50
-    }
-  },
-  computed: {
-    // TODO: remove this
-    title () {
-      if (this.data.title.length <= this.maxLength) { return this.data.title }
-      return this.data.title.substr(0, this.data.title.lastIndexOf(' ', this.maxLength)) + ' ...'
-    }
-  },
   methods: {
     formatDateLong
   }
