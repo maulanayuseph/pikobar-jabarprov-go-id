@@ -104,7 +104,6 @@ export default {
   methods: {
     changeActiveTooltip (id) {
       this.activeTooltip = id
-      console.log(id)
     }
   }
 }

@@ -216,7 +216,6 @@ export default {
   },
   methods: {
     onChanges () {
-      console.log('faskes on changes')
       this.dataJson.lini1_rujukan = []
       this.dataJson.lini1_non = []
       this.dataJson.lini2_non = []
@@ -228,8 +227,6 @@ export default {
           this.dataJson.lini1_non.push(row)
         } else if (row.tipe_faskes === 2) {
           this.dataJson.lini2_non.push(row)
-        } else {
-          // console.log('tidak masuk kategori')
         }
       })
 

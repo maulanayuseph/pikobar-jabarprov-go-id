@@ -104,8 +104,6 @@ export default {
         this.$store.dispatch('data-isolasi-harian-kemenkes-v2/getItems'),
         this.$store.dispatch('data-isolasi-lastdata-kemenkes-v2/getItems')
       ]).then(() => {
-      }).catch((error) => {
-        console.log(error)
       })
     })
   },
