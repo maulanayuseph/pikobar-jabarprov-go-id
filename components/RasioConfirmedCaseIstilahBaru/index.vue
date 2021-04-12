@@ -51,7 +51,8 @@
 
 <script>
 import { ContentLoader } from 'vue-content-loader'
-import _ from 'lodash'
+import _forEach from 'lodash/forEach'
+import _orderBy from 'lodash/orderBy'
 import BarChart from './BarChart.js'
 
 export default {
@@ -208,7 +209,7 @@ export default {
         labels: [],
         datasets: []
       }
-      const sortedData = _.orderBy(
+      const sortedData = _orderBy(
         data.wilayah,
         [category],
         ['desc']
@@ -259,7 +260,7 @@ export default {
           }
         ]
 
-        _.forEach(sortedData, (element) => {
+        _forEach(sortedData, (element) => {
           chartData.labels.push(element[codeLabel])
           chartData.datasets[0].data.push(element.probable_diisolasi)
           chartData.datasets[1].data.push(element.closecontact_dikarantina)
@@ -294,7 +295,7 @@ export default {
           }
         ]
 
-        _.forEach(sortedData, (element) => {
+        _forEach(sortedData, (element) => {
           chartData.labels.push(element[codeLabel])
           chartData.datasets[0].data.push(element.confirmation_meninggal)
           chartData.datasets[1].data.push(element.confirmation_selesai)
@@ -311,7 +312,7 @@ export default {
             barPercentage: 1
           }
         ]
-        _.forEach(sortedData, (element) => {
+        _forEach(sortedData, (element) => {
           chartData.labels.push(element[codeLabel])
           chartData.datasets[0].data.push(element[category])
         })

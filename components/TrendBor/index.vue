@@ -79,7 +79,8 @@
 
 <script>
 import { ContentLoader } from 'vue-content-loader'
-import _ from 'lodash'
+import _forEach from 'lodash/forEach'
+import _find from 'lodash/find'
 import moment from 'moment'
 import LineChart from './LineChart.js'
 
@@ -274,10 +275,10 @@ export default {
     setSelectedZone () {
       const optionsCity = []
       const activeZone = this.selectedZone.value
-      const zone = _.find(this.groupZone, (o) => { return o.id === activeZone })
+      const zone = _find(this.groupZone, (o) => { return o.id === activeZone })
 
       if (activeZone !== 'all') {
-        _.forEach(this.listCity, (element) => {
+        _forEach(this.listCity, (element) => {
           if (zone.data.includes(element.value)) {
             optionsCity.push(element)
           }
@@ -364,7 +365,7 @@ export default {
         ]
       }
 
-      _.forEach(data, (elem) => {
+      _forEach(data, (elem) => {
         const dateTime = new Date(elem.tanggal).getTime()
         const startTime = this.activeDate.start.getTime()
         const endTime = this.activeDate.end.getTime()
@@ -391,7 +392,7 @@ export default {
       let total = 0
 
       if (length > 0) {
-        _.forEach(labels, (element) => {
+        _forEach(labels, (element) => {
           const date = element.split('/')
           if (activeMonth === date[1]) {
             listMonth[i].total++
@@ -405,7 +406,7 @@ export default {
         })
 
         i = 0
-        _.forEach(listMonth, (element, index) => {
+        _forEach(listMonth, (element, index) => {
           let color = '#2D2D2D'
           if (index % 2 === 0) {
             color = '#3C3B3B'

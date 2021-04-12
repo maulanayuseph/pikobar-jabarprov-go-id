@@ -56,7 +56,9 @@
 
 <script>
 import { ContentLoader } from 'vue-content-loader'
-import _ from 'lodash'
+import _forEach from 'lodash/forEach'
+import _filter from 'lodash/filter'
+import _orderBy from 'lodash/orderBy'
 import BarChart from './BarChart.js'
 export default {
   name: 'ChartBorZone',
@@ -212,12 +214,12 @@ export default {
         'Priangan Barat',
         'Priangan Timur'
       ]
-      let dataBor = _.filter(this.isolateLastData, (o) => {
+      let dataBor = _filter(this.isolateLastData, (o) => {
         if (zona.includes(o.kode_wilayah)) {
           return o
         }
       })
-      dataBor = _.orderBy(
+      dataBor = _orderBy(
         dataBor,
         this.activeCategory.bor,
         ['desc']
@@ -252,7 +254,7 @@ export default {
       const data = []
       const bgColors = []
 
-      _.forEach(this.dataBor, (res) => {
+      _forEach(this.dataBor, (res) => {
         const bgColor = (res.kode_wilayah === '32') ? this.activeCategory.colorCenter : this.activeCategory.color
 
         chartData.labels.push(res.nama_wilayah)

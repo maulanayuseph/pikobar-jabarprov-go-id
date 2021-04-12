@@ -114,7 +114,10 @@
 import { ContentLoader } from 'vue-content-loader'
 import { DataTable, ItemsPerPageDropdown, Pagination } from 'v-datatable-light'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
-import _ from 'lodash'
+import _forEach from 'lodash/forEach'
+import _filter from 'lodash/filter'
+import _orderBy from 'lodash/orderBy'
+
 export default {
   name: 'BorHospital',
   components: {
@@ -292,7 +295,7 @@ export default {
     setDataHospital (data) {
       const dataTable = []
       let i = 1
-      _.forEach(data, (el) => {
+      _forEach(data, (el) => {
         dataTable.push(
           {
             no: i,
@@ -312,7 +315,7 @@ export default {
         )
         i++
       })
-      const sortedData = _.orderBy(dataTable, [this.sortField], [this.sort])
+      const sortedData = _orderBy(dataTable, [this.sortField], [this.sort])
       this.totalItems = sortedData.length
       this.dataTable = sortedData
       this.dataHospital = sortedData
@@ -326,7 +329,7 @@ export default {
       this.data = this.dataTable.slice(start, end)
     },
     updateData ({ sortField, sort }) {
-      this.dataTable = _.orderBy(this.dataTable, [sortField], [sort])
+      this.dataTable = _orderBy(this.dataTable, [sortField], [sort])
       this.resetNumber()
       this.changePage(this.currentPage)
     },
@@ -338,7 +341,7 @@ export default {
       this.currentPage = currentPage
     },
     resetNumber () {
-      const data = _.forEach(this.dataTable, (element, index) => {
+      const data = _forEach(this.dataTable, (element, index) => {
         element.no = index + 1
       })
 
@@ -352,18 +355,18 @@ export default {
       const reference = this.selectedHospital.value
 
       if (this.searchHospital !== '') {
-        data = _.filter(data, (o) => { return o.hospital.toLowerCase().includes(this.searchHospital.toLowerCase()) })
+        data = _filter(data, (o) => { return o.hospital.toLowerCase().includes(this.searchHospital.toLowerCase()) })
       }
 
       if (city !== 'all') {
-        data = _.filter(data, (o) => { return o.city === city })
+        data = _filter(data, (o) => { return o.city === city })
       }
 
       if (reference !== 'all') {
-        data = _.filter(data, (o) => { return o.isReference === reference })
+        data = _filter(data, (o) => { return o.isReference === reference })
       }
 
-      _.forEach(data, (elem) => {
+      _forEach(data, (elem) => {
         elem.no = i
         dataTable.push(elem)
         i++
