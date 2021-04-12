@@ -62,9 +62,6 @@
 import { faPlayCircle, faAngleDoubleUp, faInfoCircle, faAngleDoubleDown, faBed } from '@fortawesome/free-solid-svg-icons'
 export default {
   name: 'CardBor',
-  components: {
-    // CardLoader: () => import('./CardLoader')
-  },
   props: {
     bor: {
       type: Object,
@@ -145,13 +142,11 @@ export default {
    margin-top: 20px;
  }
 
-  // -- vars
   $bg-color: #34495e;
   $default-size: 1.3em;
   $label-font-size: $default-size / 7;
   $label-font-size-redo: $default-size * 4;
 
-  // -- mixins
   @mixin size($width, $height) {
       height: $height;
       width: $width;
@@ -248,7 +243,6 @@ export default {
           font-weight: bold;
           font-size: $label-font-size;
           left: $label-font-size-redo / 10;
-          // line-height: $label-font-size-redo * .70;
           position: absolute;
           right: $label-font-size-redo / 10;
           text-align: center;
@@ -290,7 +284,6 @@ export default {
     padding: 10px;
     border-radius: 6px;
     left: 12%;
-    /* Position the tooltip text - see examples below! */
     z-index: 3;
     box-shadow: 4px 4px 4px 1px rgba(0, 0, 0, 0.14);
     font-weight: normal;
