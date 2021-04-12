@@ -4,12 +4,18 @@ import { slugifyArticleRoute } from '../lib/slugify'
 export const ORDER_INDEX = 'published_at'
 export const ORDER_TYPE = 'desc'
 
-export function get (options = { perPage: 3 }) {
-  return db.collection('articles')
+export function get (options = { perPage: 3, tag: null }) {
+  let query = db.collection('articles')
     .orderBy(ORDER_INDEX, 'desc')
     .limit(options.perPage)
+
+  if (typeof options.tag === 'string' && options.tag.length) {
+    query = query.where('tag', '==', options.tag)
+  }
+  return query
     .get()
     .then((docs) => {
+      console.log({ docs })
       if (!docs.empty) {
         return docs.docs.map((doc) => {
           const data = doc.data()
