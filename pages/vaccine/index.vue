@@ -278,27 +278,6 @@ export default {
   data () {
     return {
       whatsappBacklink: '#',
-      hoaxData1: {
-        title: '10 Orang Di Jerman Meninggal Dunia Guyss Tau Gak sih Guyss Tau Gak sih Guyss Tau Gak sih',
-        date: '31 Feb 2021',
-        image: '/img/hoax.jpg'
-      },
-      hoaxData2: {
-        title: 'JDS Merger dengan SIPD Jerman Meninggal Dunia Guyss 10 Orang ',
-        date: '31 Feb 2021',
-        image: '/img/hoax.jpg'
-      },
-      hoaxData3: {
-        title: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit',
-        date: '31 Feb 2021',
-        image: '/img/hoax.jpg'
-      },
-      newsData: {
-        title: '10 Orang Di Jerman Meninggal Dunia Guyss Tau Gak sih Guyss Tau Gak sih Guyss Tau Gak sih',
-        date: '31 Feb 2021',
-        image: '/img/donasi-3.jpg',
-        source: 'Humas Jabar Bos'
-      },
       icon: {
         faArrowRight
       }
