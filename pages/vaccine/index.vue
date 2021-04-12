@@ -355,15 +355,15 @@ export default {
 </script>
 <style lang="scss" scoped>
 .pl-resp {
-  @media (min-width: 1024px) {
-    padding-left: 20.5rem;
+  @media (min-width: 1280px) {
+    padding-left: 17vw;
+  }
+  @media (min-width: 768px) and (max-width: 1279px) {
+    padding-left: 1.5vw;
   }
 }
 .scroll {
   scrollbar-color: rgba(255,0,0,0);
   scrollbar-width: thin;
 }
-.scroll-content::-webkit-scrollbar-track{-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.1);box-shadow: inset 0 0 6px rgba(0,0,0,0.1);background-color: #ccc;}
-.scroll-content::-webkit-scrollbar{width: 5px;height: 1px;background-color: #ccc;}
-.scroll-content::-webkit-scrollbar-thumb{background-color: #ff7043;}
 </style>
