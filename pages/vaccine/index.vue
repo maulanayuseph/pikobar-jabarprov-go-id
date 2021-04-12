@@ -185,6 +185,36 @@
         </div>
       </div>
     </div>
+    <div class="my-6 py-6">
+      <div class="container flex flex-row mx-auto items-end mb-4">
+        <h3 class="text-lg lg:text-2xl ml-4 mr-8">
+          <strong>Berita</strong>
+        </h3>
+        <span>
+          <strong class="text-green-700">Lihat Selengkapnya</strong>
+        </span>
+      </div>
+      <div class="flex flex-row gap-6 overflow-x-auto overflow-y-hidden pl-resp scroll">
+        <NewsCard
+          :data="newsData"
+        />
+        <NewsCard
+          :data="newsData"
+        />
+        <NewsCard
+          :data="newsData"
+        />
+        <NewsCard
+          :data="newsData"
+        />
+        <NewsCard
+          :data="newsData"
+        />
+        <NewsCard
+          :data="newsData"
+        />
+      </div>
+    </div>
     <div class="container mx-auto">
       <div class="m-4 p-5 rounded-lg bg-white shadow grid grid-cols-2 gap-4">
         <div class="bg-gray-100 rounded-md col-span-2 md:col-span-1 grid grid-cols-2 p-4 gap-8">
@@ -241,11 +271,13 @@ import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
 import { ContentLoader } from 'vue-content-loader'
 import { analytics } from '~/lib/firebase'
 import HoaxNews from '~/components/Vaccine/HoaxNews.vue'
+import NewsCard from '~/components/Vaccine/NewsCard.vue'
 
 export default {
   components: {
     ContentLoader,
-    HoaxNews
+    HoaxNews,
+    NewsCard
   },
   async fetch () {
     await this.$store.dispatch('vaksin/getItems')
@@ -269,6 +301,12 @@ export default {
         title: '10 Orang Di Jerman Meninggal Dunia Guyss Tau Gak sih Guyss Tau Gak sih Guyss Tau Gak sih',
         date: '31 Feb 2021',
         image: '/img/hoax.jpg'
+      },
+      newsData: {
+        title: '10 Orang Di Jerman Meninggal Dunia Guyss Tau Gak sih Guyss Tau Gak sih Guyss Tau Gak sih',
+        date: '31 Feb 2021',
+        image: '/img/donasi-3.jpg',
+        source: 'Humas Jabar Bos'
       },
       icon: {
         faArrowRight
@@ -305,3 +343,17 @@ export default {
   }
 }
 </script>
+<style lang="scss" scoped>
+.pl-resp {
+  @media (min-width: 1024px) {
+    padding-left: 20.5rem;
+  }
+}
+.scroll {
+  scrollbar-color: rgba(255,0,0,0);
+  scrollbar-width: thin;
+}
+.scroll-content::-webkit-scrollbar-track{-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.1);box-shadow: inset 0 0 6px rgba(0,0,0,0.1);background-color: #ccc;}
+.scroll-content::-webkit-scrollbar{width: 5px;height: 1px;background-color: #ccc;}
+.scroll-content::-webkit-scrollbar-thumb{background-color: #ff7043;}
+</style>
