@@ -74,7 +74,8 @@ export default {
           icon: this.icon.faTachometerAlt,
           children: [
             { to: '/data', label: 'Statistik', icon: this.icon.faChartLine },
-            { to: '/distribution-case', label: 'Sebaran Kasus', icon: this.icon.faMapMarked }
+            { to: '/distribution-case', label: 'Sebaran Kasus', icon: this.icon.faMapMarked },
+            { to: '/distribution-healthcare', label: 'Keterisian Tempat Tidur', icon: this.icon.faBed }
           ]
         },
         { to: '/articles?tab=jabar', label: 'Berita', icon: this.icon.faNewspaper },
@@ -109,7 +110,7 @@ export default {
         return
       }
 
-      const { faHome, faChartLine, faNewspaper, faPhoneAlt, faQuestionCircle, faComment, faWallet, faBoxOpen, faTachometerAlt, faMapMarked } = lib
+      const { faHome, faChartLine, faNewspaper, faPhoneAlt, faQuestionCircle, faComment, faWallet, faBoxOpen, faTachometerAlt, faMapMarked, faBed } = lib
       this.icon = {
         faHome,
         faChartLine,
@@ -120,7 +121,8 @@ export default {
         faWallet,
         faBoxOpen,
         faTachometerAlt,
-        faMapMarked
+        faMapMarked,
+        faBed
       }
     },
     animate (toggled) {

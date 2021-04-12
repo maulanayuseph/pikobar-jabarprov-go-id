@@ -9,33 +9,37 @@
           </h3>
         </div>
         <div class="lg:w-1/3 md:auto sm:w-auto">
-          <div class="flex">
-            <div class="w-full mr-2">
-              <multiselect
-                v-model="selectedKota"
-                :options="optionsKota"
-                track-by="value"
-                label="label"
-                select-label=""
-                deselect-label=""
-                selected-label=""
-                @input="setSelectedKota"
-              />
+          <client-only>
+            <div class="flex">
+              <div class="w-full mr-2">
+                <multiselect
+                  v-model="selectedKota"
+                  :options="optionsKota"
+                  track-by="value"
+                  label="label"
+                  :allow-empty="false"
+                  select-label=""
+                  deselect-label=""
+                  selected-label=""
+                  @input="setSelectedKota"
+                />
+              </div>
+              <div class="w-full">
+                <multiselect
+                  v-model="selectedKecamatan"
+                  :options="optionsKecamatan"
+                  track-by="value"
+                  label="label"
+                  :allow-empty="false"
+                  select-label=""
+                  deselect-label=""
+                  selected-label=""
+                  :disabled="selectedKota.value === '32' ? true : false"
+                  @input="setSelectedKecamatan"
+                />
+              </div>
             </div>
-            <div class="w-full">
-              <multiselect
-                v-model="selectedKecamatan"
-                :options="optionsKecamatan"
-                track-by="value"
-                label="label"
-                select-label=""
-                deselect-label=""
-                selected-label=""
-                :disabled="selectedKota.value === '32' ? true : false"
-                @input="setSelectedKecamatan"
-              />
-            </div>
-          </div>
+          </client-only>
         </div>
       </div>
     </header>
@@ -307,6 +311,9 @@ export default {
         this.activeRegionId = val
         this.activeRegionCategory = 'kecamatan'
       }
+
+      this.$emit('update:activeRegionId', this.activeRegionId)
+      this.$emit('update:activeRegionCategory', this.activeRegionCategory)
     },
     setSelectedKecamatan () {
       const val = this.selectedKecamatan.value

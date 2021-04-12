@@ -98,7 +98,7 @@ import { faDownload } from '@fortawesome/free-solid-svg-icons'
 import { formatDateTimeShort } from '~/lib/date'
 import { analytics } from '~/lib/firebase'
 import { DataTable, ItemsPerPageDropdown, Pagination  } from 'v-datatable-light'
-import _ from 'lodash'
+import _orderBy from 'lodash/orderBy'
 import XLSX from 'xlsx'
 
 const addZero = value => ("0" + value).slice(-2)
@@ -502,7 +502,7 @@ export default {
     dtEditClick: props => alert("Click props:" + JSON.stringify(props)),
 
     dtUpdateSort: function({ sortField, sort }) {
-      const sortedData = _.orderBy(this.jsonDataRekapitulasiJabarKumulatifKab, [sortField], [sort])
+      const sortedData = _orderBy(this.jsonDataRekapitulasiJabarKumulatifKab, [sortField], [sort])
       const start = (this.currentPage - 1) * this.itemsPerPage
       const end = this.currentPage * this.itemsPerPage
       this.data = sortedData.slice(start, end)

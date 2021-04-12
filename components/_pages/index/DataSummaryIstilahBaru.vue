@@ -144,7 +144,7 @@
         </CounterCardLoader>
       </section>
 
-      <section class="flex flex-row flex-wrap">
+      <section class="flex flex-col md:flex-row flex-wrap">
         <!-- Kontak Erat -->
         <CounterCardLoader
           :is-pending="isLoadingJabar"
@@ -152,7 +152,7 @@
           :is-tooltip-closecontact="true"
           :is-tooltip-suspect="false"
           :is-tooltip-probable="false"
-          class="border border-solid digital-signage2 bg-white text-title"
+          class="flex-1 border border-solid bg-white text-title md:mx-2 mb-8"
           label="Kontak Erat"
         >
           <div class="flex flex-col text-white text-center mt-3 font-bold">
@@ -196,7 +196,7 @@
           :is-tooltip-closecontact="false"
           :is-tooltip-suspect="true"
           :is-tooltip-probable="false"
-          class="mb-8 border border-solid digital-signage2 bg-white text-title"
+          class="flex-1 mb-8 border border-solid bg-white text-title md:mx-2"
           label="Suspek"
         >
           <div class="flex flex-col text-white text-center mt-3 font-bold">
@@ -249,7 +249,7 @@
           :is-tooltip-closecontact="false"
           :is-tooltip-suspect="false"
           :is-tooltip-probable="true"
-          class="mb-8 border border-solid digital-signage2 bg-white text-title"
+          class="flex-1 mb-8 border border-solid bg-white text-title md:mx-2"
           label="Probable"
         >
           <div class="flex flex-col text-white text-center mt-3 font-bold">
@@ -534,8 +534,6 @@ export default {
   }
   .digital-signage2 {
     width: 31% !important;
-    margin-left: auto;
-    margin-right: auto;
     margin-bottom: 20px;
   }
 }

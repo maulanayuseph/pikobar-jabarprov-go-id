@@ -102,7 +102,7 @@ export default {
           children: [
             { to: '/data', label: 'Statisik' },
             { to: '/distribution-case', label: 'Sebaran Kasus' },
-            { to: '/distribution-healthcare', label: 'Sebaran Faskes' }
+            { to: '/distribution-healthcare', label: 'Keterisian Tempat Tidur' }
           ]
         },
         { to: '/articles?tab=jabar', label: 'Berita' },

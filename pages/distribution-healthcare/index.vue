@@ -1,18 +1,52 @@
 <template>
   <div class="container mx-auto">
     <br>
-    <header class="m-4 mb-8 md:m-8">
+    <div class="m-4 mb-4 md:m-8 md:mb-4">
       <div class="flex flex-col lg:flex-row lg:items-stretch">
         <div class="lg md:auto sm:w-auto">
           <h3 class="text-3xl text-gray-900 font-bold text-left leading-none" style="margin-bottom: 10px; ">
-            Sebaran Faskes di Jawa Barat
+            Keterisian Tempat Tidur (BOR) Berdasarkan Gejala dan Ruang Perawatan di Rumah Sakit
           </h3>
+          <small class="text-xl opacity-75">Update Terakhir: {{ lastupdate }}</small>
         </div>
       </div>
-    </header>
-    <section class="m-4 md:m-8">
+    </div>
+    <div class="m-4 mb-8 md:my-4 md:mx-8">
+      <div class="disclaimer flex flex-nowrap lg:flex-row items-start rounded p-3 text-sm">
+        <FontAwesomeIcon
+          class="inline-block mr-2 cursor-pointer mt-1"
+          :icon="icons.faInfoCircle"
+        />
+        <div class="ml-2">
+          Sumber data yang digunakan adalah Data RS <i>Online</i> (Kemenkes) yang disesuaikan dengan kategori yang ditetapkan Dinas Kesehatan Jawa Barat. Pembaruan data dilakukan secara harian (tidak <i>realtime</i>).
+        </div>
+      </div>
+    </div>
+    <div class="m-1 md:m-4">
+      <BorAggregation />
+    </div>
+    <div class="m-1 md:m-4">
+      <BorAggregationCategory />
+    </div>
+    <div class="m-5 md:m-8">
+      <TrendBor />
+    </div>
+    <div class="m-1 md:m-4">
+      <div class="flex flex-col sm:flex-row sm:flex-wrap">
+        <div class="flex-1 mx-2 my-1">
+          <ChartBorZone />
+        </div>
+        <div class="flex-1 mx-2 my-1">
+          <ChartBorCity />
+        </div>
+      </div>
+    </div>
+    <div class="m-5 md:m-8">
+      <BorHospital />
+    </div>
+    <div class="m-4 md:m-8">
       <div class="flex flex-col lg:flex-row lg:items-stretch">
-        <div class="w-full mb-6 lg lg:mr-6 lg:mb-0 bg-white rounded-lg mb-8 shadow-lg">
+        <div class="w-full mb-6 lg lg:mb-0 bg-white rounded-lg mb-8 shadow-lg">
           <div>
             <h3 class="p-5 text-lg md:text">
               <b>Peta Sebaran Faskes di Jawa Barat</b>
@@ -24,27 +58,59 @@
           </div>
         </div>
       </div>
-    </section>
+    </div>
   </div>
 </template>
 
 <script>
+import { faInfoCircle } from '@fortawesome/free-solid-svg-icons'
+import moment from 'moment'
 import { analytics } from '~/lib/firebase'
 export default {
   components: {
-    MapV4SebaranFaskes: () => import('~/components/MapV4SebaranFaskes')
+    MapV4SebaranFaskes: () => import('~/components/MapV4SebaranFaskes'),
+    BorAggregation: () => import('~/components/BorAggregation'),
+    BorAggregationCategory: () => import('~/components/BorAggregationCategory'),
+    ChartBorZone: () => import('~/components/ChartBorZone'),
+    ChartBorCity: () => import('~/components/ChartBorCity'),
+    TrendBor: () => import('~/components/TrendBor'),
+    BorHospital: () => import('~/components/BorHospital')
+  },
+  data () {
+    return {
+      lastupdate: '',
+      icons: {
+        faInfoCircle
+      }
+    }
+  },
+  computed: {
+    isolateLastDataMetadata () {
+      return this.$store.getters['data-isolasi-lastdata-kemenkes-v2/metadata']
+    }
+  },
+  watch: {
+    isolateLastDataMetadata (val) {
+      this.lastupdate = moment(val.last_update).locale('id').format('DD MMMM YYYY')
+    }
   },
   mounted () {
     this.$nextTick(() => {
       if (process.browser) {
         analytics.logEvent('dashboard_view')
       }
+      Promise.all([
+        this.$store.dispatch('data-isolasi-total-kemenkes-v2/getItems'),
+        this.$store.dispatch('data-isolasi-harian-kemenkes-v2/getItems'),
+        this.$store.dispatch('data-isolasi-lastdata-kemenkes-v2/getItems')
+      ]).then(() => {
+      })
     })
   },
-  methods: {
-  },
+  methods: {},
   head () {
-    const title = 'Sebaran Faskes - Pikobar [Pusat Informasi dan Koordinasi COVID-19 Jawa Barat]'
+    const title =
+      'Keterisian Tempat Tidur - Pikobar [Pusat Informasi dan Koordinasi COVID-19 Jawa Barat]'
     return {
       title,
       meta: [
@@ -63,11 +129,19 @@ export default {
   }
 }
 </script>
-
+<style scoped>
+.disclaimer {
+  background-color: #e0f2fe;
+  border: 1px solid #0166c7;
+}
+.disclaimer svg {
+  color: #0166c7
+}
+</style>
 <style>
-@import "leaflet-geosearch/assets/css/leaflet.css";
-@import "leaflet.markercluster/dist/MarkerCluster.css";
-@import "leaflet.markercluster/dist/MarkerCluster.Default.css";
+@import 'leaflet-geosearch/assets/css/leaflet.css';
+@import 'leaflet.markercluster/dist/MarkerCluster.css';
+@import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
 .bg-green-100 {
   background-color: #5aaa4e;
 }

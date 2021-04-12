@@ -7,7 +7,7 @@
       </h3>
       <small class="text-xl opacity-75">*Update Terakhir: {{ lastUpdatedAt }}</small>
     </header>
-    <section class="m-4 mb-8 md:m-8">
+    <section class="m-4 mb-8 md:m-5">
       <DataSummaryIstilahBaru />
     </section>
     <section class="m-4 mb-8 md:m-8">
@@ -32,23 +32,42 @@
       </div>
     </section>
     <section>
-      <a
-        href="/distribution-case"
-      >
-        <div class="m-4 mb-8 md:m-8 h-48 bg-orange-600 rounded-lg shadow-md" style="background-color: #FEC52E;">
-          <div class="float-left py-6 px-10" style="position: absolute;">
-            <div class="w-text xl:text-2xl font-bold">
-              Ketahui informasi lebih lengkap mengenai <br>
-              Sebaran Kasus COVID-19 di Provinsi Jawa Barat
-            </div>
+      <div class="flex flex-col md:flex-row">
+        <div class="md:w-1/2">
+          <a
+            href="/distribution-case"
+          >
+            <div class="banner bg-no-repeat bg-right-bottom m-4 mb-8 md:m-8 h-48 bg-orange-600 rounded-lg shadow-md relative" style="height: 320px;background-color: #FEC52E;">
+              <div class="float-left py-6 px-10">
+                <div class="w-text xl:text-2xl font-bold">
+                  Ketahui informasi lebih lengkap mengenai <br>
+                  Sebaran Kasus COVID-19 di Provinsi Jawa Barat
 
-            <button class="bg-white py-2 px-4 rounded font-semibold mt-5 hover:shadow">
-              Lihat Selengkapnya <FontAwesomeIcon :icon="faAngleRight" class="ml-2 w-text xl:text-xl align-middle" />
-            </button>
-          </div>
-          <img class="float-right h-full" src="~assets/banner-sebaran-ilustrasi.png">
+                </div>
+                <button class="bg-white py-2 px-4 rounded font-semibold mt-5 hover:shadow">
+                  Lihat Selengkapnya <FontAwesomeIcon :icon="faAngleRight" class="ml-2 w-text xl:text-xl align-middle" />
+                </button>
+              </div>
+            </div>
+          </a>
         </div>
-      </a>
+        <div class="md:w-1/2">
+          <a
+            href="/distribution-healthcare"
+          >
+            <div class="banner-healthcare bg-no-repeat bg-right-bottom m-4 mb-8 md:m-8 h-48 rounded-lg shadow-md relative" style="height: 320px;background-color: #69b85d;">
+              <div class="float-left py-6 px-10">
+                <div class="w-text xl:text-2xl font-bold">
+                  Keterisian Tempat Tidur (BOR) Berdasarkan Gejala dan Ruang Perawatan di Rumah Sakit <br><br>
+                </div>
+                <button class="bg-white py-2 px-4 rounded font-semibold mt-5 hover:shadow">
+                  Lihat Selengkapnya <FontAwesomeIcon :icon="faAngleRight" class="ml-2 w-text xl:text-xl align-middle" />
+                </button>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
     </section>
 
     <section class="m-4 mb-8 md:m-8">
@@ -230,6 +249,14 @@ export default {
   &[active] {
     @apply text-white bg-brand-green;
   }
+}
+
+.banner {
+  background-image: url('~assets/banner-sebaran-ilustrasi.png');
+}
+
+.banner-healthcare {
+  background-image: url('~assets/banner-healthcare.png');
 }
 </style>
 
