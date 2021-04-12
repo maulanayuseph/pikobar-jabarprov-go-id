@@ -8,7 +8,7 @@
         </div>
         <strong class="text-md wrap-title">{{ data.title }}</strong>
         <div class="news-date">
-          <strong>{{ data.published_at }}</strong>
+          <strong>{{ formatDateLong(data.published_at) }}</strong>
         </div>
       </div>
     </div>
@@ -16,6 +16,7 @@
 </template>
 
 <script>
+import { formatDateIndonesia as formatDateLong } from '../../lib/date'
 export default {
   props: {
     data: {
@@ -23,6 +24,8 @@ export default {
       default: null
     }
   },
+  methods: {
+    formatDateLong
   }
 }
 </script>
