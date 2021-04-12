@@ -6,7 +6,7 @@
         <div class="news-source">
           {{ data.news_channel }}
         </div>
-        <strong class="text-md">{{ title }}</strong>
+        <strong class="text-md wrap-title">{{ data.title }}</strong>
         <div class="news-date">
           <strong>{{ data.published_at }}</strong>
         </div>
@@ -28,7 +28,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-// TODO: use css for line wrapping like news card
 .news-card {
   max-width: 260px;
   min-width: 260px;
@@ -37,5 +36,11 @@ export default {
 }
 .news-content {
   min-height: 145px;
+}
+.wrap-title {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 </style>
