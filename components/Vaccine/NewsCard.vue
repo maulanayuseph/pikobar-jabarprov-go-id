@@ -23,16 +23,6 @@ export default {
       default: null
     }
   },
-  data () {
-    return {
-      maxLength: 40
-    }
-  },
-  computed: {
-    title () {
-      if (this.data.title.length <= this.maxLength) { return this.data.title }
-      return this.data.title.substr(0, this.data.title.lastIndexOf(' ', this.maxLength)) + ' ...'
-    }
   }
 }
 </script>
