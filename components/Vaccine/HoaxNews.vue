@@ -8,9 +8,9 @@
         <span class="news-source">
           Jabar Saber Hoax
         </span>
-        <strong class="text-md wrap-title">{{ title }}</strong>
+        <strong class="text-md wrap-title">{{ data.title }}</strong>
         <div class="news-date">
-          <strong>{{ data.date }}</strong>
+          <strong>{{ formatDateLong(data.published_at) }}</strong>
         </div>
       </div>
     </div>
@@ -18,6 +18,7 @@
 </template>
 
 <script>
+import { formatDateIndonesia as formatDateLong } from '../../lib/date'
 export default {
   props: {
     data: {
@@ -27,14 +28,19 @@ export default {
   },
   data () {
     return {
+      // TODO: remove this
       maxLength: 50
     }
   },
   computed: {
+    // TODO: remove this
     title () {
       if (this.data.title.length <= this.maxLength) { return this.data.title }
       return this.data.title.substr(0, this.data.title.lastIndexOf(' ', this.maxLength)) + ' ...'
     }
+  },
+  methods: {
+    formatDateLong
   }
 }
 </script>
