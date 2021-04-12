@@ -107,16 +107,9 @@
             <strong>Anti Hoax</strong>
           </h3>
           <HoaxNews
-            :data="hoaxData1"
-          />
-          <HoaxNews
-            :data="hoaxData2"
-          />
-          <HoaxNews
-            :data="hoaxData3"
-          />
-          <HoaxNews
-            :data="hoaxData1"
+            v-for="(item, index) in antiHoaxNews"
+            :key="index"
+            :data="item"
           />
           <!-- Do not use v-if to prevent re-hydration on client renders -->
           <content-loader
@@ -190,28 +183,15 @@
         <h3 class="text-lg lg:text-2xl ml-4 mr-8">
           <strong>Berita</strong>
         </h3>
-        <span>
+        <nuxt-link to="/articles?tab=jabar">
           <strong class="text-green-700">Lihat Selengkapnya</strong>
-        </span>
+        </nuxt-link>
       </div>
       <div class="flex flex-row gap-6 overflow-x-auto overflow-y-hidden pl-resp scroll">
         <NewsCard
-          :data="newsData"
-        />
-        <NewsCard
-          :data="newsData"
-        />
-        <NewsCard
-          :data="newsData"
-        />
-        <NewsCard
-          :data="newsData"
-        />
-        <NewsCard
-          :data="newsData"
-        />
-        <NewsCard
-          :data="newsData"
+          v-for="(item, index) in vaccineNews"
+          :key="index"
+          :data="item"
         />
       </div>
     </div>
@@ -267,6 +247,7 @@
   </div>
 </template>
 <script>
+import { mapState } from 'vuex'
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
 import { ContentLoader } from 'vue-content-loader'
 import { analytics } from '~/lib/firebase'
@@ -324,6 +305,12 @@ export default {
     }
   },
   computed: {
+    ...mapState('vaccine-news', {
+      vaccineNews: 'items'
+    }),
+    ...mapState('anti-hoax', {
+      antiHoaxNews: 'items'
+    }),
     contentVaksin () {
       return this.$store.state.vaksin.items
     }
@@ -332,6 +319,10 @@ export default {
     if (process.client || process.browser) {
       analytics.logEvent('vaccinepage_view')
     }
+  },
+  mounted () {
+    this.$store.dispatch('anti-hoax/getItems')
+    this.$store.dispatch('vaccine-news/getItems')
   },
   head () {
     const title = 'Informasi Vaksinasi Covid-19 - Pikobar [Pusat Informasi dan Koordinasi COVID-19 Jawa Barat]'
