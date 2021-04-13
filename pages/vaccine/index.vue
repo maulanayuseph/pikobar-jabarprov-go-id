@@ -187,11 +187,9 @@
           <strong class="text-green-700">Lihat Selengkapnya</strong>
         </nuxt-link>
       </div>
-      <div class="flex flex-row gap-6 overflow-x-auto overflow-y-hidden pl-resp scroll">
-        <NewsCard
-          v-for="(item, index) in vaccineNews"
-          :key="index"
-          :data="item"
+      <div>
+        <CardSwiper
+          :items="vaccineNews"
         />
       </div>
     </div>
@@ -252,13 +250,13 @@ import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
 import { ContentLoader } from 'vue-content-loader'
 import { analytics } from '~/lib/firebase'
 import HoaxNews from '~/components/Vaccine/HoaxNews.vue'
-import NewsCard from '~/components/Vaccine/NewsCard.vue'
+import CardSwiper from '~/components/CardSwiper/index.vue'
 
 export default {
   components: {
     ContentLoader,
     HoaxNews,
-    NewsCard
+    CardSwiper
   },
   async fetch () {
     await this.$store.dispatch('vaksin/getItems')
