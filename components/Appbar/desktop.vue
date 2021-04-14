@@ -106,6 +106,7 @@ export default {
           ]
         },
         { to: '/articles?tab=jabar', label: 'Berita' },
+        { to: '/vaccine', label: 'Vaksinasi' },
         { to: '/faq', label: 'FAQ' },
         { to: '/contact', label: 'Kontak' },
         { to: '/donate/logistic', label: 'Donasi' },
@@ -136,6 +137,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.appbar-menu-item {
+  @apply text-sm;
+}
 .appbar-menu-item.nuxt-link-active {
   &,
   > * {
