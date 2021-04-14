@@ -15,7 +15,6 @@ export function get (options = { perPage: 3, tag: null }) {
   return query
     .get()
     .then((docs) => {
-      console.log({ docs })
       if (!docs.empty) {
         return docs.docs.map((doc) => {
           const data = doc.data()
