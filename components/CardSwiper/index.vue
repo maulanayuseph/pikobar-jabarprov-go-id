@@ -2,12 +2,17 @@
   <client-only>
     <div>
       <template v-if="!isPending">
-        <VueCarousel class="main-carousel" ref="swiper" v-bind="carouselConfig">
+        <VueCarousel
+          ref="swiper"
+          class="main-carousel"
+          v-bind="carouselConfig"
+        >
           <VueCarouselSlide
             v-for="(item, index) in carouselItems"
             :key="index"
             class="mx-5 carousel-item"
             :style="{'--swiper-height': height}"
+            @slide-click="onSlideClick(item)"
           >
             <NewsCard
               :data="item"
@@ -103,6 +108,13 @@ export default {
           }).finally(() => {
             this.isPending = false
           })
+      }
+    }
+  },
+  methods: {
+    onSlideClick (slide) {
+      if (typeof slide.route === 'string' && slide.route.length) {
+        this.$router.push(slide.route)
       }
     }
   }
