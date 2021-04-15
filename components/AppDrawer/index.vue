@@ -75,7 +75,8 @@ export default {
           children: [
             { to: '/data', label: 'Statistik', icon: this.icon.faChartLine },
             { to: '/distribution-case', label: 'Sebaran Kasus', icon: this.icon.faMapMarked },
-            { to: '/distribution-healthcare', label: 'Keterisian Tempat Tidur', icon: this.icon.faBed }
+            { to: '/distribution-healthcare', label: 'Keterisian Tempat Tidur', icon: this.icon.faBed },
+            { to: '/transmission-potential', label: 'Peta Potensi dan Risiko Penularan', icon: this.icon.faMap }
           ]
         },
         { to: '/articles?tab=jabar', label: 'Berita', icon: this.icon.faNewspaper },
@@ -110,7 +111,7 @@ export default {
         return
       }
 
-      const { faHome, faChartLine, faNewspaper, faPhoneAlt, faQuestionCircle, faComment, faWallet, faBoxOpen, faTachometerAlt, faMapMarked, faBed } = lib
+      const { faHome, faChartLine, faNewspaper, faPhoneAlt, faQuestionCircle, faComment, faWallet, faBoxOpen, faTachometerAlt, faMapMarked, faBed, faMap } = lib
       this.icon = {
         faHome,
         faChartLine,
@@ -122,7 +123,8 @@ export default {
         faBoxOpen,
         faTachometerAlt,
         faMapMarked,
-        faBed
+        faBed,
+        faMap
       }
     },
     animate (toggled) {
