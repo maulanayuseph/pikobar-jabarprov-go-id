@@ -181,11 +181,11 @@ export default {
       selectedZone: { value: 'all', label: 'Jawa Barat' },
       listCity: [
         { value: 'all', label: 'Zona Jawa Barat' },
-        { value: 'bodebek', label: 'Zona Bodebek' },
-        { value: 'bandungraya', label: 'Zona Bandung Raya' },
-        { value: 'purwasuka', label: 'Zona Purwasuka' },
-        { value: 'ciayumajakuning', label: 'Zona Ciayumajakuning' },
-        { value: 'prianganbarat', label: 'Zona Priangan Barat' },
+        { value: 'Bodebek', label: 'Zona Bodebek' },
+        { value: 'Bandung Raya', label: 'Zona Bandung Raya' },
+        { value: 'Purwasuka', label: 'Zona Purwasuka' },
+        { value: 'Ciayumajakuning', label: 'Zona Ciayumajakuning' },
+        { value: 'Priangan Barat', label: 'Zona Priangan Barat' },
         { value: 'Priangan Timur', label: 'Zona Priangan Timur' },
         { value: '3201', label: 'Kab. Bogor' },
         { value: '3202', label: 'Kab. Sukabumi' },
@@ -222,27 +222,27 @@ export default {
       groupZone: [
         {
           id: 'Bodebek',
-          data: ['bodebek', '3275', '3276', '3216', '3201', '3271']
+          data: ['Bodebek', '3275', '3276', '3216', '3201', '3271']
         },
         {
           id: 'Bandung Raya',
-          data: ['bandungraya', '3273', '3277', '3204', '3217', '3211']
+          data: ['Bandung Raya', '3273', '3277', '3204', '3217', '3211']
         },
         {
           id: 'Purwasuka',
-          data: ['purwasuka', '3214', '3213', '3215']
+          data: ['Purwasuka', '3214', '3213', '3215']
         },
         {
           id: 'Ciayumajakuning',
-          data: ['ciayumajakuning', '3209', '3274', '3210', '3212', '3208']
+          data: ['Ciayumajakuning', '3209', '3274', '3210', '3212', '3208']
         },
         {
           id: 'Priangan Barat',
-          data: ['prianganbarat', '3203', '3272', '3202']
+          data: ['Priangan Barat', '3203', '3272', '3202']
         },
         {
           id: 'Priangan Timur',
-          data: ['priangantimur', '3205', '3278', '3206', '3207', '3218', '3279']
+          data: ['Priangan Timur', '3205', '3278', '3206', '3207', '3218', '3279']
         }
       ],
       icons: {
@@ -299,10 +299,20 @@ export default {
     },
     setSelectedCity () {
       const activeCity = this.selectedCity.value
-      this.getIsolateDaily({
+      const isZone = _find(this.groupZone, (o) => { return o.id === activeCity })
+      let query = {
         wilayah: 'kota',
         kode_kab: activeCity
-      })
+      }
+
+      if (isZone !== undefined) {
+        query = {
+          wilayah: 'zona',
+          kode_zona: activeCity
+        }
+      }
+
+      this.getIsolateDaily(query)
     },
     onDateSelected (daterange) {
       this.activeDate.start = daterange.start
