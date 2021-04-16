@@ -109,7 +109,13 @@ export default {
         },
         tooltips: {
           mode: 'index',
-          intersect: false
+          intersect: false,
+          callbacks: {
+            label (context) {
+              const label = this._data.datasets[context.datasetIndex].label + ': ' + context.value + '%'
+              return label
+            }
+          }
         },
         elements: {
           point: {
@@ -117,6 +123,12 @@ export default {
           }
         },
         scales: {
+          yAxes: [{
+            scaleLabel: {
+              display: true,
+              labelString: 'BOR (%)'
+            }
+          }],
           xAxes: [{
             gridLines: {
               color: 'rgba(0, 0, 0, 0)'
