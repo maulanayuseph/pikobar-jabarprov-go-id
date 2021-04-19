@@ -13,11 +13,16 @@
     <div class="m-5 md:m-8 rounded-lg" style="height: 44rem;">
       <iframe src="https://potensi-risiko-penularan.digitalservice.id/" height="100%" width="100%" title="Iframe Example" />
     </div>
-    <div class="logo ml-auto mr-5 md:mr-8 mt-3 flex bg-gray-200 p-3">
-      <img src="/img/logo-plj.png">
-      <img src="/img/logo-jds-full.png">
-      <img src="/img/logo-bappenas.png">
-      <img src="/img/logo-jabar.png">
+    <div class="mr-5 md:mr-8 mt-3 p-3 flex flex-wrap items-center justify-center">
+      <div class="w-32">
+        Hasil Kolaborasi:
+      </div>
+      <div class="flex flex-wrap justify-center logo">
+        <img src="/img/logo-plj.png">
+        <img src="/img/logo-jds-full.png">
+        <img src="/img/logo-bappenas.png">
+        <img src="/img/logo-jabar.png">
+      </div>
     </div>
   </div>
 </template>
@@ -26,7 +31,7 @@
 export default {
   head () {
     const title =
-      'Peta Potensi Penularan'
+      'Peta Potensi dan Risiko Penularan'
     return {
       title,
       meta: [
@@ -47,7 +52,7 @@ export default {
 </script>
 <style scoped>
 .logo {
-  width: 350px;
+  /* width: 350px; */
 }
 .logo img {
   height: 50px
