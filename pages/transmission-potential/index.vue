@@ -51,9 +51,7 @@ export default {
 }
 </script>
 <style scoped>
-.logo {
-  /* width: 350px; */
-}
+
 .logo img {
   height: 50px
 }
