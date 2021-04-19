@@ -35,7 +35,9 @@ export default {
   max-width: 260px;
   min-width: 260px;
   height: 290px;
-  @apply rounded-lg flex flex-col;
+  @apply
+  cursor-pointer
+  rounded-lg flex flex-col;
 }
 .news-content {
   min-height: 145px;

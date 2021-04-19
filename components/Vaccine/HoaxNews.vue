@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="flex flex-row justify-between items-stretch mb-8">
+    <div class="flex flex-row hoax-news justify-between items-stretch mb-8" @click="onClick">
       <div class="container hoax__image border-grey-50">
         <img :src="data.image">
       </div>
@@ -27,12 +27,21 @@ export default {
     }
   },
   methods: {
-    formatDateLong
+    formatDateLong,
+    onClick () {
+      const backlink = this.data?.backlink
+      if (typeof backlink === 'string' && backlink.startsWith('http')) {
+        window.open(backlink, '_blank')
+      }
+    }
   }
 }
 </script>
 
 <style lang="scss" scoped>
+.hoax-news {
+  @apply cursor-pointer;
+}
 .hoax {
   &__image {
     max-width: 100px;
