@@ -18,10 +18,10 @@
         Hasil Kolaborasi:
       </div>
       <div class="flex flex-wrap justify-center logo">
-        <img src="/img/logo-plj.png">
-        <img src="/img/logo-jds-full.png">
-        <img src="/img/logo-bappenas.png">
-        <img src="/img/logo-jabar.png">
+        <a href="https://pulselabjakarta.org/"><img src="/img/logo-plj.png"></a>
+        <img src="/img/logo-jds-full.png" class="ml-4">
+        <img src="/img/logo-bappenas.png" class="ml-4">
+        <img src="/img/logo-jabar.png" class="ml-4">
       </div>
     </div>
   </div>
