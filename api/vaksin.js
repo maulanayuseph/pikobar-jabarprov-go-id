@@ -16,7 +16,7 @@ function convertToJSON (documentSnapshot) {
 export async function get () {
   const snapshots = await db
     .collection('vaccination_content')
-    .orderBy('order', 'ASC')
+    .orderBy('order', 'asc')
     .get()
 
   if (snapshots.empty) {

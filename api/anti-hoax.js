@@ -5,13 +5,9 @@ export const ORDER_INDEX = 'published_at'
 export const ORDER_TYPE = 'desc'
 
 export function get (options = { perPage: 3, tag: null }) {
-  let query = db.collection('articles')
+  const query = db.collection('antihoax_content')
     .orderBy(ORDER_INDEX, 'desc')
     .limit(options.perPage)
-
-  if (typeof options.tag === 'string' && options.tag.length) {
-    query = query.where('tag', '==', options.tag)
-  }
   return query
     .get()
     .then((docs) => {
@@ -27,23 +23,5 @@ export function get (options = { perPage: 3, tag: null }) {
         })
       }
       return []
-    })
-}
-
-export function getById (id) {
-  return db.collection('articles')
-    .doc(id)
-    .get()
-    .then((doc) => {
-      if (doc.exists) {
-        const data = doc.data()
-        return {
-          ...data,
-          id: doc.id,
-          published_at: data.published_at.toDate(),
-          route: slugifyArticleRoute(doc.id, data.title)
-        }
-      }
-      return null
     })
 }
