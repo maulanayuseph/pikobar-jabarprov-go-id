@@ -2,7 +2,7 @@
   <div>
     <h3 class="text-center mb-8 md:mb-12">
       <b class="text-lg">
-        {{ titleSponsor ? titleSponsor : 'Didukung oleh:'}}
+        {{ titleSponsor ? titleSponsor : 'Pikobar didukung oleh:' }}
       </b>
     </h3>
     <div class="max-w-4xl mx-auto flex flex-row flex-wrap justify-center items-center text-base">
