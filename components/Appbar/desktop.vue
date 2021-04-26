@@ -101,10 +101,12 @@ export default {
           children: [
             { to: '/data', label: 'Statisik' },
             { to: '/distribution-case', label: 'Sebaran Kasus' },
-            { to: '/distribution-healthcare', label: 'Keterisian Tempat Tidur' }
+            { to: '/distribution-healthcare', label: 'Keterisian Tempat Tidur' },
+            { to: '/transmission-potential', label: 'Peta Potensi dan Risiko Penularan' }
           ]
         },
         { to: '/articles?tab=jabar', label: 'Berita' },
+        { to: '/vaccine', label: 'Vaksinasi' },
         { to: '/faq', label: 'FAQ' },
         { to: '/contact', label: 'Kontak' },
         { to: '/donate/logistic', label: 'Donasi' },
@@ -195,6 +197,9 @@ export default {
   }
 }
 
+.appbar-menu-item {
+  @apply text-sm;
+}
 .appbar-menu-item.nuxt-link-active {
   &,
   > * {

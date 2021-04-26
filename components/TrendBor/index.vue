@@ -109,7 +109,13 @@ export default {
         },
         tooltips: {
           mode: 'index',
-          intersect: false
+          intersect: false,
+          callbacks: {
+            label (context) {
+              const label = this._data.datasets[context.datasetIndex].label + ': ' + context.value + '%'
+              return label
+            }
+          }
         },
         elements: {
           point: {
@@ -117,6 +123,12 @@ export default {
           }
         },
         scales: {
+          yAxes: [{
+            scaleLabel: {
+              display: true,
+              labelString: 'BOR (%)'
+            }
+          }],
           xAxes: [{
             gridLines: {
               color: 'rgba(0, 0, 0, 0)'
@@ -170,79 +182,79 @@ export default {
         }
       },
       optionsZone: [
-        { value: 'all', label: 'JAWA BARAT' },
-        { value: 'Bodebek', label: 'BODEBEK' },
-        { value: 'Bandung Raya', label: 'BANDUNG RAYA' },
-        { value: 'Purwasuka', label: 'PURWASUKA' },
-        { value: 'Ciayumajakuning', label: 'CIAYUMAJAKUNING' },
-        { value: 'Priangan Barat', label: 'PRIANGAN BARAT' },
-        { value: 'Priangan Timur', label: 'PRIANGAN TIMUR' }
+        { value: 'all', label: 'Jawa Barat' },
+        { value: 'Bodebek', label: 'Bodebek' },
+        { value: 'Bandung Raya', label: 'Bandung Raya' },
+        { value: 'Purwasuka', label: 'Purwasuka' },
+        { value: 'Ciayumajakuning', label: 'Ciayumajakuning' },
+        { value: 'Priangan Barat', label: 'Priangan Barat' },
+        { value: 'Priangan Timur', label: 'Priangan Timur' }
       ],
-      selectedZone: { value: 'all', label: 'JAWA BARAT' },
+      selectedZone: { value: 'all', label: 'Jawa Barat' },
       listCity: [
-        { value: 'all', label: 'ZONA JAWA BARAT' },
-        { value: 'bodebek', label: 'ZONA BODEBEK' },
-        { value: 'bandungraya', label: 'ZONA BANDUNG RAYA' },
-        { value: 'purwasuka', label: 'ZONA PURWASUKA' },
-        { value: 'ciayumajakuning', label: 'ZONA CIAYUMAJAKUNING' },
-        { value: 'prianganbarat', label: 'ZONA PRIANGAN BARAT' },
-        { value: 'Priangan Timur', label: 'ZONA PRIANGAN TIMUR' },
-        { value: '3201', label: 'KAB. BOGOR' },
-        { value: '3202', label: 'KAB. SUKABUMI' },
-        { value: '3203', label: 'KAB. CIANJUR' },
-        { value: '3204', label: 'KAB. BANDUNG' },
-        { value: '3205', label: 'KAB. GARUT' },
-        { value: '3206', label: 'KAB. TASIKMALAYA' },
-        { value: '3207', label: 'KAB. CIAMIS' },
-        { value: '3208', label: 'KAB. KUNINGAN' },
-        { value: '3209', label: 'KAB. CIREBON' },
-        { value: '3210', label: 'KAB. MAJALENGKA' },
-        { value: '3211', label: 'KAB. SUMEDANG' },
-        { value: '3212', label: 'KAB. INDRAMAYU' },
-        { value: '3213', label: 'KAB. SUBANG' },
-        { value: '3214', label: 'KAB. PURWAKARTA' },
-        { value: '3215', label: 'KAB. KARAWANG' },
-        { value: '3216', label: 'KAB. BEKASI' },
-        { value: '3217', label: 'KAB. BANDUNG BARAT' },
-        { value: '3218', label: 'KAB. PANGANDARAN' },
-        { value: '3271', label: 'KOTA BOGOR' },
-        { value: '3272', label: 'KOTA SUKABUMI' },
-        { value: '3273', label: 'KOTA BANDUNG' },
-        { value: '3274', label: 'KOTA CIREBON' },
-        { value: '3275', label: 'KOTA BEKASI' },
-        { value: '3276', label: 'KOTA DEPOK' },
-        { value: '3277', label: 'KOTA CIMAHI' },
-        { value: '3278', label: 'KOTA TASIKMALAYA' },
-        { value: '3279', label: 'KOTA BANJAR' }
+        { value: 'all', label: 'Zona Jawa Barat' },
+        { value: 'Bodebek', label: 'Zona Bodebek' },
+        { value: 'Bandung Raya', label: 'Zona Bandung Raya' },
+        { value: 'Purwasuka', label: 'Zona Purwasuka' },
+        { value: 'Ciayumajakuning', label: 'Zona Ciayumajakuning' },
+        { value: 'Priangan Barat', label: 'Zona Priangan Barat' },
+        { value: 'Priangan Timur', label: 'Zona Priangan Timur' },
+        { value: '3201', label: 'Kab. Bogor' },
+        { value: '3202', label: 'Kab. Sukabumi' },
+        { value: '3203', label: 'Kab. Cianjur' },
+        { value: '3204', label: 'Kab. Bandung' },
+        { value: '3205', label: 'Kab. Garut' },
+        { value: '3206', label: 'Kab. Tasikmalaya' },
+        { value: '3207', label: 'Kab. Ciamis' },
+        { value: '3208', label: 'Kab. Kuningan' },
+        { value: '3209', label: 'Kab. Cirebon' },
+        { value: '3210', label: 'Kab. Majalengka' },
+        { value: '3211', label: 'Kab. Sumedang' },
+        { value: '3212', label: 'Kab. Indramayu' },
+        { value: '3213', label: 'Kab. Subang' },
+        { value: '3214', label: 'Kab. Purwakarta' },
+        { value: '3215', label: 'Kab. Karawang' },
+        { value: '3216', label: 'Kab. Bekasi' },
+        { value: '3217', label: 'Kab. Bandung Barat' },
+        { value: '3218', label: 'Kab. Pangandaran' },
+        { value: '3271', label: 'Kota Bogor' },
+        { value: '3272', label: 'Kota Sukabumi' },
+        { value: '3273', label: 'Kota Bandung' },
+        { value: '3274', label: 'Kota Cirebon' },
+        { value: '3275', label: 'Kota Bekasi' },
+        { value: '3276', label: 'Kota Depok' },
+        { value: '3277', label: 'Kota Cimahi' },
+        { value: '3278', label: 'Kota Tasikmalaya' },
+        { value: '3279', label: 'Kota Banjar' }
       ],
       optionsCity: [
-        { value: 'all', label: 'ZONA JAWA BARAT' }
+        { value: 'all', label: 'Zona Jawa Barat' }
       ],
-      selectedCity: { value: 'all', label: 'ZONA JAWA BARAT' },
+      selectedCity: { value: 'all', label: 'Zona Jawa Barat' },
       groupZone: [
         {
           id: 'Bodebek',
-          data: ['bodebek', '3275', '3276', '3216', '3201', '3271']
+          data: ['Bodebek', '3275', '3276', '3216', '3201', '3271']
         },
         {
           id: 'Bandung Raya',
-          data: ['bandungraya', '3273', '3277', '3204', '3217', '3211']
+          data: ['Bandung Raya', '3273', '3277', '3204', '3217', '3211']
         },
         {
           id: 'Purwasuka',
-          data: ['purwasuka', '3214', '3213', '3215']
+          data: ['Purwasuka', '3214', '3213', '3215']
         },
         {
           id: 'Ciayumajakuning',
-          data: ['ciayumajakuning', '3209', '3274', '3210', '3212', '3208']
+          data: ['Ciayumajakuning', '3209', '3274', '3210', '3212', '3208']
         },
         {
           id: 'Priangan Barat',
-          data: ['prianganbarat', '3203', '3272', '3202']
+          data: ['Priangan Barat', '3203', '3272', '3202']
         },
         {
           id: 'Priangan Timur',
-          data: ['priangantimur', '3205', '3278', '3206', '3207', '3218', '3279']
+          data: ['Priangan Timur', '3205', '3278', '3206', '3207', '3218', '3279']
         }
       ],
       icons: {
@@ -299,10 +311,20 @@ export default {
     },
     setSelectedCity () {
       const activeCity = this.selectedCity.value
-      this.getIsolateDaily({
+      const isZone = _find(this.groupZone, (o) => { return o.id === activeCity })
+      let query = {
         wilayah: 'kota',
         kode_kab: activeCity
-      })
+      }
+
+      if (isZone !== undefined) {
+        query = {
+          wilayah: 'zona',
+          kode_zona: activeCity
+        }
+      }
+
+      this.getIsolateDaily(query)
     },
     onDateSelected (daterange) {
       this.activeDate.start = daterange.start
