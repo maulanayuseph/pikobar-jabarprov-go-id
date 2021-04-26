@@ -20,18 +20,18 @@
       </div>
       <ul class="appbar-desktop__menus">
         <li v-for="(item, index) in menus" :key="item.to">
-          <nuxt-link
+          <component
+            :is="item.href ? 'a' : 'nuxt-link'"
             v-if="item.children === undefined"
             :key="`single:${index}`"
-            :to="item.to"
+            v-bind="getAnchorProps(item)"
             :exact="item.exact"
             class="appbar-desktop__menu-item appbar-menu-item"
-            @click.prevent.stop="onMenuItemClicked(item)"
           >
             <a>
               {{ item.label }}
             </a>
-          </nuxt-link>
+          </component>
 
           <nuxt-link
             v-if="item.children"
@@ -108,7 +108,7 @@ export default {
         { to: '/faq', label: 'FAQ' },
         { to: '/contact', label: 'Kontak' },
         { to: '/donate/logistic', label: 'Donasi' },
-        { to: 'https://bansos.pikobar.jabarprov.go.id/', label: 'Bantuan Sosial' }
+        { href: 'https://bansos.pikobar.jabarprov.go.id/', label: 'Bantuan Sosial' }
       ]
     }
   },
@@ -123,12 +123,12 @@ export default {
     }
   },
   methods: {
-    onMenuItemClicked (m) {
-      if (m.to.startsWith('http')) {
-        window.open(m.to, '_blank')
-      } else {
-        this.$router.push(m.to)
+    getAnchorProps (m) {
+      const { href, to } = m
+      if (href) {
+        return { href, target: '_blank' }
       }
+      return { to }
     }
   }
 }
