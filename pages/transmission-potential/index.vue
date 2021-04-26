@@ -13,11 +13,11 @@
     <div class="m-5 md:m-8 rounded-lg" style="height: 44rem;">
       <iframe src="https://potensi-risiko-penularan.digitalservice.id/" height="100%" width="100%" title="Iframe Example" />
     </div>
-    <div class="mr-5 md:mr-8 mt-3 p-3 flex flex-wrap items-center justify-center">
+    <div class="logo mr-5 md:mr-8 mt-3 p-3 flex flex-wrap items-center justify-center">
       <div class="w-32">
         Hasil Kolaborasi:
       </div>
-      <div class="flex flex-wrap justify-center logo">
+      <div class="flex flex-wrap justify-center">
         <a href="https://pulselabjakarta.org/"><img src="/img/logo-plj.png"></a>
         <img src="/img/logo-jds-full.png" class="ml-4">
         <img src="/img/logo-bappenas.png" class="ml-4">
@@ -51,8 +51,10 @@ export default {
 }
 </script>
 <style scoped>
-
+.logo {
+  margin-bottom: 13em;
+}
 .logo img {
-  height: 50px
+  height: 60px;
 }
 </style>
