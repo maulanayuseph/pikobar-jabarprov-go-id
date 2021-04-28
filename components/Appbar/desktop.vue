@@ -1,11 +1,11 @@
 <template>
-  <div class="hidden lg:block lg:mx-4">
-    <div class="flex justify-between items-center">
+  <div class="appbar-desktop">
+    <div class="appbar-desktop__wrapper">
       <div
-        class="flex items-center"
+        class="appbar-desktop__brand"
       >
         <nuxt-link to="/">
-          <img class="block h-10 mx-auto mr-4" src="/logo.jpg" alt>
+          <img class="appbar-desktop__brand-logo" src="/logo.jpg" alt>
         </nuxt-link>
         <nuxt-link to="/">
           <div class="text-left">
@@ -18,39 +18,38 @@
           </div>
         </nuxt-link>
       </div>
-      <!-- <ul class="hidden md:block lg:hidden">
-            Menu
-          </ul> -->
-      <ul class="flex flex-row items-center">
-        <li v-for="item in menus" :key="item.to">
-          <a
+      <ul class="appbar-desktop__menus">
+        <li v-for="(item, index) in menus" :key="item.to">
+          <component
+            :is="item.href ? 'a' : 'nuxt-link'"
             v-if="item.children === undefined"
-            :href="item.to"
+            :key="`single:${index}`"
+            v-bind="getAnchorProps(item)"
             :exact="item.exact"
-            class="hidden lg:flex appbar-menu-item cursor-pointer mx-2 px-2 py-2 hover:bg-gray-200"
-            @click.prevent.stop="onMenuItemClicked(item)"
+            class="appbar-desktop__menu-item appbar-menu-item"
           >
             <a>
               {{ item.label }}
             </a>
-          </a>
+          </component>
 
           <nuxt-link
             v-if="item.children"
+            :key="`group:${index}`"
             to="#"
             :exact="item.exact"
-            class="hidden lg:flex appbar-menu-item cursor-pointer mx-2 px-2 py-2 hover:bg-gray-200"
+            class="appbar-desktop__menu-item-parent appbar-menu-item"
           >
             <a>
               {{ item.label }}
             </a>
           </nuxt-link>
-          <ul v-if="item.children" :class="['hidden absolute rounded bg-white pb-3']">
+          <ul v-if="item.children" class="hidden absolute rounded bg-white pb-3">
             <li v-for="itemSub in item.children" :key="itemSub.to">
               <nuxt-link
                 :to="itemSub.to"
                 :exact="itemSub.exact"
-                class="hidden lg:flex appbar-menu-item cursor-pointer mx-2 px-2 py-2 hover:bg-gray-200"
+                class="appbar-desktop__menu-item-child appbar-menu-item"
               >
                 <a>
                   {{ itemSub.label }}
@@ -111,7 +110,7 @@ export default {
         { to: '/faq', label: 'FAQ' },
         { to: '/contact', label: 'Kontak' },
         { to: '/donate/logistic', label: 'Donasi' },
-        { to: 'https://bansos.pikobar.jabarprov.go.id/', label: 'Bantuan Sosial' }
+        { href: 'https://bansos.pikobar.jabarprov.go.id/', label: 'Bantuan Sosial' }
       ]
     }
   },
@@ -126,18 +125,78 @@ export default {
     }
   },
   methods: {
-    onMenuItemClicked (m) {
-      if (m.to.startsWith('http')) {
-        window.open(m.to, '_blank')
-      } else {
-        this.$router.push(m.to)
+    getAnchorProps (m) {
+      const { href, to } = m
+      if (href) {
+        return { href, target: '_blank' }
       }
+      return { to }
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
+.appbar-desktop {
+  @apply hidden;
+
+  @screen lg {
+    @apply block mx-4;
+  }
+
+  &__wrapper {
+    @apply flex justify-between items-center;
+  }
+
+  &__brand {
+    @apply flex items-center;
+  }
+
+  &__brand-logo {
+    @apply block h-10 mx-auto mr-4;
+  }
+
+  &__menus {
+    @apply flex flex-row items-center;
+  }
+
+  &__menu-item {
+    @apply hidden cursor-pointer mx-2 px-2 py-2;
+
+    @screen lg {
+      @apply flex;
+    }
+
+    &:hover {
+      @apply bg-gray-200;
+    }
+  }
+
+  &__menu-item-parent {
+    @apply hidden cursor-pointer mx-2 px-2 py-2;
+
+    @screen lg {
+      @apply flex;
+    }
+
+    &:hover {
+      @apply bg-gray-200;
+    }
+  }
+
+  &__menu-item-child {
+    @apply hidden cursor-pointer mx-2 px-2 py-2;
+
+    @screen lg {
+      @apply flex;
+    }
+
+    &:hover {
+      @apply bg-gray-200;
+    }
+  }
+}
+
 .appbar-menu-item {
   @apply text-sm;
 }
