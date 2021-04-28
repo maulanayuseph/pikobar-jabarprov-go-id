@@ -310,12 +310,25 @@ export default {
             filled: el.total_terisi,
             total: el.total_tersedia,
             bor: el.total_persentase + '%',
-            isReference: (el.rujukan_non_rujukan !== null)
+            isReference: (el.rujukan_non_rujukan !== null),
+            sort: {
+              city: el.nama_wilayah,
+              hospital: el.rumah_sakit,
+              green: el.hijau_persentase,
+              yellow: el.kuning_persentase,
+              red: el.merah_persentase,
+              icu: el.icu_persentase,
+              igd: el.igd_persentase,
+              birth: el.ruang_bersalin_persentase,
+              filled: el.total_terisi,
+              total: el.total_tersedia,
+              bor: el.total_persentase
+            }
           }
         )
         i++
       })
-      const sortedData = _orderBy(dataTable, [this.sortField], [this.sort])
+      const sortedData = _orderBy(dataTable, ['sort.' + this.sortField], [this.sort])
       this.totalItems = sortedData.length
       this.dataTable = sortedData
       this.dataHospital = sortedData
@@ -329,7 +342,7 @@ export default {
       this.data = this.dataTable.slice(start, end)
     },
     updateData ({ sortField, sort }) {
-      this.dataTable = _orderBy(this.dataTable, [sortField], [sort])
+      this.dataTable = _orderBy(this.dataTable, ['sort.' + sortField], [sort])
       this.resetNumber()
       this.changePage(this.currentPage)
     },
