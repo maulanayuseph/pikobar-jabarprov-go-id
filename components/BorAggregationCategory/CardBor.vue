@@ -38,7 +38,7 @@
             </div>
           </div>
 
-          <div class="pie" style="transform: rotate(90deg);" :style="[bor.bor <= 50 ? {} : {'clip': 'rect(auto, auto, auto, auto)'}]">
+          <div class="pie" style="transform: rotate(0deg);" :style="[bor.bor <= 50 ? {} : {'clip': 'rect(auto, auto, auto, auto)'}]">
             <div class="left-side half-circle" :style="{ transform: 'rotate(' + bor.bor * 3.6 + 'deg)', 'border-color': bor.color } " />
             <div class="right-side half-circle" :style="[bor.bor <= 50 ? {'display': 'none'} : {'transform': 'rotate(180deg)', 'border-color': bor.color}]" />
           </div>
