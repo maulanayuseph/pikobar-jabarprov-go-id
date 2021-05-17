@@ -782,14 +782,6 @@ export default {
     }
   },
   mounted () {
-    const endDate = new Date()
-    const startDate = new Date().setDate(new Date().getDate() - 30)
-    this.selectedDateCloseContact.start = startDate
-    this.selectedDateCloseContact.end = endDate
-    this.selectedDateSuspect.start = startDate
-    this.selectedDateSuspect.end = endDate
-    this.selectedDateProbable.start = startDate
-    this.selectedDateProbable.end = endDate
     this.checkIsMobile()
   },
   methods: {
