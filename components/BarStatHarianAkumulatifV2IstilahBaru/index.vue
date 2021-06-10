@@ -613,16 +613,16 @@ export default {
         tooltip: { isHtml: true }
       },
       selectedDateCloseContact: {
-        start: '',
-        end: ''
+        start: new Date().setDate(new Date().getDate() - 30),
+        end: new Date()
       },
       selectedDateSuspect: {
-        start: '',
-        end: ''
+        start: new Date().setDate(new Date().getDate() - 30),
+        end: new Date()
       },
       selectedDateProbable: {
-        start: '',
-        end: ''
+        start: new Date().setDate(new Date().getDate() - 30),
+        end: new Date()
       },
       rangedateCloseContact: {
         captions: {
@@ -633,7 +633,7 @@ export default {
           all () {
             return {
               label: 'Semua Waktu',
-              active: true,
+              active: false,
               dateRange: {
                 start: new Date('2020-08-13'),
                 end: new Date()
@@ -659,7 +659,7 @@ export default {
             const tanggalselesai = new Date(n.getFullYear(), n.getMonth(), n.getDate(), 23, 59)
             return {
               label: '1 Bulan Terakhir',
-              active: false,
+              active: true,
               dateRange: {
                 start: tanggalmulai,
                 end: tanggalselesai
@@ -677,7 +677,7 @@ export default {
           all () {
             return {
               label: 'Semua Waktu',
-              active: true,
+              active: false,
               dateRange: {
                 start: new Date('2020-08-13'),
                 end: new Date()
@@ -703,7 +703,7 @@ export default {
             const tanggalselesai = new Date(n.getFullYear(), n.getMonth(), n.getDate(), 23, 59)
             return {
               label: '1 Bulan Terakhir',
-              active: false,
+              active: true,
               dateRange: {
                 start: tanggalmulai,
                 end: tanggalselesai
@@ -721,7 +721,7 @@ export default {
           all () {
             return {
               label: 'Semua Waktu',
-              active: true,
+              active: false,
               dateRange: {
                 start: new Date('2020-08-13'),
                 end: new Date()
@@ -747,7 +747,7 @@ export default {
             const tanggalselesai = new Date(n.getFullYear(), n.getMonth(), n.getDate(), 23, 59)
             return {
               label: '1 Bulan Terakhir',
-              active: false,
+              active: true,
               dateRange: {
                 start: tanggalmulai,
                 end: tanggalselesai
@@ -782,12 +782,6 @@ export default {
     }
   },
   mounted () {
-    this.selectedDateCloseContact.start = new Date('2020-08-13')
-    this.selectedDateCloseContact.end = new Date()
-    this.selectedDateSuspect.start = new Date('2020-08-13')
-    this.selectedDateSuspect.end = new Date()
-    this.selectedDateProbable.start = new Date('2020-08-13')
-    this.selectedDateProbable.end = new Date()
     this.checkIsMobile()
   },
   methods: {
