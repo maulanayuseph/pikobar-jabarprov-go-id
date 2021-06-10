@@ -20,9 +20,9 @@
             <div class="text-3xl">
               {{ bor.bor }}<span class="smaller">%</span>
             </div>
-            <div class="growth flex flex-row align-items-center justify-center" :class="bor.growth <= 0 ? 'down' : 'up'">
+            <div class="growth flex flex-row align-items-center justify-center" :class="bor.growth <= 0 ? 'up' : 'down'">
               <div class="growth-icon rounded-full mt-1">
-                <FontAwesomeIcon class="inline-block text-white mb-1 cursor-pointer text-gray-500" :icon="bor.growth <= 0 ? icons.faAngleDoubleDown : icons.faAngleDoubleUp" />
+                <FontAwesomeIcon class="inline-block text-white mb-1 cursor-pointer text-gray-500" :icon="bor.growth <= 0 ? icons.faAngleDoubleUp : icons.faAngleDoubleDown" />
               </div>
               <div class="growth-label ml-1" style="font-size: 16px;">
                 {{ Math.abs(bor.growth) }}%
