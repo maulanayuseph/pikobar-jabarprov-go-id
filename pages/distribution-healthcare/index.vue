@@ -18,7 +18,7 @@
           :icon="icons.faInfoCircle"
         />
         <div class="ml-2">
-          Sumber data yang digunakan adalah Data RS <i>Online</i> (Kemenkes) yang disesuaikan dengan kategori yang ditetapkan Dinas Kesehatan Jawa Barat. Pembaruan data dilakukan secara harian (tidak <i>realtime</i>).
+          Sumber data yang digunakan merupakan Data RS <i>Online</i> (Kemenkes) yang diperoleh dari fasilitas kesehatan dan dilakukan secara harian (tidak <i>realtime</i>). Adapun data Total BOR di bawah ini, dikelompokkan sesuai dengan kategori yang telah ditetapkan oleh Dinas Kesehatan Provinsi Jawa Barat, namun dihitung tanpa mengikutsertaan data IGD dan Ruang Bersalin.
         </div>
       </div>
     </div>

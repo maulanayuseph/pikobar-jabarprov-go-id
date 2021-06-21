@@ -329,7 +329,7 @@ export default {
           available: 0,
           filled: 0,
           color: '#64b5f6',
-          tooltip: ['IGD Covid-19']
+          tooltip: ['IGD Covid-19 tidak masuk kedalam kalkulasi Total BOR Jawa Barat']
         },
         {
           id: 6,
@@ -340,7 +340,7 @@ export default {
           available: 0,
           filled: 0,
           color: '#aa1aa4',
-          tooltip: ['Ruang Bersalin Pasien Covid-19']
+          tooltip: ['Ruang Bersalin Covid-19 tidak masuk kedalam kalkulasi Total BOR Jawa Barat']
         }
       ],
       dataIsolateDaily: []
