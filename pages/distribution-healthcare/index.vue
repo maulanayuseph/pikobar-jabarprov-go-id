@@ -43,15 +43,6 @@
     </div>
     <div class="m-5 md:m-8">
       <BorHospital />
-      <div class="disclaimer flex flex-nowrap lg:flex-row items-start rounded p-3 text-sm mt-2">
-        <FontAwesomeIcon
-          class="inline-block mr-2 cursor-pointer mt-1"
-          :icon="icons.faInfoCircle"
-        />
-        <div class="ml-2">
-          Total BOR di atas ini dihitung tanpa mengikutsertaan data IGD dan Ruang Bersalin.
-        </div>
-      </div>
     </div>
     <div class="m-4 md:m-8">
       <div class="flex flex-col lg:flex-row lg:items-stretch">
