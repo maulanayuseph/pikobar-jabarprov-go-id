@@ -1,9 +1,5 @@
 import { db } from '../lib/firebase'
 
-function isSourceDefined (doc) {
-  return typeof doc.source === 'string' && doc.source.length
-}
-
 function convertToJSON (documentSnapshot) {
   const data = documentSnapshot.data()
   return {
@@ -28,8 +24,4 @@ export async function get () {
      * Convert FirebaseFirestore.DocumentSnapshot to POJO
      */
     .map(convertToJSON)
-    /**
-     * Only shows document whose source is not nil or empty
-     */
-    .filter(isSourceDefined)
 }
