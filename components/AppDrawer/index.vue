@@ -81,6 +81,7 @@ export default {
         },
         { to: '/articles?tab=jabar', label: 'Berita', icon: this.icon.faNewspaper },
         { to: '/contact', label: 'Kontak', icon: this.icon.faPhoneAlt },
+        { to: '/vaccine', label: 'Vaksinasi', icon: this.icon.faSyringe },
         { to: '/faq', label: 'FAQ', icon: this.icon.faQuestionCircle },
         { to: 'https://forum.pikobar.jabarprov.go.id/', label: 'Forum', icon: this.icon.faComment },
         { to: '/donate/logistic', label: 'Donasi', icon: this.icon.faBoxOpen },
@@ -111,7 +112,21 @@ export default {
         return
       }
 
-      const { faHome, faChartLine, faNewspaper, faPhoneAlt, faQuestionCircle, faComment, faWallet, faBoxOpen, faTachometerAlt, faMapMarked, faBed, faMap } = lib
+      const {
+        faHome,
+        faChartLine,
+        faNewspaper,
+        faPhoneAlt,
+        faQuestionCircle,
+        faComment,
+        faWallet,
+        faBoxOpen,
+        faTachometerAlt,
+        faMapMarked,
+        faBed,
+        faMap,
+        faSyringe
+      } = lib
       this.icon = {
         faHome,
         faChartLine,
@@ -124,7 +139,8 @@ export default {
         faTachometerAlt,
         faMapMarked,
         faBed,
-        faMap
+        faMap,
+        faSyringe
       }
     },
     animate (toggled) {
