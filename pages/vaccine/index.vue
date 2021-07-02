@@ -35,13 +35,26 @@
               </h2>
               <!-- eslint-disable vue/no-v-html -->
               <p
-                class="text-gray-700 text-lg md:text-base"
+                class="text-gray-700 text-lg md:text-base vaccine-content"
                 v-html="data.content"
               />
               <!-- eslint-enable vue/no-v-html -->
-              <span class="text-blue-500 italic underline">
-                Sumber: {{ data.source || '' }}
-              </span>
+              <template v-if="data.source">
+                <a
+                  v-if="isExternalUrl(data.source)"
+                  target="_blank"
+                  :href="data.source"
+                  class="text-blue-500 italic underline"
+                >
+                  Sumber: {{ data.source || '' }}
+                </a>
+                <span
+                  v-else
+                  class="text-blue-500"
+                >
+                  Sumber: {{ data.source || '' }}
+                </span>
+              </template>
             </div>
           </div>
           <!-- Do not use v-if to prevent re-hydration on client renders -->
@@ -301,6 +314,11 @@ export default {
     this.$store.dispatch('anti-hoax/getItems')
     this.$store.dispatch('vaccine-news/getItems')
   },
+  methods: {
+    isExternalUrl (str) {
+      return typeof str === 'string' && str.startsWith('http')
+    }
+  },
   head () {
     const title = 'Informasi Vaksinasi Covid-19 - Pikobar [Pusat Informasi dan Koordinasi COVID-19 Jawa Barat]'
     return {
@@ -333,5 +351,11 @@ export default {
 .scroll {
   scrollbar-color: rgba(255,0,0,0);
   scrollbar-width: thin;
+}
+
+.vaccine-content::v-deep {
+  a {
+    @apply text-blue-500 underline;
+  }
 }
 </style>

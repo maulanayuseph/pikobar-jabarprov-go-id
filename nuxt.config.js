@@ -27,7 +27,8 @@ export default {
     interval: 100,
     exclude: [
       /^\/(\bdata\b).*$/,
-      /^\/(\bdonate\b).*$/
+      /^\/(\bdonate\b).*$/,
+      /^\/(\bvaccine\b).*$/
     ],
     async routes () {
       const genFn = await import('./routes-generator').then(m => m ? m.default || m : null)
