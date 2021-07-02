@@ -357,5 +357,19 @@ export default {
   a {
     @apply text-blue-500 underline;
   }
+
+  table {
+    overflow-x: auto;
+    display: block;
+    border-top: 1px solid #eee !important;
+    border-left: 1px solid #eee !important;
+
+    td {
+      border-right: 1px solid #eee;
+      border-bottom: 1px solid #eee;
+      padding: 0 16px;
+      vertical-align: top;
+    }
+  }
 }
 </style>
