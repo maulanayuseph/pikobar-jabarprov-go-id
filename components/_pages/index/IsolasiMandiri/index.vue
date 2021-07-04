@@ -18,19 +18,19 @@
       </ExpandableContent>
       <ExpandableContent>
         <template #title>
-          Kontak erat dari pasien Covid-19
+          Kontak Erat dari Pasien COVID-19
         </template>
         <KontakEratCovid19 />
       </ExpandableContent>
       <ExpandableContent>
         <template #title>
-          Kapan pasien Covid-19 dinyatakan bebas isoman?
+          Kapan Pasien COVID-19 Dinyatakan Bebas Isoman?
         </template>
         <BebasIsoman />
       </ExpandableContent>
       <ExpandableContent>
         <template #title>
-          Jika isoman sudah selesai, haruskah tes PCR ulang?
+          Jika Isoman Sudah Selesai, Haruskah Tes PCR Ulang?
         </template>
         <TestPCRUlang />
       </ExpandableContent>
