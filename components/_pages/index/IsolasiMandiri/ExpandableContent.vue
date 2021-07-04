@@ -9,25 +9,26 @@
       <strong>
         <slot name="title" />
       </strong>
-      <svg
-        id="Capa_1"
-        version="1.1"
-        xmlns="http://www.w3.org/2000/svg"
-        xmlns:xlink="http://www.w3.org/1999/xlink"
-        x="0px"
-        y="0px"
-        viewBox="0 0 256 256"
-        class="exp-content__trigger"
-        style="enable-background:new 0 0 256 256;"
-        xml:space="preserve"
-        @click="toggle"
-      >
-        <g>
+      <button class="p-2 ml-8" @click="toggle">
+        <svg
+          id="Capa_1"
+          version="1.1"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          x="0px"
+          y="0px"
+          viewBox="0 0 256 256"
+          class="exp-content__trigger"
+          style="enable-background:new 0 0 256 256;"
+          xml:space="preserve"
+        >
           <g>
-            <polygon points="225.813,48.907 128,146.72 30.187,48.907 0,79.093 128,207.093 256,79.093" />
+            <g>
+              <polygon points="225.813,48.907 128,146.72 30.187,48.907 0,79.093 128,207.093 256,79.093" />
+            </g>
           </g>
-        </g>
-      </svg>
+        </svg>
+      </button>
     </h3>
     <div
       v-show="mOpen"
@@ -94,7 +95,7 @@ export default {
 
   &__trigger {
     transition: transform 0.15s ease-out;
-    @apply flex-none w-4 h-4 ml-8
+    @apply flex-none w-4 h-4
     text-green-500
     cursor-pointer
     fill-current;
