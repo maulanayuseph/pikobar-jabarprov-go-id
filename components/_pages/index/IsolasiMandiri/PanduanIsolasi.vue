@@ -1,55 +1,80 @@
 <template>
-  <p class="panduan-isolasi">
-    Hal pertama yang perlu Wargi lakukan ketika mengetahui terkonfirmasi positif
-    adalah dengan melaporkan diri ke puskesmas/fasilitas pelayanan kesehatan (fasyankes)
-    terdekat untuk pemantauan kesehatan. Tak hanya untuk mendapatkan pemeriksaan dini
-    oleh tenaga medis, pelaporan ini juga diperlukan untuk proses pelacakan kontak erat.
-    <br>
-    <br>
-    Ketika Wargi terkonfirmasi tanpa gejala atau dengan gejala ringan, maka yang perlu
-    Wargi lakukan adalah melakukan isolasi mandiri. Apa yang perlu Wargi siapkan untuk isoman?
-    <br>
-    <br>
-    <ol>
-      <li>
-        <strong>Tinggal di rumah</strong>, kecuali untuk kepentingan medis
-      </li>
-      <li>
-        <strong>Gunakan kamar tidur terpisah</strong> dengan anggota keluarga lainnya,
-        dan jika memungkinkan dengan kamar mandi terpisah.
-      </li>
-      <li>
-        <strong>Terapkan protokol kesehatan</strong> (gunakan masker, mencuci tangan, menjaga jarak)
-      </li>
-      <li>
-        <strong>Lakukan pengukuran suhu harian dan observasi gejala klinis</strong> seperti
-        batuk atau kesulitan bernapas.
-      </li>
-      <li>
-        <strong>Hindari pemakaian bersama peralatan makan, mandi, dan linen/sprei.</strong>
-      </li>
-      <li>
-        <strong>Terapkan Perilaku Hidup Bersih dan Sehat (PHBS)</strong>
-        : konsumsi makanan bergizi, mencuci tangan dengan sabun dan air mengalir, dan lakukan
-        etika batuk/bersin.
-      </li>
-      <li>
-        <strong>Berjemur di bawah sinar matahari setiap pagi.</strong>
-      </li>
-      <li>
-        <strong>Jaga kebersihan</strong> rumah dengan disinfektan.
-      </li>
-      <li>
-        <strong>Segera hubungi fasyankes terdekat jika terjadi perburukan gejala</strong> untuk
-        perawatan lebih lanjut.
-      </li>
-    </ol>
-    <br>
-    Isolasi mandiri dilakukan selama ±10 hari atau hingga pasien memenuhi kriteria sembuh
-    Covid-19. Isolasi di rumah bagi pasien tanpa gejala maupun yang bergejala ringan, bisa menjadi
-    hal yang berat bagi sebagian orang. Namun, cara ini efektif untuk melindungi Wargi, keluarga,
-    serta orang lain.
-  </p>
+  <div class="text-gray-800">
+    <p class="panduan-isolasi">
+      Hal pertama yang perlu Wargi lakukan ketika mengetahui terkonfirmasi positif adalah dengan
+      <strong>melaporkan diri ke puskesmas/fasilitas pelayanan kesehatan (fasyankes)</strong>
+      terdekat untuk pemantauan kesehatan. Tak hanya untuk mendapatkan pemeriksaan dini oleh
+      tenaga medis, pelaporan ini juga diperlukan untuk proses pelacakan kontak erat.
+      <br>
+      <br>
+      Pasien dengan hasil tes positif Covid-19 tidak bisa memutuskan langsung untuk isolasi mandiri
+      <strong>tanpa berkonsultasi dengan dokter</strong>. Dokter berkompeten memutuskan apakah
+      pasien cukup isoman di rumah, di fasilitas isolasi terpusat, atau perlu dirawat di RS.
+      Konsultasi dokter penting agar pengobatan yang diberikan sesuai kondisi, dan mengantisipasi
+      perburukan saat isoman.
+      <br>
+      <br>
+      Ketika Wargi terkonfirmasi tanpa gejala atau dengan gejala ringan, maka yang perlu
+      Wargi lakukan adalah melakukan isolasi mandiri.
+      <strong>Apa yang perlu Wargi siapkan untuk isoman?</strong>
+      <br>
+      <br>
+      <ol>
+        <li>
+          Tetap tinggal di rumah, kecuali untuk kepentingan medis
+        </li>
+        <li>
+          Selain membekali dengan obat dan vitamin, ada baiknya miliki nomor kontak dokter
+          untuk konsultasi & pemantauan kondisi pasien.
+        </li>
+        <li>
+          Lengkapi diri dengan alat kesehatan seperti: termometer, oximeter, alat kesehatan lain
+          yang disesuaikan dengan komorbid (mis. pengukur tensi darah)
+        </li>
+        <li>
+          Kabarkan keluarga, komunitas, dan teman jika terdiagnosis positif Covid-19 dan
+          harus menjalani isoman.
+        </li>
+        <li>
+          Gunakan kamar tidur terpisah dengan anggota keluarga lainnya, dan jika memungkinkan
+          dengan kamar mandi terpisah.
+        </li>
+        <li>
+          Terapkan protokol kesehatan (gunakan masker, mencuci tangan, menjaga jarak)
+        </li>
+        <li>
+          Lakukan pengukuran suhu harian dan observasi gejala klinis seperti batuk atau kesulitan bernapas.
+        </li>
+        <li>
+          Hindari pemakaian bersama peralatan makan, mandi, dan linen/sprei.
+        </li>
+        <li>
+          Tidak disarankan menggunakan AC
+        </li>
+        <li>
+          Terapkan Perilaku Hidup Bersih dan Sehat (PHBS): konsumsi makanan bergizi, mencuci tangan dengan
+          sabun dan air mengalir, dan lakukan etika batuk/bersin.
+        </li>
+        <li>
+          Berjemur di bawah sinar matahari setiap pagi.
+        </li>
+        <li>
+          Jaga kebersihan rumah dengan disinfektan.
+        </li>
+        <li>
+          Siapkan tas berisi kebutuhan darurat jika tiba-tiba harus pergi ke fasyankes terdekat, seperti:
+          KTP, kartu BPJS, kartu berobat di fasyankes/RS langganan, baju ganti, peralatan lain seperti gadget, dll.
+        </li>
+        <li>
+          Segera hubungi fasyankes terdekat jika terjadi perburukan gejala untuk perawatan lebih lanjut.
+        </li>
+      </ol>
+      <br>
+    </p>
+    <p class="text-right text-sm text-gray-600">
+      Sumber: Kementerian Kesehatan RI & KawalCovid19
+    </p>
+  </div>
 </template>
 
 <style lang="scss">
@@ -63,6 +88,5 @@
       @apply ml-4 pl-4;
     }
   }
-
 }
 </style>
