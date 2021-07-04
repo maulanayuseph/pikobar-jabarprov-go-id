@@ -1,5 +1,5 @@
 <template>
-  <p>
+  <p class="text-gray-800">
     Jika selama menjalani isolasi mandiri Wargi memerlukan pelayanan kesehatan
     dan membutuhkan pemeriksaan kesehatan lebih lanjut, Pemerintah Daerah Provinsi Jawa Barat
     menawarkan pelayanan dokter telekonsultasi melalui
