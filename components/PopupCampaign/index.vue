@@ -115,10 +115,10 @@ export default {
   }
 
   &__btn-close {
-    width: 1.5rem;
-    height: 1.5rem;
-    top: -0.75rem;
-    right: -0.75rem;
+    width: 3rem;
+    height: 3rem;
+    top: -1.5rem;
+    right: -1.5rem;
     @apply absolute
     flex flex-row justify-center items-center
     rounded-full
@@ -126,6 +126,11 @@ export default {
 
     &:hover {
       @apply bg-gray-800;
+    }
+
+    &:focus
+    &:active {
+      outline: none !important;
     }
   }
 }
