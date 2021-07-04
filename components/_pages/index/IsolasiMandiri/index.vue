@@ -18,6 +18,24 @@
       </ExpandableContent>
       <ExpandableContent>
         <template #title>
+          Kontak erat dari pasien Covid-19
+        </template>
+        <KontakEratCovid19 />
+      </ExpandableContent>
+      <ExpandableContent>
+        <template #title>
+          Kapan pasien Covid-19 dinyatakan bebas isoman?
+        </template>
+        <BebasIsoman />
+      </ExpandableContent>
+      <ExpandableContent>
+        <template #title>
+          Jika isoman sudah selesai, haruskah tes PCR ulang?
+        </template>
+        <TestPCRUlang />
+      </ExpandableContent>
+      <ExpandableContent>
+        <template #title>
           Konsultasi dengan Dokter
         </template>
         <KonsultasiDenganDokter />
@@ -31,7 +49,7 @@
       <div class="flex flex-col flex-no-wrap sm:flex-row gap-4 mt-4 lg:mt-6 lg:gap-6">
         <ActionCard
           class="w-full lg:w-1/2"
-          title="Konsultasi dengan Dokter"
+          title="Konsultasi dengan Dokter<br><br>"
           body="Konsultasi dengan dokter melalui layanan hotline Pikobar"
           prompt="Tanyakan Sekarang"
           :event="konsultasiDokterEvent"
@@ -40,8 +58,8 @@
         />
         <ActionCard
           class="w-full lg:w-1/2"
-          title="Permohonan Kebutuhan"
-          body="Ajukan permohonan kebutuhan untuk isolasi mandiri"
+          title="Permohonan Kebutuhan Vitamin/Obat"
+          body="Ajukan permohonan kebutuhan vitamin/obat untuk isolasi mandiri"
           prompt="Ajukan Sekarang"
           :event="permohonanKebutuhanEvent"
           :image="permohonanKebutuhanImage"
@@ -56,6 +74,9 @@
 import ExpandableContent from './ExpandableContent'
 import PerawatanBagiPasien from './PerawatanBagiPasien'
 import PanduanIsolasi from './PanduanIsolasi'
+import KontakEratCovid19 from './KontakEratCovid19'
+import BebasIsoman from './BebasIsoman'
+import TestPCRUlang from './TestPCRUlang'
 import KonsultasiDenganDokter from './KonsultasiDenganDokter'
 import PermohonanKebutuhanIsoman from './PermohonanKebutuhanIsoman'
 import ActionCard from './ActionCard'
@@ -74,7 +95,10 @@ export default {
     PanduanIsolasi,
     KonsultasiDenganDokter,
     PermohonanKebutuhanIsoman,
-    ActionCard
+    ActionCard,
+    KontakEratCovid19,
+    BebasIsoman,
+    TestPCRUlang
   },
   data () {
     return {
