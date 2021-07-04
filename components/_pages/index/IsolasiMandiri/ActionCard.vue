@@ -8,9 +8,7 @@
       alt="action illustration"
     >
     <div class="action-card__content">
-      <h3 class="font-bold text-xl">
-        {{ title }}
-      </h3>
+      <h3 class="font-bold text-xl" v-html="title" />
       <p class="text-gray-800">
         {{ body }}
       </p>
