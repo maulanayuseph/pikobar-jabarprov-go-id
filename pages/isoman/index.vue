@@ -3,7 +3,7 @@
   <div>
     <section class="bg-brand-green-darker">
       <div class="container mx-auto">
-        <div class="mx-4 flex flex-wrap gap-8 py-8 justify-between">
+        <div class="mx-4 flex flex-wrap gap-8 py-12 justify-between">
           <div class="flex flex-col items-start justify-center">
             <h1 class="text-3xl font-semibold tracking-wider md:tracking-normal md:text-4xl md:font-bold leading-normal text-white">
               Informasi Isolasi Mandiri
