@@ -88,9 +88,6 @@
           </a>
         </div>
       </div>
-      <section class="mt-8 rounded-lg bg-white shadow-md p-5 md:p-8">
-        <IsolasiMandiri />
-      </section>
       <div class="flex flex-row flex-wrap items-stretch my-8">
         <div
           class="w-full flex flex-col mb-8 lg:mb-0 lg:w-1/4 lg:mr-8"
@@ -169,6 +166,97 @@
         >
           Lihat Rumah Sakit Lainnya
         </nuxt-link>
+      </div>
+    </section>
+    <section class="md:flex flex-row flex-no-wrap mt-8 m-4 md:m-8 rounded-lg bg-white shadow-md p-5 md:p-8">
+      <div class="lg:w-1/2 order-2">
+        <header class="lg:max-w-2xl">
+          <h2 class="mb-4 md:mb-8 text-left text-xl md:text-2xl">
+            <b>Tetap Waspada dengan menerapkan AKB</b>
+          </h2>
+          <p>
+            Selama vaksin belum ditemukan, cara terbaik untuk kembali beraktivitas adalah dengan menerapkan ADAPTASI KEBIASAAN BARU (AKB) di tengah pandemi.
+          </p>
+        </header>
+        <br>
+        <div class="flex flex-col items-stretch lg:max-w-2xl">
+          <article class="text-black">
+            <p>
+              Berdasarkan Peraturan Gubernur No.63 tahun 2020, penentuan risiko kesehatan masyarakat di Daerah Kabupaten/Kota yang dikeluarkan oleh Satuan Tugas Penanganan Covid-19 Nasional secara berkala setiap minggu, diatur meliputi 4 ZONA RISIKO, yaitu:
+            </p>
+            <br>
+            <ul class="list-disc list-inside">
+              <li>
+                Level 1 <strong class="text-green-600">Tidak terdampak/tidak ada kasus (Hijau)</strong>
+              </li>
+              <li>
+                Level 2 <strong class="text-yellow-500">Risiko rendah (Kuning)</strong>
+              </li>
+              <li>
+                Level 3 <strong class="text-orange-600">Risiko sedang (Oranye)</strong>
+              </li>
+              <li>
+                Level 4 <strong class="text-red-600">Risiko tinggi (Merah)</strong>
+              </li>
+            </ul>
+            <br>
+            <p>
+              Wargi dapat melihat peta sebaran berdasarkan zona risiko
+              <a href="https://covid19.go.id/peta-risiko" target="blank" class="text-blue-600 underline">di sini</a>
+            </p>
+            <br>
+            <p>
+              Lalu, apa saja yang harus wargi Jabar perhatikan saat mulai beraktivitas kembali?
+            </p>
+            <br>
+            <p>
+              Hal mendasar yang perlu wargi terapkan adalah protokol kesehatan dalam setiap akan melakukan kegiatan seperti:
+              <br>
+              <br>
+              <ul class="list-none">
+                <li class="li-check-mark">
+                  Mencuci tangan secara berkala
+                </li>
+                <li class="li-check-mark">
+                  Gunakan masker saat keluar rumah
+                </li>
+                <li class="li-check-mark">
+                  Selalu menjaga jarak min. 1 meter dan hindari kontak fisik dengan orang lain
+                </li>
+                <li class="li-check-mark">
+                  Membawa hand sanitizer/tisu basah untuk kebersihan darurat (jika tidak ada fasilitas cuci tangan)
+                </li>
+                <li class="li-check-mark">
+                  Membawa peralatan makan sendiri
+                </li>
+              </ul>
+              <br>
+              <br>
+              Protokol harus selalu wargi terapkan di mana saja dan kapan saja. Saat sedang berbelanja di pasar,
+              mulai kembali masuk kantor, ataupun sedang di area publik seperti halte dan taman. Jangan lupa
+              untuk selalu pakai masker segera mandi dan ganti pakaian saat sampai di rumah.
+              <br>
+              <br>
+              Jika merasa tidak sehat atau memiliki gejala demam,  maka wargi sebaiknya tetap berkegiatan dari rumah.
+              Karena di setiap kebiasaan baru, selalu ada harapan untuk keluarga dan kerabat agar tetap aman.
+              Terus waspada dan jaga diri jaga sesama dengan AKB.
+            </p>
+          </article>
+          <nuxt-link
+            v-show="false"
+            tag="a"
+            to="#"
+            class="text-center md:self-center px-4 py-2 rounded-lg text-brand-green-darker hover:bg-green-200 border-2 border-solid border-brand-green"
+          >
+            Lihat Selengkapnya
+          </nuxt-link>
+        </div>
+      </div>
+      <div class="hidden lg:block w-1/2 order-1 mr-4">
+        <img
+          src="https://firebasestorage.googleapis.com/v0/b/jabarprov-covid19.appspot.com/o/public%2Fakb-new.png?alt=media&token=0ff7c0a2-c95c-4282-a2b8-68e7930e3610"
+          class="w-full h-full object-contain object-top"
+        >
       </div>
     </section>
     <section class="mt-2 m-4 md:mt-4 md:m-8 rounded-lg bg-white shadow-md p-5 md:p-8">
@@ -341,7 +429,6 @@ import ShareableItems from '~/components/ShareableItems'
 import ShareableItemTable from '~/components/ShareableItemTable'
 import PopupCampaign from '~/components/PopupCampaign'
 import PikobarSocmed from '~/components/PikobarSocmed'
-import IsolasiMandiri from '~/components/_pages/index/IsolasiMandiri'
 
 export default {
   components: {
@@ -355,8 +442,7 @@ export default {
     DataTabs,
     ShareableItems,
     ShareableItemTable,
-    PikobarSocmed,
-    IsolasiMandiri
+    PikobarSocmed
   },
   async fetch () {
     await this.$store.dispatch('hospitals/getItems')
