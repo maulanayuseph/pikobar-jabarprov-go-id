@@ -52,7 +52,7 @@
 import contentTables from './anjuran-tempat-perawatan'
 export default {
   data: () => ({
-    numOfColumns: 0,
+    numOfColumns: 1,
     contentTables
   }),
   computed: {
