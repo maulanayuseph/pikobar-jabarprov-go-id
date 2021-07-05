@@ -44,21 +44,6 @@
     <div class="m-5 md:m-8">
       <BorHospital />
     </div>
-    <div class="m-4 md:m-8">
-      <div class="flex flex-col lg:flex-row lg:items-stretch">
-        <div class="w-full mb-6 lg lg:mb-0 bg-white rounded-lg mb-8 shadow-lg">
-          <div>
-            <h3 class="p-5 text-lg md:text">
-              <b>Peta Sebaran Faskes di Jawa Barat</b>
-            </h3>
-            <hr>
-          </div>
-          <div class="p-6">
-            <MapV4SebaranFaskes />
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
 </template>
 
@@ -68,7 +53,6 @@ import moment from 'moment'
 import { analytics } from '~/lib/firebase'
 export default {
   components: {
-    MapV4SebaranFaskes: () => import('~/components/MapV4SebaranFaskes'),
     BorAggregation: () => import('~/components/BorAggregation'),
     BorAggregationCategory: () => import('~/components/BorAggregationCategory'),
     ChartBorZone: () => import('~/components/ChartBorZone'),
