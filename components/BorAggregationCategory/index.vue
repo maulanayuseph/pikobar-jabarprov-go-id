@@ -222,7 +222,7 @@ export default {
         },
         {
           id: 4,
-          name: 'ICU/Ruang Intensif',
+          name: 'Ruang Intensif',
           bor: 0,
           growth: 0,
           total: 0,
@@ -298,7 +298,7 @@ export default {
       this.dataBor[2].available = data.merah_tersedia
       this.dataBor[2].filled = data.merah_terisi
 
-      this.dataBor[3].name = 'ICU/Ruang Intensif'
+      this.dataBor[3].name = 'Ruang Intensif'
       this.dataBor[3].bor = data.icu_persentase
       this.dataBor[3].total = data.icu_total
       this.dataBor[3].available = data.icu_tersedia
