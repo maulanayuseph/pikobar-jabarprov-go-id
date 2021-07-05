@@ -358,24 +358,10 @@ export default {
             hidden: true
           },
           {
-            label: 'ICU',
+            label: 'Ruang Intensif',
             fill: false,
             data: [],
             borderColor: '#978bd1',
-            hidden: true
-          },
-          {
-            label: 'IGD',
-            fill: false,
-            data: [],
-            hidden: true,
-            borderColor: '#75c9fd'
-          },
-          {
-            label: 'R.Bersalin',
-            fill: false,
-            data: [],
-            borderColor: '#bf54bb',
             hidden: true
           },
           {
@@ -398,9 +384,7 @@ export default {
           chartData.datasets[1].data.push(elem.kuning_persentase)
           chartData.datasets[2].data.push(elem.merah_persentase)
           chartData.datasets[3].data.push(elem.icu_persentase)
-          chartData.datasets[4].data.push(elem.igd_persentase)
-          chartData.datasets[5].data.push(elem.ruang_bersalin_persentase)
-          chartData.datasets[6].data.push(elem.total_persentase)
+          chartData.datasets[4].data.push(elem.total_persentase)
         }
       })
       this.chartData = chartData
