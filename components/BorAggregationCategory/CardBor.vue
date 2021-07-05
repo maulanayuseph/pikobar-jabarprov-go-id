@@ -44,13 +44,15 @@
           </div>
           <div class="shadow" />
         </div>
-        <div class="bed my-auto mx-auto text-center sm:text-left">
-          <FontAwesomeIcon class="inline-block mr-0  sm:mr-2 cursor-pointer text-gray-500" :icon="icons.faBed" />
-          <div class="text-3xl font-bold">
-            {{ bor.available.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.") }}
-          </div>
-          <div style="font-size: 14px;">
-            TT Tersedia
+        <div class="bed my-auto mx-auto text-center sm:text-left flex mt-6">
+          <FontAwesomeIcon class="inline-block mr-0 mr-5  sm:mr-5 cursor-pointer text-gray-500" :icon="icons.faBed" />
+          <div>
+            <div class="text-3xl font-bold">
+              {{ bor.available.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.") }}
+            </div>
+            <div style="font-size: 14px;">
+              TT Tersedia
+            </div>
           </div>
         </div>
       </div>
