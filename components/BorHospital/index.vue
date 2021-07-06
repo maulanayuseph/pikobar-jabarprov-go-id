@@ -279,6 +279,7 @@ export default {
       _forEach(data, (el) => {
         const filled = el.hijau_terisi + el.kuning_terisi + el.merah_terisi + el.icu_terisi
         const total = el.hijau_tersedia + el.kuning_tersedia + el.merah_tersedia + el.icu_tersedia
+        const available = total - filled
         dataTable.push(
           {
             no: i,
@@ -291,7 +292,7 @@ export default {
             igd: `${el.igd_persentase}% (${el.igd_terisi}/${el.igd_tersedia})`,
             birth: `${el.ruang_bersalin_persentase}% (${el.ruang_bersalin_terisi}/${el.ruang_bersalin_tersedia})`,
             filled,
-            available: total - filled,
+            available: (available > 0) ? available : 0,
             total,
             bor: el.total_persentase + '%',
             isReference: (el.rujukan_non_rujukan !== null),
@@ -305,7 +306,7 @@ export default {
               igd: el.igd_persentase,
               birth: el.ruang_bersalin_persentase,
               filled,
-              available: total - filled,
+              available: (available > 0) ? available : 0,
               total,
               bor: el.total_persentase
             }
