@@ -201,6 +201,11 @@ export default {
           sortable: true
         },
         {
+          name: 'available',
+          label: 'Tersedia',
+          sortable: true
+        },
+        {
           name: 'total',
           label: 'Kapasitas',
           sortable: true
@@ -286,6 +291,7 @@ export default {
             igd: `${el.igd_persentase}% (${el.igd_terisi}/${el.igd_tersedia})`,
             birth: `${el.ruang_bersalin_persentase}% (${el.ruang_bersalin_terisi}/${el.ruang_bersalin_tersedia})`,
             filled,
+            available: total - filled,
             total,
             bor: el.total_persentase + '%',
             isReference: (el.rujukan_non_rujukan !== null),
@@ -299,6 +305,7 @@ export default {
               igd: el.igd_persentase,
               birth: el.ruang_bersalin_persentase,
               filled,
+              available: total - filled,
               total,
               bor: el.total_persentase
             }
