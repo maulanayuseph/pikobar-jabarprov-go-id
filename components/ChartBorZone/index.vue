@@ -75,9 +75,7 @@ export default {
         { value: 'green', label: 'Hijau' },
         { value: 'yellow', label: 'Kuning' },
         { value: 'red', label: 'Merah' },
-        { value: 'icu', label: 'ICU' },
-        { value: 'igd', label: 'IGD' },
-        { value: 'birth', label: 'Ruang Bersalin' }
+        { value: 'icu', label: 'Ruang Intensif' }
       ],
       selectedCategory: { value: 'bor', label: 'Total BOR' },
       icons: {

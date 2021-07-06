@@ -3,7 +3,7 @@
     <div :class="!isLoading ? 'bg-white rounded-lg shadow-lg' : 'hidden'">
       <div class="flex flex-col md:flex-row flex-wrap items-center p-4">
         <h4 class="font-bold text-lg">
-          Keterisian Tempat Tidur (BOR) RS di Jawa Barat
+          Keterisian Tempat Tidur (BOR) RS Melayani Covid di Jawa Barat
         </h4>
         <div class="flex flex-col w-full md:w-auto md:flex-row flex-wrap xl:ml-auto">
           <div class="relative rounded-md shadow-sm m-1">
@@ -35,20 +35,6 @@
                 selected-label=""
                 label="label"
                 @input="setSelectedCity"
-              />
-            </div>
-            <div class="w-full md:w-56 m-1">
-              <multiselect
-                v-model="selectedHospital"
-                class="optHospital w-full md:w-56"
-                :options="optionsHospital"
-                :allow-empty="false"
-                track-by="value"
-                select-label=""
-                deselect-label=""
-                selected-label=""
-                label="label"
-                @input="setSelectedHospital"
               />
             </div>
           </client-only>
@@ -169,7 +155,7 @@ export default {
         { value: true, label: 'RS Melayani Covid-19' },
         { value: false, label: 'RS Tidak Melayani Covid-19' }
       ],
-      selectedHospital: { value: 'all', label: 'Semua RS' },
+      selectedHospital: { value: true, label: 'RS Melayani Covid-19' },
       icons: {
         faSearch
       },
@@ -206,22 +192,17 @@ export default {
         },
         {
           name: 'icu',
-          label: 'ICU',
-          sortable: true
-        },
-        {
-          name: 'igd',
-          label: 'IGD',
-          sortable: true
-        },
-        {
-          name: 'birth',
-          label: 'R. Bersalin',
+          label: 'Ruang Intensif',
           sortable: true
         },
         {
           name: 'filled',
           label: 'Terisi',
+          sortable: true
+        },
+        {
+          name: 'available',
+          label: 'Tersedia',
           sortable: true
         },
         {
@@ -296,6 +277,9 @@ export default {
       const dataTable = []
       let i = 1
       _forEach(data, (el) => {
+        const filled = el.hijau_terisi + el.kuning_terisi + el.merah_terisi + el.icu_terisi
+        const total = el.hijau_tersedia + el.kuning_tersedia + el.merah_tersedia + el.icu_tersedia
+        const available = total - filled
         dataTable.push(
           {
             no: i,
@@ -307,8 +291,9 @@ export default {
             icu: `${el.icu_persentase}% (${el.icu_terisi}/${el.icu_tersedia})`,
             igd: `${el.igd_persentase}% (${el.igd_terisi}/${el.igd_tersedia})`,
             birth: `${el.ruang_bersalin_persentase}% (${el.ruang_bersalin_terisi}/${el.ruang_bersalin_tersedia})`,
-            filled: el.total_terisi,
-            total: el.total_tersedia,
+            filled,
+            available: (available > 0) ? available : 0,
+            total,
             bor: el.total_persentase + '%',
             isReference: (el.rujukan_non_rujukan !== null),
             sort: {
@@ -320,8 +305,9 @@ export default {
               icu: el.icu_persentase,
               igd: el.igd_persentase,
               birth: el.ruang_bersalin_persentase,
-              filled: el.total_terisi,
-              total: el.total_tersedia,
+              filled,
+              available: (available > 0) ? available : 0,
+              total,
               bor: el.total_persentase
             }
           }
