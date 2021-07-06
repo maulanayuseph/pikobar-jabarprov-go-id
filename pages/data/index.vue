@@ -5,7 +5,7 @@
       <h3 class="text-3xl text-gray-900 font-bold text-left leading-none" style="margin-bottom: 10px; ">
         Dashboard Statistik Kasus Covid-19 Provinsi Jawa Barat
       </h3>
-      <small class="text-xl opacity-75">*Update Terakhir: {{ lastUpdatedAt }} 11:00</small>
+      <small class="text-xl opacity-75">*Update Terakhir: {{ lastUpdatedAt }}</small>
     </header>
     <section class="m-4 mb-8 md:m-5">
       <DataSummaryIstilahBaru />
@@ -153,7 +153,7 @@ import axios from 'axios'
 import { mapState } from 'vuex'
 import DataSummaryIstilahBaru from '~/components/_pages/index/DataSummaryIstilahBaru'
 import { faFirstAid, faBug, faMap, faCalendarMinus, faArrowRight, faChevronRight, faInfo, faCircle, faAngleRight } from '@fortawesome/free-solid-svg-icons'
-import { formatDateShort } from '~/lib/date'
+import { formatDateTimeShort } from '~/lib/date'
 import { analytics } from '~/lib/firebase'
 
 export default {
@@ -193,7 +193,7 @@ export default {
       if (!this.cases) {
         return ''
       }
-      return this.formatDateShort(this.cases.updated_at)
+      return this.formatDateTimeShort(this.cases.updated_at)
     }
   },
   mounted () {
@@ -217,7 +217,7 @@ export default {
     })
   },
   methods: {
-    formatDateShort,
+    formatDateTimeShort,
     enableHeatmap () {
       this.stat.isActiveHeatmap = true
       this.stat.isActiveFaskes = false

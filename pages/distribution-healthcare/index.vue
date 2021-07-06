@@ -75,7 +75,7 @@ export default {
   },
   watch: {
     isolateLastDataMetadata (val) {
-      this.lastupdate = moment(val.last_update).locale('id').format('DD MMMM YYYY')
+      this.lastupdate = moment(val.last_update).locale('id').format('dddd, DD MMMM YYYY') + ' 11.00'
     }
   },
   mounted () {
