@@ -82,6 +82,7 @@ export default {
         { to: '/articles?tab=jabar', label: 'Berita', icon: this.icon.faNewspaper },
         { to: '/contact', label: 'Kontak', icon: this.icon.faPhoneAlt },
         { to: '/vaccine', label: 'Vaksinasi', icon: this.icon.faSyringe },
+        { to: '/isoman', label: 'Isoman', icon: this.icon.faHotel },
         { to: '/faq', label: 'FAQ', icon: this.icon.faQuestionCircle },
         { to: 'https://forum.pikobar.jabarprov.go.id/', label: 'Forum', icon: this.icon.faComment },
         { to: '/donate/logistic', label: 'Donasi', icon: this.icon.faBoxOpen },
@@ -114,6 +115,7 @@ export default {
 
       const {
         faHome,
+        faHotel,
         faChartLine,
         faNewspaper,
         faPhoneAlt,
@@ -129,6 +131,7 @@ export default {
       } = lib
       this.icon = {
         faHome,
+        faHotel,
         faChartLine,
         faNewspaper,
         faPhoneAlt,

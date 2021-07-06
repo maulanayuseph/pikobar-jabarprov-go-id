@@ -33,20 +33,38 @@
             </a>
           </component>
 
-          <nuxt-link
+          <span
             v-if="item.children"
             :key="`group:${index}`"
-            to="#"
-            :exact="item.exact"
             class="appbar-desktop__menu-item-parent appbar-menu-item"
           >
-            <a>
+            <a class="flex justify-start items-center">
               {{ item.label }}
+              <svg
+                id="Capa_1"
+                version="1.1"
+                xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
+                x="0px"
+                y="0px"
+                viewBox="0 0 256 256"
+                class="w-3 h-3 ml-2 fill-current"
+                style="enable-background:new 0 0 256 256;"
+                xml:space="preserve"
+                @click="toggle"
+              >
+                <g>
+                  <g>
+                    <polygon points="225.813,48.907 128,146.72 30.187,48.907 0,79.093 128,207.093 256,79.093" />
+                  </g>
+                </g>
+              </svg>
             </a>
-          </nuxt-link>
+          </span>
           <ul v-if="item.children" class="hidden absolute rounded bg-white pb-3">
-            <li v-for="itemSub in item.children" :key="itemSub.to">
+            <li v-for="(itemSub, itemSubIndex) in item.children" :key="itemSubIndex">
               <nuxt-link
+                v-if="itemSub.to"
                 :to="itemSub.to"
                 :exact="itemSub.exact"
                 class="appbar-desktop__menu-item-child appbar-menu-item"
@@ -55,6 +73,16 @@
                   {{ itemSub.label }}
                 </a>
               </nuxt-link>
+              <a
+                v-else-if="itemSub.href"
+                :href="itemSub.href"
+                target="_blank"
+                class="appbar-desktop__menu-item-child appbar-menu-item"
+              >
+                <a>
+                  {{ itemSub.label }}
+                </a>
+              </a>
             </li>
           </ul>
         </li>
@@ -105,12 +133,19 @@ export default {
             { to: '/transmission-potential', label: 'Peta Potensi dan Risiko Penularan' }
           ]
         },
-        { to: '/articles?tab=jabar', label: 'Berita' },
         { to: '/vaccine', label: 'Vaksinasi' },
-        { to: '/faq', label: 'FAQ' },
-        { to: '/contact', label: 'Kontak' },
+        { to: '/isoman', label: 'Isoman' },
         { to: '/donate/logistic', label: 'Donasi' },
-        { href: 'https://bansos.pikobar.jabarprov.go.id/', label: 'Bantuan Sosial' }
+        {
+          to: '#',
+          label: 'Informasi',
+          children: [
+            { to: '/articles?tab=jabar', label: 'Berita' },
+            { to: '/faq', label: 'FAQ' },
+            { to: '/contact', label: 'Kontak' },
+            { href: 'https://bansos.pikobar.jabarprov.go.id/', label: 'Bantuan Sosial' }
+          ]
+        }
       ]
     }
   },
@@ -199,6 +234,12 @@ export default {
 
 .appbar-menu-item {
   @apply text-sm;
+}
+.appbar-menu-item:not(.nuxt-link-active) {
+  &,
+  > * {
+    @apply text-gray-500 font-bold;
+  }
 }
 .appbar-menu-item.nuxt-link-active {
   &,

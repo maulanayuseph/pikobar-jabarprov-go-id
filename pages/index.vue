@@ -26,7 +26,7 @@
                 title="Hotline Pikobar"
                 subtitle="Chat WA seputar COVID-19"
                 number="Klik untuk chat"
-                href="https://s.id/ChatbotPikobar"
+                href="https://wa.me/6285697391854?text=Halo%20Admin!%20Saya%20ingin%20tanya%20seputar%20PIKOBAR"
                 :icon="require('@fortawesome/free-brands-svg-icons').faWhatsapp"
                 icon-class="text-4xl"
               />
