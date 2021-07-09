@@ -19,7 +19,7 @@
         </nuxt-link>
       </div>
       <ul class="appbar-desktop__menus">
-        <li v-for="(item, index) in menus" :key="item.to">
+        <li v-for="(item, index) in menus" :key="index">
           <component
             :is="item.href ? 'a' : 'nuxt-link'"
             v-if="item.children === undefined"
@@ -135,6 +135,7 @@ export default {
         },
         { to: '/vaccine', label: 'Vaksinasi' },
         { to: '/isoman', label: 'Isoman' },
+        { to: '/oxygen', label: 'Agen Oksigen' },
         { to: '/donate/logistic', label: 'Donasi' },
         {
           to: '#',
