@@ -5,18 +5,14 @@
         v-for="(item, i) in items"
         :key="i"
       >
-        <ContactListItem v-bind="item" />
+        <slot name="list-item" v-bind="item" />
       </li>
     </ul>
   </div>
 </template>
 
 <script>
-import ContactListItem from './ContactListItem'
 export default {
-  components: {
-    ContactListItem
-  },
   props: {
     items: {
       type: Array,
