@@ -83,6 +83,7 @@ export default {
         { to: '/contact', label: 'Kontak', icon: this.icon.faPhoneAlt },
         { to: '/vaccine', label: 'Vaksinasi', icon: this.icon.faSyringe },
         { to: '/isoman', label: 'Isoman', icon: this.icon.faHotel },
+        { to: '/oxygen', label: 'Agen Oksigen', icon: this.icon.faLungs },
         { to: '/faq', label: 'FAQ', icon: this.icon.faQuestionCircle },
         { to: 'https://forum.pikobar.jabarprov.go.id/', label: 'Forum', icon: this.icon.faComment },
         { to: '/donate/logistic', label: 'Donasi', icon: this.icon.faBoxOpen },
@@ -127,7 +128,8 @@ export default {
         faMapMarked,
         faBed,
         faMap,
-        faSyringe
+        faSyringe,
+        faLungs
       } = lib
       this.icon = {
         faHome,
@@ -143,7 +145,8 @@ export default {
         faMapMarked,
         faBed,
         faMap,
-        faSyringe
+        faSyringe,
+        faLungs
       }
     },
     animate (toggled) {
