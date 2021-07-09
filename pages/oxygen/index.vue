@@ -30,7 +30,6 @@
 
 <script>
 import { mapState } from 'vuex'
-import { analytics } from '~/lib/firebase'
 import ExpandableContent from '~/components/_pages/index/IsolasiMandiri/ExpandableContent'
 export default {
   components: {
@@ -45,11 +44,6 @@ export default {
   mounted () {
     this.$store.dispatch('oxygen/getItems')
     this.$store.dispatch('oxygen/getInfoItems')
-    this.$nextTick(() => {
-      if (process.browser) {
-        analytics.logEvent('contacts_view')
-      }
-    })
   },
   head () {
     const title = 'Kontak - Pikobar [Pusat Informasi dan Koordinasi COVID-19 Jawa Barat]'
