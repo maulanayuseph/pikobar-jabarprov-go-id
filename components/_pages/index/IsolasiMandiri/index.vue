@@ -48,8 +48,8 @@
     <div class="flex flex-col flex-no-wrap sm:flex-row gap-4 mt-4 lg:mt-6 lg:gap-6">
       <ActionCard
         class="w-full lg:w-1/2"
-        title="Konsultasi dengan Dokter<br><br>"
-        body="Konsultasi dengan dokter melalui layanan hotline Pikobar"
+        title="Konsultasi dengan Dokter"
+        body="Bagi Wargi yang membutuhkan obat, yuk konsultasikan terlebih dahulu dengan dokter melalui layanan telekonsultasi dokter Pikobar"
         prompt="Tanyakan Sekarang"
         :event="konsultasiDokterEvent"
         :image="konsultasiDokterImage"
