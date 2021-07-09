@@ -16,7 +16,7 @@
         <h2 class="text-2xl font-bold leading-tight mb-6">
           Konten Edukasi Tentang Penggunaan Oksigen
         </h2>
-        <ExpandableContent open v-for="(item, i) in infoItems" :key="i">
+        <ExpandableContent v-for="(item, i) in infoItems" :key="i" open>
           <template #title>
             {{ item.title }}
           </template>
