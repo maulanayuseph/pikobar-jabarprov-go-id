@@ -46,7 +46,7 @@ export default {
     this.$store.dispatch('oxygen/getInfoItems')
   },
   head () {
-    const title = 'Kontak - Pikobar [Pusat Informasi dan Koordinasi COVID-19 Jawa Barat]'
+    const title = 'Agen Oksigen - Pikobar [Pusat Informasi dan Koordinasi COVID-19 Jawa Barat]'
     return {
       title,
       meta: [
