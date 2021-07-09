@@ -20,7 +20,7 @@
           <template #title>
             {{ item.title }}
           </template>
-          <div v-html="item.content" />
+          <div class="html-content" v-html="item.content" />
         </ExpandableContent>
       </div>
       <OxygenAccordion />
@@ -71,3 +71,21 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.html-content::v-deep {
+  table {
+    overflow-x: auto;
+    display: block;
+    border-top: 1px solid #eee !important;
+    border-left: 1px solid #eee !important;
+
+    td {
+      border-right: 1px solid #eee;
+      border-bottom: 1px solid #eee;
+      padding: 0 16px;
+      vertical-align: top;
+    }
+  }
+}
+</style>

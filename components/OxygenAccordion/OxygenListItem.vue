@@ -26,8 +26,6 @@
       <a
         v-if="itemType"
         class="inline-block px-4 py-1 bg-green-100 rounded mt-2 mr-2 text-gray-800 hover:opacity-50"
-        :href="itemType"
-        target="_blank"
         :title="`Buka Laman ${itemType}`"
       >
         <i class="fas fa-globe-asia fa-sm mr-1" />
