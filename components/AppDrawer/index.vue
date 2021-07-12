@@ -14,7 +14,9 @@
             :href="m.to"
             @click.prevent="onClickMenuItem(m)"
           >
-            <FontAwesomeIcon v-if="m.icon" :icon="m.icon" class="mr-4" />
+            <span class="app-drawer__menu-item__icon">
+              <FontAwesomeIcon v-if="m.icon" :icon="m.icon" />
+            </span>
             <span>
               {{ m.label }}
             </span>
@@ -25,7 +27,9 @@
             :href="m.to"
             @click.prevent="onClickMenuItem(m, index)"
           >
-            <FontAwesomeIcon v-if="m.icon" :icon="m.icon" class="mr-4" />
+            <span class="app-drawer__menu-item__icon">
+              <FontAwesomeIcon v-if="m.icon" :icon="m.icon" />
+            </span>
             <span>
               {{ m.label }}
             </span>
@@ -37,7 +41,9 @@
                 :href="subm.to"
                 @click.prevent="onClickMenuItem(subm)"
               >
-                <FontAwesomeIcon v-if="subm.icon" :icon="subm.icon" class="mr-4" />
+                <span class="app-drawer__menu-item__icon">
+                  <FontAwesomeIcon v-if="subm.icon" :icon="subm.icon" />
+                </span>
                 <span>
                   {{ subm.label }}
                 </span>
@@ -242,6 +248,11 @@ export default {
   @apply cursor-pointer
   flex flex-row items-center
   text-xl text-gray-600 p-4;
+
+  &__icon {
+    min-width: 36px;
+    display: inline-block;
+  }
 
   &.is-active {
     @apply text-green-500;

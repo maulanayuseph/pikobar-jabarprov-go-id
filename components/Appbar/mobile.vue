@@ -1,27 +1,12 @@
 <template>
   <div class="lg:hidden">
-    <a
-      v-show="canGoBack"
-      class="cursor-pointer flex items-center"
-      href="javascript:void(0)"
-      @click.prevent="onGoBack"
-    >
-      <FontAwesomeIcon :icon="icon.faChevronLeft" />
-      <div class="text-left px-4">
-        <p class="text-lg">
-          Kembali
-        </p>
-      </div>
-    </a>
     <div
-      v-show="!canGoBack"
       class="flex justify-between items-center"
     >
       <div
         class="flex items-center"
       >
         <a
-          v-show="showDrawerToggle"
           class="cursor-pointer flex items-center mr-4"
           href="javascript:void(0)"
           @click.prevent="onToggleDrawer"
@@ -73,12 +58,6 @@ export default {
     }
   },
   computed: {
-    showDrawerToggle () {
-      return this.$route.path === '/'
-    },
-    canGoBack () {
-      return this.$route.path !== '/'
-    },
     pathToGoBack () {
       return this.$store.state.route.from.path
     }
