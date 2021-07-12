@@ -14,9 +14,9 @@
     <div class="container mx-auto">
       <div class="m-4 md:m-8 p-5 md:p-8 rounded-lg bg-white shadow-md">
         <h2 class="text-2xl font-bold leading-tight mb-6">
-          Konten Edukasi Tentang Penggunaan Oksigen
+          Terapi Oksigen & Pemanfaatannya
         </h2>
-        <ExpandableContent v-for="(item, i) in infoItems" :key="i" open>
+        <ExpandableContent v-for="(item, i) in infoItems" :key="i">
           <template #title>
             {{ item.title }}
           </template>
