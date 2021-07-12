@@ -1,5 +1,5 @@
 <template>
-  <div class="">
+  <div>
     <div class="bg-brand-green-dark">
       <div class="container mx-auto p-8 lg:p-16 text-white">
         <h2 class="text-2xl font-bold leading-tight">
