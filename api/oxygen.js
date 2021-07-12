@@ -2,6 +2,7 @@ import { db } from '../lib/firebase'
 
 export function get (options = { perPage: 9999 }) {
   return db.collection('oxygen_center')
+    .orderBy('city', 'asc')
     .limit(options.perPage)
     .get()
     .then((docs) => {
