@@ -1,12 +1,12 @@
 <template>
-  <div class="">
+  <div>
     <div class="bg-brand-green-dark">
       <div class="container mx-auto p-8 lg:p-16 text-white">
         <h2 class="text-2xl font-bold leading-tight">
-          Daftar Agen Oxygen di Jawa Barat
+          Terapi Oksigen Bagi Pasien Covid-19
         </h2>
         <p class="mb-6 mt-2 text-base opacity-75 leading-tight">
-          Informasi dan kontak agen oksigen (isi ulang dan tabung oksigen) di Jawa Barat
+          Informasi mengenai terapi oksigen & sebaran lokasi agen penyedia tabung oksigen di Jawa Barat
         </p>
       </div>
     </div>
@@ -52,7 +52,7 @@ export default {
     })
   },
   head () {
-    const title = 'Agen Oksigen - Pikobar [Pusat Informasi dan Koordinasi COVID-19 Jawa Barat]'
+    const title = 'Terapi Oksigen - Pikobar [Pusat Informasi dan Koordinasi COVID-19 Jawa Barat]'
     return {
       title,
       meta: [
