@@ -10,7 +10,7 @@
         <nuxt-link to="/">
           <div class="text-left">
             <p class="text-base">
-              Pusat Informasi <br class="inline-block md:hidden"> &amp;  Koordinasi COVID-19
+              Pusat Informasi &amp; Koordinasi COVID-19
             </p>
             <p class="text-sm text-gray-700">
               Provinsi Jawa Barat
@@ -19,7 +19,14 @@
         </nuxt-link>
       </div>
       <ul class="appbar-desktop__menus">
-        <li v-for="(item, index) in menus" :key="item.to">
+        <li
+          v-for="(item, index) in menus"
+          :key="index"
+          :class="{
+            'appbar-desktop__menus__list-item': true,
+            'appbar-desktop__menus__list-item--has-children': item.children
+          }"
+        >
           <component
             :is="item.href ? 'a' : 'nuxt-link'"
             v-if="item.children === undefined"
@@ -28,15 +35,16 @@
             :exact="item.exact"
             class="appbar-desktop__menu-item appbar-menu-item"
           >
-            <a>
-              {{ item.label }}
-            </a>
+            {{ item.label }}
           </component>
 
           <span
             v-if="item.children"
             :key="`group:${index}`"
-            class="appbar-desktop__menu-item-parent appbar-menu-item"
+            :class="[
+              'appbar-desktop__menu-item-parent appbar-menu-item',
+              isChildActive(item) && 'nuxt-link-active'
+            ]"
           >
             <a class="flex justify-start items-center">
               {{ item.label }}
@@ -51,7 +59,6 @@
                 class="w-3 h-3 ml-2 fill-current"
                 style="enable-background:new 0 0 256 256;"
                 xml:space="preserve"
-                @click="toggle"
               >
                 <g>
                   <g>
@@ -61,17 +68,21 @@
               </svg>
             </a>
           </span>
-          <ul v-if="item.children" class="hidden absolute rounded bg-white pb-3">
-            <li v-for="(itemSub, itemSubIndex) in item.children" :key="itemSubIndex">
+          <ul
+            v-if="item.children"
+            class="appbar-menu-item__dropdown"
+          >
+            <li
+              v-for="(itemSub, itemSubIndex) in item.children"
+              :key="itemSubIndex"
+            >
               <nuxt-link
                 v-if="itemSub.to"
                 :to="itemSub.to"
                 :exact="itemSub.exact"
                 class="appbar-desktop__menu-item-child appbar-menu-item"
               >
-                <a>
-                  {{ itemSub.label }}
-                </a>
+                {{ itemSub.label }}
               </nuxt-link>
               <a
                 v-else-if="itemSub.href"
@@ -79,9 +90,7 @@
                 target="_blank"
                 class="appbar-desktop__menu-item-child appbar-menu-item"
               >
-                <a>
-                  {{ itemSub.label }}
-                </a>
+                {{ itemSub.label }}
               </a>
             </li>
           </ul>
@@ -135,6 +144,7 @@ export default {
         },
         { to: '/vaccine', label: 'Vaksinasi' },
         { to: '/isoman', label: 'Isoman' },
+        { to: '/oxygen', label: 'Terapi Oksigen' },
         { to: '/donate/logistic', label: 'Donasi' },
         {
           to: '#',
@@ -166,89 +176,17 @@ export default {
         return { href, target: '_blank' }
       }
       return { to }
+    },
+    isChildActive (item) {
+      const { children = [] } = item
+      if (!Array.isArray(children)) {
+        return false
+      }
+      return children.some((child) => {
+        const backlink = child.to || child.href || ''
+        return this.$route.fullPath.startsWith(backlink)
+      })
     }
   }
 }
 </script>
-
-<style lang="scss" scoped>
-.appbar-desktop {
-  @apply hidden;
-
-  @screen lg {
-    @apply block mx-4;
-  }
-
-  &__wrapper {
-    @apply flex justify-between items-center;
-  }
-
-  &__brand {
-    @apply flex items-center;
-  }
-
-  &__brand-logo {
-    @apply block h-10 mx-auto mr-4;
-  }
-
-  &__menus {
-    @apply flex flex-row items-center;
-  }
-
-  &__menu-item {
-    @apply hidden cursor-pointer mx-2 px-2 py-2;
-
-    @screen lg {
-      @apply flex;
-    }
-
-    &:hover {
-      @apply bg-gray-200;
-    }
-  }
-
-  &__menu-item-parent {
-    @apply hidden cursor-pointer mx-2 px-2 py-2;
-
-    @screen lg {
-      @apply flex;
-    }
-
-    &:hover {
-      @apply bg-gray-200;
-    }
-  }
-
-  &__menu-item-child {
-    @apply hidden cursor-pointer mx-2 px-2 py-2;
-
-    @screen lg {
-      @apply flex;
-    }
-
-    &:hover {
-      @apply bg-gray-200;
-    }
-  }
-}
-
-.appbar-menu-item {
-  @apply text-sm;
-}
-.appbar-menu-item:not(.nuxt-link-active) {
-  &,
-  > * {
-    @apply text-gray-500 font-bold;
-  }
-}
-.appbar-menu-item.nuxt-link-active {
-  &,
-  > * {
-    @apply text-brand-green font-bold;
-  }
-}
-
-ul li:hover ul {
-  display: block;
-}
-</style>

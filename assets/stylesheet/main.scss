@@ -88,6 +88,97 @@ html {
   @apply text-xs;
 }
 
+
+.appbar-desktop {
+  @apply hidden;
+
+  @screen lg {
+    @apply block mx-4;
+  }
+
+  &__wrapper {
+    @apply flex justify-between items-center;
+  }
+
+  &__brand {
+    @apply flex items-center;
+  }
+
+  &__brand-logo {
+    @apply block w-auto h-10 mx-auto mr-4
+    object-contain object-center;
+  }
+
+  &__menus {
+    @apply flex flex-row items-center;
+
+    &__list-item--has-children:hover {
+      .appbar-menu-item__dropdown {
+        display: block;
+      }
+    }
+  }
+
+  &__menu-item {
+    @apply hidden cursor-pointer mx-2 px-2 py-2
+    whitespace-no-wrap;
+
+    @screen lg {
+      @apply flex;
+    }
+
+    &:hover {
+      @apply bg-gray-200;
+    }
+  }
+
+  &__menu-item-parent {
+    @apply hidden cursor-pointer mx-2 px-2 py-2;
+
+    @screen lg {
+      @apply flex;
+    }
+
+    &:hover {
+      @apply bg-gray-200;
+    }
+  }
+
+  &__menu-item-child {
+    @apply hidden cursor-pointer mx-2 px-2 py-2;
+
+    @screen lg {
+      @apply flex;
+    }
+
+    &:hover {
+      @apply bg-gray-200;
+    }
+  }
+
+  .appbar-menu-item {
+    @apply text-sm;
+  }
+  .appbar-menu-item:not(.nuxt-link-active) {
+    &,
+    > * {
+      @apply text-gray-500 font-bold;
+    }
+  }
+  .appbar-menu-item.nuxt-link-active {
+    &,
+    > * {
+      @apply text-brand-green font-bold;
+    }
+  }
+
+  .appbar-menu-item__dropdown {
+    @apply hidden absolute rounded bg-white pb-3
+    border border-solid border-gray-300
+    shadow-md;
+  }
+}
+
 /* purgecss end ignore */
 // .calendar-right-to-left{
 //   margin-left: -650px !important;

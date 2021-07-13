@@ -13,7 +13,11 @@
     <br>
     <template #content>
       <div>
-        <ContactList v-if="filteredHospitals && filteredHospitals.length" :items="filteredHospitals" />
+        <ContactList v-if="filteredHospitals && filteredHospitals.length" :items="filteredHospitals">
+          <template v-slot:list-item="hospitalItem">
+            <ContactListItem v-bind="hospitalItem" />
+          </template>
+        </ContactList>
         <EmptyData v-else />
       </div>
     </template>
@@ -24,10 +28,12 @@
 import { mapState } from 'vuex'
 import mixin from './mixin.js'
 import ContactList from '~/components/ContactList'
+import ContactListItem from '~/components/ContactList/ContactListItem'
 export default {
   components: {
     Accordion: () => import('./Accordion'),
-    ContactList
+    ContactList,
+    ContactListItem
   },
   mixins: [mixin],
   data () {

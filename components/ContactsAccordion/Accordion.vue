@@ -51,18 +51,26 @@ export default {
       default: () => ({})
     }
   },
+  props: {
+    open: {
+      type: Boolean
+    }
+  },
   data () {
     return {
       isCollapsed: false
     }
   },
-  watch: {
-    'accordionProps$.isCollapsed': {
-      immediate: true,
-      handler (v) {
-        this.isCollapsed = v
-      }
-    }
+  created () {
+    this.$watch(
+      function () {
+        return this.accordionProps$.isCollapsed || this.open
+      },
+      function (truthy) {
+        this.isCollapsed = truthy
+      },
+      { immediate: true }
+    )
   }
 }
 </script>
