@@ -16,12 +16,27 @@
         <h2 class="text-2xl font-bold leading-tight mb-6">
           Terapi Oksigen & Pemanfaatannya
         </h2>
-        <ExpandableContent v-for="(item, i) in infoItems" :key="i">
-          <template #title>
-            {{ item.title }}
-          </template>
-          <div class="html-content" v-html="item.content" />
-        </ExpandableContent>
+        <ContentLoader
+          v-if="isInfoItemsLoading"
+          :speed="3"
+          :height="48"
+        >
+          <rect width="100%" height="100%" rx="2" ry="2" />
+        </ContentLoader>
+        <template v-else>
+          <ExpandableContent
+            v-for="(item, i) in infoItems"
+            :key="i"
+          >
+            <template #title>
+              {{ item.title }}
+            </template>
+            <div
+              class="html-content"
+              v-html="item.content"
+            />
+          </ExpandableContent>
+        </template>
       </div>
       <OxygenAccordion />
     </div>
@@ -29,16 +44,19 @@
 </template>
 
 <script>
+import { ContentLoader } from 'vue-content-loader'
 import { mapState } from 'vuex'
 import { analytics } from '~/lib/firebase'
 import ExpandableContent from '~/components/_pages/index/IsolasiMandiri/ExpandableContent'
 export default {
   components: {
+    ContentLoader,
     OxygenAccordion: () => import('~/components/OxygenAccordion'),
     ExpandableContent
   },
   computed: {
     ...mapState('oxygen', [
+      'isInfoItemsLoading',
       'infoItems'
     ])
   },
