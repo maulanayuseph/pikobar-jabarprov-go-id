@@ -3,10 +3,10 @@
     <div class="bg-brand-green-dark">
       <div class="container mx-auto p-8 lg:p-16 text-white">
         <h2 class="text-2xl font-bold leading-tight">
-          Terapi Oksigen Bagi Pasien Covid-19
+          Tabung Oksigen Bagi Pasien Covid-19
         </h2>
         <p class="mb-6 mt-2 text-base opacity-75 leading-tight">
-          Informasi mengenai terapi oksigen & sebaran lokasi agen penyedia tabung oksigen di Jawa Barat
+          Informasi mengenai pemanfaatan tabung oksigen & sebaran lokasi agen penyedia tabung oksigen di Jawa Barat
         </p>
       </div>
     </div>

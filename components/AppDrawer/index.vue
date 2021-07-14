@@ -89,7 +89,7 @@ export default {
         { to: '/contact', label: 'Kontak', icon: this.icon.faPhoneAlt },
         { to: '/vaccine', label: 'Vaksinasi', icon: this.icon.faSyringe },
         { to: '/isoman', label: 'Isoman', icon: this.icon.faHotel },
-        { to: '/oxygen', label: 'Terapi Oksigen', icon: this.icon.faLungs },
+        { to: '/oxygen', label: 'Cari Oksgien', icon: this.icon.faLungs },
         { to: '/faq', label: 'FAQ', icon: this.icon.faQuestionCircle },
         { to: 'https://forum.pikobar.jabarprov.go.id/', label: 'Forum', icon: this.icon.faComment },
         { to: '/donate/logistic', label: 'Donasi', icon: this.icon.faBoxOpen },
