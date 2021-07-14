@@ -14,7 +14,17 @@
     <template #content>
       <div>
         <StringSearchQuery v-model="searchString" class="mb-4" @search="performFiltering" />
-        <ContactList v-if="filteredOxygen && filteredOxygen.length" :items="filteredOxygen">
+        <ContentLoader
+          v-if="isItemsLoading"
+          :speed="3"
+          :height="48"
+        >
+          <rect width="100%" height="100%" rx="2" ry="2" />
+        </ContentLoader>
+        <ContactList
+          v-else-if="filteredOxygen && filteredOxygen.length"
+          :items="filteredOxygen"
+        >
           <template v-slot:list-item="hospitalItem">
             <OxygenListItem v-bind="hospitalItem" />
           </template>
@@ -26,6 +36,7 @@
 </template>
 
 <script>
+import { ContentLoader } from 'vue-content-loader'
 import { mapState } from 'vuex'
 import StringSearchQuery from '../StringSearchQuery'
 import EmptyData from '../ContactsAccordion/EmptyData'
@@ -34,6 +45,7 @@ import ContactList from '~/components/ContactList'
 
 export default {
   components: {
+    ContentLoader,
     Accordion: () => import('../ContactsAccordion/Accordion'),
     ContactList,
     OxygenListItem,
@@ -48,6 +60,7 @@ export default {
   },
   computed: {
     ...mapState('oxygen', {
+      isItemsLoading: 'isItemsLoading',
       oxygens: 'items'
     })
   },

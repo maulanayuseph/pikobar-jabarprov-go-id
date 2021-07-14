@@ -144,7 +144,7 @@ export default {
         },
         { to: '/vaccine', label: 'Vaksinasi' },
         { to: '/isoman', label: 'Isoman' },
-        { to: '/oxygen', label: 'Terapi Oksigen' },
+        { to: '/oxygen', label: 'Cari Oksigen' },
         { to: '/donate/logistic', label: 'Donasi' },
         {
           to: '#',
