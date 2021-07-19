@@ -1,14 +1,18 @@
 <template>
   <div class="action-card">
-    <img
-      class="mx-auto col-span-6 h-32 object-contain object-center lg:h-auto lg:col-span-2"
-      style="max-width: 150px; max-height: 150px;"
-      width="80%"
-      :src="image"
-      alt="action illustration"
-    >
+    <div class="action-card__top">
+      <img
+        class="action-card__image"
+        style="max-width: 150px; max-height: 150px;"
+        width="80%"
+        :src="image"
+        alt="action illustration"
+      >
+      <h3 class="action-card__title">
+        {{ title }}
+      </h3>
+    </div>
     <div class="action-card__content">
-      <h3 class="font-bold text-xl" v-html="title" />
       <p class="text-gray-800">
         {{ body }}
       </p>
@@ -23,7 +27,7 @@
         </span>
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          class="w-6 h-6"
+          class="w-5 h-5 ml-3"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
@@ -84,31 +88,41 @@ export default {
 <style lang="scss" scoped>
 .action-card {
   @apply p-4
+  flex flex-col
+  justify-start
   rounded-md
-  grid grid-cols-6
-  gap-8
   border border-solid border-gray-300
   bg-white;
 
+  &__top {
+    @apply flex-none;
+  }
+
+  &__image {
+    @apply mx-auto mb-4 h-32 object-contain object-center;
+  }
+
+  &__title {
+    @apply font-bold text-xl;
+  }
+
   &__content {
-    @apply flex flex-col
-    gap-6
+    margin-top: 1.5em;
+    @apply flex-1 flex flex-col
     justify-between
     items-start
-    col-span-6;
+    col-span-2;
 
     @screen lg {
-      @apply col-span-4;
+      @apply col-span-6;
     }
   }
 
   &__btn-link {
     @apply bg-brand-green-darker
     text-white text-sm font-bold tracking-wide
-    p-4
+    mt-4 px-4 py-3
     rounded-lg
-    gap-3
-    w-full
     flex flex-row
     items-center
     justify-between;
@@ -116,11 +130,21 @@ export default {
     &:focus {
       @apply outline-none;
     }
+  }
 
-    @screen lg {
-      @apply px-6 py-2
-      text-base;
+  @screen sm {
+    &--whitespaced &__title::after {
+      content: ' ';
+      display: block;
+      white-space: pre;
     }
   }
+
+  @screen lg {
+    &--whitespaced &__title::after {
+      display: none;
+    }
+  }
+
 }
 </style>

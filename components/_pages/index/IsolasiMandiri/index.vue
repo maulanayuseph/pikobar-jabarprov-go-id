@@ -45,9 +45,9 @@
       </template>
       <PermohonanKebutuhanIsoman />
     </ExpandableContent>
-    <div class="flex flex-col flex-no-wrap sm:flex-row gap-4 mt-4 lg:mt-6 lg:gap-6">
+    <div class="isoman__action-cards">
       <ActionCard
-        class="w-full lg:w-1/2"
+        class="action-card--whitespaced"
         title="Konsultasi dengan Dokter"
         body="Bagi Wargi yang membutuhkan obat, yuk konsultasikan terlebih dahulu dengan dokter melalui layanan telekonsultasi dokter Pikobar"
         prompt="Tanyakan Sekarang"
@@ -56,10 +56,25 @@
         :backlink="konsultasiDokter"
       />
       <ActionCard
-        class="w-full lg:w-1/2"
         title="Permohonan Kebutuhan Vitamin"
         body="Ajukan permohonan kebutuhan vitamin untuk isolasi mandiri"
         prompt="Ajukan Sekarang"
+        :event="permohonanKebutuhanEvent"
+        :image="permohonanKebutuhanImage"
+        :backlink="permohonanKebutuhan"
+      />
+      <ActionCard
+        title="Saya Butuh Tabung Oksigen"
+        body="Lihat daftar penyedia tabung oksigen di sekitar Anda"
+        prompt="Cek di Sini"
+        :event="konsultasiDokterEvent"
+        :image="konsultasiDokterImage"
+        :backlink="konsultasiDokter"
+      />
+      <ActionCard
+        title="Saya Punya Tabung Oksigen"
+        body="Lengkapi formulir untuk meminjamkan tabung oksigen bagi warga yang membutuhkan"
+        prompt="Isi Formulir"
         :event="permohonanKebutuhanEvent"
         :image="permohonanKebutuhanImage"
         :backlink="permohonanKebutuhan"
@@ -118,6 +133,36 @@ export default {
 
     @screen md {
       @apply mb-8 text-2xl;
+    }
+  }
+
+  &__action-cards {
+    gap: 16px;
+    @apply flex flex-col flex-wrap mt-4;
+
+    > * {
+      // for each action card
+      // 16px is gap
+      width: 100%;
+    }
+
+    @screen sm {
+      @apply flex-row;
+
+      > * {
+        width: calc((100% - 16px) / 2);
+      }
+    }
+
+    @screen lg {
+      gap: 24px;
+      @apply gap-6 mt-6;
+
+      > * {
+        // for each action card
+        // 24px is gap
+        width: calc((100% - 24px) / 2);
+      }
     }
   }
 }
