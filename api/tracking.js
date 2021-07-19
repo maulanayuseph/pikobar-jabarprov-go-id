@@ -8,9 +8,9 @@ export {
   trackingAPI
 }
 
-export async function getTrackingResult () {
+export async function getTrackingResult (params) {
   try {
-    const response = await trackingAPI.get('/api/v1/landing-page-registration/tracking', { search: 2232 })
+    const response = await trackingAPI.post('/track', params)
     return response
   } catch (error) {
     return error

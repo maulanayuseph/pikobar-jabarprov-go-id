@@ -31,7 +31,6 @@
         <vue-recaptcha
           :sitekey="recaptchaKey"
           :load-recaptcha-script="true"
-          size="invisible"
           @verify="verifyCaptcha"
           @expired="onRecaptchaExpired"
           @error="onRecaptchaError"
@@ -71,12 +70,14 @@ export default {
         faSearch
       },
       recaptchaKey: process.env.GOOGLE_RECAPTCHA_KEY,
-      isSearch: this.isSearched
+      isSearch: this.isSearched,
+      searchTracking: '',
+      captchaResponse: null
     }
   },
   methods: {
     verifyCaptcha (response) {
-      console.log(response)
+      this.captchaResponse = response
     },
     onRecaptchaError () {
       console.log('recaptcha error')
@@ -86,8 +87,27 @@ export default {
     },
     async onSearch () {
       this.isSearch = true
-      const response = await this.$store.dispatch('tracking/getTracking')
+      const params = {
+        request_id: this.searchTracking,
+        'g-recaptcha-response': this.captchaResponse
+      }
+      const response = await this.$store.dispatch('tracking/getTracking', params)
       console.log(response)
+      // Display Example response
+      // {
+      //   "alamat_tempat": "Jl. Anggrek 21 no. 18 AS 22 Kranggan Permai Bekasi",
+      //   "city": "Kota Bekasi",
+      //   "id_permohonan": "REQ-0000008214",
+      //   "nama_lengkap": "Satriyo A*** Nu***",
+      //   "nik": "3404********0006",
+      //   "paket_obatvitamin": "Paket A - Vitamin Tanpa Konsultasi Dokter",
+      //   "status": "DELIVERED",
+      //   "delivery_info": {
+      //     "airwaybill": "0233852100119075",
+      //     "courier": "JNE",
+      //     "track_url": "https://shipdeo.com/tracking-airwaybill?jne&0233852100119075"
+      //   }
+      // }
       this.$emit('update:isSearch', this.isSearch)
     }
   }

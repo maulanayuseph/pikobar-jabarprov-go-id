@@ -23,8 +23,8 @@ import { getTrackingResult } from '../api/tracking'
 // }
 
 export const actions = {
-  async getTracking () {
-    const items = await getTrackingResult()
+  async getTracking ({ commit }, params) {
+    const items = await getTrackingResult(params)
     return items
   }
 }
