@@ -73,26 +73,22 @@
             </div>
           </div>
           <div class="w-full h-auto text-sm mr-10 mt-5 row flex flex-col sm:flex-row">
-            <div class="w-full sm:w-1/2 md:w-1/3 pl-2 h-auto text-left">
-              <div class="pt-3">
-                <div class="mb-1">
-                  <span class="text-2xl font-extrabold">{{ Number(data.antigen.positif).toLocaleString('id-ID') }}</span>
-                  <span class="text-sm">({{ Number(data.antigen_persentase_by_total.positif.toFixed(2)).toLocaleString('id-ID') }}%)</span>
-                </div>
-                <div class="text-sm">
-                  Positif
-                </div>
+            <div class="w-full sm:w-1/2 md:w-1/3 mb-3 sm:mb-0 pl-2 h-auto text-left">
+              <div class="mb-1">
+                <span class="text-2xl font-extrabold">{{ Number(data.antigen.positif).toLocaleString('id-ID') }}</span>
+                <span class="text-sm">({{ Number(data.antigen_persentase_by_total.positif.toFixed(2)).toLocaleString('id-ID') }}%)</span>
+              </div>
+              <div class="text-sm">
+                Positif
               </div>
             </div>
             <div class="w-full sm:w-1/2 md:w-1/3 pl-2 h-auto text-left">
-              <div class="pt-3">
-                <div class="mb-1">
-                  <span class="text-2xl font-extrabold">{{ Number(data.antigen.negatif).toLocaleString('id-ID') }}</span>
-                  <span class="text-sm">({{ Number(data.antigen_persentase_by_total.negatif.toFixed(2)).toLocaleString('id-ID') }}%)</span>
-                </div>
-                <div class="text-sm">
-                  Negatif
-                </div>
+              <div class="mb-1">
+                <span class="text-2xl font-extrabold">{{ Number(data.antigen.negatif).toLocaleString('id-ID') }}</span>
+                <span class="text-sm">({{ Number(data.antigen_persentase_by_total.negatif.toFixed(2)).toLocaleString('id-ID') }}%)</span>
+              </div>
+              <div class="text-sm">
+                Negatif
               </div>
             </div>
           </div>
@@ -106,7 +102,7 @@
     </div>
     <div class="w-full lg:w-6/12 bg-white overflow-hidden rounded-lg shadow-md flex flex-row justify-center items-center mt-5 p-5">
       <div class="w-full h-auto justify-center items-center my-5 row flex-row lg:flex xl:flex">
-        <div class="w-full md:w-full lg:w-1/2 text-center">
+        <div class="w-full md:w-full lg:w-1/2 text-center py-5 px-5">
           <img src="/img/illustrasi-rdt.svg" width="300px" class="mx-auto" alt="Ilustrasi RDT">
         </div>
         <div class="w-full md:w-full lg:w-1/2 text-center lg:text-left py-5 px-5">
