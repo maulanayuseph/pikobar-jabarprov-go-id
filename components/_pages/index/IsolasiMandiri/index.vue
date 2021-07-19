@@ -188,8 +188,6 @@ export default {
     @apply flex flex-col flex-wrap mt-4;
 
     > * {
-      // for each action card
-      // 16px is gap
       width: 100%;
     }
 
@@ -197,6 +195,8 @@ export default {
       @apply flex-row;
 
       > * {
+        // for each action card
+        // 16px is gap
         width: calc((100% - 16px) / 2);
       }
     }
