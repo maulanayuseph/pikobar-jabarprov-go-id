@@ -56,7 +56,7 @@ export const actions = {
         })
       await remoteConfig.fetchAndActivate()
       const backlinks = remoteConfig.getValue('oxygen_request_and_provide')._value
-      commit('setFormBacklinks', backlinks)
+      commit('setFormBacklinks', JSON.parse(backlinks))
     }
     return state.formBacklinks
   }
