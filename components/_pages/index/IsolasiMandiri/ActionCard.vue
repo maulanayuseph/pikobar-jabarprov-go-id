@@ -66,7 +66,7 @@ export default {
     },
     backlink: {
       type: String,
-      required: true
+      default: ''
     },
     image: {
       type: String,
@@ -75,6 +75,9 @@ export default {
   },
   methods: {
     onClick () {
+      if (!this.backlink) {
+        return
+      }
       if (analytics && this.event) {
         analytics.logEvent(this.event)
       }
@@ -86,6 +89,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@keyframes btn-loading {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 .action-card {
   @apply p-4
   flex flex-col
@@ -132,6 +144,29 @@ export default {
     }
   }
 
+  &--loading &,
+  &--error & {
+    &__btn-link * {
+      display: none
+    }
+  }
+
+  &--loading &__btn-link {
+    width: 120px;
+    height: 38px;
+    animation: btn-loading 1s ease infinite alternate;
+    @apply bg-gray-200;
+  }
+
+  &--error &__btn-link {
+    @apply bg-red-600;
+
+    &::before {
+      content: 'Terjadi kesalahan';
+      display: inline-block;
+    }
+  }
+
   @screen sm {
     &--whitespaced &__title::after {
       content: ' ';
@@ -145,6 +180,5 @@ export default {
       display: none;
     }
   }
-
 }
 </style>
