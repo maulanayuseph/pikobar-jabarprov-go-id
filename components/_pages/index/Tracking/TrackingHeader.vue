@@ -36,7 +36,7 @@
           @error="onRecaptchaError"
         />
         <button
-          class="sm:mr-0 hover:bg-brand-green-light lg:w-40 search-button"
+          class="sm:mr-0 bg-brand-green hover:bg-brand-green-light lg:w-40 search-button"
           @click="onSearch"
         >
           Cari
@@ -121,8 +121,7 @@ export default {
   content-center justify-between
 }
 .search-button {
-  @apply mr-2 px-4 py-2 rounded-lg
-  bg-brand-green text-white
+  @apply px-4 py-2 rounded-lg text-white
   justify-center items-center
 }
 .icon-search {
