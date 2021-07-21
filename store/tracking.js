@@ -1,30 +1,18 @@
 import { getTrackingResult } from '../api/tracking'
 
-// export const state = () => ({
-//   items: [],
-//   isItemsLoading: true,
-//   infoItems: [],
-//   isInfoItemsLoading: true
-// })
+export const state = () => ({
+  result: {}
+})
 
-// export const mutations = {
-//   setItems (state, items) {
-//     state.items = items
-//   },
-//   setItemsLoading (state, isItemsLoading) {
-//     state.isItemsLoading = isItemsLoading
-//   },
-//   setInfoItems (state, infoItems) {
-//     state.infoItems = infoItems
-//   },
-//   setInfoItemsLoading (state, isInfoItemsLoading) {
-//     state.isInfoItemsLoading = isInfoItemsLoading
-//   }
-// }
+export const mutations = {
+  setResult (state, result) {
+    state.result = result
+  }
+}
 
 export const actions = {
   async getTracking ({ commit }, params) {
-    const items = await getTrackingResult(params)
-    return items
+    const result = await getTrackingResult(params)
+    commit('setResult', result.status ? result : {})
   }
 }

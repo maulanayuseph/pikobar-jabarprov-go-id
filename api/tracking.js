@@ -11,7 +11,7 @@ export {
 export async function getTrackingResult (params) {
   try {
     const response = await trackingAPI.post('/track', params)
-    return response
+    return response.data
   } catch (error) {
     return error
   }
