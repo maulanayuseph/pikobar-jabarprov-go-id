@@ -93,21 +93,6 @@ export default {
       }
       const response = await this.$store.dispatch('tracking/getTracking', params)
       console.log(response)
-      // Display Example response
-      // {
-      //   "alamat_tempat": "Jl. Anggrek 21 no. 18 AS 22 Kranggan Permai Bekasi",
-      //   "city": "Kota Bekasi",
-      //   "id_permohonan": "REQ-0000008214",
-      //   "nama_lengkap": "Satriyo A*** Nu***",
-      //   "nik": "3404********0006",
-      //   "paket_obatvitamin": "Paket A - Vitamin Tanpa Konsultasi Dokter",
-      //   "status": "DELIVERED",
-      //   "delivery_info": {
-      //     "airwaybill": "0233852100119075",
-      //     "courier": "JNE",
-      //     "track_url": "https://shipdeo.com/tracking-airwaybill?jne&0233852100119075"
-      //   }
-      // }
       this.$emit('update:isSearch', this.isSearch)
     }
   }
