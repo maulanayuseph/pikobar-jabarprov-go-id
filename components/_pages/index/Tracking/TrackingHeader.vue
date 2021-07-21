@@ -29,8 +29,10 @@
           pemohonan obat/vitamin
         </p>
         <vue-recaptcha
+          ref="recaptcha"
           :sitekey="recaptchaKey"
           :load-recaptcha-script="true"
+          size='invisible'
           @verify="verifyCaptcha"
           @expired="onRecaptchaExpired"
           @error="onRecaptchaError"
@@ -69,15 +71,24 @@ export default {
       icons: {
         faSearch
       },
-      recaptchaKey: process.env.GOOGLE_RECAPTCHA_KEY,
+      recaptchaKey: process.env.ISOMAN_RECAPTCHA_KEY,
       isSearch: this.isSearched,
       searchTracking: '',
-      captchaResponse: null
+      captchaResponse: null,
+      isLoading: false
     }
   },
   methods: {
-    verifyCaptcha (response) {
+    async verifyCaptcha (response) {
       this.captchaResponse = response
+      this.$refs.recaptcha.reset()
+      const params = {
+        request_id: this.searchTracking,
+        'g-recaptcha-response': this.captchaResponse
+      }
+      await this.$store.dispatch('tracking/getTracking', params)
+      this.isLoading = false
+      this.$emit('update:isSearch', this.isSearch)
     },
     onRecaptchaError () {
       console.log('recaptcha error')
@@ -85,15 +96,10 @@ export default {
     onRecaptchaExpired () {
       console.log('recaptcha expired')
     },
-    async onSearch () {
+    onSearch () {
       this.isSearch = true
-      const params = {
-        request_id: this.searchTracking,
-        'g-recaptcha-response': this.captchaResponse
-      }
-      const response = await this.$store.dispatch('tracking/getTracking', params)
-      console.log(response)
-      this.$emit('update:isSearch', this.isSearch)
+      this.isLoading = true
+      this.$refs.recaptcha.execute()
     }
   }
 }
