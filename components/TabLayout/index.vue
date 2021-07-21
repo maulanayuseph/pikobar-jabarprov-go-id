@@ -27,6 +27,10 @@ export default {
     activeTabId: {
       type: String,
       default: null
+    },
+    fixed: {
+      type: Boolean,
+      default: false
     }
   },
   data () {
@@ -44,8 +48,10 @@ export default {
   },
   methods: {
     onClickTab (newTabId) {
-      this.mActiveTabId = newTabId
-      this.$emit('change', newTabId)
+      if (!this.fixed) {
+        this.mActiveTabId = newTabId
+        this.$emit('change', newTabId)
+      }
     }
   }
 }
