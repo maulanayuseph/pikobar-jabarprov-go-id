@@ -4,12 +4,13 @@
       :is-searched="isSearched"
       :is-search.sync="isSearched"
     />
-    <TrackingResult v-if="isSearched" />
-    <EmptyResult />
+    <TrackingResult v-if="isSearched && displayResult" />
+    <EmptyResult v-if="isSearched && !displayResult" />
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import TrackingHeader from '../../components/_pages/index/Tracking/TrackingHeader'
 import TrackingResult from '../../components/_pages/index/Tracking/TrackingResult'
 import EmptyResult from '../../components/_pages/index/Tracking/EmptyResult'
@@ -22,6 +23,14 @@ export default {
   data () {
     return {
       isSearched: false
+    }
+  },
+  computed: {
+    ...mapState('tracking', [
+      'result'
+    ]),
+    displayResult () {
+      return Object.keys(this.result).length !== 0 && this.result.constructor === Object
     }
   },
   head () {
