@@ -12,16 +12,6 @@
   </div>
 </template>
 
-<script>
-export default {
-  data () {
-    return {
-      halo: null
-    }
-  }
-}
-</script>
-
 <style scoped>
 .result-card {
   @apply flex flex-col p-5 m-4
