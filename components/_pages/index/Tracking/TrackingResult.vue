@@ -27,11 +27,34 @@
             <span class="text-sm md:text-base w-6/12 sm:w-9/12">{{ trackingResult.alamat_tempat }}</span>
           </div>
         </div>
-        <div>
-          <TabLayout :tabs="listTabs" :active-tab-id="activeTabId" @change="v => activeTabId = v" />
+        <div v-if="activeTabId">
+          <TabLayout
+            :tabs="listTabs"
+            :active-tab-id="activeTabId"
+            fixed
+          />
           <div class="flex flex-col">
             <span>Status Permohonan Anda</span>
             <span class="text-xl font-bold self-center">{{ requestStatus }}</span>
+            <span v-if="activeTabId === 'verification'">
+              Alasan: {{ trackingResult.verify_info.reason }}
+            </span>
+            <div v-if="activeTabId === 'distribution' || activeTabId === 'received'" class="flex flex-col self-center w-3/12 mt-6">
+              <div class="flex flex-row">
+                <span class="text-sm md:text-base w-6/12 sm:w-6/12">Nomor Resi :</span>
+                <span class="text-sm md:text-base w-6/12 sm:w-6/12">{{ trackingResult.delivery_info.airwaybill }}</span>
+              </div>
+              <div class="flex flex-row">
+                <span class="text-sm md:text-base w-6/12 sm:w-6/12">Nomor Kurir :</span>
+                <span class="text-sm md:text-base w-6/12 sm:w-6/12">{{ trackingResult.delivery_info.courier }}</span>
+              </div>
+              <a
+                :href="trackingResult.delivery_info.track_url"
+                class="self-center mt-4"
+              >
+                Cek status pengiriman
+              </a>
+            </div>
           </div>
         </div>
       </div>
@@ -40,13 +63,13 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
   components: {
     TabLayout: () => import('../../../TabLayout')
   },
   data () {
     return {
-      activeTabId: 'request',
       listTabs: [
         {
           id: 'request',
@@ -69,27 +92,17 @@ export default {
           title: '5. Diterima'
         }
       ],
-      trackingResult: {
-        alamat_tempat: 'Jl. Anggrek 21 no. 18 AS 22 Kranggan Permai Bekasi',
-        city: 'Kota Bekasi',
-        id_permohonan: 'REQ-0000008214',
-        nama_lengkap: 'Satriyo A*** Nu***',
-        nik: '3404********0006',
-        paket_obatvitamin: 'Paket A - Vitamin Tanpa Konsultasi Dokter',
-        status: 'DELIVERED',
-        delivery_info: {
-          airwaybill: '0233852100119075',
-          courier: 'JNE',
-          track_url: 'https://shipdeo.com/tracking-airwaybill?jne&0233852100119075'
-        }
-      }
+      trackingResult: null
     }
   },
   computed: {
+    ...mapState('tracking', [
+      'result'
+    ]),
     requestStatus () {
       switch (this.activeTabId) {
         case 'verification':
-          return 'LOLOS VERIFIKASI'
+          return this.trackingResult.verify_info.approved ? 'LOLOS VERIFIKASI' : 'TIDAK MEMENUHI VERIFIKASI'
         case 'packing':
           return 'PAKET ANDA SEDANG DI PACKING'
         case 'distribution':
@@ -99,7 +112,30 @@ export default {
         default:
           return ''
       }
+    },
+    activeTabId () {
+      if (this.trackingResult.status) {
+        switch (this.trackingResult.status) {
+          case 'NEW':
+            return 'request'
+          case 'VERIFIED':
+            return 'verification'
+          case 'PACKAGING':
+            return 'packing'
+          case 'DELIVERY':
+            return 'distribution'
+          case 'DELIVERED':
+            return 'received'
+          default:
+            return ''
+        }
+      } else {
+        return ''
+      }
     }
+  },
+  created () {
+    this.trackingResult = this.result
   }
 }
 </script>
