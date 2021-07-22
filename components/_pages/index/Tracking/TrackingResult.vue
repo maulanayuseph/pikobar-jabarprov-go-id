@@ -50,7 +50,8 @@
               </div>
               <a
                 :href="trackingResult.delivery_info.track_url"
-                class="self-center mt-4"
+                target="_blank"
+                class="md:self-center hover:bg-green-200 trace-button"
               >
                 Cek status pengiriman
               </a>
@@ -145,5 +146,10 @@ export default {
   @apply flex flex-col p-5 m-4
   rounded-lg bg-white shadow-md
   content-center
+}
+.trace-button {
+  @apply text-center px-4 py-1
+  mt-4 rounded-lg text-brand-green-darker
+   border-2 border-solid border-brand-green
 }
 </style>
