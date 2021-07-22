@@ -34,12 +34,12 @@
             fixed
           />
           <div class="flex flex-col">
-            <span>Status Permohonan Anda</span>
+            <span class="self-center sm:self-start my-2">Status Permohonan Anda</span>
             <span class="text-xl font-bold self-center">{{ requestStatus }}</span>
-            <span v-if="activeTabId === 'verification'">
+            <span v-if="activeTabId === 'verification' && !this.trackingResult.verify_info.approved" class="mt-2 self-center sm:self-start">
               Alasan: {{ trackingResult.verify_info.reason }}
             </span>
-            <div v-if="activeTabId === 'distribution' || activeTabId === 'received'" class="flex flex-col self-center w-3/12 mt-6">
+            <div v-if="activeTabId === 'distribution' || activeTabId === 'received'" class="flex flex-col self-center lg:w-3/12 mt-6">
               <div class="flex flex-row">
                 <span class="text-sm md:text-base w-6/12 sm:w-6/12">Nomor Resi :</span>
                 <span class="text-sm md:text-base w-6/12 sm:w-6/12">{{ trackingResult.delivery_info.airwaybill }}</span>
@@ -118,7 +118,7 @@ export default {
         switch (this.trackingResult.status) {
           case 'NEW':
             return 'request'
-          case 'VERIFIED':
+          case 'VERIFY':
             return 'verification'
           case 'PACKAGING':
             return 'packing'
