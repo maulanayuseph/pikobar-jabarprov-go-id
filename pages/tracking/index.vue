@@ -4,7 +4,7 @@
       :is-searched="isSearched"
       :is-search.sync="isSearched"
     />
-    <TrackingResult v-if="isSearched && displayResult" />
+    <TrackingResult v-if="isSearched && displayResult" :key="result" />
     <EmptyResult v-if="isSearched && !displayResult" />
   </div>
 </template>
