@@ -22,6 +22,7 @@
             name="search"
             class="block pl-8 py-2 sm:text-sm border rounded-md w-full"
             placeholder="Masukkan ID Permohonan/NIK Anda"
+            @keyup.enter="onSearch"
           >
         </div>
         <p class="text-xs">
