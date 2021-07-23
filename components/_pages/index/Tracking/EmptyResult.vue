@@ -1,11 +1,11 @@
 <template>
   <div class="container mx-auto">
-    <div class=" md:m-8 md:p-8 result-card">
+    <div class="md:m-8 md:p-8 result-card">
       <img src="~assets/tracking-not-found.png" width="350px">
-      <span class="text-2xl font-bold">
+      <span class="text-2xl font-bold text-center">
         Data Permohonan Tidak Ditemukan
       </span>
-      <span>
+      <span class="text-center">
         Maaf, Kami tidak dapat menemukan Data Permohonan yang Anda cari.
       </span>
     </div>

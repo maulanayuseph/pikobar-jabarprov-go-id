@@ -2,7 +2,7 @@
   <div class="container mx-auto">
     <div class="flex flex-col-reverse lg:flex-row md:m-8 md:p-8 header-card gap-4">
       <div class="flex flex-col justify-center gap-2">
-        <h2 class="text-2xl font-bold leading-tight">
+        <h2 class="text-2xl font-bold leading-tight text-center sm:text-left">
           Lacak Permohonan Vitamin/Obat Anda
         </h2>
         <p class="mb-6 mt-2 text-base opacity-75 leading-tight">
