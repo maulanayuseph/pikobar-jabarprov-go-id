@@ -138,6 +138,12 @@ export default {
     }
   }
 
+  @screen md {
+    &:not(&--show) {
+      display: none;
+    }
+  }
+
   &__content-wrapper {
     @apply absolute z-50 overflow-visible;
     bottom: -100%;
