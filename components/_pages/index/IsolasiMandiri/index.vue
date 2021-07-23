@@ -66,22 +66,23 @@
       <ActionCard
         :class="asyncCardClasses"
         title="Saya Butuh Tabung Oksigen"
-        body="Lihat daftar penyedia tabung oksigen di sekitar Anda"
+        body="Cari pinjaman tabung oksigen baik dari warga maupun pemerintah"
         prompt="Cek di Sini"
         :event="peminjamOksigenEvent"
         :image="peminjamOksigenImage"
-        :backlink="peminjamOksigenJotform"
+        @click="onOpenOxygenRequestPopup"
       />
       <ActionCard
         :class="asyncCardClasses"
         title="Saya Punya Tabung Oksigen"
-        body="Lengkapi formulir untuk meminjamkan tabung oksigen bagi warga yang membutuhkan"
+        body="Pinjamkan atau donasikan tabung oksigen bagi warga yang membutuhkan"
         prompt="Isi Formulir"
         :event="pemberiOksigenEvent"
         :image="pemberiOksigenImage"
         :backlink="pemberiOksigenJotform"
       />
     </div>
+    <OxygenProviderPopup ref="popup" />
   </div>
 </template>
 
@@ -95,6 +96,7 @@ import TestPCRUlang from './TestPCRUlang'
 import KonsultasiDenganDokter from './KonsultasiDenganDokter'
 import PermohonanKebutuhanIsoman from './PermohonanKebutuhanIsoman'
 import ActionCard from './ActionCard'
+import OxygenProviderPopup from './OxygenProviderPopup'
 import { konsultasiDokter, permohonanKebutuhan } from './backlinks'
 import {
   TAP_KONSULTASI_DOKTER as konsultasiDokterEvent,
@@ -117,7 +119,8 @@ export default {
     ActionCard,
     KontakEratCovid19,
     BebasIsoman,
-    TestPCRUlang
+    TestPCRUlang,
+    OxygenProviderPopup
   },
   data () {
     return {
@@ -168,6 +171,9 @@ export default {
       } finally {
         this.isBacklinkLoading = false
       }
+    },
+    onOpenOxygenRequestPopup () {
+      this.$refs.popup.open()
     }
   }
 }
