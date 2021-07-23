@@ -21,10 +21,21 @@
             type="text"
             name="search"
             class="block pl-8 py-2 sm:text-sm border rounded-md w-full"
+            :class="{
+              'border-red-500': !isValid
+            }"
             placeholder="Masukkan ID Permohonan/NIK Anda"
             @keyup.enter="onSearch"
           >
         </div>
+        <span
+          class="text-xs text-red-500 -mt-2"
+          :class="{
+            'hidden': isValid
+          }"
+        >
+          This field is required
+        </span>
         <p class="text-xs">
           *ID permohonan didapatkan setelah anda melakukan pengisian form
           pemohonan obat/vitamin
@@ -76,7 +87,13 @@ export default {
       isSearch: this.isSearched,
       searchTracking: '',
       captchaResponse: null,
-      isLoading: false
+      isLoading: false,
+      isValid: true
+    }
+  },
+  watch: {
+    searchTracking (val) {
+      this.isValid = val !== ''
     }
   },
   methods: {
@@ -98,9 +115,14 @@ export default {
       console.log('recaptcha expired')
     },
     onSearch () {
-      this.isSearch = true
-      this.isLoading = true
-      this.$refs.recaptcha.execute()
+      if (this.searchTracking) {
+        this.isSearch = true
+        this.isLoading = true
+        this.isValid = true
+        this.$refs.recaptcha.execute()
+      } else {
+        this.isValid = false
+      }
     }
   }
 }
