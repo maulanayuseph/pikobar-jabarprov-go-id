@@ -75,6 +75,9 @@ export default {
   },
   methods: {
     onClick () {
+      if (this.$listeners.click) {
+        return this.$listeners.click()
+      }
       if (!this.backlink) {
         return
       }
