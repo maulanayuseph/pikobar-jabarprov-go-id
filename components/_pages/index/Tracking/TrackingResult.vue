@@ -150,6 +150,6 @@ export default {
 .trace-button {
   @apply text-center px-4 py-1
   mt-4 rounded-lg text-brand-green-darker
-   border-2 border-solid border-brand-green
+  border-2 border-solid border-brand-green
 }
 </style>

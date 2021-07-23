@@ -6,8 +6,7 @@
           Lacak Permohonan Vitamin/Obat Anda
         </h2>
         <p class="mb-6 mt-2 text-base opacity-75 leading-tight">
-          Anda dapat mengetahui status tindak lanjut permohonan obat/vitamin yang
-          telah diajukan melalui Pikobar
+          Anda dapat mengetahui status tindak lanjut permohonan obat/vitamin yang telah diajukan melalui Pikobar
         </p>
         <div class="relative rounded-md shadow-sm">
           <div class="icon-search">
@@ -53,7 +52,8 @@
           class="sm:mr-0 bg-brand-green hover:bg-brand-green-light lg:w-40 search-button"
           @click="onSearch"
         >
-          Cari
+          <Spinner v-if="isLoading" />
+          <span v-else>Cari</span>
         </button>
       </div>
       <img
@@ -68,9 +68,11 @@
 <script>
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
 import VueRecaptcha from 'vue-recaptcha'
+import Spinner from '~/components/Spinner'
 export default {
   components: {
-    VueRecaptcha
+    VueRecaptcha,
+    Spinner
   },
   props: {
     isSearched: {
