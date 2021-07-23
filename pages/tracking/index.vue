@@ -4,7 +4,7 @@
       :is-searched="isSearched"
       :is-search.sync="isSearched"
     />
-    <TrackingResult v-if="isSearched && displayResult" :key="result" />
+    <TrackingResult v-if="isSearched && displayResult" :key="reRender" />
     <EmptyResult v-if="isSearched && !displayResult" />
   </div>
 </template>
@@ -22,7 +22,8 @@ export default {
   },
   data () {
     return {
-      isSearched: false
+      isSearched: false,
+      reRender: false
     }
   },
   computed: {
@@ -31,6 +32,11 @@ export default {
     ]),
     displayResult () {
       return Object.keys(this.result).length !== 0 && this.result.constructor === Object
+    }
+  },
+  watch: {
+    result () {
+      this.reRender = !this.reRender
     }
   },
   head () {

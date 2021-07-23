@@ -6,25 +6,9 @@
       </h2>
       <div class="flex flex-col rounded-lg border-gray-400 border-solid border-2 p-4">
         <div class="flex flex-col gap-2 mb-2 md:p-8">
-          <div class="flex flex-row">
-            <span class="text-sm md:text-base w-6/12 sm:w-3/12">ID Permohonan</span>
-            <span class="text-sm md:text-base w-6/12 sm:w-9/12">{{ trackingResult.id_permohonan }}</span>
-          </div>
-          <div class="flex flex-row">
-            <span class="text-sm md:text-base w-6/12 sm:w-3/12">NIK</span>
-            <span class="text-sm md:text-base w-6/12 sm:w-9/12">{{ trackingResult.nik }}</span>
-          </div>
-          <div class="flex flex-row">
-            <span class="text-sm md:text-base w-6/12 sm:w-3/12">Nama Pemohon</span>
-            <span class="text-sm md:text-base w-6/12 sm:w-9/12">{{ trackingResult.nama_lengkap }}</span>
-          </div>
-          <div class="flex flex-row">
-            <span class="text-sm md:text-base w-6/12 sm:w-3/12">Nama Paket</span>
-            <span class="text-sm md:text-base w-6/12 sm:w-9/12">{{ trackingResult.paket_obatvitamin }}</span>
-          </div>
-          <div class="flex flex-row">
-            <span class="text-sm md:text-base w-6/12 sm:w-3/12">Alamat Domisili</span>
-            <span class="text-sm md:text-base w-6/12 sm:w-9/12">{{ trackingResult.alamat_tempat }}</span>
+          <div v-for="identity in resultIdentity" :key="identity.title" class="flex flex-row">
+            <span class="text-sm md:text-base w-6/12 sm:w-3/12">{{ identity.title }}</span>
+            <span class="text-sm md:text-base w-6/12 sm:w-9/12">{{ identity.value }}</span>
           </div>
         </div>
         <div v-if="activeTabId">
@@ -36,10 +20,16 @@
           <div class="flex flex-col">
             <span class="self-center sm:self-start my-2">Status Permohonan Anda</span>
             <span class="text-xl font-bold self-center">{{ requestStatus }}</span>
-            <span v-if="activeTabId === 'verification' && !this.trackingResult.verify_info.approved" class="mt-2 self-center sm:self-start">
+            <span
+              v-if="activeTabId === 'verification' && !trackingResult.verify_info.approved"
+              class="mt-2 self-center sm:self-start"
+            >
               Alasan: {{ trackingResult.verify_info.reason }}
             </span>
-            <div v-if="activeTabId === 'distribution' || activeTabId === 'received'" class="flex flex-col self-center lg:w-3/12 mt-6">
+            <div
+              v-if="activeTabId === 'distribution' || activeTabId === 'received'"
+              class="flex flex-col self-center lg:w-3/12 mt-6"
+            >
               <div class="flex flex-row">
                 <span class="text-sm md:text-base w-6/12 sm:w-6/12">Nomor Resi :</span>
                 <span class="text-sm md:text-base w-6/12 sm:w-6/12">{{ trackingResult.delivery_info.airwaybill }}</span>
@@ -93,7 +83,8 @@ export default {
           title: '5. Diterima'
         }
       ],
-      trackingResult: null
+      trackingResult: null,
+      resultIdentity: null
     }
   },
   computed: {
@@ -115,7 +106,7 @@ export default {
       }
     },
     activeTabId () {
-      if (this.trackingResult.status) {
+      if (this.trackingResult && this.trackingResult.status) {
         switch (this.trackingResult.status) {
           case 'NEW':
             return 'request'
@@ -137,6 +128,28 @@ export default {
   },
   created () {
     this.trackingResult = this.result
+    this.resultIdentity = [
+      {
+        title: 'ID Permohonan',
+        value: this.trackingResult.id_permohonan || ''
+      },
+      {
+        title: 'NIK',
+        value: this.trackingResult.nik || ''
+      },
+      {
+        title: 'Nama Pemohon',
+        value: this.trackingResult.nama_lengkap || ''
+      },
+      {
+        title: 'Nama Paket',
+        value: this.trackingResult.paket_obatvitamin || ''
+      },
+      {
+        title: 'Alamat Domisili',
+        value: this.trackingResult.alamat_tempat || ''
+      }
+    ]
   }
 }
 </script>
