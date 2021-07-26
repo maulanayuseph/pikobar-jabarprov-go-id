@@ -62,7 +62,9 @@ export default {
   },
   mounted () {
     this.$store.dispatch('oxygen/getItems')
+    this.$store.dispatch('oxygen/getTotals')
     this.$store.dispatch('oxygen/getInfoItems')
+    this.$store.dispatch('oxygen/getCollectedDistricts')
     this.$nextTick(() => {
       if (process.browser) {
         analytics.logEvent('oxygen_view')
