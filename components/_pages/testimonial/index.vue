@@ -59,10 +59,10 @@ export default {
         @apply -m-2
         #{!important};
       }
-      &--active {
+    }
+    .VueCarousel-dot--active {
         @apply bg-green-600
         #{!important};
-      }
     }
   }
 }
