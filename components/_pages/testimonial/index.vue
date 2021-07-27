@@ -6,10 +6,10 @@
     <carousel class="testimoni__carousel">
       <slide v-for="testimoni in dataTestimoni" :key="testimoni.key">
         <TestimoniCard
-          :nama="testimoni.Name"
-          :asal="testimoni.Address"
+          :name="testimoni.name"
+          :address="testimoni.address"
           :image="defaultAvatar"
-          :body="testimoni.Testimoni"
+          :message="testimoni.message"
         />
       </slide>
     </carousel>

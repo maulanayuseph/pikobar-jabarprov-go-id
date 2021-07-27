@@ -9,10 +9,10 @@
       </div>
       <div class="ml-2">
         <div class="text-base font-semibold text-black">
-          {{ nama }}
+          {{ name }}
         </div>
         <div class="text-xs font-thin text-gray-600">
-          {{ asal }}
+          {{ address }}
         </div>
       </div>
     </div>
@@ -23,7 +23,7 @@
     </div>
     <div class="action-card__content">
       <p class="text-gray-800 mt-4 mb-4">
-        {{ body }}
+        {{ message }}
       </p>
     </div>
   </div>
@@ -32,15 +32,15 @@
 <script>
 export default {
   props: {
-    nama: {
+    name: {
       type: String,
       required: true
     },
-    asal: {
+    address: {
       type: String,
       required: true
     },
-    body: {
+    message: {
       type: String,
       required: true
     },
